@@ -119,7 +119,7 @@ Now, take a particular implementation of **InShape** that has certain knowledge 
 
 The **InShape** implementation is given an axis-aligned bounding box as input. The goal is to correctly classify the box just by evaluating the shape _pointwise_.
 
-Under certain conditions, this is trivial to do. For example, if the shape is enclosed by a 1x1 rectangle, the point (0, 0) is on the shape, and every horizontal or vertical line crosses the shape (inside the rectangle) at most once (think of one quarter of a circle centered at the origin), then the box can be correctly classified just by checking the point's corners. The algorithm (Algorithm 1) is thus to return&mdash;
+Under certain conditions, this is trivial to do. For example, if the shape is enclosed by a 1&times;1 rectangle, the point (0, 0) is on the shape, and every horizontal or vertical line crosses the shape (inside the rectangle) at most once (think of one quarter of a circle centered at the origin), then the box can be correctly classified just by checking the point's corners. The algorithm (Algorithm 1) is thus to return&mdash;
 
 - _YES_ if all the box's vertices are on or inside the shape;
 - _NO_ if none of the box's vertices are on or inside the shape; and

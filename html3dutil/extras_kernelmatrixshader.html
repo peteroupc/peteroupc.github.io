@@ -29,7 +29,7 @@ edge detection, and embossing, that process each pixel and its neighbors.</li>
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#extras_kernelmatrixshader.getKernelMatrix">getKernelMatrix</a><br />Creates a 3x3 (9-element) kernel matrix for using
+  <li><a href="#extras_kernelmatrixshader.getKernelMatrix">getKernelMatrix</a><br />Creates a 3&times;3 (9-element) kernel matrix for using
 as the “matrix” uniform of the kernel matrix shader.</li>
   <li><a href="#extras_kernelmatrixshader.normalizeKernelInPlace">normalizeKernelInPlace</a><br />TODO: Not documented yet.</li>
 </ul>
@@ -39,7 +39,7 @@ as the “matrix” uniform of the kernel matrix shader.</li>
 
 <p>GLSL shader code for a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors. This filter takes
-a 3x3 matrix called a <em>convolution kernel</em>, which gives the contribution of each pixel’s color to the final color. All the numbers in the matrix usually add up to 1. An example of a convolution kernel:</p>
+a 3&times;3 matrix called a <em>convolution kernel</em>, which gives the contribution of each pixel’s color to the final color. All the numbers in the matrix usually add up to 1. An example of a convolution kernel:</p>
 
 <pre>[ 0, 1/8, 0,
 1/8, 1/2, 1/8,
@@ -52,18 +52,18 @@ colors of its 4 adjacent pixels. Note that this example adds up to 1.
 <img src="filters8.png" alt="**Edge detect filtered image**" />
 This shader program takes three uniforms: “sample”, the source texture;
 “textureSize”, the width and height of the texture in pixels;
-“matrix”, the 3x3 convolution kernel.</p>
+“matrix”, the 3&times;3 convolution kernel.</p>
 
 <p><a name="extras_kernelmatrixshader.getKernelMatrix"></a>
 ### (static) module:extras/kernelmatrixshader.getKernelMatrix(kind)</p>
 
-<p>Creates a 3x3 (9-element) kernel matrix for using
+<p>Creates a 3&times;3 (9-element) kernel matrix for using
 as the “matrix” uniform of the kernel matrix shader.</p>
 
 <h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li><code>kind</code> (Type: string)<br />One of the following: “blur” for a 3x3 Gaussian blr matrix, or “edge-detect” for an edge detection matrix.</li>
+  <li><code>kind</code> (Type: string)<br />One of the following: “blur” for a 3&times;3 Gaussian blr matrix, or “edge-detect” for an edge detection matrix.</li>
 </ul>
 
 <h4 id="return-value">Return Value</h4>

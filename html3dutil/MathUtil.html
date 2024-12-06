@@ -44,7 +44,7 @@ A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
 that matrices can describe include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with “mat”.
-A 3x3 or 4x4 matrix has 9 or 16 elements, respectively. In mathematical publications,
+A 3&times;3 or 4&times;4 matrix has 9 or 16 elements, respectively. In mathematical publications,
 matrices are often notated in column-major order, in which each
 element of the matrix is placed in columns as opposed to rows, as in the following example:</p>
 <math>
@@ -79,7 +79,7 @@ element of the matrix is placed in columns as opposed to rows, as in the followi
 </math>
 <p>The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to <code>MathUtil</code>’s matrix methods.
-For 3x3 matrices, the elements are arranged in the following order:</p>
+For 3&times;3 matrices, the elements are arranged in the following order:</p>
 <math>
 <mfenced open="[" close="]">
 <mtable>
@@ -102,7 +102,7 @@ For 3x3 matrices, the elements are arranged in the following order:</p>
 </mfenced>
 </math>
 <p><b>A Matrix Transforms Between Coordinate Systems:</b> A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate system. These are four 3-element vectors that describe how the three axes and the center map to the new coordinate system in relation to the old coordinate system.
-The following depiction of a 4x4 matrix illustrates the meaning of each of its elements. To keep things
+The following depiction of a 4&times;4 matrix illustrates the meaning of each of its elements. To keep things
 simple, this matrix’s transformation is one that keeps straight lines straight and parallel lines parallel.</p>
 <math>
 <mfenced open="[" close="]">
@@ -171,16 +171,16 @@ the third column shows a Z axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
 Provided the matrix can be inverted (see the documentation for mat4invert), the three axis vectors are
 _basis vectors_ of the coordinate system.
-\*Why a 4x4 matrix?\*\* A matrix can describe _linear transformations_ from one vector in space
+\*Why a 4&times;4 matrix?\*\* A matrix can describe _linear transformations_ from one vector in space
 to another. These transformations, which include [\*\*scaling\*\*](#Scaling),
 [\*\*rotation\*\*](#Rotation), and shearing, can change where a vector points _at_,
-but not where it points _from_. It's enough to use a 3x3 matrix to describe
+but not where it points _from_. It's enough to use a 3&times;3 matrix to describe
 linear transformations in 3D space.
 But certain other transformations, such as [\*\*translation\*\*](#Translation) and
 [\*\*perspective\*\*](#Projective_Transformations), are common in 3D computer graphics.
-To describe translation and perspective in 3D, the 3x3 matrix must be
-augmented by an additional row and column, turning it into a 4x4 matrix.
-A 4x4 matrix can describe linear transformations in 4D space and
+To describe translation and perspective in 3D, the 3&times;3 matrix must be
+augmented by an additional row and column, turning it into a 4&times;4 matrix.
+A 4&times;4 matrix can describe linear transformations in 4D space and
 transform 4-element vectors. A 4-element vector has four components:
 X, Y, Z, and W. If a 4-element vector represents a 3D point, these
 components are the point's _homogeneous coordinates_ (unless the
@@ -188,15 +188,15 @@ vector's W is 0). To convert these coordinates back to 3D, divide
 X, Y, and Z by W. This is usually only required, however, if the
 matrix describes a perspective projection (see
 [\*\*"Projective Transformations"\*\*](#Projective_Transformations)).
-A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
-in 3D between 3x3 and 4x4 matrices.
+A similar situation applies in 2D between 2&times;2 and 3&times;3 matrices as it does
+in 3D between 3&times;3 and 4&times;4 matrices.
 \*Transforming points.\*\* The transformation formula multiplies a matrix by a 3D point to change that point's
 position:
 \*\*a&prime;\*\*<sub>_x_</sub> = matrix[0] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[4] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[8] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[12] &#x22c5; \*\*a\*\*<sub>_w_</sub>
 \*\*a&prime;\*\*<sub>_y_</sub> = matrix[1] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[5] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[9] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[13] &#x22c5; \*\*a\*\*<sub>_w_</sub>
 \*\*a&prime;\*\*<sub>_z_</sub> = matrix[2] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[6] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[10] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[14] &#x22c5; \*\*a\*\*<sub>_w_</sub>
 \*\*a&prime;\*\*<sub>_w_</sub> = matrix[3] &#x22c5; \*\*a\*\*<sub>_x_</sub> + matrix[7] &#x22c5; \*\*a\*\*<sub>_y_</sub> + matrix[11] &#x22c5; \*\*a\*\*<sub>_z_</sub> + matrix[15] &#x22c5; \*\*a\*\*<sub>_w_</sub>
-For more on why \*\*a&prime;\*\*<sub>_w_</sub> appears here, see \*\*"Why a 4x4 Matrix?"\*\*, above. In each formula that follows, \*\*a\*\*<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
+For more on why \*\*a&prime;\*\*<sub>_w_</sub> appears here, see \*\*"Why a 4&times;4 Matrix?"\*\*, above. In each formula that follows, \*\*a\*\*<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
 \* Scaling.\*\* Scaling changes an object's size.
 To create a scaling matrix, use <a href="MathUtil.html#MathUtil.mat4scaled">MathUtil.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
@@ -461,15 +461,15 @@ To get an insight of how matrix multiplication works, treat the second matrix as
 of column vectors (with the same number of rows as the number of columns in the
 first matrix). Multiplying the two matrices transforms these vectors to new ones in the
 same way as if the column vectors were transformed individually. (This also explains why there can
-be one or more column vectors in the second matrix and not just four in the case of a 4x4 matrix,
-and also why transforming a 4-element column vector is the same as multiplying a 4x4 matrix by a
+be one or more column vectors in the second matrix and not just four in the case of a 4&times;4 matrix,
+and also why transforming a 4-element column vector is the same as multiplying a 4&times;4 matrix by a
 matrix with one column and four rows.\*)
 This insight reveals a practical use of matrix multiplication: transforming four 4-element
-vectors at once using a single matrix operation involving two 4x4 matrices. After the
+vectors at once using a single matrix operation involving two 4&times;4 matrices. After the
 matrix multiplication, each of the transformed vectors will be contained in one of the four columns
 of the output matrix.
 The methods `mat4multiply`, `mat4scale`, `mat4scaleInPlace`, `mat4translate`, and
-mat4rotate involve multiplying 4x4 matrices.
+mat4rotate involve multiplying 4&times;4 matrices.
 Related functions:
 <a href="MathUtil.html#MathUtil.mat4multiply">MathUtil.mat4multiply()</a> -
 Multiplies two matrices
@@ -481,9 +481,9 @@ keep straight lines straight and parallel lines parallel.) However, this is not 
 some transformations in the `MathUtil` class.
 Transformations that don't necessarily preserve parallelism of lines are called _projective transformations_.
 An NxN matrix can describe certain projective transformations if it has one more row and one more column
-than the number of dimensions. For example, a 4x4 matrix can describe 3D projective transformations
+than the number of dimensions. For example, a 4&times;4 matrix can describe 3D projective transformations
 in the form of linear transformations on homogeneous coordinates (see
-[\*\*"Why a 4x4 Matrix?"\*\*](#Why_a_4x4_Matrix)). For a 3D projective transformation, the last row
+[\*\*"Why a 4&times;4 Matrix?"\*\*](#Why_a_4x4_Matrix)). For a 3D projective transformation, the last row
 in the matrix is not necessarily (0, 0, 0, 1).
 One example of a projective transformation is found in a _perspective projection_ matrix,
 as returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a> or <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum</a>. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in _eye space_, or more specifically, as follows:
@@ -551,7 +551,7 @@ method need not be a [\*\*unit vector\*\*](#Unit_Vectors).
 ### Quaternions
 A quaternion is a 4-element vector that can describe a 3D rotation. Functions dealing with quaternions begin with "quat". Functions that generate quaternions include: <a href="MathUtil.html#MathUtil.quatIdentity">MathUtil.quatIdentity</a>, which generates a quaternion describing an
 absence of rotations; <a href="MathUtil.html#MathUtil.quatFromVectors">MathUtil.quatFromVectors</a>, which generates a quaternion describing
-a rotation from one vector to another; <a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a>, which generates a quaternion from a [\*\*4x4 matrix\*\*](#Matrices); <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a>, which generates a quaternion from an angle and [\*\*axis of rotation\*\*](#Axis_of_Rotation); MathUtil.quatFromTaitBryan, which generates a quaternion from Tait-Bryan angles.
+a rotation from one vector to another; <a href="MathUtil.html#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a>, which generates a quaternion from a [\*\*4&times;4 matrix\*\*](#Matrices); <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a>, which generates a quaternion from an angle and [\*\*axis of rotation\*\*](#Axis_of_Rotation); MathUtil.quatFromTaitBryan, which generates a quaternion from Tait-Bryan angles.
 <a id="Using_Quaternions"></a>
 #### Using Quaternions
 For best results when using quaternions:
@@ -587,9 +587,9 @@ axis), so that a rotation along that axis will do nothing.
 Related functions:
 MathUtil.quatFromTaitBryan() -
 Converts from Tait-Bryan angles to a quaternion
-<a id="4x4_Matrices"></a>
-### 4x4 Matrices
-A 4x4 matrix can describe a 3D vector rotation; see [\*\*"Rotation", above\*\*](#Rotation).
+<a id="4&times;4_Matrices"></a>
+### 4&times;4 Matrices
+A 4&times;4 matrix can describe a 3D vector rotation; see [\*\*"Rotation", above\*\*](#Rotation).
 <a id="Planes"></a>
 ## Planes
 A 4-element array can describe a plane in the following manner:
@@ -730,64 +730,64 @@ partially inside a view frustum.
 cubic B&eacute;zier
 curve with end points (0, 0) and (1, 1) and with two
 configurable control points.
-* [mat3copy](#MathUtil.mat3copy)<br />Returns a copy of a 3x3 matrix.
-* [mat3identity](#MathUtil.mat3identity)<br />Returns the identity 3x3 matrix (a matrix that keeps
+* [mat3copy](#MathUtil.mat3copy)<br />Returns a copy of a 3&times;3 matrix.
+* [mat3identity](#MathUtil.mat3identity)<br />Returns the identity 3&times;3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
-* [mat3invert](#MathUtil.mat3invert)<br />Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
-* [mat3multiply](#MathUtil.mat3multiply)<br />Multiplies two 3x3 matrices.
-* [mat3transform](#MathUtil.mat3transform)<br />Transforms a 3-element vector with a 3x3 matrix and returns
+* [mat3invert](#MathUtil.mat3invert)<br />Finds the inverse of a 3&times;3 matrix, describing a transformation that undoes the given transformation.
+* [mat3multiply](#MathUtil.mat3multiply)<br />Multiplies two 3&times;3 matrices.
+* [mat3transform](#MathUtil.mat3transform)<br />Transforms a 3-element vector with a 3&times;3 matrix and returns
 the transformed vector.
-* [mat3transpose](#MathUtil.mat3transpose)<br />Returns the transpose of a 3x3 matrix.
-* [mat3transposeInPlace](#MathUtil.mat3transposeInPlace)<br />Transposes a 3x3 matrix in place without creating
+* [mat3transpose](#MathUtil.mat3transpose)<br />Returns the transpose of a 3&times;3 matrix.
+* [mat3transposeInPlace](#MathUtil.mat3transposeInPlace)<br />Transposes a 3&times;3 matrix in place without creating
 a new matrix.
-* [mat4copy](#MathUtil.mat4copy)<br />Returns a copy of a 4x4 matrix.
-* [mat4frustum](#MathUtil.mat4frustum)<br />Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
+* [mat4copy](#MathUtil.mat4copy)<br />Returns a copy of a 4&times;4 matrix.
+* [mat4frustum](#MathUtil.mat4frustum)<br />Returns a 4&times;4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
 in the form of a view frustum, or the limits in the "eye"'s view.
-* [mat4identity](#MathUtil.mat4identity)<br />Returns the identity 4x4 matrix (a matrix that keeps
+* [mat4identity](#MathUtil.mat4identity)<br />Returns the identity 4&times;4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
-* [mat4inverseTranspose3](#MathUtil.mat4inverseTranspose3)<br />Returns the transposed result of the inverted 3x3 upper left corner of
-the given 4x4 matrix.
-* [mat4invert](#MathUtil.mat4invert)<br />Finds the inverse of a 4x4 matrix.
-* [mat4isIdentity](#MathUtil.mat4isIdentity)<br />Returns whether a 4x4 matrix is the identity matrix.
-* [mat4lookat](#MathUtil.mat4lookat)<br />Returns a 4x4 matrix that represents a "camera" view,
+* [mat4inverseTranspose3](#MathUtil.mat4inverseTranspose3)<br />Returns the transposed result of the inverted 3&times;3 upper left corner of
+the given 4&times;4 matrix.
+* [mat4invert](#MathUtil.mat4invert)<br />Finds the inverse of a 4&times;4 matrix.
+* [mat4isIdentity](#MathUtil.mat4isIdentity)<br />Returns whether a 4&times;4 matrix is the identity matrix.
+* [mat4lookat](#MathUtil.mat4lookat)<br />Returns a 4&times;4 matrix that represents a "camera" view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>).
-* [mat4multiply](#MathUtil.mat4multiply)<br />Multiplies two 4x4 matrices.
-* [mat4oblique](#MathUtil.mat4oblique)<br />Returns a 4x4 view matrix representing an oblique "eye" view,
+* [mat4multiply](#MathUtil.mat4multiply)<br />Multiplies two 4&times;4 matrices.
+* [mat4oblique](#MathUtil.mat4oblique)<br />Returns a 4&times;4 view matrix representing an oblique "eye" view,
 when used in conjunction with an <a href="MathUtil.html#MathUtil.mat4ortho">orthographic projection</a>.
-* [mat4ortho](#MathUtil.mat4ortho)<br />Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.
-* [mat4ortho2d](#MathUtil.mat4ortho2d)<br />Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>.
-* [mat4ortho2dAspect](#MathUtil.mat4ortho2dAspect)<br />Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>,
+* [mat4ortho](#MathUtil.mat4ortho)<br />Returns a 4&times;4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.
+* [mat4ortho2d](#MathUtil.mat4ortho2d)<br />Returns a 4&times;4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>.
+* [mat4ortho2dAspect](#MathUtil.mat4ortho2dAspect)<br />Returns a 4&times;4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
-* [mat4orthoAspect](#MathUtil.mat4orthoAspect)<br />Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
+* [mat4orthoAspect](#MathUtil.mat4orthoAspect)<br />Returns a 4&times;4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
-* [mat4perspective](#MathUtil.mat4perspective)<br />Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.
-* [mat4perspectiveHorizontal](#MathUtil.mat4perspectiveHorizontal)<br />Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
+* [mat4perspective](#MathUtil.mat4perspective)<br />Returns a 4&times;4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.
+* [mat4perspectiveHorizontal](#MathUtil.mat4perspectiveHorizontal)<br />Returns a 4&times;4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
 given an X axis field of view.
-* [mat4pickMatrix](#MathUtil.mat4pickMatrix)<br />Returns a 4x4 matrix that transforms the view to the center of the viewport.
-* [mat4projectVec3](#MathUtil.mat4projectVec3)<br />Transforms a 3-element vector with a 4x4 matrix and returns
+* [mat4pickMatrix](#MathUtil.mat4pickMatrix)<br />Returns a 4&times;4 matrix that transforms the view to the center of the viewport.
+* [mat4projectVec3](#MathUtil.mat4projectVec3)<br />Transforms a 3-element vector with a 4&times;4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
-* [mat4rotate](#MathUtil.mat4rotate)<br />Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+* [mat4rotate](#MathUtil.mat4rotate)<br />Multiplies a 4&times;4 matrix by a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath,
 and returns a new matrix.
-* [mat4rotated](#MathUtil.mat4rotated)<br />Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+* [mat4rotated](#MathUtil.mat4rotated)<br />Returns a 4&times;4 matrix representing a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath.
-* [mat4scale](#MathUtil.mat4scale)<br />Multiplies a 4x4 matrix by a scaling transformation.
-* [mat4scaleInPlace](#MathUtil.mat4scaleInPlace)<br />Modifies a 4x4 matrix by multiplying it by a
+* [mat4scale](#MathUtil.mat4scale)<br />Multiplies a 4&times;4 matrix by a scaling transformation.
+* [mat4scaleInPlace](#MathUtil.mat4scaleInPlace)<br />Modifies a 4&times;4 matrix by multiplying it by a
 scaling transformation.
-* [mat4scaled](#MathUtil.mat4scaled)<br />Returns a 4x4 matrix representing a scaling transformation.
+* [mat4scaled](#MathUtil.mat4scaled)<br />Returns a 4&times;4 matrix representing a scaling transformation.
 * [mat4toFrustumPlanes](#MathUtil.mat4toFrustumPlanes)<br />Finds the six clipping planes of a view frustum defined
-by a 4x4 matrix.
-* [mat4toMat3](#MathUtil.mat4toMat3)<br />Returns the upper-left part of a 4x4 matrix as a new
-3x3 matrix.
-* [mat4transform](#MathUtil.mat4transform)<br />Transforms a 4-element vector with a 4x4 matrix and returns
+by a 4&times;4 matrix.
+* [mat4toMat3](#MathUtil.mat4toMat3)<br />Returns the upper-left part of a 4&times;4 matrix as a new
+3&times;3 matrix.
+* [mat4transform](#MathUtil.mat4transform)<br />Transforms a 4-element vector with a 4&times;4 matrix and returns
 the transformed vector.
-* [mat4transformVec3](#MathUtil.mat4transformVec3)<br />Transforms a 3-element vector with a 4x4 matrix as though it were
+* [mat4transformVec3](#MathUtil.mat4transformVec3)<br />Transforms a 3-element vector with a 4&times;4 matrix as though it were
 an affine transformation matrix (without perspective) and returns the transformed vector.
-* [mat4translate](#MathUtil.mat4translate)<br />Multiplies a 4x4 matrix by a translation transformation.
-* [mat4translated](#MathUtil.mat4translated)<br />Returns a 4x4 matrix representing a translation.
-* [mat4transpose](#MathUtil.mat4transpose)<br />Returns the transpose of a 4x4 matrix.
-* [mat4transposeInPlace](#MathUtil.mat4transposeInPlace)<br />Transposes a 4x4 matrix in place without creating
+* [mat4translate](#MathUtil.mat4translate)<br />Multiplies a 4&times;4 matrix by a translation transformation.
+* [mat4translated](#MathUtil.mat4translated)<br />Returns a 4&times;4 matrix representing a translation.
+* [mat4transpose](#MathUtil.mat4transpose)<br />Returns the transpose of a 4&times;4 matrix.
+* [mat4transposeInPlace](#MathUtil.mat4transposeInPlace)<br />Transposes a 4&times;4 matrix in place without creating
 a new matrix.
 * [planeFromNormalAndPoint](#MathUtil.planeFromNormalAndPoint)<br />Creates a plane from a normal vector and a point on the plane.
 * [planeNormalize](#MathUtil.planeNormalize)<br />Normalizes this plane so that its normal is a glmath,
@@ -799,7 +799,7 @@ unless all the normal's components are 0, and sets this plane to the result.
 * [quatDot](#MathUtil.quatDot)<br />Finds the dot product of two quaternions.
 * [quatFromAxisAngle](#MathUtil.quatFromAxisAngle)<br />Generates a quaternion from a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath,
-* [quatFromMat4](#MathUtil.quatFromMat4)<br />Generates a quaternion from the vector rotation described in a 4x4 matrix.
+* [quatFromMat4](#MathUtil.quatFromMat4)<br />Generates a quaternion from the vector rotation described in a 4&times;4 matrix.
 * [quatFromVectors](#MathUtil.quatFromVectors)<br />Generates a quaternion describing a rotation between
 two 3-element vectors.
 * [quatIdentity](#MathUtil.quatIdentity)<br />Returns the identity quaternion of multiplication, (0, 0, 0, 1).
@@ -823,7 +823,7 @@ given two quaternion rotations, using a spherical interpolation function.
 * [quatToAxisAngle](#MathUtil.quatToAxisAngle)<br />Calculates the vector rotation for this quaternion in the form
 of the angle to rotate the vector by and an glmath to
 rotate that vector around.
-* [quatToMat4](#MathUtil.quatToMat4)<br />Generates a 4x4 matrix describing the rotation
+* [quatToMat4](#MathUtil.quatToMat4)<br />Generates a 4&times;4 matrix describing the rotation
 described by this quaternion.
 * [quatTransform](#MathUtil.quatTransform)<br />Transforms a 3- or 4-element vector using a
 quaternion's vector rotation.
@@ -1249,11 +1249,11 @@ is 0 or less, and 1 if <code>t</code> is 1 or greater. (Type: number)
 <a name="MathUtil.mat3copy"></a>
 ### (static) MathUtil.mat3copy(mat)
 
-Returns a copy of a 3x3 matrix.
+Returns a copy of a 3&times;3 matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 3x3atrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 3&times;3atrix.
 
 #### Return Value
 
@@ -1262,7 +1262,7 @@ Return value. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat3identity"></a>
 ### (static) MathUtil.mat3identity()
 
-Returns the identity 3x3 matrix (a matrix that keeps
+Returns the identity 3&times;3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
 
 #### Return Value
@@ -1272,21 +1272,21 @@ Return value. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat3invert"></a>
 ### (static) MathUtil.mat3invert(m)
 
-Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
+Finds the inverse of a 3&times;3 matrix, describing a transformation that undoes the given transformation.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;number&gt;)<br />A 3x3 matrix.
+* `m` (Type: Array.&lt;number&gt;)<br />A 3&times;3 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix.
+The resulting 3&times;3 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat3multiply"></a>
 ### (static) MathUtil.mat3multiply(a, b)
 
-Multiplies two 3x3 matrices. A new matrix is returned.
+Multiplies two 3&times;3 matrices. A new matrix is returned.
 The matrices are multiplied such that the transformations
 they describe happen in reverse order. For example, if the first
 matrix (input matrix) describes a translation and the second
@@ -1305,12 +1305,12 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;number&gt;)
+The resulting 3&times;3 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat3transform"></a>
 ### (static) MathUtil.mat3transform(mat, v, [vy], [vz])
 
-Transforms a 3-element vector with a 3x3 matrix and returns
+Transforms a 3-element vector with a 3&times;3 matrix and returns
 the transformed vector.
 
 Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
@@ -1322,7 +1322,7 @@ get the transformed vector.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 3x3 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 3&times;3 matrix.
 * `v` (Type: Array.&lt;number&gt; | number)<br />X coordinate. If "vy", and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br />Y coordinate.
 * `vz` (Type: number) (optional)<br />Z coordinate. To transform a 2D point, set Z to 1, and divide the result's X and Y by the result's Z.
@@ -1334,27 +1334,27 @@ The transformed vector. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat3transpose"></a>
 ### (static) MathUtil.mat3transpose(m3)
 
-Returns the transpose of a 3x3 matrix. (A transpose is a
+Returns the transpose of a 3&times;3 matrix. (A transpose is a
 matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
-* `m3` (Type: Array.&lt;number&gt;)<br />A 3x3 matrix.
+* `m3` (Type: Array.&lt;number&gt;)<br />A 3&times;3 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;number&gt;)
+The resulting 3&times;3 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat3transposeInPlace"></a>
 ### (static) MathUtil.mat3transposeInPlace(mat)
 
-Transposes a 3x3 matrix in place without creating
+Transposes a 3&times;3 matrix in place without creating
 a new matrix. (A transpose is a matrix whose rows
 are converted to columns and vice versa.)
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 3x3 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 3&times;3 matrix.
 
 #### Return Value
 
@@ -1363,11 +1363,11 @@ The parameter "mat". (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4copy"></a>
 ### (static) MathUtil.mat4copy(mat)
 
-Returns a copy of a 4x4 matrix.
+Returns a copy of a 4&times;4 matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
@@ -1376,7 +1376,7 @@ Return value. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4frustum"></a>
 ### (static) MathUtil.mat4frustum(l, r, b, t, near, far)
 
-Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
+Returns a 4&times;4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
 in the form of a view frustum, or the limits in the "eye"'s view.
 
 When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
@@ -1399,12 +1399,12 @@ The transformed coordinates have the meanings given above assuming that the eye 
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4identity"></a>
 ### (static) MathUtil.mat4identity()
 
-Returns the identity 4x4 matrix (a matrix that keeps
+Returns the identity 4&times;4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
 
 #### Return Value
@@ -1414,30 +1414,30 @@ Return value. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4inverseTranspose3"></a>
 ### (static) MathUtil.mat4inverseTranspose3(m4)
 
-Returns the transposed result of the inverted 3x3 upper left corner of
-the given 4x4 matrix.
+Returns the transposed result of the inverted 3&times;3 upper left corner of
+the given 4&times;4 matrix.
 
 This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the model-view matrix. Normals are then
 transformed by this matrix and then converted to unit vectors. But if the
 input matrix uses only rotations, translations, and/or uniform scaling
-(same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
+(same scaling in X, Y, and Z), the 3&times;3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `m4` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. If the matrix
-can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;number&gt;)
+The resulting 3&times;3 matrix. If the matrix
+can't be inverted, returns the identity 3&times;3 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4invert"></a>
 ### (static) MathUtil.mat4invert(m)
 
-Finds the inverse of a 4x4 matrix.
+Finds the inverse of a 4&times;4 matrix.
 An inverted matrix can describe a transformation in three-dimensional space that undoes another transformation. For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.
@@ -1447,12 +1447,12 @@ to invert the translation (5, 2, -3), use the translation (-5, -2, 3).
 To invert a \*\*scaling\*\*, use 1 divided by each of the scaling elements (given above as `sx`, `sy`, and `sz`)
 and generate a new scaling matrix with those elements.
 For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
-To invert a \*\*rotation\*\* for a 4x4 matrix, swap the 2nd and 5th elements of the matrix,
+To invert a \*\*rotation\*\* for a 4&times;4 matrix, swap the 2nd and 5th elements of the matrix,
 the 3rd and 9th elements, and the 7th and 10th elements of the matrix (zero-based
 elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the angle of the
 rotation to reset an object to its previous orientation. In general, to invert an NxN
 rotation matrix, _transpose_ that matrix (so that its rows become its columns and vice versa).
-\*Inverting a general NxN matrix.\*\* Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.
+\*Inverting a general NxN matrix.\*\* Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4&times;4 or 3&times;3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.
 To describe how inverting a matrix works, we will need to define some terms:
 A matrix cell's _row index_ and _column index_ tell where that cell appears in the matrix. For example, a cell on the first row has row index 0 and a cell on the second column has column index 1.
 A matrix's _determinant_ is its overall
@@ -1461,7 +1461,7 @@ than 0 can be inverted. To find a matrix's determinant:
 1. For each cell in the first row (or first column), find the matrix's _minor_ at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix).
 2. Label the minors (A, B, C, D, ...), in that order.
 3. The matrix's determinant is (A - B + C - D + ...).
-A 1x1 matrix's determinant is simply the value of its only cell.
+A 1&times;1 matrix's determinant is simply the value of its only cell.
 To invert an NxN matrix:
 1. Create a new NxN matrix.
 2. For each cell in the original matrix, find its minor at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix), and set the corresponding cell
@@ -1477,21 +1477,21 @@ cell in the new matrix by that value.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `m` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix.
+The resulting 4&times;4 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4isIdentity"></a>
 ### (static) MathUtil.mat4isIdentity(mat)
 
-Returns whether a 4x4 matrix is the identity matrix.
+Returns whether a 4&times;4 matrix is the identity matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
@@ -1500,7 +1500,7 @@ Return value. (Type: boolean)
 <a name="MathUtil.mat4lookat"></a>
 ### (static) MathUtil.mat4lookat(cameraPos, [lookingAt], [up])
 
-Returns a 4x4 matrix that represents a "camera" view,
+Returns a 4&times;4 matrix that represents a "camera" view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>). This essentially rotates a "camera"
 and moves it to somewhere in the scene. In eye space, when just this matrix is used to transform vertices:<ul>
@@ -1524,7 +1524,7 @@ To adjust the result of this method for a left-handed coordinate system (so that
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 #### Examples
 
@@ -1573,7 +1573,7 @@ viewer position, the viewing direction, and the up vector (a "look-to" matrix):
 <a name="MathUtil.mat4multiply"></a>
 ### (static) MathUtil.mat4multiply(a, b)
 
-Multiplies two 4x4 matrices. A new matrix is returned.
+Multiplies two 4&times;4 matrices. A new matrix is returned.
 The matrices are multiplied such that the transformations
 they describe happen in reverse order. For example, if the first
 matrix (input matrix) describes a translation and the second
@@ -1592,12 +1592,12 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4oblique"></a>
 ### (static) MathUtil.mat4oblique(alpha, phi)
 
-Returns a 4x4 view matrix representing an oblique "eye" view,
+Returns a 4&times;4 view matrix representing an oblique "eye" view,
 when used in conjunction with an <a href="MathUtil.html#MathUtil.mat4ortho">orthographic projection</a>.
 
 This method works the same way in right-handed and left-handed
@@ -1610,12 +1610,12 @@ coordinate systems.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4ortho"></a>
 ### (static) MathUtil.mat4ortho(l, r, b, t, n, f)
 
-Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.
+Returns a 4&times;4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.
 In this projection, the left clipping plane is parallel to the right clipping
 plane and the top to the bottom.
 
@@ -1642,12 +1642,12 @@ The transformed coordinates have the meanings given above assuming that the eye 
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4ortho2d"></a>
 ### (static) MathUtil.mat4ortho2d(l, r, b, t)
 
-Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>.
+Returns a 4&times;4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>.
 
 This is the same as mat4ortho() with the near clipping plane
 set to -1 and the far clipping plane set to 1.
@@ -1664,12 +1664,12 @@ when using this matrix and on adjusting the matrix for different coordinate syst
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4ortho2dAspect"></a>
 ### (static) MathUtil.mat4ortho2dAspect(l, r, b, t, aspect)
 
-Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>,
+Returns a 4&times;4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 
 If the view rectangle's aspect ratio doesn't match the desired aspect
@@ -1693,7 +1693,7 @@ of coordinates when using this matrix and on adjusting the matrix for different 
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 #### Examples
 
@@ -1707,7 +1707,7 @@ retrieved from the HTML DOM.
 <a name="MathUtil.mat4orthoAspect"></a>
 ### (static) MathUtil.mat4orthoAspect(l, r, b, t, n, f, aspect)
 
-Returns a 4x4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
+Returns a 4&times;4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 
 If the view rectangle's aspect ratio doesn't match the desired aspect
@@ -1733,7 +1733,7 @@ when using this matrix and on adjusting the matrix for different coordinate syst
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 #### Examples
 
@@ -1748,7 +1748,7 @@ retrieved from the HTML DOM.
 <a name="MathUtil.mat4perspective"></a>
 ### (static) MathUtil.mat4perspective(fovY, aspectRatio, near, far)
 
-Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.
+Returns a 4&times;4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.
 
 When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
 <li>X coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from left to right.</li>
@@ -1768,7 +1768,7 @@ The transformed coordinates have the meanings given above assuming that the eye 
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 #### Examples
 
@@ -1783,7 +1783,7 @@ retrieved from the HTML DOM.
 <a name="MathUtil.mat4perspectiveHorizontal"></a>
 ### (static) MathUtil.mat4perspectiveHorizontal(fovX, aspectRatio, near, far)
 
-Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
+Returns a 4&times;4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
 given an X axis field of view.
 
 See <a href="MathUtil.html#MathUtil.mat4perspective">mat4perspective()</a> for information on the meaning of coordinates
@@ -1798,7 +1798,7 @@ when using this matrix and on adjusting the matrix for different coordinate syst
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 #### Examples
 
@@ -1813,7 +1813,7 @@ retrieved from the HTML DOM.
 <a name="MathUtil.mat4pickMatrix"></a>
 ### (static) MathUtil.mat4pickMatrix(wx, wy, ww, wh, vp)
 
-Returns a 4x4 matrix that transforms the view to the center of the viewport. The resulting matrix should be multiplied by a projection matrix (such as that returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>), a projection-view matrix (projection matrix multiplied
+Returns a 4&times;4 matrix that transforms the view to the center of the viewport. The resulting matrix should be multiplied by a projection matrix (such as that returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>), a projection-view matrix (projection matrix multiplied
 by the view matrix, in that order),
 or a model-view-projection matrix, that is, (projection-view matrix multiplied
 by the model [world] matrix, in that order).
@@ -1828,23 +1828,23 @@ by the model [world] matrix, in that order).
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4projectVec3"></a>
 ### (static) MathUtil.mat4projectVec3(mat, v, [vy], [vz])
 
-Transforms a 3-element vector with a 4x4 matrix and returns
+Transforms a 3-element vector with a 4&times;4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
 
 The transformation involves transforming a 4-element vector with the same X,
-Y, and Z coordinates, but with a W coordinate equal to 1, with the 4x4 matrix, and
+Y, and Z coordinates, but with a W coordinate equal to 1, with the 4&times;4 matrix, and
 then dividing X, Y, and Z of the transformed 4-element
 vector by that vector's W (a <i>perspective divide</i>),
 then returning that vector's new X, Y, and Z.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br /> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume, before the perspective divide, will have the range specified in those methods' documentation and increase in the direction given in that documentation, and those coordinates, after the perspective divide will range from -1 to 1 (or 0 to 1) if they previously ranged from -W to W (or 0 to W, respectively).
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br /> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume, before the perspective divide, will have the range specified in those methods' documentation and increase in the direction given in that documentation, and those coordinates, after the perspective divide will range from -1 to 1 (or 0 to 1) if they previously ranged from -W to W (or 0 to W, respectively).
 * `v` (Type: Array.&lt;number&gt; | number)<br />X coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br />Y coordinate.
 * `vz` (Type: number) (optional)<br />Z coordinate. To transform a 2D point, set Z to 0.
@@ -1858,7 +1858,7 @@ the transformed vector's X, Y, and Z coordinates. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4rotate"></a>
 ### (static) MathUtil.mat4rotate(mat, angle, v, vy, vz)
 
-Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+Multiplies a 4&times;4 matrix by a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath,
 and returns a new matrix.
 The effect will be that the rotation transformation will
@@ -1867,7 +1867,7 @@ when applied in the global coordinate frame.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix to multiply.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix to multiply.
 * `angle` (Type: Array.&lt;number&gt; | number)<br />The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the glmath as the first three elements, followed by the angle in degrees as the fourth element.
 * `v` (Type: Array.&lt;number&gt; | number)<br />X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.
 * `vy` (Type: number)<br />Y-component of the point lying on the axis of rotation.
@@ -1875,12 +1875,12 @@ when applied in the global coordinate frame.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4rotated"></a>
 ### (static) MathUtil.mat4rotated(angle, v, vy, vz)
 
-Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+Returns a 4&times;4 matrix representing a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath.
 
 #### Parameters
@@ -1892,7 +1892,7 @@ by the given rotation angle and around the given glmath.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 #### Examples
 
@@ -1905,28 +1905,28 @@ The following example rotates a vector,
 <a name="MathUtil.mat4scale"></a>
 ### (static) MathUtil.mat4scale(mat, v3, v3y, v3z)
 
-Multiplies a 4x4 matrix by a scaling transformation.
+Multiplies a 4&times;4 matrix by a scaling transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />4x4 matrix to multiply.
+* `mat` (Type: Array.&lt;number&gt;)<br />4&times;4 matrix to multiply.
 * `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: number)<br />Scale factor along the Y axis.
 * `v3z` (Type: number)<br />Scale factor along the Z axis.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4scaleInPlace"></a>
 ### (static) MathUtil.mat4scaleInPlace(mat, v3, [v3y], [v3z])
 
-Modifies a 4x4 matrix by multiplying it by a
+Modifies a 4&times;4 matrix by multiplying it by a
 scaling transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 * `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: number) (optional)<br />Scale factor along the Y axis.
 * `v3z` (Type: number) (optional)<br />Scale factor along the Z axis.
@@ -1938,7 +1938,7 @@ The same parameter as "mat". (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4scaled"></a>
 ### (static) MathUtil.mat4scaled(v3, v3y, v3z)
 
-Returns a 4x4 matrix representing a scaling transformation.
+Returns a 4&times;4 matrix representing a scaling transformation.
 
 #### Parameters
 
@@ -1948,13 +1948,13 @@ Returns a 4x4 matrix representing a scaling transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4toFrustumPlanes"></a>
 ### (static) MathUtil.mat4toFrustumPlanes(matrix)
 
 Finds the six clipping planes of a view frustum defined
-by a 4x4 matrix. These six planes together form the
+by a 4&times;4 matrix. These six planes together form the
 shape of a "chopped-off" pyramid (or frustum).
 
 In this model, the "eye" is placed at the top
@@ -1965,7 +1965,7 @@ off top.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix, in that order).
+* `matrix` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix, in that order).
 
 #### Return Value
 
@@ -1978,21 +1978,21 @@ will be normalized (see <a href="MathUtil.html#MathUtil.planeNormalizeInPlace">M
 <a name="MathUtil.mat4toMat3"></a>
 ### (static) MathUtil.mat4toMat3(m4)
 
-Returns the upper-left part of a 4x4 matrix as a new
-3x3 matrix.
+Returns the upper-left part of a 4&times;4 matrix as a new
+3&times;3 matrix.
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `m4` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;number&gt;)
+The resulting 3&times;3 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4transform"></a>
 ### (static) MathUtil.mat4transform(mat, v, [vy], [vz], [vw])
 
-Transforms a 4-element vector with a 4x4 matrix and returns
+Transforms a 4-element vector with a 4&times;4 matrix and returns
 the transformed vector.
 
 Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
@@ -2004,7 +2004,7 @@ get the transformed vector.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 * `v` (Type: Array.&lt;number&gt; | number)<br />X coordinate. If "vy", "vz", and "vw" are omitted, this value can instead be a 4-element array giving the X, Y, Z, and W coordinates.
 * `vy` (Type: number) (optional)<br />Y coordinate.
 * `vz` (Type: number) (optional)<br />Z coordinate.
@@ -2017,7 +2017,7 @@ The transformed vector. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4transformVec3"></a>
 ### (static) MathUtil.mat4transformVec3(mat, v, [vy], [vz])
 
-Transforms a 3-element vector with a 4x4 matrix as though it were
+Transforms a 3-element vector with a 4&times;4 matrix as though it were
 an affine transformation matrix (without perspective) and returns the transformed vector.
 The effect is as though elements
 3, 7, 11, and 15 (counting from 0) of the matrix
@@ -2026,12 +2026,12 @@ vector had a fourth element valued at 1.
 
 For most purposes, use
 the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method instead, which supports
-4x4 matrices that may be in a perspective
+4&times;4 matrices that may be in a perspective
 projection (whose last row is not necessarily (0, 0, 0, 1)).
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 * `v` (Type: Array.&lt;number&gt; | number)<br />X coordinate. If "vy" and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br />Y coordinate.
 * `vz` (Type: number) (optional)<br />Z coordinate. To transform a 2D point, set Z to 0.
@@ -2043,7 +2043,7 @@ The transformed 3-element vector. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.mat4translate"></a>
 ### (static) MathUtil.mat4translate(mat, v3, v3y, v3z)
 
-Multiplies a 4x4 matrix by a translation transformation.
+Multiplies a 4&times;4 matrix by a translation transformation.
 
 #### Parameters
 
@@ -2054,12 +2054,12 @@ Multiplies a 4x4 matrix by a translation transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4translated"></a>
 ### (static) MathUtil.mat4translated(v3, v3y, v3z)
 
-Returns a 4x4 matrix representing a translation.
+Returns a 4&times;4 matrix representing a translation.
 
 #### Parameters
 
@@ -2069,32 +2069,32 @@ Returns a 4x4 matrix representing a translation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4transpose"></a>
 ### (static) MathUtil.mat4transpose(m4)
 
-Returns the transpose of a 4x4 matrix. (A transpose is a
+Returns the transpose of a 4&times;4 matrix. (A transpose is a
 matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `m4` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number&gt;)
+The resulting 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.mat4transposeInPlace"></a>
 ### (static) MathUtil.mat4transposeInPlace(mat)
 
-Transposes a 4x4 matrix in place without creating
+Transposes a 4&times;4 matrix in place without creating
 a new matrix. (A transpose is a matrix whose rows
 are converted to columns and vice versa.)
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `mat` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
@@ -2221,14 +2221,14 @@ and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;nu
 <a name="MathUtil.quatFromMat4"></a>
 ### (static) MathUtil.quatFromMat4(m)
 
-Generates a quaternion from the vector rotation described in a 4x4 matrix.
-The upper 3x3 portion of the matrix is used for this calculation.
+Generates a quaternion from the vector rotation described in a 4&times;4 matrix.
+The upper 3&times;3 portion of the matrix is used for this calculation.
 The results are undefined if the matrix includes any transformation
 other than rotation.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix.
+* `m` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix.
 
 #### Return Value
 
@@ -2525,7 +2525,7 @@ of rotation will be a unit vector. (Type: Array.&lt;number&gt;)
 <a name="MathUtil.quatToMat4"></a>
 ### (static) MathUtil.quatToMat4(quat)
 
-Generates a 4x4 matrix describing the rotation
+Generates a 4&times;4 matrix describing the rotation
 described by this quaternion.
 
 #### Parameters
@@ -2534,7 +2534,7 @@ described by this quaternion.
 
 #### Return Value
 
-The generated 4x4 matrix. (Type: Array.&lt;number&gt;)
+The generated 4&times;4 matrix. (Type: Array.&lt;number&gt;)
 
 <a name="MathUtil.quatTransform"></a>
 ### (static) MathUtil.quatTransform(q, v)
@@ -3293,7 +3293,7 @@ Z coordinates within the view volume range from 0 to 1 (assuming
 #### Parameters
 
 * `vector` (Type: Array.&lt;number&gt;)<br />A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform, in window coordinates.
-* `matrix` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method.<br /> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="MathUtil.html#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
+* `matrix` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method.<br /> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="MathUtil.html#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
 * `viewport` (Type: Array.&lt;number&gt;)<br />A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: boolean) (optional)<br />If false, null, undefined, or omitted, reverses the sign of the Y coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
 
@@ -3614,7 +3614,7 @@ using the given transformation matrix and viewport rectangle.
 #### Parameters
 
 * `vector` (Type: Array.&lt;number&gt;)<br />A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
-* `matrix` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br />This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br /> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, Y coordinates increase in the opposite direction), and Z coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such Z coordinates range from -1 to 1.
+* `matrix` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br />This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br /> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, Y coordinates increase in the opposite direction), and Z coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such Z coordinates range from -1 to 1.
 * `viewport` (Type: Array.&lt;number&gt;)<br />A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: boolean) (optional)<br />If false, null, undefined, or omitted, reverses the sign of the Y coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
 
@@ -3642,7 +3642,7 @@ where three of its sides having a vertex in common are
 defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
 <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
-of a 3x3 matrix whose rows or columns are the vectors A, B, and C, in that order.
+of a 3&times;3 matrix whose rows or columns are the vectors A, B, and C, in that order.
 <li>Assume A is perpendicular to vectors B and C. If the triple product is positive,
 then A points in the same direction as the cross product of
 B and C -- which will be perpendicular -- and the angle from B to C, when rotated

@@ -161,7 +161,7 @@
 
 <p>The <strong>InShape</strong> implementation is given an axis-aligned bounding box as input. The goal is to correctly classify the box just by evaluating the shape <em>pointwise</em>.</p>
 
-<p>Under certain conditions, this is trivial to do. For example, if the shape is enclosed by a 1x1 rectangle, the point (0, 0) is on the shape, and every horizontal or vertical line crosses the shape (inside the rectangle) at most once (think of one quarter of a circle centered at the origin), then the box can be correctly classified just by checking the point’s corners. The algorithm (Algorithm 1) is thus to return—</p>
+<p>Under certain conditions, this is trivial to do. For example, if the shape is enclosed by a 1&times;1 rectangle, the point (0, 0) is on the shape, and every horizontal or vertical line crosses the shape (inside the rectangle) at most once (think of one quarter of a circle centered at the origin), then the box can be correctly classified just by checking the point’s corners. The algorithm (Algorithm 1) is thus to return—</p>
 
 <ul>
   <li><em>YES</em> if all the box’s vertices are on or inside the shape;</li>

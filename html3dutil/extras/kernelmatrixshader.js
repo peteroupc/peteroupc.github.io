@@ -14,7 +14,7 @@
 /**
  * GLSL shader code for a family of image processing filters, such as blurring, sharpening,
  * edge detection, and embossing, that process each pixel and its neighbors. This filter takes
- * a 3x3 matrix called a _convolution kernel_, which gives the contribution of each pixel's color to the final color. All the numbers in the matrix usually add up to 1. An example of a convolution kernel:<pre>[ 0, 1/8, 0,
+ * a 3&times;3 matrix called a _convolution kernel_, which gives the contribution of each pixel's color to the final color. All the numbers in the matrix usually add up to 1. An example of a convolution kernel:<pre>[ 0, 1/8, 0,
  * 1/8, 1/2, 1/8,
  * 0, 1/8, 0 ]</pre>
  * This matrix means that the destination pixel will have 1/2 of the original pixel's color, and 1/8 of the
@@ -23,7 +23,7 @@
  * ![**Edge detect filtered image**](filters8.png)
  * This shader program takes three uniforms: "sample", the source texture;
  * "textureSize", the width and height of the texture in pixels;
- * "matrix", the 3x3 convolution kernel.
+ * "matrix", the 3&times;3 convolution kernel.
  */
 export const kernelMatrixShader = {
   "vertexShader":["varying vec2 uvCoord;",
@@ -67,9 +67,9 @@ export const kernelMatrixShader = {
   }
 };
 /**
- * Creates a 3x3 (9-element) kernel matrix for using
+ * Creates a 3&times;3 (9-element) kernel matrix for using
  * as the "matrix" uniform of the kernel matrix shader.
- * @param {string} kind One of the following: "blur" for a 3x3 Gaussian blr
+ * @param {string} kind One of the following: "blur" for a 3&times;3 Gaussian blr
  * matrix, or "edge-detect" for an edge detection matrix.
  * @returns {Array<number>} The created matrix.
  * @function

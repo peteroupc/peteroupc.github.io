@@ -14,12 +14,12 @@
 
 import {MathUtil, toGLColor} from "../h3du_module";
 /**
- * Generates a 32x32 bitmap of a linear gradient in the horizontal direction. This function demonstrates generating a custom texture.
+ * Generates a 32&times;32 bitmap of a linear gradient in the horizontal direction. This function demonstrates generating a custom texture.
  * @param {Array<number>|number|string} color1 A [color vector or string]{@link toGLColor} identifying
  * the color at the left edge of the gradient.
  * @param {Array<number>|number|string} color2 A [color vector or string]{@link toGLColor} identifying
  * the color at the right edge of the gradient.
- * @returns {UInt8Array} An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+ * @returns {UInt8Array} An array with 32&times;32x4 bytes, arranged in 32 rows of 32 pixels
  * of 4 bytes each. For each pixel, the four bytes are color components
  * in the following order: red, green, blue, alpha.
  * @function
@@ -50,12 +50,12 @@ export function horizontalGradient(color1, color2) {
   return new Uint8Array(gradient);
 }
 /**
- * Generates a 32x32 bitmap of a radial gradient. This function demonstrates generating a custom texture.
+ * Generates a 32&times;32 bitmap of a radial gradient. This function demonstrates generating a custom texture.
  * @param {Array<number>|number|string} colorCenter A [color vector or string]{@link toGLColor} identifying
  * the color at the center of the gradient.
  * @param {Array<number>|number|string} colorEdges A [color vector or string]{@link toGLColor} identifying
  * the color at the edges of the gradient.
- * @returns {UInt8Array} An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+ * @returns {UInt8Array} An array with 32&times;32x4 bytes, arranged in 32 rows of 32 pixels
  * of 4 bytes each. For each pixel, the four bytes are color components
  * in the following order: red, green, blue, alpha.
  * @function

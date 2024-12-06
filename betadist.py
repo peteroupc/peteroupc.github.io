@@ -4885,13 +4885,13 @@ if __name__ == "__main__":
 
     def randomrealtest():
         print("started randomrealtest")
-        rutest(0&times;7F, 8, 2, 4)
-        rutest(0&times;80, 8, 2, 4)
+        rutest(0x7F, 8, 2, 4)
+        rutest(0x80, 8, 2, 4)
         rutest(0xFF, 8, 4, 8)
-        rutest(0&times;3F, 8, 1, 2)
-        rutest(0&times;40, 8, 1, 2)
-        rutest(0&times;5F, 8, 1, 3)
-        rutest(0&times;60, 8, 2, 3)
+        rutest(0x3F, 8, 1, 2)
+        rutest(0x40, 8, 1, 2)
+        rutest(0x5F, 8, 1, 3)
+        rutest(0x60, 8, 2, 3)
         ru = RealLn(Fraction(1752140, 4790796))
         ev = ru.ev(0)
         if ev != -1 and ev != -2:

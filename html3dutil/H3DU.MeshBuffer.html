@@ -113,7 +113,7 @@ to the given color.</li>
   <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br />Sets the vertex indices used by this mesh buffer.</li>
   <li><a href="#H3DU.MeshBuffer_setType">setType</a><br />Sets the type of graphics primitives stored in this mesh buffer.</li>
   <li><a href="#H3DU.MeshBuffer_transform">transform</a><br />Transforms the positions and normals of all the vertices currently
-in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>.</li>
+in this mesh, with the help of a <a href="tutorial-glmath.html">4&times;4 matrix</a>.</li>
   <li><a href="#H3DU.MeshBuffer.triangleFanIndices">triangleFanIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
   <li><a href="#H3DU.MeshBuffer.triangleStripIndices">triangleStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
   <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br />Gets the number of vertices in this mesh buffer, that
@@ -854,13 +854,13 @@ This object. (Type: MeshBuffer)
 ### H3DU.MeshBuffer#transform(matrix)
 
 Transforms the positions and normals of all the vertices currently
-in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
+in this mesh, with the help of a <a href="tutorial-glmath.html">4&times;4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
 or <code>NORMAL_0</code> will be affected by this method; values of
 other attributes will be unaffected.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number&gt;)<br />A 4x4 matrix described in the MathUtil.mat4projectVec3 method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see MathUtil.mat4inverseTranspose3). (Normals need to be transformed specially because they describe directions, not points.)
+* `matrix` (Type: Array.&lt;number&gt;)<br />A 4&times;4 matrix described in the MathUtil.mat4projectVec3 method. The normals will be transformed using the 3&times;3 inverse transpose of this matrix (see MathUtil.mat4inverseTranspose3). (Normals need to be transformed specially because they describe directions, not points.)
 
 #### Return Value
 
