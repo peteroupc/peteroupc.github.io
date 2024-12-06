@@ -350,13 +350,13 @@ class Fixed:
         return Fixed.v(ret)
 
     # High-resolution approximation of pi/2
-    HalfPiHighRes = 0x1921FB54442D18469898CC51701B83
+    HalfPiHighRes = 0&times;1921FB54442D18469898CC51701B83
     # High-resolution approximation of pi*2
-    TwoTimesPiHighRes = 0x6487ED5110B4611A62633145C06E0E
+    TwoTimesPiHighRes = 0&times;6487ED5110B4611A62633145C06E0E
     # Pi*3/2
-    PiAndHalfHighRes = 0x4B65F1FCCC8748D3C9CA64F450528A
+    PiAndHalfHighRes = 0&times;4B65F1FCCC8748D3C9CA64F450528A
     # Pi
-    PiHighRes = 0x3243F6A8885A308D313198A2E03707
+    PiHighRes = 0&times;3243F6A8885A308D313198A2E03707
     # Number of fractional bits in halfPiHighRes
     HighResFrac = 116
 
