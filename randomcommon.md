@@ -28,7 +28,7 @@ Not all topics are covered above.  Notably, the analysis ignores questions that 
 
 Another notable trend is that these topics were asked for programming languages where convenient APIs for these tasks were missing. This is why I recommend that [**new programming language APIs**](https://peteroupc.github.io/random.html#Implementing_New_RNG_APIs) _provide functionality covering the topics above in their standard libraries_, to ease the burden of programmers using that language.
 
-The following sections will detail the topics given above, with suggestions on how to solve them.  Many of the links point to sections of my article "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)".
+The following sections will detail the topics given earlier, with suggestions on how to solve them.  Many of the links point to sections of my article "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)".
 
 The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 

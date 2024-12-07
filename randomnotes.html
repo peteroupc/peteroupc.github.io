@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2023/06/15"><meta name="citation_online_date" content="2023/06/15"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomnotes.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomnotes.html"><meta name="citation_date" content="2024/12/07"><meta name="citation_online_date" content="2024/12/07"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomnotes.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -375,7 +375,7 @@ END METHOD
   <li><code>s</code>, an <code>n</code>×<code>n</code> <em>subgenerator matrix</em>, a list of <code>n</code> lists of <code>n</code> values each.  The values in each list (each normal state of the Markov chain) must sum to 0 or less, and for each state <code>i</code>, <code>s[i][i]</code> is 0 minus the rate of that state’s exponential random variate, and each entry <code>s[i][j]</code> with <code>i!=j</code> is the relative probability for moving to state <code>j</code>.</li>
 </ul>
 
-<p>The method <code>PhaseType</code>, given below, samples from a phase-type distribution given the two parameters above.  (The pseudocode assumes each number in <code>alpha</code> and <code>s</code> is a rational number, because it uses <code>NormalizeRatios</code>.)</p>
+<p>The method <code>PhaseType</code>, given later, samples from a phase-type distribution given the two parameters above.  (The pseudocode assumes each number in <code>alpha</code> and <code>s</code> is a rational number, because it uses <code>NormalizeRatios</code>.)</p>
 
 <p>```
 METHOD GenToTrans(s)
@@ -421,7 +421,7 @@ END METHOD
 
 <ul>
   <li>A list, <code>mu</code> (μ), which indicates the means to add to the random vector’s components. <code>mu</code> can be <code>nothing</code>, in which case each component will have a mean of zero.</li>
-  <li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (Σ), a symmetric positive definite N×N matrix, where N is the number of components of the random vector.  (An N×N matrix is <em>positive definite</em> if its determinant [overall scale] is greater than 0 and if either the matrix is 1×1 or a smaller matrix formed by removing the last row and column is positive definite.)</li>
+  <li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (Σ), a symmetric positive definite N×N matrix, where N is the number of components of the random vector.  (An N×N matrix is <em>positive definite</em> if its determinant [overall scale] is greater than 0 and if either the matrix is 1 × 1 or a smaller matrix formed by removing the last row and column is positive definite.)</li>
 </ul>
 
 <p> </p>

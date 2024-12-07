@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/12/05"><meta name="citation_online_date" content="2024/12/05"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/12/07"><meta name="citation_online_date" content="2024/12/07"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -783,7 +783,7 @@ END METHOD
 
 <p> </p>
 
-<pre>// Applies a 3&amp;times;3 matrix transformation
+<pre>// Applies a 3 &amp;times; 3 matrix transformation
 METHOD Apply3x3Matrix(xyz, xyzmatrix)
     r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
     g=xyz[0]*xyzmatrix[3]+xyz[1]*xyzmatrix[4]+xyz[2]*xyzmatrix[5]
@@ -832,7 +832,7 @@ END METHOD
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>In the pseudocode just given, 3×3 matrices are used to transform a linear RGB color to or from XYZ form (see <a href="#Conversion_Matrices_Between_XYZ_and_RGB"><strong>“Conversion Matrices Between XYZ and RGB”</strong></a>).</li>
+    <li>In the pseudocode just given, 3 × 3 matrices are used to transform a linear RGB color to or from XYZ form (see <a href="#Conversion_Matrices_Between_XYZ_and_RGB"><strong>“Conversion Matrices Between XYZ and RGB”</strong></a>).</li>
     <li><code>XYZTosRGB</code> and <code>XYZTosRGBD50</code> can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, then the sRGB color can be converted to an in-range one. There are many such <em>gamut mapping</em> conversions; for example, one such conversion involves clamping each component of the sRGB color using the idiom <code>min(max(compo,0), 1)</code>, where <code>compo</code> is that component.</li>
     <li>
       <p>XYZ colors that have undergone <strong>black point compensation</strong> (see also ISO 18619) can be expressed as <code>Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))</code>, where—</p>
@@ -865,7 +865,7 @@ END METHOD
 
 <h4 id="conversion-matrices-between-xyz-and-rgb">Conversion Matrices Between XYZ and RGB</h4>
 
-<p>The following methods calculate a 3×3 matrix to convert from a linear RGB color to XYZ form (<code>RGBToXYZMatrix</code>) and back (<code>XYZToRGBMatrix</code>), given the RGB color space’s red, green, blue, and white points. Each point is expressed as a relative XYZ color with arbitrary X and Z components and a Y component of 1.  For example, <code>xr</code> and <code>zr</code> are the red point’s X and Z components, respectively.  See <a href="http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html"><strong>brucelindbloom.com</strong></a> for more information.</p>
+<p>The following methods calculate a 3 × 3 matrix to convert from a linear RGB color to XYZ form (<code>RGBToXYZMatrix</code>) and back (<code>XYZToRGBMatrix</code>), given the RGB color space’s red, green, blue, and white points. Each point is expressed as a relative XYZ color with arbitrary X and Z components and a Y component of 1.  For example, <code>xr</code> and <code>zr</code> are the red point’s X and Z components, respectively.  See <a href="http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html"><strong>brucelindbloom.com</strong></a> for more information.</p>
 
 <pre>METHOD RGBToXYZMatrix(xr,zr,xg,zg,xb,zb,xw,zw)
  s1=(xb*zg - xb*zw - xg*zb + xg*zw + xw*zb - xw*zg)
@@ -1277,7 +1277,7 @@ END METHOD
 <p>The following techniques generate new colors that are related to existing colors.</p>
 
 <ul>
-  <li><strong>Color harmonies</strong><sup id="fnref:28" role="doc-noteref"><a href="#fn:28" class="footnote" rel="footnote">28</a></sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup id="fnref:11:3" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup> to generate the hues for the colors that make up that harmony:
+  <li><strong>Color harmonies</strong><sup id="fnref:28" role="doc-noteref"><a href="#fn:28" class="footnote" rel="footnote">28</a></sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given later, the following numbers are added to a hue angle<sup id="fnref:11:3" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup> to generate the hues for the colors that make up that harmony:
     <ul>
       <li><strong>Analogous</strong>: 0, Y, -Y, where Y is 2π/3 or less. In general, <em>analogous colors</em> are two, four, or a higher even number of colors spaced at equal hue intervals from a central color.</li>
       <li><strong>Complementary</strong>: 0, π.  This is the base hue with its opposite hue.</li>
@@ -1526,7 +1526,7 @@ END METHOD
 
 <h3 id="color-matrices">Color Matrices</h3>
 
-<p>A <em>color matrix</em> is a 9-item (3×3) list for transforming a three-component color. The following are examples of color matrices:</p>
+<p>A <em>color matrix</em> is a 9-item (3 × 3) list for transforming a three-component color. The following are examples of color matrices:</p>
 
 <ul>
   <li><strong>Sepia.</strong> Sepia matrices can have the form <code>[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section “<a href="#Luminance_Factor_Grayscale"><strong>Luminance Factor (Grayscale)</strong></a>”, and <code>sw</code> is the RGB color for “sepia white” (an arbitrary choice).  An example for linear sRGB is: <code>[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]</code>.</li>

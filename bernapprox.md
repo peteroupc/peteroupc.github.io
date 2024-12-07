@@ -93,7 +93,7 @@ The goal is now to find a polynomial of degree $n$, written in Bernstein form, s
 1. the polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. each of the polynomial's Bernstein coefficients is not less than 0 or greater than 1 (assuming none of $f$'s values is less than 0 or greater than 1).
 
-For some of the polynomials given above, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound's equation for $n$ and round the solution up to the nearest integer.  See the table below, where:
+For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound's equation for $n$ and round the solution up to the nearest integer.  See the table below, where:
 
 - $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 - $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
@@ -160,7 +160,7 @@ Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\la
 4. $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and
 5. $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
 
-Then the $n$-th _Taylor polynomial_ centered at 0, given below, is within $\epsilon$ of $f$:
+Then the $n$-th _Taylor polynomial_ centered at 0, given later, is within $\epsilon$ of $f$:
 
 $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$
 
@@ -689,8 +689,8 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 
 -------------
 
-1. Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.
-2. Compute the values $c_k$ as given above, which relate to $f$'s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.
+1. Compute the required degree $n$ as given earlier, with error tolerance $\epsilon/2$.
+2. Compute the values $c_k$ as given earlier, which relate to $f$'s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.
 3. Compute the (_n_+1)&times;(_n_+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^51].
 4. Multiply the matrix by the transposed vector of values $(c_0, ..., c_n)$ to get the polynomial's Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)
 5. (Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.

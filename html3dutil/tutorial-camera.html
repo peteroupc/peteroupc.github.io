@@ -106,7 +106,7 @@ and others would be.</p>
 
 <p><strong><a href="MathUtil.html#MathUtil.mat4perspective"><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
 
-<p>This method returns a 4&times;4 matrix that adjusts the coordinate system for a perspective
+<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
 and sets the scene’s projection matrix accordingly.</p>
 
@@ -118,7 +118,7 @@ and sets the scene’s projection matrix accordingly.</p>
 
 <p><strong><a href="http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum">**<code>MathUtil.mat4frustum(left, right, bottom, top, near, far)</code>**</a></strong></p>
 
-<p>This method returns a 4&times;4 matrix that adjusts the coordinate system for a perspective
+<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for a perspective
 projection based on the location of the six clipping planes that
 bound the view volume. Their positions are chosen so that the result is a perspective projection.</p>
 
@@ -141,7 +141,7 @@ objects with the same size not varying in size with their distance from the “c
 
 <p><strong><code>MathUtil.mat4ortho(left, right, bottom, top, near, far)</code></strong></p>
 
-<p>This method returns a 4&times;4 matrix that adjusts the coordinate system for an orthographic projection.</p>
+<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for an orthographic projection.</p>
 
 <ul>
   <li><code>left</code> - Leftmost coordinate of the 3D view.</li>
@@ -154,7 +154,7 @@ can be negative.</li>
 
 <p><strong><code>MathUtil.mat4ortho2d(left, right, bottom, top)</code></strong></p>
 
-<p>This method returns a 4&times;4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.</p>
+<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.</p>
 
 <ul>
   <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
@@ -162,7 +162,7 @@ can be negative.</li>
 
 <p><strong><code>MathUtil.mat4orthoAspect(left, right, bottom, top, near, far, aspect)</code></strong></p>
 
-<p>This method returns a 4&times;4 matrix that adjusts the coordinate system for an orthographic projection,
+<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for an orthographic projection,
 such that the resulting view isn’t stretched
 or squished in case the view volume’s aspect ratio and the scene’s aspect ratio are different.</p>
 
@@ -181,10 +181,10 @@ A view matrix essentially rotates the “camera” and moves it to a given posit
 
 <ul>
   <li>The “camera” is rotated to point at a certain object or location on the scene. This is represented by
-the <code>lookingAt</code> parameter in the <code>mat4lookat()</code> method, below.</li>
+the <code>lookingAt</code> parameter in the <code>mat4lookat()</code> method, later.</li>
   <li>The “camera” is placed somewhere on the scene. This is represented by
 the <code>eye</code> parameter in the <code>mat4lookat()</code> method.  It also represents the “eye position” in the perspective
-projection, above.</li>
+projection, earlier.</li>
   <li>The “camera” rolls itself, possibly turning it sideways or upside down. This is guided by
 the <code>up</code> parameter in the <code>mat4lookat()</code> method. Turning the “camera” upside down, for example, will swap
 the placement of the top and bottom clipping planes, thus inverting the view of the scene.</li>

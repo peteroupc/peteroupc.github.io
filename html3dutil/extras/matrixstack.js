@@ -13,7 +13,7 @@
 
 /**
  * This class implements a stack
- * of 4&times;4 transformation matrices.<p>
+ * of 4 &times; 4 transformation matrices.<p>
  * When the constructor is called, it will create a stack whose
  * only element is the identity matrix.
  * @constructor

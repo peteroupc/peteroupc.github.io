@@ -1334,7 +1334,7 @@ For fixed-point number formats representing multiples of 1/`n`, this method is t
 
 * `RNDRANGEMinMaxExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb - 1)`, or an error if `fpa >= fpb or a == fpb - 1`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 2) + 1)` or `(RNDINTEXC(n - 1) + 1)`.
 
-> **Note:** Additional methods to sample fixed-point numbers in a different interval are given below, but are not used in the rest of this article.
+> **Note:** Additional methods to sample fixed-point numbers in a different interval are given later, but are not used in the rest of this article.
 >
 > * `RNDRANGE(a, b)`, interval [`a`, `b`]: `RNDINTRANGE(fpa, fpb)`.  But if `a` is 0 and `b` is 1: `RNDINT(n)`.
 > * `RNDRANGEMinExc(a, b)`, interval (`a`, `b`]: `RNDINTRANGE(fpa + 1, fpb)`, or an error if `fpa >= fpb`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 1) + 1)` or `(RNDINTEXC(n) + 1)`.
@@ -1431,7 +1431,7 @@ See also (Downey 2007\)[^63] and the [**Rademacher Floating-Point Library**](htt
 
 > **Notes:**
 >
-> 1. Additional methods to sample "uniform" floating-point numbers in a different interval are given below, but are not used in the rest of this article.
+> 1. Additional methods to sample "uniform" floating-point numbers in a different interval are given later, but are not used in the rest of this article.
 >
 >     - `RNDRANGE(mn, mx)`, interval \[`mn`, `mx`\]: Generate `RNDRANGEHelper(mn, mx)`.
 >     - `RNDRANGEMaxExc(mn, mx)`, interval \[`mx`, `mx`\): If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mx` is generated this way.
@@ -1678,7 +1678,7 @@ Some applications need to convert a pregenerated number between 0 and 1 (usually
 In addition, the following methods approximate the quantile:
 
 - Distribution is **discrete, with known PDF-like function** (and the distribution takes on integers): If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `wsum = 0; for i in a..b: wsum=wsum+PDF(i); for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * wsum)`. [^81] \(In this case, the method is exact in theory for sampling the original distribution restricted to \[a, b\].)  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- Distribution is **absolutely continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. This method does not currently allow controlling for the approximation error in sampling the distribution. See also `DensityInversionSampler` and `numbers_from_dist_inversion` (Derflinger et al. 2010\)[^82], (Devroye and Gravel 2020\)[^12] in the Python sample code [^83].
+- Distribution is **absolutely continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, later, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. This method does not currently allow controlling for the approximation error in sampling the distribution. See also `DensityInversionSampler` and `numbers_from_dist_inversion` (Derflinger et al. 2010\)[^82], (Devroye and Gravel 2020\)[^12] in the Python sample code [^83].
 - Distribution is **absolutely continuous, with known CDF**: If the interval \[a, b\] covers all or almost all the distribution, and the CDF is continuous and strictly increasing on that interval, then let `D` be the original distribution restricted to \[a, b\].  Then it's possible to sample from a distribution that is close to `D` by a Wasserstein distance of no more than `eps` (Devroye and Gravel 2020, especially Theorem 8\)[^12] by the following method [^84]\:
 
     - In a setup phase: Create an empty list.  Then, at values of `x` in \[a, b\] spaced evenly with a step size of `eps` or less, starting at `a` and ending at `b`, add the sublist `[x, (CDF(x)-a)/(b-a)]` to the list.  The first item in the sublist is the _sampled point_ `x`, and the second item is the _adjusted CDF value_.
@@ -1782,7 +1782,7 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
       end
       // NOTE: If values and weights are rational
       // numbers, use `areas=NormalizeRatios(areas)` instead
-      // of finding `areas` as given below.
+      // of finding `areas` as given later.
       ratios=[]
       for w in areas: AddItem(ratios, FPRatio(w))
       areas=NormalizeRatios(ratios)
@@ -2359,7 +2359,7 @@ That is, the methods assume we have a **"source of (uniform) random numbers"**. 
 
 However, this is an ideal assumption which is hard if not impossible to achieve in practice.
 
-Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal "source of random numbers" mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other generator of random-behaving numbers) even if they don't in theory.
+Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal "source of random numbers" mentioned earlier. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other generator of random-behaving numbers) even if they don't in theory.
 
 The "source of random numbers" can be simulated by a wide range of devices and programs, including PRNGs, so-called &quot;true random number generators&quot;, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  An application ought to choose devices or programs that simulate the "source of random numbers" well enough for its purposes, including in terms of their statistical quality,  "unguessability", or both. However, it is outside this document's scope to give further advice on this choice.
 

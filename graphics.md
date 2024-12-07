@@ -34,7 +34,7 @@ Limit 2D graphics to the following:
 
 1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth tile-based 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
-3. Each tile is 8&times;8 pixels and uses the colors of one of the sixteen palettes just described.
+3. Each tile is 8 &times; 8 pixels and uses the colors of one of the sixteen palettes just described.
 4. The 2D and 3D layers may contain transparent pixels.
 5. One of the 2D layers can undergo a 2D affine transformation.
 6. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be displayed at a time. Each sprite may be tile-based or bitmap-based and must have a width and height of no more than 64 pixels each.  Sprites may contain transparent parts.
@@ -42,11 +42,11 @@ Limit 2D graphics to the following:
 General:
 
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
-- 256&times;192 screen resolution (256 pixels wide by 192 pixels high) with up to 60 frames per second, or 256&times;384 screen resolution with up to 30 frames per second.
+- 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) with up to 60 frames per second, or 256 &times; 384 screen resolution with up to 30 frames per second.
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
 - Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
 
-A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640&times;480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640&times;480) / (256&times;192).  Other resolutions used in classic games include 320&times;200, 320&times;240, 640&times;350, and 512&times;384; another choice is 160&times;120.)
+A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640 &times; 480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640 &times; 480) / (256 &times; 192).  Other resolutions used in classic games include 320 &times; 200, 320 &times; 240, 640 &times; 350, and 512 &times; 384; another choice is 160 &times; 120.)
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
@@ -74,7 +74,7 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
 
 ## Classic Wallpaper Challenge
 
-See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920&times;1080 or larger).
+See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
 
 <a id=License></a>
 

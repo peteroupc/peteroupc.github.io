@@ -388,7 +388,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * @param {string} str The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized
  * by this method.
  * @param {Object} params An object whose keys have
- * the possibilities given below, and whose values are those
+ * the possibilities given later, and whose values are those
  * allowed for each key.<ul>
  * <li><code>x</code> - X coordinate of the top left corner of the text.
  * If null, undefined, or omitted, uses 0.
@@ -1015,7 +1015,7 @@ H3DU.TextureAtlas = function() {
  * sprite will be in pixels; therefore, for best results, the coordinate system
  * should be scaled so that one unit equals one pixel.
  * @param {Array<Object>} sprites An array of objects whose keys have
- * the possibilities given below, and whose values are those
+ * the possibilities given later, and whose values are those
  * allowed for each key.<ul>
  * <li><code>name</code> - Name of the sprite, as listed in this texture
  * atlas.

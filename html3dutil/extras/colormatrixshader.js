@@ -12,9 +12,9 @@
 */
 
 /**
- * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4&times;4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
+ * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4 &times; 4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
  * is the texture to which the filter is to be applied, "t", a value from 0 to 1 indicating how strongly to
- * apply the color matrix, and "matrix", which is the 4&times;4 matrix just described.
+ * apply the color matrix, and "matrix", which is the 4 &times; 4 matrix just described.
  */
 export const colorMatrixShader = {
   "vertexShader":["varying vec2 uvCoord;",
@@ -61,7 +61,7 @@ export const colorMatrixShader = {
  * image to achieve a sepia coloring.
  * <li>"invert" - Filter that inverts the colors of the image so the effect looks like a film negative.
  * </ul>
- * @returns {Array<number>} 4&times;4 color matrix.
+ * @returns {Array<number>} 4 &times; 4 color matrix.
  * @function
  */
 export const getColorMatrix = function(kind) {

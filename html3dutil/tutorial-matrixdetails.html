@@ -16,7 +16,7 @@
 transformation from one coordinate system to another. Transformations
 that matrices can describe include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with “mat”.
-A 3&times;3 or 4&times;4 matrix has 9 or 16 elements, respectively.</p>
+A 3 &times; 3 or 4 &times; 4 matrix has 9 or 16 elements, respectively.</p>
 
 <p>This section contains detailed information on matrices.</p>
 
@@ -30,7 +30,7 @@ A 3&times;3 or 4&times;4 matrix has 9 or 16 elements, respectively.</p>
   <li><a href="#Arrangement"><strong>Arrangement</strong></a>
     <ul>
       <li><a href="#A_Matrix_Transforms_Between_Coordinate_Systems"><strong>A Matrix Transforms Between Coordinate Systems</strong></a></li>
-      <li><a href="#Why_a_4x4_Matrix"><strong>Why a 4&times;4 Matrix?</strong></a></li>
+      <li><a href="#Why_a_4x4_Matrix"><strong>Why a 4 &times; 4 Matrix?</strong></a></li>
     </ul>
   </li>
   <li><a href="#Transforming_Points"><strong>Transforming Points</strong></a>
@@ -92,7 +92,7 @@ element of the matrix is placed in columns as opposed to rows, as in the followi
 <p>The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to <code>MathUtil</code>’s matrix methods.</p>
 
-<p>For 3&times;3 matrices, the elements are arranged in the following order:</p>
+<p>For 3 &times; 3 matrices, the elements are arranged in the following order:</p>
 
 <math>
 <mfenced open="[" close="]">
@@ -124,7 +124,7 @@ into the matrix arrays passed to <code>MathUtil</code>’s matrix methods.</p>
 system.  These are four 3-element vectors that describe how the three axes and the center map
 to the new coordinate system in relation to the old coordinate system.</p>
 
-<p>The following depiction of a 4&times;4 matrix illustrates the meaning of each of its elements. To keep things
+<p>The following depiction of a 4 &times; 4 matrix illustrates the meaning of each of its elements. To keep things
 simple, this matrix’s transformation is one that keeps straight lines straight and parallel lines parallel.</p>
 
 <math>
@@ -201,19 +201,19 @@ _basis vectors_ of the coordinate system.
 
 <a id="Why_a_4x4_Matrix"></a>
 
-### Why a 4&times;4 Matrix?
+### Why a 4 &times; 4 Matrix?
 A matrix can describe _linear transformations_ from one vector in space
 to another.  These transformations, which include [**scaling**](#Scaling),
 [**rotation**](#Rotation), and shearing, can change where a vector points _at_,
-but not where it points _from_.  It's enough to use a 3&times;3 matrix to describe
+but not where it points _from_.  It's enough to use a 3 &times; 3 matrix to describe
 linear transformations in 3D space.
 
 But certain other transformations, such as [**translation**](#Translation) and
 [**perspective**](#Projective_Transformations), are common in 3D computer graphics.
-To describe translation and perspective in 3D, the 3&times;3 matrix must be
-augmented by an additional row and column, turning it into a 4&times;4 matrix.
+To describe translation and perspective in 3D, the 3 &times; 3 matrix must be
+augmented by an additional row and column, turning it into a 4 &times; 4 matrix.
 
-A 4&times;4 matrix can describe linear transformations in 4D space and
+A 4 &times; 4 matrix can describe linear transformations in 4D space and
 transform 4-element vectors.  A 4-element vector has four components:
 X, Y, Z, and W. If a 4-element vector represents a 3D point, these
 components are the point's _homogeneous coordinates_ (unless the
@@ -222,8 +222,8 @@ X, Y, and Z by W.  This is usually only required, however, if the
 matrix describes a perspective projection (see
 [**"Projective Transformations"**](#Projective_Transformations)).
 
-A similar situation applies in 2D between 2&times;2 and 3&times;3 matrices as it does
-in 3D between 3&times;3 and 4&times;4 matrices.
+A similar situation applies in 2D between 2 &times; 2 and 3 &times; 3 matrices as it does
+in 3D between 3 &times; 3 and 4 &times; 4 matrices.
 
 <a id="Transforming_Points"></a>
 
@@ -237,18 +237,18 @@ position:
 * **a&prime;**<sub>_z_</sub> = matrix[2] &#x22c5; **a**<sub>_x_</sub> + matrix[6] &#x22c5; **a**<sub>_y_</sub> + matrix[10] &#x22c5; **a**<sub>_z_</sub> + matrix[14] &#x22c5; **a**<sub>_w_</sub>
 * **a&prime;**<sub>_w_</sub> = matrix[3] &#x22c5; **a**<sub>_x_</sub> + matrix[7] &#x22c5; **a**<sub>_y_</sub> + matrix[11] &#x22c5; **a**<sub>_z_</sub> + matrix[15] &#x22c5; **a**<sub>_w_</sub>
 
-For more on why **a&prime;**<sub>_w_</sub> appears here, see [**"Why a 4&times;4 Matrix?"**](#Why_a_4x4_Matrix).  In each formula that follows,  **a**<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
+For more on why **a&prime;**<sub>_w_</sub> appears here, see [**"Why a 4 &times; 4 Matrix?"**](#Why_a_4x4_Matrix).  In each formula that follows,  **a**<sub>_w_</sub> is assumed to be 1 (indicating a conventional 3D point).
 
 The following sections describe different kinds of matrix transformations in more detail.
 
 Related functions:
 
 * <a href="MathUtil.html#MathUtil.mat4transform">MathUtil.mat4transform()</a> -
- Transforms a 4-element vector with a 4&times;4 matrix
+ Transforms a 4-element vector with a 4 &times; 4 matrix
 * <a href="MathUtil.html#MathUtil.mat3transform">MathUtil.mat3transform()</a> -
- Transforms a 3-element vector with a 3&times;3 matrix
+ Transforms a 3-element vector with a 3 &times; 3 matrix
 * <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> -
- Does a perspective-correct transformation of a 3D point with a 4&times;4 matrix
+ Does a perspective-correct transformation of a 3D point with a 4 &times; 4 matrix
 
 <a id="Scaling"></a>
 
@@ -320,9 +320,9 @@ Related functions:
 * <a href="MathUtil.html#MathUtil.mat4scaleInPlace">MathUtil.mat4scaleInPlace()</a> -
  Multiplies a matrix in place by a scaling.
 * <a href="MathUtil.html#MathUtil.mat4identity">MathUtil.mat4identity()</a> -
- Returns a 4&times;4 identity matrix
+ Returns a 4 &times; 4 identity matrix
 * <a href="MathUtil.html#MathUtil.mat3identity">MathUtil.mat3identity()</a> -
- Returns a 3&times;3 identity matrix
+ Returns a 3 &times; 3 identity matrix
 
 <a id="Translation"></a>
 
@@ -539,17 +539,17 @@ To get an insight of how matrix multiplication works, treat the second matrix as
 of column vectors (with the same number of rows as the number of columns in the
 first matrix).  Multiplying the two matrices transforms these vectors to new ones in the
 same way as if the column vectors were transformed individually.  (This also explains why there can
-be one or more column vectors in the second matrix and not just four in the case of a 4&times;4 matrix,
-and also why transforming a 4-element column vector is the same as multiplying a 4&times;4 matrix by a
+be one or more column vectors in the second matrix and not just four in the case of a 4 &times; 4 matrix,
+and also why transforming a 4-element column vector is the same as multiplying a 4 &times; 4 matrix by a
 matrix with one column and four rows.*)
 
 This insight reveals a practical use of matrix multiplication: transforming four 4-element
-vectors at once using a single matrix operation involving two 4&times;4 matrices.  After the
+vectors at once using a single matrix operation involving two 4 &times; 4 matrices.  After the
 matrix multiplication, each of the transformed vectors will be contained in one of the four columns
 of the output matrix.
 
 The methods `mat4multiply`, `mat4scale`, `mat4scaleInPlace`, `mat4translate`, and
-mat4rotate involve multiplying 4&times;4 matrices.
+mat4rotate involve multiplying 4 &times; 4 matrices.
 
 Related functions:
 
@@ -570,9 +570,9 @@ some transformations in the `MathUtil` class.
 
 Transformations that don't necessarily preserve parallelism of lines are called _projective transformations_.
 An NxN matrix can describe certain projective transformations if it has one more row and one more column
-than the number of dimensions.  For example, a 4&times;4 matrix can describe 3D projective transformations
+than the number of dimensions.  For example, a 4 &times; 4 matrix can describe 3D projective transformations
 in the form of linear transformations on homogeneous coordinates (see
-[**"Why a 4&times;4 Matrix?"**](#Why_a_4x4_Matrix)).  For a 3D projective transformation, the last row
+[**"Why a 4 &times; 4 Matrix?"**](#Why_a_4x4_Matrix)).  For a 3D projective transformation, the last row
 in the matrix is not necessarily (0, 0, 0, 1).
 
 One example of a projective transformation is found in a _perspective projection_ matrix,
@@ -605,7 +605,7 @@ To invert a **scaling**, use 1 divided by each of the scaling elements (given ab
 and generate a new scaling matrix with those elements.
 For example, to invert the scaling (2, 3, 4), use the scaling (1/2, 1/3, 1/4).
 
-To invert a **rotation** for a 4&times;4 matrix, swap the 2nd and 5th elements of the matrix,
+To invert a **rotation** for a 4 &times; 4 matrix, swap the 2nd and 5th elements of the matrix,
 the 3rd and 9th elements, and the 7th and 10th elements of the matrix (zero-based
 elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the angle of the
 rotation to reset an object to its previous orientation.  In general, to invert an NxN
@@ -615,7 +615,7 @@ rotation matrix, _transpose_ that matrix (so that its rows become its columns an
 
 #### Inverting a General NxN Matrix
 
-Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4&times;4 or 3&times;3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.
+Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4 &times; 4 or 3 &times; 3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.
 
 To describe how inverting a matrix works, we will need to define some terms:
 
@@ -627,7 +627,7 @@ To describe how inverting a matrix works, we will need to define some terms:
   2. Label the minors (A, B, C, D, ...), in that order.
   3. The matrix's determinant is (A - B + C - D + ...).
 
-  A 1&times;1 matrix's determinant is simply the value of its only cell.
+  A 1 &times; 1 matrix's determinant is simply the value of its only cell.
 
 To invert an NxN matrix:
 

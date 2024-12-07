@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/08/22"><meta name="citation_online_date" content="2024/08/22"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/12/07"><meta name="citation_online_date" content="2024/12/07"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -157,7 +157,7 @@
   <li>each of the polynomial’s Bernstein coefficients is not less than 0 or greater than 1 (assuming none of $f$’s values is less than 0 or greater than 1).</li>
 </ol>
 
-<p>For some of the polynomials given above, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound’s equation for $n$ and round the solution up to the nearest integer.  See the table below, where:</p>
+<p>For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound’s equation for $n$ and round the solution up to the nearest integer.  See the table below, where:</p>
 
 <ul>
   <li>$M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</li>
@@ -329,7 +329,7 @@
   <li>$f(0)$ is known as well as $f^{(1)}(0), …, f^{(n)}(0)$.</li>
 </ol>
 
-<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given below, is within $\epsilon$ of $f$:</p>
+<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given later, is within $\epsilon$ of $f$:</p>
 
 \[P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,\]
 
@@ -879,8 +879,8 @@
 <hr />
 
 <ol>
-  <li>Compute the required degree $n$ as given above, with error tolerance $\epsilon/2$.</li>
-  <li>Compute the values $c_k$ as given above, which relate to $f$’s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, …, c_n$.</li>
+  <li>Compute the required degree $n$ as given earlier, with error tolerance $\epsilon/2$.</li>
+  <li>Compute the values $c_k$ as given earlier, which relate to $f$’s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, …, c_n$.</li>
   <li>Compute the (<em>n</em>+1)×(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)<sup id="fnref:51" role="doc-noteref"><a href="#fn:51" class="footnote" rel="footnote">51</a></sup>.</li>
   <li>Multiply the matrix by the transposed vector of values $(c_0, …, c_n)$ to get the polynomial’s Bernstein coefficients $b_0, …, b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
   <li>(Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>

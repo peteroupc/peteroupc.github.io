@@ -665,7 +665,7 @@ Both methods are approximate conversions because the factors in the pseudocode a
 
 &nbsp;
 
-    // Applies a 3&times;3 matrix transformation
+    // Applies a 3 &times; 3 matrix transformation
     METHOD Apply3x3Matrix(xyz, xyzmatrix)
         r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
         g=xyz[0]*xyzmatrix[3]+xyz[1]*xyzmatrix[4]+xyz[2]*xyzmatrix[5]
@@ -711,7 +711,7 @@ Both methods are approximate conversions because the factors in the pseudocode a
 
 > **Notes:**
 >
-> 1. In the pseudocode just given, 3&times;3 matrices are used to transform a linear RGB color to or from XYZ form (see [**"Conversion Matrices Between XYZ and RGB"**](#Conversion_Matrices_Between_XYZ_and_RGB)).
+> 1. In the pseudocode just given, 3 &times; 3 matrices are used to transform a linear RGB color to or from XYZ form (see [**"Conversion Matrices Between XYZ and RGB"**](#Conversion_Matrices_Between_XYZ_and_RGB)).
 > 2. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, then the sRGB color can be converted to an in-range one. There are many such _gamut mapping_ conversions; for example, one such conversion involves clamping each component of the sRGB color using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
 > 3. XYZ colors that have undergone **black point compensation** (see also ISO 18619) can be expressed as `Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))`, where&mdash;
 >
@@ -736,7 +736,7 @@ The corresponding conversions to XYZ are then the inverse of the conversions jus
 
 #### Conversion Matrices Between XYZ and RGB
 
-The following methods calculate a 3&times;3 matrix to convert from a linear RGB color to XYZ form (`RGBToXYZMatrix`) and back (`XYZToRGBMatrix`), given the RGB color space's red, green, blue, and white points. Each point is expressed as a relative XYZ color with arbitrary X and Z components and a Y component of 1.  For example, `xr` and `zr` are the red point's X and Z components, respectively.  See [**brucelindbloom.com**](http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html) for more information.
+The following methods calculate a 3 &times; 3 matrix to convert from a linear RGB color to XYZ form (`RGBToXYZMatrix`) and back (`XYZToRGBMatrix`), given the RGB color space's red, green, blue, and white points. Each point is expressed as a relative XYZ color with arbitrary X and Z components and a Y component of 1.  For example, `xr` and `zr` are the red point's X and Z components, respectively.  See [**brucelindbloom.com**](http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html) for more information.
 
     METHOD RGBToXYZMatrix(xr,zr,xg,zg,xb,zb,xw,zw)
      s1=(xb*zg - xb*zw - xg*zb + xg*zw + xw*zb - xw*zg)
@@ -1113,7 +1113,7 @@ Other forms of binarization may classify pixels based at least in part on their 
 
 The following techniques generate new colors that are related to existing colors.
 
-- **Color harmonies**[^28] result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle[^11] to generate the hues for the colors that make up that harmony:
+- **Color harmonies**[^28] result by generating several colors that differ in hue (hue angle).  For each color harmony given later, the following numbers are added to a hue angle[^11] to generate the hues for the colors that make up that harmony:
     - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are two, four, or a higher even number of colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
@@ -1252,7 +1252,7 @@ Binary and ternary raster operations are prevalent in bit block transfers, which
 
 ### Color Matrices
 
-A _color matrix_ is a 9-item (3&times;3) list for transforming a three-component color. The following are examples of color matrices:
+A _color matrix_ is a 9-item (3 &times; 3) list for transforming a three-component color. The following are examples of color matrices:
 
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges

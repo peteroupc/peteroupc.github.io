@@ -126,10 +126,10 @@ H3DU.Scene3D._Triangle.prototype.draw=function(width, height, data, depth, color
     var miny = (Math.max(Math.min(Y1, Y2, Y3), frustumY0) + 0xF) >> 4;
     var maxx = (Math.min(Math.max(X1, X2, X3), frustumX1) + 0xF) >> 4;
     var maxy = (Math.min(Math.max(Y1, Y2, Y3), frustumY1) + 0xF) >> 4;
-    // Block size, standard 8&times;8 (must be power of two)
+    // Block size, standard 8 &times; 8 (must be power of two)
     var q = 8;
 
-    // Start in corner of 8&times;8 block
+    // Start in corner of 8 &times; 8 block
     minx &= ~7;
     miny &= ~7;
     var tex=new Float32Array([0,0,0]);

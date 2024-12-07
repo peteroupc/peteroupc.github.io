@@ -56,7 +56,7 @@ A streaming algorithm, which builds something like an "extractor tree", is anoth
 
 I maintain [**source code of this extractor and the Peres extractor**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb), which also includes additional notes on randomness extraction.
 
-Pae's "entropy-preserving" binarization (Pae 2018\)[^12], given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
+Pae's "entropy-preserving" binarization (Pae 2018\)[^12], given later, is meant to be used in other extractor algorithms such as the ones mentioned earlier.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
 
 1. Let _f_ be a number in the interval \[0, _n_) that was previously randomly generated.  If _f_ is greater than 0, write a 1 (and go to step 2).
 2. If _f_ is less than _n_ &minus; 1, write a 0 _x_ times, where _x_ is (_n_ &minus; 1) &minus; _f_.

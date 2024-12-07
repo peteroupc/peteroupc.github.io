@@ -395,7 +395,8 @@ class UnimodalSampler:
                 return st + (en - st) * y
 
     def _sampleTail(self, st, direc, cdfstart, cdfend):
-        x = 0x2 = 1
+        x = 0
+        x2 - 1
         u = random.random()
         while True:
             c = (self.cdf(st + x2 * direc) - cdfstart) / (cdfend - cdfstart)

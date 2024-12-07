@@ -231,7 +231,7 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 
 - In the algorithm, denote:
     - $\epsilon(f, n)$ as an upper bound on the absolute value of the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0.
-        - For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), below.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see "[**Achievable Simulation Rates**](#Achievable_Simulation_Rates)", later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)
+        - For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), later.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see "[**Achievable Simulation Rates**](#Achievable_Simulation_Rates)", later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)
         - For examples of error bounds, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
     - ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
         - **Example:** If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C\cdot 2^r/(((2^r)-1)\cdot 2^{rm})$.
@@ -255,7 +255,7 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 
 Then an algorithm to toss heads with probability equal to $f$ would be:
 
-1. Generate _X_ at random with the probabilities given above.
+1. Generate _X_ at random with the probabilities given earlier.
 2. If _X_ is 0, return 0.  Otherwise, if _X_ is 1, find the **starting polynomial** and its Bernstein coefficients.  Otherwise (if _X_ is 2 or greater), find the **difference polynomial** of order _m_ and its Bernstein coefficients, where _m_ = (_X_&minus;2) + **StartOrder**.
 3. Flip the input coin (with probability of heads $\lambda$), $n - 1$ times, where $n$ is the number of Bernstein coefficients in the polynomial found in step 2 (its degree plus one), and let $j$ be the number of heads.
 4. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
@@ -268,7 +268,7 @@ If _T_ turns out to be greater than 1 in this algorithm, but still finite, one w
 > - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^8].
 > - The **starting polynomial** is found as follows. Let _c_ = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; **StartWidth** is equal to ceil($c\cdot 65536$)/65536, and **StartOrder** is equal to 0.
 > - ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally "increase" with increasing degree (Temple 1954)[^9], (Moldovan 1962)[^10].
-> - DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always "below" $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate _T_, below.
+> - DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always "below" $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate _T_, later.
 > - _T_ is calculated as **StartWidth** + $1.01\cdot M/4$.
 
 <a id=Request_for_Additional_Methods></a>

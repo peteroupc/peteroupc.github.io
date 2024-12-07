@@ -327,7 +327,7 @@ A _phase-type distribution_ models a sum of exponential random variates driven b
 - `alpha`, an `n`-item array showing the probability of starting the chain at each normal state.
 - `s`, an `n`&times;`n` _subgenerator matrix_, a list of `n` lists of `n` values each.  The values in each list (each normal state of the Markov chain) must sum to 0 or less, and for each state `i`, `s[i][i]` is 0 minus the rate of that state's exponential random variate, and each entry `s[i][j]` with `i!=j` is the relative probability for moving to state `j`.
 
-The method `PhaseType`, given below, samples from a phase-type distribution given the two parameters above.  (The pseudocode assumes each number in `alpha` and `s` is a rational number, because it uses `NormalizeRatios`.)
+The method `PhaseType`, given later, samples from a phase-type distribution given the two parameters above.  (The pseudocode assumes each number in `alpha` and `s` is a rational number, because it uses `NormalizeRatios`.)
 
 ```
 METHOD GenToTrans(s)
@@ -370,7 +370,7 @@ END METHOD
 The following pseudocode generates a random vector (list of numbers) that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
 - A list, `mu` (&mu;), which indicates the means to add to the random vector's components. `mu` can be `nothing`, in which case each component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;), a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector.  (An N&times;N matrix is _positive definite_ if its determinant [overall scale] is greater than 0 and if either the matrix is 1&times;1 or a smaller matrix formed by removing the last row and column is positive definite.)
+- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;), a symmetric positive definite N&times;N matrix, where N is the number of components of the random vector.  (An N&times;N matrix is _positive definite_ if its determinant [overall scale] is greater than 0 and if either the matrix is 1 &times; 1 or a smaller matrix formed by removing the last row and column is positive definite.)
 
 &nbsp;
 

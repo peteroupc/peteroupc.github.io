@@ -1406,7 +1406,7 @@ class DiceEnterprise:
           (such as int or Python's Fraction).
 
           Each term in the polynomial must have the same number of items (except
-          for the special case given above).  For example, the following is not a valid
+          for the special case given earlier).  For example, the following is not a valid
           way to express this parameter:
                    [[1, 1, 0], [1, 3, 4, 5], [1, 1, 2], [2, 3, 4]]
           Here, the second term has four items, not three like the rest.

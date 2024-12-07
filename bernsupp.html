@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/11/09"><meta name="citation_online_date" content="2024/11/09"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/12/07"><meta name="citation_online_date" content="2024/12/07"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -343,7 +343,7 @@
     <ul>
       <li>$\epsilon(f, n)$ as an upper bound on the absolute value of the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0.
         <ul>
-          <li>For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it’s easy to find the value of ErrShift(f, n), below.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see “<a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a>”, later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)</li>
+          <li>For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r&gt;0$ is a multiple of 1/2, since then it’s easy to find the value of ErrShift(f, n), later.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see “<a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a>”, later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)</li>
           <li>For examples of error bounds, see <a href="https://peteroupc.github.io/bernapprox.html"><strong>“Approximations in Bernstein Form”</strong></a>.</li>
         </ul>
       </li>
@@ -388,7 +388,7 @@
 <p>Then an algorithm to toss heads with probability equal to $f$ would be:</p>
 
 <ol>
-  <li>Generate <em>X</em> at random with the probabilities given above.</li>
+  <li>Generate <em>X</em> at random with the probabilities given earlier.</li>
   <li>If <em>X</em> is 0, return 0.  Otherwise, if <em>X</em> is 1, find the <strong>starting polynomial</strong> and its Bernstein coefficients.  Otherwise (if <em>X</em> is 2 or greater), find the <strong>difference polynomial</strong> of order <em>m</em> and its Bernstein coefficients, where <em>m</em> = (<em>X</em>−2) + <strong>StartOrder</strong>.</li>
   <li>Flip the input coin (with probability of heads $\lambda$), $n - 1$ times, where $n$ is the number of Bernstein coefficients in the polynomial found in step 2 (its degree plus one), and let $j$ be the number of heads.</li>
   <li>Return 1 with probability equal to the polynomial’s $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).</li>
@@ -404,7 +404,7 @@
     <li>The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>.</li>
     <li>The <strong>starting polynomial</strong> is found as follows. Let <em>c</em> = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; <strong>StartWidth</strong> is equal to ceil($c\cdot 65536$)/65536, and <strong>StartOrder</strong> is equal to 0.</li>
     <li>ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally “increase” with increasing degree (Temple 1954)<sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>, (Moldovan 1962)<sup id="fnref:10" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>.</li>
-    <li>DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always “below” $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate <em>T</em>, below.</li>
+    <li>DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always “below” $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate <em>T</em>, later.</li>
     <li><em>T</em> is calculated as <strong>StartWidth</strong> + $1.01\cdot M/4$.</li>
   </ul>
 </blockquote>
