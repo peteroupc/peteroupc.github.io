@@ -12,7 +12,7 @@ All three serve to arouse nostalgia among 1990s computer users.
 
 ## Graphics Challenge for Retro Style Games
 
-An interesting challenge for game developers.
+An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.
 
 Limit 3D graphics to the following:
 
