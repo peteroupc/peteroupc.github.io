@@ -839,7 +839,7 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
 
 #### Certain Converging Series
 
-A general-purpose algorithm was given by Mendo (2020/2021\)[^36] that can simulate any probability, as long as&mdash;
+A general-purpose algorithm was given by Mendo (2024\)[^36] that can simulate any probability, as long as&mdash;
 
 - the probability is greater than 0 and less than 1,
 - the probability can be written as a (possibly infinite) sum of rational numbers greater than 0, that is, as _p_ = _a_\[0\] + _a_\[1\] + ..., and
@@ -879,7 +879,7 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
 
 > **Notes:**
 >
-> 1. Mendo (2020/2021\)[^36] as well as Carvalho and Moreira (2022)[^37] discuss how to find error bounds on "cutting off" a series that work for many infinite series.  This can be helpful in finding the appropriate sequences _a_ and _err_ needed for the first algorithm in this section.
+> 1. Mendo (2024\)[^36] as well as Carvalho and Moreira (2022)[^37] discuss how to find error bounds on "cutting off" a series that work for many infinite series.  This can be helpful in finding the appropriate sequences _a_ and _err_ needed for the first algorithm in this section.
 > 2. If a number is known as a simple continued fraction whose partial denominators are integers, Citterio and Pavani (2016)[^38] show how to calculate lower and upper bounds for that number.  The bounds will be rational numbers whose numerator has at most a given number of digits.
 >
 > **Examples**:
@@ -2279,7 +2279,7 @@ In this algorithm, _m_ must be greater than 0, and _x_ is a real number that is 
 
 #### Euler&ndash;Mascheroni constant _&gamma;_
 
-The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;_ (about 0.5772) is due to Mendo (2020/2021\)[^36].  This solves an open question given in (Flajolet et al., 2010\)[^1].  An algorithm for the Euler&ndash;Mascheroni constant appears here even though it is not yet known whether this constant is irrational.  Sondow (2005\)[^69] described how the Euler&ndash;Mascheroni constant can be rewritten as an infinite sum, which is the form used in this algorithm.
+The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;_ (about 0.5772) is due to Mendo (2024\)[^36].  This solves an open question given in (Flajolet et al., 2010\)[^1].  An algorithm for the Euler&ndash;Mascheroni constant appears here even though it is not yet known whether this constant is irrational.  Sondow (2005\)[^69] described how the Euler&ndash;Mascheroni constant can be rewritten as an infinite sum, which is the form used in this algorithm.
 
 1. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
@@ -2300,7 +2300,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 
 #### exp(&minus;_x_/_y_) \* _z_/_t_
 
-This algorithm is again based on an algorithm due to Mendo (2020/2021\)[^36].  The algorithm takes integers _x_ &ge; 0, _y_ &gt; 0, _z_ &ge; 0, and _t_ &gt; 0, such that 0 &le; exp(&minus;_x_/_y_) \* _z_/_t_ &le; 1.
+This algorithm is again based on an algorithm due to Mendo (2024\)[^36].  The algorithm takes integers _x_ &ge; 0, _y_ &gt; 0, _z_ &ge; 0, and _t_ &gt; 0, such that 0 &le; exp(&minus;_x_/_y_) \* _z_/_t_ &le; 1.
 
 1. If _z_ is 0, return 0.  If _x_ is 0, return a number that is 1 with probability _z_/_t_ and 0 otherwise.
 2. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
@@ -2465,7 +2465,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^35]: Penaud, J.G., Roques, O., "Tirage à pile ou face de mots de Fibonacci", _Discrete Mathematics_ 256, 2002.
 
-[^36]: Mendo, L., "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020/2021.
+[^36]: Mendo, L. (2024). Simulating a coin with irrational bias using rational arithmetic. Communications in Statistics-Simulation and Computation, 1-17. Also: "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020/2021.
 
 [^37]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
 

@@ -24,7 +24,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| happen | occur, manifest, produce itself, present itself, take place, unfold, come about, come to pass. | Inspired by E. Bernal. |
+| happen | occur, take place, unfold, come about, manifest, produce itself, present itself, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone]; _an event_ puts [someone] to death |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] the death of many; _an event_ puts many to death |Inspired by E. Bernal. |
