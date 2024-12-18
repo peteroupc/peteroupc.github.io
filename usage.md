@@ -19,7 +19,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant, illegitimate actor | |
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
 | cause | lead to, provoke, engender, occasion, beget, breed, bring on, bring about, give rise to, produce, result in | Verb. |
-| check out | discover, uncover, learn more about, find out about, see for yourself | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
+| check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on | |
 | focused on (e.g., _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
