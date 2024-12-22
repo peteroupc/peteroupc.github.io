@@ -263,7 +263,7 @@ The following are examples of these formats:
 - **10-bpc:** As 30-bit integers (10 bpc RGB), or as 40-bit integers with an alpha component.
 - **16-bpc:** As 48-bit integers (16 bpc RGB), or as 64-bit integers with an alpha component.
 
-There are many ways to store RGB and RGBA colors in these formats as integers or as a sequence of 8-bit bytes.  For example, the RGB color's components can be in "little endian" or "big endian" 8-bit byte order, or the order in which the color's components are packed into an integer can vary.  This document does not seek to survey the RGB binary storage formats available.
+There are many ways to store RGB and RGBA colors in these formats as integers or as a sequence of 8-bit bytes.  For example, the RGB color's components can be in "little-endian" or "big-endian" 8-bit byte order, or the order in which the color's components are packed into an integer can vary.  This document does not seek to survey the RGB binary storage formats available.
 
 The following pseudocode presents methods to convert RGB colors to and from different binary color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
 

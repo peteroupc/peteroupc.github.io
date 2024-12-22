@@ -582,7 +582,7 @@ The Bernoulli factory problem (the problem of turning one biased coin into anoth
 
 In this section:
 
-- An _oracle_ (or black box) is an endless stream of independent random variates of an incompletely known probability distribution.  In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.
+- An _oracle_ is an endless stream of independent random variates of an incompletely known probability distribution.  In the Bernoulli factory problem, this oracle is a _coin that shows heads or tails where the probability of heads is unknown_.
 
 The rest of this section deals with oracles that go beyond coins.
 

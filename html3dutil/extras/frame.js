@@ -133,7 +133,7 @@ var PrimitiveCounter = function() {
    * @returns {Object} Return value.
    */
   this.update = function() {
-    if(!this.warned)console.warn("PrimitiveCounter is deprecated");
+    if(!this.warned)console.warn("PrimitiveCounter is obsolete");
     this.warned = true;
   };
 };

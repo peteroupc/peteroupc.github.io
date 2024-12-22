@@ -183,8 +183,8 @@ H3DU.MathUtil.planeIntersection = function(p1, p2, p3) {
  * view frustum. In order, they are the left, right, top,
  * bottom, near, and far clipping planes.
  * @returns {Array<number>} A 4-element array
- * containing the 3-element points for the top-left,
- * bottom-left, top-right, and bottom-right corners,
+ * containing the 3-element points for the upper-left,
+ * lower-left, upper-right, and lower-right corners,
  * respectively, of the near clipping plane.
  */
 H3DU.MathUtil.frustumNearPlane = function(frustum) {
@@ -208,8 +208,8 @@ H3DU.MathUtil.frustumNearPlane = function(frustum) {
  * view frustum. In order, they are the left, right, top,
  * bottom, near, and far clipping planes.
  * @returns {Array<number>} A 4-element array
- * containing the 3-element points for the top-left,
- * bottom-left, top-right, and bottom-right corners,
+ * containing the 3-element points for the upper-left,
+ * lower-left, upper-right, and lower-right corners,
  * respectively, of the near clipping plane.
  */
 H3DU.MathUtil.frustumFarPlane = function(frustum) {

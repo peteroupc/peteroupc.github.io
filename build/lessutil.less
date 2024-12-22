@@ -71,12 +71,12 @@ border-radius: @size;
 /* needed because of undefined behavior of 'border-radius' on table elements with 'border-collapse: collapse' */
 border-collapse: separate;
 &>tbody:first-child>tr:first-child, &>thead>tr {
-  &>th:first-child, &>td:first-child { border-top-left-radius: @size;}
-  &>th:last-child, &>td:last-child { border-top-right-radius: @size;}
+  &>th:first-child, &>td:first-child { border-upper-left-radius: @size;}
+  &>th:last-child, &>td:last-child { border-upper-right-radius: @size;}
 }
 &>tbody > tr:last-child {
-  &, &>td:first-child { border-bottom-left-radius: @size; }
-  &, &>td:last-child { border-bottom-right-radius: @size; }
+  &, &>td:first-child { border-lower-left-radius: @size; }
+  &, &>td:last-child { border-lower-right-radius: @size; }
 }
 }
 

@@ -390,13 +390,13 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * @param {Object} params An object whose keys have
  * the possibilities given later, and whose values are those
  * allowed for each key.<ul>
- * <li><code>x</code> - X coordinate of the top left corner of the text.
+ * <li><code>x</code> - X coordinate of the upper-left corner of the text.
  * If null, undefined, or omitted, uses 0.
  * For the text to show upright, the coordinate system should have the
  * X axis pointing right and the Y axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively).
- * <li><code>y</code> - Y coordinate of the top left corner of the text.
+ * <li><code>y</code> - Y coordinate of the upper-left corner of the text.
  * If null, undefined, or omitted, uses 0.
  * <li><code>lineHeight</code> - Height of each line of the text in units.
  * If null, undefined, or omitted, uses the line height given in the font.
@@ -1093,7 +1093,7 @@ H3DU.TextureAtlas._checkSprite = function(sprite) {
   if(typeof sprite.size === "undefined" || sprite.size === null)return false;
   // Original size of the sprite (before being truncated)
   if(typeof sprite.orig === "undefined" || sprite.orig === null)return false;
-  // Offset of the top left corner of the sprite relative to the original
+  // Offset of the upper-left corner of the sprite relative to the original
   // location (may be other than "0,0" if the sprite was truncated)
   if(typeof sprite.offset === "undefined" || sprite.offset === null)return false;
   if(typeof sprite.rotate === "undefined" || sprite.rotate === null)return false;
