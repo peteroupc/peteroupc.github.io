@@ -265,7 +265,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-subclass.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_evaluators.Roulette.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/MathUtil.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/MathUtil.html</loc><lastmod>2024-12-22T06:21:50Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/FrameCounterDiv.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_warpshader.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_tga.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
@@ -396,7 +396,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/extras_polyhedra.Polyhedra.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_derivedcurves.curveRadialCurve.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Texture.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/Semantic.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/Semantic.html</loc><lastmod>2024-12-22T06:38:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-meshexamples.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_convex.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_drawingtoy.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
@@ -420,7 +420,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/extras_radgradshader.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.FrameCounterDiv.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/ShapeGroup.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/MatrixStack.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/MatrixStack.html</loc><lastmod>2024-12-22T06:38:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/Transform.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_checkerboardshader.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_horgradshader.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
@@ -428,7 +428,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.MatrixStack.html</loc><lastmod>2024-12-07T16:29:49Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.exports.Polyhedra.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.TextureAtlas.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html</loc><lastmod>2024-12-22T06:21:13Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html</loc><lastmod>2024-12-22T06:38:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Camera.html</loc><lastmod>2024-12-22T06:21:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-paths.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html</loc><lastmod>2024-12-22T06:21:13Z</lastmod></url>
@@ -445,14 +445,14 @@
 <url><loc>https://peteroupc.github.io/html3dutil/TorusKnot.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-camera.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/MeshJSON.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/Meshes.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/Meshes.html</loc><lastmod>2024-12-22T06:38:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/BSplineCurve.html</loc><lastmod>2024-12-22T06:21:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.BezierCurve.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.ShaderInfo.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/FrameCounter.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/Hypotrochoid.html</loc><lastmod>2024-12-22T06:21:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-overview.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/tutorial-filters.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/tutorial-filters.html</loc><lastmod>2024-12-22T06:38:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_derivedcurves.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.BufferedMesh.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_gradients.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
@@ -474,7 +474,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/Epitrochoid.html</loc><lastmod>2024-12-22T06:21:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_superellipsoid.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Material.html</loc><lastmod>2024-12-07T16:29:50Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/tutorial-surfaces.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/tutorial-surfaces.html</loc><lastmod>2024-12-22T06:38:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.GraphicsPath.html</loc><lastmod>2024-12-22T06:21:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_pathutil.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_torusknot.html</loc><lastmod>2024-12-22T06:21:15Z</lastmod></url>

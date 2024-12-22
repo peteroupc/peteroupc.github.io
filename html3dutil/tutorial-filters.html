@@ -91,7 +91,7 @@ filter as part of the program’s fragment shader. Since shader programs must al
 
 <ul>
   <li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
-  <li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the bottom-left corner, not the top left, that is, textures are “bottom up”,
+  <li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the lower-left corner, not the upper left, that is, textures are “bottom up”,
 not “top down”).</li>
   <li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels. <code>textureSize.x</code> is the
 width, and <code>textureSize.y</code> is the height.</li>
