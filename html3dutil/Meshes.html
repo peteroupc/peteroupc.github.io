@@ -27,7 +27,7 @@ also contains vertex positions.</p>
 
 <p><b>What are texture coordinates?</b> If a texture (array of memory units) will be applied to a mesh buffer’s geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.</p>
 
-<p>In most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, V coordinates start by default at the bottom of the texture (0) and increase to the top (1), while in others, such as WebGL, Vulkan, Metal, and Direct3D, V coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
+<p>In most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, V coordinates start by default at the bottom of the texture (0) and increase to the top (1), while in others, such as WebGL, Vulkan, Metal, and Direct3D, V coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the toplower-left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
 
 <p>In general, texture coordinates describe 2-dimensional points.
 However, for such texturing tasks as mapping
@@ -690,6 +690,8 @@ Meshes.triangleStripIndices(mesh.vertexCount())
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
+  <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
   <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>

@@ -86,7 +86,7 @@ a new matrix.</li>
 in the form of a view frustum, or the limits in the “camera”’s view.</li>
   <li><a href="#H3DU.MathUtil.mat4identity">mat4identity</a><br />Returns the identity 4 × 4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).</li>
-  <li><a href="#H3DU.MathUtil.mat4inverseTranspose3">mat4inverseTranspose3</a><br />Returns the transposed result of the inverted 3 × 3 upper left corner of
+  <li><a href="#H3DU.MathUtil.mat4inverseTranspose3">mat4inverseTranspose3</a><br />Returns the transposed result of the inverted 3 × 3 upperlower-left corner of
 the given 4 × 4 matrix.</li>
   <li><a href="#H3DU.MathUtil.mat4invert">mat4invert</a><br />Finds the inverse of a 4 × 4 matrix, describing a transformation that undoes the given transformation.</li>
   <li><a href="#H3DU.MathUtil.mat4isIdentity">mat4isIdentity</a><br />Returns whether a 4 × 4 matrix is the identity matrix.</li>
@@ -805,7 +805,7 @@ vectors unchanged when they are transformed with this matrix).</p>
 <p><a name="H3DU.MathUtil.mat4inverseTranspose3"></a>
 ### (static) H3DU.MathUtil.mat4inverseTranspose3(m4)</p>
 
-<p>Returns the transposed result of the inverted 3 × 3 upper left corner of
+<p>Returns the transposed result of the inverted 3 × 3 upperlower-left corner of
 the given 4 × 4 matrix.</p>
 
 <p>This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
@@ -907,8 +907,8 @@ vector or nearly so.
 
 The following example creates an
 isometric projection for a right-handed coordinate system. The Y
-axis will point up, the Z axis toward the bottom left, and the X axis toward
-the bottom right.
+axis will point up, the Z axis toward the lower left, and the X axis toward
+the lower right.
 
     // Assumes an orthographic projection matrix is used. Example:
     // var projectionMatrix=MathUtil.mat4ortho(-10,10,-10,10,-50,50);
@@ -2652,7 +2652,7 @@ increase from front to back.
 * `vector` (Type: Array.&lt;number&gt;)<br />A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform, in window coordinates.
 * `matrix` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the MathUtil.mat4projectVec3 method.<br /> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See MathUtil.vec3toWindowPoint for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
 * `viewport` (Type: Array.&lt;number&gt;)<br />A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
-* `yUp` (Type: boolean) (optional)<br />If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the MathUtil.mat4projectVec3 method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
+* `yUp` (Type: boolean) (optional)<br />If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the MathUtil.mat4projectVec3 method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upperlower-left corner.
 
 #### Return Value
 
@@ -2973,7 +2973,7 @@ using the given transformation matrix and viewport rectangle.
 * `vector` (Type: Array.&lt;number&gt;)<br />A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
 * `matrix` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix to use to transform the vector according to the MathUtil.mat4projectVec3 method, before the transformed vector is converted to window coordinates. <br />This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br />If the matrix includes a projection transform returned by MathUtil.mat4ortho, MathUtil.mat4perspective, or similar MathUtil methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward instead of upward or vice versa.
 * `viewport` (Type: Array.&lt;number&gt;)<br />A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
-* `yUp` (Type: boolean) (optional)<br />If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the MathUtil.mat4projectVec3 method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
+* `yUp` (Type: boolean) (optional)<br />If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the MathUtil.mat4projectVec3 method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upperlower-left corner.
 
 #### Return Value
 
@@ -3411,6 +3411,8 @@ The parameter "a" (Type: Array.&lt;number&gt;)
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
+  <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
   <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>

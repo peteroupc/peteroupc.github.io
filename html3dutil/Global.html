@@ -4,15 +4,6 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h3 id="members">Members</h3>
-
-<ul>
-  <li><a href="#toExtrudedMeshBuffer">toExtrudedMeshBuffer</a><br />Generates a mesh buffer consisting of “walls” that follow this graphics path approximately, and, optionally, a base and top.</li>
-  <li><a href="#toLineMeshBuffer">toLineMeshBuffer</a><br />Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</li>
-  <li><a href="#toMeshBuffer">toMeshBuffer</a><br />Decomposes this path into triangles and generates a mesh
-buffer with those triangles.</li>
-</ul>
-
 <h3 id="methods">Methods</h3>
 
 <ul>
@@ -27,24 +18,6 @@ its work.</li>
 the last known time, where a frame’s length is 1/60 of a second.</li>
   <li><a href="#toGLColor">toGLColor</a><br />Creates a 4-element array representing a color.</li>
 </ul>
-
-<p><a name="toExtrudedMeshBuffer"></a>
-### toExtrudedMeshBuffer (constant)</p>
-
-<p>Generates a mesh buffer consisting of “walls” that follow this graphics path approximately, and, optionally, a base and top.</p>
-
-<p><a name="toLineMeshBuffer"></a>
-### toLineMeshBuffer (constant)</p>
-
-<p>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</p>
-
-<p><a name="toMeshBuffer"></a>
-### toMeshBuffer (constant)</p>
-
-<p>Decomposes this path into triangles and generates a mesh
-buffer with those triangles. Each triangle’s normal will point
-toward the Z axis, and each triangle vertex’s texture coordinates will
-be the same as that vertex’s position.</p>
 
 <p><a name="getPromiseResults"></a>
 ### getPromiseResults(promises, [progressResolve], [progressReject])</p>
@@ -186,7 +159,7 @@ After you choose the three values, combine them by writing the `#`, then the red
 - \*\*What is HSL notation?\*\* A color in HSL notation is made of the following three components:
 \* _Hue_ ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HSL) stands for a different hue: red, yellow, green, cyan (sky-blue), blue, and magenta correspond roughly to hue 0 (say, 12 o&#8217;clock), 60, 120, 180, 240, and 300, respectively.
  \* "Saturation" and "lightness" range from 0% to 100%. "Saturation" is the distance of the color from gray (0% means gray; 100% means most distant from gray). "Lightness" is roughly the amount of black or white mixed with the color (0% means black; 100% means white; closer to 0% means closer to black; closer to 100% means closer to white).
- &gt; \*\*Example:\*\* The value `hsl(240,100%,50%)` has a hue of 240 (blue), a "saturation" of 100% (fully saturated), and a "lightness" of 50% (neither black or white). It represents a vivid blue. If we lower "lightness" to 20%, we get a "darker" blue. If we also change the hue to 0, we get a "dark" red.
+ &gt; \*\*Example:\*\* The value `hsl(240,100%,50%)` has a hue of 240 (blue), a "saturation" of 100% (fully saturated), and a "lightness" of 50% (as far from "black" as from "white"). It represents a vivid blue. If we lower "lightness" to 20%, we get a "darker" blue. If we also change the hue to 0, we get a "dark" red.
 An alternate syntax for HSL colors supports the alpha component (see next question): in the example `hsla(240,100%,50%,80%)`, the `80%` is the alpha component.
 - \*\*What is an alpha component?\*\* An alpha component shows how much the color is transparent (see-through) or opaque. The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't provide for an alpha component, the color is fully opaque.
 
@@ -253,6 +226,8 @@ clamped to 1. (Type: Array.&lt;number&gt;)
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
+  <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
   <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
