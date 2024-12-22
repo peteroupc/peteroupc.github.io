@@ -1934,7 +1934,7 @@ The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out
 
 ### Other Factory Functions
 
-Algorithms in bold are given in this page.
+Algorithms in bold type are given in this page.
 
 |  To simulate:  |  Follow this algorithm: |
    --- |  ---- |
