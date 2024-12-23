@@ -262,12 +262,12 @@
   <li>For randomness, the algorithm relies only on a <em>fair coin</em> (something that chooses either 1 or 0 with equal probability, independently of other choices).</li>
   <li>The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational numbers or transcendental functions. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations are rational numbers of arbitrary precision.  However, the more implicitly the algorithm works with irrational numbers or transcendental functions, the better.)</li>
   <li>The algorithm may use rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby), as long as the arithmetic is exact.</li>
-  <li>If the algorithm gives out a PSRN, the number represented by the sampled digits must follow a distribution that is close to the algorithm’s ideal distribution by a distance of not more than 1/(<em>b</em><sup><em>m</em></sup>), where <em>b</em> is the PSRN’s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN’s fractional part.  ((Devroye and Gravel 2020)<sup id="fnref:3:1" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> suggests Wasserstein distance, or “earth-mover distance”, as the distance to use for this purpose.)</li>
-  <li>After the algorithm gives out a PSRN, if the algorithm’s caller fills the PSRN’s unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the PSRN’s fractional part’s first <em>m</em> digits are sampled, the PSRN’s distribution must remain close to the algorithm’s ideal distribution by a distance of not more than 1/(<em>b</em><sup><em>m</em></sup>).</li>
+  <li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the algorithm’s ideal distribution by a distance of not more than 1/(<em>b</em><sup><em>m</em></sup>), where <em>b</em> is the PSRN’s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN’s fractional part.  ((Devroye and Gravel 2020)<sup id="fnref:3:1" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> suggests Wasserstein distance, or “earth-mover distance”, as the distance to use for this purpose.)</li>
+  <li>After the algorithm outputs a PSRN, if the algorithm’s caller fills the PSRN’s unsampled fractional digits at random (for example, uniformly at random in the case of a uniform PSRN), so that the PSRN’s fractional part’s first <em>m</em> digits are sampled, the PSRN’s distribution must remain close to the algorithm’s ideal distribution by a distance of not more than 1/(<em>b</em><sup><em>m</em></sup>).</li>
 </ol>
 
 <blockquote>
-  <p><strong>Example</strong>:  Suppose an algorithm samples from a normal distribution using base-2 uniform PSRNs.  If it gives out a PSRN whose fractional part has three sampled bits (and no unsampled bits before the rightmost sampled bit), the PSRN’s distribution must be within a distance of—</p>
+  <p><strong>Example</strong>:  Suppose an algorithm samples from a normal distribution using base-2 uniform PSRNs.  If it outputs a PSRN whose fractional part has three sampled bits (and no unsampled bits before the rightmost sampled bit), the PSRN’s distribution must be within a distance of—</p>
 
   <ul>
     <li>1/(2<sup>3</sup>) to the ideal normal distribution at the time the PSRN is output, and</li>
@@ -595,7 +595,7 @@
 
 <h3 id="using-the-arithmetic-algorithms">Using the Arithmetic Algorithms</h3>
 
-<p>The algorithms given earlier for addition and multiplication are useful for scaling and shifting PSRNs.  For example, they can transform a normally-distributed PSRN into one with an arbitrary mean and standard deviation (by first multiplying the PSRN by the standard deviation, then adding the mean).  Here is a sketch of a procedure that achieves this, given two parameters, <em>location</em> and <em>scale</em>, that are both rational numbers.</p>
+<p>The algorithms given above for addition and multiplication are useful for scaling and shifting PSRNs.  For example, they can transform a normally-distributed PSRN into one with an arbitrary mean and standard deviation (by first multiplying the PSRN by the standard deviation, then adding the mean).  Here is a sketch of a procedure that achieves this, given two parameters, <em>location</em> and <em>scale</em>, that are both rational numbers.</p>
 
 <ol>
   <li>Generate a uniform PSRN, then transform it into a variate of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney’s algorithm for the standard normal distribution (Karney 2016)<sup id="fnref:1:6" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>)).  This procedure won’t work for exponential PSRNs (e-rands).</li>
@@ -960,7 +960,7 @@
 <p>The following Python code implements the beta sampler described in this document.  It relies on two Python modules I wrote:</p>
 
 <ul>
-  <li>”<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>”, which collects a number of Bernoulli factories, some of which are relied on by the following code.</li>
+  <li>”<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.py"><strong>bernoulli.py</strong></a>”, which collects a number of Bernoulli factories, some of which are relied on by the code below.</li>
   <li>”<a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/randomgen.py"><strong>randomgen.py</strong></a>”, which collects a number of random variate generation methods, including <code>kthsmallest</code>, as well as the <code>RandomGen</code> class.</li>
 </ul>
 
@@ -2197,7 +2197,7 @@ def unifsum(x,n,v):
   </tbody>
 </table>
 
-<p>For more efficient results, all these coefficients could be scaled so that the highest coefficient is equal to 1.  This doesn’t affect the algorithm’s correctness because scaling a Bézier curve’s control points scales the curve accordingly, as is well known. In the preceding example, after multiplying by 3/2 (the reciprocal of the highest coefficient, which is 2/3), the table would now look like this:</p>
+<p>For more efficient results, all these coefficients could be scaled so that the highest coefficient is equal to 1.  This doesn’t affect the algorithm’s correctness because scaling a Bézier curve’s control points scales the curve accordingly, as is well known. In the example above, after multiplying by 3/2 (the reciprocal of the highest coefficient, which is 2/3), the table would now look like this:</p>
 
 <table>
   <thead>
@@ -2247,7 +2247,7 @@ def unifsum(x,n,v):
     <p>The following are additional modifications that should be done to the sampler.  However, not applying them does not affect the sampler’s correctness.</p>
 
     <ul>
-      <li>The Bernstein coefficients should be scaled so that the highest coefficient of <em>each</em> piece is equal to 1.  See the following table for an example.</li>
+      <li>The Bernstein coefficients should be scaled so that the highest coefficient of <em>each</em> piece is equal to 1.  See the table below for an example.</li>
       <li>If piece 0 is being sampled and the PSRN’s digits are binary (base 2), the “coin” described in step 4 uses a modified version of <strong>SampleGeometricBag</strong> in which a 1 (rather than any other digit) is sampled from the PSRN when it reads from or writes to that PSRN.  Moreover, the PSRN is always accepted regardless of the result of the “coin” flip.</li>
       <li>If piece <em>n</em> − 1 is being sampled and the PSRN’s digits are binary (base 2), the “coin” uses a modified version of <strong>SampleGeometricBag</strong> in which a 0 (rather than any other digit) is sampled, and the PSRN is always accepted.</li>
     </ul>

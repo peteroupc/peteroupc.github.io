@@ -1722,7 +1722,7 @@ CLASSES
      |  - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
      |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
      |  Article 12 (March 2012), 5 pages.
-     |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [https://doi.org/10.1214/21-AAP1679](https://doi.org/10.1214/21-AAP1679)
+     |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. https://doi.org/10.1214/21-AAP1679
      |  - Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli factories and black-box reductions in mechanism design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
      |  - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
      |  Carlo likelihood-based inference for jump-diffusion processes.
@@ -4495,3 +4495,4 @@ FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
 
 ```
+
