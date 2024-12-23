@@ -543,7 +543,7 @@ class Fixed:
     def atan2(y, x):
         """
         Calculates the approximate measure, in radians, of the angle formed by the
-        X axis and a line determined by the origin and the given coordinates of a 2D
+        x-axis and a line determined by the origin and the given coordinates of a 2D
         point.  This is also known as the inverse tangent.
         """
         rx = Fixed.v(x).value

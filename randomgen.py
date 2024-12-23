@@ -4383,7 +4383,7 @@ class RatioOfUniformsTiling:
        However, for the ratio of uniforms method to work, both pdf(x) and
        x*x*pdf(x) must be less than or equal to a finite number (thus, if the distribution has
        tails, they must drop off at a faster than quadratic rate).
-    - mode: X-coordinate of the PDF's highest peak or one of them,
+    - mode: x-coordinate of the PDF's highest peak or one of them,
        or a location close to it.  Optional; default is 0.
     - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
        For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
