@@ -173,9 +173,9 @@ MatrixStack.prototype.rotate = function(angle, x, y, z) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a
  * translation transformation.
- * @param {number} x Translation along the X axis.
- * @param {number} y Translation along the Y axis.
- * @param {number} z Translation along the Z axis.
+ * @param {number} x Translation along the x-axis.
+ * @param {number} y Translation along the y-axis.
+ * @param {number} z Translation along the z-axis.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.translate = function(x, y, z) {
@@ -194,9 +194,9 @@ MatrixStack.prototype.translate = function(x, y, z) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a
  * scaling transformation.
- * @param {number} x Scale factor along the X axis.
- * @param {number} y Scale factor along the Y axis.
- * @param {number} z Scale factor along the Z axis.
+ * @param {number} x Scale factor along the x-axis.
+ * @param {number} y Scale factor along the y-axis.
+ * @param {number} z Scale factor along the z-axis.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.scale = function(x, y, z) {
@@ -276,13 +276,13 @@ MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
  * Modifies the matrix at the top of this stack by multiplying it by
  * a frustum matrix.<p>
  * For more information on the frustum matrix and the parameters, see {@link MathUtil.mat4frustum}.
- * @param {number} l X coordinate of the point where the left
+ * @param {number} l The Xcoordinate of the point where the left
  * clipping plane meets the near clipping plane.
- * @param {number} r X coordinate of the point where the right
+ * @param {number} r The Xcoordinate of the point where the right
  * clipping plane meets the near clipping plane.
- * @param {number} b Y coordinate of the point where the bottom
+ * @param {number} b The Ycoordinate of the point where the bottom
  * clipping plane meets the near clipping plane.
- * @param {number} t Y coordinate of the point where the top
+ * @param {number} t The Ycoordinate of the point where the top
  * clipping plane meets the near clipping plane.
  * @param {number} n The distance from the camera to
  * the near clipping plane.
@@ -317,16 +317,16 @@ MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix representing a "camera" view.<p>
  * For more information on that matrix and the parameters, see {@link MathUtil.mat4lookat}.
- * @param {number} ex X coordinate of the "camera" position in world space.
- * @param {number} ey Y coordinate of the "camera" position.
- * @param {number} ez Z coordinate of the "camera" position.
- * @param {number} cx X coordinate of the position in world space that
+ * @param {number} ex The Xcoordinate of the "camera" position in world space.
+ * @param {number} ey The Ycoordinate of the "camera" position.
+ * @param {number} ez The Zcoordinate of the "camera" position.
+ * @param {number} cx The Xcoordinate of the position in world space that
  * the "camera" is "looking at".
- * @param {number} cy Y coordinate of the position "looked at".
- * @param {number} cz Z coordinate of the position "looked at".
- * @param {number} ux X coordinate of the up direction vector.
- * @param {number} uy Y coordinate of the up vector.
- * @param {number} uz Z coordinate of the up vector.
+ * @param {number} cy The Ycoordinate of the position "looked at".
+ * @param {number} cz The Zcoordinate of the position "looked at".
+ * @param {number} ux The Xcoordinate of the up direction vector.
+ * @param {number} uy The Ycoordinate of the up vector.
+ * @param {number} uz The Zcoordinate of the up vector.
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
@@ -455,11 +455,11 @@ MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
  * Modifies the matrix at the top of this stack by multiplying it by
  * a matrix that transforms the view to a portion of the viewport.<p>
  * For more information on that matrix and the parameters, see {@link MathUtil.mat4pickMatrix}.
- * @param {number} wx X coordinate of the center of the desired viewport portion.
- * @param {number} wy Y coordinate of the center of the desired viewport portion.
+ * @param {number} wx The Xcoordinate of the center of the desired viewport portion.
+ * @param {number} wy The Ycoordinate of the center of the desired viewport portion.
  * @param {number} ww Width of the desired viewport portion.
  * @param {number} wh Height of the desired viewport portion.
- * @param {Array<number>} vp A 4-element array giving the X and Y coordinates
+ * @param {Array<number>} vp A 4-element array giving the x- and y-coordinates
  * of the current viewport's origin followed by the width and height
  * of a rectangle indicating the current viewport.
  * @returns {MatrixStack} This object.

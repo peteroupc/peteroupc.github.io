@@ -534,7 +534,7 @@ To generate a random string of characters:
 
 The following are examples of character lists:
 
-1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
+1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic uppercase letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lowercase letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
 2. For a base-10 digit string, the characters can be the basic digits only.
 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f" (not both).
 
@@ -1876,7 +1876,7 @@ Miscellaneous:
 - **Dirichlet distribution**: Suppose we (1) generate _n_+1 random [**gamma-distributed**](https://peteroupc.github.io/randomnotes.md#Gamma_Distribution) variates, each with separate parameters; (2) take their sum; (3) divide each of them by that sum; then (4) multiply each of them by a real number `x` greater than 0.  Then:
     - After step (4), if `x` was 1, the [**Dirichlet distribution**](https://en.wikipedia.org/wiki/Dirichlet_distribution) \(for example, (Devroye 1986\)[^24], p. 593-594) models the first _n_ of those numbers.
     - If the numbers at step (1) were each generated as `Expo(1)` (a special case of the gamma distribution), the result after step (4) is a uniformly distributed sum of _n_+1 numbers that sum to `x` (see also linked article above).
-- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong X axes).
+- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong x-axes).
 - **Erlang distribution**: `GammaDist(n)/lamda`, where `n` is an integer greater than 0.  Returns a number that simulates a sum of `n` exponential random variates with the given `lamda` parameter.
 - **Estoup distribution**: See zeta distribution.
 - **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a), a)`, where `a` is a shape parameter.
@@ -2048,7 +2048,7 @@ See Schechtmann and Zinn (1990)[^106]. Here, EPD generates an _exponential power
 > 1. `PNorm(vec, p)`, also known as &#x2113;<sub>`p`</sub> norm, is a generalized notion of distance. `p` can be any number 0 or greater, or can be infinity.  `PNorm(vec, 2)` is the "usual" distance and, for instance, forms the "usual" versions of spheres, while `PNorm(vec, infinity)` forms a hypercube.
 > 2. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains an optimized method for points on a circle (2-dimensional sphere, `p=2`).
 >
-> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on a circle and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+> **Example:** To generate a random point on the surface of a cylinder running along the z-axis, generate random x- and y-coordinates on a circle and generate a random z-coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest z-coordinates possible.
 
 <a id=Random_Points_Inside_a_Box_Ball_Shell_or_Cone></a>
 
@@ -2057,13 +2057,13 @@ See Schechtmann and Zinn (1990)[^106]. Here, EPD generates an _exponential power
 To generate a random point inside&mdash;
 
 - an **N-dimensional box**, generate `RNDRANGEMinMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
-    - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMinMaxExc(0,2), RNDRANGEMinMaxExc(3,6)]`, and
+    - to generate a random point inside a rectangle bounded in \[0, 2\) along the x-axis and \[3, 6\) along the y-axis, generate `[RNDRANGEMinMaxExc(0,2), RNDRANGEMinMaxExc(3,6)]`, and
     - to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]`.
 - an **N-dimensional ball**, centered at the origin, with a given radius, follow the pseudocode in `RandomPointOnSphere`, except replace `PNorm(ret, p)` with `pow(pow(PNorm(ret, p),p)+Expo(1),1.0/p)` (Barthe et al. 2005)[^107]. [^108]
 - an **N-dimensional spherical shell** (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional ball with radius equal to `pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)`[^109].
-- a **cone** with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))`[^110].
+- a **cone** with height `H` and radius `R` at its base, running along the z-axis, generate a random z-coordinate by `Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))`, then generate random x- and y-coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))`[^110].
 
-> **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+> **Example:** To generate a random point inside a cylinder running along the z-axis, generate random x- and y-coordinates inside a disc (2-dimensional ball) and generate a random z-coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest z-coordinates possible.
 >
 > **Notes:**
 >

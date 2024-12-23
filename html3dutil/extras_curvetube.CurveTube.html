@@ -22,42 +22,42 @@ library.</p>
 <ul>
   <li><code>func</code> (Type: Object)<br />A <a href="Curve.html">curve evaluator object</a> that describes the 3-dimensional curve to extrude a tube from. For best results, the curve should be continuous and smooth.</li>
   <li><code>thickness</code> (Type: number) (optional)<br />Radius of the extruded tube. If this parameter is null, undefined, or omitted, the default is 0.125.</li>
-  <li><code>sweptCurve</code> (Type: Object) (optional)<br />A <a href="Curve.html">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null, undefined, or omitted, uses a circular cross section in which the V coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the “thickness” parameter.</li>
+  <li><code>sweptCurve</code> (Type: Object) (optional)<br />A <a href="Curve.html">curve evaluator object</a> that describes a two-dimensional curve to serve as the cross section of the extruded shape. The curve need not be closed. If this parameter is null, undefined, or omitted, uses a circular cross section in which the v-coordinate ranges from 0 through 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections will affect the meaning of the “thickness” parameter.</li>
 </ul>
 
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#extras_curvetube_CurveTube_endPoints">endPoints</a><br />Returns the starting and ending U and V coordinates of this surface.</li>
-  <li><a href="#extras_curvetube_CurveTube_evaluate">evaluate</a><br />Generates a point on the extruded tube from the given u and V coordinates.</li>
+  <li><a href="#extras_curvetube_CurveTube_endPoints">endPoints</a><br />Returns the starting and ending u- and v-coordinates of this surface.</li>
+  <li><a href="#extras_curvetube_CurveTube_evaluate">evaluate</a><br />Generates a point on the extruded tube from the given u- and v-coordinates.</li>
 </ul>
 
 <p><a name="extras_curvetube_CurveTube_endPoints"></a>
 ### module:extras/curvetube~CurveTube#endPoints()</p>
 
-<p>Returns the starting and ending U and V coordinates of this surface.</p>
+<p>Returns the starting and ending u- and v-coordinates of this surface.</p>
 
 <h4 id="return-value">Return Value</h4>
 
 <p>A four-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the surface, and the third
-and fourth elements are its starting and ending V coordinates.
-The starting and ending U coordinates will be the extruded curve’s end points (or <code>[0, 1]</code>
+elements are the starting and ending u-coordinates, respectively, of the surface, and the third
+and fourth elements are its starting and ending v-coordinates.
+The starting and ending u-coordinates will be the extruded curve’s end points (or <code>[0, 1]</code>
 if it doesn’t implement an <code>endPoints</code> method).
-The starting and ending V coordinates are <code>[0, &pi;]</code> by default, but if a cross
-section curve is defined, those V coordinates will be that curve’s end points (or <code>[0, 1]</code>
+The starting and ending v-coordinates are <code>[0, &pi;]</code> by default, but if a cross
+section curve is defined, those v-coordinates will be that curve’s end points (or <code>[0, 1]</code>
 if it doesn’t implement an <code>endPoints</code> method).</p>
 
 <p><a name="extras_curvetube_CurveTube_evaluate"></a>
 ### module:extras/curvetube~CurveTube#evaluate(u, v)</p>
 
-<p>Generates a point on the extruded tube from the given u and V coordinates.</p>
+<p>Generates a point on the extruded tube from the given u- and v-coordinates.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li><code>u</code> (Type: number)<br />U coordinate. This will run the length of the curve.</li>
-  <li><code>v</code> (Type: number)<br />V coordinate. This will sweep around the extruded tube.</li>
+  <li><code>u</code> (Type: number)<br />u-coordinate. This will run the length of the curve.</li>
+  <li><code>v</code> (Type: number)<br />v-coordinate. This will sweep around the extruded tube.</li>
 </ul>
 
 <h4 id="return-value-1">Return Value</h4>

@@ -15,7 +15,7 @@
 
 <p>A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
-The rolling circle will start at the positive X axis of the fixed circle.</p>
+The rolling circle will start at the positive x-axis of the fixed circle.</p>
 
 <p>The following curves can be generated with this class (in the following
 descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
@@ -36,14 +36,14 @@ and D = <code>distFromRollerCenter</code>).&lt;ul&gt;</p>
   <li><code>outerRadius</code> (Type: number)<br />Radius of the circle whose position is fixed.</li>
   <li><code>rollerRadius</code> (Type: number)<br />Radius of the rolling circle. An epicycloid results when distFromRollerCenter=rollerRadius.</li>
   <li><code>distFromRollerCenter</code> (Type: number)<br />Distance from the center of the rolling circle to the drawing pen.</li>
-  <li><code>rotationDegrees</code> (Type: number) (optional)<br />Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
+  <li><code>rotationDegrees</code> (Type: number) (optional)<br />Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. Default is 0.</li>
 </ul>
 
 <h3 id="methods">Methods</h3>
 
 <ul>
   <li><a href="#extras_evaluators_Epitrochoid_endPoints">endPoints</a><br />Gets the endpoints of this curve.</li>
-  <li><a href="#extras_evaluators_Epitrochoid_evaluate">evaluate</a><br />Generates a point on the curve from the given U coordinate.</li>
+  <li><a href="#extras_evaluators_Epitrochoid_evaluate">evaluate</a><br />Generates a point on the curve from the given u-coordinate.</li>
   <li><a href="#extras_evaluators_Epitrochoid_scaleTo">scaleTo</a><br />Creates a modified version of this curve so that it
 fits the given radius.</li>
 </ul>
@@ -64,18 +64,18 @@ and the second number is the end of the curve. * (Type: Array.&lt;number&gt;)</p
 <p><a name="extras_evaluators_Epitrochoid_evaluate"></a>
 ### module:extras/evaluators~Epitrochoid#evaluate(u)</p>
 
-<p>Generates a point on the curve from the given U coordinate.</p>
+<p>Generates a point on the curve from the given u-coordinate.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li><code>u</code> (Type: number)<br />U coordinate.</li>
+  <li><code>u</code> (Type: number)<br />u-coordinate.</li>
 </ul>
 
 <h4 id="return-value-1">Return Value</h4>
 
 <p>A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0. (Type: Array.&lt;number&gt;)</p>
+Only the x- and y-coordinates will be other than 0. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="extras_evaluators_Epitrochoid_scaleTo"></a>
 ### module:extras/evaluators~Epitrochoid#scaleTo(radius)</p>

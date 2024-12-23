@@ -201,7 +201,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support [**"ANSI" (American National Standards Institute) graphics codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "&#x5b;" followed by a semicolon-separated sequence of numbers (given later) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (The graphic control sequence U+001B followed by "&#x5b;m" has the same effect.)
-- "1": Set the following text in bold type.
+- "1": Set the following text in bold type type type type type type type type type.
 - "2": Use a slightly dimmer foreground color than usual.
 - "3": Set the following text in italic type.
 - "4": Underline the following text.

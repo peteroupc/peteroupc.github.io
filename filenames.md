@@ -26,28 +26,28 @@ Applications that wish to support internationalized file names can follow the su
 
 ### Guidance for User-Facing Files
 
-_User-facing files_ are files created by end users or introduced into the application by end users.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
+_User-facing files_ are files created by customers or introduced into the application by customers.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
 
 **When creating new files:** The MailLib library includes a [**`MakeFilename`**](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method that converts a title or file name to a suitable name for saving data to a file.  `MakeFilename` does a number of things to maximize the chance that the name can be used as is in most file systems.
 
 In one possible use of `MakeFilename`, a word-processing application could create a file name for a document by taking the document's title or the first few words of its body and adding a file extension like ".document" to those words (for example, "My Report.document"), then pass that name to the `MakeFilename` method to get a suggested file name to show a user seeking to save that document.
 
-**When accessing existing files:** If an application receives the name of an existing file (as opposed to its directory path) from the file system, it should use that file name without change for the purposes of accessing or overwriting that file; this means that for such purposes, the application should treat that file name as uninterpreted data without converting its contents in any way, including by the `MakeFilename` method, a transcoder, or a case converter.  This doesn't forbid applications from making changes to that file name for other purposes, including for the purpose of displaying that name to end users.
+**When accessing existing files:** If an application receives the name of an existing file (as opposed to its directory path) from the file system, it should use that file name without change for the purposes of accessing or overwriting that file; this means that for such purposes, the application should treat that file name as uninterpreted data without converting its contents in any way, including by the `MakeFilename` method, a transcoder, or a case converter.  This doesn't forbid applications from making changes to that file name for other purposes, including for the purpose of displaying that name for others to see.
 
 <a id=Guidance_for_Non_User_Facing_Files></a>
 
 ### Guidance for Non-User-Facing Files
 
-_Internal files_ are files used by the application only and not exposed directly to end users.
+_Internal files_ are files used by the application only and not exposed directly to users.
 
 To maximize compatibility with file system conventions, applications should limit the names of internal files to names that have the following characters only and are left unchanged by the [**`MakeFilename`**](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method:
 
-- Basic lower-case letters (U+0061 to U+007A).
+- Basic lowercase letters (U+0061 to U+007A).
 - Basic digits (U+0030 to U+0039).
 - Hyphen, full stop ("-", ".").
 - Underscore ("_") if portability is not a concern (see RFC 2049 sec. 3).
 
-In addition, such file names should not begin or end with "-" or "." or have two or more consecutive full stops ("."). (Basic upper-case letters, U+0041 to U+005a, are not suggested here because different file systems have different rules for case comparisons.)
+In addition, such file names should not begin or end with "-" or "." or have two or more consecutive full stops ("."). (Basic uppercase letters, U+0041 to U+005a, are not suggested here because different file systems have different rules for case comparisons.)
 
 Applications should avoid giving internal files an internationalized file name without a compelling reason to do so.  This is especially because there are ways to encode such file names in this restricted character set, one of which is to&mdash;
 - put the internationalized string [**in UTF-8**](https://peteroupc.github.io/MailLib/docs/PeterO.DataUtilities.html#GetUtf8Bytes_string_bool) (an 8-bit encoding form of the Unicode Standard), then

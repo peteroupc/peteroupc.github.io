@@ -53,8 +53,8 @@ point that lies on the surface.</p>
   <li><strong>F</strong>(u, v) = [ <em>x</em>(u, v), <em>y</em>(u, v), <em>z</em>(u, v) ];</li>
 </ul>
 
-<p>The <em>x</em> function returns an X coordinate given u and v, and likewise for <em>y</em> and <em>z</em>.
-Since the <em>z</em> function returns a Z coordinate, the surface will be in 2D if <em>z</em> always returns
+<p>The <em>x</em> function returns an x-coordinate given u and v, and likewise for <em>y</em> and <em>z</em>.
+Since the <em>z</em> function returns a z-coordinate, the surface will be in 2D if <em>z</em> always returns
 the same value.</p>
 
 <p>For example, if we have a parametric surface defined by the following functions:</p>
@@ -113,8 +113,8 @@ The comments explain how <code>makeMesh</code> works in detail.</p>
       .positionNormal(func)
       .attribute(colorGradient, H3DU.Semantic.COLOR)
      // Evaluate the surface and generate a triangle
-     // mesh, using resolution+1 different U coordinates,
-     // and resolution+1 different V coordinates.
+     // mesh, using resolution+1 different u-coordinates,
+     // and resolution+1 different v-coordinates.
      // Instead of H3DU.Mesh.TRIANGLES, we could use
      // H3DU.Mesh.LINES to create a wireframe mesh,
      // or H3DU.Mesh.POINTS to create a point mesh.
@@ -131,9 +131,9 @@ V each range from 0 through 1.)</p>
 
 <pre>var evaluator = {
   "evaluate":function(u, v){
-    // Take the U parameter as the X coordinate,
-    // the V parameter as the Y coordinate, and 0 as
-    // the Z coordinate.
+    // Take the U parameter as the x-coordinate,
+    // the V parameter as the y-coordinate, and 0 as
+    // the z-coordinate.
     return [u, v, 0];
   }
 };
@@ -158,12 +158,12 @@ V each range from 0 through 1.)</p>
 <p><img src="surfaces3.png" alt="**The parametric surface.**" /></p>
 
 <p>Now here’s the interesting part: This evaluator returns not a disc,
-but a <em>cone</em>, whose length runs along the negative Z axis:</p>
+but a <em>cone</em>, whose length runs along the negative z-axis:</p>
 
 <pre>var evaluator = {
   "evaluate":function(u, v){
      // Return cone coordinates, using the u
-     // parameter as the Z axis.
+     // parameter as the z-axis.
      return [u*Math.cos(v),u*Math.sin(v),-u];
   },
   // Declare the usual range of the coordinates
@@ -171,7 +171,7 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
 };
 </pre>
 
-<p>The following shape was rotated to show the Z axis; the rotation isn’t perfect.</p>
+<p>The following shape was rotated to show the z-axis; the rotation isn’t perfect.</p>
 
 <p><img src="surfaces4.png" alt="**The parametric surface.**" /></p>
 

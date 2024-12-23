@@ -14,7 +14,7 @@
 
 <p>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
-The rolling circle will start at the positive X axis of the fixed circle.</p>
+The rolling circle will start at the positive x-axis of the fixed circle.</p>
 
 <p>The following curves can be generated with this class (in the following
 descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
@@ -45,43 +45,43 @@ the HTML 3D Library. Example:</p>
 <li><code>outerRadius</code> (Type: number)<br>Radius of the circle whose position is fixed.</li>
 <li><code>rollerRadius</code> (Type: number)<br>Radius of the rolling circle. An epicycloid results when distFromRollerCenter=rollerRadius.</li>
 <li><code>distFromRollerCenter</code> (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.</li>
-<li><code>rotationDegrees</code> (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
+<li><code>rotationDegrees</code> (Type: number) (optional)<br>Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. Default is 0.</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Epitrochoid_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Epitrochoid_accel">accel</a><br>Finds an approximate acceleration vector at the given u-coordinate of this curve.</li>
 <li><a href="#H3DU.Epitrochoid_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.</li>
+curve and the point at the given u-coordinate of this curve.</li>
 <li><a href="#H3DU.Epitrochoid_changeEnds">changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.</li>
 <li><a href="#H3DU.Epitrochoid_endPoints">endPoints</a><br>Gets the endpoints of this curve.</li>
-<li><a href="#H3DU.Epitrochoid_evaluate">evaluate</a><br>Generates a point on the curve from the given U coordinate.</li>
+<li><a href="#H3DU.Epitrochoid_evaluate">evaluate</a><br>Generates a point on the curve from the given u-coordinate.</li>
 <li><a href="#H3DU.Epitrochoid_fitRange">fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.</li>
+path as this one but has its u-coordinates remapped to fit the given range.</li>
 <li><a href="#H3DU.Epitrochoid_getLength">getLength</a><br>Convenience method for getting the total length of this curve.</li>
 <li><a href="#H3DU.Epitrochoid_getPoints">getPoints</a><br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.</li>
+of u-coordinates.</li>
 <li><a href="#H3DU.Epitrochoid_getPointsAsObjects">getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.</li>
-<li><a href="#H3DU.Epitrochoid_jerk">jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.</li>
-<li><a href="#H3DU.Epitrochoid_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
+of u-coordinates.</li>
+<li><a href="#H3DU.Epitrochoid_jerk">jerk</a><br>Finds an approximate jerk vector at the given u-coordinate of this curve.</li>
+<li><a href="#H3DU.Epitrochoid_normal">normal</a><br>Finds an approximate principal normal vector at the given u-coordinate of this curve.</li>
 <li><a href="#H3DU.Epitrochoid_scaleTo">scaleTo</a><br>Creates a modified version of this curve so that it
 fits the given radius.</li>
-<li><a href="#H3DU.Epitrochoid_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.</li>
+<li><a href="#H3DU.Epitrochoid_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.</li>
 <li><a href="#H3DU.Epitrochoid_toArcLengthParam">toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.</li>
-<li><a href="#H3DU.Epitrochoid_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
+<li><a href="#H3DU.Epitrochoid_velocity">velocity</a><br>Finds an approximate velocity vector at the given u-coordinate of this curve.</li>
 </ul>
 
 <p><a name='H3DU.Epitrochoid_accel'></a></p>
 
 <h3>H3DU.Epitrochoid#accel(u)</h3>
 
-<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+<p>Finds an approximate acceleration vector at the given u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
@@ -91,7 +91,7 @@ the velocity vector.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -104,7 +104,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <h3>H3DU.Epitrochoid#arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
 
@@ -113,19 +113,19 @@ method if it implements it; otherwise, calculates a numerical integral using the
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
+<p>The approximate arc length of this curve at the given u-coordinate. (Type: number)</p>
 
 <p><a name='H3DU.Epitrochoid_changeEnds'></a></p>
 
 <h3>H3DU.Epitrochoid#changeEnds(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
 from [0, &pi;] to [0, &pi;/8].</p>
@@ -169,26 +169,26 @@ and the second number is the end of the curve. * (Type: Array.&lt;number&gt;)</p
 
 <h3>H3DU.Epitrochoid#evaluate(u)</h3>
 
-<p>Generates a point on the curve from the given U coordinate.</p>
+<p>Generates a point on the curve from the given u-coordinate.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0. (Type: Array.&lt;number&gt;)</p>
+Only the x- and y-coordinates will be other than 0. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Epitrochoid_fitRange'></a></p>
 
 <h3>H3DU.Epitrochoid#fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
-For example, this method can be used to shrink the range of U coordinates
+path as this one but has its u-coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
 
@@ -218,7 +218,7 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
 <h3>H3DU.Epitrochoid#getPoints(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization.</p>
 
@@ -239,7 +239,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.
 <h3>H3DU.Epitrochoid#getPointsAsObjects(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization. The positions will be in the form of objects with
 up to four properties: x, y, z, and w retrieve the first, second, third,
@@ -270,7 +270,7 @@ var buffer=new THREE.BufferGeometry()
 
 <h3>H3DU.Epitrochoid#jerk(u)</h3>
 
-<p>Finds an approximate jerk vector at the given U coordinate of this curve.
+<p>Finds an approximate jerk vector at the given u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
@@ -280,7 +280,7 @@ the acceleration vector.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -292,7 +292,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <h3>H3DU.Epitrochoid#normal(u)</h3>
 
-<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+<p>Finds an approximate principal normal vector at the given u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
 
@@ -303,7 +303,7 @@ vector divided by that derivative&#39;s length. The normal returned by this meth
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -332,13 +332,13 @@ fits the given radius.</p>
 
 <h3>H3DU.Epitrochoid#tangent(u)</h3>
 
-<p>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+<p>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but &quot;normalized&quot; to a unit vector.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -351,7 +351,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <h3>H3DU.Epitrochoid#toArcLengthParam()</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>. Arc length
 parameterization allows for moving along a curve&#39;s path at a uniform
 speed and for generating points which are spaced evenly along that
@@ -375,7 +375,7 @@ this method is approximate.</p>
 
 <h3>H3DU.Epitrochoid#velocity(u)</h3>
 
-<p>Finds an approximate velocity vector at the given U coordinate of this curve.
+<p>Finds an approximate velocity vector at the given u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).</p>
@@ -385,7 +385,7 @@ the position (from the <code>evaluate</code> method).</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4>Return Value</h4>

@@ -21,42 +21,42 @@ to create a B&eacute;zier surface.</b></p>
 
 <ul>
 <li><code>cp</code> (Type: Array.&lt;Array.&lt;Array.&lt;number&gt;&gt;&gt;)<br>An array of control point arrays as specified in <a href="H3DU.BSplineSurface.html#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>.</li>
-<li><code>u1</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation along the U axis.)</li>
-<li><code>u2</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation along the U axis.)</li>
-<li><code>v1</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation along the V axis.)</li>
-<li><code>v2</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation along the V axis.)</li>
+<li><code>u1</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation along the u-axis.)</li>
+<li><code>u2</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation along the u-axis.)</li>
+<li><code>v1</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the starting point for the purpose of interpolation along the v-axis.)</li>
+<li><code>v2</code> (Type: number) (optional)<br>No longer used since version 2.0. The starting and ending points will be (0, 1). (This parameter was the ending point for the purpose of interpolation along the v-axis.)</li>
 </ul>
 
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.BezierSurface_bitangent">bitangent</a><br>Finds an approximate bitangent vector of this surface at the given U and V coordinates.</li>
-<li><a href="#H3DU.BezierSurface_endPoints">endPoints</a><br>Returns the starting and ending U and V coordinates of this surface.</li>
+<li><a href="#H3DU.BezierSurface_bitangent">bitangent</a><br>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_endPoints">endPoints</a><br>Returns the starting and ending u- and v-coordinates of this surface.</li>
 <li><a href="#H3DU.BezierSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
 in a B&eacute;zier surface.</li>
-<li><a href="#H3DU.BezierSurface_gradient">gradient</a><br>Finds an approximate gradient vector of this surface at the given U and V coordinates.</li>
-<li><a href="#H3DU.BezierSurface_normal">normal</a><br>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.</li>
-<li><a href="#H3DU.BezierSurface_tangent">tangent</a><br>Finds an approximate tangent vector of this surface at the given U and V coordinates.</li>
+<li><a href="#H3DU.BezierSurface_gradient">gradient</a><br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_normal">normal</a><br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_tangent">tangent</a><br>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.</li>
 </ul>
 
 <p><a name='H3DU.BezierSurface_bitangent'></a></p>
 
 <h3>H3DU.BezierSurface#bitangent(u, v)</h3>
 
-<p>Finds an approximate bitangent vector of this surface at the given U and V coordinates.</p>
+<p>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.</p>
 
 <p>The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
-with respect to the V axis using the <code>evaluate</code> method.</p>
+with respect to the v-axis using the <code>evaluate</code> method.</p>
 
-<p>The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively,
+<p>The <b>bitangent vector</b> is the vector pointing in the direction of the v-axis, or alternatively,
 the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the surface.</li>
-<li><code>v</code> (Type: number)<br>V coordinate of a point on the surface.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the surface.</li>
+<li><code>v</code> (Type: number)<br>v-coordinate of a point on the surface.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -68,13 +68,13 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <h3>H3DU.BezierSurface#endPoints()</h3>
 
-<p>Returns the starting and ending U and V coordinates of this surface.</p>
+<p>Returns the starting and ending u- and v-coordinates of this surface.</p>
 
 <h4>Return Value</h4>
 
 <p>A four-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the surface, and the third
-and fourth elements are its starting and ending V coordinates. (Type: Array.&lt;number&gt;)</p>
+elements are the starting and ending u-coordinates, respectively, of the surface, and the third
+and fourth elements are its starting and ending v-coordinates. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.BezierSurface_evaluate'></a></p>
 
@@ -86,8 +86,8 @@ in a B&eacute;zier surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of the surface to evaluate (generally within the range given in the constructor).</li>
-<li><code>v</code> (Type: number)<br>V coordinate of the surface to evaluate.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of the surface to evaluate (generally within the range given in the constructor).</li>
+<li><code>v</code> (Type: number)<br>v-coordinate of the surface to evaluate.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -99,7 +99,7 @@ the evaluation. It will have as many elements as a control point, as specified i
 
 <h3>H3DU.BezierSurface#gradient(u, v)</h3>
 
-<p>Finds an approximate gradient vector of this surface at the given U and V coordinates.</p>
+<p>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.</p>
 
 <p>The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>gradient</code>
 method if it implements it; otherwise uses the surface&#39;s tangent and bitangent vectors to implement the gradient
@@ -116,8 +116,8 @@ in that order. The gradient returned by this method <i>should not</i> be &quot;n
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the surface.</li>
-<li><code>v</code> (Type: number)<br>V coordinate of a point on the surface.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the surface.</li>
+<li><code>v</code> (Type: number)<br>v-coordinate of a point on the surface.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -129,14 +129,14 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <h3>H3DU.BezierSurface#normal(u, v)</h3>
 
-<p>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
+<p>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but &quot;normalized&quot; to a unit vector.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the surface.</li>
-<li><code>v</code> (Type: number)<br>V coordinate of a point on the surface.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the surface.</li>
+<li><code>v</code> (Type: number)<br>v-coordinate of a point on the surface.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -148,20 +148,20 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <h3>H3DU.BezierSurface#tangent(u, v)</h3>
 
-<p>Finds an approximate tangent vector of this surface at the given U and V coordinates.
+<p>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
 The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the <code>evaluate</code> method.</p>
+with respect to the u-axis using the <code>evaluate</code> method.</p>
 
-<p>The <b>tangent vector</b> is the vector pointing in the direction of the U axis,
+<p>The <b>tangent vector</b> is the vector pointing in the direction of the u-axis,
 or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
 The tangent vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>U coordinate of a point on the surface.</li>
-<li><code>v</code> (Type: number)<br>V coordinate of a point on the surface.</li>
+<li><code>u</code> (Type: number)<br>u-coordinate of a point on the surface.</li>
+<li><code>v</code> (Type: number)<br>v-coordinate of a point on the surface.</li>
 </ul>
 
 <h4>Return Value</h4>

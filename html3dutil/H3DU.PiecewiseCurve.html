@@ -16,13 +16,12 @@
 <p>A curve evaluator object for a curve
 made up of one or more individual curves.</p>
 
-<p>The combined curve’s U coordinates range from 0 to N,
+<p>The combined curve’s u-coordinates range from 0 to N,
 where N is the number of curves. In this way, the integer
-part of a U coordinate indicates the curve the coordinate
+part of a u-coordinate indicates the curve the coordinate
 refers to. For example, if there are four curves, coordinates
 from 0, but less than 1, belong to the first curve, and coordinates
-from 1, but less than 2, belong to the second curve. The U
-coordinate equal to N refers to the end of the last curve in
+from 1, but less than 2, belong to the second curve. The u-coordinate equal to N refers to the end of the last curve in
 the piecewise curve.</p>
 
 <h4 id="parameters">Parameters</h4>
@@ -51,9 +50,9 @@ return new PiecewiseCurve(curves)
 
 <ul>
   <li><a href="#H3DU.PiecewiseCurve_arcLength">arcLength</a><br />Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.</li>
-  <li><a href="#H3DU.PiecewiseCurve_endPoints">endPoints</a><br />Returns the starting and ending U coordinates of this curve.</li>
-  <li><a href="#H3DU.PiecewiseCurve_evaluate">evaluate</a><br />Finds the position of this curve at the given U coordinate.</li>
+curve and the point at the given u-coordinate of this curve.</li>
+  <li><a href="#H3DU.PiecewiseCurve_endPoints">endPoints</a><br />Returns the starting and ending u-coordinates of this curve.</li>
+  <li><a href="#H3DU.PiecewiseCurve_evaluate">evaluate</a><br />Finds the position of this curve at the given u-coordinate.</li>
   <li><a href="#H3DU.PiecewiseCurve.fromCatmullRomSpline">fromCatmullRomSpline</a><br />Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull–Rom spline.</li>
   <li><a href="#H3DU.PiecewiseCurve.fromEllipseArc">fromEllipseArc</a><br />TODO: Not documented yet.</li>
@@ -62,29 +61,29 @@ Hermite spline.</li>
   <li><a href="#H3DU.PiecewiseCurve.fromTCBSpline">fromTCBSpline</a><br />Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic TCB spline (tension/continuity/bias spline, also known as Kochanek–Bartels spline).</li>
   <li><a href="#H3DU.PiecewiseCurve_getCurves">getCurves</a><br />Gets a reference to the curves that make up this piecewise curve.</li>
-  <li><a href="#H3DU.PiecewiseCurve_velocity">velocity</a><br />Finds an approximate velocity vector at the given U coordinate of this curve.</li>
+  <li><a href="#H3DU.PiecewiseCurve_velocity">velocity</a><br />Finds an approximate velocity vector at the given u-coordinate of this curve.</li>
 </ul>
 
 <p><a name="H3DU.PiecewiseCurve_arcLength"></a>
 ### H3DU.PiecewiseCurve#arcLength(u)</p>
 
 <p>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.</p>
+curve and the point at the given u-coordinate of this curve.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li><code>u</code> (Type: number)<br />U coordinate of a point on the curve.</li>
+  <li><code>u</code> (Type: number)<br />u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4 id="return-value">Return Value</h4>
 
-<p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
+<p>The approximate arc length of this curve at the given u-coordinate. (Type: number)</p>
 
 <p><a name="H3DU.PiecewiseCurve_endPoints"></a>
 ### H3DU.PiecewiseCurve#endPoints()</p>
 
-<p>Returns the starting and ending U coordinates of this curve.</p>
+<p>Returns the starting and ending u-coordinates of this curve.</p>
 
 <h4 id="return-value-1">Return Value</h4>
 
@@ -96,12 +95,12 @@ of curves that make up this piecewise curve.</p>
 <p><a name="H3DU.PiecewiseCurve_evaluate"></a>
 ### H3DU.PiecewiseCurve#evaluate(u)</p>
 
-<p>Finds the position of this curve at the given U coordinate.</p>
+<p>Finds the position of this curve at the given u-coordinate.</p>
 
 <h4 id="parameters-2">Parameters</h4>
 
 <ul>
-  <li><code>u</code> (Type: number)<br />U coordinate of a point on the curve.</li>
+  <li><code>u</code> (Type: number)<br />u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4 id="return-value-2">Return Value</h4>
@@ -209,12 +208,12 @@ same path as the TCB spline. (Type: PiecewiseCurve)</p>
 <p><a name="H3DU.PiecewiseCurve_velocity"></a>
 ### H3DU.PiecewiseCurve#velocity(u)</p>
 
-<p>Finds an approximate velocity vector at the given U coordinate of this curve.</p>
+<p>Finds an approximate velocity vector at the given u-coordinate of this curve.</p>
 
 <h4 id="parameters-7">Parameters</h4>
 
 <ul>
-  <li><code>u</code> (Type: number)<br />U coordinate of a point on the curve.</li>
+  <li><code>u</code> (Type: number)<br />u-coordinate of a point on the curve.</li>
 </ul>
 
 <h4 id="return-value-8">Return Value</h4>

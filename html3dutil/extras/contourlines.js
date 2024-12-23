@@ -180,20 +180,20 @@ function drawCurve(contours) {
 }
 /**
  * Generates contour lines for two-dimensional data.
- * @param {Function} func A function that takes two parameters--a U coordinate
+ * @param {Function} func A function that takes two parameters--a u-coordinate
  * and a V coordinate--and returns a number at that point.
  * @param {Array<number>} levels An array of values at which to draw contour lines.
  * For example, if levels is `[20, 25]`, this function will draw contour
  * lines along the values 20 and 25.
- * @param {number} u1 Starting U coordinate to sample.
- * @param {number} u2 Ending U coordinate to sample.
- * @param {number} v1 Starting V coordinate to sample.
- * @param {number} v2 Ending V coordinate to sample.
+ * @param {number} u1 Starting u-coordinate to sample.
+ * @param {number} u2 Ending u-coordinate to sample.
+ * @param {number} v1 Starting v-coordinate to sample.
+ * @param {number} v2 Ending v-coordinate to sample.
  * @param {number} usize The number of levels between grid points
- * along the U axis. This method will sample (usize+1)*(vsize+1)
+ * along the u-axis. This method will sample (usize+1)*(vsize+1)
  * grid points in total.
  * @param {number} vsize The number of levels between grid points
- * along the V axis.
+ * along the v-axis.
  * @returns {MeshBuffer} A mesh buffer of line segments for the contour lines.
  * @example <caption>This example generates contour lines for a simple
  * function. This method samples the function at integer grid points.

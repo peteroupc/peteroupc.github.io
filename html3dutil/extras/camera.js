@@ -357,9 +357,9 @@ InputTracker.SUBTRACT = 109;
  * mouse position, and delta mouse wheel
  * position (see the "update" method).
  * @returns {Object} An object containing the following keys:<ul>
- * <li><code>cx</code> - X coordinate of the current mouse
+ * <li><code>cx</code> - x-coordinate of the current mouse
  * position.
- * <li><code>cx</code> - Y coordinate of the current mouse
+ * <li><code>cx</code> - y-coordinate of the current mouse
  * position.
  * <li><code>x</code> - X component of the delta mouse position.
  * <li><code>y</code> - Y component of the delta mouse position.
@@ -638,11 +638,11 @@ Camera.prototype.turnAngleVertical = function(angleDegrees) {
 };
 /**
  * Sets the position of the camera.
- * @param {number} cx The camera's new X coordinate,
- * or a 3-element vector containing the X, Y, and Z coordinates.
+ * @param {number} cx The camera's new x-coordinate,
+ * or a 3-element vector containing the x-, y-, and z-coordinates.
  * In the latter case, "cy" and "cz" can be omitted.
- * @param {number} [cy] The camera's new Y coordinate.
- * @param {number} [cz] The camera's new Z coordinate.
+ * @param {number} [cy] The camera's new y-coordinate.
+ * @param {number} [cz] The camera's new z-coordinate.
  * @returns {Camera} This object.
  */
 Camera.prototype.setPosition = function(cx, cy, cz) {
@@ -661,7 +661,7 @@ Camera.prototype.setPosition = function(cx, cy, cz) {
 /**
  * Gets the position of the camera.
  * @returns {Array<number>} An array of three numbers giving
- * the X, Y, and Z coordinates of the camera's position, respectively.
+ * the x-, y-, and z-coordinates of the camera's position, respectively.
  */
 Camera.prototype.getPosition = function() {
   return MathUtil.vec3copy(this.position);

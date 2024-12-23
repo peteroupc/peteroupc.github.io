@@ -154,7 +154,7 @@ can be negative.</li>
 
 <p><strong><code>MathUtil.mat4ortho2d(left, right, bottom, top)</code></strong></p>
 
-<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.</p>
+<p>This method returns a 4 × 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes z-coordinates at or near 0 especially appropriate for this projection.</p>
 
 <ul>
   <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
@@ -224,19 +224,19 @@ without transforming them.</p>
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
 perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
-transforms W to the negative Z coordinate in eye space, that is, it will increase with
+transforms W to the negative z-coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the “eye” or “camera”.</p>
 
-<p>To take perspective into account, the clip space X, Y, and Z coordinates are
+<p>To take perspective into account, the clip space x-, y-, and z-coordinates are
 divided by the clip space W, and then converted to <em>window coordinates</em>,
 which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels.</p>
 
 <p>For the perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective"><code>mat4perspective</code></a>, dividing
-the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
+the x-, y-, and z-coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the “eye” or “camera”),
-the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
+the x-, y-, and z-coordinates are brought closer and closer to the center of the view.  This
 is the <em>perspective</em> effect mentioned earlier: objects will appear smaller and smaller
 as they are more and more distant from the “camera”.</p>
 

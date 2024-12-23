@@ -13,13 +13,13 @@
 import {MathUtil} from "../h3du_module.js";
 /**
  * Generates a star polygon <code>{points/jump}</code>.
- * @param {number} x X coordinate of the star polygon's center.
- * @param {number} y Y coordinate of the star polygon's center.
+ * @param {number} x The Xcoordinate of the star polygon's center.
+ * @param {number} y The Ycoordinate of the star polygon's center.
  * @param {number} radius Radius of the star polygon; that is, the distance from the center to each of its points.
  * @param {number} points Number of points in the star polygon. Must be an integer 2 or greater.
  * @param {number} jump Number of points in the underlying polygon to skip when connecting points with straight line segments to generate the star polygon. Must be an integer 1 or greater.
  * @param {number} [phaseInDegrees] Angle, in degrees, of the first point in the star polygon. If null, undefined, or omitted, the default is 0.
- * @returns {Array<Array<number>>} Array of points (two-element arrays) making up the star polygon. The first number of each point is the X coordinate, and the second the Y coordinate.
+ * @returns {Array<Array<number>>} Array of points (two-element arrays) making up the star polygon. The first number of each point is the x-coordinate, and the second the y-coordinate.
  */
 export function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
   const coords = [];

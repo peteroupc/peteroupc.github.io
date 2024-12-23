@@ -212,8 +212,8 @@ function makeMesh(func, resolutionU, resolutionV) {
     .positionNormal(func)
     .attribute(colorGradient, H3DU.Semantic.COLOR)
     // Evaluate the surface and generate a triangle
-    // mesh, using resolution+1 different U coordinates,
-    // and resolution+1 different V coordinates.
+    // mesh, using resolution+1 different u-coordinates,
+    // and resolution+1 different v-coordinates.
     // Instead of H3DU.Mesh.TRIANGLES, we could use
     // H3DU.Mesh.LINES to create a wireframe mesh,
     // or H3DU.Mesh.POINTS to create a point mesh.

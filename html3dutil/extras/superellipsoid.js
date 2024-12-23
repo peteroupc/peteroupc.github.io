@@ -144,8 +144,8 @@ Supershape.superellipse = function(n, rx, ry) {
  * A value of 1 forms a circle, values approaching 0 have the circle
  * approach a square, and values approaching infinity have the circle
  * approach a plus sign.
- * @param {number} rx Radius along the X axis of the figure.
- * @param {number} ry Radius along the Y axis of the figure.
+ * @param {number} rx Radius along the x-axis of the figure.
+ * @param {number} ry Radius along the y-axis of the figure.
  * @returns {Object} Curve evaluator object for a superellipse curve.
  */
 Supershape.superellipse2 = function(n, rx, ry) {
@@ -160,11 +160,11 @@ Supershape.superellipse2 = function(n, rx, ry) {
  * case of a 3-D supershape),
  * but using Paul Bourke's parameterization (using the sphere parametric
  * equation but raising all sines and cosines to a power of n1 or n2).
- * @param {number} n1 Exponent for the sines and cosines along the V axis.
- * @param {number} n2 Exponent for the sines and cosines along the U axis.
- * @param {number} rx Radius along the X axis of the figure.
- * @param {number} ry Radius along the Y axis of the figure.
- * @param {number} rz Radius along the Z axis of the figure.
+ * @param {number} n1 Exponent for the sines and cosines along the v-axis.
+ * @param {number} n2 Exponent for the sines and cosines along the u-axis.
+ * @param {number} rx Radius along the x-axis of the figure.
+ * @param {number} ry Radius along the y-axis of the figure.
+ * @param {number} rz Radius along the z-axis of the figure.
  * @returns {Object} Surface evaluator object for a superellipsoid.
  */
 Supershape.superellipsoid2 = function(n1, n2, rx, ry, rz) {
@@ -203,8 +203,8 @@ Supershape.roundedPolygon = function(sides, rounding, rx, ry) {
  * @param {number} xRadius
  * @param {number} yRadius
  * @param {number} innerRadius
- * @param {number} n Exponent for the sines and cosines in the U axis.
- * @param {number} m Exponent for the sines and cosines in the V axis.
+ * @param {number} n Exponent for the sines and cosines in the u-axis.
+ * @param {number} m Exponent for the sines and cosines in the v-axis.
  * @constructor
  */
 export const Supertoroid = function(xRadius, yRadius, innerRadius) {

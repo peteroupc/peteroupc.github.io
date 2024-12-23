@@ -101,7 +101,7 @@ buffer stores each triangle using three consecutive vertices.</p>
       <tbody>
         <tr>
           <td><code>vertices</code> (Type: Array.&lt;number&gt;</td>
-          <td>Float32Array)<br />An array of vertex positions. This array’s length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.</td>
+          <td>Float32Array)<br />An array of vertex positions. This array’s length must be divisible by 3; every 3 elements are the x-, y-, and z-coordinates, in that order, of one vertex.</td>
         </tr>
       </tbody>
     </table>
@@ -132,7 +132,7 @@ buffer stores each triangle using three consecutive vertices.</p>
 buffer from a predefined array of vertex positions.</p>
 
 <pre>// First, create an array of numbers giving the X, Y, and
-// Z coordinate for each vertex position. Here, three vertices
+// z-coordinate for each vertex position. Here, three vertices
 // are defined.
 var vertices = [x1, y1, z1, x2, y2, z2, x3, y3, z3 ];
 // Second -- and this is optional -- create a second array of numbers
@@ -172,7 +172,7 @@ and vertex colors.</p>
       <tbody>
         <tr>
           <td><code>vertices</code> (Type: Array.&lt;number&gt;</td>
-          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 6; every 6 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;X, Y, and Z coordinates, in that order, of the vertex position. &lt;li&gt;Red, green, and blue components, in that order, of the vertex color, where each component ranges from a low of 0 to a high of 1.&lt;/ol&gt;</td>
+          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 6; every 6 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;x-, y-, and z-coordinates, in that order, of the vertex position. &lt;li&gt;Red, green, and blue components, in that order, of the vertex color, where each component ranges from a low of 0 to a high of 1.&lt;/ol&gt;</td>
         </tr>
       </tbody>
     </table>
@@ -204,7 +204,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.</p>
 
 <pre>// First, create an array of numbers giving the X, Y, and
-// Z coordinate for each vertex position and associated
+// z-coordinate for each vertex position and associated
 // color components. Here, three vertices
 // are defined. For each vertex, the position is given, followed by
 // the color components.
@@ -236,7 +236,7 @@ and vertex normals.</p>
       <tbody>
         <tr>
           <td><code>vertices</code> (Type: Array.&lt;number&gt;</td>
-          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 6; every 6 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;X, Y, and Z coordinates, in that order, of the vertex position. &lt;li&gt;X, Y, and Z components, in that order, of the vertex normal.&lt;/ol&gt;</td>
+          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 6; every 6 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;x-, y-, and z-coordinates, in that order, of the vertex position. &lt;li&gt;X, Y, and Z components, in that order, of the vertex normal.&lt;/ol&gt;</td>
         </tr>
       </tbody>
     </table>
@@ -267,7 +267,7 @@ and vertex normals.</p>
 buffer from a predefined array of vertex positions and normals.</p>
 
 <pre>// First, create an array of numbers giving the X, Y, and
-// Z coordinate for each vertex position and normal. Here, three vertices
+// z-coordinate for each vertex position and normal. Here, three vertices
 // are defined. For each vertex, the position is given, followed by
 // the normal.
 var vertices = [
@@ -298,7 +298,7 @@ vertex normals, and vertex colors.</p>
       <tbody>
         <tr>
           <td><code>vertices</code> (Type: Array.&lt;number&gt;</td>
-          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 9; every 9 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;X, Y, and Z coordinates, in that order, of the vertex position. &lt;li&gt;X, Y, and Z components, in that order, of the vertex normal. &lt;li&gt;Red, green, and blue components, in that order, of the vertex color, where each component ranges from a low of 0 to a high of 1.&lt;/ol&gt;</td>
+          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 9; every 9 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;x-, y-, and z-coordinates, in that order, of the vertex position. &lt;li&gt;X, Y, and Z components, in that order, of the vertex normal. &lt;li&gt;Red, green, and blue components, in that order, of the vertex color, where each component ranges from a low of 0 to a high of 1.&lt;/ol&gt;</td>
         </tr>
       </tbody>
     </table>
@@ -330,7 +330,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.</p>
 
 <pre>// First, create an array of numbers giving the X, Y, and
-// Z coordinate for each vertex position and normal, and associated
+// z-coordinate for each vertex position and normal, and associated
 // color components. Here, three vertices
 // are defined. For each vertex, the position is given, followed by
 // the normal, followed by the color components.
@@ -362,7 +362,7 @@ vertex normals, and texture coordinates.</p>
       <tbody>
         <tr>
           <td><code>vertices</code> (Type: Array.&lt;number&gt;</td>
-          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 8; every 8 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;X, Y, and Z coordinates, in that order, of the vertex position. &lt;li&gt;X, Y, and Z components, in that order, of the vertex normal. &lt;li&gt;U and V <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> in that order, of the vertex.&lt;/ol&gt;</td>
+          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 8; every 8 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;x-, y-, and z-coordinates, in that order, of the vertex position. &lt;li&gt;X, Y, and Z components, in that order, of the vertex normal. &lt;li&gt;U and V <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> in that order, of the vertex.&lt;/ol&gt;</td>
         </tr>
       </tbody>
     </table>
@@ -394,7 +394,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.</p>
 
 <pre>// First, create an array of numbers giving the X, Y, and
-// Z coordinate for each vertex position and normal, and associated
+// z-coordinate for each vertex position and normal, and associated
 // texture coordinates. Here, three vertices
 // are defined. For each vertex, the position is given, followed by
 // the normal, followed by the texture coordinates.
@@ -426,7 +426,7 @@ and texture coordinates.</p>
       <tbody>
         <tr>
           <td><code>vertices</code> (Type: Array.&lt;number&gt;</td>
-          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 5; every 5 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;X, Y, and Z coordinates, in that order, of the vertex position. &lt;li&gt;U and V <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> in that order, of the vertex.&lt;/ol&gt;</td>
+          <td>Float32Array)<br />An array of vertex data. This array’s length must be divisible by 5; every 5 elements describe one vertex and are in the following order:&lt;ol&gt; &lt;li&gt;x-, y-, and z-coordinates, in that order, of the vertex position. &lt;li&gt;U and V <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> in that order, of the vertex.&lt;/ol&gt;</td>
         </tr>
       </tbody>
     </table>
@@ -458,7 +458,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.</p>
 
 <pre>// First, create an array of numbers giving the X, Y, and
-// Z coordinate for each vertex position and associated
+// z-coordinate for each vertex position and associated
 // texture coordinates. Here, three vertices
 // are defined. For each vertex, the position is given, followed by
 // the texture coordinates.
@@ -488,7 +488,7 @@ Only values with the attribute semantic <code>POSITION_0</code> are returned.</p
 <p>An array of primitives,
 each of which holds the vertices that make up that primitive.
 If this mesh holds triangles, each primitive will contain three
-vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex’s coordinates (for example, if the attribute holds 3 elements per value, the coordinates are X, Y, and Z coordinates, in that order). (Type: Array.&lt;Array.&lt;number»)</p>
+vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex’s-coordinates (for example, if the attribute holds 3 elements per value, the coordinates are x-, y-, and z-coordinates, in that order). (Type: Array.&lt;Array.&lt;number»)</p>
 
 <p><a name="MeshBuffer_primitiveCount"></a>
 ### MeshBuffer#primitiveCount()</p>

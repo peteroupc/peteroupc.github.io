@@ -17,12 +17,12 @@ import {MeshBuffer} from "../h3du-module.js";
  * of each tile will range from [0,1] across the width and height
  * of that tile. Thus, any texture used to render the mesh buffer should
  * entirely be of a square tile.
- * @param {number} xStart X coordinate of the start of the floor.
- * @param {number} yStart Y coordinate of the start of the floor.
+ * @param {number} xStart The Xcoordinate of the start of the floor.
+ * @param {number} yStart The Ycoordinate of the start of the floor.
  * @param {number} width Total width of the floor.
  * @param {number} height Total height of the floor.
  * @param {number} tileSize Width and height of each floor tile.
- * @param {number} [z] Z coordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
+ * @param {number} [z] The Zcoordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
  * @returns {MeshBuffer} The resulting mesh buffer.
  * @function
  */

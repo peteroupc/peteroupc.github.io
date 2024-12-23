@@ -28,9 +28,9 @@ function _numIntegrate(func, xmin, xmax) {
   "use strict";
   /*
 * Estimates the integral of a function. The integral
-* is like the area between the function's graph and the X axis,
-* where areas above the X axis add to the integral, and areas
-* below the X axis subtract from it.
+* is like the area between the function's graph and the x-axis,
+* where areas above the x-axis add to the integral, and areas
+* below the x-axis subtract from it.
 * @private
 * @param {Function} func A function that takes one number
 * and returns a number. For best results,

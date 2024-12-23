@@ -20,9 +20,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
 * Updates the position of a particle using Verlet integration.
 * @param {Array<number>} particle Information on a single particle in
 * the form of an array of nine numbers as follows:<ul>
-* <li>The first three numbers are the X, Y, and Z coordinates
+* <li>The first three numbers are the x-, y-, and z-coordinates
 * of the particle's position.
-* <li>The next three numbers are the X, Y, and Z coordinates
+* <li>The next three numbers are the x-, y-, and z-coordinates
 * of the particle's previous position.
 * <li>The next three numbers are the X, Y, and Z components
 * of the particle's acceleration (force divided by mass).
@@ -59,9 +59,9 @@ H3DU.MathUtil.integrateVerlet = function(particle, timeStep) {
 * Initializes a particle's data for Verlet integration.
 * @param {Array<Number>} particle Array to hold
 * the data for Verlet integration.
-* @param {number} x Starting X coordinate of the particle.
-* @param {number} y Starting Y coordinate of the particle.
-* @param {number} z Starting Z coordinate of the particle.
+* @param {number} x Starting x-coordinate of the particle.
+* @param {number} y Starting y-coordinate of the particle.
+* @param {number} z Starting z-coordinate of the particle.
 * @param {number} vx X component of the velocity.
 * @param {number} vy Y component of the velocity.
 * @param {number} vz Z component of the velocity.

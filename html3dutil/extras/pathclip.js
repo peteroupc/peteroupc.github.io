@@ -735,11 +735,11 @@ licensed under the Unlicense: https://unlicense.org/
   // Compare two sweep events
   // Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
   Clipper.sweepEventComp = function(e1, e2) {
-    if(e1.p[0] > e2.p[0]) // Different X coordinate
+    if(e1.p[0] > e2.p[0]) // Different x-coordinate
       return true;
-    if(e2.p[0] > e1.p[0]) // Different X coordinate
+    if(e2.p[0] > e1.p[0]) // Different x-coordinate
       return false;
-    if(!Clipper._ptEq(e1.p, e2.p)) // Different points, but same X coordinate. The event with lower Y coordinate is processed first
+    if(!Clipper._ptEq(e1.p, e2.p)) // Different points, but same x-coordinate. The event with lower y-coordinate is processed first
       return e1.p[1] > e2.p[1];
     if(e1.left !== e2.left) // Same point, but one is a left endpoint and the other a right endpoint. The right endpoint is processed first
       return e1.left;

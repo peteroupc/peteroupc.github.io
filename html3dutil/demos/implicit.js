@@ -12,9 +12,9 @@
  * @param {Object} func A <b>sampling object</b>. This object contains a single property,
  * "sample", which is a function that takes three parameters
  * specifying a 3-dimensional point:<ol>
- * <li>x - An X coordinate.
- * <li>y - A Y coordinate.
- * <li>z - A Z coordinate.</ol>
+ * <li>x - An x-coordinate.
+ * <li>y - A y-coordinate.
+ * <li>z - A z-coordinate.</ol>
  * and returns a number. If the implicit surface function returns 0, that
  * means the point lies on the surface.
  * @example <caption>The following defines an implicit surface
@@ -474,20 +474,20 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
 /**
  * Finds a tight bounding box within the given three-dimensional
  * area that encloses this implicit surface.
- * @param {number} xsize Number of grid points along the X axis. Must be 2 or greater.
- * @param {number} ysize Number of grid points along the Y axis. Must be 2 or greater.
- * @param {number} zsize Number of grid points along the Z axis. Must be 2 or greater.
- * @param {number} xmin Smallest value along the X axis.
- * @param {number} xmax Greatest value along the X axis.
- * @param {number} ymin Smallest value along the Y axis.
- * @param {number} ymax Greatest value along the Y axis.
- * @param {number} zmin Smallest value along the Z axis.
- * @param {number} zmax Greatest value along the Z axis.
+ * @param {number} xsize Number of grid points along the x-axis. Must be 2 or greater.
+ * @param {number} ysize Number of grid points along the y-axis. Must be 2 or greater.
+ * @param {number} zsize Number of grid points along the z-axis. Must be 2 or greater.
+ * @param {number} xmin Smallest value along the x-axis.
+ * @param {number} xmax Greatest value along the x-axis.
+ * @param {number} ymin Smallest value along the y-axis.
+ * @param {number} ymax Greatest value along the y-axis.
+ * @param {number} zmin Smallest value along the z-axis.
+ * @param {number} zmax Greatest value along the z-axis.
  * @returns {Array<number>} An array of six numbers describing a tight
  * axis-aligned bounding box
  * that fits this implicit surface within the given area. The first three numbers
- * are the smallest-valued X, Y, and Z coordinates, and the
- * last three are the largest-valued X, Y, and Z coordinates.
+ * are the smallest-valued x-, y-, and z-coordinates, and the
+ * last three are the largest-valued x-, y-, and z-coordinates.
  * If no part of the boundary of the surface lies within the given
  * area, returns the array [Inf, Inf, Inf, -Inf,
  * -Inf, -Inf].
@@ -538,15 +538,15 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * implicit surface
  * within the given area.
  * @param {Mesh} mesh Mesh to store the points in.
- * @param {number} xsize Number of grid points along the X axis. Must be 2 or greater.
- * @param {number} ysize Number of grid points along the Y axis. Must be 2 or greater.
- * @param {number} zsize Number of grid points along the Z axis. Must be 2 or greater.
- * @param {number} xmin Smallest value along the X axis.
- * @param {number} xmax Greatest value along the X axis.
- * @param {number} ymin Smallest value along the Y axis.
- * @param {number} ymax Greatest value along the Y axis.
- * @param {number} zmin Smallest value along the Z axis.
- * @param {number} zmax Greatest value along the Z axis.
+ * @param {number} xsize Number of grid points along the x-axis. Must be 2 or greater.
+ * @param {number} ysize Number of grid points along the y-axis. Must be 2 or greater.
+ * @param {number} zsize Number of grid points along the z-axis. Must be 2 or greater.
+ * @param {number} xmin Smallest value along the x-axis.
+ * @param {number} xmax Greatest value along the x-axis.
+ * @param {number} ymin Smallest value along the y-axis.
+ * @param {number} ymax Greatest value along the y-axis.
+ * @param {number} zmin Smallest value along the z-axis.
+ * @param {number} zmax Greatest value along the z-axis.
  * @returns {ImplicitSurface} This object.
  */
 ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
@@ -579,15 +579,15 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * given mesh the triangles and normals that make up the boundary of
  * this implicit surface within the given area.
  * @param {Mesh} mesh Mesh to store the points in.
- * @param {number} xsize Number of grid points along the X axis. Must be 2 or greater.
- * @param {number} ysize Number of grid points along the Y axis. Must be 2 or greater.
- * @param {number} zsize Number of grid points along the Z axis. Must be 2 or greater.
- * @param {number} xmin Smallest value along the X axis.
- * @param {number} xmax Greatest value along the X axis.
- * @param {number} ymin Smallest value along the Y axis.
- * @param {number} ymax Greatest value along the Y axis.
- * @param {number} zmin Smallest value along the Z axis.
- * @param {number} zmax Greatest value along the Z axis.
+ * @param {number} xsize Number of grid points along the x-axis. Must be 2 or greater.
+ * @param {number} ysize Number of grid points along the y-axis. Must be 2 or greater.
+ * @param {number} zsize Number of grid points along the z-axis. Must be 2 or greater.
+ * @param {number} xmin Smallest value along the x-axis.
+ * @param {number} xmax Greatest value along the x-axis.
+ * @param {number} ymin Smallest value along the y-axis.
+ * @param {number} ymax Greatest value along the y-axis.
+ * @param {number} zmin Smallest value along the z-axis.
+ * @param {number} zmax Greatest value along the z-axis.
  * @returns {ImplicitSurface} This object.
  */
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {

@@ -1934,7 +1934,7 @@ The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out
 
 ### Other Factory Functions
 
-Algorithms in bold type are given in this page.
+Algorithms in bold type type type type type type type type type are given in this page.
 
 |  To simulate:  |  Follow this algorithm: |
    --- |  ---- |
@@ -2132,7 +2132,7 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
 2. Do the following process repeatedly, until the algorithm returns a value:
     1. Set _c1_ to 2\*_c1_ plus either 1 or 0 with equal probability.  Then, set _c2_ to 2\*_c2_ plus either 1 or 0 with equal probability.
-    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, do the following.  (Point is inside the quarter disk, whose area is _&pi;_/4.  Now _c1_, the point's _x_ coordinate, is treated as a uniform random variate between _c1_/_S_ and (_c1_+1)/_S_, and the following substeps return 1 with probability equal to that variate.)
+    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, do the following.  (Point is inside the quarter disk, whose area is _&pi;_/4.  Now _c1_, the point's x-, is treated as a uniform random variate between _c1_/_S_ and (_c1_+1)/_S_, and the following substeps return 1 with probability equal to that variate.)
         1. Generate _z_, a uniform random integer in the interval [0, _S_).  If _z_ is less than _c1_, return 1.  If _z_ is greater than _c1_, return 0.
         2. Generate two numbers that are each 1 or 0 with equal probability.  If the two numbers are different, return the first number.  Otherwise, repeat this substep.
     3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, abort these substeps and go to step 1 ("Set _S_...").  (Point is outside the quarter disk.)

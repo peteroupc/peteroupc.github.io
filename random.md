@@ -450,7 +450,7 @@ The following are some questions to consider when generating unique identifiers:
 1. Can the application easily check identifiers for uniqueness within the desired scope and range (for example, check whether a file or database record with that identifier already exists\)[^31]?
 2. Can the application tolerate the risk of generating the same identifier for different resources[^32]?
 3. Do identifiers have to be hard to guess, be simply "random-looking", or be neither?
-4. Do identifiers have to be typed in or otherwise relayed by end users[^33]?
+4. Do identifiers have to be typed in or otherwise relayed by customers[^33]?
 5. Is the resource an identifier identifies available to anyone who knows that identifier (even without being logged in or authorized in some way)?[^34]
 6. Do identifiers have to be memorable?
 
@@ -649,7 +649,7 @@ I acknowledge&mdash;
     - about 1.4 million billion billion random 160-bit integers, or
     - about 93 billion billion billion random 192-bit integers.
 
-[^33]: If an application expects end users to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.
+[^33]: If an application expects customers to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.
 
 [^34]: Note that the _insecure direct object references_ problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.
 
@@ -672,7 +672,7 @@ I acknowledge&mdash;
 
 [^41]: An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.
 
-[^42]: Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (for example, to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.
+[^42]: Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (for example, to use a cryptographic or otherwise "better" RNG), or to make improvements or issue fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.
 
 <a id=License></a>
 

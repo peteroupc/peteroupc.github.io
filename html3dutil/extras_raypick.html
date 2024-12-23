@@ -35,8 +35,8 @@ corresponding to the given two-dimensional (X and Y) coordinates.</p>
 <h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li><code>x</code><br />Two-dimensional X coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.</li>
-  <li><code>y</code><br />Two-dimensional Y coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.</li>
+  <li><code>x</code><br />Two-dimensional x-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.</li>
+  <li><code>y</code><br />Two-dimensional y-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.</li>
   <li><code>projView</code><br />Same meaning as second parameter of MathUtil.vec3fromWindowPoint. For example, to convert to world space coordinates, pass a projection matrix (projection matrix multiplied by the view matrix, in that order) to this parameter.</li>
   <li><code>viewport</code><br />Same meaning as third parameter of MathUtil.vec3fromWindowPoint.</li>
   <li><code>objects</code><br />Shape objects from which this method will choose one.</li>
@@ -48,10 +48,8 @@ corresponding to the given two-dimensional (X and Y) coordinates.</p>
 <li><code>index</code> - Index, starting from 0, into the objects array
 of the shape object that was picked. Is -1 if no object was picked
 (and the "local" and "world" properties will be absent).
-<li><code>local</code> - 3-element array giving the X, Y, and
-Z coordinates of the picked point in object (model) space.
-<li><code>world</code> - 3-element array giving the X, Y, and
-Z coordinates of the picked point in world space.&lt;/ul&gt;
+<li><code>local</code> - 3-element array giving the x-, y-, and z-coordinates of the picked point in object (model) space.
+<li><code>world</code> - 3-element array giving the x-, y-, and z-coordinates of the picked point in world space.&lt;/ul&gt;
 
 #### Examples
 

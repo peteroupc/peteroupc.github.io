@@ -24,7 +24,7 @@ of shapes.</li>
 in it.</li>
   <li><a href="#ShapeGroup_getBounds">getBounds</a><br />Finds a bounding box that holds all vertices in this shape group.</li>
   <li><a href="#ShapeGroup_getMatrix">getMatrix</a><br />Gets a copy of the transformation needed to transform
-this shape group’s coordinates to world coordinates.</li>
+this shape group’s-coordinates to world coordinates.</li>
   <li><a href="#ShapeGroup_getShape">getShape</a><br />Gets the shape or shape group located
 in this shape group at the given index.</li>
   <li><a href="#ShapeGroup_getTransform">getTransform</a><br />Gets a reference to the transform used by this shape group object.</li>
@@ -98,8 +98,8 @@ tightest, and the box will be in world space coordinates.</p>
 <p>An array of six numbers describing an
 axis-aligned bounding box
 that fits all vertices in the shape group. The first three numbers
-are the smallest-valued X, Y, and Z coordinates, and the
-last three are the largest-valued X, Y, and Z coordinates.
+are the smallest-valued x-, y-, and z-coordinates, and the
+last three are the largest-valued x-, y-, and z-coordinates.
 If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;number&gt;)</p>
 
@@ -107,7 +107,7 @@ If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 ### ShapeGroup#getMatrix()</p>
 
 <p>Gets a copy of the transformation needed to transform
-this shape group’s coordinates to world coordinates.</p>
+this shape group’s-coordinates to world coordinates.</p>
 
 <h4 id="return-value-3">Return Value</h4>
 
@@ -199,13 +199,13 @@ rather than the transform for each shape in the group.</p>
       <tbody>
         <tr>
           <td><code>x</code> (Type: number</td>
-          <td>Array.&lt;number&gt;)<br />X coordinate or a 3-element position array, as specified in <a href="Transform.html#Transform_setScale">Transform#setScale</a>.</td>
+          <td>Array.&lt;number&gt;)<br />x-coordinate or a 3-element position array, as specified in <a href="Transform.html#Transform_setScale">Transform#setScale</a>.</td>
         </tr>
       </tbody>
     </table>
   </li>
-  <li><code>y</code> (Type: number)<br />Y coordinate.</li>
-  <li><code>z</code> (Type: number)<br />Z coordinate.</li>
+  <li><code>y</code> (Type: number)<br />y-coordinate.</li>
+  <li><code>z</code> (Type: number)<br />z-coordinate.</li>
 </ul>
 
 <h4 id="return-value-9">Return Value</h4>

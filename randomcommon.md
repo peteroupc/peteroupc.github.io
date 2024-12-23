@@ -132,7 +132,7 @@ Many applications need to generate a random string whose characters are chosen f
 
 However, the following are some of the many considerations involving random string generation:
 
-- If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or [**allow typing mistakes to be detected**](https://espadrine.github.io/blog/posts/a-base32-checksum.html).
+- If the string needs to be typed in by customers, or to be memorable, it may be important to choose a character set carefully or [**allow typing mistakes to be detected**](https://espadrine.github.io/blog/posts/a-base32-checksum.html).
 - If the string identifies something, the application may require strings it generates to be unique; see [**Unique Random Identifiers**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers) for considerations.
 - If the string is a secret value of any kind, including a password, a bearer credential, a session identifier, a nonce, a "confirmation code", a "verification code", or a "forgot-password" code, then the string has to be generated using a [**cryptographic RNG**](https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages) (such as the `secrets` module in Python or the `random_bytes` function in PHP).
 

@@ -262,7 +262,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * Creates a group of shapes containing the primitives needed to
  * draw text in the given position, size, and color.
  * For the text to show upright, the coordinate system should have the
- * X axis pointing right and the Y axis pointing down (for example, an
+ * x-axis pointing right and the y-axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively).
  * @param {string} str The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
@@ -390,13 +390,13 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * @param {Object} params An object whose keys have
  * the possibilities given later, and whose values are those
  * allowed for each key.<ul>
- * <li><code>x</code> - X coordinate of the upper-left corner of the text.
+ * <li><code>x</code> - x-coordinate of the upper-left corner of the text.
  * If null, undefined, or omitted, uses 0.
  * For the text to show upright, the coordinate system should have the
- * X axis pointing right and the Y axis pointing down (for example, an
+ * x-axis pointing right and the y-axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively).
- * <li><code>y</code> - Y coordinate of the upper-left corner of the text.
+ * <li><code>y</code> - y-coordinate of the upper-left corner of the text.
  * If null, undefined, or omitted, uses 0.
  * <li><code>lineHeight</code> - Height of each line of the text in units.
  * If null, undefined, or omitted, uses the line height given in the font.
@@ -1009,7 +1009,7 @@ H3DU.TextureAtlas = function() {
 /**
  * Makes a shape group used to display one or more sprites.
  * For the sprites to show upright, the coordinate system should have the
- * X axis pointing right and the Y axis pointing down (for example, an
+ * x-axis pointing right and the y-axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively). The size of each
  * sprite will be in pixels; therefore, for best results, the coordinate system
@@ -1022,8 +1022,8 @@ H3DU.TextureAtlas = function() {
  * <li><code>index</code> - If a sprite has multiple versions, use this index
  * parameter to distinguish them. Index can't be less than 0. If a sprite doesn't
  * have multiple versions, this value is not required.
- * <li><code>x</code> - X coordinate of the sprite.
- * <li><code>y</code> - Y coordinate of the sprite.
+ * <li><code>x</code> - x-coordinate of the sprite.
+ * <li><code>y</code> - y-coordinate of the sprite.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
  */

@@ -25,7 +25,7 @@ H3DU.Polyhedra = function() {
  * Normalizes the distance from the origin to each vertex in the given
  * array to a fixed radius.
  * @param {Array<number>} vertices An array of vertices, where each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array.
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array.
  * @param {number} radius Distance from the origin where each vertex
  * will be normalized to.
  * @returns {Object} Return value.
@@ -57,7 +57,7 @@ H3DU.Polyhedra.scaleVertices = function(vertices, radius) {
  * generate an approximation of a sphere.
  * @param {Array<Array<number>>} vi A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -114,7 +114,7 @@ H3DU.Polyhedra.makeSphere = function(vi, radius, level) {
  * @private
  * @param {Array<Array<number>>} vi A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -200,7 +200,7 @@ H3DU.Polyhedra.tetrahedron = function(radius, level) {
  * Gets the vertices of a regular octahedron with radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -229,7 +229,7 @@ H3DU.Polyhedra.octahedronFaces = function() {
  * Gets the vertices of a tetrahedron with radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -244,7 +244,7 @@ H3DU.Polyhedra.tetrahedronFaces = function() {
  * Gets the vertices of a regular icosahedron with maximum radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -268,7 +268,7 @@ H3DU.Polyhedra.icosahedronFaces = function() {
  * Gets the vertices of a hexahedron (cube) with maximum radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -284,7 +284,7 @@ H3DU.Polyhedra.hexahedronFaces = function() {
  * (cube) with maximum radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -301,7 +301,7 @@ H3DU.Polyhedra.hexahedronFacesCompact = function() {
  * Gets the vertices of a dodecahedron with maximum radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
@@ -317,7 +317,7 @@ H3DU.Polyhedra.dodecahedronFaces = function() {
  * with maximum radius 1.
  * @returns {Array<Array<number>>} A two-element array. The first
  * element contains an array of the vertices that make up the solid (each
- * vertex's X, Y, and Z coordinates are stored as three elements of that array),
+ * vertex's x-, y-, and z-coordinates are stored as three elements of that array),
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).

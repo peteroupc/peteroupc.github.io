@@ -31,8 +31,8 @@
   <li><code>[ReadUtf8FromBytes(byte[], int, int, System.Text.StringBuilder, bool)](#ReadUtf8FromBytes_byte_int_int_System_Text_StringBuilder_bool)</code> - Reads a string in UTF-8 encoding from a byte array.</li>
   <li><code>[ReadUtf8ToString(System.IO.Stream)](#ReadUtf8ToString_System_IO_Stream)</code> - Reads a string in UTF-8 encoding from a data stream in full and returns that string.</li>
   <li><code>[ReadUtf8ToString(System.IO.Stream, int, bool)](#ReadUtf8ToString_System_IO_Stream_int_bool)</code> - Reads a string in UTF-8 encoding from a data stream and returns that string.</li>
-  <li><code>[ToLowerCaseAscii(string)](#ToLowerCaseAscii_string)</code> - Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to the corresponding basic lower-case letters.</li>
-  <li><code>[ToUpperCaseAscii(string)](#ToUpperCaseAscii_string)</code> - Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A) converted to the corresponding basic upper-case letters.</li>
+  <li><code>[ToLowerCaseAscii(string)](#ToLowerCaseAscii_string)</code> - Returns a string with the basic uppercase letters A to Z (U+0041 to U+005A) converted to the corresponding basic lowercase letters.</li>
+  <li><code>[ToUpperCaseAscii(string)](#ToUpperCaseAscii_string)</code> - Returns a string with the basic lowercase letters A to Z (U+0061 to U+007A) converted to the corresponding basic uppercase letters.</li>
   <li><code>[WriteUtf8(string, int, int, System.IO.Stream, bool)](#WriteUtf8_string_int_int_System_IO_Stream_bool)</code> - Writes a portion of a string in UTF-8 encoding to a data stream.</li>
   <li><code>[WriteUtf8(string, int, int, System.IO.Stream, bool, bool)](#WriteUtf8_string_int_int_System_IO_Stream_bool_bool)</code> - Writes a portion of a string in UTF-8 encoding to a data stream.</li>
   <li><code>[WriteUtf8(string, System.IO.Stream, bool)](#WriteUtf8_string_System_IO_Stream_bool)</code> - Writes a string in UTF-8 encoding to a data stream.</li>
@@ -660,7 +660,7 @@ The parameter  <i>stream</i>
     string str);
 </pre>
 
-<p>Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to the corresponding basic lower-case letters. Other characters remain unchanged.</p>
+<p>Returns a string with the basic uppercase letters A to Z (U+0041 to U+005A) converted to the corresponding basic lowercase letters. Other characters remain unchanged.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -681,7 +681,7 @@ The parameter  <i>stream</i>
     string str);
 </pre>
 
-<p>Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A) converted to the corresponding basic upper-case letters. Other characters remain unchanged.</p>
+<p>Returns a string with the basic lowercase letters A to Z (U+0061 to U+007A) converted to the corresponding basic uppercase letters. Other characters remain unchanged.</p>
 
 <p><b>Parameters:</b></p>
 

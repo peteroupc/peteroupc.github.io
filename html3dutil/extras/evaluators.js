@@ -20,18 +20,18 @@ import {Curve, MathUtil, Surface} from "../h3du_module.js";
  * library. <p>
  * @constructor
  * @param {Object} curve A [curve evaluator object]{@link Curve} that describes a 2-dimensional curve to rotate about the axis of rotation, as
- * specified in the "axis" parameter. The curve's X coordinates
- * correspond to elevation, and its Y coordinates correspond to radius.<p>
+ * specified in the "axis" parameter. The curve's x-coordinates
+ * correspond to elevation, and its y-coordinates correspond to radius.<p>
  * If the curve function draws a curve that goes both above and below the axis of rotation, such
- * as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must
+ * as a circle or ellipse, the v-coordinates given in _minval_ and _maxval_ must
  * restrict the curve definition to no more than half of the curve.
- * @param {number} minval Smallest V coordinate.
- * @param {number} maxval Largest V coordinate. If _minval_ is greater than
+ * @param {number} minval Smallest v-coordinate.
+ * @param {number} maxval Largest v-coordinate. If _minval_ is greater than
  * _maxval_, both values will be swapped.
  * @param {Array<number>} [axis] Axis of rotation, around which the curve
  * will be rotated to generate the surface of revolution. If null, undefined, or omitted, the positive
- * Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing
- * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
+ * z-axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing
+ * the x-, y-, and z-coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  */
@@ -53,8 +53,8 @@ SurfaceOfRevolution.prototype.endPoints = function() {
 };
 /**
  * Finds the coordinates of the given point of this surface.
- * @param {number} u U coordinate of the surface to evaluate.
- * @param {number} v V coordinate of the surface to evaluate.
+ * @param {number} u The Ucoordinate of the surface to evaluate.
+ * @param {number} v The Vcoordinate of the surface to evaluate.
  * @returns {Array<number>} An array containing the coordinates
  * of the position at the given point. It will have three elements.
  */
@@ -104,14 +104,14 @@ SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
  * If _minval_ is greater than _maxval_, both values will be swapped.
  * @param {Array<number>} [axis] Axis of rotation, around which the
  * function graph will be rotated to generate the surface of revolution.
- * If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
+ * If null, undefined, or omitted, the positive z-axis (0, 0, 1) will be the axis of rotation.
  * This parameter is a 3-element array describing
- * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
+ * the x-, y-, and z-coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  * @returns {SurfaceOfRevolution} Return value.
  * @example <caption>The following creates an evaluator for a cone
- * which starts at the origin and runs 10 units along the Z axis.</caption>
+ * which starts at the origin and runs 10 units along the z-axis.</caption>
  * var surf=SurfaceOfRevolution.fromFunction(
  * function(x) {
  * "use strict"; return x/2; }, // use a constantly increasing function
@@ -150,9 +150,9 @@ SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
  * If null, undefined, or omitted, uses a circular cross section with a radius of 1.
  * @param {Array<number>} [axis] Axis of rotation, which the torus
  * will pass through.
- * If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation.
+ * If null, undefined, or omitted, the positive z-axis (0, 0, 1) will be the axis of rotation.
  * This parameter is a 3-element array describing
- * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
+ * the x-, y-, and z-coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  * @returns {SurfaceOfRevolution} Return value.
@@ -260,13 +260,13 @@ function Line(length) {
 
 /**
  * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve whose position is fixed.<p>
- * This object generates two-dimensional curves, which are returned by the <code>evaluate</code> method as three-dimensional points with the third element (Z coordinate) set to 0.
+ * This object generates two-dimensional curves, which are returned by the <code>evaluate</code> method as three-dimensional points with the third element (z-coordinate) set to 0.
  * @param {Object} rollingCurve A [curve evaluator object]{@link Curve} that describes the curve that rolls to generate the roulette curve.
  * This curve is assumed to be a smooth, convex closed curve such as a circle. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
  * @param {Object} fixedCurve A [curve evaluator object]{@link Curve} that describes the curve on which the rolling curve will move. This
  * curve is assumed to be smooth at every point;
  * this includes periodic waves and circles. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
- * @param {Array<number>} polePoint X and Y coordinates of a point, from the same coordinate
+ * @param {Array<number>} polePoint x- and y-coordinates of a point, from the same coordinate
  * system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
  * @param {number} [revolutions] The roulette will be generated by rolling the rolling curve the distance of the fixed curve times this parameter; this will be reflected in this instance's <code>endPoints</code> method. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.
  * @augments Curve
@@ -326,7 +326,7 @@ Roulette.prototype.constructor = Roulette;
  * A hypocycloid results when distFromInnerCenter=innerRadius.
  * @param {number} distFromInnerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. If null, undefined, or omitted, the default is 0.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. If null, undefined, or omitted, the default is 0.
  * @param {number} [revolutions] Number of times to roll the inner circle around the outer circle to generate the hypotrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.
  */
 Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees, revolutions) {
@@ -339,7 +339,7 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
 /**
  * Creates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
  * of another circle, whose position is fixed, with a center of (0,0).
- * The rolling circle will start at the positive X axis of the fixed circle
+ * The rolling circle will start at the positive x-axis of the fixed circle
  * unless otherwise given in the parameter <code>rotationDegrees</code>.<p>
  * This is a special case of a roulette in which the fixed and rolling curves are circles, and the pole point is the starting point of a circle with the same center as the rolling circle.<p><p>
  * The following curves can be generated with this class (in the following
@@ -359,7 +359,7 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
  * An epicycloid results when distFromRollerCenter=rollerRadius.
  * @param {number} distFromRollerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. If null, undefined, or omitted, the default is 0.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. If null, undefined, or omitted, the default is 0.
  * @param {number} [revolutions] Number of times to roll the inner circle around the outer circle to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.
  */
 Roulette.epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees, revolutions) {
@@ -370,18 +370,18 @@ Roulette.epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter, r
 };
 
 /**
- * Creates a [curve evaluator object]{@link Curve} for a <i>trochoid</i>, a curve drawn by a circle that rolls along the X axis.
+ * Creates a [curve evaluator object]{@link Curve} for a <i>trochoid</i>, a curve drawn by a circle that rolls along the x-axis.
  * <p>
  * The following curves can be generated with this class (in the following
  * descriptions, R = <code>radius</code>
  * and D = <code>distFromCenter</code>).<ul>
- * <li>Cycloid: D = R (trochoid touching the X axis).</li>
- * <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
- * <li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
+ * <li>Cycloid: D = R (trochoid touching the x-axis).</li>
+ * <li>Curtate cycloid: D < R (trochoid not touching the x-axis).</li>
+ * <li>Prolate cycloid: D > R (trochoid crossing the x-axis).</li></ul>
  * @param {number} radius Radius of the rolling circle.
  * @param {number} distFromCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {number} [distance] Distance to roll the inner circle along the X axis to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 2 * &pi; * <code>radius</code>.
+ * @param {number} [distance] Distance to roll the inner circle along the x-axis to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 2 * &pi; * <code>radius</code>.
  */
 Roulette.trochoid = function(radius, distFromCenter, distance) {
   const dist = typeof distance === "undefined" || distance === null ?
@@ -401,7 +401,7 @@ Roulette.trochoid = function(radius, distFromCenter, distance) {
  * @param {number} denom Integer denominator of a parameter that determines the petal form of the rose. Must not be 0.
  * @param {number} distFromInnerCenter Distance from the center of the
  * rolling circle to the drawing pen.
- * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. Default is 0.
  * @returns {Roulette} The resulting curve evaluator object.
  */
 Roulette.rose = function(num, den, distFromInnerCenter, rotationDegrees) {

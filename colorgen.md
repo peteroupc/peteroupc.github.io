@@ -1515,7 +1515,7 @@ Converting a color (such as an RGB color) to a color name can be done by&mdash;
 - retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table\)[^37], or
 - finding the [**nearest color**](#Nearest_Colors) to that color among the named colors, and returning the name of the color found this way.
 
-Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.[^37]
+Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lowercase form) in a hash table, or returning an error if no such color exists.[^37]
 
 If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_ (Venn et al.\)[^41].
 

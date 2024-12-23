@@ -120,7 +120,7 @@ into the matrix arrays passed to <code>MathUtil</code>’s matrix methods.</p>
 
 <h3 id="a-matrix-transforms-between-coordinate-systems">A Matrix Transforms Between Coordinate Systems</h3>
 
-<p>A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
+<p>A transformed 3D coordinate system is made up of an x-, y-, and z-axes, and a center of the coordinate
 system.  These are four 3-element vectors that describe how the three axes and the center map
 to the new coordinate system in relation to the old coordinate system.</p>
 
@@ -131,21 +131,21 @@ simple, this matrix’s transformation is one that keeps straight lines straight
 <mfenced open="[" close="]">
  <mtable>
  <mtr>
- <mtd><mi>[0] X-axis X</mi></mtd>
- <mtd><mi>[4] Y-axis X</mi></mtd>
- <mtd><mi>[8] Z-axis X</mi></mtd>
+ <mtd><mi>[0] x-axis X</mi></mtd>
+ <mtd><mi>[4] y-axis X</mi></mtd>
+ <mtd><mi>[8] z-axis X</mi></mtd>
  <mtd><mi>[12] Center X</mi></mtd>
  </mtr>
  <mtr>
- <mtd><mi>[1] X-axis Y</mi></mtd>
- <mtd><mi>[5] Y-axis Y</mi></mtd>
- <mtd><mi>[9] Z-axis Y</mi></mtd>
+ <mtd><mi>[1] x-axis Y</mi></mtd>
+ <mtd><mi>[5] y-axis Y</mi></mtd>
+ <mtd><mi>[9] z-axis Y</mi></mtd>
  <mtd><mi>[13] Center Y</mi></mtd>
  </mtr>
  <mtr>
- <mtd><mi>[2] X-axis Z</mi></mtd>
- <mtd><mi>[6] Y-axis Z</mi></mtd>
- <mtd><mi>[10] Z-axis Z</mi></mtd>
+ <mtd><mi>[2] x-axis Z</mi></mtd>
+ <mtd><mi>[6] y-axis Z</mi></mtd>
+ <mtd><mi>[10] z-axis Z</mi></mtd>
  <mtd><mi>[14] Center Z</mi></mtd>
  </mtr>
  <mtr>
@@ -191,9 +191,9 @@ simple, this matrix’s transformation is one that keeps straight lines straight
 &lt;/mfenced&gt;
 &lt;/math&gt;
 
-Here, the first column shows an X-axis vector at (1, 0, 0),
-the second column shows a Y-axis vector at (0, 0.5, 0.866025),
-the third column shows a Z-axis vector at (0, -0.866025, 0.5),
+Here, the first column shows an x-axis vector at (1, 0, 0),
+the second column shows a y-axis vector at (0, 0.5, 0.866025),
+the third column shows a z-axis vector at (0, -0.866025, 0.5),
 and the fourth column centers the coordinate system at (2, 3, 4).
 
 Provided the matrix can be [**inverted**](#Matrix_Inversions), the three axis vectors are
@@ -288,8 +288,8 @@ Scaling changes an object's size. Scaling uses the 1st,
 </mfenced>
 </math>
 
-where the X coordinate is multiplied by `sx`, the Y coordinate is multiplied by `sy`, and
-the Z coordinate is multiplied by `sz`.
+where the x-coordinate is multiplied by `sx`, the y-coordinate is multiplied by `sy`, and
+the z-coordinate is multiplied by `sz`.
 
 The scaling formula would look like:
 
@@ -306,10 +306,10 @@ If `sx`, `sy`, or `sz` is -1, that coordinate is _reflected_ along the correspon
 If `sx`, `sy`, and `sz` are all 1, we have an _identity matrix_, where the input vector
 is equal to the output vector.
 
-When the transformed X, Y, or Z axis has a length other than 1, the coordinate
+When the transformed X, Y, or z-axis has a length other than 1, the coordinate
 system will be scaled up or down along that axis.  The scalings given
 here will scale the lengths of the corresponding axes.  For example,
-if `sx` is 2, the X axis will be (2, 0, 0) and thus have a length of 2.
+if `sx` is 2, the x-axis will be (2, 0, 0) and thus have a length of 2.
 
 Related functions:
 
@@ -363,8 +363,8 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:
 </mfenced>
 </math>
 
-where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
-`tz` is added to the Z coordinate. The transformation formulas would look like:
+where `tx` is added to the x-coordinate, `ty` is added to the y-coordinate, and
+`tz` is added to the z-coordinate. The transformation formulas would look like:
 
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
@@ -420,7 +420,7 @@ sines and cosines, see the end of this section.)
 </mtable>
 </mfenced>
 </math>
-<figcaption>Rotation about the X axis.</figcaption></figure>
+<figcaption>Rotation about the x-axis.</figcaption></figure>
 <figure>
 <math>
 <mfenced open="[" close="]">
@@ -452,7 +452,7 @@ sines and cosines, see the end of this section.)
 </mtable>
 </mfenced>
 </math>
-<figcaption>Rotation about the Y axis.</figcaption></figure>
+<figcaption>Rotation about the y-axis.</figcaption></figure>
 <figure>
 <math>
 <mfenced open="[" close="]">
@@ -484,21 +484,21 @@ sines and cosines, see the end of this section.)
 </mtable>
 </mfenced>
 </math>
-<figcaption>Rotation about the Z axis.</figcaption></figure>
+<figcaption>Rotation about the z-axis.</figcaption></figure>
 
 Note that:
 
-* When we rotate a point about the X axis, the X coordinate is unchanged
-and the Y and Z coordinates are adjusted in the rotation. For rotations about the
-Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
+* When we rotate a point about the x-axis, the x-coordinate is unchanged
+and the y- and z-coordinates are adjusted in the rotation. For rotations about the
+y-axis or the z-axis, the Y or z-coordinate, respectively, is likewise unchanged.
 * If the axis of rotation points backward from the "eye", positive rotations mean
 counterclockwise rotation in glmath. For example,
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.
 * Rotating a point around an arbitrary axis of rotation is more complicated to describe.
-When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
- <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
+When describing an axis of rotation, <code>[1, 0, 0]</code> is the x-axis,
+ <code>[0, 1, 0]</code> is the y-axis, and  <code>[0, 0, 1]</code> is the z-axis.
 
 See [**"Rotation example"**](#Rotation_Example) for an illustration of a rotation
 transformation.
@@ -576,7 +576,7 @@ in the form of linear transformations on homogeneous coordinates (see
 in the matrix is not necessarily (0, 0, 0, 1).
 
 One example of a projective transformation is found in a _perspective projection_ matrix,
-as returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a> or <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum</a>. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in _eye space_, or more specifically, as follows:
+as returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a> or <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum</a>. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative z-coordinate in _eye space_, or more specifically, as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
@@ -647,8 +647,8 @@ To invert an NxN matrix:
 
 ## Rotation Example
 
-As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
-&theta; = 60&deg;).  First, we find the rotation formula for the X axis:
+As an example, say we rotate 60 degrees about the x-axis (`mat4rotated(60, 1, 0, 0)`,
+&theta; = 60&deg;).  First, we find the rotation formula for the x-axis:
 
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
 * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
@@ -657,7 +657,7 @@ As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0,
 
 We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
 We plug those numbers into the rotation formula to get a formula for rotating a
-point 60 degrees about the X axis.
+point 60 degrees about the x-axis.
 
 * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0 = **a**<sub>_x_</sub>
 * **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.5 &#x22c5; **a**<sub>_y_</sub> + -0.866025 &#x22c5; **a**<sub>_z_</sub> + 0

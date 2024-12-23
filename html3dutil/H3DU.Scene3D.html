@@ -625,7 +625,7 @@ This color is black by default.</p>
 
 <ul>
 <li><code>index</code> (Type: number)<br>Zero-based index of the light to set. The first light has index 0, the second has index 1, and so on. Will be created if the light doesn&#39;t exist.</li>
-<li><code>position</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector giving the direction of the light, along the X, Y, and Z axes, respectively. May be null, in which case the default is (0, 0, 1).</li>
+<li><code>position</code> (Type: Array.&lt;number&gt;)<br>A 3-element vector giving the direction of the light, along the x-, y-, and z-axes, respectively. May be null, in which case the default is (0, 0, 1).</li>
 <li><code>diffuse</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the diffuse color of the light. If null, undefined, or omitted, the default is (1, 1, 1, 1) for light index 0 and (0, 0, 0, 0) otherwise.</li>
 <li><code>specular</code> (Type: Array.&lt;number&gt;) (optional)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a> giving the color of specular highlights caused by the light. If null, undefined, or omitted, the default is (1, 1, 1) for light index 0 and (0, 0, 0) otherwise.</li>
 </ul>
@@ -649,10 +649,10 @@ see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective
 <h4>Parameters</h4>
 
 <ul>
-<li><code>left</code> (Type: number)<br>X coordinate of the point where the left clipping plane meets the near clipping plane.</li>
-<li><code>right</code> (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.</li>
-<li><code>bottom</code> (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
-<li><code>top</code> (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+<li><code>left</code> (Type: number)<br>x-coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+<li><code>right</code> (Type: number)<br>x-coordinate of the point where the right clipping plane meets the near clipping plane.</li>
+<li><code>bottom</code> (Type: number)<br>y-coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+<li><code>top</code> (Type: number)<br>y-coordinate of the point where the top clipping plane meets the near clipping plane.</li>
 <li><code>near</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 <li><code>far</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
 </ul>
@@ -822,7 +822,7 @@ see <a href="H3DU.Math.html#H3DU.Math.mat4perspective">H3DU.Math.mat4perspective
 <h4>Parameters</h4>
 
 <ul>
-<li><code>fov</code> (Type: number)<br>Y axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
+<li><code>fov</code> (Type: number)<br>y-axis field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
 <li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio (getAspect() or getClientAspect()).</li>
 <li><code>near</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 <li><code>far</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>

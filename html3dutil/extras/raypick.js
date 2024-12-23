@@ -472,9 +472,9 @@ function makeRay(startPt, focusPt) {
 /**
  * Finds the three-dimensional shape object and world-space coordinates
  * corresponding to the given two-dimensional (X and Y) coordinates.
- * @param x Two-dimensional X coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of
+ * @param x Two-dimensional x-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of
  * MathUtil.vec3fromWindowPoint.
- * @param y Two-dimensional Y coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of
+ * @param y Two-dimensional y-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of
  * MathUtil.vec3fromWindowPoint.
  * @param projView Same meaning as second parameter of
  * MathUtil.vec3fromWindowPoint. For example, to convert
@@ -488,9 +488,9 @@ function makeRay(startPt, focusPt) {
  * of the shape object that was picked. Is -1 if no object was picked
  * (and the "local" and "world" properties will be absent).
  * <li><code>local</code> - 3-element array giving the X, Y, and
- * Z coordinates of the picked point in object (model) space.
+ * z-coordinates of the picked point in object (model) space.
  * <li><code>world</code> - 3-element array giving the X, Y, and
- * Z coordinates of the picked point in world space.</ul>
+ * z-coordinates of the picked point in world space.</ul>
  * @example <caption>The following example shows how a hypothetical scene graph could implement picking objects based on the position of the mouse cursor.</caption>
  * var mousePos = scene.getMousePosInPixels();
  * var viewport = [0, 0, scene.getWidth(), scene.getHeight()];

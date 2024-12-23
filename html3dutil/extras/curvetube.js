@@ -249,7 +249,7 @@ _TBNFrames._distSq = function(a, b) {
  * @param {Object} [sweptCurve] A [curve evaluator object]{@link Curve} that
  * describes a two-dimensional curve to serve as
  * the cross section of the extruded shape. The curve need not be closed. If this parameter is null, undefined, or omitted, uses a
- * circular cross section in which the V coordinate ranges from 0 through
+ * circular cross section in which the v-coordinate ranges from 0 through
  * 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections
  * will affect the meaning of the "thickness" parameter.
  * @constructor
@@ -263,14 +263,14 @@ export const CurveTube = function(func, thickness, sweptCurve) {
 CurveTube.prototype = Object.create(Surface.prototype);
 CurveTube.prototype.constructor = CurveTube;
 /**
- * Returns the starting and ending U and V coordinates of this surface.
+ * Returns the starting and ending u- and v-coordinates of this surface.
  * @returns A four-element array. The first and second
- * elements are the starting and ending U coordinates, respectively, of the surface, and the third
- * and fourth elements are its starting and ending V coordinates.
- * The starting and ending U coordinates will be the extruded curve's end points (or <code>[0, 1]</code>
+ * elements are the starting and ending u-coordinates, respectively, of the surface, and the third
+ * and fourth elements are its starting and ending v-coordinates.
+ * The starting and ending u-coordinates will be the extruded curve's end points (or <code>[0, 1]</code>
  * if it doesn't implement an <code>endPoints</code> method).
- * The starting and ending V coordinates are <code>[0, &pi;]</code> by default, but if a cross
- * section curve is defined, those V coordinates will be that curve's end points (or <code>[0, 1]</code>
+ * The starting and ending v-coordinates are <code>[0, &pi;]</code> by default, but if a cross
+ * section curve is defined, those v-coordinates will be that curve's end points (or <code>[0, 1]</code>
  * if it doesn't implement an <code>endPoints</code> method).
  */
 CurveTube.prototype.endPoints = function() {
@@ -283,9 +283,9 @@ CurveTube.prototype.endPoints = function() {
   }
 };
 /**
- * Generates a point on the extruded tube from the given u and V coordinates.
- * @param {number} u U coordinate. This will run the length of the curve.
- * @param {number} v V coordinate. This will sweep around the extruded
+ * Generates a point on the extruded tube from the given u- and v-coordinates.
+ * @param {number} u The Ucoordinate. This will run the length of the curve.
+ * @param {number} v The Vcoordinate. This will sweep around the extruded
  * tube.
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  */
