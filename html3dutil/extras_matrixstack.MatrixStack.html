@@ -56,15 +56,15 @@ translation transformation.</li>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.</p>
 
-<p>For more information on the frustum matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum</a>.</p>
+<p>For more information on the frustum matrix and the parameters, see MathUtil.mat4frustum.</p>
 
 <h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li><code>l</code> (Type: number)<br />x-coordinate of the point where the left clipping plane meets the near clipping plane.</li>
-  <li><code>r</code> (Type: number)<br />x-coordinate of the point where the right clipping plane meets the near clipping plane.</li>
-  <li><code>b</code> (Type: number)<br />y-coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
-  <li><code>t</code> (Type: number)<br />y-coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+  <li><code>l</code> (Type: number)<br />The Xcoordinate of the point where the left clipping plane meets the near clipping plane.</li>
+  <li><code>r</code> (Type: number)<br />The Xcoordinate of the point where the right clipping plane meets the near clipping plane.</li>
+  <li><code>b</code> (Type: number)<br />The Ycoordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+  <li><code>t</code> (Type: number)<br />The Ycoordinate of the point where the top clipping plane meets the near clipping plane.</li>
   <li><code>n</code> (Type: number)<br />The distance from the camera to the near clipping plane.</li>
   <li><code>f</code> (Type: number)<br />The distance from the camera to the far clipping plane.</li>
 </ul>
@@ -128,20 +128,20 @@ transpose of the given matrix.</p>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a “camera” view.</p>
 
-<p>For more information on that matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4lookat">MathUtil.mat4lookat</a>.</p>
+<p>For more information on that matrix and the parameters, see MathUtil.mat4lookat.</p>
 
 <h4 id="parameters-3">Parameters</h4>
 
 <ul>
-  <li><code>ex</code> (Type: number)<br />x-coordinate of the “camera” position in world space.</li>
-  <li><code>ey</code> (Type: number)<br />y-coordinate of the “camera” position.</li>
-  <li><code>ez</code> (Type: number)<br />z-coordinate of the “camera” position.</li>
-  <li><code>cx</code> (Type: number)<br />x-coordinate of the position in world space that the “camera” is “looking at”.</li>
-  <li><code>cy</code> (Type: number)<br />y-coordinate of the position “looked at”.</li>
-  <li><code>cz</code> (Type: number)<br />z-coordinate of the position “looked at”.</li>
-  <li><code>ux</code> (Type: number)<br />x-coordinate of the up direction vector.</li>
-  <li><code>uy</code> (Type: number)<br />y-coordinate of the up vector.</li>
-  <li><code>uz</code> (Type: number)<br />z-coordinate of the up vector.</li>
+  <li><code>ex</code> (Type: number)<br />The Xcoordinate of the “camera” position in world space.</li>
+  <li><code>ey</code> (Type: number)<br />The Ycoordinate of the “camera” position.</li>
+  <li><code>ez</code> (Type: number)<br />The Zcoordinate of the “camera” position.</li>
+  <li><code>cx</code> (Type: number)<br />The Xcoordinate of the position in world space that the “camera” is “looking at”.</li>
+  <li><code>cy</code> (Type: number)<br />The Ycoordinate of the position “looked at”.</li>
+  <li><code>cz</code> (Type: number)<br />The Zcoordinate of the position “looked at”.</li>
+  <li><code>ux</code> (Type: number)<br />The Xcoordinate of the up direction vector.</li>
+  <li><code>uy</code> (Type: number)<br />The Ycoordinate of the up vector.</li>
+  <li><code>uz</code> (Type: number)<br />The Zcoordinate of the up vector.</li>
 </ul>
 
 <h4 id="return-value-5">Return Value</h4>
@@ -194,7 +194,7 @@ the effect of translation than scaling.</p>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection matrix.</p>
 
-<p>For more information on the projection matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>.</p>
+<p>For more information on the projection matrix and the parameters, see MathUtil.mat4ortho.</p>
 
 <h4 id="parameters-6">Parameters</h4>
 
@@ -217,7 +217,7 @@ an orthographic projection matrix.</p>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection matrix.</p>
 
-<p>For more information on that matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4ortho2d">MathUtil.mat4ortho2d</a>.</p>
+<p>For more information on that matrix and the parameters, see MathUtil.mat4ortho2d.</p>
 
 <h4 id="parameters-7">Parameters</h4>
 
@@ -238,7 +238,7 @@ a 2D orthographic projection matrix.</p>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.</p>
 
-<p>For more information on that matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.</p>
+<p>For more information on that matrix and the parameters, see MathUtil.mat4perspective.</p>
 
 <h4 id="parameters-8">Parameters</h4>
 
@@ -259,13 +259,13 @@ a matrix that defines a perspective projection.</p>
 <p>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.</p>
 
-<p>For more information on that matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4pickMatrix">MathUtil.mat4pickMatrix</a>.</p>
+<p>For more information on that matrix and the parameters, see MathUtil.mat4pickMatrix.</p>
 
 <h4 id="parameters-9">Parameters</h4>
 
 <ul>
-  <li><code>wx</code> (Type: number)<br />x-coordinate of the center of the desired viewport portion.</li>
-  <li><code>wy</code> (Type: number)<br />y-coordinate of the center of the desired viewport portion.</li>
+  <li><code>wx</code> (Type: number)<br />The Xcoordinate of the center of the desired viewport portion.</li>
+  <li><code>wy</code> (Type: number)<br />The Ycoordinate of the center of the desired viewport portion.</li>
   <li><code>ww</code> (Type: number)<br />Width of the desired viewport portion.</li>
   <li><code>wh</code> (Type: number)<br />Height of the desired viewport portion.</li>
   <li><code>vp</code> (Type: Array.&lt;number&gt;)<br />A 4-element array giving the x- and y-coordinates of the current viewport’s origin followed by the width and height of a rectangle indicating the current viewport.</li>
@@ -299,7 +299,7 @@ and puts the copy on top of the stack.</p>
 <p><a name="extras_matrixstack_MatrixStack_rotate"></a>
 ### module:extras/matrixstack~MatrixStack#rotate(angle, x, y, z)</p>
 
-<p>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see <a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate</a>.</p>
+<p>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see MathUtil.mat4rotate.</p>
 
 <h4 id="parameters-10">Parameters</h4>
 
@@ -364,22 +364,6 @@ translation transformation.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

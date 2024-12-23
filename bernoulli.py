@@ -309,7 +309,7 @@ class Bernoulli:
 
     def bernoulli_x(self, f, x):
         """Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
-            Mendo calls Bernoulli factories "non-randomized" if their randomness
+            Mendo calls Bernoulli factories "nonrandomized" if their randomness
             is based entirely on the underlying coin.
         - f: Function that returns 1 if heads and 0 if tails.
         - x: Desired probability, in [0, 1]."""
@@ -508,7 +508,7 @@ class Bernoulli:
          (Dughmi et al. 2021). E[p^x] is the expected value of p^x and is also known
          as the probability generating function.
         - f: Function that returns 1 if heads and 0 if tails.
-        - rng: Function that returns a non-negative integer at random.
+        - rng: Function that returns a nonnegative integer at random.
           Example (Dughmi et al. 2021): if 'rng' is Poisson(lamda) we have
           an "exponentiation" Bernoulli factory as follows:
           B(p) => B(exp(p*lamda-lamda))
@@ -524,7 +524,7 @@ class Bernoulli:
           c(2)*(1-p)^3 + ...), where c(i) = `c[i]/sum(c)`) (Mendo 2019).
         - f: Function that returns 1 if heads and 0 if tails.
         - c: List of coefficients in the power series, all of which must be
-          non-negative integers."""
+          nonnegative integers."""
         i = 0
         csum = sum(c)
         dsum = 0
@@ -1864,7 +1864,7 @@ class DiceEnterprise:
                             # d1+d2 = degree - current_degree
                             d1d2 = degree - (ntilde[0] + ntilde[1])
                             # Same as: 0 <= d1 + d2 <= degree, since ntilde[x] must
-                            # be non-negative
+                            # be nonnegative
                             if ntilde[0] + ntilde[1] <= degree:
                                 # print([float(state[0][j]),"n0",n0,"n",d1d2,"k",d1,"ntilde",ntilde])
                                 ret += Fraction(state[0][j]) * math.comb(d1d2, d1)

@@ -1,14 +1,13 @@
 import decimal as dec
 import math
 
-
 class Fixed:
     """
     Fixed-point numbers, represented using integers that store multiples
     of 2^-BITS.  They are not necessarily faster than floating-point numbers, nor
     do they necessarily have the same precision or resolution of floating-point
     numbers.  The main benefit of fixed-point numbers is that they improve
-    determinism for applications that rely on non-integer real numbers (notably
+    determinism for applications that rely on noninteger real numbers (notably
     simulations and machine learning applications), in the sense that the operations
     given here deliver the same answer for the same input across computers,
     whereas floating-point numbers have a host of problems that make repeatable
@@ -17,7 +16,7 @@ class Fixed:
     floating-point numbers.
 
     The operations given here are not guaranteed to be "constant-time"
-    (non-data-dependent and branchless) for every relevant input.
+    (nondata-dependent and branchless) for every relevant input.
 
     Any copyright to this file is released to the Public Domain.  In case this is not
     possible, this file is also licensed under Creative Commons Zero version 1.0.
@@ -112,7 +111,7 @@ class Fixed:
         """
         Converts a string, integer, Decimal, or other number type into
         a fixed-point number.  If the parameter is a Fixed, returns itself.
-        If the given number is a non-integer, returns the closest value to
+        If the given number is a noninteger, returns the closest value to
         a Fixed after rounding using the round-to-nearest-ties-to-even
         rounding mode.  The parameter is recommended to be a string
         or integer, and is not recommended to be a `float`.
@@ -757,7 +756,6 @@ class Fixed:
 
     def __repr__(self):
         return str(dec.Decimal(self.value) / dec.Decimal((1 << Fixed.BITS)))
-
 
 if __name__ == "__main__":
 

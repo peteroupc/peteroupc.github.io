@@ -85,12 +85,12 @@ filter as part of the program’s fragment shader. Since shader programs must al
 "}"].join("\n"));
 </pre>
 
-<p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the example above.</p>
+<p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the preceding example.</p>
 
 <p>The <code>textureEffect</code> function takes these parameters:</p>
 
 <ul>
-  <li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
+  <li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the preceding example.</li>
   <li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the lower-left corner, not the upper left, that is, textures are “bottom up”,
 not “top down”).</li>
   <li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels. <code>textureSize.x</code> is the
@@ -102,7 +102,7 @@ width, and <code>textureSize.y</code> is the height.</li>
 <p>The shader can also define custom parameters called “uniforms”, so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like <code>uniform [type] [name];</code> at the top of the shader. Example: <code>uniform float time;</code> Uniforms, once declared, can be used in the <code>textureEffect</code> function.</p>
 
 <p>A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
-be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
+be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see later for more examples of graphics filters.</p>
 
 <p><a id="Using_Graphics_Filters"></a></p>
 
@@ -288,22 +288,6 @@ frame for the undulation effect.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

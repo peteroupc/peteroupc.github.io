@@ -14,11 +14,11 @@
 
 <p>This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-<a href="http://peteroupc.github.io/html3dutil"><strong>Geometry Utilities Library</strong></a>,
+<a href="http://peteroupc.github.io/html3dutil"><strong>Geometry Helper Library</strong></a>,
 and explains how a commonly used graphics pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.</p>
 
-<p><strong>Source code for the latest version of the library is available at the</strong> <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Utilities Library’s project page</strong></a><strong>.</strong></p>
+<p><strong>Source code for the latest version of the library is available at the</strong> <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Helper Library’s project page</strong></a><strong>.</strong></p>
 
 <p><a id="Contents"></a></p>
 
@@ -104,7 +104,7 @@ and others would be.</p>
 
 <p>The following methods define a perspective projection.</p>
 
-<p><strong><a href="MathUtil.html#MathUtil.mat4perspective"><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
+<p><strong><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></strong></p>
 
 <p>This method returns a 4 × 4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -211,7 +211,7 @@ the use of matrices related to them, such as <em>projection</em>, <em>view</em>,
 and <em>world</em> matrices, are merely conventions,
 which exist for convenience in many 3D graphics libraries.</p>
 
-<p>When a commonly used graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line, or point,
+<p>When a commonly used graphics pipeline (outside the 3D graphics library concerned) draws a triangle, line, or point,
 all it really expects is the location of that primitive’s vertices in <em>clip space</em>. A
 so-called <em>vertex shader</em> communicates those locations to the graphics pipeline using
 the data accessible to it. Although the vertex shader can use projection, view, and world
@@ -223,7 +223,7 @@ without transforming them.</p>
 <p>As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
+perspective matrix returned by MathUtil.mat4perspective, for example,
 transforms W to the negative z-coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the “eye” or “camera”.</p>
 
@@ -233,7 +233,7 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels.</p>
 
-<p>For the perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective"><code>mat4perspective</code></a>, dividing
+<p>For the perspective matrix returned by <code>mat4perspective</code>, dividing
 the x-, y-, and z-coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the “eye” or “camera”),
 the x-, y-, and z-coordinates are brought closer and closer to the center of the view.  This
@@ -244,7 +244,7 @@ as they are more and more distant from the “camera”.</p>
 
 <h2 id="other-pages">Other Pages</h2>
 
-<p>The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:</p>
+<p>The following pages of mine on CodeProject also discuss the Geometry Helper Library, formerly the Public-Domain HTML 3D Library:</p>
 
 <ul>
   <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
@@ -265,22 +265,6 @@ as they are more and more distant from the “camera”.</p>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

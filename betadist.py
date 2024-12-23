@@ -14,7 +14,6 @@ except:
 import math
 from fractions import Fraction
 
-
 def betabin(k, psi, rho, cpsi, m=5):
     ret = math.comb(m - 1, k - 1)
     for i in range(k - 1):
@@ -22,7 +21,6 @@ def betabin(k, psi, rho, cpsi, m=5):
     for j in range(m - k):
         ret *= (m - psi) * rho / (m - 1) + j * (cpsi - rho)
     return ret
-
 
 def genscore_mean_var(mean, vari, m=5):
     # Generalized score distribution, parameterized by mean and variance
@@ -35,7 +33,6 @@ def genscore_mean_var(mean, vari, m=5):
         return genscore(psi, 0, m=m)
     else:
         return genscore(psi, 1 - (vari - vmin) / (vmax - vmin), m=m)
-
 
 def genscore(psi, rho, m=5):
     # Generalized score distribution (GSD).
@@ -84,7 +81,6 @@ def genscore(psi, rho, m=5):
         else:
             return 1 + sum(randBernoulli((psi - 1) / (m - 1)) for i in range(m - 1))
 
-
 def randBernoulli(f):
     if f == 1:
         return 1
@@ -95,7 +91,6 @@ def randBernoulli(f):
     if isinstance(f, Real):
         return 1 if realIsLess(RandUniform(), f) else 0
     return 1 if realIsLess(RandUniform(), RealFraction(f)) else 0
-
 
 def tulap(m, b, q):
     # Tulap(m, b, q). ("truncated uniform Laplace"), m real, b in (0, 1), q in [0, 1).
@@ -133,7 +128,6 @@ def tulap(m, b, q):
         if realIsLess(q / 2, fn) and realIsLess(fn, 1 - q / 2):
             return nreal + m
 
-
 def gen_to_transition(s):
     size = len(s)
     m = [[0 for i in range(size + 1)] for j in range(size)]
@@ -146,13 +140,12 @@ def gen_to_transition(s):
                 m[i][j] = -s[i][j] / s[i][i]
     return m
 
-
 class PhaseType:
     # Samples from a continuous phase-type distribution.
     #    N is the number of states (other than the
     #    "absorbing" or terminating state).
     # alpha - Probabilities to start in each state. N items.
-    # s - Sub-generator matrix.  List of N lists with N items each.
+    # s - Subgenerator matrix.  List of N lists with N items each.
     def __init__(self, alpha, s):
         self.n = len(s)
         self.alpha = alpha
@@ -167,7 +160,6 @@ class PhaseType:
             ret -= RealLn(RandUniform()) / self.rates[state]
             state = random.choices(range(self.n + 1), weights=self.trans[state])[0]
         return ret
-
 
 def exchangeable_bernoulli(p, d, lamda=None):
     # p=expected value (in [0, 1]); d=dimension; lamda=weights for
@@ -209,9 +201,7 @@ def exchangeable_bernoulli(p, d, lamda=None):
         random.shuffle(ret)
     return ret
 
-
 ###################
-
 
 def psrn_complement(x):
     # NOTE: Assumes digits is 2
@@ -220,10 +210,8 @@ def psrn_complement(x):
             x[2][i] = 1 - x[2][i]
     return x
 
-
 def psrn_new_01():
     return [1, 0, []]
-
 
 def psrn_fill(rg, psrn, precision=53, digits=2):
     af = 0
@@ -264,7 +252,6 @@ def psrn_fill(rg, psrn, precision=53, digits=2):
             asign * ((af // digits) + (aint * digits**precision)) / (digits**precision)
         )
 
-
 def psrn_in_range(rg, bmin, bmax, digits=2):
     if bmin >= bmax:
         raise ValueError
@@ -303,7 +290,6 @@ def psrn_in_range(rg, bmin, bmax, digits=2):
             if psrn_less_than_fraction(rg, a, bmax, digits) == 1:
                 a[0] = 1
                 return a
-
 
 def psrn_in_range_positive(rg, bmin, bmax, digits=2):
     if bmin >= bmax or bmin < 0 or bmax <= 0:
@@ -404,10 +390,8 @@ def psrn_in_range_positive(rg, bmin, bmax, digits=2):
                 continue
         return a
 
-
 def psrn_sample(rg, psrn, digits=2):
     return psrn_less(rg, psrn_new_01(), [1, 0, psrn[2]], digits)
-
 
 def psrn_less(rg, psrn1, psrn2, digits=2):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
@@ -447,7 +431,6 @@ def psrn_less(rg, psrn1, psrn2, digits=2):
         if aa > bb:
             return 0
         index += 1
-
 
 def psrn_less_than_fraction(rg, psrn, rat, digits=2):
     if (psrn[0] != -1 and psrn[0] != 1) or psrn[1] == None:
@@ -511,7 +494,6 @@ def psrn_less_than_fraction(rg, psrn, rat, digits=2):
             return 0 if psrn[0] > 0 else 1
         pt *= digits
         index += 1
-
 
 def psrn_reciprocal(rg, psrn1, digits=2):
     """Generates the reciprocal of a partially-sampled random number.
@@ -581,7 +563,6 @@ def psrn_reciprocal(rg, psrn1, digits=2):
             ddc *= digits
             dc *= digits
 
-
 def proddist(x, a, b, c, d):
     if a * d < b * c:
         aa = a
@@ -603,7 +584,6 @@ def proddist(x, a, b, c, d):
     else:
         r = max(0, min(1, math.log(b * d / x))) / math.log(b / a)
     return max(0, min(1, r))
-
 
 def proddist2(x, a, b, c, d):
     if a * d < b * c:
@@ -627,7 +607,6 @@ def proddist2(x, a, b, c, d):
         r = [Fraction(b * d, x), Fraction(b, a)]
     return r
 
-
 def psrn_multiply(rg, psrn1, psrn2, digits=2):
     """Multiplies two uniform partially-sampled random numbers.
     psrn1: List containing the sign, integer part, and fractional part
@@ -638,7 +617,6 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
     digits: Digit base of PSRNs' digits.  Default is 2, or binary."""
     return psrn_multiply_b(rg, psrn1, psrn2, digits=digits)
 
-
 def _dlc(rg, psrn, c, digits=2):
     i = rg.rndint(c - 1)
     if i < psrn[1]:
@@ -646,7 +624,6 @@ def _dlc(rg, psrn, c, digits=2):
     if i == psrn[1]:
         return psrn_sample(rg, psrn, digits=digits)
     return 0
-
 
 def _log_1n(rg, c):
     # ln(1+1/c)
@@ -659,7 +636,6 @@ def _log_1n(rg, c):
         if psrn_sample(rg, u) == 1:
             if rg.rndint(c - 1) == 0:
                 return 0
-
 
 def _log_yxyz(rg, psrn, st, digits=2):
     # ln((st+psrn)/st)
@@ -675,7 +651,6 @@ def _log_yxyz(rg, psrn, st, digits=2):
             if _dlc(rg, psrn, st, digits=digits) == 1:
                 return 0
 
-
 def _dlc2(rg, psrn, n, d, digits=2):
     while True:
         if rg.rndint(d) != d:
@@ -687,7 +662,6 @@ def _dlc2(rg, psrn, n, d, digits=2):
             return 0
         if psrn_sample(rg, psrn, digits=digits) == 1:
             return 0
-
 
 def _log_xyzy(rg, psrn, large, midmax, digits=2):
     # ln(large/(midmax+psrn))
@@ -705,14 +679,12 @@ def _log_xyzy(rg, psrn, large, midmax, digits=2):
             if _dlc2(rg, psrn, n, d, digits=digits) == 1:
                 return 0
 
-
 def _log_yxyz_test(ps, st):
     import scipy.integrate as spi
 
     rg = bernoulli.Bernoulli()
     print(spi.quad(lambda x: math.log((st + ps + x) / st), 0, 1)[0])
     print(sum(_log_yxyz(rg, [1, ps, []], st) for i in range(100000)) / 100000)
-
 
 def _log_xyzy_test(ps, large, midmax):
     import scipy.integrate as spi
@@ -723,14 +695,12 @@ def _log_xyzy_test(ps, large, midmax):
         sum(_log_xyzy(rg, [1, ps, []], large, midmax) for i in range(100000)) / 100000
     )
 
-
 def _dlc2_test(n, d):
     import scipy.integrate as spi
 
     rg = bernoulli.Bernoulli()
     print(spi.quad(lambda x: (n + (1 - x)) / (d + x), 0, 1)[0])
     print(sum(_dlc2(rg, [1, 0, []], n, d) for i in range(100000)) / 100000)
-
 
 if False:
     _dlc2_test(0, 19)
@@ -746,7 +716,6 @@ if False:
     _log_xyzy_test(1, 32, 30)
     _log_xyzy_test(0, 16, 14)
     exit()
-
 
 def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
@@ -839,7 +808,6 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
             # if iters>100:print(iters)
             return cpsrn
 
-
 def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
     """Multiplies a partially-sampled random number by a fraction.
     psrn1: List containing the sign, integer part, and fractional part
@@ -885,7 +853,6 @@ def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
                 rv = rv * digits + rg.rndint(digits - 1)
                 dcount += 1
                 ddc *= digits
-
 
 def psrn_add(rg, psrn1, psrn2, digits=2):
     """Adds two uniform partially-sampled random numbers.
@@ -988,7 +955,6 @@ def psrn_add(rg, psrn1, psrn2, digits=2):
             y = y * digits + rg.rndint(digits - 1)
             b *= digits
             newdigits += 1
-
 
 def psrn_add_fraction(rg, psrn, fraction, digits=2):
     if psrn[0] == None or psrn[1] == None:
@@ -1098,7 +1064,6 @@ def psrn_add_fraction(rg, psrn, fraction, digits=2):
                     rv = rv * digits + rg.rndint(digits - 1)
                     rvs = rv + rvstart
 
-
 def psrnexpo(rg):
     count = 0
     while True:
@@ -1116,9 +1081,7 @@ def psrnexpo(rg):
             return [1, count, y1[2]]
         count += 1
 
-
 ###################
-
 
 def geobagcompare(bag, f):
     """Returns 1 with probability f(U), where U is the value that
@@ -1189,7 +1152,6 @@ def geobagcompare(bag, f):
             i += 1
             iprec = 1 << i
 
-
 def _bern_power(bern, bag, num, den, bagfactory):
     if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
         # If the geometric bag is known to hold a very small number, use
@@ -1203,13 +1165,11 @@ def _bern_power(bern, bag, num, den, bagfactory):
     else:
         return bern.power(bagfactory, num, den)
 
-
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
     return psrn_fill(
         _power_of_uniform_greaterthan1_geobag(bern, power, complement),
         precision=precision,
     )
-
 
 def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
     if power < 1:
@@ -1250,7 +1210,6 @@ def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
             # Flip all bits if complement is true
             return psrn_complement(bag) if complement else bag
 
-
 def powerOfUniform(b, px, py, precision=53):
     """Generates a power of a uniform random number.
     - px, py - Numerator and denominator of desired exponent for the uniform
@@ -1262,10 +1221,8 @@ def powerOfUniform(b, px, py, precision=53):
     # is in (0, 1].
     return betadist(b, py, px, 1, 1, precision)
 
-
 def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
     return psrn_fill(betadist_geobag(b, ax, ay, bx, by), precision=precision)
-
 
 def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
     """Generates a beta-distributed random number with arbitrary
@@ -1329,9 +1286,7 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
             # Accepted
             return bag
 
-
 #####################
-
 
 class _RGConv:
     # Wrapper that takes an object that implements
@@ -1341,7 +1296,6 @@ class _RGConv:
 
     def randint(self, a, b):
         return a + self.rg.rndint(b - a)
-
 
 #####################
 def truncated_gamma(rg, bern, ax, ay, precision=53):
@@ -1359,7 +1313,6 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
                 break
             w = u
             k += 1
-
 
 def forsythe_prob2(rg, x):
     # Returns 1 with probability x*exp(1-x), where x is in [0, 1].
@@ -1385,7 +1338,6 @@ def forsythe_prob2(rg, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
 
-
 def forsythe_prob3(rg, x):
     # Returns 1 with probability erf(x)/erf(1), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
@@ -1407,7 +1359,6 @@ def forsythe_prob3(rg, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
 
-
 def forsythe_prob(rg, m, n):
     # Returns 1 with probability gamma(m,n)/gamma(m,1),
     # where gamma(.) is the lower incomplete gamma function.
@@ -1427,7 +1378,6 @@ def forsythe_prob(rg, m, n):
             u = v
         if k % 2 == 1:
             return 1 if psrn_less_than_fraction(rg, ret, n) == 1 else 0
-
 
 def exp_minus_x2y(rg, f, y, pwr=2):
     """B(x) -> B(exp(-x*x*y))"""
@@ -1463,7 +1413,6 @@ def exp_minus_x2y(rg, f, y, pwr=2):
         fac *= n
         y *= uy
 
-
 def exp_minus_xy(rg, f, y):
     """B(x) -> B(exp(-x*y))"""
     if y > 1:
@@ -1497,7 +1446,6 @@ def exp_minus_xy(rg, f, y):
         fac *= n
         y *= uy
 
-
 def sampleIntPlusBag(rg, psrn, k):
     """Return 1 with probability (x+k)/2^bitlength(k).
     Ignores PSRN's integer part and sign."""
@@ -1518,7 +1466,6 @@ def sampleIntPlusBag(rg, psrn, k):
         if psrn[2][r] == None:
             psrn[2][r] = rg.randbit()
         return psrn[2][r]
-
 
 def rayleighpsrn(rg, s=1):
     k = 0
@@ -1552,7 +1499,6 @@ def rayleighpsrn(rg, s=1):
             bag[1] = k
             return bag
 
-
 def size_biased_poisson_ailamujia(rg, eta=1):
     """Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
     Pak. J. Statistics 37(1), 19-38, 2021."""
@@ -1567,7 +1513,6 @@ def size_biased_poisson_ailamujia(rg, eta=1):
             return z
         cumu -= pr
         z += 1
-
 
 def genshape(rg, inshape):
     """Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
@@ -1602,7 +1547,6 @@ def genshape(rg, inshape):
             else:
                 s *= base
                 d += 1
-
 
 class _PavingNode:
     def __init__(self, coords):
@@ -1639,7 +1583,6 @@ class _PavingNode:
             raise ValueError
         self.left, self.right = self.getBisection()
         return self.left, self.right
-
 
 class ShapeSampler2:
     YES = 1
@@ -1689,7 +1632,7 @@ class ShapeSampler2:
     def _makepsrn(self, coord, rg):
         # Because of bisections and the restriction of root box sizes to
         # integers, the denominator must be a power of 2.
-        # Moreover, coords are assumed to be non-negative.
+        # Moreover, coords are assumed to be nonnegative.
         if coord[0].numerator < 0:
             raise NotImplementedError
         if coord[1].numerator < 0:
@@ -1729,7 +1672,6 @@ class ShapeSampler2:
                 left, right = box.getBisection()
                 box = left if child == 0 else right
                 box.mark = self.inshape(box.coords)
-
 
 class ShapeSampler:
     def __init__(self, inshape, dx=1, dy=1):
@@ -1803,7 +1745,6 @@ class ShapeSampler:
         psrny[0] = -1 if rg.randbit() == 0 else 1
         return [psrnx, psrny]
 
-
 def _peres(bits, output):
     u = []
     v = []
@@ -1828,7 +1769,6 @@ def _peres(bits, output):
     # Recursion on "discarded" bits
     _peres(u, output)
     _peres(v, output)
-
 
 class _BitFetchingRandomGen:
     def __init__(self, *args):
@@ -1907,7 +1847,6 @@ class _BitFetchingRandomGen:
             x >>= 1
         self.fetchedbits = 0
 
-
 def _test_rand_extraction(rg, func, digits=2, nofill=False):
     func(rg)
     return
@@ -1945,7 +1884,6 @@ def _test_rand_extraction(rg, func, digits=2, nofill=False):
         except:
             pass
 
-
 def addto1(rg):
     # Simulates the number of uniforms
     # in [0,1] needed to produce a sum greater than 1.
@@ -1958,9 +1896,7 @@ def addto1(rg):
             break
     return i
 
-
 ########################
-
 
 def recordcount(n):
     if n == 1:
@@ -1970,7 +1906,6 @@ def recordcount(n):
         if random.randint(0, i) == 0:
             ret += 1
     return ret
-
 
 def lah(n, k):
     # Lah distribution.
@@ -1999,7 +1934,6 @@ def lah(n, k):
         else:
             run += 1
     return ret
-
 
 # Random real numbers.  Uses ideas from H.J. Boehm's
 # concept of "constructive reals".
@@ -2041,9 +1975,9 @@ def lah(n, k):
 # for `ev()`, the `ev(m)` result using the
 # cached output may differ from the `ev(m)` without
 # a cache.  And this can make the `ev()` method
-# non-deterministic (it doesn't always return the same
+# nondeterministic (it doesn't always return the same
 # value for the same input).
-# And this is why non-reproducibility can happen
+# And this is why nonreproducibility can happen
 # if the application uses Rand* and Real* classes
 # together with PRNGs.  (This issue is similar to
 # the issue with doing parallel sums of floating-point
@@ -2056,7 +1990,6 @@ def lah(n, k):
 # application that has its own PRNG that's not
 # shared with other tasks).
 #
-
 
 class Real:
     def ev(self, n):
@@ -2149,7 +2082,6 @@ class Real:
     def __repr__(a):
         return "Real"
 
-
 class RealPi(Real):
     def __init__(self, fraction=1, consistent=False):
         self.fraction = Fraction(fraction)
@@ -2207,10 +2139,8 @@ class RealPi(Real):
             lower = upper
             k += 1
 
-
 REALPI = RealPi(consistent=True)
 REALHALFPI = RealPi(Fraction(1, 2), consistent=True)
-
 
 class RealTan(Real):
     def __init__(self, a):
@@ -2224,7 +2154,6 @@ class RealTan(Real):
 
     def ev(self, n):
         return self.a.ev(n)
-
 
 class RealArcTan2(Real):
     def __init__(self, y, x):
@@ -2258,7 +2187,6 @@ class RealArcTan2(Real):
     def ev(self, n):
         return self.r.ev(n)
 
-
 _BERNNUMBERS = [
     Fraction(1),
     Fraction(1, 2),
@@ -2274,7 +2202,6 @@ _BERNNUMBERS = [
     0,
 ]
 _extrabernnumbers = {}
-
 
 def bernoullinum(n):
     # Calculates Bernoulli numbers
@@ -2296,9 +2223,7 @@ def bernoullinum(n):
     _extrabernnumbers[n] = ret
     return ret
 
-
 _STIRLING1 = {}
-
 
 def stirling1(n, k):
     # Calculates Stirling numbers of the first kind
@@ -2311,7 +2236,6 @@ def stirling1(n, k):
     ret = stirling1(n - 1, k - 1) - stirling1(n - 1, k) * (n - 1)
     _STIRLING1[(n, k)] = ret
     return ret
-
 
 def loggammahelper(n, precision):
     # Implements the first listed convergent version of Stirling's formula
@@ -2373,7 +2297,6 @@ def loggammahelper(n, precision):
     errintv.addnumden(result.supn, result.supd)
     return (result.infn, result.infd, errintv.supn, errintv.supd)
 
-
 class RealLogGammaInt(Real):
     _logPi = None
 
@@ -2405,7 +2328,6 @@ class RealLogGammaInt(Real):
         if self.a == 1 or self.a == 2:
             return 0
         return self.r.ev(n)
-
 
 class _RealLogGammaIntHelper(Real):
     def __init__(self, a):
@@ -2447,7 +2369,6 @@ class _RealLogGammaIntHelper(Real):
                 return cinf
             nv += 6
 
-
 def logbinco(n, k):
     # Log binomial coefficient.
     if k + 1 == (n - k) + 1:
@@ -2460,18 +2381,15 @@ def logbinco(n, k):
         )
     return r
 
-
 def logbinprob(n, k):
     # Log of binomial probability, that is, the log of the probability
     # that exactly k zeros occur among n unbiased random bits.
     divisor = RealLn(2) * n  # ln(2)*n = ln(2**n)
     return logbinco(n, k) - divisor
 
-
 def logpoisson(lamda, n):
     # Log of the probability that a Poisson(lamda) random number is n.
     return RealLn(lamda) * n - lamda - RealLogGammaInt(n + 1)
-
 
 class RealErf(Real):
     def __init__(self, a):
@@ -2483,7 +2401,6 @@ class RealErf(Real):
 
     def ev(self, n):
         return self.r.ev(n)
-
 
 class _RealErfHelper(Real):
     def __init__(self, a):
@@ -2581,7 +2498,6 @@ class _RealErfHelper(Real):
                 self.ev_v = cinf
                 return cinf
             nv += 6
-
 
 class RealArcTan(Real):
     def __init__(self, a):
@@ -2700,7 +2616,6 @@ class RealArcTan(Real):
                 return cinf
             nv += 6
 
-
 class RealSin(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
@@ -2720,7 +2635,6 @@ class RealSin(Real):
             return 0
         return self.c.ev(n)
 
-
 def fracAreClose(a, b, n):
     # if a>b: raise ValueError
     an = a.numerator
@@ -2728,7 +2642,6 @@ def fracAreClose(a, b, n):
     bn = b.numerator
     bd = b.denominator
     return fracAreCloseND(an, ad, bn, bd, n)
-
 
 def fracEV(sn, sd, n):
     sn = sn << (n + 2) if sn >= 0 else sn * (1 << (n + 2))
@@ -2742,7 +2655,6 @@ def fracEV(sn, sd, n):
     else:
         ret2 = (ret // 4) + 1 if ret % 4 >= 2 else (ret // 4)
     return ret2
-
 
 def fracAreCloseND(an, ad, bn, bd, n):
     if ad < 0 or bd < 0:
@@ -2765,7 +2677,6 @@ def fracAreCloseND(an, ad, bn, bd, n):
     if (an << n) > ad * ra and (bn << n) < bd * rb:  # a>ra/2^n  # b<rb/2^n
         return ra
     return None
-
 
 class RealCos(Real):
     def __init__(self, a):
@@ -2869,7 +2780,6 @@ class RealCos(Real):
                 self.ev_v = cinf
                 return cinf
             nv += 6
-
 
 class RealExp(Real):
     def __init__(self, a):
@@ -2976,7 +2886,6 @@ class RealExp(Real):
                 return cinf
             nv += 2
 
-
 def randMax(n=2):  # rand()^(1/n)
     u = RandUniform()
     for i in range(1, n):
@@ -2985,7 +2894,6 @@ def randMax(n=2):  # rand()^(1/n)
             u = v
     return u
 
-
 def randMin(n=2):  # 1-rand()^(1/n)
     u = RandUniform()
     for i in range(1, n):
@@ -2993,7 +2901,6 @@ def randMin(n=2):  # 1-rand()^(1/n)
         if realIsLess(v, u):
             u = v
     return u
-
 
 class RealPow(Real):
     def __init__(self, a, b):
@@ -3130,7 +3037,6 @@ class RealPow(Real):
                 nv += 4
         return self.r.ev(n)
 
-
 class RealDivide(Real):
     def __init__(self, a, b):
         self.a = a if isinstance(a, Real) else RealFraction(a)
@@ -3208,7 +3114,6 @@ class RealDivide(Real):
                 return cinf
             nv += 4
 
-
 class RandPSRN(Real):
     # Constructive real operation
     # that takes a positive uniform PSRN with base-2
@@ -3236,9 +3141,7 @@ class RandPSRN(Real):
             bits = -bits
         return bits
 
-
 _realbits = 0
-
 
 class RandUniform(Real):
     # Random uniform real number in the interval (0, 1).
@@ -3266,7 +3169,6 @@ class RandUniform(Real):
         # At this point, with probability one, ret/2^n is accurate
         # to strictly less than 1 ulp
         return ret
-
 
 class RealFraction(Real):
     def __init__(self, a, b=None):
@@ -3401,7 +3303,6 @@ class RealFraction(Real):
             return self.num << n
         return fracEV(self.num, self.den, n)
 
-
 class RealNegate(Real):
     def __init__(self, a):
         self.a = a if isinstance(a, Real) else RealFraction(a)
@@ -3411,7 +3312,6 @@ class RealNegate(Real):
 
     def ev(self, n):
         return -self.a.ev(n)
-
 
 class RealSubtract(Real):
     def __init__(self, a, b):
@@ -3424,7 +3324,6 @@ class RealSubtract(Real):
     def ev(self, n):
         r = self.a.ev(n + 2) - self.b.ev(n + 2)
         return (r // 4) + 1 if r % 4 >= 2 else (r // 4)
-
 
 class RealAdd(Real):
     def __init__(self, a, b):
@@ -3454,7 +3353,6 @@ class RealAdd(Real):
         self.ev_n = n
         self.ev_v = ret
         return ret
-
 
 # floor(atanh(1/2^i)*2^29)
 ArcTanHTable = [
@@ -3490,7 +3388,6 @@ ArcTanHTable = [
     1,
 ]
 
-
 def _roundedshiftraw(a, shift):
     aa = abs(a)
     ret = aa >> shift
@@ -3501,7 +3398,6 @@ def _roundedshiftraw(a, shift):
     if a < 0:
         ret = -ret
     return ret
-
 
 def logsmall(av, n):
     if n > 16 or av < 2:
@@ -3518,13 +3414,11 @@ def logsmall(av, n):
     supcr = supcr + 2 if avplus <= 271 else supcr + 1
     return (infcr, 65536, supcr, 65536)
 
-
 CRUDELOG_BITS = 16
 CRUDELOG_LOGMIN = (1 << CRUDELOG_BITS) * 15 // 100
 CRUDELOG_LOG2BITS = 45426
 CRUDELOG_ARCTANFRAC = 29
 CRUDELOG_ARCTANBITDIFF = CRUDELOG_ARCTANFRAC - CRUDELOG_BITS
-
 
 def crudelog(av):
     # The CORDIC way to
@@ -3558,7 +3452,6 @@ def crudelog(av):
                 ry -= x
                 rz += ArcTanHTable[i]
     return _roundedshiftraw(rz, CRUDELOG_ARCTANBITDIFF - 1)
-
 
 CRUDELOG = [0 if i == 0 else crudelog(i) for i in range(0, 65536 + 1)]
 
@@ -3659,7 +3552,6 @@ LNPOLY3 = [
         5000000000000000000000000000000000000000000000000000,
     ),
 ]
-
 
 class FPInterval:
     # Fixed-point interval
@@ -3781,7 +3673,6 @@ class FPInterval:
         # print(["mul0",self])
         self._truncate()
         # print(["mul1",self.infn/self.infd,self.supn/self.supd])
-
 
 class RealLn(Real):
     def __init__(self, a):
@@ -3987,7 +3878,6 @@ class RealLn(Real):
                 return cinf
             nv += 4
 
-
 def realFloor(a):
     if isinstance(a, RealFraction):
         # NOTE: Python's "//" operator does floor division
@@ -4004,13 +3894,11 @@ def realFloor(a):
             return av // (1 << n)
         n += 2
 
-
 def realCeiling(a):
     if isinstance(a, RealFraction):
         # NOTE: Python's "//" operator does floor division
         return -((-a.num) // a.den)
     return -realFloor(-a)
-
 
 def realIsLessOrEqual(a, b):
     a = a if isinstance(a, Real) else RealFraction(a)
@@ -4018,7 +3906,6 @@ def realIsLessOrEqual(a, b):
     if isinstance(a, RealFraction) and isinstance(b, RealFraction):
         return Fraction(a.num, a.den) <= Fraction(b.num, b.den)
     return realIsLess(a, b)
-
 
 def realIsLess(a, b):
     if isinstance(a, int):
@@ -4049,10 +3936,8 @@ def realIsLess(a, b):
             return True
         n += 3
 
-
 def realIsGreater(a, b):
     return realIsLess(b, a)
-
 
 def realIsNegative(a):
     try:
@@ -4069,7 +3954,6 @@ def realIsNegative(a):
             return True
         n += 2
 
-
 class RealSqrt(Real):
     def __init__(self, a):
         self.a = RealPow(a, Fraction(1, 2))
@@ -4079,7 +3963,6 @@ class RealSqrt(Real):
 
     def ev(self, n):
         return self.a.ev(n)
-
 
 class RealMultiply(Real):
     def __init__(self, a, b):
@@ -4191,9 +4074,7 @@ class RealMultiply(Real):
                 return cinf
             nv += 6
 
-
 REAL_858_1000 = RealFraction(Fraction(858, 1000))
-
 
 def realNormalROU(mu=0, sigma=1):
     # Generates a Gaussian random variate using
@@ -4208,7 +4089,6 @@ def realNormalROU(mu=0, sigma=1):
             if random.randint(0, 1) == 0:
                 return -b / a if mu == 0 else (-b / a) + mu
             return b / a if mu == 0 else (b / a) + mu
-
 
 def fpNormalROU(mu=0, sigma=1):
     # Generates a Gaussian random variate using
@@ -4225,7 +4105,6 @@ def fpNormalROU(mu=0, sigma=1):
             if random.randint(0, 1) == 0:
                 return -b / a if mu == 0 else (-b / a) + mu
             return b / a if mu == 0 else (b / a) + mu
-
 
 def logconcave(f, c):  # Devroye 1986, chapter 7
     # Samples a random variate from an absolutely
@@ -4245,7 +4124,6 @@ def logconcave(f, c):  # Devroye 1986, chapter 7
         if realIsLess(z, f(x)):
             return x
 
-
 def gammaDist2():
     # Gamma distribution with parameter 2,
     # using Devroye's algorithm for log concave densities
@@ -4262,7 +4140,6 @@ def gammaDist2():
         x = 1 + x * (random.randint(0, 1) * 2 - 1) / c
         if realIsLess(zero, x) and z <= RealLn(x) - x + 1:
             return x
-
 
 def c2a(r=None):
     # Generates a uniform random point on the unit circle
@@ -4283,7 +4160,6 @@ def c2a(r=None):
                 return [(y1 - y2) * r / s, 2 * r * x1 * x2 / s]
             else:
                 [(y1 - y2) / s, 2 * x1 * x2 / s]
-
 
 def muth(mu):
     # Ratio-of-uniforms sampler for the Muth distribution
@@ -4308,7 +4184,6 @@ def muth(mu):
             continue
         if realIsLess(RealLn(v) * 2, logpdf):
             return x
-
 
 def realGamma(ml):
     # Generates a gamma random variate
@@ -4339,7 +4214,6 @@ def realGamma(ml):
         ret = ret * RealPow(RandUniform(), Fraction(1, ml))
     return ret
 
-
 class RandUniformIntFrac(Real):
     def __init__(self, i, f):
         if i < 0:
@@ -4353,7 +4227,6 @@ class RandUniformIntFrac(Real):
     def ev(self, n):
         return (self.i << n) + self.f.ev(n)
 
-
 class RandUniformNegIntFrac(Real):
     def __init__(self, i, f):
         if i < 0:
@@ -4366,7 +4239,6 @@ class RandUniformNegIntFrac(Real):
 
     def ev(self, n):
         return -((self.i << n) + self.f.ev(n))
-
 
 def randLnUniform():
     count = 0
@@ -4387,7 +4259,6 @@ def randLnUniform():
             return RandUniformNegIntFrac(count, y1)
         count += 1
 
-
 def randUniformLessThan(val):
     # NOTE: Assumes 'val' is greater than 0
     tev = val.ev(0) + 1
@@ -4396,7 +4267,6 @@ def randUniformLessThan(val):
         if realIsLess(x, val):
             return x
 
-
 def randUniformPower(pwr):
     if isinstance(pwr, RealFraction) and pwr.den > 0:
         if pwr.num < 0:
@@ -4404,7 +4274,6 @@ def randUniformPower(pwr):
         else:
             return randMax(pwr.den) ** abs(pwr.num)
     return RandUniform() ** pwr
-
 
 def monoSecondMoment(secondMoment, pdf):
     # For distributions on the positive real line
@@ -4443,7 +4312,6 @@ def monoSecondMoment(secondMoment, pdf):
             # print(iters)
             return x
 
-
 class SinFunction:
     def value(self, pt):
         return (
@@ -4451,7 +4319,6 @@ class SinFunction:
             if (pt == 0 or (isinstance(pt, Real) and pt.isDefinitelyZero()))
             else RealSin(pt)
         )
-
 
 def bernsteinDiff(coeffs, diff):
     # Gets the Bernstein coefficients of the 'diff'-th derivative of
@@ -4471,7 +4338,6 @@ def bernsteinDiff(coeffs, diff):
         coeffs = [(coeffs[i + 1] - coeffs[i]) * n for i in range(n)]
         n -= 1
     return coeffs
-
 
 class BernsteinPoly:
     def __init__(self, coeffs):
@@ -4523,7 +4389,6 @@ class BernsteinPoly:
     def diff(self, pt, d=1):
         return self.deriv(d).value(pt)
 
-
 def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
     # Minimum degree for iteratedPoly2 (for deriv=4) or
     # iteratedPoly3 (for deriv=5 or 6) needed to achieve
@@ -4553,7 +4418,6 @@ def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
         )
     raise ValueError("'deriv' value not supported")
 
-
 def iteratedPoly2(func, n):
     # Bernstein coefficients for the
     # Micchelli-Felbecker iterated Bernstein polynomial of order 2
@@ -4563,7 +4427,6 @@ def iteratedPoly2(func, n):
         rf = RealFraction(i, n)
         ret.append(func.value(rf) * 2 - bp.value(rf))
     return ret
-
 
 def iteratedPoly3(func, n):
     # Bernstein coefficients for the
@@ -4575,7 +4438,6 @@ def iteratedPoly3(func, n):
         rf = RealFraction(i, n)
         ret.append(bprec.value(rf) + 3 * (func.value(rf) - bp.value(rf)))
     return ret
-
 
 class PiecewiseBernstein:
     def __init__(self):
@@ -4640,7 +4502,6 @@ class PiecewiseBernstein:
             raise ValueError("likely not a polynomial")
         return [v for v in self.pieces[0][0]]
 
-
 def c4example():
     # Example function: A C4 continuous piecewise polynomial
     return (
@@ -4670,7 +4531,6 @@ def c4example():
         )
     )
 
-
 def iteratedPolyExample():
     # Example of a Bernoulli factory that simulates
     # a polynomial that is close to a C4 continuous function
@@ -4687,7 +4547,6 @@ def iteratedPolyExample():
         r += 1 if realIsLess(RandUniform(), ip[heads]) else 0
     print(r / 10000)
     print(sinf.value(RealFraction(0.3)).disp())
-
 
 ######################
 

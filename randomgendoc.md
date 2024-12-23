@@ -279,7 +279,7 @@ CLASSES
      |
      |   Reference:
      |   Fulger, Daniel and Guido Germano. "Automatic generation of
-     |   non-uniform random variates for arbitrary pointwise computable
+     |   nonuniform random variates for arbitrary pointwise computable
      |   probability densities by tiling",
      |   arXiv:0902.3088v1  [cs.MS], 2009.
      |
@@ -749,7 +749,7 @@ CLASSES
      |  getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None, precision=53)
      |      Finds a code describing the position and size of a box that covers the given
      |      point in the universal dyadic decomposition for random variate generation,
-     |      based on a non-uniform probability density function.  It generates a
+     |      based on a nonuniform probability density function.  It generates a
      |      random variate for this purpose, so the return value may differ from call to
      |      call.
      |      - point: A list of coordinates of a point in space.  This method assumes
@@ -987,7 +987,7 @@ CLASSES
      |  numbersWithSum(self, count, sum=1.0)
      |
      |  numbers_from_cdf(self, cdf, mn, mx, n=1)
-     |      Generates one or more random variates from a non-discrete probability
+     |      Generates one or more random variates from a nondiscrete probability
      |      distribution by numerically inverting its cumulative
      |      distribution function (CDF).
      |
@@ -1017,7 +1017,7 @@ CLASSES
      |         are set to 0 and 1, respectively, by default.
      |
      |  numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2)
-     |      Generates 'n' random variates that follow a discrete or non-discrete
+     |      Generates 'n' random variates that follow a discrete or nondiscrete
      |      probability distribution, using the inversion method.
      |      Implements section 5 of Devroye and Gravel,
      |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
@@ -1047,7 +1047,7 @@ CLASSES
      |
      |  numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None)
      |      Transforms one or more random variates in [0, 1] into numbers
-     |      (called quantiles) that follow a non-discrete probability distribution, based on its PDF
+     |      (called quantiles) that follow a nondiscrete probability distribution, based on its PDF
      |      (probability density function), its CDF (cumulative distribution
      |      function), or both.
      |
@@ -1282,7 +1282,7 @@ CLASSES
      |  wiener(self, st, en, step=1.0, mu=0.0, sigma=1.0)
      |      Generates random variates following a Wiener
      |      process (Brownian motion). Each element of the return
-     |      value contains a timestamp and a random variate in that order.
+     |      value contains a time stamp and a random variate in that order.
      |
      |  zero_or_one(self, px, py)
      |      Returns 1 at probability px/py, 0 otherwise.
@@ -1427,7 +1427,7 @@ CLASSES
      |  Implements Vose's version of the alias sampler, which chooses a random variate in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
-     |  the probability.  This sampler supports integer or non-integer weights.
+     |  the probability.  This sampler supports integer or noninteger weights.
      |
      |  Reference:
      |  Vose, Michael D. "A linear algorithm for generating random variates with a given
@@ -1488,7 +1488,7 @@ CLASSES
      |  of 2^-BITS.  They are not necessarily faster than floating-point numbers, nor
      |  do they necessarily have the same precision or resolution of floating-point
      |  numbers.  The main benefit of fixed-point numbers is that they improve
-     |  determinism for applications that rely on non-integer real numbers (notably
+     |  determinism for applications that rely on noninteger real numbers (notably
      |  simulations and machine learning applications), in the sense that the operations
      |  given here deliver the same answer for the same input across computers,
      |  whereas floating-point numbers have a host of problems that make repeatable
@@ -1497,7 +1497,7 @@ CLASSES
      |  floating-point numbers.
      |
      |  The operations given here are not guaranteed to be "constant-time"
-     |  (non-data-dependent and branchless) for every relevant input.
+     |  (nondata-dependent and branchless) for every relevant input.
      |
      |  Any copyright to this file is released to the Public Domain.  In case this is not
      |  possible, this file is also licensed under Creative Commons Zero version 1.0.
@@ -1617,7 +1617,7 @@ CLASSES
      |  v(i)
      |      Converts a string, integer, Decimal, or other number type into
      |      a fixed-point number.  If the parameter is a Fixed, returns itself.
-     |      If the given number is a non-integer, returns the closest value to
+     |      If the given number is a noninteger, returns the closest value to
      |      a Fixed after rounding using the round-to-nearest-ties-to-even
      |      rounding mode.  The parameter is recommended to be a string
      |      or integer, and is not recommended to be a `float`.
@@ -1722,7 +1722,7 @@ CLASSES
      |  - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
      |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
      |  Article 12 (March 2012), 5 pages.
-     |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. https://doi.org/10.1214/21-AAP1679
+     |  -  Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [https://doi.org/10.1214/21-AAP1679](https://doi.org/10.1214/21-AAP1679)
      |  - Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli factories and black-box reductions in mechanism design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
      |  - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
      |  Carlo likelihood-based inference for jump-diffusion processes.
@@ -1773,7 +1773,7 @@ CLASSES
      |
      |  bernoulli_x(self, f, x)
      |      Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
-     |          Mendo calls Bernoulli factories "non-randomized" if their randomness
+     |          Mendo calls Bernoulli factories "nonrandomized" if their randomness
      |          is based entirely on the underlying coin.
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      - x: Desired probability, in [0, 1].
@@ -1915,14 +1915,14 @@ CLASSES
      |        c(2)*(1-p)^3 + ...), where c(i) = `c[i]/sum(c)`) (Mendo 2019).
      |      - f: Function that returns 1 if heads and 0 if tails.
      |      - c: List of coefficients in the power series, all of which must be
-     |        non-negative integers.
+     |        nonnegative integers.
      |
      |  probgenfunc(self, f, rng)
      |      Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
      |       (Dughmi et al. 2021). E[p^x] is the expected value of p^x and is also known
      |       as the probability generating function.
      |      - f: Function that returns 1 if heads and 0 if tails.
-     |      - rng: Function that returns a non-negative integer at random.
+     |      - rng: Function that returns a nonnegative integer at random.
      |        Example (Dughmi et al. 2021): if 'rng' is Poisson(lamda) we have
      |        an "exponentiation" Bernoulli factory as follows:
      |        B(p) => B(exp(p*lamda-lamda))
@@ -4495,4 +4495,3 @@ FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
 
 ```
-

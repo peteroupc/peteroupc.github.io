@@ -144,7 +144,7 @@ A [second list](https://peteroupc.github.io/html3dutil/colornames.svg) shows the
 \* The `80` is a base-16 number showing the color&#8217;s green component.
 \* The `cc` is a base-16 number showing the color&#8217;s blue component.
 The notation may also include an additional base-16 number, as in this example: `#ac80ccff`. Here, the last `ff` shows the color's alpha component (see _What is an alpha component?_, later). Two shortened notations are supported: colors with only three or four base-16 digits are the same as their expanded six-digit or eight-digit form, respectively. For example, `#f8c` is the same as `#ff88cc`; and `#f8ce`, `#ff88ccee`.
-- \*\*How do I make HTML colors?\*\* Look at the table below that shows some of the values possible for the red, green, and blue components of some colors.
+- \*\*How do I make HTML colors?\*\* Look at the following table that shows some of the values possible for the red, green, and blue components of some colors.
 Red.. 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 Green 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 Blue. 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
@@ -165,7 +165,7 @@ An alternate syntax for HSL colors supports the alpha component (see next questi
 
 #### Parameters
 
-* `r` (Type: Array.&lt;number&gt; | number | string)<br />One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
+* `r` (Type: Array.&lt;number&gt; | number | string)<br />One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned earlier in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.
 * `g` (Type: number) (optional)<br />Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `b` (Type: number) (optional)<br />Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.
 * `a` (Type: number) (optional)<br />Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.
@@ -192,22 +192,6 @@ clamped to 1. (Type: Array.&lt;number&gt;)
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

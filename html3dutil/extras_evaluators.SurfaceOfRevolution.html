@@ -11,7 +11,7 @@
 <p><a name="extras_evaluators.SurfaceOfRevolution"></a>
 ### new module:extras/evaluators.SurfaceOfRevolution(curve, minval, maxval, [axis])</p>
 
-<p>A <a href="Surface.html">surface evaluator object</a> for a surface of revolution,
+<p>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.</p>
 
 <p>This class is considered a supplementary class to the
@@ -21,7 +21,7 @@ library.</p>
 <h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li><code>curve</code> (Type: Object)<br />A <a href="Curve.html">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the “axis” parameter. The curve’s x-coordinates correspond to elevation, and its y-coordinates correspond to radius.</li>
+  <li><code>curve</code> (Type: Object)<br />A curve evaluator object that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the “axis” parameter. The curve’s x-coordinates correspond to elevation, and its y-coordinates correspond to radius.</li>
 </ul>
 
 <p>If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the v-coordinates given in <em>minval</em> and <em>maxval</em> must restrict the curve definition to no more than half of the curve.
@@ -34,9 +34,9 @@ library.</p>
 <ul>
   <li><a href="#extras_evaluators_SurfaceOfRevolution_endPoints">endPoints</a></li>
   <li><a href="#extras_evaluators_SurfaceOfRevolution_evaluate">evaluate</a><br />Finds the coordinates of the given point of this surface.</li>
-  <li><a href="#extras_evaluators_SurfaceOfRevolution.fromFunction">fromFunction</a><br />Creates a <a href="Surface.html">surface evaluator object</a> for a surface of revolution
+  <li><a href="#extras_evaluators_SurfaceOfRevolution.fromFunction">fromFunction</a><br />Creates a surface evaluator object for a surface of revolution
 whose curve is the graph of a single-variable function.</li>
-  <li><a href="#extras_evaluators_SurfaceOfRevolution.torus">torus</a><br />A <a href="Surface.html">surface evaluator object</a> for a torus, a special case of a surface of revolution.</li>
+  <li><a href="#extras_evaluators_SurfaceOfRevolution.torus">torus</a><br />A surface evaluator object for a torus, a special case of a surface of revolution.</li>
 </ul>
 
 <p><a name="extras_evaluators_SurfaceOfRevolution_endPoints"></a>
@@ -50,8 +50,8 @@ whose curve is the graph of a single-variable function.</li>
 <h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li><code>u</code> (Type: number)<br />u-coordinate of the surface to evaluate.</li>
-  <li><code>v</code> (Type: number)<br />v-coordinate of the surface to evaluate.</li>
+  <li><code>u</code> (Type: number)<br />The Ucoordinate of the surface to evaluate.</li>
+  <li><code>v</code> (Type: number)<br />The Vcoordinate of the surface to evaluate.</li>
 </ul>
 
 <h4 id="return-value">Return Value</h4>
@@ -62,7 +62,7 @@ of the position at the given point. It will have three elements. (Type: Array.&l
 <p><a name="extras_evaluators_SurfaceOfRevolution.fromFunction"></a>
 ### (static) module:extras/evaluators~SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])</p>
 
-<p>Creates a <a href="Surface.html">surface evaluator object</a> for a surface of revolution
+<p>Creates a surface evaluator object for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
@@ -115,14 +115,14 @@ function(x) {
 <p><a name="extras_evaluators_SurfaceOfRevolution.torus"></a>
 ### (static) module:extras/evaluators~SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])</p>
 
-<p>A <a href="Surface.html">surface evaluator object</a> for a torus, a special case of a surface of revolution.</p>
+<p>A surface evaluator object for a torus, a special case of a surface of revolution.</p>
 
 <h4 id="parameters-3">Parameters</h4>
 
 <ul>
   <li><code>outerRadius</code> (Type: number)<br />Radius from the center to the innermost part of the torus.</li>
   <li><code>innerRadius</code> (Type: number)<br />Radius from the inner edge to the innermost part of the torus.</li>
-  <li><code>curve</code> (Type: Object) (optional)<br />A <a href="Curve.html">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null, undefined, or omitted, uses a circular cross section with a radius of 1.</li>
+  <li><code>curve</code> (Type: Object) (optional)<br />A curve evaluator object that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null, undefined, or omitted, uses a circular cross section with a radius of 1.</li>
   <li><code>axis</code> (Type: Array.&lt;number&gt;) (optional)<br />Axis of rotation, which the torus will pass through. If null, undefined, or omitted, the positive z-axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the x-, y-, and z-coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a glmath.</li>
 </ul>
 
@@ -144,22 +144,6 @@ function(x) {
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>

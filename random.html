@@ -319,8 +319,8 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>If an application requires only one pseudorandom value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:</p>
 
 <ul>
-  <li>Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.</li>
-  <li>Generating a pseudorandom number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or “pixel”) as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit integer.<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup></li>
+  <li>Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which gives out a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.</li>
+  <li>Generating a pseudorandom number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or “pixel”) as well as a seed (which is the same for all fragments) to the Wang hash, which gives out a 32-bit integer.<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup></li>
 </ul>
 
 <p><a id="Ensuring_Reproducibility"></a></p>
@@ -423,7 +423,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ol>
   <li>
-    <p><strong>Stream case.</strong> If the PRNG supports <em>streams</em> as described above: Generate a seed (or use a predetermined seed), then:</p>
+    <p><strong>Stream case.</strong> If the PRNG supports <em>streams</em> as described earlier: Generate a seed (or use a predetermined seed), then:</p>
 
     <ol>
       <li>Create a PRNG instance for each process.</li>
@@ -586,7 +586,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><em>Noise</em> is a randomized variation in images, sound, and other data.<sup id="fnref:26" role="doc-noteref"><a href="#fn:26" class="footnote" rel="footnote">26</a></sup></p>
 
-<p>A <em>noise function</em> is similar to a hash function; it takes an <em>n</em>-dimensional point and, optionally, additional data, and outputs a pseudorandom number.<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>  Noise functions generate <strong><em>procedural noise</em></strong> such as <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (including <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  If the noise function takes additional data, that data—
+<p>A <em>noise function</em> is similar to a hash function; it takes an <em>n</em>-dimensional point and, optionally, additional data, and gives out a pseudorandom number.<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>  Noise functions generate <strong><em>procedural noise</em></strong> such as <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (including <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  If the noise function takes additional data, that data—
 - should include randomly generated or pseudorandom numbers, and
 - should not vary from one run to the next while the noise function is used for a given purpose (for example, to generate terrain for a given map).</p>
 
@@ -601,7 +601,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
   <li>additional data such as a <em>salt</em> (which is designed to mitigate precomputation attacks) or a <em>nonce</em>,</li>
 </ul>
 
-<p>and outputs a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a <em>key derivation function</em>; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess — examples of such functions include PBKDF2 (RFC 2898) and <code>scrypt</code> (RFC 7914).  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.</p>
+<p>and gives out a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a <em>key derivation function</em>; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess — examples of such functions include PBKDF2 (RFC 2898) and <code>scrypt</code> (RFC 7914).  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.</p>
 
 <p><a id="RNG_Topics"></a></p>
 
@@ -746,10 +746,10 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <h3 id="high-quality-rngs-requirements">High-Quality RNGs: Requirements</h3>
 
 <p>A PRNG is a high-quality RNG if—
-- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
+- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security),
 - the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more (that is, the PRNG can produce any of at least 2<sup>63</sup> different number sequences, which it can generally do only if the PRNG has at least 63 bits of state), and
 - it either—
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside of information security),
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside information security),
     - has a maximum “random” number cycle length equal to the number of different seeds the PRNG admits, or
     - has a minimum “random” number cycle length of 2<sup>127</sup> or greater.</p>
 
@@ -833,7 +833,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
       <p>For example, see F. Dörre and V. Klebanov, “Practical Detection of Entropy Loss in Pseudo-Random Number Generators”, 2016. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:4" role="doc-endnote">
-      <p>Items that produce numbers or signals that follow a non-uniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through <em>randomness extraction</em> techniques (see “<a href="#Seed_Generation"><strong>Seed Generation</strong></a>”).<br />Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Items that produce numbers or signals that follow a nonuniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through <em>randomness extraction</em> techniques (see “<a href="#Seed_Generation"><strong>Seed Generation</strong></a>”).<br />Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5" role="doc-endnote">
       <p>See also the FIPS 200 definition (“The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability”) and ISO/IEC 27000. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

@@ -78,7 +78,7 @@ class VoseAlias:
     Implements Vose's version of the alias sampler, which chooses a random variate in [0, n)
     where the probability that each number is chosen is weighted.  The 'weights' is the
     list of weights each 0 or greater; the higher the weight, the greater
-    the probability.  This sampler supports integer or non-integer weights.
+    the probability.  This sampler supports integer or noninteger weights.
 
     Reference:
     Vose, Michael D. "A linear algorithm for generating random variates with a given
@@ -87,7 +87,7 @@ class VoseAlias:
 
     def __init__(self, weights):
         # Vose's alias method for large n and nonnegative
-        # weights.  This method has a non-trivial setup,
+        # weights.  This method has a nontrivial setup,
         # but a linear-time sampling step in n.
         prob = [0 for _ in weights]
         alias = [0 for _ in weights]
@@ -3609,7 +3609,7 @@ class RandomGen:
 
     def numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2):
         """
-        Generates 'n' random variates that follow a discrete or non-discrete
+        Generates 'n' random variates that follow a discrete or nondiscrete
         probability distribution, using the inversion method.
         Implements section 5 of Devroye and Gravel,
         "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
@@ -3823,7 +3823,7 @@ class RandomGen:
         return self.piecewise_linear_n(values, weights, n)
 
     def numbers_from_cdf(self, cdf, mn, mx, n=1):
-        """Generates one or more random variates from a non-discrete probability
+        """Generates one or more random variates from a nondiscrete probability
         distribution by numerically inverting its cumulative
         distribution function (CDF).
 
@@ -3839,7 +3839,7 @@ class RandomGen:
 
     def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
         """Transforms one or more random variates in [0, 1] into numbers
-        (called quantiles) that follow a non-discrete probability distribution, based on its PDF
+        (called quantiles) that follow a nondiscrete probability distribution, based on its PDF
         (probability density function), its CDF (cumulative distribution
         function), or both.
 
@@ -4043,7 +4043,7 @@ class RandomGen:
         """
         Finds a code describing the position and size of a box that covers the given
         point in the universal dyadic decomposition for random variate generation,
-        based on a non-uniform probability density function.  It generates a
+        based on a nonuniform probability density function.  It generates a
         random variate for this purpose, so the return value may differ from call to
         call.
         - point: A list of coordinates of a point in space.  This method assumes
@@ -4601,7 +4601,7 @@ class DensityTiling:
 
      Reference:
      Fulger, Daniel and Guido Germano. "Automatic generation of
-     non-uniform random variates for arbitrary pointwise computable
+     nonuniform random variates for arbitrary pointwise computable
      probability densities by tiling",
      arXiv:0902.3088v1  [cs.MS], 2009.
     """
