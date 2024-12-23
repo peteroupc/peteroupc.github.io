@@ -4148,7 +4148,7 @@ class RandomGen:
                 if r == 2:
                     return [k, pt]
                 if r == 0:
-                    raise ValueError("outside of set")
+                    raise ValueError("outside set")
             elif f != None:
                 success = True
                 isoutside = True
@@ -4164,7 +4164,7 @@ class RandomGen:
                     else:
                         isoutside = False
                 if isoutside:
-                    raise ValueError("outside of set")
+                    raise ValueError("outside set")
                 if success:
                     return [k, pt]
             point = [Fraction(v) * 2 for v in point]
@@ -4580,7 +4580,7 @@ class DensityTiling:
          discarded.
 
     - pdf: A function that specifies the PDF. It takes a single
-      number and outputs a single number. The area under
+      number and gives out a single number. The area under
       the PDF need not equal 1 (this class tolerates the PDF even if
       it is only known up to a normalizing constant).  For best results,
       the PDF should be less than or equal to a finite number  (thus, it should be free of _poles_, or points
@@ -4775,7 +4775,7 @@ class DensityInversionSampler:
       from pregenerated uniform random variates in [0, 1].
 
     - pdf: A function that specifies the PDF. It takes a single
-      number and outputs a single number. The area under
+      number and gives out a single number. The area under
       the PDF need not equal 1 (this sampler works even if the
       PDF is only known up to a normalizing constant).
     - bl, br - Specifies the sampling domain of the PDF.  Both

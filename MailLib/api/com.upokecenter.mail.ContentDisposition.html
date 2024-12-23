@@ -156,7 +156,7 @@ public static final ContentDisposition Inline The content disposition value "inl
 </pre>
 
 <h3 id="getdispositiontype">getDispositionType</h3>
-<pre>public final String getDispositionType() Gets a string containing this object's disposition type, such as "inline" or  "attachment". Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8,  unrecognized disposition types should be treated as "attachment". (There is  no default content disposition in a message has no Content-Disposition  header field.). The resulting string will be in lowercase; that is, with  its basic uppercase letters ("A" to "Z") converted to basic lowercase  letters ("a" to "z").
+<pre>public final String getDispositionType() Gets a string containing this object's disposition type, such as "inline" or  "attachment". Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8,  unrecognized disposition types should be treated as "attachment". (There is  no default content disposition in a message has no Content-Disposition  header field.). The resulting string will be in lowercase; that is, with its  basic uppercase letters ("A" to "Z") converted to basic lowercase letters  ("a" to "z").
 </pre>
 
 <p><strong>Returns:</strong></p>
@@ -233,10 +233,10 @@ public static final ContentDisposition Inline The content disposition value "inl
 </pre>
 <p>Gets a list of parameter names associated with this object and their
  values. Each parameter name will be in lowercase; that is, with its basic
- uppercase letters ("A" to "Z") converted to basic lowercase letters ("a"
- to "z"). </p>
-<p>For the "filename" parameter, the value of that parameter
- is not adapted with the ContentDisposition.MakeFilename method; see the
+ uppercase letters ("A" to "Z") converted to basic lowercase letters ("a" to
+ "z"). </p>
+<p>For the "filename" parameter, the value of that parameter is
+ not adapted with the ContentDisposition.MakeFilename method; see the
  documentation for the ContentDisposition class.</p>
 
 <p><strong>Returns:</strong></p>

@@ -165,12 +165,12 @@ Specifically:
 | If the underlying source produces: | Then `NEXTRAND()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
 | Non-uniform numbers[^3]. | The next bit from a new source formed by taking the underlying source's outputs as input to a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to produce independent random integers that equal 1 or 0 with equal probability. | 2. |
-| Uniform numbers not described below. | Same as above. | 2<sup>_n_</sup>. |
+| Uniform numbers not described below. | Same as earlier. | 2<sup>_n_</sup>. |
 | Uniform 32-bit nonnegative integers. | The next number from the source. | 2<sup>32</sup>. |
 | Uniform 64-bit nonnegative integers. | The next number from the source. | 2<sup>64</sup>. |
 | Uniform integers in the interval \[0, _n_\). | The next number from the source. | _n_. |
 | Uniform numbers in the interval \[0, 1\) known to be evenly spaced by a number _p_ (for example, dSFMT). | The next number from the source, multiplied by _p_. | 1/_p_. |
-| Uniform numbers in the interval \[0, 1\), where numbers in \[0, 0.5\) and those in \[0.5, 1\) are known to occur with equal probability (for example, Java's `Math.random()`). | 0 if the source outputs a number less than 0.5, or 1 otherwise. | 2. |
+| Uniform numbers in the interval \[0, 1\), where numbers in \[0, 0.5\) and those in \[0.5, 1\) are known to occur with equal probability (for example, Java's `Math.random()`). | 0 if the source gives out a number less than 0.5, or 1 otherwise. | 2. |
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
       if maxInclusive <= MODULUS - 1:
@@ -271,7 +271,7 @@ The table below shows algorithms that have been proposed for choosing an integer
 
 ### `RNDINTRANGE`: Random Integers in [N, M]
 
-The na&iuml;ve way of generating a **random integer in the interval [`minInclusive`, `maxInclusive`]**, shown below, works well for nonnegative integers and arbitrary-precision integers.
+The na&iuml;ve way of generating a **random integer in the interval [`minInclusive`, `maxInclusive`]**, shown next, works well for nonnegative integers and arbitrary-precision integers.
 
      METHOD RNDINTRANGE(minInclusive, maxInclusive)
        // minInclusive must not be greater than maxInclusive
@@ -859,7 +859,7 @@ The following are various ways to implement `WeightedChoice`. Many of them requi
 > **Notes:**
 >
 > 1. **Weighted choice algorithms as binary tree walkers.** Just like `RNDINT` algorithms (see the [**`RNDINT` section**](#RNDINT_Random_Integers_in_0_N)), weighted choice algorithms can all be described as random walks on a binary DDG tree.  In this case, though, the probabilities are not necessarily uniform, and on average, the algorithm needs at least as many "fair coin flips" (random integers that equal 1 or 0 with equal probability) as the sum of _binary entropies_ of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights add up to 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is `0 - (3/21) * log2(3/21) = 0.4010...`, where `log2(x) = ln(x)/ln(2)`, and so on for the other weights).  Thus, any weighted sampler will require at least 1.2800... bits on average to generate a number with probability proportional to these weights.[^11]  The note "Reducing 'bit waste'" from the `RNDINT` section also applies here.
-> 2. For best results, weights passed to the algorithms in the table above should first be **converted to integers** (for example, using `NormalizeRatios` in the pseudocode above), **or rational numbers** when indicated. (Obviously, if the weights were originally irrational numbers, this conversion will be lossy and the algorithm won't be exact, unless noted otherwise in the table.)  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so such numbers should be avoided.
+> 2. For best results, weights passed to the algorithms in the preceding table should first be **converted to integers** (for example, using `NormalizeRatios` in the pseudocode above), **or rational numbers** when indicated. (Obviously, if the weights were originally irrational numbers, this conversion will be lossy and the algorithm won't be exact, unless noted otherwise in the table.)  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so such numbers should be avoided.
 > 3. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of the `WeightedChoice` pseudocode for generating multiple random points in one call.
 >
 > **Examples:**
@@ -2131,7 +2131,7 @@ The following are some additional articles I have written on the topic of random
 
 [^12]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
-[^13]: A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random() * maxExclusive)`, where `Math.random()` is any method that outputs a floating-point number that behaves like an independent uniform random variate in the interval \[0, 1\).  However, no implementation of `Math.random()` can choose from all real numbers in \[0, 1\), so this idiom can cause some results to be slightly more probable than others depending on the value of `maxExclusive`.  For example, if `Math.random()` is implemented as `RNDINT(X - 1)/X` and `X` is not divisible by `maxExclusive`, the resulting algorithm will be inexact in general.  Also, an implementation might pre-round `Math.random() * maxExclusive` (before the `floor`) to the closest number it can represent; in rare cases, that might be `maxExclusive` for certain rounding modes. If an application is concerned about these issues, it should treat the `Math.random()` implementation as simulating the "source of random numbers" for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.
+[^13]: A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(Math.random() * maxExclusive)`, where `Math.random()` is any method that gives out a floating-point number that behaves like an independent uniform random variate in the interval \[0, 1\).  However, no implementation of `Math.random()` can choose from all real numbers in \[0, 1\), so this idiom can cause some results to be slightly more probable than others depending on the value of `maxExclusive`.  For example, if `Math.random()` is implemented as `RNDINT(X - 1)/X` and `X` is not divisible by `maxExclusive`, the resulting algorithm will be inexact in general.  Also, an implementation might pre-round `Math.random() * maxExclusive` (before the `floor`) to the closest number it can represent; in rare cases, that might be `maxExclusive` for certain rounding modes. If an application is concerned about these issues, it should treat the `Math.random()` implementation as simulating the "source of random numbers" for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.
 
 [^14]: The user "BVtp" from the _Stack Overflow_ community led me to this insight.
 
@@ -2372,7 +2372,7 @@ The randomization methods in this document are deterministic (that is, they prod
 
 ### Implementation Considerations
 
-1. **Shell scripts and Microsoft Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a uniformly distributed "random" integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
+1. **Shell scripts and Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a uniformly distributed "random" integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
 2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to choose a number at random, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time they generate a pseudorandom number.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
 4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random variates at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a "source of random numbers"), and letting each thread fill its assigned chunk with random variates.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
@@ -2381,7 +2381,7 @@ The randomization methods in this document are deterministic (that is, they prod
     - [**finding the quantile for $(2n+1)/(2^{k+1})$**](#Inverse_Transform_Sampling) \(which comes from dividing the interval [0, 1] into 2<sup>_k_</sup> equal pieces and sampling the middle of one of the pieces), or
     - using _n_ to help initialize a local PRNG and using the PRNG to generate a sample from that distribution.
 
-    An application should use this suggestion only if it wants to ensure a fixed amount of "randomness" per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>_k_</sup> different outcomes or less this way. (In general, _n_ can't be chosen uniformly at random with a _fixed_ number of randomly chosen bits, unless the number of different outcomes for _n_ is a power of 2.)  In general, neither approach given above allows for controlling the approximation error in generating a value this way.
+    An application should use this suggestion only if it wants to ensure a fixed amount of "randomness" per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>_k_</sup> different outcomes or less this way. (In general, _n_ can't be chosen uniformly at random with a _fixed_ number of randomly chosen bits, unless the number of different outcomes for _n_ is a power of 2.)  In general, neither approach given earlier allows for controlling the approximation error in generating a value this way.
 
 <a id=Security_Considerations></a>
 

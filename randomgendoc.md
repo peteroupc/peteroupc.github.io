@@ -183,7 +183,7 @@ CLASSES
      |    from pregenerated uniform random variates in [0, 1].
      |
      |  - pdf: A function that specifies the PDF. It takes a single
-     |    number and outputs a single number. The area under
+     |    number and gives out a single number. The area under
      |    the PDF need not equal 1 (this sampler works even if the
      |    PDF is only known up to a normalizing constant).
      |  - bl, br - Specifies the sampling domain of the PDF.  Both
@@ -258,7 +258,7 @@ CLASSES
      |       discarded.
      |
      |  - pdf: A function that specifies the PDF. It takes a single
-     |    number and outputs a single number. The area under
+     |    number and gives out a single number. The area under
      |    the PDF need not equal 1 (this class tolerates the PDF even if
      |    it is only known up to a normalizing constant).  For best results,
      |    the PDF should be less than or equal to a finite number  (thus, it should be free of _poles_, or points

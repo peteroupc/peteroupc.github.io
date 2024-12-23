@@ -187,7 +187,7 @@ class MooreSampler:
         if funcrange.sup < 0:
             raise ValueError("pdf is negative at %s" % (box))
         if not isinstance(funcrange, FInterval):
-            raise ValueError("pdf must output an FInterval")
+            raise ValueError("pdf must give out an FInterval")
         # NOTE: Priority key can be a coarse-precision
         # floating-point number, since the exact value of
         # the key is not crucial for the sampler's correctness.
