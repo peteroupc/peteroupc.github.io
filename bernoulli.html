@@ -225,9 +225,9 @@
   <li><em>f</em> is continuous and polynomially bounded on its domain.</li>
 </ul>
 
-<p><em>Polynomially bounded</em> means that both <em>f</em>(<em>λ</em>) and 1−<em>f</em>(<em>λ</em>) are not less than min(<em>λ</em><sup><em>n</em></sup>, (1−<em>λ</em>)<sup><em>n</em></sup>) for some integer <em>n</em>.  In other words, there are two nonnegative polynomials that do not equal the same value everywhere: one can be “sandwiched” between the <em>λ</em>-axis and <em>f</em>, and another between the <em>λ</em>-axis and 1−<em>f</em>.</p>
+<p><em>Polynomially bounded</em> means that both <em>f</em>(<em>λ</em>) and 1−<em>f</em>(<em>λ</em>) are not less than min(<em>λ</em><sup><em>n</em></sup>, (1−<em>λ</em>)<sup><em>n</em></sup>) for some integer <em>n</em>.  In other words, there are two non-negative polynomials that do not equal the same value everywhere: one can be “sandwiched” between the <em>λ</em>-axis and <em>f</em>, and another between the <em>λ</em>-axis and 1−<em>f</em>.</p>
 
-<p>The following shows some functions that are factory functions and some that are not.  In the following table, <em>ϵ</em> is a number greater than 0 and less than 1/2.</p>
+<p>The following shows some functions that are factory functions and some that are not.  In the table below, <em>ϵ</em> is a number greater than 0 and less than 1/2.</p>
 
 <table>
   <thead>
@@ -458,7 +458,7 @@
 
   <ol>
     <li>Each <em>a</em>[<em>i</em>] acts as a control point for a 1-dimensional <a href="https://en.wikipedia.org/wiki/Bézier_curve"><strong>Bézier curve</strong></a>, where <em>λ</em> is the relative position on that curve, the curve begins at  <em>a</em>[0], and the curve ends at <em>a</em>[<em>n</em>].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when <em>λ</em> = 0, and 0.6 when <em>λ</em> = 1.  (The curve, however, is not at 0.3 when <em>λ</em> = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)</li>
-    <li>The problem of simulating polynomials in Bernstein form is related to <em>stochastic logic</em>, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and give out a single bit (for further discussion see (Qian et al. 2011)<sup id="fnref:8:1" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>, Qian and Riedel 2008<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup>).</li>
+    <li>The problem of simulating polynomials in Bernstein form is related to <em>stochastic logic</em>, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011)<sup id="fnref:8:1" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>, Qian and Riedel 2008<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup>).</li>
   </ol>
 
   <p><strong>Examples:</strong></p>
@@ -566,7 +566,7 @@
 
 <ol>
   <li>Create two empty lists: <em>blist</em> and <em>ulist</em>.</li>
-  <li>Set <em>state1</em> to the position of the first nonzero item in <em>R</em>.  Set <em>state2</em> to the position of the last nonzero item in <em>R</em>.  In both cases, positions start at 0.  If all the items in <em>R</em> are zeros, return 0.</li>
+  <li>Set <em>state1</em> to the position of the first non-zero item in <em>R</em>.  Set <em>state2</em> to the position of the last non-zero item in <em>R</em>.  In both cases, positions start at 0.  If all the items in <em>R</em> are zeros, return 0.</li>
   <li>Flip the input coin and append the result (which is 0 or 1) to the end of <em>blist</em>.  Generate a uniform random variate between 0 and 1 and append it to the end of <em>ulist</em>.</li>
   <li>(Monotonic coupling from the past (Morina et al., 2022)<sup id="fnref:19:1" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>, (Propp and Wilson 1996)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.) Set <em>i</em> to the number of items in <em>blist</em> minus 1, then while <em>i</em> is 0 or greater:
     <ol>
@@ -691,10 +691,10 @@ where—</p>
 
 <p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial from power form to Bernstein form, given the power coefficients $a_0, …, a_{m-1}$, is the so-called “matrix method” from Ray and Nataraj (2012)<sup id="fnref:13:1" role="doc-noteref"><a href="#fn:13" class="footnote" rel="footnote">13</a></sup>.)  Let $b_0, …, b_{m-1}$ be the polynomial’s Bernstein coefficients.  Then if those coefficients all lie on the closed unit interval, then the following algorithm simulates $f(\lambda)$.</p>
 
-<p><strong>Algorithm 1:</strong> Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a>, with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory “flips the input coin”, it runs the subalgorithm below.</p>
+<p><strong>Algorithm 1:</strong> Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a>, with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory “flips the input coin”, it runs the sub-algorithm below.</p>
 
 <ul>
-  <li><strong>Subalgorithm:</strong> Generate 1 or 0 with equal probability.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman (2012)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>):
+  <li><strong>Sub-algorithm:</strong> Generate 1 or 0 with equal probability.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman (2012)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>):
     <ol>
       <li>Run a Bernoulli factory algorithm for $g(\lambda)$, $m-1$ times.  Let $j$ be the number of runs that return 1.</li>
       <li>With probability $b_j$, return 1.  Otherwise, return 0.</li>
@@ -803,7 +803,7 @@ where each sum is taken over all nonnegative values of $n$ where $a_n &gt; 0$. (
   </tbody>
 </table>
 
-<p>The conditions on $f$ given earlier mean that—</p>
+<p>The conditions on $f$ given above mean that—</p>
 
 <ul>
   <li>for series of type 1, <em>f</em>(0) = 1−<em>CS</em> and <em>f</em>(1) = 1 (series of type 1 with <em>CS</em>=1 is the main form in Mendo’s paper),</li>
@@ -943,7 +943,7 @@ where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is o
 where:</p>
 
 <ul>
-  <li>Each sum given earlier is taken over all values of <em>n</em> that can occur after step 1 is complete (in this case, all values of <em>n</em> that are even and greater than 0).</li>
+  <li>Each sum given above is taken over all values of <em>n</em> that can occur after step 1 is complete (in this case, all values of <em>n</em> that are even and greater than 0).</li>
   <li>$a_n$ is $1/(n!)$.<sup id="fnref:26" role="doc-noteref"><a href="#fn:26" class="footnote" rel="footnote">26</a></sup></li>
   <li>The power coefficients $a_n$ are tucked under a function $w(n)$, which in this case is $\frac{1}{2^{n-2}}$ if <em>n</em>&gt;0 and <em>n</em> is even<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup>, or 0 otherwise.</li>
 </ul>
@@ -956,7 +956,7 @@ where:</p>
   <li>In step 3, $g(\lambda)$ is simply $\lambda$.</li>
 </ul>
 
-<p><strong>Examples 8:</strong> cosh(<em>λ</em>)−1 and additional target functions are shown in the following table.  (In the following table, $w(n)=1/(2^{z^{-1}(n)+1})$ where $z^{-1}(n)$ is the inverse of the “Step 1b” column, and the $g(\lambda)$ in step 3 is simply $\lambda$.)</p>
+<p><strong>Examples 8:</strong> cosh(<em>λ</em>)−1 and additional target functions are shown in the following table.  (In the table below, $w(n)=1/(2^{z^{-1}(n)+1})$ where $z^{-1}(n)$ is the inverse of the “Step 1b” column, and the $g(\lambda)$ in step 3 is simply $\lambda$.)</p>
 
 <table>
   <thead>
@@ -1174,7 +1174,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 
 <p>Inspired by (Flajolet et al., 2010, “Finite graphs (Markov chains) and rational functions”)<sup id="fnref:1:3" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, I developed the following algorithm.</p>
 
-<p><strong>Algorithm 1.</strong> The following algorithm returns 1 with a probability expressed as a simple continued fraction.  This algorithm works only if each <em>a</em>[<em>i</em>]’s absolute value is 1 or greater and <em>a</em>[1] is greater than 0, but otherwise, each  <em>a</em>[<em>i</em>] may be negative, be a noninteger, or both.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p><strong>Algorithm 1.</strong> The following algorithm returns 1 with a probability expressed as a simple continued fraction.  This algorithm works only if each <em>a</em>[<em>i</em>]’s absolute value is 1 or greater and <em>a</em>[1] is greater than 0, but otherwise, each  <em>a</em>[<em>i</em>] may be negative, be a non-integer, or both.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
   <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
@@ -1192,7 +1192,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 
 <p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + … ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.</p>
 
-<p>The following algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] has an absolute value of 1 or less, but otherwise, each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] may be negative, be a noninteger, or both.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
+<p>The following algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] has an absolute value of 1 or less, but otherwise, each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] may be negative, be a non-integer, or both.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
 
 <ol>
   <li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent simple continued fraction.)</li>
@@ -1207,7 +1207,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
   </li>
 </ol>
 
-<p><strong>Algorithm 3.</strong> This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a noninteger.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p><strong>Algorithm 3.</strong> This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
   <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
@@ -1417,7 +1417,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
         <li>For each integer <em>n</em>≥1, if $g(n)&gt;0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section “About Bernoulli Factories”.</li>
       </ul>
 
-      <p>Then by <strong>generating <em>X</em> and giving out 0 if <em>X</em> is 0, and otherwise flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>λ</em>)/<em>g</em>(<em>X</em>)</strong>, the probability <em>f</em>(<em>λ</em>) can be simulated as the convex combination—</p>
+      <p>Then by <strong>generating <em>X</em> and outputting 0 if <em>X</em> is 0, and otherwise flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>λ</em>)/<em>g</em>(<em>X</em>)</strong>, the probability <em>f</em>(<em>λ</em>) can be simulated as the convex combination—</p>
 
       <p>\(f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,\) letting 0/0 = 0.  See also Mendo (2019)<sup id="fnref:24:1" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup>.</p>
     </li>
@@ -1458,7 +1458,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
         <li>With probability $f(X/n)$, return 1.  Otherwise, return 0.</li>
       </ol>
 
-      <p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or <em>Szász–Mirakyan operator</em>) of $f$ of degree $n$ (for example, Szász (1950)<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.</p>
+      <p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or <em>Szász–Mirakyan operator</em>) of $f$ of degree $n$ (e.g., Szász (1950)<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.</p>
     </li>
     <li><strong>The original Bernoulli factories.</strong>  Keane and O’Brien’s (1994)<sup id="fnref:2:3" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> paper introducing Bernoulli factories showed that any Bernoulli factory function $f(\lambda)$ can be written as a convex combination of polynomials.  In their proof, $g(i) = (1/4)\cdot(3/4)^{i-1}$ (and $g(0)=0$), and each $h_i(\lambda)$ is a polynomial, not necessarily of degree <em>i</em>, whose Bernstein coefficients are each either 0 or 1 (see “<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>”).</li>
     <li><strong>Polynomials to zero-and-one polynomials.</strong> Suppose $f(\lambda)$ is a polynomial of degree $n$  and each of its Bernstein coefficients $(a[0], a[1], …, a[n])$ (see “<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>”) is 0 or greater and 1 or less. Then $f$ can be written as a convex combination of polynomials with only 0 and 1 as Bernstein coefficients.<br />Specifically, $g(i)=(1/2)^i$ and $g(0)=0$, and $h_i(\lambda)$ is a polynomial whose Bernstein coefficients are $(b[i][0], b[i][1], …, b[i][n])$, where $b[i][j]$ is 1 if $a[j]$ is 1 or if floor($a[j]\cdot 2^i$) (or the $i$-th binary digit after the point in $a[j]$’s binary expansion) is odd<sup id="fnref:25:2" role="doc-noteref"><a href="#fn:25" class="footnote" rel="footnote">25</a></sup>, or 0 otherwise.</li>
@@ -1481,7 +1481,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 
   <ol>
     <li>Step 1 of this algorithm is incomplete, since it doesn’t explain how to generate $X$ exactly.  That depends on the probability $g(k,\lambda)$.</li>
-    <li>If we define <em>S</em> to be a set of integers 0 or greater, and replace step 2 with “If <em>X</em> is in the set <em>S</em>, return 1.  Otherwise, return 0”, then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in <em>S</em>, or 0 otherwise). Then the so-called “even-parity” construction<sup id="fnref:32:1" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup> is a special case of this algorithm, if <em>S</em> is the even positive integers and zero and if the following example is used.</li>
+    <li>If we define <em>S</em> to be a set of integers 0 or greater, and replace step 2 with “If <em>X</em> is in the set <em>S</em>, return 1.  Otherwise, return 0”, then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in <em>S</em>, or 0 otherwise). Then the so-called “even-parity” construction<sup id="fnref:32:1" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup> is a special case of this algorithm, if <em>S</em> is the even positive integers and zero and if the example below is used.</li>
   </ol>
 
   <p><strong>Example:</strong> Step 1 can read “Flip the input coin for <em>λ</em> repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.” Then step 1 generates <em>X</em> with probability $\lambda^X (1-\lambda)$.<sup id="fnref:45" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">45</a></sup></p>
@@ -1569,7 +1569,7 @@ where:</p>
 <p>The method uses <strong>Algorithm CC</strong>, where step 1 is done as follows: “Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.”<sup id="fnref:45:2" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">45</a></sup>  Optionally, step 2 can be done as described in Flajolet et al., (2010)<sup id="fnref:1:6" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>: generate an <em>X</em>-letter word uniformly at random and “parse” that word using a stochastic grammar to determine whether that word can be produced by that grammar.</p>
 
 <blockquote>
-  <p><strong>Note:</strong> The <em>radius of convergence</em> of OGF is the greatest number <em>ρ</em> such that OGF is defined at every point less than <em>ρ</em> away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval [1/<em>β</em>, 1] (Flajolet 1987)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup>.  For example, the OGF involved in the square root construction given in the following examples has radius of convergence 1/2.</p>
+  <p><strong>Note:</strong> The <em>radius of convergence</em> of OGF is the greatest number <em>ρ</em> such that OGF is defined at every point less than <em>ρ</em> away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval [1/<em>β</em>, 1] (Flajolet 1987)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup>.  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.</p>
 
   <p><strong>Examples:</strong></p>
 
@@ -1654,7 +1654,7 @@ where:</p>
         <li>Alternating permutations of odd size (EGF(<em>λ</em>) = tan(<em>λ</em>); V(<em>n</em>) = W((<em>n</em>+1)/2) if <em>n</em> is odd<sup id="fnref:25:3" role="doc-noteref"><a href="#fn:25" class="footnote" rel="footnote">25</a></sup> and 0 otherwise, where the W(<em>m</em>) starting at <em>m</em> = 1 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>).</li>
       </ul>
     </li>
-    <li>Using the class of <em>sorted permutations</em>, we can generate a Poisson random variate with mean <em>λ</em> via the von Neumann schema, where <em>λ</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(−<em>λ</em>) — giving out 1 if a Poisson random variate with mean <em>λ</em> is 0, or 0 otherwise — but for the reason given in the note, this algorithm gets slower as <em>λ</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson random variate with mean floor(<em>c</em>) to one with mean <em>c</em>−floor(<em>c</em>) generates a Poisson random variate with mean <em>c</em>.</li>
+    <li>Using the class of <em>sorted permutations</em>, we can generate a Poisson random variate with mean <em>λ</em> via the von Neumann schema, where <em>λ</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(−<em>λ</em>) — outputting 1 if a Poisson random variate with mean <em>λ</em> is 0, or 0 otherwise — but for the reason given in the note, this algorithm gets slower as <em>λ</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson random variate with mean floor(<em>c</em>) to one with mean <em>c</em>−floor(<em>c</em>) generates a Poisson random variate with mean <em>c</em>.</li>
     <li>
       <p>The algorithm for exp(−<em>λ</em>), described in example 2, is as follows:</p>
 
@@ -2686,7 +2686,7 @@ where $0\le a\lt b\le 1$, using the following algorithm:</p>
 
 <h4 id="lambda--xy"><em>λ</em> * <em>x</em>/<em>y</em></h4>
 
-<p>In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when <em>x</em>/<em>y</em> &gt; 1.  This makes the function relatively nontrivial to simulate in this case.</p>
+<p>In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when <em>x</em>/<em>y</em> &gt; 1.  This makes the function relatively non-trivial to simulate in this case.</p>
 
 <p>Huber has suggested several algorithms for this function over the years.</p>
 
@@ -2719,7 +2719,7 @@ where $0\le a\lt b\le 1$, using the following algorithm:</p>
   <li>(<em>i</em> is 0.) Return 1.</li>
 </ol>
 
-<p>Huber (2016)<sup id="fnref:42:2" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup> presented a second algorithm using the same three parameters, but it’s omitted here because it appears to perform worse than the algorithm given earlier and the <strong>algorithm for (<em>λ</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> below (see also Morina 2021<sup id="fnref:64:1" role="doc-noteref"><a href="#fn:64" class="footnote" rel="footnote">64</a></sup>).</p>
+<p>Huber (2016)<sup id="fnref:42:2" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup> presented a second algorithm using the same three parameters, but it’s omitted here because it appears to perform worse than the algorithm given above and the <strong>algorithm for (<em>λ</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> below (see also Morina 2021<sup id="fnref:64:1" role="doc-noteref"><a href="#fn:64" class="footnote" rel="footnote">64</a></sup>).</p>
 
 <p>Huber (2016) also included a third algorithm that simulates <em>λ</em> * <em>x</em> / <em>y</em>.  The algorithm works only if <em>λ</em> * <em>x</em> / <em>y</em> is known to be less than 1/2.  This third algorithm takes three parameters:</p>
 
@@ -2876,7 +2876,7 @@ where $0\le a\lt b\le 1$, using the following algorithm:</p>
 
 <h3 id="other-factory-functions">Other Factory Functions</h3>
 
-<p>Algorithms in bold type are given in this page.</p>
+<p>Algorithms in bold type type type type type type type type type are given in this page.</p>
 
 <table>
   <thead>
@@ -3032,7 +3032,7 @@ kind of irrational number.</p>
 </ol>
 
 <blockquote>
-  <p><strong>Note:</strong> The following is a running time analysis of this algorithm.  A similar analysis to the one below can be used to find the expected (“long-run average”) time complexity of many Bernoulli factory algorithms.  Let <strong>E</strong>[<em>N</em>] be the expected (“long-run average”) number of “fair coin flips” generated by the algorithm.  Then, since each bit is independent, <strong>E</strong>[<em>N</em>] = 2*<em>φ</em> as shown next.</p>
+  <p><strong>Note:</strong> The following is a running time analysis of this algorithm.  A similar analysis to the one below can be used to find the expected (“long-run average”) time complexity of many Bernoulli factory algorithms.  Let <strong>E</strong>[<em>N</em>] be the expected (“long-run average”) number of “fair coin flips” generated by the algorithm.  Then, since each bit is independent, <strong>E</strong>[<em>N</em>] = 2*<em>φ</em> as shown below.</p>
 
   <ul>
     <li>Each iteration stops the algorithm with probability <em>p</em> = (1/2) + (1−(1/2)) * (1/<em>φ</em>) (1/2 for the initial bit and 1/<em>φ</em> for the recursive run; (1−(1/2)) because the (1/2) is being subtracted earlier on the right-hand side from 1).</li>
@@ -3591,7 +3591,7 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
   <p><strong>Example:</strong> If a Bernoulli factory algorithm would generate 1 or 0 with equal probability (or flip a fair coin), instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951)<sup id="fnref:72" role="doc-noteref"><a href="#fn:72" class="footnote" rel="footnote">72</a></sup>.  But this trick works only if the input coin’s probability of heads is neither 0 nor 1.</p>
 </blockquote>
 
-<p>When Keane and O’Brien (1994)<sup id="fnref:24:7" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup> introduced Bernoulli factories, they showed already that <em>f</em>(<em>λ</em>) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn’t show heads every time or tails every time) — just use the von Neumann trick as in the preceding example.  But does <em>f</em> remain strongly simulable if its domain includes 0, 1, or both?  That’s a complexer question; see the <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>supplemental notes</strong></a>.</p>
+<p>When Keane and O’Brien (1994)<sup id="fnref:24:7" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup> introduced Bernoulli factories, they showed already that <em>f</em>(<em>λ</em>) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn’t show heads every time or tails every time) — just use the von Neumann trick as in the example above.  But does <em>f</em> remain strongly simulable if its domain includes 0, 1, or both?  That’s a complexer question; see the <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>supplemental notes</strong></a>.</p>
 
 <p><a id="The_Entropy_Bound"></a></p>
 
@@ -3645,7 +3645,7 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
 
 <ul>
   <li>The algorithm finishes with probability 1 by assumption.</li>
-  <li>Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with a “black box” that simulates the correct “continued sublogarithm”.  If step 1 reaches the last parameter, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the “continued sublogarithm” and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the “rejection piece” that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at the first substep of the loop with probability <em>f1</em> = (1 − 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at the second substep with probability <em>f2</em> = <em>x</em>/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>p</em> + <em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
+  <li>Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with a “black box” that simulates the correct “continued sub-logarithm”.  If step 1 reaches the last parameter, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the “continued sub-logarithm” and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the “rejection piece” that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at the first substep of the loop with probability <em>f1</em> = (1 − 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at the second substep with probability <em>f2</em> = <em>x</em>/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>p</em> + <em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
 </ul>
 
 <p>Since both conditions of Huber’s theorem are satisfied, this completes the proof. □</p>
@@ -3660,7 +3660,7 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
 
 <ul>
   <li>The algorithm finishes with probability 1 because with each recursion, the method does a recursive run with no greater probability than not; observe that <em>a</em>[<em>i</em>] can never be more than 1, so that <em>a</em>[<em>i</em>]/(1+<em>a</em>[<em>i</em>]), that is, the probability of finishing the run in each iteration, is always 1/2 or greater.</li>
-  <li>If the recursive call in the loop is replaced with a “black box” that simulates the correct “subfraction”, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the “continued subfraction” and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 − <em>h</em>)), and the last piece is the “rejection piece”.  The algorithm will pass at the first substep with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at the first substep of the loop with probability <em>f1</em> = (1 − <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at the second substep with probability <em>f2</em> = <em>x</em> * (1 − <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the desired probability wanted, so that both of Huber’s conditions are satisfied and the proof is complete.  □</li>
+  <li>If the recursive call in the loop is replaced with a “black box” that simulates the correct “sub-fraction”, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the “continued sub-fraction” and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 − <em>h</em>)), and the last piece is the “rejection piece”.  The algorithm will pass at the first substep with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at the first substep of the loop with probability <em>f1</em> = (1 − <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at the second substep with probability <em>f2</em> = <em>x</em> * (1 − <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the desired probability wanted, so that both of Huber’s conditions are satisfied and the proof is complete.  □</li>
 </ul>
 
 <p><a id="Proof_of_the_General_Martingale_Algorithm"></a></p>
@@ -3836,7 +3836,7 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
 
 <h3 id="derivation-of-an-algorithm-for-pi--4">Derivation of an Algorithm for <em>π</em> / 4</h3>
 
-<p>The following is a derivation of the Madhava–Gregory–Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)<sup id="fnref:1:30" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.  It works as follows.  Let $S$ be a set of nonnegative integers.  Then:</p>
+<p>The following is a derivation of the Madhava–Gregory–Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)<sup id="fnref:1:30" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.  It works as follows.  Let $S$ be a set of non-negative integers.  Then:</p>
 
 <ol>
   <li>Generate a uniform random variate between 0 and 1, call it $U$.</li>
@@ -3848,11 +3848,11 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
 
 <p>\(\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,\) and the overall algorithm uses the “<a href="#Integrals"><strong>integral method</strong></a>”, so that the overall algorithm returns 1 with probability—</p>
 
-<p>\(\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,\) which, in the case of the MGL generator (where $S$ is the set of nonnegative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
+<p>\(\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,\) which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
 
 <p>The derivation below relies on the following fact: The probability satisfies—</p>
 
-<p>\(\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.\) Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli’s theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.</p>
+<p>\(\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.\) Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli’s theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.</p>
 
 <p>Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm’s step 2 generates a number $k$, namely—</p>
 
