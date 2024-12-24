@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/suppcolor.pdf"><meta name="citation_url" content="https://peteroupc.github.io/suppcolor.html"><meta name="citation_date" content="2024/12/22"><meta name="citation_online_date" content="2024/12/22"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/suppcolor.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/suppcolor.pdf"><meta name="citation_url" content="https://peteroupc.github.io/suppcolor.html"><meta name="citation_date" content="2024/12/24"><meta name="citation_online_date" content="2024/12/24"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/suppcolor.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -12,7 +12,7 @@
 
 <h2 id="introduction">Introduction</h2>
 
-<p>This document presents supplemental topics about color.  They add to my article on <a href="https://peteroupc.github.io/colorgen.html"><strong>color topics for programmers</strong></a>.</p>
+<p>This document presents supplemental topics about color.  They add to my article on <a href="https://peteroupc.github.io/colorgen.html"><strong>color topics for programmers</strong></a>.  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</p>
 
 <p><a id="Contents"></a></p>
 
@@ -21,7 +21,6 @@
 <ul>
   <li><a href="#Introduction"><strong>Introduction</strong></a></li>
   <li><a href="#Contents"><strong>Contents</strong></a></li>
-  <li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
   <li><a href="#Kinds_of_Color_Spaces"><strong>Kinds of Color Spaces</strong></a></li>
   <li><a href="#Primary_Colors"><strong>“Primary Colors”</strong></a></li>
   <li><a href="#Calculating_the_Mean_Hue_Angle"><strong>Calculating the Mean Hue Angle</strong></a></li>
@@ -39,16 +38,6 @@
   <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
-<p><a id="Notation_and_Definitions"></a></p>
-
-<h2 id="notation-and-definitions">Notation and Definitions</h2>
-
-<ul>
-  <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
-  <li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
-  <li><strong>RGB.</strong> Red–green–blue.</li>
-</ul>
-
 <p><a id="Kinds_of_Color_Spaces"></a></p>
 
 <h2 id="kinds-of-color-spaces">Kinds of Color Spaces</h2>
@@ -58,10 +47,10 @@
 <ul>
   <li><strong>Light-mixture</strong> color spaces are based on mixtures of colored light sources (such as RGB, red–green–blue).  (The term “additive mixture” is better used to mean <a href="http://eilv.cie.co.at/term/24"><strong><em>additive mixture of color stimuli</em></strong></a>, rather than light mixture.)</li>
   <li><strong>Colorant-mixture</strong> color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan–magenta–yellow–black). (“Subtractive mixture” is an inferior term.)</li>
-  <li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE <em>L*C*h</em>.</li>
+  <li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE (International Commission on Illumination) <em>L*C*h</em>.</li>
   <li><strong>Light/dark</strong> color spaces have three dimensions, one of which is a light/dark dimension.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y′C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Of these color spaces:</li>
   <li><strong>Opponent</strong> color spaces are light/dark color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.</li>
-  <li>It’s discouraged to speak of <strong>“device-dependent”</strong> and <strong>“device-independent”</strong> color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered “device independent”, some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (<em>colorimetric color spaces</em>).</li>
+  <li>It’s discouraged to speak of <strong>“device-dependent”</strong> and <strong>“device-independent”</strong> color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered “device independent”, some RGB (red–green–blue) color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (<em>colorimetric color spaces</em>).</li>
 </ul>
 
 <p><a id="Primary_Colors"></a></p>
@@ -102,13 +91,13 @@ END
 
 <h2 id="additional-text-based-rgb-colors">Additional Text-based RGB colors</h2>
 
-<p>The following color formats express <a href="https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats"><strong>8-bpc <em>encoded RGB</em> colors</strong></a> as text strings:</p>
+<p>The following color formats express <a href="https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats"><strong>8-bit-per-color-component <em>encoded RGB</em> colors</strong></a> as text strings:</p>
 
 <ul>
   <li><strong>Delphi</strong> format: Consists of “$00” followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.</li>
   <li><strong>Visual Basic</strong> format: Consists of “&amp;H” followed by six base-16 digits, two each for the blue, green, and red components, in that order.</li>
   <li><strong>C++</strong> format: Consists of “0x00” followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows <code>COLORREF</code> color, the three components are blue, green, and red, in that order.</li>
-  <li><strong>PowerBuilder</strong> format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.</li>
+  <li><strong>PowerBuilder</strong> format: Consists of the integer form of the 8-bit-per-color-component format color, packed red/green/blue, in that order from lowest to highest bits.</li>
 </ul>
 
 <p><a id="Additional_Color_Models"></a></p>
@@ -225,7 +214,7 @@ END METHOD
 
 <ul>
   <li>“0”: Reset the foreground and background color and other graphic properties to default.  (The graphic control sequence U+001B followed by “[m” has the same effect.)</li>
-  <li>“1”: Set the following text in bold type type type type type type type type type.</li>
+  <li>“1”: Set the following text in bold type.</li>
   <li>“2”: Use a slightly dimmer foreground color than usual.</li>
   <li>“3”: Set the following text in italic type.</li>
   <li>“4”: Underline the following text.</li>
@@ -254,7 +243,7 @@ END METHOD
 - how the sample is prepared,
 - how the sample is presented to the measurement device,
 - for opaque samples, whether that device includes gloss in the measurement (as in “sphere” or “diffuse/8°” devices) or excludes it (as in “45/0” or “0/45” devices),
-- for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
+- for nonopaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
 - how the measurement device illuminates the sample and filters the light in the device’s path (especially if it’s a colorimeter or the sample is fluorescent),
 - the measurement device’s aperture (sample view area),
 - ambient temperature and relative humidity, and

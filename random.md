@@ -14,7 +14,7 @@ however, it's not enough for this sequence to merely "look random".  But unfortu
 - specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)), or
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`), or
 - implement RNGs by default that leave something to be desired (such as Mersenne Twister), or
-- initialize RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), or
+- initialize RNGs with a time stamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), or
 - use RNGs that are initialized with a fixed value by default (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C[^1]),
 
 so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests [**existing implementations**](#Existing_RNG_APIs_in_Programming_Languages) of them.
@@ -31,7 +31,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 - Testing an RNG implementation for correctness[^3] or statistical quality.  See my document on [**testing PRNGs**](https://peteroupc.github.io/randomtest.html).
 - Generating numbers with unequal probabilities; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
-- Generators of low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  They are not RNGs since the numbers they produce depend on prior results.
+- Generators of low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  They are not RNGs in this document since the numbers they produce depend on prior results.
 
 > **Note**: For some applications, such as the gambling industry or the financial industry, the selection of RNGs may be limited by regulatory requirements.  This document does not take precedence over such requirements.
 
@@ -222,8 +222,8 @@ In general, the bigger that "random" content is, the greater the justification t
 
 If an application requires only one pseudorandom value, with a fixed number of bits, then the application can pass the seed to a hash function rather than a PRNG.  Examples of this include the following:
 
-- Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which outputs a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.
-- Generating a pseudorandom number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or "pixel") as well as a seed (which is the same for all fragments) to the Wang hash, which outputs a 32-bit integer.[^6]
+- Generating a color pseudorandomly, by passing the seed to the MD5 hash function, which gives out a 128-bit hash code, and taking the first 24 bits of the hash code as the pseudorandom color.
+- Generating a pseudorandom number in a GLSL (OpenGL Shading Language) fragment shader by passing the fragment coordinates (which vary for each fragment, or "pixel") as well as a seed (which is the same for all fragments) to the Wang hash, which gives out a 32-bit integer.[^6]
 
 <a id=Ensuring_Reproducibility></a>
 
@@ -293,7 +293,7 @@ See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextra
 
 In general, to generate a seed allowed by a noncryptographic PRNG, an application ought to use a cryptographic RNG or a method described in the [**previous section**](#Seed_Generation).
 
-It is not recommended to seed PRNGs with timestamps, since they can carry the risk of generating the same "random" number sequence accidentally.[^15]
+It is not recommended to seed PRNGs with time stamps, since they can carry the risk of generating the same "random" number sequence accidentally.[^15]
 
 <a id=Seeding_Multiple_Processes></a>
 
@@ -308,7 +308,7 @@ To reduce this correlation risk, the application can choose a [**high-quality PR
 
 Multiple processes can be seeded for pseudorandom number generation as follows.[^17]
 
-1. **Stream case.** If the PRNG supports _streams_ as described above: Generate a seed (or use a predetermined seed), then:
+1. **Stream case.** If the PRNG supports _streams_ as described earlier: Generate a seed (or use a predetermined seed), then:
 
     1. Create a PRNG instance for each process.
     2. Hash the seed and a fixed identifier to generate a new seed allowed by the PRNG.
@@ -385,7 +385,7 @@ A _hash function_ is a function that takes an arbitrary input of any size (such 
 For pseudorandom number generation purposes:
 - If the individual bits of a hash code behave like independent uniform random bits, the code can serve as the seed for a PRNG or those bits can serve as pseudorandom numbers.
 - Good hash functions include cryptographic hash functions (for example, SHA2-256, BLAKE2) and other hash functions that tend to produce wildly dispersed hash codes for nearby inputs.
-- Poor hash functions include linear PRNGs such as LCGs and the Xorshift family.
+- Poor hash functions include linear PRNGs such as linear congruential generators and the Xorshift family.
 
 The use of hash functions for other purposes (such as data lookup and data integrity) is beyond the scope of this document.  See my note on [**hash functions**](https://peteroupc.github.io/hash.html).
 
@@ -395,7 +395,7 @@ The use of hash functions for other purposes (such as data lookup and data integ
 
 _Noise_ is a randomized variation in images, sound, and other data.[^26]
 
-A _noise function_ is similar to a hash function; it takes an _n_-dimensional point and, optionally, additional data, and outputs a pseudorandom number.[^27]  Noise functions generate **_procedural noise_** such as [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (including [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  If the noise function takes additional data, that data&mdash;
+A _noise function_ is similar to a hash function; it takes an _n_-dimensional point and, optionally, additional data, and gives out a pseudorandom number.[^27]  Noise functions generate **_procedural noise_** such as [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (including [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  If the noise function takes additional data, that data&mdash;
 - should include randomly generated or pseudorandom numbers, and
 - should not vary from one run to the next while the noise function is used for a given purpose (for example, to generate terrain for a given map).
 
@@ -408,7 +408,7 @@ A _pseudorandom function_ is a kind of hash function that takes&mdash;
 - a _secret_ (such as a password or a long-term key), and
 - additional data such as a _salt_ (which is designed to mitigate precomputation attacks) or a _nonce_,
 
-and outputs a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898) and `scrypt` (RFC 7914).  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
+and gives out a pseudorandom number whose bits behave like independent uniform random bits.  (If the output is encryption keys, the function is also called a _key derivation function_; see NIST SP 800-108.)  Some pseudorandom functions deliberately take time to compute their output; these are designed above all for cases in which the secret is a password or is otherwise easy to guess &mdash; examples of such functions include PBKDF2 (RFC 2898) and `scrypt` (RFC 7914).  Pseudorandom functions are also used in proofs of work such as the one described in RFC 8019 sec. 4.4.
 
 <a id=RNG_Topics></a>
 
@@ -521,10 +521,10 @@ A cryptographic RNG is not required to reseed itself.
 ### High-Quality RNGs: Requirements
 
 A PRNG is a high-quality RNG if&mdash;
-- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
+- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security),
 - the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more (that is, the PRNG can produce any of at least 2<sup>63</sup> different number sequences, which it can generally do only if the PRNG has at least 63 bits of state), and
 - it either&mdash;
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside of information security),
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside information security),
     - has a maximum "random" number cycle length equal to the number of different seeds the PRNG admits, or
     - has a minimum "random" number cycle length of 2<sup>127</sup> or greater.
 
@@ -584,7 +584,7 @@ I acknowledge&mdash;
 
 [^3]: For example, see F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.
 
-[^4]: Items that produce numbers or signals that follow a non-uniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through _randomness extraction_ techniques (see "[**Seed Generation**](#Seed_Generation)").<br>Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers.
+[^4]: Items that produce numbers or signals that follow a nonuniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through _randomness extraction_ techniques (see "[**Seed Generation**](#Seed_Generation)").<br>Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers.
 
 [^5]: See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.
 

@@ -63,8 +63,6 @@ $$p(\lambda) = {n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambd
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients_ (which this document may simply call _coefficients_ if the meaning is obvious from the context).[^1]
 
-A function $f(\lambda)$ is _piecewise continuous_ if it's made up of multiple continuous functions defined on a finite number of "pieces", or non-empty subintervals, that together make up $f$'s domain.
-
 <a id=Approximations_by_Polynomials></a>
 
 ## Approximations by Polynomials
@@ -93,7 +91,7 @@ The goal is now to find a polynomial of degree $n$, written in Bernstein form, s
 1. the polynomial is within $\epsilon$ of $f(\lambda)$, and
 2. each of the polynomial's Bernstein coefficients is not less than 0 or greater than 1 (assuming none of $f$'s values is less than 0 or greater than 1).
 
-For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound's equation for $n$ and round the solution up to the nearest integer.  See the table below, where:
+For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound's equation for $n$ and round the solution up to the nearest integer.  See the following table, where:
 
 - $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 - $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
@@ -123,10 +121,10 @@ Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coe
 
 On the other hand, polynomials other than Bernstein polynomials can approach $f$ faster in many cases than Bernstein polynomials, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$'s values is less than 0 or greater than 1.
 
-1. Determine whether $f$ is described in the table above.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
-2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
-3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.
-4. Calculate $n$ as given in the table above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.
+1. Determine whether $f$ is described in the preceding table.  Let _A_ be the minimum of $f$ on the closed unit interval and let _B_ be the maximum of $f$ there.
+2. If 0 &lt; _A_ &le; _B_ &lt; 1, calculate $n$ as given in the preceding table, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.
+3. Propositions B1, B2, and B3 in the [**appendix**](#Appendix) give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If _B_ is less than 1 and any of those conditions is met, calculate $n$ as given in the preceding table, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.
+4. Calculate $n$ as given in the preceding table.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.
 
 The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$.
 
@@ -232,7 +230,7 @@ If a polynomial is in Bernstein form on the interval $[a, b]$, of degree $n$:
 
 - The polynomial's integral on $[a, b]$ is found by adding the polynomial's Bernstein coefficients for $[a, b]$ together, then multiplying by $(b-a)/(n+1)$.
 
-Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval \[_a_, _b_\], and let $f(\lambda)$ be a piecewise continuous function on that interval.
+Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval \[_a_, _b_\], and let $f(\lambda)$ be  a function made up of multiple continuous functions defined on a finite number of "pieces", or nonempty subintervals, that together make up the interval \[_a_, _b_\].
 
 - If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$'s integral on that interval.
 - If $P$ is within $\epsilon/(b-a)$ of $f$ at every point on the interval, then its integral is within $\epsilon$ of $f$'s integral on that interval.
@@ -249,7 +247,7 @@ For the time being, this section works only if $f(\lambda)$ is defined on the cl
 
 If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it's possible to approximate $f$'s $r$-th derivative as follows:
 
-1. Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the table below.
+1. Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the following table.
 2. Let $a[0], ..., a[n]$ be the polynomial's Bernstein coefficients. Now, to compute the polynomial's $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)[^20].
 
     - If $n$ is 0, set $a[0]=0$ and stop.
@@ -258,7 +256,7 @@ If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (
 
 3. The result is a degree-$n$ polynomial, with Bernstein coefficients $a[0], ..., a[n]$, that approximates the $r$-th derivative of $f(\lambda)$.
 
-In the table below:
+In the following table:
 
 - $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 - $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
@@ -290,7 +288,7 @@ Some methods in this document require rewriting a polynomial in "power" form of 
 
 ## Approximations by Rational Functions
 
-Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when&mdash;
+Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with nonnegative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when&mdash;
 
 - $f$ has only a finite number of continuous derivatives on the open interval (0, 1) (Borwein 1979, section 3)[^29], _or_
 - $f(\lambda)$ is writable as $a_0 \lambda^0 + a_1 \lambda^1 + ...$, where $a_k\ge(k+1) a_{k+1}\ge 0$ whenever $k\ge 0$ (Borwein 1980)[^30].
@@ -442,7 +440,7 @@ where the $a_i$ are constants each 0 or greater and sum to a finite value and wh
 
 _Proof:_ By inspection, $f(x)$ is a power series and is nonnegative wherever $x\ge 0$ (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since&mdash;
 
-- for $n=0$, $a_0 x^0=a_0$ is a non-negative constant (which trivially reaches its maximum at 1), and
+- for $n=0$, $a_0 x^0=a_0$ is a nonnegative constant (which trivially reaches its maximum at 1), and
 - for each $n$ where $a_0 = 0$, $a_0 x^n$ is the constant 0 (which trivially reaches its maximum at 1), and
 - for each other $n$, $x^n$ is a strictly increasing function and multiplying that by $a_n$ (a positive constant) doesn't change whether it's strictly increasing.
 
@@ -640,7 +638,7 @@ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{3
 
 &#x25a1;
 
-> **Note**: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda <1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.
+> **Note**: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be nonnegative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda <1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.
 
 **Proposition B10D:** Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 

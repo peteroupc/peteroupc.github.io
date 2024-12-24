@@ -28,7 +28,7 @@
  collection. This is relevant for applications that use many-bit-long numbers
  as secret parameters.</li><li>The methods in this class (especially those
  that involve arithmetic) are not guaranteed to be "constant-time"
- (non-data-dependent) for all relevant inputs. Certain attacks that involve
+ (nondata-dependent) for all relevant inputs. Certain attacks that involve
  encrypted communications have exploited the timing and other aspects of such
  communications to derive keying material or cleartext indirectly.</li></ul>
 <p>Applications should instead use dedicated security libraries to handle
@@ -749,7 +749,7 @@ Use Pow instead.</p>
  <code>0xC8</code>, so an additional 0 is added at the start to ensure it's
  interpreted as positive.)</li><li>To encode negative numbers, take the
  absolute value of the number, subtract by 1, encode the number into bytes,
- and toggle each bit of each byte. Any further bits that appear beyond the
+ and reverse each bit of each byte. Any further bits that appear beyond the
  most significant bit of the number will be all ones. For example, the number
  -450 can be encoded as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31,
  0x7b</code>. (Note that the second example contains a cleared high bit in <code>
@@ -2543,7 +2543,7 @@ Use Pow instead.</p>
 </ul>
 
 <h3 id="shiftleft">ShiftLeft</h3>
-<pre>public EInteger ShiftLeft(EInteger eshift) Returns an arbitrary-precision integer with the bits shifted to the left by  a number of bits given as an arbitrary-precision integer. A value of 1  doubles this value, a value of 2 multiplies it by 4; a value of 3, by 8; a  value of 4, by 16; and so on.
+<pre>public EInteger ShiftLeft(EInteger eshift) Returns an arbitrary-precision integer with the bits shifted to the left by  a number of bits given as an arbitrary-precision integer. A value of 1  doubles this value, a value of 2 multiplies it by 4; a value of 3, by 8; a  value of 4, by 16; and in general, a value of N, by 2^N, where N is 1 or  greater.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -2566,7 +2566,7 @@ Use Pow instead.</p>
 </ul>
 
 <h3 id="shiftleft-1">ShiftLeft</h3>
-<pre>public EInteger ShiftLeft(int numberBits) Returns an arbitrary-precision integer with the bits shifted to the left by  a number of bits. A value of 1 doubles this value, a value of 2 multiplies  it by 4, a value of 3 × by, a value of 4 × by, and so on.
+<pre>public EInteger ShiftLeft(int numberBits) Returns an arbitrary-precision integer with the bits shifted to the left by  a number of bits. A value of 1 doubles this value, a value of 2 multiplies  it by 4, a value of 3, by 8, a value of 4, by 16, and in general, a value of  N, by 2^N, where N is 1 or greater.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -2600,7 +2600,7 @@ Use Pow instead.</p>
 </ul>
 
 <h3 id="lowbits">LowBits</h3>
-<pre>public EInteger LowBits(long longBitCount) Extracts the lowest bits of this integer. This is equivalent to &lt;code&gt;  And(2^longBitCount - 1)&lt;/code&gt;, but is more efficient when this integer is  non-negative and longBitCount's value is large.
+<pre>public EInteger LowBits(long longBitCount) Extracts the lowest bits of this integer. This is equivalent to &lt;code&gt;  And(2^longBitCount - 1)&lt;/code&gt;, but is more efficient when this integer is  nonnegative and longBitCount's value is large.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -2617,7 +2617,7 @@ Use Pow instead.</p>
 </ul>
 
 <h3 id="lowbits-1">LowBits</h3>
-<pre>public EInteger LowBits(int bitCount) Extracts the lowest bits of this integer. This is equivalent to &lt;code&gt;  And(2^bitCount - 1)&lt;/code&gt;, but is more efficient when this integer is  non-negative and bitCount's value is large.
+<pre>public EInteger LowBits(int bitCount) Extracts the lowest bits of this integer. This is equivalent to &lt;code&gt;  And(2^bitCount - 1)&lt;/code&gt;, but is more efficient when this integer is nonnegative  and bitCount's value is large.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -2634,7 +2634,7 @@ Use Pow instead.</p>
 </ul>
 
 <h3 id="lowbits-2">LowBits</h3>
-<pre>public EInteger LowBits(EInteger bigBitCount) Extracts the lowest bits of this integer. This is equivalent to &lt;code&gt;  And(2^bigBitCount - 1)&lt;/code&gt;, but is more efficient when this integer is  non-negative and bigBitCount's value is large.
+<pre>public EInteger LowBits(EInteger bigBitCount) Extracts the lowest bits of this integer. This is equivalent to &lt;code&gt;  And(2^bigBitCount - 1)&lt;/code&gt;, but is more efficient when this integer is  nonnegative and bigBitCount's value is large.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -2974,7 +2974,8 @@ Use Pow instead.</p>
 
 <ul>
   <li><code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.</li>
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2998,7 +2999,8 @@ Use Pow instead.</p>
 
 <ul>
   <li><code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.</li>
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3024,7 +3026,8 @@ Use Pow instead.</p>
 
 <ul>
   <li><code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.</li>
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3042,7 +3045,8 @@ Use Pow instead.</p>
 
 <ul>
   <li><code>root</code> - The root to find; must be 1 or greater. If this value is 2, this
- method finds the square root; if 3, the cube root, and so on.</li>
+ method finds the square root; if 3, the cube root, and in general, if N, the
+ N-th root.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

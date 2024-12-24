@@ -546,10 +546,7 @@ CLASSES
      |      in probability, even though the list
      |      need not be a uniformly randomly
      |      chosen derangement.  Reference:
-     |      J.R.G. Mendonça, "Efficient generation of
-     |      random derangements with the expected
-     |      distribution of cycle lengths", arXiv:1809.04571v4
-     |      [stat.CO], 2020.
+     |      J.R.G. Mendonça, arXiv:1809.04571v4, 2020.
      |
      |  diceRoll(self, dice, sides=6, bonus=0)
      |
@@ -1290,8 +1287,7 @@ CLASSES
      |  zero_or_one_exp_minus(self, x, y)
      |      Generates 1 with probability exp(-px/py); 0 otherwise.
      |      Reference:
-     |      Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-     |      for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020.
+     |      Canonne, C., Kamath, G., Steinke, T., arXiv:2004.00010, 2020.
      |
      |  zero_or_one_power(self, px, py, n)
      |      Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise.

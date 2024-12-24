@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/12/22"><meta name="citation_online_date" content="2024/12/22"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2024/12/24"><meta name="citation_online_date" content="2024/12/24"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -146,7 +146,6 @@
   <li><strong>D50 illuminant, D65 illuminant.</strong> CIE models of daylight at a correlated color temperature of about 5000 or 6500 kelvins respectively.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></li>
   <li><strong>D50/2 white point.</strong> The white point determined by the D50 illuminant and the CIE 1931 standard observer.</li>
   <li><strong>D65/2 white point.</strong> The white point determined by the D65 illuminant and the CIE 1931 standard observer.</li>
-  <li><strong>IEC.</strong> International Electrotechnical Commission.</li>
   <li><strong>Image color list.</strong> Means either—
     <ul>
       <li>a list of colors (which can have duplicates), all of the same color space, or</li>
@@ -155,7 +154,6 @@
   </li>
   <li><strong>ISO.</strong> International Organization for Standardization.</li>
   <li><strong>Light source.</strong> Means a <a href="http://eilv.cie.co.at/term/982"><strong><em>primary light source</em></strong></a> or an <a href="http://eilv.cie.co.at/term/554"><strong><em>illuminant</em></strong></a>, as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.</li>
-  <li><strong>Multicomponent color.</strong> Color given in terms of one or more color components.  Color components include red components, green components, luminance factors, and points on a spectral reflectance curve.</li>
   <li><strong>RGB.</strong> Red-green-blue.</li>
 </ul>
 
@@ -280,7 +278,7 @@
 
 <p>For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB"><strong>sRGB proposal</strong></a>, which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
 
-<p>The following methods convert colors between linear and encoded sRGB. (Note that the thresholds <code>0.0031308</code> and <code>0.4045</code> are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for these thresholds.)</p>
+<p>The following methods convert colors between linear and encoded sRGB. (Note that the thresholds <code>0.0031308</code> and <code>0.4045</code> are those of IEC 61966-2-1, the official sRGB standard published by the International Electrotechnical Commission; the sRGB proposal has a different value for these thresholds.)</p>
 
 <pre>// Convert a color component from encoded to linear sRGB
 // NOTE: This is not gamma decoding; it's similar to, but
@@ -679,7 +677,7 @@ END METHOD
   <li>the <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf"><strong>JPEG File Interchange Format</strong></a> variant, as the <code>YCbCrToRgbJpeg</code> and <code>RgbToYCbCrJpeg</code> methods.</li>
 </ul>
 
-<p>The Y′C<sub><em>B</em></sub>C<sub><em>R</em></sub> transformation is independent of RGB color space, but the three variants given above should use <a href="#RGB_Color_Spaces"><strong><em>encoded RGB</em> colors</strong></a> rather than <em>linear RGB</em> colors.</p>
+<p>The Y′C<sub><em>B</em></sub>C<sub><em>R</em></sub> transformation is independent of RGB color space, but the three variants given earlier should use <a href="#RGB_Color_Spaces"><strong><em>encoded RGB</em> colors</strong></a> rather than <em>linear RGB</em> colors.</p>
 
 <pre>// NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
 // in the NTSC color space
@@ -1215,10 +1213,10 @@ END METHOD
     <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
   </ol>
 
-  <p><strong>Note:</strong> <code>Luminance(color)</code> belongs to a family of functions that output a single number that summarizes a color and ranges from 0 for “minimum intensity” through 1 for “maximum intensity”. The following are other functions in this family.</p>
+  <p><strong>Note:</strong> <code>Luminance(color)</code> belongs to a family of functions that give out a single number that summarizes a color and ranges from 0 for “minimum intensity” through 1 for “maximum intensity”. The following are other functions in this family.</p>
 
   <ol>
-    <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color’s red, green, or blue component, respectively.</li>
+    <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color’s red, green, or blue component, respectively.  Examples of a color channel are a red component, a luminance factor, or a point on a spectral reflectance curve.</li>
     <li><strong>Average</strong> of the multicomponent color’s components (see <a href="#Alpha_Blending"><strong>Alpha Blending</strong></a>).</li>
     <li><strong>Maximum</strong>; for example, <code>max(max(color[0], color[1]), color[2])</code> for three-component colors.</li>
     <li><strong>Minimum</strong>; for example, <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland)<sup id="fnref:24" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup>.)</li>
@@ -2036,11 +2034,11 @@ end
     while i &lt;= 830 // End of relevant part of spectrum
              cmf=cmfFunc(i)
              refl=reflFunc(i)
-             spec=lightFunc(i)
-             weight=weight+cmf[1]*spec*5
-             xyz[0]=xyz[0]+refl*spec*cmf[0]*5
-             xyz[1]=xyz[1]+refl*spec*cmf[1]*5
-             xyz[2]=xyz[2]+refl*spec*cmf[2]*5
+             specification=lightFunc(i)
+             weight=weight+cmf[1]*specification*5
+             xyz[0]=xyz[0]+refl*specification*cmf[0]*5
+             xyz[1]=xyz[1]+refl*specification*cmf[1]*5
+             xyz[2]=xyz[2]+refl*specification*cmf[2]*5
              i = i + 5
     end
     if weight==0: return xyz
@@ -2050,7 +2048,7 @@ end
     // not change.
     // NOTE: If `weight` is 1/683, `cmfFunc` outputs XYZ
     // values, and `reflFunc` always returns 1, then SpectrumToTristim
-    // will output XYZ values where Y is a value in cd/m^2.
+    // will give out XYZ values where Y is a value in cd/m^2.
     xyz[0] = xyz[0] / weight
     xyz[1] = xyz[1] / weight
     xyz[2] = xyz[2] / weight
@@ -2090,7 +2088,7 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  As a blackbody’s temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.</p>
 
-<p>The <code>Planckian</code> method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
+<p>The <code>Planckian</code> method shown next models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
 
 <pre>METHOD Planckian(wl, temp)
     num = pow(wl, -5)
@@ -2229,7 +2227,7 @@ END METHOD
       <p>For information on how defective color vision can be simulated, see “<a href="http://ixora.io/projects/colorblindness/color-blindness-simulation-research/"><strong>Color Blindness Simulation Research</strong></a>”, by “Jim”. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7" role="doc-endnote">
-      <p>Although most color display devices in the past used three dots per pixel (“red”, “green”, and “blue”), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel — such as “red”, “green”, “blue”, and “white”, or RGBW — and ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for solid-state lighting, luminaires, or display devices. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Although most color display devices in the past used three dots per pixel (“red”, “green”, and “blue”), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel — such as “red”, “green”, “blue”, and “white”, or RGBW — and ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside hardware and driver development for solid-state lighting, luminaires, or display devices. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8" role="doc-endnote">
       <p>B. Lindbloom, “<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html"><strong>RGB Working Space Information</strong></a>”. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

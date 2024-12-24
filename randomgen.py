@@ -1302,10 +1302,7 @@ class RandomGen:
         in probability, even though the list
         need not be a uniformly randomly
         chosen derangement.  Reference:
-        J.R.G. Mendonça, "Efficient generation of
-        random derangements with the expected
-        distribution of cycle lengths", arXiv:1809.04571v4
-        [stat.CO], 2020.
+        J.R.G. Mendonça, arXiv:1809.04571v4, 2020.
         """
         n = len(list)
         if n < 4:
@@ -1967,8 +1964,7 @@ class RandomGen:
     def zero_or_one_exp_minus(self, x, y):
         """Generates 1 with probability exp(-px/py); 0 otherwise.
         Reference:
-        Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-        for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020."""
+        Canonne, C., Kamath, G., Steinke, T., arXiv:2004.00010, 2020."""
         if y <= 0 or x < 0:
             raise ValueError
         if x == 0:

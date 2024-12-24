@@ -6,7 +6,7 @@
 
 ## Introduction
 
-This document presents supplemental topics about color.  They add to my article on [**color topics for programmers**](https://peteroupc.github.io/colorgen.html).
+This document presents supplemental topics about color.  They add to my article on [**color topics for programmers**](https://peteroupc.github.io/colorgen.html).  The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 
 <a id=Contents></a>
 
@@ -14,7 +14,6 @@ This document presents supplemental topics about color.  They add to my article 
 
 - [**Introduction**](#Introduction)
 - [**Contents**](#Contents)
-- [**Notation and Definitions**](#Notation_and_Definitions)
 - [**Kinds of Color Spaces**](#Kinds_of_Color_Spaces)
 - [**"Primary Colors"**](#Primary_Colors)
 - [**Calculating the Mean Hue Angle**](#Calculating_the_Mean_Hue_Angle)
@@ -28,14 +27,6 @@ This document presents supplemental topics about color.  They add to my article 
 - [**Irrelevant Topics**](#Irrelevant_Topics)
 - [**License**](#License)
 
-<a id=Notation_and_Definitions></a>
-
-## Notation and Definitions
-
-- The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
-- **CIE.** French initials for the International Commission on Illumination.
-- **RGB.** Red&ndash;green&ndash;blue.
-
 <a id=Kinds_of_Color_Spaces></a>
 
 ## Kinds of Color Spaces
@@ -44,10 +35,10 @@ _Color spaces_ are designed to organize colors.  They can be categorized as any 
 
 - **Light-mixture** color spaces are based on mixtures of colored light sources (such as RGB, red&ndash;green&ndash;blue).  (The term "additive mixture" is better used to mean [**_additive mixture of color stimuli_**](http://eilv.cie.co.at/term/24), rather than light mixture.)
 - **Colorant-mixture** color spaces are based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan&ndash;magenta&ndash;yellow&ndash;black). ("Subtractive mixture" is an inferior term.)
-- **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE _L\*C\*h_.
+- **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE (International Commission on Illumination) _L\*C\*h_.
 - **Light/dark** color spaces have three dimensions, one of which is a light/dark dimension.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
 - **Opponent** color spaces are light/dark color spaces arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.
-- It's discouraged to speak of **"device-dependent"** and **"device-independent"** color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered "device independent", some RGB color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (_colorimetric color spaces_).
+- It's discouraged to speak of **"device-dependent"** and **"device-independent"** color spaces, because the difference between the two is not always clear.  While color spaces based on how humans perceive color, such as XYZ, may be considered "device independent", some RGB (red&ndash;green&ndash;blue) color spaces may also be, depending on whether they are convertible, without loss, to XYZ and back (_colorimetric color spaces_).
 
 <a id=Primary_Colors></a>
 
@@ -86,12 +77,12 @@ The `MeanAngle` method, as given in the pseudocode below, finds the average of o
 
 ## Additional Text-based RGB colors
 
-The following color formats express [**8-bpc _encoded RGB_ colors**](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
+The following color formats express [**8-bit-per-color-component _encoded RGB_ colors**](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
 
 - **Delphi** format: Consists of "$00" followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.
 - **Visual Basic** format: Consists of "&H" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
 - **C++** format: Consists of "0x00" followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows `COLORREF` color, the three components are blue, green, and red, in that order.
-- **PowerBuilder** format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.
+- **PowerBuilder** format: Consists of the integer form of the 8-bit-per-color-component format color, packed red/green/blue, in that order from lowest to highest bits.
 
 <a id=Additional_Color_Models></a>
 
@@ -201,7 +192,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 Some command-line terminals (or terminal emulators) support coloring the background or foreground of text.  In such programs that support [**"ANSI" (American National Standards Institute) graphics codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "&#x5b;" followed by a semicolon-separated sequence of numbers (given later) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (The graphic control sequence U+001B followed by "&#x5b;m" has the same effect.)
-- "1": Set the following text in bold type type type type type type type type type.
+- "1": Set the following text in bold type.
 - "2": Use a slightly dimmer foreground color than usual.
 - "3": Set the following text in italic type.
 - "4": Underline the following text.
@@ -229,7 +220,7 @@ Color measurements of the same sample can vary depending on many things, includi
 - how the sample is prepared,
 - how the sample is presented to the measurement device,
 - for opaque samples, whether that device includes gloss in the measurement (as in "sphere" or "diffuse/8&deg;" devices) or excludes it (as in "45/0" or "0/45" devices),
-- for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
+- for nonopaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
 - how the measurement device illuminates the sample and filters the light in the device's path (especially if it's a colorimeter or the sample is fluorescent),
 - the measurement device's aperture (sample view area),
 - ambient temperature and relative humidity, and

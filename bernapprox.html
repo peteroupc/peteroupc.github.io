@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/12/07"><meta name="citation_online_date" content="2024/12/07"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2024/12/24"><meta name="citation_online_date" content="2024/12/24"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -85,8 +85,6 @@
 
 <p>where <em>n</em> is the polynomial’s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], …, <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em> (which this document may simply call <em>coefficients</em> if the meaning is obvious from the context).<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
 
-<p>A function $f(\lambda)$ is <em>piecewise continuous</em> if it’s made up of multiple continuous functions defined on a finite number of “pieces”, or non-empty subintervals, that together make up $f$’s domain.</p>
-
 <p><a id="Approximations_by_Polynomials"></a></p>
 
 <h2 id="approximations-by-polynomials">Approximations by Polynomials</h2>
@@ -157,7 +155,7 @@
   <li>each of the polynomial’s Bernstein coefficients is not less than 0 or greater than 1 (assuming none of $f$’s values is less than 0 or greater than 1).</li>
 </ol>
 
-<p>For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound’s equation for $n$ and round the solution up to the nearest integer.  See the table below, where:</p>
+<p>For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound’s equation for $n$ and round the solution up to the nearest integer.  See the following table, where:</p>
 
 <ul>
   <li>$M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</li>
@@ -277,10 +275,10 @@
 <p>On the other hand, polynomials other than Bernstein polynomials can approach $f$ faster in many cases than Bernstein polynomials, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$’s values is less than 0 or greater than 1.</p>
 
 <ol>
-  <li>Determine whether $f$ is described in the table above.  Let <em>A</em> be the minimum of $f$ on the closed unit interval and let <em>B</em> be the maximum of $f$ there.</li>
-  <li>If 0 &lt; <em>A</em> ≤ <em>B</em> &lt; 1, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
-  <li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in the table above, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.</li>
-  <li>Calculate $n$ as given in the table above.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.</li>
+  <li>Determine whether $f$ is described in the preceding table.  Let <em>A</em> be the minimum of $f$ on the closed unit interval and let <em>B</em> be the maximum of $f$ there.</li>
+  <li>If 0 &lt; <em>A</em> ≤ <em>B</em> &lt; 1, calculate $n$ as given in the preceding table, but with $\epsilon=\min(\epsilon, A, 1-B)$, and stop.</li>
+  <li>Propositions B1, B2, and B3 in the <a href="#Appendix"><strong>appendix</strong></a> give conditions on $f$ so that $W_{n,2}$ or $W_{n,3}$ (as the case may be) will be nonnegative.  If <em>B</em> is less than 1 and any of those conditions is met, calculate $n$ as given in the preceding table, but with $\epsilon=\min(\epsilon, 1-B)$. (For B3, set $n$ to max($n$, $m$), where $m$ is given in that proposition.) Then stop; $W_{n,2}$ or $W_{n,3}$ will now be bounded by 0 and 1.</li>
+  <li>Calculate $n$ as given in the preceding table.  Then, if any Bernstein coefficient of the resulting polynomial is less than 0 or greater than 1, double the value of $n$ until this condition is no longer true.</li>
 </ol>
 
 <p>The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$.</p>
@@ -420,7 +418,7 @@
   <li>The polynomial’s integral on $[a, b]$ is found by adding the polynomial’s Bernstein coefficients for $[a, b]$ together, then multiplying by $(b-a)/(n+1)$.</li>
 </ul>
 
-<p>Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval [<em>a</em>, <em>b</em>], and let $f(\lambda)$ be a piecewise continuous function on that interval.</p>
+<p>Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval [<em>a</em>, <em>b</em>], and let $f(\lambda)$ be  a function made up of multiple continuous functions defined on a finite number of “pieces”, or nonempty subintervals, that together make up the interval [<em>a</em>, <em>b</em>].</p>
 
 <ul>
   <li>If $P$ is within $\epsilon$ of $f$ at every point on the interval, then its integral is within $\epsilon\times(b-a)$ of $f$’s integral on that interval.</li>
@@ -442,7 +440,7 @@
 <p>If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it’s possible to approximate $f$’s $r$-th derivative as follows:</p>
 
 <ol>
-  <li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the table below.</li>
+  <li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the following table.</li>
   <li>
     <p>Let $a[0], …, a[n]$ be the polynomial’s Bernstein coefficients. Now, to compute the polynomial’s $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)<sup id="fnref:20:1" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.</p>
 
@@ -455,7 +453,7 @@
   <li>The result is a degree-$n$ polynomial, with Bernstein coefficients $a[0], …, a[n]$, that approximates the $r$-th derivative of $f(\lambda)$.</li>
 </ol>
 
-<p>In the table below:</p>
+<p>In the following table:</p>
 
 <ul>
   <li>$M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</li>
@@ -515,7 +513,7 @@
 
 <h2 id="approximations-by-rational-functions">Approximations by Rational Functions</h2>
 
-<p>Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with non-negative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when—</p>
+<p>Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the closed unit interval to itself, where $q(\lambda)$ is in Bernstein form with nonnegative coefficients.  Then rational functions of this kind are not much better than polynomials in approximating $f(\lambda)$ when—</p>
 
 <ul>
   <li>$f$ has only a finite number of continuous derivatives on the open interval (0, 1) (Borwein 1979, section 3)<sup id="fnref:29" role="doc-noteref"><a href="#fn:29" class="footnote" rel="footnote">29</a></sup>, <em>or</em></li>
@@ -576,7 +574,7 @@
 <p><em>Proof:</em> By inspection, $f(x)$ is a power series and is nonnegative wherever $x\ge 0$ (and thus wherever $0\le x\le 1$).  Each of its terms has a maximum at 1 since—</p>
 
 <ul>
-  <li>for $n=0$, $a_0 x^0=a_0$ is a non-negative constant (which trivially reaches its maximum at 1), and</li>
+  <li>for $n=0$, $a_0 x^0=a_0$ is a nonnegative constant (which trivially reaches its maximum at 1), and</li>
   <li>for each $n$ where $a_0 = 0$, $a_0 x^n$ is the constant 0 (which trivially reaches its maximum at 1), and</li>
   <li>for each other $n$, $x^n$ is a strictly increasing function and multiplying that by $a_n$ (a positive constant) doesn’t change whether it’s strictly increasing.</li>
 </ul>
@@ -819,7 +817,7 @@
 <p>□</p>
 
 <blockquote>
-  <p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be non-negative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>
+  <p><strong>Note</strong>: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be nonnegative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda &lt;1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.</p>
 </blockquote>
 
 <p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:</p>

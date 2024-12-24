@@ -56,7 +56,7 @@
  negative zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b>
  is generally used when a negative number is rounded to 0; it has the same
  mathematical value as positive zero. <b>Infinity</b> is generally used when
- a non-zero number is divided by zero, or when a very high or very low number
+ a nonzero number is divided by zero, or when a very high or very low number
  can't be represented in a given exponent range. <b>Not-a-number</b> is
  generally used to signal errors.</p>
 <p>This class implements the General
@@ -122,7 +122,7 @@
  timely fashion due to garbage collection. This is relevant for applications
  that use many-digit-long numbers as secret parameters.</li><li>The methods
  in this class (especially those that involve arithmetic) are not guaranteed
- to be "constant-time" (non-data-dependent) for all relevant inputs. Certain
+ to be "constant-time" (nondata-dependent) for all relevant inputs. Certain
  attacks that involve encrypted communications have exploited the timing and
  other aspects of such communications to derive keying material or cleartext
  indirectly.</li></ul>
@@ -145,16 +145,16 @@
  or <code>System.Decimal</code>). Such "native" types are often subject to
  runtime settings that change how floating-point math behaves with them, and
  these settings are often not accessible to .NET or Java
- code.</li><li>Non-associativity and intermediate precisions: In general,
+ code.</li><li>Nonassociativity and intermediate precisions: In general,
  EDecimal and EFloat use "unlimited" precision in their calculations unless
  specified otherwise by an EContext object. However, by limiting the
  precision of EDecimal, EFloat, and other floating-point numbers in this way,
  operations such as addition and multiplication on three or more numbers can
- be <i>non-associative</i> , meaning the result can change depending on the
+ be <i>nonassociative</i> , meaning the result can change depending on the
  order in which those numbers are added or multiplied. This property means
  that if an algorithm does not ensure such numbers are added or multiplied in
  the same order every time, its results may not be reproducible across
- computers or across runs of the application. This non-associativity problem
+ computers or across runs of the application. This nonassociativity problem
  can happen, for example, if an application splits a calculation across
  several threads and combines their results in the end. The problems with an
  unspecified order of operations (in the same line of code) and intermediate
@@ -448,26 +448,25 @@
     <p><code>EDecimal Divide(int intValue)</code><br />
  Divides this arbitrary-precision decimal floating-point number by a 32-bit
  signed integer and returns the result; returns NaN instead if the result
- would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7,
- 2/3, and so on); if this is not desired, use DivideToExponent, or use the
- Divide overload that takes an EContext.</p>
+ would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and
+ 2/3); if this is not desired, use DivideToExponent, or use the Divide
+ overload that takes an EContext.</p>
   </li>
   <li>
     <p><code>EDecimal Divide(long longValue)</code><br />
  Divides this arbitrary-precision decimal floating-point number by a 64-bit
  signed integer and returns the result; returns NaN instead if the result
- would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7,
- 2/3, and so on); if this is not desired, use DivideToExponent, or use the
- Divide overload that takes an EContext.</p>
+ would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and
+ 2/3); if this is not desired, use DivideToExponent, or use the Divide
+ overload that takes an EContext.</p>
   </li>
   <li>
     <p><code>EDecimal Divide(EDecimal divisor)</code><br />
  Divides this arbitrary-precision decimal floating-point number by another
  arbitrary-precision decimal floating-point number and returns the result;
  returns NaN instead if the result would have a nonterminating decimal
- expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not
- desired, use DivideToExponent, or use the Divide overload that takes an
- EContext.</p>
+ expansion (including 1/3, 1/12, 1/7, and 2/3); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.</p>
   </li>
   <li>
     <p><code>EDecimal Divide(EDecimal divisor,
@@ -2082,7 +2081,7 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
  by any number of digits (these digits may begin with any number of zeros),
  or signaling NaN ("sNaN" /"-sNaN") followed by any number of digits (these
  digits may begin with any number of zeros), all where the letters can be any
- combination of basic uppercase and/or basic lowercase letters.</p>
+ combination of basic uppercase and basic lowercase letters.</p>
 <p>All
  characters mentioned earlier are the corresponding characters in the Basic
  Latin range. In particular, the digits must be the basic digits 0 to 9
@@ -3256,7 +3255,7 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide">Divide</h3>
-<pre>public EDecimal Divide(EDecimal divisor) Divides this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns the result;  returns NaN instead if the result would have a nonterminating decimal  expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not  desired, use DivideToExponent, or use the Divide overload that takes an  EContext.
+<pre>public EDecimal Divide(EDecimal divisor) Divides this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns the result;  returns NaN instead if the result would have a nonterminating decimal  expansion (including 1/3, 1/12, 1/7, and 2/3); if this is not desired, use  DivideToExponent, or use the Divide overload that takes an EContext.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -4390,7 +4389,7 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-2">Divide</h3>
-<pre>public EDecimal Divide(long longValue) Divides this arbitrary-precision decimal floating-point number by a 64-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7,  2/3, and so on); if this is not desired, use DivideToExponent, or use the  Divide overload that takes an EContext.
+<pre>public EDecimal Divide(long longValue) Divides this arbitrary-precision decimal floating-point number by a 64-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and  2/3); if this is not desired, use DivideToExponent, or use the Divide  overload that takes an EContext.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -4470,7 +4469,7 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-3">Divide</h3>
-<pre>public EDecimal Divide(int intValue) Divides this arbitrary-precision decimal floating-point number by a 32-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7,  2/3, and so on); if this is not desired, use DivideToExponent, or use the  Divide overload that takes an EContext.
+<pre>public EDecimal Divide(int intValue) Divides this arbitrary-precision decimal floating-point number by a 32-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and  2/3); if this is not desired, use DivideToExponent, or use the Divide  overload that takes an EContext.
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -5583,7 +5582,7 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="preround">PreRound</h3>
-<pre>public EDecimal PreRound(EContext ctx) Returns a number in which the value of this object is rounded to fit the  maximum precision allowed if it has more significant digits than the maximum  precision. The maximum precision allowed is given in an arithmetic context.  This method is designed for preparing operands to a custom arithmetic  operation in accordance with the "simplified" arithmetic given in Appendix A  of the General Decimal Arithmetic Specification.
+<pre>public EDecimal PreRound(EContext ctx) Returns a number in which the value of this object is rounded to fit the  maximum precision allowed if it has more significant digits than the maximum  precision. The maximum precision allowed is given in an arithmetic context.  This method is designed for preparing operands to a custom arithmetic  operation per the "simplified" arithmetic given in Appendix A  of the General Decimal Arithmetic Specification.
 </pre>
 
 <p><strong>Parameters:</strong></p>

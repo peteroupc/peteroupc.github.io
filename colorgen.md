@@ -100,13 +100,11 @@ This document presents an overview of many common color topics that are of gener
 - **D50 illuminant, D65 illuminant.** CIE models of daylight at a correlated color temperature of about 5000 or 6500 kelvins respectively.[^1]
 - **D50/2 white point.** The white point determined by the D50 illuminant and the CIE 1931 standard observer.
 - **D65/2 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
-- **IEC.** International Electrotechnical Commission.
 - **Image color list.** Means either&mdash;
     - a list of colors (which can have duplicates), all of the same color space, or
     - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a three-dimensional image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
 - **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
-- **Multicomponent color.** Color given in terms of one or more color components.  Color components include red components, green components, luminance factors, and points on a spectral reflectance curve.
 - **RGB.** Red-green-blue.
 
 <a id=Overview_of_Color_Vision></a>
@@ -206,7 +204,7 @@ Among RGB color spaces, one of the most popular is the _sRGB color space_.  In s
 
 For background, see the [**sRGB proposal**](https://www.w3.org/Graphics/Color/sRGB), which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
 
-The following methods convert colors between linear and encoded sRGB. (Note that the thresholds `0.0031308` and `0.4045` are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for these thresholds.)
+The following methods convert colors between linear and encoded sRGB. (Note that the thresholds `0.0031308` and `0.4045` are those of IEC 61966-2-1, the official sRGB standard published by the International Electrotechnical Commission; the sRGB proposal has a different value for these thresholds.)
 
     // Convert a color component from encoded to linear sRGB
     // NOTE: This is not gamma decoding; it's similar to, but
@@ -572,7 +570,7 @@ The following pseudocode is an approximate conversion between RGB and Y&prime;C<
 - the Rec. 709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
 - the [**JPEG File Interchange Format**](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant, as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB color space, but the three variants given above should use [**_encoded RGB_ colors**](#RGB_Color_Spaces) rather than _linear RGB_ colors.
+The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB color space, but the three variants given earlier should use [**_encoded RGB_ colors**](#RGB_Color_Spaces) rather than _linear RGB_ colors.
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
@@ -1062,9 +1060,9 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
-> **Note:** `Luminance(color)` belongs to a family of functions that output a single number that summarizes a color and ranges from 0 for "minimum intensity" through 1 for "maximum intensity". The following are other functions in this family.
+> **Note:** `Luminance(color)` belongs to a family of functions that give out a single number that summarizes a color and ranges from 0 for "minimum intensity" through 1 for "maximum intensity". The following are other functions in this family.
 >
-> 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
+> 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.  Examples of a color channel are a red component, a luminance factor, or a point on a spectral reflectance curve.
 > 2. **Average** of the multicomponent color's components (see [**Alpha Blending**](#Alpha_Blending)).
 > 3. **Maximum**; for example, `max(max(color[0], color[1]), color[2])` for three-component colors.
 > 4. **Minimum**; for example, `min(min(color[0], color[1]), color[2])` for three-component colors. (For techniques 1-4, see also (Helland\)[^24].)
@@ -1673,11 +1671,11 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
         while i <= 830 // End of relevant part of spectrum
                  cmf=cmfFunc(i)
                  refl=reflFunc(i)
-                 spec=lightFunc(i)
-                 weight=weight+cmf[1]*spec*5
-                 xyz[0]=xyz[0]+refl*spec*cmf[0]*5
-                 xyz[1]=xyz[1]+refl*spec*cmf[1]*5
-                 xyz[2]=xyz[2]+refl*spec*cmf[2]*5
+                 specification=lightFunc(i)
+                 weight=weight+cmf[1]*specification*5
+                 xyz[0]=xyz[0]+refl*specification*cmf[0]*5
+                 xyz[1]=xyz[1]+refl*specification*cmf[1]*5
+                 xyz[2]=xyz[2]+refl*specification*cmf[2]*5
                  i = i + 5
         end
         if weight==0: return xyz
@@ -1687,7 +1685,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
         // not change.
         // NOTE: If `weight` is 1/683, `cmfFunc` outputs XYZ
         // values, and `reflFunc` always returns 1, then SpectrumToTristim
-        // will output XYZ values where Y is a value in cd/m^2.
+        // will give out XYZ values where Y is a value in cd/m^2.
         xyz[0] = xyz[0] / weight
         xyz[1] = xyz[1] / weight
         xyz[2] = xyz[2] / weight
@@ -1720,7 +1718,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  As a blackbody's temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.
 
-The `Planckian` method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).[^44].  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
+The `Planckian` method shown next models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).[^44].  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
 
     METHOD Planckian(wl, temp)
         num = pow(wl, -5)
@@ -1829,7 +1827,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^6]: For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
 
-[^7]: Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for solid-state lighting, luminaires, or display devices.
+[^7]: Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside hardware and driver development for solid-state lighting, luminaires, or display devices.
 
 [^8]: B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".
 
