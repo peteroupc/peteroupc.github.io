@@ -885,7 +885,7 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 #### Parameters
 
-* `viewerPos` (Type: Array.&lt;number&gt;)<br />A 3-element vector specifying the "camera" position in world space.<br /> When used in conjunction with an orthographic projection, set this parameter to the value of <code>lookingAt</code> plus a <a href="tutorial-glmath.html">unit vector</a> (for example, using MathUtil.vec3add) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the examples below.
+* `viewerPos` (Type: Array.&lt;number&gt;)<br />A 3-element vector specifying the "camera" position in world space.<br /> When used in conjunction with an orthographic projection, set this parameter to the value of <code>lookingAt</code> plus a <a href="tutorial-glmath.html">unit vector</a> (for example, using MathUtil.vec3add) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the following examples.
 * `lookingAt` (Type: Array.&lt;number&gt;) (optional)<br />A 3-element vector specifying the point in world space that the "camera" is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
 * `up` (Type: Array.&lt;number&gt;) (optional)<br />A 3-element vector specifying the direction from the center of the "camera" to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the "camera" is held upright.<br /> This vector must not be parallel to the view direction (the direction from "viewerPos" to "lookingAt"). (See the example for one way to ensure this.)<br />
 
@@ -3003,7 +3003,7 @@ then A points in the same direction as the cross product of
 B and C -- which will be perpendicular -- and the angle from B to C, when rotated
 about vector A, is positive. If the triple product is negative, then A points in the
 opposite direction from that cross product, and that angle is negative.
-(See the example below.)
+(See the following example.)
 &lt;/ul&gt;
 
 #### Parameters

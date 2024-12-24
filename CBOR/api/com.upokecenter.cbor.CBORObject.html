@@ -2251,10 +2251,10 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  denominator and discarding the fractional part of the result, and this
  method throws an exception (currently ArithmeticException, but may change in
  the next major version) if this object expresses infinity or a not-a-number
- value.</li><li>In the.NET version, if the type is a nullable (e.g., <code>
+ value.</li><li>In the.NET version, if the type is a nullable (for example, <code>
  Nullable&amp;lt;int&amp;gt;</code> or <code>int?</code> , returns <code>null</code> if this CBOR
  object is null, or this object's value converted to the nullable's
- underlying type, e.g., <code>int</code> .</li><li>If the type is an enumeration(
+ underlying type, for example, <code>int</code> .</li><li>If the type is an enumeration(
  <code>Enum</code>) type and this CBOR object is a text string or an integer,
  returns the appropriate enumerated constant. (For example, if <code>MyEnum</code>
  includes an entry for <code>MyValue</code> , this method will return <code>
@@ -2273,12 +2273,12 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  instead.)</li><li>If the type is a one-dimensional or multidimensional array
  type and this CBOR object is an array, returns an array containing the items
  in this CBOR object.</li><li>If the type is List, ReadOnlyCollection or the
- generic or non-generic List, ICollection, Iterable, IReadOnlyCollection, or
+ generic or nongeneric List, ICollection, Iterable, IReadOnlyCollection, or
  IReadOnlyList (or ArrayList, List, Collection, or Iterable in Java), and if
  this CBOR object is an array, returns an object conforming to the type,
  class, or interface passed to this method, where the object will contain all
  items in this CBOR array.</li><li>If the type is Dictionary,
- ReadOnlyDictionary or the generic or non-generic Map or IReadOnlyDictionary
+ ReadOnlyDictionary or the generic or nongeneric Map or IReadOnlyDictionary
  (or HashMap or Map in Java), and if this CBOR object is a map, returns an
  object conforming to the type, class, or interface passed to this method,
  where the object will contain all keys and values in this CBOR
@@ -3230,8 +3230,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  parameter’s inputs to types specially handled by this method (such as <code>
  int</code> or <code>string</code>) and/or to plain-old-data types (POCO or POJO types)
  within the control of the application. If the plain-old-data type references
- other data types, those types should likewise meet either criterion
- above.&lt;/p&gt;.</li>
+ other data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3256,7 +3255,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li><code>options</code> - An object containing options to control how certain objects
@@ -3291,7 +3290,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li><code>mapper</code> - An object containing optional converters to convert objects of
@@ -3395,7 +3394,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
 <p><b>REMARK:</b> .NET enumeration (<code>
  Enum</code>) constants could also have been converted to text strings with <code>
  toString()</code> , but that method will return multiple names if the given Enum
- object is a combination of Enum objects (e.g. if the object is <code>
+ object is a combination of Enum objects (for example if the object is <code>
  FileAccess.Read | FileAccess.Write</code>). More generally, if Enums are
  converted to text strings, constants from Enum types with the <code>Flags</code>
  attribute, and constants from the same Enum type that share an underlying
@@ -3437,7 +3436,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li>
@@ -3518,7 +3517,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li><code>bigintTag</code> - &lt;p&gt;Tag number. The tag number 55799 can be used to mark a
@@ -3613,7 +3612,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li><code>smallTag</code> - &lt;p&gt;A 32-bit integer that specifies a tag number. The tag
@@ -4691,7 +4690,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li>
@@ -4741,7 +4740,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  inputs to types specially handled by this method (such as <code>int</code> or
  <code>string</code>) and/or to plain-old-data types (POCO or POJO types) within
  the control of the application. If the plain-old-data type references other
- data types, those types should likewise meet either criterion above.&lt;/p&gt;.</p>
+ data types, those types should likewise meet either criterion given earlier.&lt;/p&gt;.</p>
 
 <ul>
   <li><code>outputStream</code> - A writable data stream.</li>
@@ -5090,7 +5089,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
 <h3 id="asint32">AsInt32</h3>
 <pre>public int AsInt32()
 </pre>
-<p>Converts this object to a 32-bit signed integer. Non-integer number
+<p>Converts this object to a 32-bit signed integer. Noninteger number
  values are converted to integers by discarding their fractional parts.
  (NOTE: To determine whether this method call can succeed, call
  <b>AsNumber().getCanTruncatedIntFitInInt32()</b> before calling this method. See
@@ -5215,7 +5214,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  tag).</li><li>If both objects are arrays, they are compared item by item. In
  this case, if the arrays have different numbers of items, the array with
  more items is treated as greater than the other array.</li><li>If both
- objects are maps, their key-value pairs, sorted by key in accordance with
+ objects are maps, their key-value pairs, sorted by key per
  this method, are compared, where each pair is compared first by key and then
  by value. In this case, if the maps have different numbers of key-value
  pairs, the map with more pairs is treated as greater than the other
@@ -5375,7 +5374,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
   <li><code>CBORException</code> - Thrown if the pointer is null, or
  if the pointer is invalid, or if there is no object at the given pointer, or
  the special key “-“ appears in the pointer in the context of an array (not a
- map), or if the pointer is non-empty and this object has a CBOR type other
+ map), or if the pointer is nonempty and this object has a CBOR type other
  than array or map.</li>
 </ul>
 
@@ -5387,7 +5386,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  </p>
 <pre>'/' KEY '/' KEY.get(...)</pre>
 <p>where KEY represents a key into the
- JSON object or its sub-objects in the hierarchy. For example,</p>
+ JSON object or its subobjects in the hierarchy. For example,</p>
 <pre>/foo/2/bar</pre>
 <p>means the same as &lt;pre&gt;obj.get(‘foo’)[2][‘bar’]&lt;/pre&gt;
  in JavaScript. If “~” and/or “/” occurs in a key, it must be escaped with
@@ -5419,7 +5418,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  array or map). Returns <code>defaultValue</code> if the pointer is null, or if
  the pointer is invalid, or if there is no object at the given pointer, or
  the special key “-“ appears in the pointer in the context of an array (not a
- map), or if the pointer is non-empty and this object has a CBOR type other
+ map), or if the pointer is nonempty and this object has a CBOR type other
  than array or map.</li>
 </ul>
 
@@ -6087,7 +6086,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  This function works not only with arrays and maps, but also integers,
  strings, byte arrays, and other JSON data types. Notes: </p>
 <ul><li>If this
- object contains maps with non-string keys, the keys are converted to JSON
+ object contains maps with nonstring keys, the keys are converted to JSON
  strings before writing the map as a JSON string.</li><li>If this object
  represents a number (the IsNumber property, or isNumber() method in Java,
  returns true), then it is written out as a number.</li><li>If the CBOR
@@ -6244,8 +6243,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 }
 } </pre>
 <p>The
- following example (written in Java for the Java version) shows how to use a
- subclassed <code>OutputStream</code> together with a <code>
+ following example (written in Java for the Java version) shows how to use a subclass of <code>OutputStream</code> together with a <code>
  ByteArrayOutputStream</code> to limit the size of supported JSON serializations of
  CBOR objects.</p>
 <pre> /* maximum supported JSON size in bytes*/ final int
@@ -6825,7 +6823,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 }
 } </pre>
 <p>The following example (written in Java for the
- Java version) shows how to use a subclassed <code>OutputStream</code> together
+ Java version) shows how to use a subclass of <code>OutputStream</code> together
  with a <code>ByteArrayOutputStream</code> to limit the size of supported CBOR
  serializations.</p>
 <pre> /* maximum supported CBOR size in bytes*/ final

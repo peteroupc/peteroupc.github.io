@@ -10,25 +10,25 @@
 
 <p><a id="Public_Domain_Geometry_Utilities_Library"></a></p>
 
-<h2 id="public-domain-geometry-utilities-library">Public-Domain Geometry Utilities Library</h2>
+<h2 id="public-domain-geometry-utilities-library">Public-Domain Geometry Helper Library</h2>
 
-<p>This page will introduce the <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Utilities Library</strong></a>, an open-source JavaScript library that I wrote.</p>
+<p>This page will introduce the <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Helper Library</strong></a>, an open-source JavaScript library that I wrote.</p>
 
 <p>This library contains classes and auxiliary methods to represent 3-D geometries, including curves and surfaces, in JavaScript, and methods that support the development of 3D applications, including HTML applications that use the 3-D canvas.</p>
 
 <p>The library differs from many others because this one is in the public domain, so no permission is required to use it.</p>
 
-<p>This page includes information on how to use the Geometry Utilities Library and an overview of its features.</p>
+<p>This page includes information on how to use the Geometry Helper Library and an overview of its features.</p>
 
 <blockquote>
-  <p><strong>Note:</strong> The Geometry Utilities Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Utilities Library currently doesn’t use them directly).</p>
+  <p><strong>Note:</strong> The Geometry Helper Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Helper Library currently doesn’t use them directly).</p>
 </blockquote>
 
 <p><a id="Example"></a></p>
 
 <h2 id="example">Example</h2>
 
-<p>The following is a screen shot of a scene generated with the help of the former Public Domain HTML 3D Library.  Currently, however, the Geometry Utilities library has no means to render 3-D geometry directly.</p>
+<p>The following is a screenshot of a scene generated with the help of the former Public Domain HTML 3D Library.  Currently, however, the Geometry Utilities library has no means to render 3-D geometry directly.</p>
 
 <p><img src="https://peteroupc.github.io/html3dutil/html3d.png" alt="" /></p>
 
@@ -37,7 +37,7 @@
 <h2 id="contents">Contents</h2>
 
 <ul>
-  <li><a href="#Public_Domain_Geometry_Utilities_Library"><strong>Public-Domain Geometry Utilities Library</strong></a></li>
+  <li><a href="#Public_Domain_Geometry_Utilities_Library"><strong>Public-Domain Geometry Helper Library</strong></a></li>
   <li><a href="#Example"><strong>Example</strong></a></li>
   <li><a href="#Contents"><strong>Contents</strong></a></li>
   <li><a href="#How_to_Use"><strong>How to Use</strong></a>
@@ -57,7 +57,7 @@
 <h2 id="how-to-use">How to Use</h2>
 
 <ol>
-  <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the Geometry Utilities Library</strong></a>.</li>
+  <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the Geometry Helper Library</strong></a>.</li>
   <li>Extract the file <i>“h3du_min.js”</i> or <i>“h3du_module.js”</i>, as appropriate.</li>
   <li>
     <p>If using the script version in an HTML Web page, and write the following code in every HTML page where you will use the library.</p>
@@ -81,7 +81,7 @@ import * as H3DU from "h3du_module.js";
 <p>This is an overview of most of the JavaScript classes available in this library:</p>
 
 <ul>
-  <li><a href="https://peteroupc.github.io/html3dutil/html"><strong><code>H3DU</code></strong></a> - Contains various auxiliary methods in the Geometry Utilities Library.</li>
+  <li><a href="https://peteroupc.github.io/html3dutil/html"><strong><code>H3DU</code></strong></a> - Contains various auxiliary methods in the Geometry Helper Library.</li>
   <li><a href="https://peteroupc.github.io/html3dutil/MathUtil.html"><strong><code>MathUtil</code></strong></a> - Contains math methods useful in 3D applications, such as matrices and vectors.</li>
   <li><a href="https://peteroupc.github.io/html3dutil/MeshBuffer.html"><strong><code>MeshBuffer</code></strong></a> - Represents a 3D model.</li>
   <li><a href="https://peteroupc.github.io/html3dutil/Meshes.html"><strong><code>Meshes</code></strong></a> - Contains methods for generating common 3D models.</li>
@@ -93,7 +93,7 @@ import * as H3DU from "h3du_module.js";
  <a href="https://peteroupc.github.io/html3dutil/SurfaceBuilder.html"><strong><code>SurfaceBuilder</code></strong></a> - Supports generating parametric curves and surfaces. Many curves and surfaces can be expressed as so-called <em>curve evaluator objects</em> and <em>surface evaluator objects</em>, and the extras to the library include many kinds of such objects.</li>
 </ul>
 
-<p>For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the Geometry Utilities Library</a>.</p>
+<p>For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the Geometry Helper Library</a>.</p>
 
 <p>The following sections detail how an application that renders 3-D graphics can use this library.</p>
 
@@ -133,7 +133,7 @@ var mesh=Meshes.createBox(10,20,25);
   <br />Same as calling <code>createPartialDisk</code> with <code>start</code> 0 and <code>sweep</code> 360.</li>
 </ul>
 
-<p>The methods described above return a <code>MeshBuffer</code> object describing the appropriate mesh’s geometry.  Methods that can be called on a <code>MeshBuffer</code> include the following:</p>
+<p>The methods described earlier return a <code>MeshBuffer</code> object describing the appropriate mesh’s geometry.  Methods that can be called on a <code>MeshBuffer</code> include the following:</p>
 
 <ul>
   <li><dfn><code>meshBuffer.setColor(color)</code></dfn>
@@ -174,7 +174,7 @@ shape.setPosition(1,0,0);
 
 <h3 id="the-render-loop">The Render Loop</h3>
 
-<p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many “frames” a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. The exact details of rendering depend on the 3D rendering library in use; the Geometry Utilities Library has no means to directly render 3D objects.</p>
+<p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many “frames” a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. The exact details of rendering depend on the 3D rendering library in use; the Geometry Helper Library has no means to directly render 3D objects.</p>
 
 <p>For example, in an HTML Web page, a render loop could look like the following; it depends on the <code>requestAnimationFrame</code> API implemented in most modern Web browsers.</p>
 

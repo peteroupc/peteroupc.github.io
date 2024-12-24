@@ -18,8 +18,7 @@ A B-spline curve is a parametric curve based on polynomial functions.
 Each polynomial is generated using one or more
 <i>control points</i>, which more or less follow the path of the curve,
 and a <i>knot vector</i>, which determines, more or less, where each control
-point is spaced along the curve. Together with rational B-spline curves (see
-below), this makes B-spline curves very powerful,
+point is spaced along the curve. Together with rational B-spline curves (see later), this makes B-spline curves very powerful,
 since they can describe nearly all curves commonly used in computer
 graphics, including line segments, circles, ellipses, parabolas, and
 irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve’s control points leads to the same transformation of the resulting curve.</p>
@@ -48,7 +47,7 @@ Bézier curve contains four control points and the following knot vector:
 
 <p><b>Non-Uniform Curves</b></p>
 
-<p>A non-uniform B-spline curve is one whose knot vector is not evenly spaced,
+<p>A nonuniform B-spline curve is one whose knot vector is not evenly spaced,
 that is, the difference between one knot and the next isn’t the same.</p>
 
 <p><b>Rational Curves</b></p>
@@ -60,7 +59,7 @@ coordinates, but if N-dimensional points are wanted, use the BSplineCurve.DIVIDE
 flag to divide each coordinate by the last (and omit the last coordinate)
 to convert to N-dimensional points.</p>
 
-<p>Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can’t.</p>
+<p>Rational B-spline curves can describe circles and ellipses, which nonrational B-spline curves can’t.</p>
 
 <p>Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
 N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
@@ -69,7 +68,7 @@ conventional coordinates by its weight, then append the weight as the control po
 
 <p><b>NURBS Curves</b></p>
 
-<p><i>NURBS</i> is an acronym for non-uniform rational B-spline curves.</p>
+<p><i>NURBS</i> is an acronym for nonuniform rational B-spline curves.</p>
 
 <p><b>Polynomial Basis</b></p>
 
@@ -115,7 +114,7 @@ another, see the example.</p>
 
 <ul>
   <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number»)<br />An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point’s length represents the size of all the control points.</li>
-  <li><code>knots</code> (Type: Array.&lt;number&gt;)<br />Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br /> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br /> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve’s degree. If the difference between one knot and the next isn’t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene’s definition by repeating the first knot at the beginning and repeating the last knot at the end.)</li>
+  <li><code>knots</code> (Type: Array.&lt;number&gt;)<br />Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br /> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br /> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve’s degree. If the difference between one knot and the next isn’t the same, the curve is considered a <i>nonuniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene’s definition by repeating the first knot at the beginning and repeating the last knot at the end.)</li>
   <li><code>bits</code> (Type: number) (optional)<br />Bits for defining input and controlling output. Zero or more of BSplineCurve.DIVIDE_BIT. If null, undefined, or omitted, no bits are set.</li>
 </ul>
 
