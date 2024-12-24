@@ -178,8 +178,7 @@
     <p><code>static boolean SameQuantum(EDecimal ed1,
  EDecimal ed2)</code><br />
  Returns whether two arbitrary-precision numbers have the same exponent, they
- both are not-a-number (NaN), or they both are infinity (positive and/or
- negative).</p>
+ both are not-a-number (NaN), or they both are infinity (positive, negative, or both).</p>
   </li>
   <li>
     <p><code>static EDecimal ScaleB(EDecimal ed,
@@ -362,11 +361,11 @@
  numbers. Can be null. If AdjustExponent of the given context is <code>
  true</code>, a nonzero number is normal if the number’s exponent (when that number
  is expressed in scientific notation with one nonzero digit before the radix
- point) is at least the given context’s EMax property (e.g., if EMax is -100,
+ point) is at least the given context’s EMax property (for example, if EMax is -100,
  2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is
  not). If AdjustExponent of the given context is <code>false</code>, a nonzero
  number is subnormal if the number’s Exponent property is at least given
- context’s EMax property (e.g., if EMax is -100, 23456 * 10 <sup>-99</sup> is
+ context’s EMax property (for example, if EMax is -100, 23456 * 10 <sup>-99</sup> is
  normal, but 23456 * 10 <sup>-102</sup> is not).&lt;/p&gt;</p>
   </li>
 </ul>
@@ -505,11 +504,11 @@
  numbers. Can be null. If AdjustExponent of the given context is <code>
  true</code>, a nonzero number is subnormal if the number’s exponent (when that
  number is expressed in scientific notation with one nonzero digit before the
- radix point) is less than the given context’s EMax property (e.g., if EMax
+ radix point) is less than the given context’s EMax property (for example, if EMax
  is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
  <sup>-99</sup> is not). If AdjustExponent of the given context is <code>
  false</code>, a nonzero number is subnormal if the number’s Exponent property is
- less than the given context’s EMax property (e.g., if EMax is -100, 23456 *
+ less than the given context’s EMax property (for example, if EMax is -100, 23456 *
  10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is not).&lt;/p&gt;</p>
   </li>
 </ul>
@@ -903,7 +902,7 @@
 </ul>
 
 <h3 id="samequantum">SameQuantum</h3>
-<pre>public static boolean SameQuantum(EDecimal ed1, EDecimal ed2) Returns whether two arbitrary-precision numbers have the same exponent, they  both are not-a-number (NaN), or they both are infinity (positive and/or  negative).
+<pre>public static boolean SameQuantum(EDecimal ed1, EDecimal ed2) Returns whether two arbitrary-precision numbers have the same exponent, they  both are not-a-number (NaN), or they both are infinity (positive, negative, or both).
 </pre>
 
 <p><strong>Parameters:</strong></p>
@@ -922,7 +921,7 @@
 <ul>
   <li>Either <code>true</code> if the given arbitrary-precision numbers have
  the same exponent, they both are not-a-number (NaN), or they both are
- infinity (positive and/or negative); otherwise, <code>false</code>.</li>
+ infinity (positive, negative, or both); otherwise, <code>false</code>.</li>
 </ul>
 
 <h3 id="trim">Trim</h3>
@@ -1001,7 +1000,7 @@
 <pre>public static EDecimal And(EDecimal ed1, EDecimal ed2, EContext ec)
 </pre>
 <p>Performs a logical AND operation on two decimal numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative base-10
+ <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-10
  number with an Exponent property of 0 and no other base-10 digits than 0 or
  1 (examples include <code>01001</code> and <code>111001</code>, but not <code>02001</code>
  or <code>99999</code>). The logical AND operation sets each digit of the result
@@ -1039,7 +1038,7 @@
 </pre>
 <p>Performs a logical NOT operation on an arbitrary-precision decimal number
  in the form of a <i>logical operand</i>. A <code>logical operand</code> is a
- non-negative base-10 number with an Exponent property of 0 and no other
+ nonnegative base-10 number with an Exponent property of 0 and no other
  base-10 digits than 0 or 1 (examples include <code>01001</code> and <code>
  111001</code> , but not <code>02001</code> or <code>99999</code>). The logical NOT
  operation sets each digit of the result to 1 if the corresponding digit is
@@ -1076,7 +1075,7 @@
 </pre>
 <p>Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
  the form of <i>logical operands</i>. A <code>logical operand</code> is a
- non-negative base-10 number with an exponent of 0 and no other base-10
+ nonnegative base-10 number with an exponent of 0 and no other base-10
  digits than 0 or 1 (examples include <code>01001</code> and <code>111001</code>, but
  not <code>02001</code> or <code>99999</code>). The logical exclusive-OR operation
  sets each digit of the result to 1 if either corresponding digit of the
@@ -1111,7 +1110,7 @@
 <pre>public static EDecimal Or(EDecimal ed1, EDecimal ed2, EContext ec)
 </pre>
 <p>Performs a logical OR operation on two decimal numbers in the form of
- <i>logical operands</i>. A <code>logical operand</code> is a non-negative base-10
+ <i>logical operands</i>. A <code>logical operand</code> is a nonnegative base-10
  number with an Exponent property of 0 and no other base-10 digits than 0 or
  1 (examples include <code>01001</code> and <code>111001</code>, but not <code>02001</code>
  or <code>99999</code>). The logical OR operation sets each digit of the result

@@ -50,9 +50,9 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 
 Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functions (for example, the $k$-th derivative, $k\ge 0$, is continuous, Lipschitz continuous, concave, strictly increasing, or bounded variation, or $f$ is real analytic).
 
-1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See Note 3 in "[**End Notes**](#End_Notes)".**)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.
+1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See Note 3 in "[**End Notes**](#End_Notes)".**)  Assume $0\lt f(\lambda)\lt 1$ or $f$ is polynomially bounded.
 2. (_Approximate Bernoulli factory_): Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.
-3. (_Series expansion of simple functions_): Find a non-negative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$. (**See note 1 in "[**End Notes**](#End_Notes)".**)
+3. (_Series expansion of simple functions_): Find a nonnegative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$. (**See note 1 in "[**End Notes**](#End_Notes)".**)
 
 The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
@@ -70,7 +70,7 @@ The result of the algorithm is 1 with probability _exactly_ equal to $f(\lambda)
 
 However, the algorithm requires the polynomial sequences to meet certain requirements; among them, the sequences must be of Bernstein-form polynomials that converge from above and below to a factory function.  Specifically:
 
-_For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _in Bernstein form of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:_ $(g_{n+1}-g_{n})$ _is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (**see Note 3 in "[**End Notes**](#End_Notes)"**; Nacu and Peres (2005)[^4]; Holtz et al. (2011)[^5]).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._
+_For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _in Bernstein form of degree 1, 2, 3, ... that converge to $f$ from below and satisfy:_ $(g_{n+1}-g_{n})$ _is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $n+1$ (**see Note 3 in "[**End Notes**](#End_Notes)"**; Nacu and Peres (2005)[^4]; Holtz et al. (2011)[^5]).  For $f(\lambda)=1-f(\lambda)$ there must likewise be a sequence of this kind._
 
 <a id=A_Matter_of_Efficiency></a>
 
@@ -82,7 +82,7 @@ But Lorentz (1966)[^7] showed that if the function is positive and has a continu
 
 Thus, researchers have developed alternatives, including linear combinations and iterated Boolean sums of Bernstein polynomials, to improve the convergence rate. These include Micchelli (1973)[^8], Guan (2009)[^9], Güntürk and Li (2021a)[^10], (2021b)[^11], the "Lorentz operator" in Holtz et al. (2011)[^5], Draganov (2014), and Tachev (2022)[^12].
 
-These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but most of those results (e.g., Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
+These alternative polynomials usually include results where the error bound is the desired $O(1/n^{k/2})$, but most of those results (for example, Theorem 4.4 in Micchelli; Theorem 5 in Güntürk and Li) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
 
 <a id=A_Conjecture_on_Polynomial_Approximation></a>
 
@@ -96,9 +96,9 @@ For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such 
 
 $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
-whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda) - CM/n^{r/2})$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See Note 3 in "[**End Notes**](#End_Notes)".**)
+whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda) - CM/n^{r/2})$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. (**See Note 3 in "[**End Notes**](#End_Notes)".**)
 
-Equivalently (see also Nacu and Peres (2005)[^4]), there is $C_1>0$ such that the inequality $(PB)$ (see below) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", later).
+Equivalently (see also Nacu and Peres (2005)[^4]), there is $C_1>0$ such that the inequality $(PB)$ (see later) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", later).
 
 My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", earlier.
 
@@ -111,7 +111,7 @@ The following are some strategies for answering these questions:
 - For iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($U_{n,k}$ in [**Micchelli 1973**](https://www.sciencedirect.com/science/article/pii/0021904573900282); see also [**Güntürk and Li**](https://arxiv.org/abs/2112.09181)), verify my [**proofs of these bounds in Propositions B10C and B10D**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials).
 - For linear combinations of Bernstein polynomials (Butzer (1953)[^13], [**Tachev 2022**](https://doi.org/10.3934/mfc.2022061)), verify my proof of those error bounds in [**my Proposition B10**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials).
 - For the "[**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)" (Holtz et al. 2011)[^5], find explicit bounds, with no hidden constants, on the approximation error for the operator $Q_{n,r}(f)$ and for the polynomials $(f_n)$ and $(g_n)$ formed with it, and find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in the paper.  Or verify my proof of the order-2 operator's error bounds in [**my Proposition B10A**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials).  The bounds should have the form $C\cdot\max((\lambda(1-\lambda)/n)^{1/2}, 1/n)^r$, where $C$ is an explicitly given constant depending only on $f$ and $r$.
-- Let $f:[-1,1]\to [0,1]$ be continuous.  Find explicit bounds, with no hidden constants, on the error in approximating $f$ with the following polynomials: The polynomials are similar to Chebyshev interpolants, but evaluate $f$ at _rational_ values of $\lambda$ that converge to Chebyshev or Legendre points (e.g., converging to $\cos(j\pi/n)$ with increasing $n$). The error bounds must be close to those of Chebyshev interpolants (see, e.g., chapters 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013).
+- Let $f:[-1,1]\to [0,1]$ be continuous.  Find explicit bounds, with no hidden constants, on the error in approximating $f$ with the following polynomials: The polynomials are similar to Chebyshev interpolants, but evaluate $f$ at _rational_ values of $\lambda$ that converge to Chebyshev or Legendre points (for example, converging to $\cos(j\pi/n)$ with increasing $n$). The error bounds must be close to those of Chebyshev interpolants (see, for example, chapters 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013).
 - Find other polynomial operators meeting the requirements of the main question (see "Main Question", earlier) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions.
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
@@ -157,7 +157,7 @@ The following are some strategies for answering these questions:
 
 Prove or disprove:
 
-- Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}\text{abs}(B_n(f)(\lambda)-f(\lambda)))$ (where $n\ge 1$ is an integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with non-negative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - \text{abs}(B_n(f)(1/2)-f(1/2)))$, if $f$ is also symmetric about 1/2.
+- Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}\text{abs}(B_n(f)(\lambda)-f(\lambda)))$ (where $n\ge 1$ is an integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - \text{abs}(B_n(f)(1/2)-f(1/2)))$, if $f$ is also symmetric about 1/2.
 - Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is [**_strongly simulable_**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)) **if and only if**&mdash;
 
     - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^1]), and

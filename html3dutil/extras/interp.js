@@ -15,14 +15,14 @@ licensed under the Unlicense: https://unlicense.org/
  * indicate how far the interpolation has reached.
  * <p>To use this method, you must include the script "extras/interp.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/interp.js">&lt;/script></pre>
- * @param {number} a The Xcoordinate of the first configurable control
+ * @param {number} a The x-coordinate of the first configurable control
  * point of the curve. Should be within the range 0 through 1.
- * @param {number} b The Ycoordinate of the first configurable control
+ * @param {number} b The y-coordinate of the first configurable control
  * point of the curve. Should be within the range 0 through 1,
  * but may exceed this range.
- * @param {number} c The Xcoordinate of the second configurable control
+ * @param {number} c The x-coordinate of the second configurable control
  * point of the curve. Should be within the range 0 through 1.
- * @param {number} d The Ycoordinate of the second configurable control
+ * @param {number} d The y-coordinate of the second configurable control
  * point of the curve. Should be within the range 0 through 1,
  * but may exceed this range.
  * @param {number} t Number ranging from 0 through 1 that

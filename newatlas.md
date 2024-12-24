@@ -10,7 +10,7 @@ An atlas of the world covering **all land masses in the scale 1:4,000,000**.  Th
 - Important rivers and bodies of water labeled.
 - Important mountain peaks, volcanoes, and depressions labeled.
 - Relief shading.
-- Natural features (e.g., plains, mountain ranges, islands) labeled.
+- Natural features (for example, plains, mountain ranges, islands) labeled.
 
 The maps should not be in Mercator projection, and the size of each page should be letter size or A4.  Essentially, the maps should feel similar to the classic _Quick Reference World Atlas_ that Rand McNally Publishing used to publish.
 

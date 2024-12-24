@@ -88,7 +88,7 @@ Transforming the MRG's state with J (and taking its elements mod 1449) will tran
 
 A _linear congruential generator_ (LCG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*a + c) mod modulus`, where `a` is the _multiplier_, `c` is the additive constant, and `modulus` is the _modulus_.
 
-An efficient way to jump an LCG ahead is described in (Brown 1994\)[^7]. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
+An efficient way to jump an LCG ahead is described in (Brown 1994\)[^7]. This also applies to LCGs that transform each `x(k)` before giving out it, such as M.O'Neill's PCG32 and PCG64.
 
 An MRG with only one multiplier expresses the special case of an LCG with `c = 0` (also known as a _multiplicative_ LCG).  For `c` other than 0, the following matrix describes the state transition `[x(k-1), 1]` to `[x(k), 1]` (mod `modulus`):
 

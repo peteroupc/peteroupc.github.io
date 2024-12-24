@@ -123,7 +123,7 @@
 <p>The consistency requirement ensures that the upper polynomials “decrease” and the lower polynomials “increase”.  Unfortunately, the reverse is not true in general; even if the upper polynomials “decrease” and the lower polynomials “increase” to <em>f</em>, this does not ensure the consistency requirement by itself.</p>
 
 <blockquote>
-  <p><strong>Example (Nacu &amp; Peres [2005]<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>):</strong> The polynomial $x^2+(1-x)^2$ is of degree 2 with Bernstein coefficients [1, 0, 1].  The polynomial $x(1-x)$ is of degree 2 with Bernstein coefficients [0, 1/2, 0]. Although $(x^2+(1-x)^2)$ minus $(x(1-x))$ is non-negative, this difference’s Bernstein coefficients of degree 2 are not always non-negative, namely, the Bernstein coefficients are [1, -1/2, 1].</p>
+  <p><strong>Example (Nacu &amp; Peres [2005]<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>):</strong> The polynomial $x^2+(1-x)^2$ is of degree 2 with Bernstein coefficients [1, 0, 1].  The polynomial $x(1-x)$ is of degree 2 with Bernstein coefficients [0, 1/2, 0]. Although $(x^2+(1-x)^2)$ minus $(x(1-x))$ is nonnegative, this difference’s Bernstein coefficients of degree 2 are not always nonnegative, namely, the Bernstein coefficients are [1, -1/2, 1].</p>
 </blockquote>
 
 <p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where 0 ≤ <em>k</em> ≤ <em>n</em> is an integer.</p>
@@ -488,7 +488,7 @@
 
 <p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function <em>f</em>(<em>λ</em>) depends on how “smooth” the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>λ</em>), assuming the input coin’s probability of heads is unknown.  In the table below:</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>λ</em>), assuming the input coin’s probability of heads is unknown.  In the following table:</p>
 
 <ul>
   <li><em>λ</em>, the unknown probability of heads, is <em>ε</em> or greater and (1−<em>ε</em>) or less for some <em>ε</em> &gt; 0.</li>
@@ -521,7 +521,7 @@
       <td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note below) (Holtz et al. 2011, Theorem 13)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>.</td>
     </tr>
     <tr>
-      <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>Δ</em>(<em>n</em>, <em>α</em>, <em>λ</em>), for non-integer <em>α</em> &gt; 0 and every <em>λ</em>, and for large enough <em>n</em>. (The greater <em>α</em> is, the faster the simulation.)</td>
+      <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>Δ</em>(<em>n</em>, <em>α</em>, <em>λ</em>), for noninteger <em>α</em> &gt; 0 and every <em>λ</em>, and for large enough <em>n</em>. (The greater <em>α</em> is, the faster the simulation.)</td>
       <td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>α</em> − <em>r</em>) or greater, where <em>r</em> = floor(<em>α</em>) (Holtz et al. 2011, Theorem 8)<sup id="fnref:15:1" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>. Assumes <em>f</em> is bounded away from 0 and 1.</td>
     </tr>
     <tr>
@@ -653,7 +653,7 @@
     <tr>
       <td>Continuous and <strong>piecewise linear</strong>.</td>
       <td><em>α</em>=1.<br /><em>L</em> is the greatest absolute value of the slope among all pieces’ slopes.</td>
-      <td><em>f</em>(<em>λ</em>) is <em>piecewise linear</em> if it’s made up of multiple linear functions defined on a finite number of “pieces”, or non-empty subintervals, that together make up $f$’s domain (in this case, the closed unit interval).</td>
+      <td><em>f</em>(<em>λ</em>) is <em>piecewise linear</em> if it’s made up of multiple linear functions defined on a finite number of “pieces”, or nonempty subintervals, that together make up $f$’s domain (in this case, the closed unit interval).</td>
     </tr>
     <tr>
       <td>Piecewise linear; equals 0 at 0, 3/4 at 2/3 and 1/4 at 1, and these points are connected by linear functions.</td>
@@ -685,7 +685,7 @@
 
 <p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))</code>.</p>
 
-<p><strong>Functions with a Hölder continuous or Lipschitz continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function’s derivative can be found using the <code>diff</code> method.) In the table below, if $f$ has a bounded and continuous <em>second</em> derivative on its domain, then <em>α</em> is 1 (the first derivative is Lipschitz continuous) and <em>L</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
+<p><strong>Functions with a Hölder continuous or Lipschitz continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function’s derivative can be found using the <code>diff</code> method.) In the following table, if $f$ has a bounded and continuous <em>second</em> derivative on its domain, then <em>α</em> is 1 (the first derivative is Lipschitz continuous) and <em>L</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
 
 <table>
   <thead>
@@ -1150,7 +1150,7 @@
 
 <p>Then for every $x\ge 0$, $g_{2n}+x$ and $g_n$ satisfy that property, and for every $x\ge 1$, $g_{2n}\cdot x$ and $g_n$ do as well.</p>
 
-<p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$’s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have non-negative Bernstein coefficients as required by the property.</p>
+<p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$’s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have nonnegative Bernstein coefficients as required by the property.</p>
 
 <p>It is also true that, for every $x\ge 0$, $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, so that the property is trivially satisfied.)</p>
 
@@ -1551,7 +1551,7 @@ for i in range(20):
   <li>Flip the input coin <em>k</em> times.  Then build a bitstring <em>B1</em> consisting of the coin flip results in the order they occurred.  Let <em>i</em> be the number of ones in <em>B1</em>.</li>
   <li>Generate 2*<em>r</em> a fair coin using the method given later in this section.  (Rather than flipping the input coin 2*<em>r</em> times, as in the algorithm of Proposition 2.5.)  Then build a bitstring <em>B2</em> consisting of the coin flip results in the order they occurred.</li>
   <li>If the number of ones in <em>B2</em> is other than <em>r</em>: Translate <em>B1</em> + <em>B2</em> to an integer under mapping 1, then pass that number to extractor 2 (†), then add 1 to <em>iter</em>, then go to step 2.</li>
-  <li>Translate <em>B1</em> + <em>B2</em> to an integer under mapping 2, call the integer <em>β</em>.  If <em>β</em> &lt; <em>d</em>[<em>i</em>], pass <em>β</em> to extractor 3, then pass <em>iter</em> to extractor 6, then output a 1.  Otherwise, if <em>β</em> &lt; <em>e</em>[<em>i</em>], pass <em>β</em> − <em>d</em>[<em>i</em>] to extractor 4, then pass <em>iter</em> to extractor 6, then output a 0.  Otherwise, pass <em>β</em> − <em>e</em>[<em>i</em>] to extractor 5, then add 1 to <em>iter</em>, then go to step 2.</li>
+  <li>Translate <em>B1</em> + <em>B2</em> to an integer under mapping 2, call the integer <em>β</em>.  If <em>β</em> &lt; <em>d</em>[<em>i</em>], pass <em>β</em> to extractor 3, then pass <em>iter</em> to extractor 6, then give out a 1.  Otherwise, if <em>β</em> &lt; <em>e</em>[<em>i</em>], pass <em>β</em> − <em>d</em>[<em>i</em>] to extractor 4, then pass <em>iter</em> to extractor 6, then give out a 0.  Otherwise, pass <em>β</em> − <em>e</em>[<em>i</em>] to extractor 5, then add 1 to <em>iter</em>, then go to step 2.</li>
 </ol>
 
 <p>The mappings used in this algorithm are as follows:</p>
@@ -1582,8 +1582,8 @@ for i in range(20):
 <p>Now consider the last paragraph of Proposition 2.5.  If the input coin were flipped in step 2, the probability of—</p>
 
 <ul>
-  <li>outputting 1 in the algorithm’s last step would be <em>P1</em> = <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup>*<em>D</em>(<em>λ</em>), and</li>
-  <li>outputting either 0 or 1 in that step would be <em>P01</em> = <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup>*<em>E</em>(<em>λ</em>),</li>
+  <li>giving out 1 in the algorithm’s last step would be <em>P1</em> = <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup>*<em>D</em>(<em>λ</em>), and</li>
+  <li>giving out either 0 or 1 in that step would be <em>P01</em> = <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup>*<em>E</em>(<em>λ</em>),</li>
 </ul>
 
 <p>so that the algorithm would simulate <em>f</em>(<em>λ</em>) = <em>P1</em> / <em>P01</em>.  Observe that the <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup> cancels out in the division.  Thus, we could replace flips of the input coin with fair coin flips and still simulate <em>f</em>(<em>λ</em>); the <em>λ</em><sup><em>r</em></sup>*(1−<em>λ</em>)<sup><em>r</em></sup> above would then be (1/2)<sup>2*<em>r</em></sup>.</p>
@@ -1613,7 +1613,7 @@ for i in range(20):
 <p>It is not yet known whether the following functions can be simulated:</p>
 
 <ul>
-  <li><em>λ</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup> proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose “power” coefficients are non-negative real numbers.</li>
+  <li><em>λ</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup> proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose “power” coefficients are nonnegative real numbers.</li>
   <li>min(<em>λ</em>, 1−<em>λ</em>).</li>
 </ul>
 
@@ -1646,7 +1646,7 @@ for i in range(20):
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>Mossel and Peres (2005)<sup id="fnref:34:1" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup> defined pushdown automata to start with a non-empty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
+    <li>Mossel and Peres (2005)<sup id="fnref:34:1" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup> defined pushdown automata to start with a nonempty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
     <li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup> and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)<sup id="fnref:37:1" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
   </ol>
 </blockquote>
@@ -1827,7 +1827,7 @@ for i in range(20):
 
 <p>A <em>continued fraction</em> is one way to write a real number.  For purposes of the following proof, every real number greater than 0 and less than 1 has the following <em>continued fraction expansion</em>: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + … ))), where each <em>a</em>[<em>i</em>], a <em>partial denominator</em>, is an integer greater than 0.  A <em>quadratic irrational number</em> is an irrational number that can be written as (<em>b</em>+sqrt(<em>c</em>))/<em>d</em>, where <em>b</em>, <em>c</em>, and <em>d</em> are rational numbers.</p>
 
-<p><em>Proof:</em>  By Lagrange’s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last “few” of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, …].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the non-period (<code>1, 2</code>) is 2.</p>
+<p><em>Proof:</em>  By Lagrange’s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last “few” of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, …].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the nonperiod (<code>1, 2</code>) is 2.</p>
 
 <p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup id="fnref:39:1" role="doc-noteref"><a href="#fn:39" class="footnote" rel="footnote">39</a></sup> can be described as follows.  The chain’s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
@@ -1838,7 +1838,7 @@ for i in range(20):
   <li>From B1: Go to X0 with probability 1.</li>
 </ul>
 
-<p>Let <em>p</em> be the period size, and let <em>n</em> be the non-period size.  Now the recursive Markov chain to be built has <em>n</em>+<em>p</em> components:</p>
+<p>Let <em>p</em> be the period size, and let <em>n</em> be the nonperiod size.  Now the recursive Markov chain to be built has <em>n</em>+<em>p</em> components:</p>
 
 <ul>
   <li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component’s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component’s single box goes to the component labeled <em>n</em>+1.</li>
@@ -1865,7 +1865,7 @@ for i in range(20):
 <p>Another interesting class of machines (called <em>pushdown generators</em> here) are similar to pushdown automata (see above), with the following exceptions:</p>
 
 <ol>
-  <li>Each transition rule can also, optionally, output a base-_N_ digit in its right-hand side.  An example is: (<em>state</em>, <em>flip</em>, <em>sy</em>) → (<em>digit</em>, <em>state2</em>, {<em>sy2</em>}).</li>
+  <li>Each transition rule can also, optionally, give out a base-_N_ digit in its right-hand side.  An example is: (<em>state</em>, <em>flip</em>, <em>sy</em>) → (<em>digit</em>, <em>state2</em>, {<em>sy2</em>}).</li>
   <li>The machine must output infinitely many digits if allowed to run forever.</li>
   <li>Rules that would pop the last symbol from the stack are not allowed.</li>
 </ol>
@@ -1886,7 +1886,7 @@ for i in range(20):
   <li><em>Each value is either rational or transcendental.</em></li>
 </ol>
 
-<p>A real number is <em>transcendental</em> if it can’t be a root of a nonzero polynomial with integer “power” coefficients.  Thus, part 2 means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can’t be generated exactly.</p>
+<p>A real number is <em>transcendental</em> if it can’t be a root of a nonzero polynomial with integer “power” coefficients.  Thus, part 2 means, for example, that irrational, nontranscendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can’t be generated exactly.</p>
 
 <p>Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:</p>
 
@@ -1894,18 +1894,18 @@ for i in range(20):
 
 <p><em>Proof Sketch:</em> There are two cases.</p>
 
-<p>Case 1: If every transition rule of the generator outputs a digit, then <em>k</em> is the number of unique inputs among the generator’s transition rules (usually, there are two unique inputs, namely HEADS and TAILS), and the model of a finite-state generator is modified as follows:</p>
+<p>Case 1: If every transition rule of the generator gives out a digit, then <em>k</em> is the number of unique inputs among the generator’s transition rules (usually, there are two unique inputs, namely HEADS and TAILS), and the model of a finite-state generator is modified as follows:</p>
 
 <ol>
   <li>A <em>configuration</em> of the finite-state generator consists of its current state together with either the last coin flip result or, if the coin wasn’t flipped yet, the empty string.</li>
-  <li>The <em>output function</em> takes a configuration described above and returns a digit.  If the coin wasn’t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
+  <li>The <em>output function</em> takes a configuration described earlier and returns a digit.  If the coin wasn’t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)<sup id="fnref:44:1" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>.  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator’s rules output only one digit as desired.  Now at this point the generator’s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  □</p>
+<p>Case 2: If at least one transition rule does not give out a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)<sup id="fnref:44:1" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>.  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator’s rules output only one digit as desired.  Now at this point the generator’s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  □</p>
 
-<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup id="fnref:37:2" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>.  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)<sup id="fnref:37:3" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>.  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
+<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (subgenerators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup id="fnref:37:2" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>.  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)<sup id="fnref:37:3" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">37</a></sup>.  The <em>n</em> subgenerators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
 
-<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup id="fnref:47:1" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup>, the generator can generate a real number’s binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">48</a></sup>; Adamczewski and Bugeaud (2007)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup>).  □</p>
+<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different nonempty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup id="fnref:47:1" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup>, the generator can generate a real number’s binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">48</a></sup>; Adamczewski and Bugeaud (2007)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup>).  □</p>
 
 <p><strong>Proposition 9.</strong> <em>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval.</em></p>
 
@@ -1970,13 +1970,13 @@ for i in range(20):
       <p>Wästlund, J., “<a href="http://www.math.chalmers.se/~wastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>”, 1999. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:17:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:18" role="doc-endnote">
-      <p>The coin-flipping degree is very similar to the so-called <em>Bernstein degree</em> or <em>Lorentz degree</em>, which is the smallest integer $n$ such that $p$’s Bernstein coefficients of degree $n$ are all non-negative, assuming that $p$ is non-negative. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The coin-flipping degree is very similar to the so-called <em>Bernstein degree</em> or <em>Lorentz degree</em>, which is the smallest integer $n$ such that $p$’s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:19" role="doc-endnote">
       <p>Powers, V., Reznick, B., “<a href="https://www.sciencedirect.com/science/article/pii/S0022404900001559"><strong>A new bound for Pólya’s Theorem with applications to polynomials positive on polyhedra</strong></a>”, <em>Journal of Pure and Applied Algebra</em> 164 (24 October 2001). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:19:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:20" role="doc-endnote">
-      <p>Mok, H-N., To, W-K., “<a href="https://doi.org/10.1016/j.jco.2008.01.003"><strong>Effective Pólya semi-positivity for non-negative polynomials on the simplex</strong></a>”, <em>Journal of Complexity</em> 24 (2008). <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:20:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>Mok, H-N., To, W-K., “<a href="https://doi.org/10.1016/j.jco.2008.01.003"><strong>Effective Pólya semi-positivity for nonnegative polynomials on the simplex</strong></a>”, <em>Journal of Complexity</em> 24 (2008). <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:20:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:21" role="doc-endnote">
       <p>S. Ray, P.S.V. Nataraj, “<a href="https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf"><strong>A Matrix Method for Efficient Computation of Bernstein Coefficients</strong></a>”, Reliable Computing 17(1), 2012. <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

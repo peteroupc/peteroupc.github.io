@@ -1020,7 +1020,7 @@ The parameter  <i>headerName</i>
 
 <ul>
   <li>System.NotSupportedException:
-This message is a multipart message without a supported body part; or this message has a content disposition with a type other than “inline”; or this message’s media type is a non-multipart type and does not specify the use of a “charset” parameter, has no character encoding declared or assumed for it (which is usually the case for non-text messages), or has an unsupported character encoding.</li>
+This message is a multipart message without a supported body part; or this message has a content disposition with a type other than “inline”; or this message’s media type is a nonmultipart type and does not specify the use of a “charset” parameter, has no character encoding declared or assumed for it (which is usually the case for nontext messages), or has an unsupported character encoding.</li>
 </ul>
 
 <p><a id="GetDate"></a>
@@ -1041,7 +1041,7 @@ This message is a multipart message without a supported body part; or this messa
 <pre>public string GetFormattedBodyString();
 </pre>
 
-<p>Gets a Hypertext Markup Language (HTML) rendering of this message’s text body. This method currently supports any message for which  <code>GetBodyString()</code>  outputs a text string and treats the following media types specially: text/plain with  <code>format=flowed</code> , text/enriched, text/markdown (original Markdown).</p>
+<p>Gets a Hypertext Markup Language (HTML) rendering of this message’s text body. This method currently supports any message for which  <code>GetBodyString()</code>  gives out a text string and treats the following media types specially: text/plain with  <code>format=flowed</code> , text/enriched, text/markdown (original Markdown).</p>
 
 <p>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation:</p>
 
@@ -1697,7 +1697,7 @@ The parameter  <i>str</i>
 <pre>public string ToMailtoUri();
 </pre>
 
-<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if  <code>GetBodyString()</code>  would return a non-empty string.. The To header field is included in the URI only if it has display names or group syntax.</p>
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if  <code>GetBodyString()</code>  would return a nonempty string.. The To header field is included in the URI only if it has display names or group syntax.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1711,7 +1711,7 @@ The parameter  <i>str</i>
 
 <p><b>Deprecated.</b> Renamed to ToMailtoUri.</p>
 
-<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if  <code>GetBodyString()</code>  would return a non-empty string. The To header field is included in the URI only if it has display names or group syntax.</p>
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if  <code>GetBodyString()</code>  would return a nonempty string. The To header field is included in the URI only if it has display names or group syntax.</p>
 
 <p><b>Return Value:</b></p>
 

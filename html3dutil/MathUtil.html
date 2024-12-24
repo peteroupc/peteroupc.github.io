@@ -1193,9 +1193,9 @@ outside or inside a view frustum.
 #### Parameters
 
 * `frustum` (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br />An array of six 4-element arrays representing the six clipping planes of the view frustum. In order, they are the left, right, top, bottom, near, and far clipping planes.
-* `x` (Type: number)<br />The Xcoordinate of a point in world space.
-* `y` (Type: number)<br />The Ycoordinate of a point in world space.
-* `z` (Type: number)<br />The Zcoordinate of a point in world space.
+* `x` (Type: number)<br />The x-coordinate of a point in world space.
+* `y` (Type: number)<br />The y-coordinate of a point in world space.
+* `z` (Type: number)<br />The z-coordinate of a point in world space.
 
 #### Return Value
 
@@ -1211,9 +1211,9 @@ partially inside a view frustum.
 #### Parameters
 
 * `frustum` (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br />An array of six 4-element arrays representing the six clipping planes of the view frustum. In order, they are the left, right, top, bottom, near, and far clipping planes.
-* `x` (Type: number)<br />The Xcoordinate of the sphere's center in world space.
-* `y` (Type: number)<br />The Ycoordinate of the sphere's center in world space.
-* `z` (Type: number)<br />The Zcoordinate of the sphere's center in world space.
+* `x` (Type: number)<br />The x-coordinate of the sphere's center in world space.
+* `y` (Type: number)<br />The y-coordinate of the sphere's center in world space.
+* `z` (Type: number)<br />The z-coordinate of the sphere's center in world space.
 * `radius` (Type: number)<br />Radius of the sphere in world-space units.
 
 #### Return Value
@@ -1234,10 +1234,10 @@ indicate how far the interpolation has reached.
 
 #### Parameters
 
-* `a` (Type: number)<br />The Xcoordinate of the first configurable control point of the curve. Should be within the range 0 through 1.
-* `b` (Type: number)<br />The Ycoordinate of the first configurable control point of the curve. Should be within the range 0 through 1, but may exceed this range.
-* `c` (Type: number)<br />The Xcoordinate of the second configurable control point of the curve. Should be within the range 0 through 1.
-* `d` (Type: number)<br />The Ycoordinate of the second configurable control point of the curve. Should be within the range 0 through 1, but may exceed this range.
+* `a` (Type: number)<br />The x-coordinate of the first configurable control point of the curve. Should be within the range 0 through 1.
+* `b` (Type: number)<br />The y-coordinate of the first configurable control point of the curve. Should be within the range 0 through 1, but may exceed this range.
+* `c` (Type: number)<br />The x-coordinate of the second configurable control point of the curve. Should be within the range 0 through 1.
+* `d` (Type: number)<br />The y-coordinate of the second configurable control point of the curve. Should be within the range 0 through 1, but may exceed this range.
 * `t` (Type: number)<br />Number ranging from 0 through 1 that indicates time.
 
 #### Return Value
@@ -1324,8 +1324,8 @@ get the transformed vector.
 
 * `mat` (Type: Array.&lt;number&gt;)<br />A 3 &times; 3 matrix.
 * `v` (Type: Array.&lt;number&gt; | number)<br />x-coordinate. If "vy", and "vz" are omitted, this value can instead be a 4-element array giving the x-, y-, and z-coordinates.
-* `vy` (Type: number) (optional)<br />The Ycoordinate.
-* `vz` (Type: number) (optional)<br />The Zcoordinate. To transform a 2D point, set Z to 1, and divide the result's X and Y by the result's Z.
+* `vy` (Type: number) (optional)<br />The y-coordinate.
+* `vz` (Type: number) (optional)<br />The z-coordinate. To transform a 2D point, set Z to 1, and divide the result's X and Y by the result's Z.
 
 #### Return Value
 
@@ -1385,15 +1385,15 @@ When just this matrix is used to transform vertices, transformed coordinates in 
 <li>z-coordinates range from -W to W and increase from "near" to "far". (For view volume z-coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
 The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and z-coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a glmath). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
 <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which x-coordinates increase, or
-<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (for example, to make those coordinates increase upward in Vulkan rather than downward), or
 <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which z-coordinates increase.&lt;/ul&gt;
 
 #### Parameters
 
-* `l` (Type: number)<br />The Xcoordinate of the point in eye space where the left clipping plane meets the near clipping plane.
-* `r` (Type: number)<br />The Xcoordinate of the point in eye space where the right clipping plane meets the near clipping plane. ("l" is usually less than "r", so that x-coordinates increase from left to right when just this matrix is used to transform vertices. If "l" is greater than "r", x-coordinates increase in the opposite direction.)
-* `b` (Type: number)<br />The Ycoordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.
-* `t` (Type: number)<br />The Ycoordinate of the point in eye space where the top clipping plane meets the near clipping plane. ("b" is usually less than "t", so that, in WebGL and OpenGL by default, y-coordinates increase upward when just this matrix is used to transform vertices. If "b" is greater than "t", y-coordinates increase in the opposite direction.)
+* `l` (Type: number)<br />The x-coordinate of the point in eye space where the left clipping plane meets the near clipping plane.
+* `r` (Type: number)<br />The x-coordinate of the point in eye space where the right clipping plane meets the near clipping plane. ("l" is usually less than "r", so that x-coordinates increase from left to right when just this matrix is used to transform vertices. If "l" is greater than "r", x-coordinates increase in the opposite direction.)
+* `b` (Type: number)<br />The y-coordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.
+* `t` (Type: number)<br />The y-coordinate of the point in eye space where the top clipping plane meets the near clipping plane. ("b" is usually less than "t", so that, in WebGL and OpenGL by default, y-coordinates increase upward when just this matrix is used to transform vertices. If "b" is greater than "t", y-coordinates increase in the opposite direction.)
 * `near` (Type: number)<br />The distance, in eye space, from the "eye" to the near clipping plane. Objects closer than this distance won't be seen.<br />This value should be greater than 0, and should be set to the highest distance from the "eye" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: number)<br />The distance, in eye space, from the "eye" to the far clipping plane. Objects farther than this distance won't be seen.<br />This value should be greater than 0 and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept. ("near" is usually less than "far", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices. If "near" is greater than "far", z-coordinates increase in the opposite direction.)<br /> In the usual case that "far" is greater than "near", depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of "far" to "near", the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
 
@@ -1627,7 +1627,7 @@ When just this matrix is used to transform vertices, transformed coordinates in 
 <li>z-coordinates range from -1 to 1 and increase from "n" to "f". (For view volume z-coordinates ranging from 0 to 1, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 11th and 15th elements of the result, or zero-based indices 10 and 14, by 2, then add 0.5 to the 15th element.)</li></ul>
 The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and z-coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a glmath). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
 <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which x-coordinates increase, or
-<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (for example, to make those coordinates increase upward in Vulkan rather than downward), or
 <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which z-coordinates increase.&lt;/ul&gt;
 
 #### Parameters
@@ -1636,8 +1636,8 @@ The transformed coordinates have the meanings given earlier assuming that the ey
 * `r` (Type: number)<br />Rightmost coordinate of the orthographic view. ("l" is usually less than "r", so that x-coordinates increase from left to right when just this matrix is used to transform vertices. If "l" is greater than "r", x-coordinates increase in the opposite direction.)
 * `b` (Type: number)<br />Bottommost coordinate of the orthographic view.
 * `t` (Type: number)<br />Topmost coordinate of the orthographic view. ("b" is usually less than "t", so that, in WebGL and OpenGL by default, y-coordinates increase upward when just this matrix is used to transform vertices. If "b" is greater than "t", y-coordinates increase in the opposite direction.)
-* `n` (Type: number)<br />The Zcoordinate, in eye space, of the near clipping plane. If z-coordinates in eye space increase from the "eye" forward, a positive value for "n" means the plane is in front of the "eye".
-* `f` (Type: number)<br />The Zcoordinate, in eye space, of the far clipping plane. If z-coordinates in eye space increase from the "eye" forward, a positive value for "f" means the plane is in front of the "eye". ("n" is usually less than "f", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices. If "n" is greater than "f", z-coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.
+* `n` (Type: number)<br />The z-coordinate, in eye space, of the near clipping plane. If z-coordinates in eye space increase from the "eye" forward, a positive value for "n" means the plane is in front of the "eye".
+* `f` (Type: number)<br />The z-coordinate, in eye space, of the far clipping plane. If z-coordinates in eye space increase from the "eye" forward, a positive value for "f" means the plane is in front of the "eye". ("n" is usually less than "f", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices. If "n" is greater than "f", z-coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.
 
 #### Return Value
 
@@ -1755,12 +1755,12 @@ When just this matrix is used to transform vertices, transformed coordinates in 
 <li>z-coordinates range from -W to W and increase from "near" to "far". (For view volume z-coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
 The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and z-coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a glmath). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
 <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which x-coordinates increase, or
-<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (for example, to make those coordinates increase upward in Vulkan rather than downward), or
 <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which z-coordinates increase.&lt;/ul&gt;
 
 #### Parameters
 
-* `fovY` (Type: number)<br />The Yaxis field of view, in degrees, that is, the shortest angle between the top and bottom clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+* `fovY` (Type: number)<br />The y-axis field of view, in degrees, that is, the shortest angle between the top and bottom clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
 * `aspectRatio` (Type: number)<br />The ratio of width to height of the viewport, usually the scene's aspect ratio.
 * `near` (Type: number)<br />The distance, in eye space, from the "eye" to the near clipping plane. Objects closer than this distance won't be seen.<br />This value should be greater than 0, and should be set to the highest distance from the "eye" that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.
 * `far` (Type: number)<br />The distance, in eye space, from the "eye" to the far clipping plane. Objects farther than this distance won't be seen.<br />This value should be greater than 0 and should be set so that the absolute ratio of "far" to "near" is as small as the application can accept. ("near" is usually less than "far", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices. If "near" is greater than "far", z-coordinates increase in the opposite direction.)<br /> In the usual case that "far" is greater than "near", depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of "far" to "near", the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
@@ -1790,7 +1790,7 @@ when using this matrix and on adjusting the matrix for different coordinate syst
 
 #### Parameters
 
-* `fovX` (Type: number)<br />The Xaxis field of view, in degrees, that is, the shortest angle between the left and right clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
+* `fovX` (Type: number)<br />The x-axis field of view, in degrees, that is, the shortest angle between the left and right clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)
 * `aspectRatio` (Type: number)<br />The ratio of width to height of the viewport, usually the scene's aspect ratio.
 * `near` (Type: number)<br />The distance, in eye space, from the "eye" to the near clipping plane. Objects closer than this distance won't be seen.<br />See <a href="MathUtil.html#MathUtil.mat4perspective">mat4perspective()</a> for further information on this parameter.
 * `far` (Type: number)<br />The distance, in eye space, from the "eye" to the far clipping plane. Objects farther than this distance won't be seen.<br />See <a href="MathUtil.html#MathUtil.mat4perspective">mat4perspective()</a> for further information on this parameter.
@@ -1819,8 +1819,8 @@ by the model [world] matrix, in that order).
 
 #### Parameters
 
-* `wx` (Type: number)<br />The Xcoordinate of the center of the desired viewport portion, in window coordinates.
-* `wy` (Type: number)<br />The Ycoordinate of the center of the desired viewport portion, in window coordinates.
+* `wx` (Type: number)<br />The x-coordinate of the center of the desired viewport portion, in window coordinates.
+* `wy` (Type: number)<br />The y-coordinate of the center of the desired viewport portion, in window coordinates.
 * `ww` (Type: number)<br />Width of the desired viewport portion.
 * `wh` (Type: number)<br />Height of the desired viewport portion.
 * `vp` (Type: Array.&lt;number&gt;)<br />A 4-element array giving the x- and y-coordinates of the current viewport's origin followed by the width and height of a rectangle indicating the current viewport. If the return value of this method will be multiplied by another matrix (such as that returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods), the viewport's origin is the lower-left corner if x- and y-coordinates within the view volume increase rightward and upward, respectively, or the upper-left corner if x- and y-coordinates within the view volume increase rightward and downward, respectively.
@@ -1844,8 +1844,8 @@ then returning that vector's new X, Y, and Z.
 
 * `mat` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br /> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the x-, y-, and z-coordinates within the view volume, before the perspective divide, will have the range specified in those methods' documentation and increase in the direction given in that documentation, and those coordinates, after the perspective divide will range from -1 to 1 (or 0 to 1) if they previously ranged from -W to W (or 0 to W, respectively).
 * `v` (Type: Array.&lt;number&gt; | number)<br />x-coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the x-, y-, and z-coordinates.
-* `vy` (Type: number) (optional)<br />The Ycoordinate.
-* `vz` (Type: number) (optional)<br />The Zcoordinate. To transform a 2D point, set Z to 0.
+* `vy` (Type: number) (optional)<br />The y-coordinate.
+* `vz` (Type: number) (optional)<br />The z-coordinate. To transform a 2D point, set Z to 0.
 
 #### Return Value
 
@@ -2004,8 +2004,8 @@ get the transformed vector.
 
 * `mat` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix.
 * `v` (Type: Array.&lt;number&gt; | number)<br />x-coordinate. If "vy", "vz", and "vw" are omitted, this value can instead be a 4-element array giving the X, Y, Z, and W coordinates.
-* `vy` (Type: number) (optional)<br />The Ycoordinate.
-* `vz` (Type: number) (optional)<br />The Zcoordinate.
+* `vy` (Type: number) (optional)<br />The y-coordinate.
+* `vz` (Type: number) (optional)<br />The z-coordinate.
 * `vw` (Type: number) (optional)<br />W coordinate. To transform a 3D point, set W to 1 and divide the result's X, Y, and Z by the result's W. To transform a 2D point, set Z to 0 and W to 1 and divide the result's X and Y by the result's W.
 
 #### Return Value
@@ -2031,8 +2031,8 @@ projection (whose last row is not necessarily (0, 0, 0, 1)).
 
 * `mat` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix.
 * `v` (Type: Array.&lt;number&gt; | number)<br />x-coordinate. If "vy" and "vz" are omitted, this value can instead be a 4-element array giving the x-, y-, and z-coordinates.
-* `vy` (Type: number) (optional)<br />The Ycoordinate.
-* `vz` (Type: number) (optional)<br />The Zcoordinate. To transform a 2D point, set Z to 0.
+* `vy` (Type: number) (optional)<br />The y-coordinate.
+* `vz` (Type: number) (optional)<br />The z-coordinate. To transform a 2D point, set Z to 0.
 
 #### Return Value
 

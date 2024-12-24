@@ -114,7 +114,7 @@ function makeKernelMatrix() {
     " vec2 xy2=uvCoord+pixel;",
     " xy2=vec2(min(xy2.x,1.0),min(xy2.y,1.0));",
     " vec4 mainColor=texture2D(sampler,uvCoord);",
-    // NOTE: Assumes row-major matrices; e.g. [0][0] means
+    // NOTE: Assumes row-major matrices; for example [0][0] means
     // index 0, and [0][1] means index 1
     " vec4 x0y0=texture2D(sampler,xy0)*matrix[0][0];",
     " vec4 x1y0=texture2D(sampler,vec2(xy1.x,xy0.y))*matrix[0][1];",

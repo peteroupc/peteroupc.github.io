@@ -23,7 +23,7 @@
     <p><code>EInteger</code>  objects are immutable, so they can’t be modified, and the memory they occupy is not guaranteed to be cleared in a timely fashion due to garbage collection. This is relevant for applications that use many-bit-long numbers as secret parameters.</p>
   </li>
   <li>
-    <p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be “constant-time” (non-data-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
+    <p>The methods in this class (especially those that involve arithmetic) are not guaranteed to be “constant-time” (nondata-dependent) for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p>
   </li>
 </ul>
 
@@ -2100,7 +2100,7 @@ The parameter  <i>second</i>
     int bitCount);
 </pre>
 
-<p>Extracts the lowest bits of this integer. This is equivalent to  <code>And(2^bitCount - 1)</code> , but is more efficient when this integer is non-negative and bitCount’s value is large.</p>
+<p>Extracts the lowest bits of this integer. This is equivalent to  <code>And(2^bitCount - 1)</code> , but is more efficient when this integer is nonnegative and bitCount’s value is large.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2119,7 +2119,7 @@ The parameter  <i>second</i>
     long longBitCount);
 </pre>
 
-<p>Extracts the lowest bits of this integer. This is equivalent to  <code>And(2^longBitCount - 1)</code> , but is more efficient when this integer is non-negative and longBitCount’s value is large.</p>
+<p>Extracts the lowest bits of this integer. This is equivalent to  <code>And(2^longBitCount - 1)</code> , but is more efficient when this integer is nonnegative and longBitCount’s value is large.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2138,7 +2138,7 @@ The parameter  <i>second</i>
     PeterO.Numbers.EInteger bigBitCount);
 </pre>
 
-<p>Extracts the lowest bits of this integer. This is equivalent to  <code>And(2^bigBitCount - 1)</code> , but is more efficient when this integer is non-negative and bigBitCount’s value is large.</p>
+<p>Extracts the lowest bits of this integer. This is equivalent to  <code>And(2^bigBitCount - 1)</code> , but is more efficient when this integer is nonnegative and bigBitCount’s value is large.</p>
 
 <p><b>Parameters:</b></p>
 

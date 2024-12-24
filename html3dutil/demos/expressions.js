@@ -448,7 +448,7 @@ Operation.prototype.simplify = function() {
               }
             }
             if(!found) {
-              // no non-zero nodes after the first
+              // no nonzero nodes after the first
               this.nodes.splice(0, this.nodes.length);
               this.nodes[0] = new Constant(0);
               return this;

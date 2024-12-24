@@ -53,8 +53,8 @@ SurfaceOfRevolution.prototype.endPoints = function() {
 };
 /**
  * Finds the coordinates of the given point of this surface.
- * @param {number} u The Ucoordinate of the surface to evaluate.
- * @param {number} v The Vcoordinate of the surface to evaluate.
+ * @param {number} u The u-coordinate of the surface to evaluate.
+ * @param {number} v The v-coordinate of the surface to evaluate.
  * @returns {Array<number>} An array containing the coordinates
  * of the position at the given point. It will have three elements.
  */

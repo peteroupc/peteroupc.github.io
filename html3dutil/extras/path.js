@@ -1411,8 +1411,8 @@ licensed under the Unlicense: https://unlicense.org/
 
   /**
    * Moves the current start position and end position to the given position.
-   * @param {number} x The Xcoordinate of the position.
-   * @param {number} y The Ycoordinate of the position.
+   * @param {number} x The x-coordinate of the position.
+   * @param {number} y The y-coordinate of the position.
    * @returns {H3DU.GraphicsPath} This object.
    * @memberof! H3DU.GraphicsPath#
    */
@@ -1428,8 +1428,8 @@ licensed under the Unlicense: https://unlicense.org/
    * Adds a line segment to the path, starting
    * at the path's end position, then
    * sets the end position to the end of the segment.
-   * @param {number} x The Xcoordinate of the end of the line segment.
-   * @param {number} y The Ycoordinate of the end of the line segment.
+   * @param {number} x The x-coordinate of the end of the line segment.
+   * @param {number} y The y-coordinate of the end of the line segment.
    * @returns {H3DU.GraphicsPath} This object.
    * @memberof! H3DU.GraphicsPath#
    */
@@ -1468,20 +1468,20 @@ licensed under the Unlicense: https://unlicense.org/
    * Adds path segments in the form of a circular arc to this path,
    * using the parameterization specified in the "arcTo" method of the
    * HTML Canvas 2D Context.
-   * @param {number} x1 The Xcoordinate of a point that, along with the
+   * @param {number} x1 The x-coordinate of a point that, along with the
    * current end point, forms a tangent line. The point where the
    * circle touches this tangent line is the start point of the arc, and if the
    * point isn't the same as the current end point, this method adds
    * a line segment connecting the two points. (Note that the start point
    * of the arc is not necessarily the same as (x1, y1) or the current end point.)
-   * @param {number} y1 The Ycoordinate of the point described under "x1".
-   * @param {number} x2 The Xcoordinate of a point that, along with the
+   * @param {number} y1 The y-coordinate of the point described under "x1".
+   * @param {number} x2 The x-coordinate of a point that, along with the
    * point (x1, y1), forms a tangent line. The point where the
    * circle touches this tangent line is the end point of the arc. (Note that the
    * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
    * When this method returns, the current end point will be set to the end
    * point of the arc.
-   * @param {number} y2 The Ycoordinate of the point described under "x2".
+   * @param {number} y2 The y-coordinate of the point described under "x2".
    * @param {number} radius Radius of the circle the arc forms a part of.
    * @returns {H3DU.GraphicsPath} This object.
    * @memberof! H3DU.GraphicsPath#
@@ -1516,8 +1516,8 @@ licensed under the Unlicense: https://unlicense.org/
    * Adds path segments in the form of a circular arc to this path,
    * using the parameterization specified in the "arc" method of the
    * HTML Canvas 2D Context.
-   * @param {number} x The Xcoordinate of the center of the circle that the arc forms a part of.
-   * @param {number} y The Ycoordinate of the circle's center.
+   * @param {number} x The x-coordinate of the center of the circle that the arc forms a part of.
+   * @param {number} y The y-coordinate of the circle's center.
    * @param {number} radius Radius of the circle.
    * @param {number} startAngle Starting angle of the arc, in radians.
    * 0 means the positive x-axis, &pi;/2 means the positive y-axis,
@@ -1583,10 +1583,10 @@ licensed under the Unlicense: https://unlicense.org/
    * Adds a quadratic B&eacute;zier curve to this path starting
    * at this path's current position. The current position will be
    * the curve's first control point.
-   * @param {number} x The Xcoordinate of the curve's second control point.
-   * @param {number} y The Ycoordinate of the curve's second control point.
-   * @param {number} x2 The Xcoordinate of the curve's end point (third control point).
-   * @param {number} y2 The Ycoordinate of the curve's end point (third control point).
+   * @param {number} x The x-coordinate of the curve's second control point.
+   * @param {number} y The y-coordinate of the curve's second control point.
+   * @param {number} x2 The x-coordinate of the curve's end point (third control point).
+   * @param {number} y2 The y-coordinate of the curve's end point (third control point).
    * @returns {H3DU.GraphicsPath} This object.
    * @memberof! H3DU.GraphicsPath#
    */
@@ -1602,12 +1602,12 @@ licensed under the Unlicense: https://unlicense.org/
    * Adds a cubic B&eacute;zier curve to this path starting
    * at this path's current position. The current position will be
    * the curve's first control point.
-   * @param {number} x The Xcoordinate of the curve's second control point.
-   * @param {number} y The Xcoordinate of the curve's second control point.
-   * @param {number} x2 The Ycoordinate of the curve's third control point.
-   * @param {number} y2 The Ycoordinate of the curve's third control point.
-   * @param {number} x3 The Xcoordinate of the curve's end point (fourth control point).
-   * @param {number} y3 The Ycoordinate of the curve's end point (fourth control point).
+   * @param {number} x The x-coordinate of the curve's second control point.
+   * @param {number} y The x-coordinate of the curve's second control point.
+   * @param {number} x2 The y-coordinate of the curve's third control point.
+   * @param {number} y2 The y-coordinate of the curve's third control point.
+   * @param {number} x3 The x-coordinate of the curve's end point (fourth control point).
+   * @param {number} y3 The y-coordinate of the curve's end point (fourth control point).
    * @returns {H3DU.GraphicsPath} This object.
    * @memberof! H3DU.GraphicsPath#
    */
@@ -1730,9 +1730,9 @@ licensed under the Unlicense: https://unlicense.org/
   /**
    * Adds path segments in the form of an elliptical arc to this path,
    * using the parameterization used by the SVG specification.
-   * @param {number} rx The Xaxis radius of the ellipse that the arc will
+   * @param {number} rx The x-axis radius of the ellipse that the arc will
    * be formed from.
-   * @param {number} ry The Yaxis radius of the ellipse that the arc will
+   * @param {number} ry The y-axis radius of the ellipse that the arc will
    * be formed from.
    * @param {number} rot Rotation of the ellipse in degrees (clockwise
    * assuming the x-axis points right and the y-axis points
@@ -1743,8 +1743,8 @@ licensed under the Unlicense: https://unlicense.org/
    * @param {Boolean} sweep If true, the arc solution chosen will run
    * clockwise (assuming the x-axis points right and the y-axis points
    * down under the coordinate system); if false, counterclockwise.
-   * @param {number} x2 The Xcoordinate of the arc's end point.
-   * @param {number} y2 The Ycoordinate of the arc's end point.
+   * @param {number} x2 The x-coordinate of the arc's end point.
+   * @param {number} y2 The y-coordinate of the arc's end point.
    * @returns {H3DU.GraphicsPath} This object.
    * @memberof! H3DU.GraphicsPath#
    */
@@ -2047,9 +2047,9 @@ licensed under the Unlicense: https://unlicense.org/
 
   /**
    * Adds path segments to this path that form an axis-aligned rectangle.
-   * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
+   * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
    * coordinate system's x-axis points right and the y-axis down).
-   * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
+   * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
    * coordinate system's x-axis points right and the y-axis down).
    * @param {number} w Width of the rectangle.
    * @param {number} h Height of the rectangle.
@@ -2067,12 +2067,12 @@ licensed under the Unlicense: https://unlicense.org/
 
 /**
  * Adds a line segment to this path.
- * @param {number} x0 The Xcoordinate of the line segment's starting point.
+ * @param {number} x0 The x-coordinate of the line segment's starting point.
  * The <code>moveTo</code> method will be called on the starting point.
- * @param {number} y0 The Ycoordinate of the line segment's starting point.
- * @param {number} x1 The Xcoordinate of the line segment's ending point.
+ * @param {number} y0 The y-coordinate of the line segment's starting point.
+ * @param {number} x1 The x-coordinate of the line segment's ending point.
  * The <code>lineTo</code> method will be called on the ending point.
- * @param {number} y1 The Xcoordinate of the line segment's ending point.
+ * @param {number} y1 The x-coordinate of the line segment's ending point.
  * @returns {H3DU.GraphicsPath} This object.
  */
   GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
@@ -2106,9 +2106,9 @@ licensed under the Unlicense: https://unlicense.org/
  * Adds path segments to this path that form an axis-aligned rounded rectangle.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
@@ -2158,9 +2158,9 @@ licensed under the Unlicense: https://unlicense.org/
  * Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
@@ -2208,8 +2208,8 @@ licensed under the Unlicense: https://unlicense.org/
  * and dimensions.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the ellipse's center.
- * @param {number} cy The Ycoordinate of the ellipse's center.
+ * @param {number} cx The x-coordinate of the ellipse's center.
+ * @param {number} cy The y-coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
@@ -2229,9 +2229,9 @@ licensed under the Unlicense: https://unlicense.org/
  * and dimensions.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
@@ -2246,8 +2246,8 @@ licensed under the Unlicense: https://unlicense.org/
  * and dimensions, start angle, and sweep angle.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the ellipse's center.
- * @param {number} cy The Ycoordinate of the ellipse's center.
+ * @param {number} cx The x-coordinate of the ellipse's center.
+ * @param {number} cy The y-coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @param {number} start Starting angle of the arc, in degrees.
@@ -2307,9 +2307,9 @@ licensed under the Unlicense: https://unlicense.org/
  * and dimensions, start angle, and sweep angle.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
@@ -2334,10 +2334,10 @@ licensed under the Unlicense: https://unlicense.org/
  * Adds path segments to this path in the form of an arrow shape.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} x0 The Xcoordinate of the arrow's tail, at its very end.
- * @param {number} y0 The Ycoordinate of the arrow's tail, at its very end.
- * @param {number} x1 The Xcoordinate of the arrow's tip.
- * @param {number} y1 The Ycoordinate of the arrow's tip.
+ * @param {number} x0 The x-coordinate of the arrow's tail, at its end.
+ * @param {number} y0 The y-coordinate of the arrow's tail, at its end.
+ * @param {number} x1 The x-coordinate of the arrow's tip.
+ * @param {number} y1 The y-coordinate of the arrow's tip.
  * @param {number} headWidth Width of the arrowhead's base from side to side.
  * @param {number} headLength Length of the arrowhead from its tip to its base.
  * @param {number} tailWidth Width of the arrow's tail from side to side
@@ -2383,8 +2383,8 @@ licensed under the Unlicense: https://unlicense.org/
  * Adds path segments to this path that form a regular polygon.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the center of the polygon.
- * @param {number} cy The Ycoordinate of the center of the polygon.
+ * @param {number} cx The x-coordinate of the center of the polygon.
+ * @param {number} cy The y-coordinate of the center of the polygon.
  * @param {number} sides Number of sides the polygon has. Nothing will be added to the path if this
  * value is 2 or less.
  * @param {number} radius Radius from the center to each vertex of the polygon.
@@ -2423,8 +2423,8 @@ licensed under the Unlicense: https://unlicense.org/
  * Adds path segments to this path that form a regular N-pointed star.
  * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the center of the star.
- * @param {number} cy The Ycoordinate of the center of the star.
+ * @param {number} cx The x-coordinate of the center of the star.
+ * @param {number} cy The y-coordinate of the center of the star.
  * @param {number} points Number of points the star has. Nothing will be added to the path if this
  * value is 0 or less.
  * @param {number} radiusOut Radius from the center to each outer vertex of the star.
@@ -4077,7 +4077,7 @@ licensed under the Unlicense: https://unlicense.org/
         return connector.toPolygon(result);
       }
       if(op === Clipper.UNION && e.p[0] > minMaxx) {
-      // add all the non-processed line segments to the result
+      // add all the nonprocessed line segments to the result
         if(!e.left)
           connector.add(e.segment());
         while(this.eq.size() > 0) {

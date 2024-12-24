@@ -67,9 +67,9 @@ ImplicitSurface._fGetOffset = function(a, b, desired) {
 };
 
 ImplicitSurface._TARGET_VALUE = 0;
-// For any edge, if one vertex is inside of the surface and the other is outside of the surface
+// For any edge, if one vertex is inside of the surface and the other is outside the surface
 // then the edge intersects the surface
-// For each of the 8 vertices of the cube can be two possible states : either inside or outside of the surface
+// For each of the 8 vertices of the cube can be two possible states : either inside or outside the surface
 // For any cube the are 2^8=256 possible sets of vertex states
 // This table lists the edges intersected by the surface for all 256 possible vertex states
 // There are 12 edges. For each entry in the table, if edge #n is intersected, then bit #n is set to 1
@@ -432,7 +432,7 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
 
   const iEdgeFlags = ImplicitSurface._aiCubeEdgeFlags[iFlagIndex];
 
-  // If the cube is entirely inside or outside of the surface, then there will be no intersections
+  // If the cube is entirely inside or outside the surface, then there will be no intersections
   if(iEdgeFlags === 0)return;
   // Find the point of intersection of the surface with each edge
   // Then find the normal to the surface at those points

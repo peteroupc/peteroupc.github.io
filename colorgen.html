@@ -1496,7 +1496,7 @@ END METHOD
   <p><strong>Note:</strong> Raster operations also function, in principle, when the input and output color values are interpreted as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of colors; color value 1, the second; and so on), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when—</p>
 
   <ul>
-    <li>the number of colors in the color palette is a power of two (e.g., 2, 8, 16, 256), and</li>
+    <li>the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and</li>
     <li>for each color index <em>i</em>, the color at index <em>i</em> is the same as (or at least “close” to) the “inversion” of the color at index <em>n</em> − 1 − <em>i</em> (a less technical but less preferable alternative is: the colors in the palette are sorted by their intensity, so that, for example, the lowest-intensity color, the color closest to “black”, appears first and the highest-intensity color, the color closest to “white”, appears last).</li>
   </ul>
 </blockquote>

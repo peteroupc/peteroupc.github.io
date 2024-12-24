@@ -146,7 +146,7 @@
   <li>Set <em>gb</em> to <em>k</em> + 2, then generate a gamma random variate with shape parameter <em>n</em> and scale 1, then divide <em>gb</em> by that variate.</li>
   <li>(Find the sample size for the next stage.) Set <em>c1</em> to 2*ln(3/<em>δ</em>).</li>
   <li>Generate a Poisson random variate with mean <em>c1</em>/(<em>ε</em>*<em>gb</em>), call it <em>n</em>.</li>
-  <li>Run the standard deviation sub-algorithm (given later) <em>n</em> times.  Set <em>A</em> to the number of 1’s returned by that sub-algorithm this way.</li>
+  <li>Run the standard deviation subalgorithm (given later) <em>n</em> times.  Set <em>A</em> to the number of 1’s returned by that subalgorithm this way.</li>
   <li>Set <em>csquared</em> to (<em>A</em> / <em>c1</em> + 1 / 2 + sqrt(<em>A</em> / <em>c1</em> + 1 / 4)) * (1 + <em>ε</em><sup>1 / 3</sup>)<sup>2</sup>*<em>ε</em>/<em>gb</em>.</li>
   <li>Set <em>n</em> to ceil((2*ln(6/<em>δ</em>)/<em>ε</em><sup>2</sup>)/(1−<em>ε</em><sup>1/3</sup>)), or an integer greater than this.</li>
   <li>(Stage 2: Light-tailed sample average.)  Set <em>e0</em> to <em>ε</em><sup>1/3</sup>.</li>
@@ -162,7 +162,7 @@
   <li>Return <em>w</em>/<em>n</em>.</li>
 </ol>
 
-<p>The standard deviation sub-algorithm follows.</p>
+<p>The standard deviation subalgorithm follows.</p>
 
 <ol>
   <li>Generate 1 or 0 with equal probability.  If 1 was generated this way, return 0.</li>
@@ -347,7 +347,7 @@
   <li>(Calculate <em>f</em> of the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>, then call the result <em>μ</em>.  Return <em>f</em>(<em>μ</em>).</li>
 </ol>
 
-<p>Then the table below shows how the necessary sample size <em>n</em> can be determined.</p>
+<p>Then the following table shows how the necessary sample size <em>n</em> can be determined.</p>
 
 <table>
   <thead>
@@ -409,7 +409,7 @@
   <ol>
     <li>Take <em>f</em>(<em>x</em>) = sin(<em>π</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>π</em>, so for this <em>f</em>, <em>ψ</em>(<em>ε</em>) = <em>ε</em>/(2*<em>π</em>).  Now, if a coin produces heads with an unknown probability in the interval [<em>μ</em>, 1−<em>μ</em>], or 0 otherwise, we can run <em>Algorithm D</em> or the bounded case of <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and $\kappa$ ≥ (1/min(<em>μ</em>, 1−<em>μ</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
     <li>Take <em>f</em>(<em>x</em>) = <em>x</em>.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this <em>f</em>, <em>ψ</em>(<em>ε</em>) = <em>ε</em>/1.</li>
-    <li>The variance of a Poisson distribution with mean <em>μ</em> is <em>μ</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>ν</em> or less but otherwise unknown, we can take <em>σ</em> = sqrt(<em>ν</em>) so that the sample size <em>n</em> is ceil(<em>σ</em><sup>2</sup>/(<em>δ</em>*<em>ε</em><sup>2</sup>)), in accordance with the second case of <em>Algorithm E</em>.</li>
+    <li>The variance of a Poisson distribution with mean <em>μ</em> is <em>μ</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>ν</em> or less but otherwise unknown, we can take <em>σ</em> = sqrt(<em>ν</em>) so that the sample size <em>n</em> is ceil(<em>σ</em><sup>2</sup>/(<em>δ</em>*<em>ε</em><sup>2</sup>)), per the second case of <em>Algorithm E</em>.</li>
   </ol>
 </blockquote>
 
@@ -589,10 +589,10 @@ pprint(Max(1,kappa))
       <p>Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval [<em>a</em>, <em>b</em>] is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:18" role="doc-endnote">
-      <p>Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Wainwright, M.J., High-dimensional statistics: A nonasymptotic viewpoint, 2019. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:19" role="doc-endnote">
-      <p>Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field — see the following works and works that cite them:<br />Y. Zhang, “Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations”, dissertation, Illinois Institute of Technology, 2018.<br />N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br />Mishchenko, Konstantin. “<a href="https://arxiv.org/abs/2112.02089"><strong>Regularized Newton Method with Global $ O (1/k^2) $ Convergence</strong></a>”, arXiv:2112.02089 (2021).<br />Doikov, Nikita, K. Mishchenko, and Y. Nesterov. “<a href="https://arxiv.org/abs/2208.05888"><strong>Super-universal regularized Newton method</strong></a>”, arXiv:2208.05888 (2022). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Deterministic (nonrandom) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field — see the following works and works that cite them:<br />Y. Zhang, “Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations”, dissertation, Illinois Institute of Technology, 2018.<br />N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br />Mishchenko, Konstantin. “<a href="https://arxiv.org/abs/2112.02089"><strong>Regularized Newton Method with Global $ O (1/k^2) $ Convergence</strong></a>”, arXiv:2112.02089 (2021).<br />Doikov, Nikita, K. Mishchenko, and Y. Nesterov. “<a href="https://arxiv.org/abs/2208.05888"><strong>Super-universal regularized Newton method</strong></a>”, arXiv:2208.05888 (2022). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:20" role="doc-endnote">
       <p>J.A. Tropp, “ACM 217: Probability in High Dimensions”, Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023. <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

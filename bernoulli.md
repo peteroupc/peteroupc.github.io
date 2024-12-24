@@ -180,9 +180,9 @@ Keane and O'Brien (1994\)[^2] showed that a function _f_ that maps the closed un
 - _f_ is continuous on its domain and equals the same value everywhere on its domain, or
 - _f_ is continuous and polynomially bounded on its domain.
 
-_Polynomially bounded_ means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_.  In other words, there are two non-negative polynomials that do not equal the same value everywhere: one can be "sandwiched" between the _&lambda;_-axis and _f_, and another between the _&lambda;_-axis and 1&minus;_f_.
+_Polynomially bounded_ means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are not less than min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_.  In other words, there are two nonnegative polynomials that do not equal the same value everywhere: one can be "sandwiched" between the _&lambda;_-axis and _f_, and another between the _&lambda;_-axis and 1&minus;_f_.
 
-The following shows some functions that are factory functions and some that are not.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
+The following shows some functions that are factory functions and some that are not.  In the following table, _&#x03F5;_ is a number greater than 0 and less than 1/2.
 
 | Function _f_(_&lambda;_) | Domain | Can _f_ be a factory function? |
  ---- | ---- | ---- |
@@ -304,7 +304,7 @@ Because the Bernstein coefficients _a_\[_i_\] must be 0 or greater, but not grea
 > **Notes**:
 >
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (The curve, however, is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
-> 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011\)[^8], Qian and Riedel 2008[^11]).
+> 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and exclusive-OR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and give out a single bit (for further discussion see (Qian et al. 2011\)[^8], Qian and Riedel 2008[^11]).
 >
 > **Examples:**
 >
@@ -382,7 +382,7 @@ Any rational function that admits a Bernoulli factory can be brought into the fo
 Then the algorithm is as follows:
 
 1. Create two empty lists: _blist_ and _ulist_.
-2. Set _state1_ to the position of the first non-zero item in _R_.  Set _state2_ to the position of the last non-zero item in _R_.  In both cases, positions start at 0.  If all the items in _R_ are zeros, return 0.
+2. Set _state1_ to the position of the first nonzero item in _R_.  Set _state2_ to the position of the last nonzero item in _R_.  In both cases, positions start at 0.  If all the items in _R_ are zeros, return 0.
 3. Flip the input coin and append the result (which is 0 or 1) to the end of _blist_.  Generate a uniform random variate between 0 and 1 and append it to the end of _ulist_.
 4. (Monotonic coupling from the past (Morina et al., 2022\)[^19], (Propp and Wilson 1996\)[^20].) Set _i_ to the number of items in _blist_ minus 1, then while _i_ is 0 or greater:
     1. Let _b_ be the item at position _i_ (starting at 0) in _blist_, and let _u_ be the item at that position in _ulist_.
@@ -473,9 +473,9 @@ where&mdash;
 
 Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial from power form to Bernstein form, given the power coefficients $a_0, ..., a_{m-1}$, is the so-called "matrix method" from Ray and Nataraj (2012)[^13].)  Let $b_0, ..., b_{m-1}$ be the polynomial's Bernstein coefficients.  Then if those coefficients all lie on the closed unit interval, then the following algorithm simulates $f(\lambda)$.
 
-**Algorithm 1:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the sub-algorithm below.
+**Algorithm 1:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the subalgorithm below.
 
-- **Sub-algorithm:** Generate 1 or 0 with equal probability.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman (2012)[^7]\):
+- **Subalgorithm:** Generate 1 or 0 with equal probability.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman (2012)[^7]\):
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m-1$ times.  Let $j$ be the number of runs that return 1.
     2. With probability $b_j$, return 1.  Otherwise, return 0.
 
@@ -539,7 +539,7 @@ Mendo's algorithm and extensions of it mentioned by him cover several variations
 | 3 | $f(\lambda)=f_0(\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=\lambda$ and return the result.  Otherwise, return 0. |
 | 4 | $f(\lambda)=1-f_0(\lambda)$ | With probability _CS_, run the modified algorithm with $g(\lambda)=\lambda$ and return 1 minus the result.  Otherwise, return 1. |
 
-The conditions on $f$ given above mean that&mdash;
+The conditions on $f$ given earlier mean that&mdash;
 
 - for series of type 1, _f_(0) = 1&minus;_CS_ and _f_(1) = 1 (series of type 1 with _CS_=1 is the main form in Mendo's paper),
 - for series of type 2, _f_(0) = _CS_ and _f_(1) = 0,
@@ -628,7 +628,7 @@ Examples 7 to 9 use **Algorithm 2** to simulate generalized power series where t
 **Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$
 where:
 
-- Each sum given above is taken over all values of _n_ that can occur after step 1 is complete (in this case, all values of _n_ that are even and greater than 0).
+- Each sum given earlier is taken over all values of _n_ that can occur after step 1 is complete (in this case, all values of _n_ that are even and greater than 0).
 - $a_n$ is $1/(n!)$.[^26]
 - The power coefficients $a_n$ are tucked under a function $w(n)$, which in this case is $\frac{1}{2^{n-2}}$ if _n_&gt;0 and _n_ is even[^27], or 0 otherwise.
 
@@ -638,7 +638,7 @@ For this particular function:
 - In step 2, _P_ is $a_n/w(n) = \frac{1}{n!} / \frac{1}{2^{n-2}} = \frac{2^{n/2}}{n!}$ for each allowed $n$.
 - In step 3, $g(\lambda)$ is simply $\lambda$.
 
-**Examples 8:** cosh(_&lambda;_)&minus;1 and additional target functions are shown in the following table.  (In the table below, $w(n)=1/(2^{z^{-1}(n)+1})$ where $z^{-1}(n)$ is the inverse of the "Step 1b" column, and the $g(\lambda)$ in step 3 is simply $\lambda$.)
+**Examples 8:** cosh(_&lambda;_)&minus;1 and additional target functions are shown in the following table.  (In the following table, $w(n)=1/(2^{z^{-1}(n)+1})$ where $z^{-1}(n)$ is the inverse of the "Step 1b" column, and the $g(\lambda)$ in step 3 is simply $\lambda$.)
 
 | Target function _f_(_&lambda;_) | Step 1b in **Example 7** reads "Set _n_ to ..." | $a_n$ | $w(n)$ | Value of _P_ |
   ------- | -------- | --- | --- | --- |
@@ -745,7 +745,7 @@ where the _a_\[_i_\] are the _partial denominators_, none of which may have an a
 
 Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^1], I developed the following algorithm.
 
-**Algorithm 1.** The following algorithm returns 1 with a probability expressed as a simple continued fraction.  This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative, be a non-integer, or both.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+**Algorithm 1.** The following algorithm returns 1 with a probability expressed as a simple continued fraction.  This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative, be a noninteger, or both.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
@@ -758,7 +758,7 @@ Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational 
 
 A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
-The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative, be a non-integer, or both.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
+The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative, be a noninteger, or both.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
 1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent simple continued fraction.)
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
@@ -768,7 +768,7 @@ The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an ab
     1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the separate run returns _s_, return 0.
 
-**Algorithm 3.** This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+**Algorithm 3.** This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a noninteger.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -913,7 +913,7 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >     - For each integer _n_&ge;1, $1 \ge g(n) \ge w_n(\lambda) \ge 0$, wherever $0 \le \lambda \le 1$.
 >     - For each integer _n_&ge;1, if $g(n)>0$, the function $w_n(\lambda)/g(n)$ admits a Bernoulli factory; see the section "About Bernoulli Factories".
 >
->     Then by **generating _X_ and outputting 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, the probability _f_(_&lambda;_) can be simulated as the convex combination&mdash;
+>     Then by **generating _X_ and giving out 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, the probability _f_(_&lambda;_) can be simulated as the convex combination&mdash;
 >
 >     $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^24].
 >
@@ -945,7 +945,7 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >     1. Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)
 >     2. With probability $f(X/n)$, return 1.  Otherwise, return 0.
 >
->     Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator_) of $f$ of degree $n$ (e.g., Szász (1950)[^44]).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012\)[^7], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.
+>     Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the _Szász operator_ (or _Szász&ndash;Mirakyan operator_) of $f$ of degree $n$ (for example, Szász (1950)[^44]).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012\)[^7], except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.
 > 8. **The original Bernoulli factories.**  Keane and O'Brien's \(1994\)[^2] paper introducing Bernoulli factories showed that any Bernoulli factory function $f(\lambda)$ can be written as a convex combination of polynomials.  In their proof, $g(i) = (1/4)\cdot(3/4)^{i-1}$ (and $g(0)=0$), and each $h_i(\lambda)$ is a polynomial, not necessarily of degree _i_, whose Bernstein coefficients are each either 0 or 1 (see "[**Certain Polynomials**](#Certain_Polynomials)").
 > 9. **Polynomials to zero-and-one polynomials.** Suppose $f(\lambda)$ is a polynomial of degree $n$  and each of its Bernstein coefficients $(a[0], a[1], ..., a[n])$ (see "[**Certain Polynomials**](#Certain_Polynomials)") is 0 or greater and 1 or less. Then $f$ can be written as a convex combination of polynomials with only 0 and 1 as Bernstein coefficients.<br>Specifically, $g(i)=(1/2)^i$ and $g(0)=0$, and $h_i(\lambda)$ is a polynomial whose Bernstein coefficients are $(b[i][0], b[i][1], ..., b[i][n])$, where $b[i][j]$ is 1 if $a[j]$ is 1 or if floor($a[j]\cdot 2^i$) (or the $i$-th binary digit after the point in $a[j]$'s binary expansion) is odd[^25], or 0 otherwise.
 
@@ -961,7 +961,7 @@ This algorithm, called **Algorithm CC** in this document, follows.
 > **Notes:**
 >
 > 1. Step 1 of this algorithm is incomplete, since it doesn't explain how to generate $X$ exactly.  That depends on the probability $g(k,\lambda)$.
-> 2. If we define _S_ to be a set of integers 0 or greater, and replace step 2 with "If _X_ is in the set _S_, return 1.  Otherwise, return 0", then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in _S_, or 0 otherwise). Then the so-called "even-parity" construction[^32] is a special case of this algorithm, if _S_ is the even positive integers and zero and if the example below is used.
+> 2. If we define _S_ to be a set of integers 0 or greater, and replace step 2 with "If _X_ is in the set _S_, return 1.  Otherwise, return 0", then the algorithm returns 1 with probability $\sum_{k\text{ in }S} g(k,\lambda)$ (because $h_k(\lambda)$ is either 1 if $k$ is in _S_, or 0 otherwise). Then the so-called "even-parity" construction[^32] is a special case of this algorithm, if _S_ is the even positive integers and zero and if the following example is used.
 >
 > **Example:** Step 1 can read "Flip the input coin for _&lambda;_ repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way." Then step 1 generates _X_ with probability $\lambda^X (1-\lambda)$.[^45]
 
@@ -1030,7 +1030,7 @@ where:
 
 The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^45]  Optionally, step 2 can be done as described in Flajolet et al., (2010\)[^1]: generate an _X_-letter word uniformly at random and "parse" that word using a stochastic grammar to determine whether that word can be produced by that grammar.
 
-> **Note:** The _radius of convergence_ of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987\)[^49].  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
+> **Note:** The _radius of convergence_ of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987\)[^49].  For example, the OGF involved in the square root construction given in the following examples has radius of convergence 1/2.
 >
 > **Examples:**
 >
@@ -1097,7 +1097,7 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 >     - Alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_) = sec(_&lambda;_); V(_n_) = W(_n_/2) if _n_ is even[^27] and 0 otherwise, where the W(_m_) starting at _m_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_).
 >     - Alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); V(_n_) = W((_n_+1)/2) if _n_ is odd[^25] and 0 otherwise, where the W(_m_) starting at _m_ = 1 is [**A000182**](https://oeis.org/A000182)).
 >
-> 2. Using the class of _sorted permutations_, we can generate a Poisson random variate with mean _&lambda;_ via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; outputting 1 if a Poisson random variate with mean _&lambda;_ is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson random variate with mean floor(_c_) to one with mean _c_&minus;floor(_c_) generates a Poisson random variate with mean _c_.
+> 2. Using the class of _sorted permutations_, we can generate a Poisson random variate with mean _&lambda;_ via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; giving out 1 if a Poisson random variate with mean _&lambda;_ is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson random variate with mean floor(_c_) to one with mean _c_&minus;floor(_c_) generates a Poisson random variate with mean _c_.
 > 3. The algorithm for exp(&minus;_&lambda;_), described in example 2, is as follows:
 >
 >     1. Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way.
@@ -1794,7 +1794,7 @@ The algorithm follows.
 
 #### _&lambda;_ * _x_/_y_
 
-In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
+In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when _x_/_y_ > 1.  This makes the function relatively nontrivial to simulate in this case.
 
 Huber has suggested several algorithms for this function over the years.
 
@@ -1817,7 +1817,7 @@ As a result, some knowledge of _&lambda;_ has to be available to the algorithm. 
         2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
 9. (_i_ is 0.) Return 1.
 
-Huber (2016\)[^42] presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given above and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021[^64]).
+Huber (2016\)[^42] presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given earlier and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021[^64]).
 
 Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters:
 
@@ -1934,7 +1934,7 @@ The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out
 
 ### Other Factory Functions
 
-Algorithms in bold type type type type type type type type type are given in this page.
+Algorithms in bold type are given in this page.
 
 |  To simulate:  |  Follow this algorithm: |
    --- |  ---- |
@@ -1986,7 +1986,7 @@ This algorithm uses the algorithm described in the section on [**continued fract
 1. Generate 1 or 0 with equal probability (a "fair coin flip").  If 1 was generated this way, return 1.
 2. Do a separate run of the currently running algorithm.  If the separate run returns 1, return 0.  Otherwise, go to step 1.
 
-> **Note:** The following is a running time analysis of this algorithm.  A similar analysis to the one below can be used to find the expected ("long-run average") time complexity of many Bernoulli factory algorithms.  Let **E**\[_N_\] be the expected ("long-run average") number of "fair coin flips" generated by the algorithm.  Then, since each bit is independent, **E**\[_N_\] = 2\*_&phi;_ as shown below.
+> **Note:** The following is a running time analysis of this algorithm.  A similar analysis to the one below can be used to find the expected ("long-run average") time complexity of many Bernoulli factory algorithms.  Let **E**\[_N_\] be the expected ("long-run average") number of "fair coin flips" generated by the algorithm.  Then, since each bit is independent, **E**\[_N_\] = 2\*_&phi;_ as shown next.
 >
 > - Each iteration stops the algorithm with probability _p_ = (1/2) + (1&minus;(1/2)) * (1/_&phi;_) (1/2 for the initial bit and 1/_&phi;_ for the recursive run; (1&minus;(1/2)) because the (1/2) is being subtracted earlier on the right-hand side from 1).
 > - Thus, the expected number of iterations is **E**\[_T_\] = 1/_p_ by a well-known rejection sampling argument, since the algorithm doesn't depend on iteration counts.
@@ -2562,7 +2562,7 @@ If a Bernoulli factory algorithm uses a fair coin, it can often generate flips o
 
 > **Example:** If a Bernoulli factory algorithm would generate 1 or 0 with equal probability (or flip a fair coin), instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951\)[^72].  But this trick works only if the input coin's probability of heads is neither 0 nor 1.
 
-When Keane and O'Brien (1994\)[^24] introduced Bernoulli factories, they showed already that _f_(_&lambda;_) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn't show heads every time or tails every time) &mdash; just use the von Neumann trick as in the example above.  But does _f_ remain strongly simulable if its domain includes 0, 1, or both?  That's a complexer question; see the [**supplemental notes**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate).
+When Keane and O'Brien (1994\)[^24] introduced Bernoulli factories, they showed already that _f_(_&lambda;_) is strongly simulable whenever it admits a Bernoulli factory and its domain includes neither 0 nor 1 (so the input coin doesn't show heads every time or tails every time) &mdash; just use the von Neumann trick as in the preceding example.  But does _f_ remain strongly simulable if its domain includes 0, 1, or both?  That's a complexer question; see the [**supplemental notes**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate).
 
 <a id=The_Entropy_Bound></a>
 
@@ -2607,7 +2607,7 @@ This page is devoted to _unbiased_ estimators because "exact sampling" depends o
 _Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019\)[^65].  Using Huber's theorem requires proving two things:
 
 - The algorithm finishes with probability 1 by assumption.
-- Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with a "black box" that simulates the correct "continued sub-logarithm".  If step 1 reaches the last parameter, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at the first substep of the loop with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at the second substep with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
+- Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with a "black box" that simulates the correct "continued sublogarithm".  If step 1 reaches the last parameter, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sublogarithm" and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at the first substep of the loop with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at the second substep with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
 
 Since both conditions of Huber's theorem are satisfied, this completes the proof. &#x25a1;
 
@@ -2620,7 +2620,7 @@ Since both conditions of Huber's theorem are satisfied, this completes the proof
 _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the proof of correctness.
 
 - The algorithm finishes with probability 1 because with each recursion, the method does a recursive run with no greater probability than not; observe that _a_\[_i_\] can never be more than 1, so that _a_\[_i_\]/(1+_a_\[_i_\]), that is, the probability of finishing the run in each iteration, is always 1/2 or greater.
-- If the recursive call in the loop is replaced with a "black box" that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the desired probability wanted, so that both of Huber's conditions are satisfied and the proof is complete.  &#x25a1;
+- If the recursive call in the loop is replaced with a "black box" that simulates the correct "subfraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued subfraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the desired probability wanted, so that both of Huber's conditions are satisfied and the proof is complete.  &#x25a1;
 
 <a id=Proof_of_the_General_Martingale_Algorithm></a>
 
@@ -2709,7 +2709,7 @@ Then the algorithm's behavior is given in the tables below.
 
 ### Derivation of an Algorithm for _&pi;_ / 4
 
-The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  It works as follows.  Let $S$ be a set of non-negative integers.  Then:
+The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^1].  It works as follows.  Let $S$ be a set of nonnegative integers.  Then:
 
 1. Generate a uniform random variate between 0 and 1, call it $U$.
 2. [**Sample from the number $U$**](#Implementation_Notes) repeatedly until the sampling "fails" (returns 0).  Set $k$ to the number of "successes".  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)
@@ -2719,11 +2719,11 @@ This can be seen as running **Algorithm CC** with an input coin for a randomly g
 
 $$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash;
 
-$$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of non-negative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
+$$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of nonnegative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
 
 The derivation below relies on the following fact: The probability satisfies&mdash;
 
-$$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and non-negative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.
+$$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.
 
 Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely&mdash;
 

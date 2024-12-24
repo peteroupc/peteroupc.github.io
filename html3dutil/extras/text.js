@@ -32,7 +32,7 @@
  * <a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
  * page</a>. The XML format is very similar to the text file format.
  * The JSON format is described at
- * <a href="https://github.com/Jam3/load-bmfont/blob/master/json-spec.md">this
+ * <a href="https://github.com/Jam3/load-bmfont/blob/master/json-specification.md">this
  * page</a>.
  * <p>
  * See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
@@ -171,7 +171,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
   const classes = [];
   const linePositions = [];
   let currentClass = -1;
-  // Find the runs of non-whitespace/whitespace in the text
+  // Find the runs of nonwhitespace/whitespace in the text
   let i;
   for (i = 0; i < str.length; i++) {
     let c = str.charCodeAt(i);
@@ -191,7 +191,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
       currentClass = -1;
       continue;
     } else if(c === 0x0c || c === 0x09 || c === 0x20) {
-      // non-linebreak whitespace
+      // nonlinebreak whitespace
       if(currentClass !== 1) {
         classes.push(1); // whitespace
         breaks.push(i);
@@ -199,9 +199,9 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
       currentClass = 1;
       xPos = 0;
     } else {
-      // non-whitespace
+      // nonwhitespace
       if(currentClass !== 0) {
-        classes.push(0); // non-whitespace
+        classes.push(0); // nonwhitespace
         breaks.push(i);
       }
       currentClass = 0;

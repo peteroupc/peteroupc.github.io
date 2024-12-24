@@ -112,7 +112,7 @@ The algorithm, called **Algorithm B** in this document, follows.
 4. Set _gb_ to _k_ + 2, then generate a gamma random variate with shape parameter _n_ and scale 1, then divide _gb_ by that variate.
 5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
 6. Generate a Poisson random variate with mean _c1_/(_&epsilon;_\*_gb_), call it _n_.
-7. Run the standard deviation sub-algorithm (given later) _n_ times.  Set _A_ to the number of 1's returned by that sub-algorithm this way.
+7. Run the standard deviation subalgorithm (given later) _n_ times.  Set _A_ to the number of 1's returned by that subalgorithm this way.
 8. Set _csquared_ to (_A_ / _c1_ + 1 / 2 + sqrt(_A_ / _c1_ + 1 / 4)) * (1 + _&epsilon;_<sup>1 / 3</sup>)<sup>2</sup>\*_&epsilon;_/_gb_.
 9. Set _n_ to ceil((2\*ln(6/_&delta;_)/_&epsilon;_<sup>2</sup>)/(1&minus;_&epsilon;_<sup>1/3</sup>)), or an integer greater than this.
 10. (Stage 2: Light-tailed sample average.)  Set _e0_ to _&epsilon;_<sup>1/3</sup>.
@@ -124,7 +124,7 @@ The algorithm, called **Algorithm B** in this document, follows.
     2. If _s_&ge;0, add ln(1+_s_+_s_\*_s_/2)/_alpha_ to _w_.  Otherwise, subtract ln(1&minus;_s_+_s_\*_s_/2)/_alpha_ from _w_.
 15. Return _w_/_n_.
 
-The standard deviation sub-algorithm follows.
+The standard deviation subalgorithm follows.
 
 1. Generate 1 or 0 with equal probability.  If 1 was generated this way, return 0.
 2. Get two samples from the stream, call them _x_ and _y_.
@@ -255,7 +255,7 @@ A simpler version of _Algorithm D_ takes the sample mean as the basis for the ra
 2. (Calculate the sample size.)  Calculate the sample size _n_, depending on the distribution the stream takes and the function _f_.
 3. (Calculate _f_ of the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
-Then the table below shows how the necessary sample size _n_ can be determined.
+Then the following table shows how the necessary sample size _n_ can be determined.
 
 | Stream's distribution | Property of _f_ | Sample size |
   ---- | ---- | ---- |
@@ -283,7 +283,7 @@ Then the table below shows how the necessary sample size _n_ can be determined.
 >
 > 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if a coin produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
 > 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
-> 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with the second case of _Algorithm E_.
+> 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), per the second case of _Algorithm E_.
 
 <a id=Randomized_Integration></a>
 
@@ -410,9 +410,9 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^17]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
 
-[^18]: Wainwright, M.J., High-dimensional statistics: A non-asymptotic viewpoint, 2019.
+[^18]: Wainwright, M.J., High-dimensional statistics: A nonasymptotic viewpoint, 2019.
 
-[^19]: Deterministic (non-random) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
+[^19]: Deterministic (nonrandom) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
 
 [^20]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
 

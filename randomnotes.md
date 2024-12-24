@@ -45,7 +45,7 @@ Comments on other aspects of this document are welcome.
 
 ### Specific Distributions
 
-**Requires random real numbers.**  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the [**appendix**](#Exact_Error_Bounded_and_Approximate_Algorithms) for more information.
+**Requires random real numbers.**  This section shows algorithms to sample several popular nonuniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the [**appendix**](#Exact_Error_Bounded_and_Approximate_Algorithms) for more information.
 
 <a id=Normal_Gaussian_Distribution></a>
 
@@ -292,7 +292,7 @@ As more and more numbers, sampled independently at random in the same way, are a
         end
     END METHOD
 
-Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000\)[^17].  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is not more than min(1, 2/`alpha` &minus; 1).  The result of `GeometricStable` is a symmetric Linnik distribution if `tau = 0`, or a Mittag-Leffler distribution if `tau = 1` and `alpha < 1`.
+Methods implementing the strictly geometric stable and general geometric stable distributions are shown next (Kozubowski 2000\)[^17].  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is not more than min(1, 2/`alpha` &minus; 1).  The result of `GeometricStable` is a symmetric Linnik distribution if `tau = 0`, or a Mittag-Leffler distribution if `tau = 1` and `alpha < 1`.
 
     METHOD GeometricStable(alpha, lamda, tau)
        rho = alpha*(1-tau)/2
@@ -466,7 +466,7 @@ The following pseudocode generates a random vector (list of numbers) that follow
 > 6. A **standard** [**complex normal distribution**](https://en.wikipedia.org/wiki/Complex_normal_distribution) is a binormal distribution in which the binormal random pair is generated with `s1 = s2 = sqrt(0.5)` and `mu1 = mu2 = 0` and treated as the real and imaginary parts of a complex number.
 > 7. **Multivariate Linnik distribution**: Generate a multinormal random vector, then multiply each component by `x`, where `x = GeometricStable(alpha/2.0, 1, 1)`, where `alpha` is a parameter in (0, 2] (Kozubowski 2000\)[^17].
 > 8. **Multivariate exponential power distribution** (Solaro 2004)[^27]: `MultivariateCov(mu, cov, vec)`, where `vec = RandomPointOnSphere(m, pow(Gamma(m/s,1)*2,1.0/s), 2)`, `m` is the dimension, `s > 0` is a shape parameter, `mu` is the mean as an `m`-dimensional vector (`m`-item list), and `cov` is a covariance matrix.
-> 9. **Elliptical distribution**: `MultivariateCov(mu, cov, RandomPointOnSphere(dims, z, 2))`, where `z` is an arbitrary random variate,`dims` is the number of dimensions, `mu` is a `dims`-dimensional location vector, and `cov` is a `dims`&times;`dims` covariance matrix.  See, e.g., Fang et al. (1990)[^19]
+> 9. **Elliptical distribution**: `MultivariateCov(mu, cov, RandomPointOnSphere(dims, z, 2))`, where `z` is an arbitrary random variate,`dims` is the number of dimensions, `mu` is a `dims`-dimensional location vector, and `cov` is a `dims`&times;`dims` covariance matrix.  See, for example, Fang et al. (1990)[^19]
 > 10. **Mean-variance mixture of normal distributions** (Barndorff-Nielsen et al. 1982)[^3]: `VecAdd(mu, VecAdd(VecScale(delta, v), VecScale(MultivariateNormal(nothing, cov), sqrt(z))))`, where `mu` and `delta` are`n`-dimensional vectors, `cov` is a covariance matrix, and `v` is an arbitrary random variate 0 or greater.
 > 11. **Mean mixture of normal distributions** (Bhagwat and Marchand 2022)[^4]: `MultivariateNormal(VecAdd(theta,VecScale(a,v)), cov)` where `theta` is an `n`-dimensional location vector, `a` is an `n`-dimensional "perturbation vector", `cov` is a covariance matrix, and `v` is an arbitrary random variate.
 
@@ -645,7 +645,7 @@ There are three kinds of randomization algorithms:
 2. An _error-bounded algorithm_ is a sampling algorithm with the following requirements:
 
     - If the ideal distribution is discrete (takes on values that can map to integers and back without loss), the algorithm samples exactly from that distribution. (But see the note below.)
-    - If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.
+    - If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see later for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.
     - In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).
 
     Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.

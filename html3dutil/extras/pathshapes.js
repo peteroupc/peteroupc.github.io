@@ -12,12 +12,12 @@ licensed under the Unlicense: https://unlicense.org/
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} x0 The Xcoordinate of the line segment's starting point.
+ * @param {number} x0 The x-coordinate of the line segment's starting point.
  * The <code>moveTo</code> method will be called on the starting point.
- * @param {number} y0 The Ycoordinate of the line segment's starting point.
- * @param {number} x1 The Xcoordinate of the line segment's ending point.
+ * @param {number} y0 The y-coordinate of the line segment's starting point.
+ * @param {number} x1 The x-coordinate of the line segment's ending point.
  * The <code>lineTo</code> method will be called on the ending point.
- * @param {number} y1 The Xcoordinate of the line segment's ending point.
+ * @param {number} y1 The x-coordinate of the line segment's ending point.
  * @returns {H3DU.GraphicsPath} This object.
  */
 H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
@@ -59,9 +59,9 @@ H3DU.GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
@@ -114,9 +114,9 @@ H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
@@ -167,8 +167,8 @@ H3DU.GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the ellipse's center.
- * @param {number} cy The Ycoordinate of the ellipse's center.
+ * @param {number} cx The x-coordinate of the ellipse's center.
+ * @param {number} cy The y-coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
@@ -191,9 +191,9 @@ H3DU.GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
@@ -211,8 +211,8 @@ H3DU.GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the ellipse's center.
- * @param {number} cy The Ycoordinate of the ellipse's center.
+ * @param {number} cx The x-coordinate of the ellipse's center.
+ * @param {number} cy The y-coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @param {number} start Starting angle of the arc, in degrees.
@@ -275,9 +275,9 @@ H3DU.GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) 
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} x The Xcoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} x The x-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
- * @param {number} y The Ycoordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * @param {number} y The y-coordinate of the ellipse's bounding box's upper-left corner (assuming the
  * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
@@ -305,10 +305,10 @@ H3DU.GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, 
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} x0 The Xcoordinate of the arrow's tail, at its very end.
- * @param {number} y0 The Ycoordinate of the arrow's tail, at its very end.
- * @param {number} x1 The Xcoordinate of the arrow's tip.
- * @param {number} y1 The Ycoordinate of the arrow's tip.
+ * @param {number} x0 The x-coordinate of the arrow's tail, at its end.
+ * @param {number} y0 The y-coordinate of the arrow's tail, at its end.
+ * @param {number} x1 The x-coordinate of the arrow's tip.
+ * @param {number} y1 The y-coordinate of the arrow's tip.
  * @param {number} headWidth Width of the arrowhead's base from side to side.
  * @param {number} headLength Length of the arrowhead from its tip to its base.
  * @param {number} tailWidth Width of the arrow's tail from side to side
@@ -357,8 +357,8 @@ H3DU.GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLeng
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the center of the polygon.
- * @param {number} cy The Ycoordinate of the center of the polygon.
+ * @param {number} cx The x-coordinate of the center of the polygon.
+ * @param {number} cy The y-coordinate of the center of the polygon.
  * @param {number} sides Number of sides the polygon has. Nothing will be added to the path if this
  * value is 2 or less.
  * @param {number} radius Radius from the center to each vertex of the polygon.
@@ -400,8 +400,8 @@ H3DU.GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, pha
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
- * @param {number} cx The Xcoordinate of the center of the star.
- * @param {number} cy The Ycoordinate of the center of the star.
+ * @param {number} cx The x-coordinate of the center of the star.
+ * @param {number} cy The y-coordinate of the center of the star.
  * @param {number} points Number of points the star has. Nothing will be added to the path if this
  * value is 0 or less.
  * @param {number} radiusOut Radius from the center to each outer vertex of the star.

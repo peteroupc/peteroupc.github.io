@@ -45,7 +45,7 @@ This question is about generating random variates, in the form of their binary e
 A _pushdown generator_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY, and takes either a fair coin or a coin whose probability of heads is unknown. It starts with a given state and its stack starts with EMPTY. On each iteration:
 
 - The automaton flips the coin.
-- Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged), replaces the top stack symbol with zero, one, or two symbols, and _optionally_ outputs a base-N digit. Thus, there are three kinds of _transition rules_:
+- Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged), replaces the top stack symbol with zero, one, or two symbols, and _optionally_ gives out a base-N digit. Thus, there are three kinds of _transition rules_:
      - (_state_, _flip_, _symbol_) &rarr; (_digit_, _state2_, {_symbol2_}): move to _state2_, write _digit_, replace top stack symbol with same or different one.
      - (_state_, _flip_, _symbol_) &rarr; (_digit_, _state2_, {_symbol2_, _new_}): move to _state2_, write _digit_, replace top stack symbol with _symbol2_, then _push_ a new symbol (_new_) onto the stack.
      - (_state_, _flip_, _symbol_) &rarr; (_digit_, _state2_, {}): move to _state2_, write _digit_, _pop_ the top symbol from the stack.
@@ -102,7 +102,7 @@ I have described an [**algorithm for generating random points inside an arbitrar
 
 - generating a uniform random point inside the box if the box is inside the shape,
 - rejecting the box and starting over if the box is outside the shape, and
-- subdividing the box, choosing a random sub-box, and repeating this process for that sub-box otherwise.
+- subdividing the box, choosing a random subbox, and repeating this process for that subbox otherwise.
 
 This algorithm uses a function called **InShape** that determines whether a shape covers an axis-aligned bounding box. It takes such a bounding box as input and returns&mdash;
 

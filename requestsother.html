@@ -65,7 +65,7 @@
 
 <ul>
   <li>The automaton flips the coin.</li>
-  <li>Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged), replaces the top stack symbol with zero, one, or two symbols, and <em>optionally</em> outputs a base-N digit. Thus, there are three kinds of <em>transition rules</em>:
+  <li>Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged), replaces the top stack symbol with zero, one, or two symbols, and <em>optionally</em> gives out a base-N digit. Thus, there are three kinds of <em>transition rules</em>:
     <ul>
       <li>(<em>state</em>, <em>flip</em>, <em>symbol</em>) → (<em>digit</em>, <em>state2</em>, {<em>symbol2</em>}): move to <em>state2</em>, write <em>digit</em>, replace top stack symbol with same or different one.</li>
       <li>(<em>state</em>, <em>flip</em>, <em>symbol</em>) → (<em>digit</em>, <em>state2</em>, {<em>symbol2</em>, <em>new</em>}): move to <em>state2</em>, write <em>digit</em>, replace top stack symbol with <em>symbol2</em>, then <em>push</em> a new symbol (<em>new</em>) onto the stack.</li>
@@ -139,7 +139,7 @@
 <ul>
   <li>generating a uniform random point inside the box if the box is inside the shape,</li>
   <li>rejecting the box and starting over if the box is outside the shape, and</li>
-  <li>subdividing the box, choosing a random sub-box, and repeating this process for that sub-box otherwise.</li>
+  <li>subdividing the box, choosing a random subbox, and repeating this process for that subbox otherwise.</li>
 </ul>
 
 <p>This algorithm uses a function called <strong>InShape</strong> that determines whether a shape covers an axis-aligned bounding box. It takes such a bounding box as input and returns—</p>

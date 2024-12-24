@@ -129,7 +129,7 @@ public static final CBOREncodeOptions DefaultCtap2Canonical Default options for 
  if shared references are deeply nested and used multiple times, these
  references can result in a CBOR object that is orders of magnitude bigger
  than if shared references weren't resolved, and this can cause a denial of
- service when the decoded CBOR object is then serialized (e.g., with <code>
+ service when the decoded CBOR object is then serialized (for example, with <code>
  EncodeToBytes()</code>, <code>toString()</code>, <code>ToJSONString()</code>, or <code>
  WriteTo</code>), because object references are expanded in the process.</p>
 <p>For example, the following object in CBOR diagnostic notation, <code>

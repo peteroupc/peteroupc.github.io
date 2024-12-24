@@ -284,8 +284,8 @@ CurveTube.prototype.endPoints = function() {
 };
 /**
  * Generates a point on the extruded tube from the given u- and v-coordinates.
- * @param {number} u The Ucoordinate. This will run the length of the curve.
- * @param {number} v The Vcoordinate. This will sweep around the extruded
+ * @param {number} u The u-coordinate. This will run the length of the curve.
+ * @param {number} v The v-coordinate. This will sweep around the extruded
  * tube.
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  */

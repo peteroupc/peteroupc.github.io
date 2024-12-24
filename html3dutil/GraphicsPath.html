@@ -129,8 +129,8 @@ HTML Canvas 2D Context.</p>
 <h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li><code>x</code> (Type: number)<br />The Xcoordinate of the center of the circle that the arc forms a part of.</li>
-  <li><code>y</code> (Type: number)<br />The Ycoordinate of the circle’s center.</li>
+  <li><code>x</code> (Type: number)<br />The x-coordinate of the center of the circle that the arc forms a part of.</li>
+  <li><code>y</code> (Type: number)<br />The y-coordinate of the circle’s center.</li>
   <li><code>radius</code> (Type: number)<br />Radius of the circle.</li>
   <li><code>startAngle</code> (Type: number)<br />Starting angle of the arc, in radians. 0 means the positive x-axis, π/2 means the positive y-axis, π means the negative x-axis, and π*1.5 means the negative y-axis.</li>
   <li><code>endAngle</code> (Type: number)<br />Ending angle of the arc, in radians.</li>
@@ -151,8 +151,8 @@ and dimensions, start angle, and sweep angle.</p>
 <h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li><code>x</code> (Type: number)<br />The Xcoordinate of the ellipse’s center.</li>
-  <li><code>y</code> (Type: number)<br />The Ycoordinate of the ellipse’s center.</li>
+  <li><code>x</code> (Type: number)<br />The x-coordinate of the ellipse’s center.</li>
+  <li><code>y</code> (Type: number)<br />The y-coordinate of the ellipse’s center.</li>
   <li><code>w</code> (Type: number)<br />Width of the ellipse’s bounding box.</li>
   <li><code>h</code> (Type: number)<br />Height of the ellipse’s bounding box.</li>
   <li><code>start</code> (Type: number)<br />Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.</li>
@@ -174,8 +174,8 @@ and dimensions, start angle, and sweep angle.</p>
 <h4 id="parameters-2">Parameters</h4>
 
 <ul>
-  <li><code>x</code> (Type: number)<br />The Xcoordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
-  <li><code>y</code> (Type: number)<br />The Ycoordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
+  <li><code>x</code> (Type: number)<br />The x-coordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
+  <li><code>y</code> (Type: number)<br />The y-coordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
   <li><code>w</code> (Type: number)<br />Width of the ellipse’s bounding box.</li>
   <li><code>h</code> (Type: number)<br />Height of the ellipse’s bounding box.</li>
   <li><code>start</code> (Type: number)<br />Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.</li>
@@ -196,13 +196,13 @@ using the parameterization used by the SVG specification.</p>
 <h4 id="parameters-3">Parameters</h4>
 
 <ul>
-  <li><code>rx</code> (Type: number)<br />The Xaxis radius of the ellipse that the arc will be formed from.</li>
-  <li><code>ry</code> (Type: number)<br />The Yaxis radius of the ellipse that the arc will be formed from.</li>
+  <li><code>rx</code> (Type: number)<br />The x-axis radius of the ellipse that the arc will be formed from.</li>
+  <li><code>ry</code> (Type: number)<br />The y-axis radius of the ellipse that the arc will be formed from.</li>
   <li><code>rot</code> (Type: number)<br />Rotation of the ellipse in degrees (clockwise assuming the x-axis points right and the y-axis points down under the coordinate system).</li>
   <li><code>largeArc</code> (Type: boolean)<br />In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.</li>
   <li><code>sweep</code> (Type: boolean)<br />If true, the arc solution chosen will run clockwise (assuming the x-axis points right and the y-axis points down under the coordinate system); if false, counterclockwise.</li>
-  <li><code>x2</code> (Type: number)<br />The Xcoordinate of the arc’s end point.</li>
-  <li><code>y2</code> (Type: number)<br />The Ycoordinate of the arc’s end point.</li>
+  <li><code>x2</code> (Type: number)<br />The x-coordinate of the arc’s end point.</li>
+  <li><code>y2</code> (Type: number)<br />The y-coordinate of the arc’s end point.</li>
 </ul>
 
 <h4 id="return-value-3">Return Value</h4>
@@ -219,10 +219,10 @@ HTML Canvas 2D Context.</p>
 <h4 id="parameters-4">Parameters</h4>
 
 <ul>
-  <li><code>x1</code> (Type: number)<br />The Xcoordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn’t the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)</li>
-  <li><code>y1</code> (Type: number)<br />The Ycoordinate of the point described under “x1”.</li>
-  <li><code>x2</code> (Type: number)<br />The Xcoordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.</li>
-  <li><code>y2</code> (Type: number)<br />The Ycoordinate of the point described under “x2”.</li>
+  <li><code>x1</code> (Type: number)<br />The x-coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn’t the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)</li>
+  <li><code>y1</code> (Type: number)<br />The y-coordinate of the point described under “x1”.</li>
+  <li><code>x2</code> (Type: number)<br />The x-coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.</li>
+  <li><code>y2</code> (Type: number)<br />The y-coordinate of the point described under “x2”.</li>
   <li><code>radius</code> (Type: number)<br />Radius of the circle the arc forms a part of.</li>
 </ul>
 
@@ -238,10 +238,10 @@ HTML Canvas 2D Context.</p>
 <h4 id="parameters-5">Parameters</h4>
 
 <ul>
-  <li><code>x0</code> (Type: number)<br />The Xcoordinate of the arrow’s tail, at its very end.</li>
-  <li><code>y0</code> (Type: number)<br />The Ycoordinate of the arrow’s tail, at its very end.</li>
-  <li><code>x1</code> (Type: number)<br />The Xcoordinate of the arrow’s tip.</li>
-  <li><code>y1</code> (Type: number)<br />The Ycoordinate of the arrow’s tip.</li>
+  <li><code>x0</code> (Type: number)<br />The x-coordinate of the arrow’s tail, at its end.</li>
+  <li><code>y0</code> (Type: number)<br />The y-coordinate of the arrow’s tail, at its end.</li>
+  <li><code>x1</code> (Type: number)<br />The x-coordinate of the arrow’s tip.</li>
+  <li><code>y1</code> (Type: number)<br />The y-coordinate of the arrow’s tip.</li>
   <li><code>headWidth</code> (Type: number)<br />Width of the arrowhead’s base from side to side.</li>
   <li><code>headLength</code> (Type: number)<br />Length of the arrowhead from its tip to its base.</li>
   <li><code>tailWidth</code> (Type: number)<br />Width of the arrow’s tail from side to side</li>
@@ -260,8 +260,8 @@ from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="Graphic
 <h4 id="parameters-6">Parameters</h4>
 
 <ul>
-  <li><code>x</code> (Type: number)<br />The Xcoordinate of the rectangle’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
-  <li><code>y</code> (Type: number)<br />The Ycoordinate of the rectangle’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
+  <li><code>x</code> (Type: number)<br />The x-coordinate of the rectangle’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
+  <li><code>y</code> (Type: number)<br />The y-coordinate of the rectangle’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
   <li><code>w</code> (Type: number)<br />Width of the rectangle.</li>
   <li><code>h</code> (Type: number)<br />Height of the rectangle.</li>
   <li><code>arccx</code> (Type: number)<br />Horizontal extent (from end to end) of the rectangle’s corners. Will be adjusted to be not less than 0 and not greater than “w”.</li>
@@ -282,12 +282,12 @@ the curve’s first control point.</p>
 <h4 id="parameters-7">Parameters</h4>
 
 <ul>
-  <li><code>x</code> (Type: number)<br />The Xcoordinate of the curve’s second control point.</li>
-  <li><code>y</code> (Type: number)<br />The Xcoordinate of the curve’s second control point.</li>
-  <li><code>x2</code> (Type: number)<br />The Ycoordinate of the curve’s third control point.</li>
-  <li><code>y2</code> (Type: number)<br />The Ycoordinate of the curve’s third control point.</li>
-  <li><code>x3</code> (Type: number)<br />The Xcoordinate of the curve’s end point (fourth control point).</li>
-  <li><code>y3</code> (Type: number)<br />The Ycoordinate of the curve’s end point (fourth control point).</li>
+  <li><code>x</code> (Type: number)<br />The x-coordinate of the curve’s second control point.</li>
+  <li><code>y</code> (Type: number)<br />The x-coordinate of the curve’s second control point.</li>
+  <li><code>x2</code> (Type: number)<br />The y-coordinate of the curve’s third control point.</li>
+  <li><code>y2</code> (Type: number)<br />The y-coordinate of the curve’s third control point.</li>
+  <li><code>x3</code> (Type: number)<br />The x-coordinate of the curve’s end point (fourth control point).</li>
+  <li><code>y3</code> (Type: number)<br />The y-coordinate of the curve’s end point (fourth control point).</li>
 </ul>
 
 <h4 id="return-value-7">Return Value</h4>
@@ -332,8 +332,8 @@ and dimensions.</p>
 <h4 id="parameters-9">Parameters</h4>
 
 <ul>
-  <li><code>cx</code> (Type: number)<br />The Xcoordinate of the ellipse’s center.</li>
-  <li><code>cy</code> (Type: number)<br />The Ycoordinate of the ellipse’s center.</li>
+  <li><code>cx</code> (Type: number)<br />The x-coordinate of the ellipse’s center.</li>
+  <li><code>cy</code> (Type: number)<br />The y-coordinate of the ellipse’s center.</li>
   <li><code>w</code> (Type: number)<br />Width of the ellipse’s bounding box.</li>
   <li><code>h</code> (Type: number)<br />Height of the ellipse’s bounding box.</li>
 </ul>
@@ -351,8 +351,8 @@ and dimensions.</p>
 <h4 id="parameters-10">Parameters</h4>
 
 <ul>
-  <li><code>x</code> (Type: number)<br />The Xcoordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
-  <li><code>y</code> (Type: number)<br />The Ycoordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
+  <li><code>x</code> (Type: number)<br />The x-coordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
+  <li><code>y</code> (Type: number)<br />The y-coordinate of the ellipse’s bounding box’s upper-left corner (assuming the coordinate system’s x-axis points right and the y-axis down).</li>
   <li><code>w</code> (Type: number)<br />Width of the ellipse’s bounding box.</li>
   <li><code>h</code> (Type: number)<br />Height of the ellipse’s bounding box.</li>
 </ul>
@@ -630,10 +630,10 @@ Adds a line segment to this path.
 
 #### Parameters
 
-* `x0` (Type: number)<br />The Xcoordinate of the line segment's starting point. The <code>moveTo</code> method will be called on the starting point.
-* `y0` (Type: number)<br />The Ycoordinate of the line segment's starting point.
-* `x1` (Type: number)<br />The Xcoordinate of the line segment's ending point. The <code>lineTo</code> method will be called on the ending point.
-* `y1` (Type: number)<br />The Xcoordinate of the line segment's ending point.
+* `x0` (Type: number)<br />The x-coordinate of the line segment's starting point. The <code>moveTo</code> method will be called on the starting point.
+* `y0` (Type: number)<br />The y-coordinate of the line segment's starting point.
+* `x1` (Type: number)<br />The x-coordinate of the line segment's ending point. The <code>lineTo</code> method will be called on the ending point.
+* `y1` (Type: number)<br />The x-coordinate of the line segment's ending point.
 
 #### Return Value
 
@@ -648,8 +648,8 @@ sets the end position to the end of the segment.
 
 #### Parameters
 
-* `x` (Type: number)<br />The Xcoordinate of the end of the line segment.
-* `y` (Type: number)<br />The Ycoordinate of the end of the line segment.
+* `x` (Type: number)<br />The x-coordinate of the end of the line segment.
+* `y` (Type: number)<br />The y-coordinate of the end of the line segment.
 
 #### Return Value
 
@@ -675,8 +675,8 @@ Moves the current start position and end position to the given position.
 
 #### Parameters
 
-* `x` (Type: number)<br />The Xcoordinate of the position.
-* `y` (Type: number)<br />The Ycoordinate of the position.
+* `x` (Type: number)<br />The x-coordinate of the position.
+* `y` (Type: number)<br />The y-coordinate of the position.
 
 #### Return Value
 
@@ -720,10 +720,10 @@ the curve's first control point.
 
 #### Parameters
 
-* `x` (Type: number)<br />The Xcoordinate of the curve's second control point.
-* `y` (Type: number)<br />The Ycoordinate of the curve's second control point.
-* `x2` (Type: number)<br />The Xcoordinate of the curve's end point (third control point).
-* `y2` (Type: number)<br />The Ycoordinate of the curve's end point (third control point).
+* `x` (Type: number)<br />The x-coordinate of the curve's second control point.
+* `y` (Type: number)<br />The y-coordinate of the curve's second control point.
+* `x2` (Type: number)<br />The x-coordinate of the curve's end point (third control point).
+* `y2` (Type: number)<br />The y-coordinate of the curve's end point (third control point).
 
 #### Return Value
 
@@ -736,8 +736,8 @@ Adds path segments to this path that form an axis-aligned rectangle.
 
 #### Parameters
 
-* `x` (Type: number)<br />The Xcoordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
-* `y` (Type: number)<br />The Ycoordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `x` (Type: number)<br />The x-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br />The y-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br />Width of the rectangle.
 * `h` (Type: number)<br />Height of the rectangle.
 
@@ -752,8 +752,8 @@ Adds path segments to this path that form a regular polygon.
 
 #### Parameters
 
-* `cx` (Type: number)<br />The Xcoordinate of the center of the polygon.
-* `cy` (Type: number)<br />The Ycoordinate of the center of the polygon.
+* `cx` (Type: number)<br />The x-coordinate of the center of the polygon.
+* `cy` (Type: number)<br />The y-coordinate of the center of the polygon.
 * `sides` (Type: number)<br />Number of sides the polygon has. Nothing will be added to the path if this value is 2 or less.
 * `radius` (Type: number)<br />Radius from the center to each vertex of the polygon.
 * `phaseInDegrees` (Type: number) (optional)<br />Starting angle of the first vertex of the polygon, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis. If null, undefined, or omitted, the default is 0.
@@ -769,8 +769,8 @@ Adds path segments to this path that form a regular N-pointed star.
 
 #### Parameters
 
-* `cx` (Type: number)<br />The Xcoordinate of the center of the star.
-* `cy` (Type: number)<br />The Ycoordinate of the center of the star.
+* `cx` (Type: number)<br />The x-coordinate of the center of the star.
+* `cy` (Type: number)<br />The y-coordinate of the center of the star.
 * `points` (Type: number)<br />Number of points the star has. Nothing will be added to the path if this value is 0 or less.
 * `radiusOut` (Type: number)<br />Radius from the center to each outer vertex of the star.
 * `radiusIn` (Type: number)<br />Radius from the center to each inner vertex of the star.
@@ -797,8 +797,8 @@ Adds path segments to this path that form an axis-aligned rounded rectangle.
 
 #### Parameters
 
-* `x` (Type: number)<br />The Xcoordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
-* `y` (Type: number)<br />The Ycoordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `x` (Type: number)<br />The x-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br />The y-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br />Width of the rectangle.
 * `h` (Type: number)<br />Height of the rectangle.
 * `arccx` (Type: number)<br />Horizontal extent (from end to end) of the ellipse formed by each arc that makes up the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "w".

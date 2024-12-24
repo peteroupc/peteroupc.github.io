@@ -64,7 +64,7 @@
 
 <h3 id="specific-distributions">Specific Distributions</h3>
 
-<p><strong>Requires random real numbers.</strong>  This section shows algorithms to sample several popular non-uniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the <a href="#Exact_Error_Bounded_and_Approximate_Algorithms"><strong>appendix</strong></a> for more information.</p>
+<p><strong>Requires random real numbers.</strong>  This section shows algorithms to sample several popular nonuniform distributions.  The algorithms are exact unless otherwise noted, and applications should choose algorithms with either no error (including rounding error) or a user-settable error bound.  See the <a href="#Exact_Error_Bounded_and_Approximate_Algorithms"><strong>appendix</strong></a> for more information.</p>
 
 <p><a id="Normal_Gaussian_Distribution"></a></p>
 
@@ -337,7 +337,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup id="fnref:17" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>’s absolute value is not more than min(1, 2/<code>alpha</code> − 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag-Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
+<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown next (Kozubowski 2000)<sup id="fnref:17" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>’s absolute value is not more than min(1, 2/<code>alpha</code> − 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag-Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
 
 <pre>METHOD GeometricStable(alpha, lamda, tau)
    rho = alpha*(1-tau)/2
@@ -521,7 +521,7 @@ method for generating multiple random vectors in one call.</p>
     <li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
     <li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>x</code>, where <code>x = GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)<sup id="fnref:17:1" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.</li>
     <li><strong>Multivariate exponential power distribution</strong> (Solaro 2004)<sup id="fnref:27" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">19</a></sup>: <code>MultivariateCov(mu, cov, vec)</code>, where <code>vec = RandomPointOnSphere(m, pow(Gamma(m/s,1)*2,1.0/s), 2)</code>, <code>m</code> is the dimension, <code>s &gt; 0</code> is a shape parameter, <code>mu</code> is the mean as an <code>m</code>-dimensional vector (<code>m</code>-item list), and <code>cov</code> is a covariance matrix.</li>
-    <li><strong>Elliptical distribution</strong>: <code>MultivariateCov(mu, cov, RandomPointOnSphere(dims, z, 2))</code>, where <code>z</code> is an arbitrary random variate,<code>dims</code> is the number of dimensions, <code>mu</code> is a <code>dims</code>-dimensional location vector, and <code>cov</code> is a <code>dims</code>×<code>dims</code> covariance matrix.  See, e.g., Fang et al. (1990)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">20</a></sup></li>
+    <li><strong>Elliptical distribution</strong>: <code>MultivariateCov(mu, cov, RandomPointOnSphere(dims, z, 2))</code>, where <code>z</code> is an arbitrary random variate,<code>dims</code> is the number of dimensions, <code>mu</code> is a <code>dims</code>-dimensional location vector, and <code>cov</code> is a <code>dims</code>×<code>dims</code> covariance matrix.  See, for example, Fang et al. (1990)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">20</a></sup></li>
     <li><strong>Mean-variance mixture of normal distributions</strong> (Barndorff-Nielsen et al. 1982)<sup id="fnref:3:1" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>: <code>VecAdd(mu, VecAdd(VecScale(delta, v), VecScale(MultivariateNormal(nothing, cov), sqrt(z))))</code>, where <code>mu</code> and <code>delta</code> are<code>n</code>-dimensional vectors, <code>cov</code> is a covariance matrix, and <code>v</code> is an arbitrary random variate 0 or greater.</li>
     <li><strong>Mean mixture of normal distributions</strong> (Bhagwat and Marchand 2022)<sup id="fnref:4:1" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>: <code>MultivariateNormal(VecAdd(theta,VecScale(a,v)), cov)</code> where <code>theta</code> is an <code>n</code>-dimensional location vector, <code>a</code> is an <code>n</code>-dimensional “perturbation vector”, <code>cov</code> is a covariance matrix, and <code>v</code> is an arbitrary random variate.</li>
   </ol>
@@ -669,7 +669,7 @@ END METHOD
 
     <ul>
       <li>If the ideal distribution is discrete (takes on values that can map to integers and back without loss), the algorithm samples exactly from that distribution. (But see the note below.)</li>
-      <li>If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.</li>
+      <li>If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see later for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.</li>
       <li>In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).</li>
     </ul>
 

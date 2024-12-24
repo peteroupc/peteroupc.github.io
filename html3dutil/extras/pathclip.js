@@ -847,7 +847,7 @@ licensed under the Unlicense: https://unlicense.org/
         return connector.toPolygon(result);
       }
       if(op === Clipper.UNION && e.p[0] > minMaxx) {
-      // add all the non-processed line segments to the result
+      // add all the nonprocessed line segments to the result
         if(!e.left)
           connector.add(e.segment());
         while(this.eq.size() > 0) {

@@ -17,10 +17,10 @@ import {MathUtil} from "../h3du_module.js";
  * Uses the formula given in "Decorative Knot Patterns"
  * by L. D. Taylor, 2011.
  * @param {number} revolutions Integer greater than 0. Labeled 'p' by Taylor.
- * @param {Array<number>} r Array of integers and/or non-integers.
+ * @param {Array<number>} r Array of integers and/or nonintegers.
  * @param {Array<number>} q Array of integers. Lowest 'q' is the number of equal "parts"
  * of the torus knot.
- * @param {number} s1 Integer or non-integer parameter.
+ * @param {number} s1 Integer or noninteger parameter.
  * @param {number} m1 Integer parameter.
  * @constructor
  */

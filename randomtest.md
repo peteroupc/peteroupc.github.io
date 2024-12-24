@@ -6,7 +6,7 @@
 
 According to my document on [**pseudorandom number generator (PRNG) recommendations**](https://peteroupc.github.io/random.html), a high-quality PRNG, among other requirements&mdash;
 
-> generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security)[,]
+> generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security)[,]
 
 a requirement called the "independence requirement" in this short document.
 

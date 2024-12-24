@@ -8,10 +8,10 @@ Suppose there is an endless stream of numbers, each generated at random and inde
 
 Let `InDist` be the probability distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution `InDist`, such as its expected value (or mean or "long-run average").  Suppose the problem is to **produce a random variate with a distribution** `OutDist` **that depends on the unknown parameter $\lambda$**.  Then, of the algorithms in the section "[**Sampling Distributions Using Incomplete Information**](https://peteroupc.github.io/randmisc.md#Sampling_Distributions_Using_Incomplete_Information)":
 
-- In **Algorithm 1** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
+- In **Algorithm 1** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
 - In **Algorithm 2** (Duvignau 2015)[^2], `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
-- In **Algorithm 3** (Lee et al. 2014)[^3], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.
-- In **Algorithm 4** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is non-negative and has an expected value of $f(\lambda)$.
+- In **Algorithm 3** (Lee et al. 2014)[^3], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.
+- In **Algorithm 4** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
 - In **Algorithm 5** (Akahira et al. 1992)[^4], `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
 - In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html) (a problem of turning biased coins to biased coins), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
 
@@ -31,7 +31,7 @@ The answers to these questions will depend on&mdash;
 - whether the inputs are independent, and
 - whether outside randomness is allowed (that is, whether the estimator is _randomized_).
 
-An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (e.g., Nacu and Peres (2005, Question 2)[^7]).
+An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (for example, Nacu and Peres (2005, Question 2)[^7]).
 
 My interest on the problem is in the existence and construction of simple-to-implement algorithms that solve the _sampling problem_ given here.  In addition, the cases that most interest me are when&mdash;
 
@@ -51,13 +51,13 @@ The problem here is one of bringing all these results together in one place.
 The following are examples of results for this problem.   The estimators are allowed to be randomized (to use outside randomness) unless specified otherwise.
 
 - Suppose `InDist` takes an unknown finite number $n$ of values with unknown probabilities ($n\ge 1$), $\lambda$ is $n$, and `OutDist` has an expected value of $\lambda$.
-    - No sequential non-randomized unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)[^8]. [^9]
+    - No sequential nonrandomized unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)[^8]. [^9]
     - Not aware of conditions for sequential randomized unbiased estimators.
     - Not aware of conditions for fixed-size unbiased estimators.
     - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` is a fair die with an unknown number of faces (1 or greater), $\lambda$ is the number of faces, and `OutDist` has an expected value of $f(\lambda)$.
     - If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)[^8].
-    - If $f$ is unbounded (including when $f(\lambda)=\lambda$), there is no fixed-size non-randomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^8].
+    - If $f$ is unbounded (including when $f(\lambda)=\lambda$), there is no fixed-size nonrandomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)[^8].
     - Not aware of conditions for more general fixed-size unbiased estimators.
     - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` takes on numbers from a finite set; $\lambda$ is the expected value of `InDist`; and `OutDist` has an expected value of $f(\lambda)$.

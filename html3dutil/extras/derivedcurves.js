@@ -187,8 +187,8 @@ export function curvePedalCurve(evaluator, ox, oy) {
 /**
  * Creates a [curve evaluator object]{@link Curve} for a curve with reciprocal (inverted) polar coordinates to that of another curve.
  * @param {Curve|Object} evaluator A curve evaluator object for a curve from which an inverse curve is to be evaluated.
- * @param {number} [ox] The Xcoordinate of the curve's polar coordinate origin (the inversion center) for the purpose of evaluating its inverse curve. If null, undefined, or omitted, the default is 0.
- * @param {number} [oy] The Ycoordinate of the inversion center. If null, undefined, or omitted, the default is 0.
+ * @param {number} [ox] The x-coordinate of the curve's polar coordinate origin (the inversion center) for the purpose of evaluating its inverse curve. If null, undefined, or omitted, the default is 0.
+ * @param {number} [oy] The y-coordinate of the inversion center. If null, undefined, or omitted, the default is 0.
  * @param {number} [radius] If null, undefined, or omitted, the default is 1. TODO: Not documented fully yet.
  * @returns {Object} The resulting curve evaluator object.
  */
