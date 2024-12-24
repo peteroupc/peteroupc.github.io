@@ -177,7 +177,8 @@
     <p><code>static boolean SameQuantum(EFloat ed1,
  EFloat ed2)</code><br />
  Returns whether two arbitrary-precision numbers have the same exponent, they
- both are not-a-number (NaN), or they both are infinity (positive, negative, or both).</p>
+ both are not-a-number (NaN), or they both are infinity (positive, negative,
+ or both).</p>
   </li>
   <li>
     <p><code>static EFloat ScaleB(EFloat ed,
@@ -356,18 +357,16 @@
   <li>
     <p><code>ed</code> - An arbitrary-precision number object.</p>
   </li>
-  <li>
-    <p><code>ec</code> - &lt;p&gt;A context specifying the exponent range of arbitrary-precision
+  <li><code>ec</code> - &lt;p&gt;A context specifying the exponent range of arbitrary-precision
  numbers. Can be null. If AdjustExponent of the given context is <code>
  true</code>, a nonzero number is normal if the number’s exponent (when that number
  is expressed in scientific notation with one nonzero digit before the radix
- point) is at least the given context’s EMax property (for example, if EMax is -100,
- 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10 <sup>-102</sup> is
- not). If AdjustExponent of the given context is <code>false</code>, a nonzero
- number is subnormal if the number’s Exponent property is at least given
- context’s EMax property (for example, if EMax is -100, 23456 * 10 <sup>-99</sup> is
- normal, but 23456 * 10 <sup>-102</sup> is not).&lt;/p&gt;</p>
-  </li>
+ point) is at least the given context’s EMax property (for example, if EMax
+ is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+ <sup>-102</sup> is not). If AdjustExponent of the given context is <code>
+ false</code>, a nonzero number is subnormal if the number’s Exponent property is
+ at least given context’s EMax property (for example, if EMax is -100, 23456</li>
+  <li>10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).&lt;/p&gt;</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -504,12 +503,13 @@
  numbers. Can be null. If AdjustExponent of the given context is <code>
  true</code>, a nonzero number is subnormal if the number’s exponent (when that
  number is expressed in scientific notation with one nonzero digit before the
- radix point) is less than the given context’s EMax property (for example, if EMax
- is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
+ radix point) is less than the given context’s EMax property (for example, if
+ EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
  <sup>-99</sup> is not). If AdjustExponent of the given context is <code>
  false</code>, a nonzero number is subnormal if the number’s Exponent property is
- less than the given context’s EMax property (for example, if EMax is -100, 23456 *
- 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is not).&lt;/p&gt;</p>
+ less than the given context’s EMax property (for example, if EMax is -100,
+ 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
+ not).&lt;/p&gt;</p>
   </li>
 </ul>
 
@@ -902,7 +902,7 @@
 </ul>
 
 <h3 id="samequantum">SameQuantum</h3>
-<pre>public static boolean SameQuantum(EFloat ed1, EFloat ed2) Returns whether two arbitrary-precision numbers have the same exponent, they  both are not-a-number (NaN), or they both are infinity (positive, negative, or both).
+<pre>public static boolean SameQuantum(EFloat ed1, EFloat ed2) Returns whether two arbitrary-precision numbers have the same exponent, they  both are not-a-number (NaN), or they both are infinity (positive, negative,  or both).
 </pre>
 
 <p><strong>Parameters:</strong></p>
