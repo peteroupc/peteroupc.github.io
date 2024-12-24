@@ -1965,7 +1965,7 @@ def lah(n, k):
 # value given the precision parameter p (the Rand*
 # classes do so with probability 1).
 # In general, there are two correct answers to
-# this calculation (e.g., if the real number is pi, the two
+# this calculation (for example, if the real number is pi, the two
 # answers that are correct to 1/10 are 3.1 and 3.2).
 #
 # For performance reasons, some of the Real* classes

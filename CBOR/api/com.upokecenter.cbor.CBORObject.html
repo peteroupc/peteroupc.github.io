@@ -2251,10 +2251,10 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
  denominator and discarding the fractional part of the result, and this
  method throws an exception (currently ArithmeticException, but may change in
  the next major version) if this object expresses infinity or a not-a-number
- value.</li><li>In the.NET version, if the type is a nullable (e.g., <code>
+ value.</li><li>In the.NET version, if the type is a nullable (for example, <code>
  Nullable&amp;lt;int&amp;gt;</code> or <code>int?</code> , returns <code>null</code> if this CBOR
  object is null, or this object's value converted to the nullable's
- underlying type, e.g., <code>int</code> .</li><li>If the type is an enumeration(
+ underlying type, for example, <code>int</code> .</li><li>If the type is an enumeration(
  <code>Enum</code>) type and this CBOR object is a text string or an integer,
  returns the appropriate enumerated constant. (For example, if <code>MyEnum</code>
  includes an entry for <code>MyValue</code> , this method will return <code>
@@ -3394,7 +3394,7 @@ public static final CBORObject Zero Gets a CBOR object for the number zero. ## M
 <p><b>REMARK:</b> .NET enumeration (<code>
  Enum</code>) constants could also have been converted to text strings with <code>
  toString()</code> , but that method will return multiple names if the given Enum
- object is a combination of Enum objects (e.g. if the object is <code>
+ object is a combination of Enum objects (for example if the object is <code>
  FileAccess.Read | FileAccess.Write</code>). More generally, if Enums are
  converted to text strings, constants from Enum types with the <code>Flags</code>
  attribute, and constants from the same Enum type that share an underlying

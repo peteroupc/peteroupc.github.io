@@ -71,7 +71,7 @@ CLASSES
      |      arr - Array indicating the initial digits of the binary
      |      expansion.
      |      zerosAtEnd - Indicates whether the binary expansion
-     |      is expressed as 0.xxx0000... or 0.yyy1111... (e.g., 0.1010000...
+     |      is expressed as 0.xxx0000... or 0.yyy1111... (for example, 0.1010000...
      |      vs. 0.1001111....  Default is the latter case (False).
      |
      |  entropy(self)
@@ -681,7 +681,7 @@ CLASSES
      |             gammainc(k,(k-1)/(1+epsilon)) +
      |                 (1 - gammainc(k,(k-1)/(1-epsilon))) <= delta
      |          (where gammainc is the regularized lower incomplete gamma function,
-     |          implemented, e.g., as scipy.special.gammainc), and set this parameter
+     |          implemented, for example, as scipy.special.gammainc), and set this parameter
      |          to the calculated k value or higher.
      |            The default is 385, which allows the relative error to exceed 0.1 (epsilon) with
      |            probability at most 0.05 (delta).
