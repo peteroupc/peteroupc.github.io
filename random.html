@@ -21,7 +21,7 @@ however, it’s not enough for this sequence to merely “look random”.  But u
   <li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C’s <code>rand</code></strong></a>), or</li>
   <li>specify a relatively weak general-purpose RNG (such as Java’s <code>java.math.Random</code>), or</li>
   <li>implement RNGs by default that leave something to be desired (such as Mersenne Twister), or</li>
-  <li>initialize RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), or</li>
+  <li>initialize RNGs with a time stamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), or</li>
   <li>use RNGs that are initialized with a fixed value by default (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>),</li>
 </ul>
 
@@ -404,7 +404,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>In general, to generate a seed allowed by a noncryptographic PRNG, an application ought to use a cryptographic RNG or a method described in the <a href="#Seed_Generation"><strong>previous section</strong></a>.</p>
 
-<p>It is not recommended to seed PRNGs with timestamps, since they can carry the risk of generating the same “random” number sequence accidentally.<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup></p>
+<p>It is not recommended to seed PRNGs with time stamps, since they can carry the risk of generating the same “random” number sequence accidentally.<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup></p>
 
 <p><a id="Seeding_Multiple_Processes"></a></p>
 

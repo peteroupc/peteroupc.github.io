@@ -75,10 +75,10 @@
 <p>If a
  MIME message or body part has an unrecognized transfer encoding, its content
  type is treated as "application/octet-stream" rather than the declared
- content type (in accordance with MIME) and its transfer encoding is treated
- as 7bit (a clarification to MIME).</p>
-<p>This class currently doesn't
- support the "padding" parameter for message bodies with the media type
+ content type (per MIME) and its transfer encoding is treated as 7bit (a
+ clarification to MIME).</p>
+<p>This class currently doesn't support the
+ "padding" parameter for message bodies with the media type
  "application/octet-stream" or treated as that media type (see RFC 2046 sec.
  4.5.1).</p>
 <p>In this implementation, if the content-transfer-encoding
@@ -523,10 +523,10 @@ Renamed to ToMailtoUri.</li>
 <ul>
   <li><code>UnsupportedOperationException</code> - This message is a multipart message without a
  supported body part; or this message has a content disposition with a type
- other than “inline”; or this message’s media type is a non-multipart type
- and does not specify the use of a “charset” parameter, has no character
- encoding declared or assumed for it (which is usually the case for non-text
- messages), or has an unsupported character encoding.</li>
+ other than “inline”; or this message’s media type is a nonmultipart type and
+ does not specify the use of a “charset” parameter, has no character encoding
+ declared or assumed for it (which is usually the case for nontext messages),
+ or has an unsupported character encoding.</li>
 </ul>
 
 <h3 id="getccaddresses">getCCAddresses</h3>
@@ -1790,7 +1790,7 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="tomailtourl">ToMailtoUrl</h3>
-<pre>@Deprecated public String ToMailtoUrl() Generates a MailTo URI (uniform resource identifier) corresponding to this  message. The following header fields, and only these, are used to generate  the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message  body is included in the URI only if &lt;code&gt;GetBodyString()&lt;/code&gt; would return a  non-empty string. The To header field is included in the URI only if it has  display names or group syntax.
+<pre>@Deprecated public String ToMailtoUrl() Generates a MailTo URI (uniform resource identifier) corresponding to this  message. The following header fields, and only these, are used to generate  the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message  body is included in the URI only if &lt;code&gt;GetBodyString()&lt;/code&gt; would return a  nonempty string. The To header field is included in the URI only if it has  display names or group syntax.
 </pre>
 
 <p><strong>Returns:</strong></p>
@@ -1843,7 +1843,7 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="tomailtouri">ToMailtoUri</h3>
-<pre>public String ToMailtoUri() Generates a MailTo URI (uniform resource identifier) corresponding to this  message. The following header fields, and only these, are used to generate  the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message  body is included in the URI only if &lt;code&gt;GetBodyString()&lt;/code&gt; would return a  non-empty string.. The To header field is included in the URI only if it has  display names or group syntax.
+<pre>public String ToMailtoUri() Generates a MailTo URI (uniform resource identifier) corresponding to this  message. The following header fields, and only these, are used to generate  the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message  body is included in the URI only if &lt;code&gt;GetBodyString()&lt;/code&gt; would return a  nonempty string.. The To header field is included in the URI only if it has  display names or group syntax.
 </pre>
 
 <p><strong>Returns:</strong></p>
