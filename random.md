@@ -11,11 +11,11 @@ Most apps that use randomly generated or pseudorandom numbers care about either 
 Many applications rely on random number generators (RNGs) to produce a sequence of numbers that seemingly occur by chance;
 however, it's not enough for this sequence to merely "look random".  But unfortunately, most popular programming languages today&mdash;
 
-- specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)), or
+- specify few and weak requirements on their built-in RNGs (such as [**the C language's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)), or
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`), or
 - implement RNGs by default that leave something to be desired (such as Mersenne Twister), or
 - initialize RNGs with a time stamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), or
-- use RNGs that are initialized with a fixed value by default (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C[^1]),
+- use RNGs that are initialized with a fixed value by default (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and the C language[^1]),
 
 so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests [**existing implementations**](#Existing_RNG_APIs_in_Programming_Languages) of them.
 
@@ -24,7 +24,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - Cryptographic RNGs[^2], noncryptographic RNGs, and manually-seeded pseudorandom number generators, as well as recommendations on their use and properties.
 - Nondeterministic sources, entropy, and seed generation.
 - Existing implementations of RNGs.
-- Guidance for implementations of RNGs designed for reuse by applications.
+- Guidance for designing RNGs for reuse by applications.
 - Issues on shuffling with an RNG.
 
 **This document does not cover:**
@@ -90,20 +90,18 @@ In this document:
 
 - **Random number generator (RNG)** means software, hardware, or a combination of both that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else[^4].  (In this document, the term RNG includes pseudorandom number generators, defined next.)
 - **Pseudorandom number generator (PRNG)** means a random number generator that produces numbers by an algorithm that mathematically expands its input.
-- **Seed** means arbitrary data serving as a PRNG's input.
-- **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.[^5]
 
 <a id=Summary></a>
 
 ## Summary
 
-- Does the application use random-behaving numbers for **information security** purposes (for example, as passwords or other secrets)?
+- Does the application use random-behaving numbers for **information security** purposes (for example, as passwords or other secrets)[^5]?
     - Yes: Use a [**cryptographic RNG**](#Cryptographic_RNGs).
 - No: Does the application require [**reproducible "random" numbers**](#When_to_Use_a_Manually_Seeded_PRNG)?
     - Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
         - Does the application run **multiple independent processes** that use pseudorandom numbers?
-            - No: Seed one PRNG with the seed determined above.
-            - Yes: Pass the seed determined above to each process as described in "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)".
+            - No: Initialize one PRNG with the seed.
+            - Yes: Pass the seed to each process as described in "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)".
 - No: Is a cryptographic RNG **too slow** for the application?
     - Yes: Use a [**high-quality PRNG**](#High_Quality_RNGs_Requirements) with a seed generated using a cryptographic RNG.
     - No: Use a cryptographic RNG.
@@ -114,7 +112,7 @@ In this document:
 
 Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate numbers that not only "look random", but are cost-prohibitive to guess. An application should use a cryptographic RNG whenever the application&mdash;
 
-- generates random-behaving numbers for information security purposes, or
+- generates random-behaving numbers for information security purposes[^5], or
 - generates random-behaving numbers so infrequently that the RNG's speed is not a concern.
 
 See "[**Cryptographic RNGs: Requirements**](#Cryptographic_RNGs_Requirements)" for requirements.<br/>
@@ -124,16 +122,16 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 > **Examples:** A cryptographic RNG is recommended&mdash;
 >
 > -  when generating security parameters (including encryption keys, random passwords, nonces, session identifiers, "salts", and secret values),
-> -  for the purposes of sending or receiving messages or other data securely between computers, or
+> -  for sending or receiving messages or other data securely between computers, or
 > -  whenever predicting future random outcomes would give a player or user a significant and unfair advantage (such as in multiplayer networked games).
 
 <a id=Noncryptographic_PRNGs></a>
 
 ## Noncryptographic PRNGs
 
-Noncryptographic PRNGs vary widely in the quality of randomness of the numbers they generate.  For this reason, a noncryptographic PRNG should not be used&mdash;
+Noncryptographic PRNGs vary widely in the quality of randomness of the numbers they generate.  Therefore, a noncryptographic PRNG should not be used&mdash;
 
-- for information security purposes (for example, to generate random passwords, encryption keys, or other secrets),
+- for information security purposes (for example, to generate random passwords, encryption keys, or other secrets)[^5],
 - if cryptographic RNGs are fast enough for the application, or
 - if the PRNG is not _high quality_ (see "[**High-Quality RNGs: Requirements**](#High_Quality_RNGs_Requirements)").
 
@@ -148,13 +146,13 @@ Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated up
 
 ## Manually-Seeded PRNGs
 
-A given pseudorandom number generator (PRNG) generates the same sequence of "random" numbers for the same "seed".  Some applications care about reproducible "randomness" and thus could set a PRNG's seed manually for reproducible "random" numbers.
+A given pseudorandom number generator (PRNG) generates the same sequence of "random" numbers for the same "seed".  A _seed_ is arbitrary data serving as the PRNG's input.  Some applications care about reproducible "randomness" and thus could set a PRNG's seed manually for reproducible "random" numbers.
 
 <a id=When_to_Use_a_Manually_Seeded_PRNG></a>
 
 ### When to Use a Manually-Seeded PRNG
 
-By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. For this reason, an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
+By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. Therefore,an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
@@ -285,7 +283,7 @@ In general, there are two steps to generate an `N`-bit seed for a PRNG[^14]\:
 1. Gather enough data from independent nondeterministic sources to reach `N` bits of _entropy_ or more.
 2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.
 
-See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html). It should be mentioned, though, that in information security applications, unkeyed hash functions should not be used by themselves in randomness extraction.
+See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html). It should be mentioned, though, that in information security applications[^5], unkeyed hash functions should not be used by themselves in randomness extraction.
 
 <a id=Seed_Generation_for_Noncryptographic_PRNGs></a>
 
@@ -492,7 +490,7 @@ _Verifiable random numbers_ are randomly generated numbers (such as seeds for PR
 
 ## Guidelines for New RNG APIs
 
-This section contains guidelines for those seeking to implement RNGs designed for wide reuse (such as in a programming language's standard library).  _As mentioned earlier, an application should use existing RNG implementations whenever possible._
+This section contains guidelines for those seeking to design RNGs for wide reuse (such as in a programming language's standard library).  _As mentioned earlier, an application should use existing RNG implementations whenever possible._
 
 This section contains suggested requirements on cryptographic and high-quality RNGs that a new programming language can choose to adopt.
 
@@ -521,10 +519,10 @@ A cryptographic RNG is not required to reseed itself.
 ### High-Quality RNGs: Requirements
 
 A PRNG is a high-quality RNG if&mdash;
-- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security),
+- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security[^5]),
 - the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more (that is, the PRNG can produce any of at least 2<sup>63</sup> different number sequences, which it can generally do only if the PRNG has at least 63 bits of state), and
 - it either&mdash;
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside information security),
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside information security[^5]),
     - has a maximum "random" number cycle length equal to the number of different seeds the PRNG admits, or
     - has a minimum "random" number cycle length of 2<sup>127</sup> or greater.
 
@@ -586,7 +584,7 @@ I acknowledge&mdash;
 
 [^4]: Items that produce numbers or signals that follow a nonuniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through _randomness extraction_ techniques (see "[**Seed Generation**](#Seed_Generation)").<br>Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers.
 
-[^5]: See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.
+[^5]: Standards such as FIPS 200 and the ISO/IEC 27000 family deal with information security in the sense used here.
 
 [^6]: However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) might support integers with a restricted range (as low as -1024 to 1024) rather than 32-bit or bigger integers as are otherwise common, making it difficult to write hash functions for generating pseudorandom numbers.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.<br>An alternative for GLSL and other fragment or pixel shaders to support "randomness" is to have the shader sample a "noise texture" with randomly generated data in each pixel; for example, C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016, discusses how so-called "blue noise" can be sampled this way.<br>See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's coding blog, Jan. 12, 2013.
 
@@ -649,7 +647,7 @@ I acknowledge&mdash;
     - about 1.4 million billion billion random 160-bit integers, or
     - about 93 billion billion billion random 192-bit integers.
 
-[^33]: If an application expects customers to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends.
+[^33]: If an application expects customers to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, "ABCDEF" becomes "ABC-DEF"); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin's BIP39); or (3) adding a so-called "checksum digit" at the end of the identifier to guard against typing mistakes.  The application should try (1) or (2) before deciding to use shorter identifiers than what this document recommends.
 
 [^34]: Note that the _insecure direct object references_ problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks.
 

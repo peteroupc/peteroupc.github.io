@@ -7,6 +7,32 @@
 <h1 id="documentation-index">Documentation Index</h1>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a><br />A <a href="Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.</li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a><br />A <a href="Surface.html">surface evaluator object</a> for a B-spline (basis spline) surface,
+whose edges are made up of B-spline curves.</li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a><br /><strong>Deprecated: It is planned to render this class obsolete and rely on three.js’s BufferGeometry.</strong></li>
+  <li><a href="Curve.html">Curve</a><br />A curve evaluator object for a parametric curve.</li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a><br />An evaluator of curve evaluator objects for generating
+vertex attributes for a curve.</li>
+  <li><a href="Global.html">Global Members</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a><br />Represents a two-dimensional path.</li>
+  <li><a href="H3DU.html">H3DU</a><br />This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.</li>
+  <li><a href="MathUtil.html">MathUtil</a><br />A collection of math functions for working
+with vectors, matrices, quaternions, and other
+mathematical objects of interest to three-dimensional graphics programming.</li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a><br /><strong>Deprecated: It is planned to render this class obsolete and rely on three.js’s BufferGeometry.</strong></li>
+  <li><a href="Meshes.html">Meshes</a><br />Contains methods that create meshes
+of various geometric shapes and solids, such as cubes, cylinders,
+and spheres.</li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a><br />A <a href="Curve.html">curve evaluator object</a> for a curve
+made up of one or more individual curves.</li>
+  <li><a href="Semantic.html">Semantic</a><br /><strong>Deprecated: It is planned to render this class obsolete and rely on three.js’s BufferGeometry.</strong></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a><br />Represents a grouping of shapes.</li>
+  <li><a href="Surface.html">Surface</a><br />A surface evaluator object for a parametric surface.</li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a><br />An evaluator of surface evaluator objects for generating
+vertex attributes for a surface.</li>
+  <li><a href="Transform.html">Transform</a><br />A class offering a convenient way to set a transformation
+from one coordinate system to another.</li>
   <li><a href="extras_camera.html">module:extras/camera</a><br />The <code>extras/camera.js</code> module.</li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a><br />A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract “camera”.</li>
@@ -14,11 +40,11 @@ view of a 3D scene, in the nature of an abstract “camera”.</li>
 events.</li>
   <li><a href="extras_createwasher.html">module:extras/createwasher</a><br />The <code>extras/createwasher.js</code> module.</li>
   <li><a href="extras_curvetube.html">module:extras/curvetube</a><br />The <code>extras/curvetube.js</code> module.</li>
-  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a><br />A surface evaluator object for a tube extruded from a parametric curve.</li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a><br />A <a href="Surface.html">surface evaluator object</a> for a tube extruded from a parametric curve.</li>
   <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a><br />Additional curve evaluator and surface evaluator objects.</li>
   <li><a href="extras_evaluators.html">module:extras/evaluators</a><br />The <code>extras/evaluators.js</code> module.</li>
-  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a><br />A curve evaluator object for a curve drawn by a curve that rolls along another curve whose position is fixed.</li>
-  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a><br />A surface evaluator object for a surface of revolution,
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a><br />A <a href="Curve.html">curve evaluator object</a> for a curve drawn by a curve that rolls along another curve whose position is fixed.</li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a><br />A <a href="Surface.html">surface evaluator object</a> for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.</li>
   <li><a href="extras_fourierknot.html">module:extras/fourierknot</a><br />The <code>extras/fourierknot.js</code> module.</li>
   <li><a href="extras_gradients.html">module:extras/gradients</a><br />The <code>extras/gradients.js</code> module.</li>
@@ -29,7 +55,6 @@ of 4 × 4 transformation matrices.</li>
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a><br />The <code>extras/moresurfaces.js</code> module.</li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a><br />Surface evaluator object for the Klein surface, also known as the “Klein bottle”.</li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a><br />Surface evaluator object for a Möbius strip.</li>
-  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a><br />The <code>extras/pathtomesh.js</code> module.</li>
   <li><a href="extras_pathutil.html">module:extras/pathutil</a><br />The <code>extras/pathutil.js</code> module.</li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a><br />Contains a method to generate a simple polygon at random.</li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a><br />The <code>extras/starpolygon.js</code> module.</li>
@@ -104,6 +129,22 @@ licensed under the Unlicense: <a href="https://unlicense.org/">https://unlicense
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
@@ -122,7 +163,6 @@ licensed under the Unlicense: <a href="https://unlicense.org/">https://unlicense
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
   <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>

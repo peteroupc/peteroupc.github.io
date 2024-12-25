@@ -29,14 +29,14 @@ public-domain <a href="http://peteroupc.github.io/html3dutil"><strong>Geometry H
       <li><a href="#Why_two_variables"><strong>Why two variables?</strong></a></li>
     </ul>
   </li>
-  <li><a href="#Parametric_Surfaces_in_the_Geometry_Utilities_Library"><strong>Parametric Surfaces in the Geometry Helper Library</strong></a></li>
+  <li><a href="#Parametric_Surfaces_in_the_Geometry_Helper_Library"><strong>Parametric Surfaces in the Geometry Helper Library</strong></a></li>
   <li><a href="#Chaining_Surface_Functions"><strong>Chaining Surface Functions</strong></a></li>
   <li><a href="#Parametric_Curves"><strong>Parametric Curves</strong></a>
     <ul>
       <li><a href="#Generating_Parametric_Curves"><strong>Generating Parametric Curves</strong></a></li>
     </ul>
   </li>
-  <li><a href="#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library"><strong>Curve and Surface Evaluators in the Geometry Helper Library</strong></a></li>
+  <li><a href="#Curve_and_Surface_Evaluators_in_the_Geometry_Helper_Library"><strong>Curve and Surface Evaluators in the Geometry Helper Library</strong></a></li>
   <li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
@@ -84,7 +84,7 @@ the same value.</p>
 surface can be a seen as a “warped” version of a rectangular grid. The vector
 function “warps” this grid into a three-dimensional surface.</p>
 
-<p><a id="Parametric_Surfaces_in_the_Geometry_Utilities_Library"></a></p>
+<p><a id="Parametric_Surfaces_in_the_Geometry_Helper_Library"></a></p>
 
 <h2 id="parametric-surfaces-in-the-geometry-helper-library">Parametric Surfaces in the Geometry Helper Library</h2>
 
@@ -282,7 +282,7 @@ the circle example above.</p>
 <pre>var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 </pre>
 
-<p><a id="Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library"></a></p>
+<p><a id="Curve_and_Surface_Evaluators_in_the_Geometry_Helper_Library"></a></p>
 
 <h2 id="curve-and-surface-evaluators-in-the-geometry-helper-library">Curve and Surface Evaluators in the Geometry Helper Library</h2>
 
@@ -299,22 +299,22 @@ the shape of the curve but don’t necessarily lie on the curve), and a
 curves include <strong>NURBS</strong> curves (nonuniform and rational B-spline curves,
 with weights and nonuniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
- BSplineCurve class.</li>
+ <a href="BSplineCurve.html">BSplineCurve</a> class.</li>
   <li><strong>Bézier curves.</strong> These are curves in which the first and last
 control point are the curve’s end points. Bézier curves are a subset of B-spline
-curves and are created using the BSplineCurve.fromBezierCurve
+curves and are created using the <a href="BSplineCurve.html#BSplineCurve.fromBezierCurve">BSplineCurve.fromBezierCurve</a>
 method.</li>
   <li><strong>Piecewise curves.</strong> These are curves made up of one or more other curves.
-Piecewise curves are created using the PiecewiseCurve class.</li>
+Piecewise curves are created using the <a href="PiecewiseCurve.html">PiecewiseCurve</a> class.</li>
 </ul>
 
 <p>General-purpose surfaces include:</p>
 
 <ul>
   <li><strong>Bézier surfaces.</strong> 3D surfaces where each grid line is a Bézier
-curve. Bézier surfaces are created using the BSplineSurface.fromBezierSurface method.</li>
+curve. Bézier surfaces are created using the <a href="BSplineSurface.html#BSplineSurface.fromBezierSurface">BSplineSurface.fromBezierSurface</a> method.</li>
   <li><strong>B-Spline surfaces.</strong> 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the BSplineSurface class.</li>
+curve. B-Spline surfaces are created using the <a href="BSplineSurface.html">BSplineSurface</a> class.</li>
 </ul>
 
 <p>Special surfaces include:</p>
@@ -355,6 +355,22 @@ a supplemental extra in the Geometry Helper Library.</li>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
@@ -373,7 +389,6 @@ a supplemental extra in the Geometry Helper Library.</li>
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
   <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>

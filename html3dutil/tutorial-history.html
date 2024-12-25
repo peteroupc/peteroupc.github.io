@@ -91,12 +91,12 @@ new H3DU.PbrMaterial class.</li>
   <li>The <code>Scene3D</code> Scene3D#useProgram method was deprecated and now does nothing.</li>
   <li>New RenderPass3D class holds information about how a batch of 3D models is to be rendered. It replaces the <code>Scene3D</code> Scene3D#useFilter method, which now does nothing.</li>
   <li>New FrameBufferInfo class holds information about a frame buffer; it replaces FrameBuffer.</li>
-  <li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use MeshBuffer, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.</li>
+  <li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="MeshBuffer.html">MeshBuffer</a>, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.</li>
   <li>Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.</li>
   <li>The Shape object is no longer coupled to vertex buffers.</li>
   <li>The LightSource class now supports a radius of the light.</li>
   <li>The TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code>, which are tied to the WebGL context.</li>
-  <li><code>GLMath</code>, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include MathUtil.vec3perp, MathUtil.vec3toWindowPoint, and MathUtil.mat4projectVec3.</li>
+  <li><code>GLMath</code>, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="MathUtil.html#MathUtil.vec3perp">MathUtil.vec3perp</a>, <a href="MathUtil.html#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a>, and <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a>.</li>
   <li>Two new classes in the “extras” folder support 2D text rendering and texture atlases (as sprite sheets), namely, TextFont and TextureAtlas.</li>
   <li>The “doc” folder contains the documentation to the library in the form of Markdown text files.</li>
   <li>The Camera class, now Camera, was rewritten.</li>
@@ -108,7 +108,7 @@ new H3DU.PbrMaterial class.</li>
   <li>The experimental 2D canvas renderer in <em>surfaces2d.html</em>, was abandoned.</li>
   <li>Added <code>dispose</code> method to <code>H3DU.Scene3D</code>.</li>
   <li>Added <code>createPointedStar</code> and <code>createLathe</code> methods to <code>H3DU.Meshes</code>.</li>
-  <li>Added <code>getBounds</code> and <code>toLinePath</code> methods to GraphicsPath, an extra, as well
+  <li>Added <code>getBounds</code> and <code>toLinePath</code> methods to <a href="GraphicsPath.html">GraphicsPath</a>, an extra, as well
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
  polygons. Path triangulation now supports polygons with holes.</li>
   <li>The default light configuration is no lights when creating a LightSource. The exception, for compatibility purposes, is when using a Scene3D without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
@@ -299,6 +299,22 @@ now uses a new getTransform method and the Transform class</li>
 <h3 id="navigation">Navigation</h3>
 
 <ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="Semantic.html">Semantic</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
@@ -317,7 +333,6 @@ now uses a new getTransform method and the Transform class</li>
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
-  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
   <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>

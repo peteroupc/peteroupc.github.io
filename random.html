@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2024/12/24"><meta name="citation_online_date" content="2024/12/24"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2024/12/25"><meta name="citation_online_date" content="2024/12/25"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -18,11 +18,11 @@
 however, it’s not enough for this sequence to merely “look random”.  But unfortunately, most popular programming languages today—</p>
 
 <ul>
-  <li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C’s <code>rand</code></strong></a>), or</li>
+  <li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>the C language’s <code>rand</code></strong></a>), or</li>
   <li>specify a relatively weak general-purpose RNG (such as Java’s <code>java.math.Random</code>), or</li>
   <li>implement RNGs by default that leave something to be desired (such as Mersenne Twister), or</li>
   <li>initialize RNGs with a time stamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), or</li>
-  <li>use RNGs that are initialized with a fixed value by default (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>),</li>
+  <li>use RNGs that are initialized with a fixed value by default (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and the C language<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>),</li>
 </ul>
 
 <p>so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.   That is why this document discusses high-quality RNGs and suggests <a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>existing implementations</strong></a> of them.</p>
@@ -33,7 +33,7 @@ however, it’s not enough for this sequence to merely “look random”.  But u
   <li>Cryptographic RNGs<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, noncryptographic RNGs, and manually-seeded pseudorandom number generators, as well as recommendations on their use and properties.</li>
   <li>Nondeterministic sources, entropy, and seed generation.</li>
   <li>Existing implementations of RNGs.</li>
-  <li>Guidance for implementations of RNGs designed for reuse by applications.</li>
+  <li>Guidance for designing RNGs for reuse by applications.</li>
   <li>Issues on shuffling with an RNG.</li>
 </ul>
 
@@ -128,8 +128,6 @@ however, it’s not enough for this sequence to merely “look random”.  But u
 <ul>
   <li><strong>Random number generator (RNG)</strong> means software, hardware, or a combination of both that seeks to generate integers in a bounded range that behave as if each possible outcome occurs with the same chance as any other without influence by anything else<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.  (In this document, the term RNG includes pseudorandom number generators, defined next.)</li>
   <li><strong>Pseudorandom number generator (PRNG)</strong> means a random number generator that produces numbers by an algorithm that mathematically expands its input.</li>
-  <li><strong>Seed</strong> means arbitrary data serving as a PRNG’s input.</li>
-  <li><strong>Information security</strong> means keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup></li>
 </ul>
 
 <p><a id="Summary"></a></p>
@@ -137,7 +135,7 @@ however, it’s not enough for this sequence to merely “look random”.  But u
 <h2 id="summary">Summary</h2>
 
 <ul>
-  <li>Does the application use random-behaving numbers for <strong>information security</strong> purposes (for example, as passwords or other secrets)?
+  <li>Does the application use random-behaving numbers for <strong>information security</strong> purposes (for example, as passwords or other secrets)<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>?
     <ul>
       <li>Yes: Use a <a href="#Cryptographic_RNGs"><strong>cryptographic RNG</strong></a>.</li>
     </ul>
@@ -148,8 +146,8 @@ however, it’s not enough for this sequence to merely “look random”.  But u
         <ul>
           <li>Does the application run <strong>multiple independent processes</strong> that use pseudorandom numbers?
             <ul>
-              <li>No: Seed one PRNG with the seed determined above.</li>
-              <li>Yes: Pass the seed determined above to each process as described in “<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>”.</li>
+              <li>No: Initialize one PRNG with the seed.</li>
+              <li>Yes: Pass the seed to each process as described in “<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>”.</li>
             </ul>
           </li>
         </ul>
@@ -171,7 +169,7 @@ however, it’s not enough for this sequence to merely “look random”.  But u
 <p>Cryptographic RNGs (also known as “cryptographically strong” or “cryptographically secure” RNGs) seek to generate numbers that not only “look random”, but are cost-prohibitive to guess. An application should use a cryptographic RNG whenever the application—</p>
 
 <ul>
-  <li>generates random-behaving numbers for information security purposes, or</li>
+  <li>generates random-behaving numbers for information security purposes<sup id="fnref:5:1" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, or</li>
   <li>generates random-behaving numbers so infrequently that the RNG’s speed is not a concern.</li>
 </ul>
 
@@ -184,7 +182,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
   <ul>
     <li>when generating security parameters (including encryption keys, random passwords, nonces, session identifiers, “salts”, and secret values),</li>
-    <li>for the purposes of sending or receiving messages or other data securely between computers, or</li>
+    <li>for sending or receiving messages or other data securely between computers, or</li>
     <li>whenever predicting future random outcomes would give a player or user a significant and unfair advantage (such as in multiplayer networked games).</li>
   </ul>
 </blockquote>
@@ -193,10 +191,10 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h2 id="noncryptographic-prngs">Noncryptographic PRNGs</h2>
 
-<p>Noncryptographic PRNGs vary widely in the quality of randomness of the numbers they generate.  For this reason, a noncryptographic PRNG should not be used—</p>
+<p>Noncryptographic PRNGs vary widely in the quality of randomness of the numbers they generate.  Therefore, a noncryptographic PRNG should not be used—</p>
 
 <ul>
-  <li>for information security purposes (for example, to generate random passwords, encryption keys, or other secrets),</li>
+  <li>for information security purposes (for example, to generate random passwords, encryption keys, or other secrets)<sup id="fnref:5:2" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>,</li>
   <li>if cryptographic RNGs are fast enough for the application, or</li>
   <li>if the PRNG is not <em>high quality</em> (see “<a href="#High_Quality_RNGs_Requirements"><strong>High-Quality RNGs: Requirements</strong></a>”).</li>
 </ul>
@@ -214,13 +212,13 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h2 id="manually-seeded-prngs">Manually-Seeded PRNGs</h2>
 
-<p>A given pseudorandom number generator (PRNG) generates the same sequence of “random” numbers for the same “seed”.  Some applications care about reproducible “randomness” and thus could set a PRNG’s seed manually for reproducible “random” numbers.</p>
+<p>A given pseudorandom number generator (PRNG) generates the same sequence of “random” numbers for the same “seed”.  A <em>seed</em> is arbitrary data serving as the PRNG’s input.  Some applications care about reproducible “randomness” and thus could set a PRNG’s seed manually for reproducible “random” numbers.</p>
 
 <p><a id="When_to_Use_a_Manually_Seeded_PRNG"></a></p>
 
 <h3 id="when-to-use-a-manually-seeded-prng">When to Use a Manually-Seeded PRNG</h3>
 
-<p>By seeding a PRNG manually for reproducible “randomness”, an application will be tied to that PRNG or its implementation. For this reason, an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless—</p>
+<p>By seeding a PRNG manually for reproducible “randomness”, an application will be tied to that PRNG or its implementation. Therefore,an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless—</p>
 
 <ol>
   <li>the application might need to generate the same “random” result multiple times,</li>
@@ -396,7 +394,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
   <li>Then, condense the data into an <code>N</code>-bit number, a process called <em>randomness extraction</em>.</li>
 </ol>
 
-<p>See my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>. It should be mentioned, though, that in information security applications, unkeyed hash functions should not be used by themselves in randomness extraction.</p>
+<p>See my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>. It should be mentioned, though, that in information security applications<sup id="fnref:5:3" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, unkeyed hash functions should not be used by themselves in randomness extraction.</p>
 
 <p><a id="Seed_Generation_for_Noncryptographic_PRNGs"></a></p>
 
@@ -711,7 +709,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h2 id="guidelines-for-new-rng-apis">Guidelines for New RNG APIs</h2>
 
-<p>This section contains guidelines for those seeking to implement RNGs designed for wide reuse (such as in a programming language’s standard library).  <em>As mentioned earlier, an application should use existing RNG implementations whenever possible.</em></p>
+<p>This section contains guidelines for those seeking to design RNGs for wide reuse (such as in a programming language’s standard library).  <em>As mentioned earlier, an application should use existing RNG implementations whenever possible.</em></p>
 
 <p>This section contains suggested requirements on cryptographic and high-quality RNGs that a new programming language can choose to adopt.</p>
 
@@ -746,10 +744,10 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <h3 id="high-quality-rngs-requirements">High-Quality RNGs: Requirements</h3>
 
 <p>A PRNG is a high-quality RNG if—
-- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security),
+- it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside information security<sup id="fnref:5:4" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>),
 - the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more (that is, the PRNG can produce any of at least 2<sup>63</sup> different number sequences, which it can generally do only if the PRNG has at least 63 bits of state), and
 - it either—
-    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside information security),
+    - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent sequences of numbers (at least for nearly all practical purposes outside information security<sup id="fnref:5:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>),
     - has a maximum “random” number cycle length equal to the number of different seeds the PRNG admits, or
     - has a minimum “random” number cycle length of 2<sup>127</sup> or greater.</p>
 
@@ -836,7 +834,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
       <p>Items that produce numbers or signals that follow a nonuniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through <em>randomness extraction</em> techniques (see “<a href="#Seed_Generation"><strong>Seed Generation</strong></a>”).<br />Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5" role="doc-endnote">
-      <p>See also the FIPS 200 definition (“The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability”) and ISO/IEC 27000. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Standards such as FIPS 200 and the ISO/IEC 27000 family deal with information security in the sense used here. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:5:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:5:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:5:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:5:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a> <a href="#fnref:5:5" class="reversefootnote" role="doc-backlink">&#8617;<sup>6</sup></a></p>
     </li>
     <li id="fn:6" role="doc-endnote">
       <p>However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) might support integers with a restricted range (as low as -1024 to 1024) rather than 32-bit or bigger integers as are otherwise common, making it difficult to write hash functions for generating pseudorandom numbers.  An application ought to choose hash functions that deliver acceptable “random” numbers regardless of the kinds of numbers supported.<br />An alternative for GLSL and other fragment or pixel shaders to support “randomness” is to have the shader sample a “noise texture” with randomly generated data in each pixel; for example, C. Peters, “<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>”, <em>Moments in Graphics</em>, Dec. 22, 2016, discusses how so-called “blue noise” can be sampled this way.<br />See also N. Reed, “Quick And Easy GPU Random Numbers In D3D11”, Nathan Reed’s coding blog, Jan. 12, 2013. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -927,7 +925,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 - about 93 billion billion billion random 192-bit integers. <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:33" role="doc-endnote">
-      <p>If an application expects customers to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, “ABCDEF” becomes “ABC-DEF”); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin’s BIP39); or (3) adding a so-called “checksum digit” at the end of the identifier to guard against typing mistakes.  The application ought to consider trying (1) or (2) before deciding to use shorter identifiers than what this document recommends. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>If an application expects customers to type in a unique identifier, it could find that very long unique identifiers are unsuitable for it (for example, 128-bit numbers take up 32 base-16 characters).  There are ways to deal with these and other long identifiers, including (1) separating memorable chunks of the identifier with a hyphen, space, or another character (for example, “ABCDEF” becomes “ABC-DEF”); (2) generating the identifier from a sequence of memorable words (as in Electrum or in Bitcoin’s BIP39); or (3) adding a so-called “checksum digit” at the end of the identifier to guard against typing mistakes.  The application should try (1) or (2) before deciding to use shorter identifiers than what this document recommends. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:34" role="doc-endnote">
       <p>Note that the <em>insecure direct object references</em> problem can occur if an application enables access to a sensitive resource via an easy-to-guess identifier, but without any access control checks. <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
