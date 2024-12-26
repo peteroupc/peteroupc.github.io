@@ -36,7 +36,8 @@ curve and the point at the given u-coordinate of this curve.</li>
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.</li>
   <li><a href="#extras_evaluators.Roulette_endPoints">endPoints</a><br />Returns the starting and ending u-coordinates of this curve.</li>
-  <li><a href="#extras_evaluators_Roulette.epitrochoid">epitrochoid</a><br />Creates a <a href="Curve.html">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside another circle, whose position is fixed, with a center of (0,0).</li>
+  <li><a href="#extras_evaluators_Roulette.epitrochoid">epitrochoid</a><br />Creates a <a href="Curve.html">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
+of another circle, whose position is fixed, with a center of (0,0).</li>
   <li><a href="#extras_evaluators.Roulette_evaluate">evaluate</a><br />Finds the position of this curve at the given u-coordinate.</li>
   <li><a href="#extras_evaluators.Roulette_fitRange">fitRange</a><br />Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the given range.</li>
@@ -146,7 +147,8 @@ method.</p>
 <p><a name="extras_evaluators_Roulette.epitrochoid"></a>
 ### (static) module:extras/evaluators~Roulette.epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, [rotationDegrees], [revolutions])</p>
 
-<p>Creates a <a href="Curve.html">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside another circle, whose position is fixed, with a center of (0,0).
+<p>Creates a <a href="Curve.html">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
+of another circle, whose position is fixed, with a center of (0,0).
 The rolling circle will start at the positive x-axis of the fixed circle
 unless otherwise given in the parameter <code>rotationDegrees</code>.</p>
 
@@ -502,7 +504,6 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
   <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
   <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
   <li><a href="extras_gradients.html">module:extras/gradients</a></li>
-  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
   <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
   <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
