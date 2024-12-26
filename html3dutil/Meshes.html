@@ -56,6 +56,10 @@ points about the z-axis.</li>
   <li><a href="#Meshes.createPointedStar">createPointedStar</a><br />Creates a mesh in the form of a two-dimensional n-pointed star.</li>
   <li><a href="#Meshes.createSphere">createSphere</a><br />Creates a mesh of a sphere, centered at the origin.</li>
   <li><a href="#Meshes.createTorus">createTorus</a><br />Creates a mesh of a torus (doughnut shape), centered at the origin.</li>
+  <li><a href="#Meshes.fromPositions">fromPositions</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.fromPositionsAutoNormals">fromPositionsAutoNormals</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.fromPositionsNormals">fromPositionsNormals</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.lineLoopIndices">lineLoopIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</li>
   <li><a href="#Meshes.lineStripIndices">lineStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
   <li><a href="#Meshes.quadStripIndices">quadStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.</li>
@@ -352,34 +356,6 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <p>The generated mesh. (Type: THREE.BufferGeometry)</p>
 
-<h4 id="examples-3">Examples</h4>
-
-<p>This method creates a ring or disk striped in two colors.<br />
-<img src="mesh2.png" alt="Image of a disk striped in red and almost-white" /></p>
-
-<pre>// inner, outer - inner and outer radius of the disk
-// color1, color2 - each a color vector or string specifying
-// one of the two stripe colors
-// sections - number of stripes
-// sectionCount - number of sections per stripe
-function stripedDisk(inner,outer,color1,color2,sections,sectionCount) {
-if(sectionCount==null)sectionCount=4
-var firstColor=true
-var ret=null
-var sweep=360.0/sections;
-for(var i=0;i&lt;sections;i++) {
-var angle=360.0*(i*1.0/sections);
-var mesh=Meshes.createPartialDisk(inner,outer,
-sectionCount,1,angle,sweep)
-.setColor(firstColor ? color1 : color2)
-firstColor=!firstColor
-ret=ret ? BufferGeometryUtils.mergeGeometries(
-[ret,mesh],false) : mesh;
-}
-return ret;
-}
-</pre>
-
 <p><a name="Meshes.createPlane"></a>
 ### (static) Meshes.createPlane([width], [height], [widthDiv], [heightDiv], [inward])</p>
 
@@ -490,22 +466,90 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <p>The generated mesh. (Type: THREE.BufferGeometry)</p>
 
+<p><a name="Meshes.fromPositions"></a>
+### (static) Meshes.fromPositions(three, vertices, [indices])</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+  <li><code>indices</code> (Type: Array.&lt;number&gt;) (optional)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-12">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: THREE.BufferGeometry)</p>
+
+<p><a name="Meshes.fromPositionsAutoNormals"></a>
+### (static) Meshes.fromPositionsAutoNormals(three, vertices, indices)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+  <li><code>indices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-13">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
+<p><a name="Meshes.fromPositionsNormals"></a>
+### (static) Meshes.fromPositionsNormals(three, vertices, indices)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+  <li><code>indices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-14">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
+<p><a name="Meshes.fromPositionsNormalsUV"></a>
+### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+  <li><code>indices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-15">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
 <p><a name="Meshes.lineLoopIndices"></a>
 ### (static) Meshes.lineLoopIndices(vertexCount)</p>
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</p>
 
-<h4 id="parameters-12">Parameters</h4>
+<h4 id="parameters-16">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
 </ul>
 
-<h4 id="return-value-12">Return Value</h4>
+<h4 id="return-value-16">Return Value</h4>
 
 <p>Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
 
-<h4 id="examples-4">Examples</h4>
+<h4 id="examples-3">Examples</h4>
 
 <p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</p>
 
@@ -519,17 +563,17 @@ Meshes.lineLoopIndices(mesh.vertexCount())
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</p>
 
-<h4 id="parameters-13">Parameters</h4>
+<h4 id="parameters-17">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
 </ul>
 
-<h4 id="return-value-13">Return Value</h4>
+<h4 id="return-value-17">Return Value</h4>
 
 <p>Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
 
-<h4 id="examples-5">Examples</h4>
+<h4 id="examples-4">Examples</h4>
 
 <p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</p>
 
@@ -545,17 +589,17 @@ Meshes.lineStripIndices(mesh.vertexCount())
 quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
 2 new vertices.</p>
 
-<h4 id="parameters-14">Parameters</h4>
+<h4 id="parameters-18">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilateral strip.</li>
 </ul>
 
-<h4 id="return-value-14">Return Value</h4>
+<h4 id="return-value-18">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 2, the excess vertex is ignored. (Type: Array.&lt;number&gt;)</p>
 
-<h4 id="examples-6">Examples</h4>
+<h4 id="examples-5">Examples</h4>
 
 <p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</p>
 
@@ -569,17 +613,17 @@ Meshes.quadStripIndices(mesh.vertexCount())
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</p>
 
-<h4 id="parameters-15">Parameters</h4>
+<h4 id="parameters-19">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilaterals.</li>
 </ul>
 
-<h4 id="return-value-15">Return Value</h4>
+<h4 id="return-value-19">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 4, any excess vertices are ignored. (Type: Array.&lt;number&gt;)</p>
 
-<h4 id="examples-7">Examples</h4>
+<h4 id="examples-6">Examples</h4>
 
 <p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</p>
 
@@ -596,17 +640,17 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex of
 the first trangle, and 1 new vertex.</p>
 
-<h4 id="parameters-16">Parameters</h4>
+<h4 id="parameters-20">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle fan or convex polygon.</li>
 </ul>
 
-<h4 id="return-value-16">Return Value</h4>
+<h4 id="return-value-20">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
-<h4 id="examples-8">Examples</h4>
+<h4 id="examples-7">Examples</h4>
 
 <p>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.</p>
 
@@ -623,17 +667,17 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.</p>
 
-<h4 id="parameters-17">Parameters</h4>
+<h4 id="parameters-21">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle strip.</li>
 </ul>
 
-<h4 id="return-value-17">Return Value</h4>
+<h4 id="return-value-21">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
-<h4 id="examples-9">Examples</h4>
+<h4 id="examples-8">Examples</h4>
 
 <p>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.</p>
 
@@ -696,7 +740,6 @@ Meshes.triangleStripIndices(mesh.vertexCount())
   <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
   <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
   <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
-  <li><a href="extras_tga.html">module:extras/tga</a></li>
   <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
   <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
 </ul>
