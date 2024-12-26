@@ -2247,7 +2247,7 @@ def loggammahelper(n, precision):
     # Unfortunately, the formula from the paper is strictly increasing and
     # that paper didn't specify the exact rate of convergence or
     # an upper bound on the error incurred when truncating the series (a bound required
-    # for our purposes of exact sampling).  Therefore,this method
+    # for our purposes of exact sampling).  Therefore, this method
     # employs an error bound suggested to me by the user "Simply Beautiful Art"
     # from the Mathematics Stack Exchange community:
     # The error is abs(t[n+1]**2 / (t[n+2] - t[n+1])), where t[n+1] and t[n+2] are the first

@@ -152,7 +152,7 @@ A given pseudorandom number generator (PRNG) generates the same sequence of "ran
 
 ### When to Use a Manually-Seeded PRNG
 
-By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. Therefore,an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
+By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. Therefore, an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
