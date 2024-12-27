@@ -22,7 +22,7 @@ geometry draw call.</p>
 
 <ul>
   <li><a href="#Semantic.BITANGENT">BITANGENT</a><br />Attribute semantic for a bitangent vector.</li>
-  <li><a href="#Semantic.COLOR">COLOR</a><br />Attribute semantic for a color.</li>
+  <li><a href="#Semantic.COLOR">COLOR</a><br />“color”: Attribute semantic for a color.</li>
   <li><a href="#Semantic.CUSTOM">CUSTOM</a><br />Attribute semantic for custom attributes.</li>
   <li><a href="#Semantic.JOINT">JOINT</a><br />Attribute semantic for a skinning joint.</li>
   <li><a href="#Semantic.JOINTMATRIX">JOINTMATRIX</a><br />Uniform semantic for a joint matrix.</li>
@@ -30,11 +30,11 @@ geometry draw call.</p>
   <li><a href="#Semantic.MODELVIEW">MODELVIEW</a><br />Uniform semantic for a model-view matrix.</li>
   <li><a href="#Semantic.MODELVIEWINVERSETRANSPOSE">MODELVIEWINVERSETRANSPOSE</a><br />Uniform semantic for the inverse of the 3 × 3 transpose of the model-view matrix.</li>
   <li><a href="#Semantic.MODELVIEWPROJECTION">MODELVIEWPROJECTION</a><br />Uniform semantic for a model-view-projection matrix.</li>
-  <li><a href="#Semantic.NORMAL">NORMAL</a><br />Attribute semantic for a vertex normal.</li>
-  <li><a href="#Semantic.POSITION">POSITION</a><br />Attribute semantic for a vertex position.</li>
+  <li><a href="#Semantic.NORMAL">NORMAL</a><br />“normal”: Attribute semantic for a vertex normal.</li>
+  <li><a href="#Semantic.POSITION">POSITION</a><br />“position”: Attribute semantic for a vertex position.</li>
   <li><a href="#Semantic.PROJECTION">PROJECTION</a><br />Uniform semantic for a projection matrix.</li>
   <li><a href="#Semantic.TANGENT">TANGENT</a><br />Attribute semantic for a tangent vector.</li>
-  <li><a href="#Semantic.TEXCOORD">TEXCOORD</a><br />Attribute semantic for a tuple of texture coordinates.</li>
+  <li><a href="#Semantic.TEXCOORD">TEXCOORD</a><br />“uv”: Attribute semantic for a tuple of texture coordinates.</li>
   <li><a href="#Semantic.VIEW">VIEW</a><br />Uniform semantic for a view matrix.</li>
   <li><a href="#Semantic.VIEWINVERSE">VIEWINVERSE</a><br />Uniform semantic for an inverse view matrix.</li>
   <li><a href="#Semantic.WEIGHT">WEIGHT</a><br />Attribute semantic for a skinning weight.</li>
@@ -48,7 +48,7 @@ geometry draw call.</p>
 <p><a name="Semantic.COLOR"></a>
 ### Semantic.COLOR (constant)</p>
 
-<p>Attribute semantic for a color.
+<p>“color”: Attribute semantic for a color.
 In general, each color consists of three components.</p>
 
 <p><a name="Semantic.CUSTOM"></a>
@@ -89,7 +89,7 @@ In general, each color consists of three components.</p>
 <p><a name="Semantic.NORMAL"></a>
 ### Semantic.NORMAL (constant)</p>
 
-<p>Attribute semantic for a vertex normal.</p>
+<p>“normal”: Attribute semantic for a vertex normal.</p>
 
 <p>For 3D graphics libraries to calculate a mesh buffer’s lighting and shading correctly, that mesh buffer must specify normals for all its vertices.</p>
 
@@ -105,7 +105,7 @@ also contains vertex positions.</p>
 <p><a name="Semantic.POSITION"></a>
 ### Semantic.POSITION (constant)</p>
 
-<p>Attribute semantic for a vertex position.
+<p>“position”: Attribute semantic for a vertex position.
 In general, vertex positions are 2-dimensional or 3-dimensional.</p>
 
 <p><a name="Semantic.PROJECTION"></a>
@@ -121,7 +121,7 @@ In general, vertex positions are 2-dimensional or 3-dimensional.</p>
 <p><a name="Semantic.TEXCOORD"></a>
 ### Semantic.TEXCOORD (constant)</p>
 
-<p>Attribute semantic for a tuple of texture coordinates.</p>
+<p>“uv”: Attribute semantic for a tuple of texture coordinates.</p>
 
 <p>If a texture (array of memory units) will be applied to a mesh buffer’s geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.</p>
 
