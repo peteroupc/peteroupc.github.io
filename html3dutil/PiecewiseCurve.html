@@ -221,7 +221,7 @@ of neighboring points on the spline.</p>
 <p>A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull–Rom spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
 
 <p><a name="PiecewiseCurve.fromEllipseArc"></a>
-### (static) PiecewiseCurve.fromEllipseArc(x, y, w, h, start, sweep)</p>
+### (static) PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)</p>
 
 <p>Creates a piecewise curve that describes an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse’s center
@@ -233,8 +233,8 @@ cubic rational B-spline curves.</p>
 <ul>
   <li><code>x</code> (Type: number)<br />The x-coordinate of the ellipse’s center.</li>
   <li><code>y</code> (Type: number)<br />The y-coordinate of the ellipse’s center.</li>
-  <li><code>w</code> (Type: number)<br />Width of the ellipse’s bounding box.</li>
-  <li><code>h</code> (Type: number)<br />Height of the ellipse’s bounding box.</li>
+  <li><code>radiusX</code> (Type: number)<br />Horizontal radius of the ellipse.</li>
+  <li><code>radiusY</code> (Type: number)<br />Vertical radius of the ellipse.</li>
   <li><code>start</code> (Type: number)<br />Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.</li>
   <li><code>sweep</code> (Type: number)<br />Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system’s x-axis points right and the y-axis down, positive angles run clockwise and negative angles counterclockwise.</li>
 </ul>
@@ -485,7 +485,6 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <ul>
   <li><a href="BSplineCurve.html">BSplineCurve</a></li>
   <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
   <li><a href="Curve.html">Curve</a></li>
   <li><a href="CurveBuilder.html">CurveBuilder</a></li>
   <li><a href="GraphicsPath.html">GraphicsPath</a></li>
@@ -494,7 +493,6 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
   <li><a href="MeshBuffer.html">MeshBuffer</a></li>
   <li><a href="Meshes.html">Meshes</a></li>
   <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
   <li><a href="ShapeGroup.html">ShapeGroup</a></li>
   <li><a href="Surface.html">Surface</a></li>
   <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>

@@ -64,6 +64,7 @@ points about the z-axis.</li>
   <li><a href="#Meshes.lineStripIndices">lineStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
   <li><a href="#Meshes.quadStripIndices">quadStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.</li>
   <li><a href="#Meshes.quadsIndices">quadsIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</li>
+  <li><a href="#Meshes.recalcNormals">recalcNormals</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.triangleFanIndices">triangleFanIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
   <li><a href="#Meshes.triangleStripIndices">triangleStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
 </ul>
@@ -632,6 +633,22 @@ Meshes.quadsIndices(mesh.vertexCount())
 .map(x=&gt;mesh.getIndex(x)));
 </pre>
 
+<p><a name="Meshes.recalcNormals"></a>
+### (static) Meshes.recalcNormals(buffer, inside)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<ul>
+  <li><code>buffer</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>inside</code> (Type: *)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-20">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
 <p><a name="Meshes.triangleFanIndices"></a>
 ### (static) Meshes.triangleFanIndices(vertexCount)</p>
 
@@ -640,13 +657,13 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex of
 the first trangle, and 1 new vertex.</p>
 
-<h4 id="parameters-20">Parameters</h4>
+<h4 id="parameters-21">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle fan or convex polygon.</li>
 </ul>
 
-<h4 id="return-value-20">Return Value</h4>
+<h4 id="return-value-21">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
@@ -667,13 +684,13 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.</p>
 
-<h4 id="parameters-21">Parameters</h4>
+<h4 id="parameters-22">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle strip.</li>
 </ul>
 
-<h4 id="return-value-21">Return Value</h4>
+<h4 id="return-value-22">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
@@ -702,7 +719,6 @@ Meshes.triangleStripIndices(mesh.vertexCount())
 <ul>
   <li><a href="BSplineCurve.html">BSplineCurve</a></li>
   <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="BufferAccessor.html">BufferAccessor</a></li>
   <li><a href="Curve.html">Curve</a></li>
   <li><a href="CurveBuilder.html">CurveBuilder</a></li>
   <li><a href="GraphicsPath.html">GraphicsPath</a></li>
@@ -711,7 +727,6 @@ Meshes.triangleStripIndices(mesh.vertexCount())
   <li><a href="MeshBuffer.html">MeshBuffer</a></li>
   <li><a href="Meshes.html">Meshes</a></li>
   <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="Semantic.html">Semantic</a></li>
   <li><a href="ShapeGroup.html">ShapeGroup</a></li>
   <li><a href="Surface.html">Surface</a></li>
   <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
