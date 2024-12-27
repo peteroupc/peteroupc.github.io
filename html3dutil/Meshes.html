@@ -58,13 +58,13 @@ points about the z-axis.</li>
   <li><a href="#Meshes.createTorus">createTorus</a><br />Creates a mesh of a torus (doughnut shape), centered at the origin.</li>
   <li><a href="#Meshes.fromPositions">fromPositions</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.fromPositionsAutoNormals">fromPositionsAutoNormals</a><br />TODO: Not documented yet.</li>
-  <li><a href="#Meshes.fromPositionsNormals">fromPositionsNormals</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.lineLoopIndices">lineLoopIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</li>
   <li><a href="#Meshes.lineStripIndices">lineStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
   <li><a href="#Meshes.quadStripIndices">quadStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.</li>
   <li><a href="#Meshes.quadsIndices">quadsIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</li>
   <li><a href="#Meshes.recalcNormals">recalcNormals</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.reverseWinding">reverseWinding</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.triangleFanIndices">triangleFanIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
   <li><a href="#Meshes.triangleStripIndices">triangleStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
 </ul>
@@ -501,8 +501,8 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
-<p><a name="Meshes.fromPositionsNormals"></a>
-### (static) Meshes.fromPositionsNormals(three, vertices, indices)</p>
+<p><a name="Meshes.fromPositionsNormalsUV"></a>
+### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)</p>
 
 <p>TODO: Not documented yet.</p>
 
@@ -518,35 +518,18 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
-<p><a name="Meshes.fromPositionsNormalsUV"></a>
-### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)</p>
-
-<p>TODO: Not documented yet.</p>
-
-<h4 id="parameters-15">Parameters</h4>
-
-<ul>
-  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
-  <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
-  <li><code>indices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
-</ul>
-
-<h4 id="return-value-15">Return Value</h4>
-
-<p>TODO: Not documented yet. (Type: *)</p>
-
 <p><a name="Meshes.lineLoopIndices"></a>
 ### (static) Meshes.lineLoopIndices(vertexCount)</p>
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</p>
 
-<h4 id="parameters-16">Parameters</h4>
+<h4 id="parameters-15">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
 </ul>
 
-<h4 id="return-value-16">Return Value</h4>
+<h4 id="return-value-15">Return Value</h4>
 
 <p>Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
 
@@ -564,13 +547,13 @@ Meshes.lineLoopIndices(mesh.vertexCount())
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</p>
 
-<h4 id="parameters-17">Parameters</h4>
+<h4 id="parameters-16">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
 </ul>
 
-<h4 id="return-value-17">Return Value</h4>
+<h4 id="return-value-16">Return Value</h4>
 
 <p>Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
 
@@ -590,13 +573,13 @@ Meshes.lineStripIndices(mesh.vertexCount())
 quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
 2 new vertices.</p>
 
-<h4 id="parameters-18">Parameters</h4>
+<h4 id="parameters-17">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilateral strip.</li>
 </ul>
 
-<h4 id="return-value-18">Return Value</h4>
+<h4 id="return-value-17">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 2, the excess vertex is ignored. (Type: Array.&lt;number&gt;)</p>
 
@@ -614,13 +597,13 @@ Meshes.quadStripIndices(mesh.vertexCount())
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</p>
 
-<h4 id="parameters-19">Parameters</h4>
+<h4 id="parameters-18">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilaterals.</li>
 </ul>
 
-<h4 id="return-value-19">Return Value</h4>
+<h4 id="return-value-18">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 4, any excess vertices are ignored. (Type: Array.&lt;number&gt;)</p>
 
@@ -638,11 +621,26 @@ Meshes.quadsIndices(mesh.vertexCount())
 
 <p>TODO: Not documented yet.</p>
 
-<h4 id="parameters-20">Parameters</h4>
+<h4 id="parameters-19">Parameters</h4>
 
 <ul>
   <li><code>buffer</code> (Type: *)<br />TODO: Not documented yet.</li>
   <li><code>inside</code> (Type: *)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-19">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
+<p><a name="Meshes.reverseWinding"></a>
+### (static) Meshes.reverseWinding(buffer)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<ul>
+  <li><code>buffer</code> (Type: *)<br />TODO: Not documented yet.</li>
 </ul>
 
 <h4 id="return-value-20">Return Value</h4>
