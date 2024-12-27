@@ -58,6 +58,8 @@ points about the z-axis.</li>
   <li><a href="#Meshes.createTorus">createTorus</a><br />Creates a mesh of a torus (doughnut shape), centered at the origin.</li>
   <li><a href="#Meshes.fromPositions">fromPositions</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.fromPositionsAutoNormals">fromPositionsAutoNormals</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.fromPositionsColors">fromPositionsColors</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.fromPositionsNormals">fromPositionsNormals</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.lineLoopIndices">lineLoopIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</li>
   <li><a href="#Meshes.lineStripIndices">lineStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
@@ -501,8 +503,8 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
-<p><a name="Meshes.fromPositionsNormalsUV"></a>
-### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)</p>
+<p><a name="Meshes.fromPositionsColors"></a>
+### (static) Meshes.fromPositionsColors(three, vertices, indices)</p>
 
 <p>TODO: Not documented yet.</p>
 
@@ -510,11 +512,45 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <ul>
   <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>vertices</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>indices</code> (Type: *)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-14">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
+<p><a name="Meshes.fromPositionsNormals"></a>
+### (static) Meshes.fromPositionsNormals(three, vertices, indices)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>vertices</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>indices</code> (Type: *)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-15">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
+<p><a name="Meshes.fromPositionsNormalsUV"></a>
+### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
   <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
   <li><code>indices</code> (Type: Array.&lt;number&gt;)<br />TODO: Not documented yet.</li>
 </ul>
 
-<h4 id="return-value-14">Return Value</h4>
+<h4 id="return-value-16">Return Value</h4>
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
@@ -523,13 +559,13 @@ See the “<a href="tutorial-shapes.html">Creating Shapes</a>” tutorial.</p>
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</p>
 
-<h4 id="parameters-15">Parameters</h4>
+<h4 id="parameters-17">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
 </ul>
 
-<h4 id="return-value-15">Return Value</h4>
+<h4 id="return-value-17">Return Value</h4>
 
 <p>Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
 
@@ -547,13 +583,13 @@ Meshes.lineLoopIndices(mesh.vertexCount())
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</p>
 
-<h4 id="parameters-16">Parameters</h4>
+<h4 id="parameters-18">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the line loop.</li>
 </ul>
 
-<h4 id="return-value-16">Return Value</h4>
+<h4 id="return-value-18">Return Value</h4>
 
 <p>Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if ‘vertexCount’ is less than 2. (Type: Array.&lt;number&gt;)</p>
 
@@ -573,13 +609,13 @@ Meshes.lineStripIndices(mesh.vertexCount())
 quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
 2 new vertices.</p>
 
-<h4 id="parameters-17">Parameters</h4>
+<h4 id="parameters-19">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilateral strip.</li>
 </ul>
 
-<h4 id="return-value-17">Return Value</h4>
+<h4 id="return-value-19">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 2, the excess vertex is ignored. (Type: Array.&lt;number&gt;)</p>
 
@@ -597,13 +633,13 @@ Meshes.quadStripIndices(mesh.vertexCount())
 
 <p>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</p>
 
-<h4 id="parameters-18">Parameters</h4>
+<h4 id="parameters-20">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the quadrilaterals.</li>
 </ul>
 
-<h4 id="return-value-18">Return Value</h4>
+<h4 id="return-value-20">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 4. If ‘vertexCount’ is not divisible by 4, any excess vertices are ignored. (Type: Array.&lt;number&gt;)</p>
 
@@ -621,14 +657,14 @@ Meshes.quadsIndices(mesh.vertexCount())
 
 <p>TODO: Not documented yet.</p>
 
-<h4 id="parameters-19">Parameters</h4>
+<h4 id="parameters-21">Parameters</h4>
 
 <ul>
   <li><code>buffer</code> (Type: *)<br />TODO: Not documented yet.</li>
   <li><code>inside</code> (Type: *)<br />TODO: Not documented yet.</li>
 </ul>
 
-<h4 id="return-value-19">Return Value</h4>
+<h4 id="return-value-21">Return Value</h4>
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
@@ -637,13 +673,13 @@ Meshes.quadsIndices(mesh.vertexCount())
 
 <p>TODO: Not documented yet.</p>
 
-<h4 id="parameters-20">Parameters</h4>
+<h4 id="parameters-22">Parameters</h4>
 
 <ul>
   <li><code>buffer</code> (Type: *)<br />TODO: Not documented yet.</li>
 </ul>
 
-<h4 id="return-value-20">Return Value</h4>
+<h4 id="return-value-22">Return Value</h4>
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
@@ -655,13 +691,13 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex of
 the first trangle, and 1 new vertex.</p>
 
-<h4 id="parameters-21">Parameters</h4>
+<h4 id="parameters-23">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle fan or convex polygon.</li>
 </ul>
 
-<h4 id="return-value-21">Return Value</h4>
+<h4 id="return-value-23">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
@@ -682,13 +718,13 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.</p>
 
-<h4 id="parameters-22">Parameters</h4>
+<h4 id="parameters-24">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle strip.</li>
 </ul>
 
-<h4 id="return-value-22">Return Value</h4>
+<h4 id="return-value-24">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
@@ -729,30 +765,63 @@ Meshes.triangleStripIndices(mesh.vertexCount())
   <li><a href="Surface.html">Surface</a></li>
   <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
   <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_arrow.html">module:extras/arrow</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+  <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+  <li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+  <li><a href="extras_convex.html">module:extras/convex</a></li>
+  <li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
   <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
   <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
   <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
   <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+  <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
   <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
   <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
   <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
   <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
   <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+  <li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+  <li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+  <li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
   <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
   <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_meshes_text.html">module:extras/meshes/text</a></li>
+  <li><a href="extras_meshes_text.TextFont.html">module:extras/meshes/text.TextFont</a></li>
+  <li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
   <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
   <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
   <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pathtomesh.html">module:extras/pathtomesh</a></li>
   <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
+  <li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+  <li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+  <li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
   <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_raypick.html">module:extras/raypick</a></li>
+  <li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+  <li><a href="extras_starfield.html">module:extras/starfield</a></li>
+  <li><a href="extras_starfield.StarField.html">module:extras/starfield.StarField</a></li>
   <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_stl.html">module:extras/stl</a></li>
+  <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+  <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
   <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
   <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
   <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
   <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
   <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+  <li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+  <li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+  <li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+  <li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+  <li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
 </ul>
 </nav></body></html>
