@@ -490,9 +490,7 @@ the path.
 #### Return Value
 
 Array of line segments.
-Each line segment is an array of four numbers: the X and
-y-coordinates of the start point, respectively, then the X and
-y-coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number&gt;&gt;)
+Each line segment is an array of four numbers: the x- and y-coordinates of the start point, respectively, then the x- and y-coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number&gt;&gt;)
 
 <a name="GraphicsPath_getPoints"></a>
 ### GraphicsPath#getPoints(numPoints)
@@ -705,7 +703,7 @@ Adds path segments to this path that form a polygon or a connected line segment 
 
 #### Parameters
 
-* `pointCoords` (Type: Array.&lt;number&gt;)<br />An array of numbers containing the x- and y-coordinates of each point in the sequence of line segments. Each pair of numbers gives the X and Y coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.
+* `pointCoords` (Type: Array.&lt;number&gt;)<br />An array of numbers containing the x- and y-coordinates of each point in the sequence of line segments. Each pair of numbers gives the x- and y-coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.
 * `closed` (Type: number)<br />If "true", the sequence of points describes a closed polygon and a command to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").
 
 #### Return Value
