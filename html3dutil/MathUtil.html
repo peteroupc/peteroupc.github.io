@@ -1081,7 +1081,7 @@ Finds the center of a 3D bounding box.
 
 #### Parameters
 
-* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest x-, y-, and z-coordinates.
+* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
@@ -1097,7 +1097,7 @@ the first three values of the given array with its last three values.
 
 #### Parameters
 
-* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest x-, y-, and z-coordinates.
+* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
@@ -1116,7 +1116,7 @@ is larger than the corresponding maximum coordinate.
 
 #### Parameters
 
-* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest x-, y-, and z-coordinates.
+* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
@@ -1173,7 +1173,7 @@ is at least partially inside a view frustum.
 #### Parameters
 
 * `frustum` (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br />An array of six 4-element arrays representing the six clipping planes of the view frustum. In order, they are the left, right, top, bottom, near, and far clipping planes.
-* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box in world space, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest x-, y-, and z-coordinates.
+* `box` (Type: Array.&lt;number&gt;)<br />An axis-aligned bounding box in world space, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest X, Y, and Z coordinates.
 
 #### Return Value
 
@@ -1538,7 +1538,8 @@ vector or nearly so.
     var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
 
 The following example creates an
-isometric projection for a right-handed coordinate system. The y-axis will point up, the z-axis toward the lower left, and the x-axis toward
+isometric projection for a right-handed coordinate system. The Y
+axis will point up, the z-axis toward the lower left, and the x-axis toward
 the lower right.
 
     // Assumes an orthographic projection matrix is used. Example:
@@ -1834,7 +1835,8 @@ The resulting 4 &times; 4 matrix. (Type: Array.&lt;number&gt;)
 Transforms a 3-element vector with a 4 &times; 4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
 
-The transformation involves transforming a 4-element vector with the same x-, y-, and z-coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
+The transformation involves transforming a 4-element vector with the same X,
+Y, and z-coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
 then dividing X, Y, and Z of the transformed 4-element
 vector by that vector's W (a <i>perspective divide</i>),
 then returning that vector's new X, Y, and Z.
@@ -1907,7 +1909,7 @@ Multiplies a 4 &times; 4 matrix by a scaling transformation.
 #### Parameters
 
 * `mat` (Type: Array.&lt;number&gt;)<br />4 &times; 4 matrix to multiply.
-* `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the x-, y-, and z-axes.
+* `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and z-axes.
 * `v3y` (Type: number)<br />Scale factor along the y-axis.
 * `v3z` (Type: number)<br />Scale factor along the z-axis.
 
@@ -1924,7 +1926,7 @@ scaling transformation.
 #### Parameters
 
 * `mat` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix.
-* `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the x-, y-, and z-axes.
+* `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and z-axes.
 * `v3y` (Type: number) (optional)<br />Scale factor along the y-axis.
 * `v3z` (Type: number) (optional)<br />Scale factor along the z-axis.
 
@@ -1939,7 +1941,7 @@ Returns a 4 &times; 4 matrix representing a scaling transformation.
 
 #### Parameters
 
-* `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the x-, y-, and z-axes.
+* `v3` (Type: Array.&lt;number&gt; | number)<br />Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and z-axes.
 * `v3y` (Type: number)<br />Scale factor along the y-axis.
 * `v3z` (Type: number)<br />Scale factor along the z-axis.
 
@@ -2045,7 +2047,7 @@ Multiplies a 4 &times; 4 matrix by a translation transformation.
 #### Parameters
 
 * `mat` (Type: Array.&lt;number&gt;)<br />The matrix to multiply.
-* `v3` (Type: Array.&lt;number&gt; | number)<br />Translation along the x-axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the translations along the x-, y-, and z-axes.
+* `v3` (Type: Array.&lt;number&gt; | number)<br />Translation along the x-axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the translations along the X, Y, and z-axes.
 * `v3y` (Type: number)<br />Translation along the y-axis.
 * `v3z` (Type: number)<br />Translation along the z-axis.
 
@@ -2060,7 +2062,7 @@ Returns a 4 &times; 4 matrix representing a translation.
 
 #### Parameters
 
-* `v3` (Type: Array.&lt;number&gt; | number)<br />Translation along the x-axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the translations along the x-, y-, and z-axes.
+* `v3` (Type: Array.&lt;number&gt; | number)<br />Translation along the x-axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the translations along the X, Y, and z-axes.
 * `v3y` (Type: number)<br />Translation along the y-axis.
 * `v3z` (Type: number)<br />Translation along the z-axis.
 
@@ -3292,7 +3294,7 @@ z-coordinates within the view volume range from 0 to 1 (assuming
 * `vector` (Type: Array.&lt;number&gt;)<br />A 3-element vector giving the x-, y-, and z-coordinates of the 3D point to transform, in window coordinates.
 * `matrix` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method.<br /> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See <a href="MathUtil.html#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a> for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
 * `viewport` (Type: Array.&lt;number&gt;)<br />A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's x-coordinate, its y-coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
-* `yUp` (Type: boolean) (optional)<br />If false, null, undefined, or omitted, reverses the sign of the y-coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the y-coordinate will remain unchanged. If window y-coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upper-left corner.
+* `yUp` (Type: boolean) (optional)<br />If false, null, undefined, or omitted, reverses the sign of the y-coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window y-coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upper-left corner.
 
 #### Return Value
 
@@ -3613,7 +3615,7 @@ using the given transformation matrix and viewport rectangle.
 * `vector` (Type: Array.&lt;number&gt;)<br />A 3-element vector giving the x-, y-, and z-coordinates of the 3D point to transform.
 * `matrix` (Type: Array.&lt;number&gt;)<br />A 4 &times; 4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br />This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br /> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the x-, y-, and z-coordinates within the view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, y-coordinates increase in the opposite direction), and z-coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such z-coordinates range from -1 to 1.
 * `viewport` (Type: Array.&lt;number&gt;)<br />A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's x-coordinate, its y-coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
-* `yUp` (Type: boolean) (optional)<br />If false, null, undefined, or omitted, reverses the sign of the y-coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the y-coordinate will remain unchanged. If window y-coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upper-left corner.
+* `yUp` (Type: boolean) (optional)<br />If false, null, undefined, or omitted, reverses the sign of the y-coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window y-coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upper-left corner.
 
 #### Return Value
 
