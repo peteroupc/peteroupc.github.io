@@ -1,0 +1,286 @@
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+            <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
+                    tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
+            </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1 id="moduleextrasmeshestexttextfont">module:extras/meshes/text.TextFont</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name="extras_meshes_text.TextFont"></a>
+### new module:extras/meshes/text.TextFont()</p>
+
+<p>Represents a bitmap font, which supports drawing two-dimensional
+text. This class supports
+traditional bitmap fonts and signed distance field fonts.</p>
+
+<p>Bitmap fonts consist of a font definition file and one
+or more textures containing the shape of each font glyph. The glyphs
+are packed so that the glyphs don’t overlap each other.</p>
+
+<p>In a signed distance field font, each pixel’s alpha value depends on the
+distance from that location to the edge of the glyph. A pixel alpha less
+than 0.5 (127 in most image formats) means the pixel is outside the
+glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
+outside the glyph) and 1 (for inside the glyph) means the pixel is
+outside a buffer zone formed by the glyph’s outline. Each glyph is usually
+given extra space to accommodate the signed distance field information.</p>
+
+<p>The font definition file formats supported are text (“.fnt”),
+JSON (“.json”), binary (“.fnt” or “.bin”), and XML (“.xml”).
+The text and binary file formats are specified at
+<a href="http://www.angelcode.com/products/bmfont/doc/file_format.html">this
+page</a>. The XML format is very similar to the text file format.
+The JSON format is described at
+<a href="https://github.com/Jam3/load-bmfont/blob/master/json-specification.html">this
+page</a>.</p>
+
+<p>See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
+for a list of bitmap font generation tools. (No one tool is recommended over any
+other, and the mention of this link is not an endorsement or sponsorship
+of any particular tool.)</p>
+
+<p>NOTE: The constructor should not be called directly by applications.
+Use the TextFont.load method to get an TextFont object. This
+constructor’s parameters are undocumented and are subject to change.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script “extras/meshes/text.js”; the
+class is not included in the “h3du_min.js” file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre>&lt;script type="text/javascript" src="extras/meshes/text.js"&gt;&lt;/script&gt;
+</pre>
+
+<h3 id="methods">Methods</h3>
+
+<ul>
+  <li><a href="#extras_meshes_text_TextFont.loadData">loadData</a><br />Loads a bitmap font definition from a file.</li>
+  <li><a href="#extras_meshes_text_TextFont_loadTextures">loadTextures</a><br />Loads the texture files used by this font object.</li>
+  <li><a href="#extras_meshes_text_TextFont.loadWithTextures">loadWithTextures</a><br />Loads a bitmap font definition from a file along with the textures
+used by that font.</li>
+  <li><a href="#extras_meshes_text_TextFont_makeTextMeshes">makeTextMeshes</a><br />Creates an array of meshes containing the primitives
+needed to draw text with this font.</li>
+  <li><a href="#extras_meshes_text_TextFont_measure">measure</a><br />Calculates the width and height of a text string when
+drawn using this font.</li>
+  <li><a href="#extras_meshes_text_TextFont_textShape">textShape</a><br />Creates a group of shapes containing the primitives needed to
+draw text in the given position, size, and color.</li>
+</ul>
+
+<p><a name="extras_meshes_text_TextFont.loadData"></a>
+### (static) module:extras/meshes/text~TextFont.loadData(data, fontFileName)</p>
+
+<p>Loads a bitmap font definition from a file.
+Note that this method only loads the font data and not the bitmaps
+used to represent the font.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<ul>
+  <li><code>data</code> (Type: ArrayBuffer)<br />The data containing a bitmap font definition.</li>
+  <li><code>fontFileName</code> (Type: string)<br />The URL of the font data file to load. The following file extensions are read as the following formats:&lt;ul&gt; &lt;li&gt;“.xml”: XML&lt;/li&gt; &lt;li&gt;“.json”: JSON&lt;/li&gt; &lt;li&gt;“.bin”: Binary&lt;/li&gt; &lt;li&gt;“.fnt”: Text or binary&lt;/li&gt; &lt;li&gt;All others: Text&lt;/li&gt;&lt;/ul&gt;</li>
+</ul>
+
+<h4 id="return-value">Return Value</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Text font data, or null if an error occurs. (Type: TextFont</td>
+      <td>null)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a name="extras_meshes_text_TextFont_loadTextures"></a>
+### module:extras/meshes/text~TextFont#loadTextures(textureLoader)</p>
+
+<p>Loads the texture files used by this font object.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<ul>
+  <li><code>textureLoader</code> (Type: H3DU.TextureLoader)<br />Texture loader object to use when loading the textures.</li>
+</ul>
+
+<h4 id="return-value-1">Return Value</h4>
+
+<p>A promise as described in
+<a href="getPromiseResultsAll.html">getPromiseResultsAll</a>. If the promise
+resolves, each item in the resulting array will be a loaded
+Texture object. (Type: Promise.&lt;H3DU.Texture&gt;)</p>
+
+<p><a name="extras_meshes_text_TextFont.loadWithTextures"></a>
+### (static) module:extras/meshes/text~TextFont.loadWithTextures(fontFileName, textureLoader)</p>
+
+<p>Loads a bitmap font definition from a file along with the textures
+used by that font.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<ul>
+  <li><code>fontFileName</code> (Type: string)<br />The URL of the font data file to load. The following file extensions are read as the following formats:&lt;ul&gt; &lt;li&gt;“.xml”: XML&lt;/li&gt; &lt;li&gt;“.json”: JSON&lt;/li&gt; &lt;li&gt;“.bin”: Binary&lt;/li&gt; &lt;li&gt;“.fnt”: Text or binary&lt;/li&gt; &lt;li&gt;All others: Text&lt;/li&gt;&lt;/ul&gt;</li>
+  <li><code>textureLoader</code> (Type: H3DU.TextureLoader)<br />Texture loader object to use when loading the textures.</li>
+</ul>
+
+<h4 id="return-value-2">Return Value</h4>
+
+<p>A promise that is resolved
+when the font data and textures are loaded successfully,
+and is rejected when an error occurs.
+If the promise is resolved, the result will be an object with the
+following keys:&lt;ul&gt;</p>
+<li><code>url</code> - The URL of the font data file.
+<li><code>font</code> - The font data in the form of an TextFont object.
+<li><code>textures</code> - An array of Texture objects used by the font,
+in the order in which they are declared in the font data file.
+&lt;/ul&gt; (Type: Promise)
+
+<a name="extras_meshes_text_TextFont_makeTextMeshes"></a>
+### module:extras/meshes/text~TextFont#makeTextMeshes(str, params)
+
+Creates an array of meshes containing the primitives
+needed to draw text with this font.
+
+#### Parameters
+
+* `str` (Type: string)<br />The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
+* `params` (Type: Object)<br />An object whose keys have the possibilities given later, and whose values are those allowed for each key.<ul> <li><code>x</code> - x-coordinate of the upper-left corner of the text. If null, undefined, or omitted, uses 0. For the text to show upright, the coordinate system should have the x-axis pointing right and the y-axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - y-coordinate of the upper-left corner of the text. If null, undefined, or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null, undefined, or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be "left", "center", or "right" (all strings). &lt;/ul&gt;
+
+#### Return Value
+
+An array of meshes representing the text.
+There is one mesh for each texture page of the font. If none of the
+text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;H3DU.MeshBuffer&gt;)
+
+<a name="extras_meshes_text_TextFont_measure"></a>
+### module:extras/meshes/text~TextFont#measure(str, params)
+
+Calculates the width and height of a text string when
+drawn using this font.
+
+#### Parameters
+
+* `str` (Type: string)<br />The text string to measure. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
+* `params` (Type: Object)<br />An object described in TextFont#makeTextMeshes.
+
+#### Return Value
+
+An array of two numbers;
+the first is the width of the string, and the second is the
+height of the string (taking into account line feed characters,
+U+000A, that break lines). (Type: Array.&lt;number&gt;)
+
+<a name="extras_meshes_text_TextFont_textShape"></a>
+### module:extras/meshes/text~TextFont#textShape(str, params)
+
+Creates a group of shapes containing the primitives needed to
+draw text in the given position, size, and color.
+For the text to show upright, the coordinate system should have the
+x-axis pointing right and the y-axis pointing down (for example, an
+orthographic projection where the left and top coordinates are less
+than the right and bottom coordinates, respectively).
+
+#### Parameters
+
+* `str` (Type: string)<br />The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
+* `params` (Type: Object)<br />An object described in TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="toGLColor.html">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (Texture) to use with this font, or a single Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. &lt;/ul&gt;
+
+#### Return Value
+
+The generated group of shapes. (Type: H3DU.ShapeGroup)
+
+[Back to documentation index.](index.html)
+</li></li></li></ul></li></li></li></li></li></ul></li></li></li>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+
+<div class="noprint">
+<p>
+<a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3 id="navigation">Navigation</h3>
+
+<ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_meshes_arrow.html">module:extras/meshes/arrow</a></li>
+  <li><a href="extras_meshes_contourlines.html">module:extras/meshes/contourlines</a></li>
+  <li><a href="extras_meshes_convex.html">module:extras/meshes/convex</a></li>
+  <li><a href="extras_meshes_createfloor.html">module:extras/meshes/createfloor</a></li>
+  <li><a href="extras_meshes_drawingtoy.html">module:extras/meshes/drawingtoy</a></li>
+  <li><a href="extras_meshes_drawingtoy.DrawingToy.html">module:extras/meshes/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_meshes_gearmesh.html">module:extras/meshes/gearmesh</a></li>
+  <li><a href="extras_meshes_pathtomesh.html">module:extras/meshes/pathtomesh</a></li>
+  <li><a href="extras_meshes_polyhedra.html">module:extras/meshes/polyhedra</a></li>
+  <li><a href="extras_meshes_polyhedra.Polyhedra.html">module:extras/meshes/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_meshes_raypick.html">module:extras/meshes/raypick</a></li>
+  <li><a href="extras_meshes_starfield.html">module:extras/meshes/starfield</a></li>
+  <li><a href="extras_meshes_starfield.StarField.html">module:extras/meshes/starfield.StarField</a></li>
+  <li><a href="extras_meshes_stl.html">module:extras/meshes/stl</a></li>
+  <li><a href="extras_meshes_text.html">module:extras/meshes/text</a></li>
+  <li><a href="extras_meshes_text.TextFont.html">module:extras/meshes/text.TextFont</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_shaders_checkerboardshader.html">module:extras/shaders/checkerboardshader</a></li>
+  <li><a href="extras_shaders_colormatrixshader.html">module:extras/shaders/colormatrixshader</a></li>
+  <li><a href="extras_shaders_fragmentshaderlib.html">module:extras/shaders/fragmentshaderlib</a></li>
+  <li><a href="extras_shaders_horgradshader.html">module:extras/shaders/horgradshader</a></li>
+  <li><a href="extras_shaders_kernelmatrixshader.html">module:extras/shaders/kernelmatrixshader</a></li>
+  <li><a href="extras_shaders_marbleshader.html">module:extras/shaders/marbleshader</a></li>
+  <li><a href="extras_shaders_marbleshader2.html">module:extras/shaders/marbleshader2</a></li>
+  <li><a href="extras_shaders_mirrorshader.html">module:extras/shaders/mirrorshader</a></li>
+  <li><a href="extras_shaders_pixelateshader.html">module:extras/shaders/pixelateshader</a></li>
+  <li><a href="extras_shaders_radgradshader.html">module:extras/shaders/radgradshader</a></li>
+  <li><a href="extras_shaders_skysphereshader.html">module:extras/shaders/skysphereshader</a></li>
+  <li><a href="extras_shaders_stripesbackshader.html">module:extras/shaders/stripesbackshader</a></li>
+  <li><a href="extras_shaders_sunburstbackshader.html">module:extras/shaders/sunburstbackshader</a></li>
+  <li><a href="extras_shaders_vignetteshader.html">module:extras/shaders/vignetteshader</a></li>
+  <li><a href="extras_shaders_warpshader.html">module:extras/shaders/warpshader</a></li>
+  <li><a href="extras_shaders_waterpaintshader.html">module:extras/shaders/waterpaintshader</a></li>
+  <li><a href="extras_shaders_waveshader.html">module:extras/shaders/waveshader</a></li>
+  <li><a href="extras_shaders_woodshader.html">module:extras/shaders/woodshader</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+</ul>
+</nav></body></html>

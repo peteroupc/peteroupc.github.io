@@ -1,0 +1,343 @@
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+            <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
+                    tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
+            </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1 id="moduleextrasmeshespolyhedrapolyhedra">module:extras/meshes/polyhedra.Polyhedra</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name="extras_meshes_polyhedra.Polyhedra"></a>
+### new module:extras/meshes/polyhedra.Polyhedra()</p>
+
+<p>Contains helper methods for generating the five platonic solids
+and other polyhedra.</p>
+
+<h3 id="methods">Methods</h3>
+
+<ul>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.dodecahedron">dodecahedron</a><br />Generates a mesh of a regular dodecahedron or a sphere based on that solid.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.dodecahedronFaces">dodecahedronFaces</a><br />Gets the vertices of a dodecahedron with maximum radius 1.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.dodecahedronFacesCompact">dodecahedronFacesCompact</a><br />Gets a more compact representation of the vertices of a dodecahedron
+with maximum radius 1.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.hexahedron">hexahedron</a><br />Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.hexahedronFaces">hexahedronFaces</a><br />Gets the vertices of a hexahedron (cube) with maximum radius 1.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.hexahedronFacesCompact">hexahedronFacesCompact</a><br />Gets a more compact representation of the vertices of a hexahedron
+(cube) with maximum radius 1.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.icosahedron">icosahedron</a><br />Generates a mesh of a regular icosahedron or a sphere based on that solid.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.icosahedronFaces">icosahedronFaces</a><br />Gets the vertices of a regular icosahedron with maximum radius 1.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.makeSphere">makeSphere</a><br />Modifies the vertices and indices of a solid to
+generate an approximation of a sphere.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.normDistances">normDistances</a><br />Normalizes the distance from the origin to each vertex in the given
+array to a fixed radius.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.octahedron">octahedron</a><br />Generates a mesh of a regular octahedron or a sphere based on that solid.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.octahedronFaces">octahedronFaces</a><br />Gets the vertices of a regular octahedron with radius 1.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.tetrahedron">tetrahedron</a><br />Generates a mesh of a regular tetrahedron or a sphere based on that solid.</li>
+  <li><a href="#extras_meshes_polyhedra_Polyhedra.tetrahedronFaces">tetrahedronFaces</a><br />Gets the vertices of a tetrahedron with radius 1.</li>
+</ul>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.dodecahedron"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.dodecahedron(radius, level)</p>
+
+<p>Generates a mesh of a regular dodecahedron or a sphere based on that solid.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<ul>
+  <li><code>radius</code> (Type: number)<br />Maximum radius from the center of the solid to one of its vertices.</li>
+  <li><code>level</code> (Type: number)<br />If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid’s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4 id="return-value">Return Value</h4>
+
+<p>The generated solid. (Type: THREE.BufferGeometry)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.dodecahedronFaces"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.dodecahedronFaces()</p>
+
+<p>Gets the vertices of a dodecahedron with maximum radius 1.</p>
+
+<h4 id="return-value-1">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.dodecahedronFacesCompact"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.dodecahedronFacesCompact()</p>
+
+<p>Gets a more compact representation of the vertices of a dodecahedron
+with maximum radius 1.</p>
+
+<h4 id="return-value-2">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.hexahedron"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.hexahedron(radius, level)</p>
+
+<p>Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<ul>
+  <li><code>radius</code> (Type: number)<br />Maximum radius from the center of the solid to one of its vertices.</li>
+  <li><code>level</code> (Type: number)<br />If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid’s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4 id="return-value-3">Return Value</h4>
+
+<p>The generated solid. (Type: THREE.BufferGeometry)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.hexahedronFaces"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.hexahedronFaces()</p>
+
+<p>Gets the vertices of a hexahedron (cube) with maximum radius 1.</p>
+
+<h4 id="return-value-4">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.hexahedronFacesCompact"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.hexahedronFacesCompact()</p>
+
+<p>Gets a more compact representation of the vertices of a hexahedron
+(cube) with maximum radius 1.</p>
+
+<h4 id="return-value-5">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.icosahedron"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.icosahedron(radius, level)</p>
+
+<p>Generates a mesh of a regular icosahedron or a sphere based on that solid.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<ul>
+  <li><code>radius</code> (Type: number)<br />Maximum radius from the center of the solid to one of its vertices.</li>
+  <li><code>level</code> (Type: number)<br />If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid’s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4 id="return-value-6">Return Value</h4>
+
+<p>The generated solid. (Type: THREE.BufferGeometry)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.icosahedronFaces"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.icosahedronFaces()</p>
+
+<p>Gets the vertices of a regular icosahedron with maximum radius 1.</p>
+
+<h4 id="return-value-7">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.makeSphere"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.makeSphere(vi, radius, level)</p>
+
+<p>Modifies the vertices and indices of a solid to
+generate an approximation of a sphere.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<ul>
+  <li><code>vi</code> (Type: Array.&lt;Array.&lt;number»)<br />A two-element array. The first element contains an array of the vertices that make up the solid (each vertex’s x-, y-, and z-coordinates are stored as three elements of that array), and the second element contains an array of vertex indices (multiplying each element by 3 will get the index to the first coordinate of the corresponding vertex in the first array).</li>
+  <li><code>radius</code> (Type: number)<br />Maximum radius from the center of the solid to one of its vertices.</li>
+  <li><code>level</code> (Type: number)<br />If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid’s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4 id="return-value-8">Return Value</h4>
+
+<p>The “vi” parameter, which will likely be modified. (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.normDistances"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.normDistances(vertices, radius)</p>
+
+<p>Normalizes the distance from the origin to each vertex in the given
+array to a fixed radius.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<ul>
+  <li><code>vertices</code> (Type: Array.&lt;number&gt;)<br />An array of vertices, where each vertex’s x-, y-, and z-coordinates are stored as three elements of that array.</li>
+  <li><code>radius</code> (Type: number)<br />Distance from the origin where each vertex will be normalized to.</li>
+</ul>
+
+<h4 id="return-value-9">Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.octahedron"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.octahedron(radius, level)</p>
+
+<p>Generates a mesh of a regular octahedron or a sphere based on that solid.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<ul>
+  <li><code>radius</code> (Type: number)<br />Maximum radius from the center of the solid to one of its vertices.</li>
+  <li><code>level</code> (Type: number)<br />If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid’s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4 id="return-value-10">Return Value</h4>
+
+<p>The generated solid. (Type: THREE.BufferGeometry)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.octahedronFaces"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.octahedronFaces()</p>
+
+<p>Gets the vertices of a regular octahedron with radius 1.</p>
+
+<h4 id="return-value-11">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.tetrahedron"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.tetrahedron(radius, level)</p>
+
+<p>Generates a mesh of a regular tetrahedron or a sphere based on that solid.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<ul>
+  <li><code>radius</code> (Type: number)<br />Maximum radius from the center of the solid to one of its vertices.</li>
+  <li><code>level</code> (Type: number)<br />If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid’s surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).</li>
+</ul>
+
+<h4 id="return-value-12">Return Value</h4>
+
+<p>The generated solid. (Type: THREE.BufferGeometry)</p>
+
+<p><a name="extras_meshes_polyhedra_Polyhedra.tetrahedronFaces"></a>
+### (static) module:extras/meshes/polyhedra~Polyhedra.tetrahedronFaces()</p>
+
+<p>Gets the vertices of a tetrahedron with radius 1.</p>
+
+<h4 id="return-value-13">Return Value</h4>
+
+<p>A two-element array. The first
+element contains an array of the vertices that make up the solid (each
+vertex’s x-, y-, and z-coordinates are stored as three elements of that array),
+and the second element contains an array of vertex indices (multiplying
+each element by 3 will get the index to the first coordinate of the corresponding
+vertex in the first array). (Type: Array.&lt;Array.&lt;number»)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+
+<div class="noprint">
+<p>
+<a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3 id="navigation">Navigation</h3>
+
+<ul>
+  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
+  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
+  <li><a href="Curve.html">Curve</a></li>
+  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
+  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
+  <li><a href="H3DU.html">H3DU</a></li>
+  <li><a href="MathUtil.html">MathUtil</a></li>
+  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
+  <li><a href="Meshes.html">Meshes</a></li>
+  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
+  <li><a href="Surface.html">Surface</a></li>
+  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+  <li><a href="Transform.html">Transform</a></li>
+  <li><a href="extras_camera.html">module:extras/camera</a></li>
+  <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+  <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+  <li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+  <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+  <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+  <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+  <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+  <li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+  <li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+  <li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+  <li><a href="extras_gradients.html">module:extras/gradients</a></li>
+  <li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+  <li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+  <li><a href="extras_meshes_arrow.html">module:extras/meshes/arrow</a></li>
+  <li><a href="extras_meshes_contourlines.html">module:extras/meshes/contourlines</a></li>
+  <li><a href="extras_meshes_convex.html">module:extras/meshes/convex</a></li>
+  <li><a href="extras_meshes_createfloor.html">module:extras/meshes/createfloor</a></li>
+  <li><a href="extras_meshes_drawingtoy.html">module:extras/meshes/drawingtoy</a></li>
+  <li><a href="extras_meshes_drawingtoy.DrawingToy.html">module:extras/meshes/drawingtoy.DrawingToy</a></li>
+  <li><a href="extras_meshes_gearmesh.html">module:extras/meshes/gearmesh</a></li>
+  <li><a href="extras_meshes_pathtomesh.html">module:extras/meshes/pathtomesh</a></li>
+  <li><a href="extras_meshes_polyhedra.html">module:extras/meshes/polyhedra</a></li>
+  <li><a href="extras_meshes_polyhedra.Polyhedra.html">module:extras/meshes/polyhedra.Polyhedra</a></li>
+  <li><a href="extras_meshes_raypick.html">module:extras/meshes/raypick</a></li>
+  <li><a href="extras_meshes_starfield.html">module:extras/meshes/starfield</a></li>
+  <li><a href="extras_meshes_starfield.StarField.html">module:extras/meshes/starfield.StarField</a></li>
+  <li><a href="extras_meshes_stl.html">module:extras/meshes/stl</a></li>
+  <li><a href="extras_meshes_text.html">module:extras/meshes/text</a></li>
+  <li><a href="extras_meshes_text.TextFont.html">module:extras/meshes/text.TextFont</a></li>
+  <li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+  <li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+  <li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+  <li><a href="extras_pathutil.html">module:extras/pathutil</a></li>
+  <li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+  <li><a href="extras_shaders_checkerboardshader.html">module:extras/shaders/checkerboardshader</a></li>
+  <li><a href="extras_shaders_colormatrixshader.html">module:extras/shaders/colormatrixshader</a></li>
+  <li><a href="extras_shaders_fragmentshaderlib.html">module:extras/shaders/fragmentshaderlib</a></li>
+  <li><a href="extras_shaders_horgradshader.html">module:extras/shaders/horgradshader</a></li>
+  <li><a href="extras_shaders_kernelmatrixshader.html">module:extras/shaders/kernelmatrixshader</a></li>
+  <li><a href="extras_shaders_marbleshader.html">module:extras/shaders/marbleshader</a></li>
+  <li><a href="extras_shaders_marbleshader2.html">module:extras/shaders/marbleshader2</a></li>
+  <li><a href="extras_shaders_mirrorshader.html">module:extras/shaders/mirrorshader</a></li>
+  <li><a href="extras_shaders_pixelateshader.html">module:extras/shaders/pixelateshader</a></li>
+  <li><a href="extras_shaders_radgradshader.html">module:extras/shaders/radgradshader</a></li>
+  <li><a href="extras_shaders_skysphereshader.html">module:extras/shaders/skysphereshader</a></li>
+  <li><a href="extras_shaders_stripesbackshader.html">module:extras/shaders/stripesbackshader</a></li>
+  <li><a href="extras_shaders_sunburstbackshader.html">module:extras/shaders/sunburstbackshader</a></li>
+  <li><a href="extras_shaders_vignetteshader.html">module:extras/shaders/vignetteshader</a></li>
+  <li><a href="extras_shaders_warpshader.html">module:extras/shaders/warpshader</a></li>
+  <li><a href="extras_shaders_waterpaintshader.html">module:extras/shaders/waterpaintshader</a></li>
+  <li><a href="extras_shaders_waveshader.html">module:extras/shaders/waveshader</a></li>
+  <li><a href="extras_shaders_woodshader.html">module:extras/shaders/woodshader</a></li>
+  <li><a href="extras_starpolygon.html">module:extras/starpolygon</a></li>
+  <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+  <li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+  <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+  <li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+  <li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+</ul>
+</nav></body></html>
