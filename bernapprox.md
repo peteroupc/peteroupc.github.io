@@ -491,7 +491,7 @@ where $\mathbb{E}[.]$ is the expected value ("long-run average").
 
 The following results bound the absolute value of $T_{n,r}$, $S_{n,r}$, and $M_{n,r}$.[^33]
 
-**Result B4** (Molteni (2022)[^34]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $\text{abs}(T_{n,r}(p))\le (r!)/(((r/2)!)8^{r/2}) n^{r/2}$ and $\text{abs}(S_{n,r}(p)) \le (r!)/(((r/2)!)8^{r/2})\cdot(1/n^{r/2})$.
+**Result B4** (Molteni (2022)[^34]): If $r$ is an even integer such that $0\le r\le 44$, then for every integer $n\ge 1$, $\text{abs}(T_{n,r}(p))\le ((r!)/(((r/2)!)8^{r/2}))\cdot n^{r/2}$ and $\text{abs}(S_{n,r}(p)) \le ((r!)/(((r/2)!)8^{r/2}))\cdot(1/n^{r/2})$.
 
 **Result B4A** (Adell et al. (2015)[^35]):  For every odd integer $r\ge 1$, $T_{n,r}(p)$ is positive whenever $0\le p\lt 1/2$, and negative whenever $1/2\lt p\le 1$.
 
