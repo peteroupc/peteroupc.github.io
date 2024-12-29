@@ -94,7 +94,7 @@ generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, <code>makeMesh</code>, generates a parametric surface mesh.
 The comments explain how <code>makeMesh</code> works in detail.</p>
 
-<pre>function makeMesh(func,resolutionU, resolutionV){
+<pre>function makeMesh(three,func,resolutionU, resolutionV){
    "use strict";
    if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
    if(typeof resolutionU === "undefined" || resolutionU === null)resolutionU = 50;
@@ -111,15 +111,15 @@ The comments explain how <code>makeMesh</code> works in detail.</p>
    };
    return new H3DU.SurfaceBuilder()
       .positionNormal(func)
-      .attribute(colorGradient, H3DU.Semantic.COLOR)
+      .attribute(colorGradient, "color")
      // Evaluate the surface and generate a triangle
      // mesh, using resolution+1 different u-coordinates,
      // and resolution+1 different v-coordinates.
-     // Instead of H3DU.Mesh.TRIANGLES, we could use
-     // H3DU.Mesh.LINES to create a wireframe mesh,
-     // or H3DU.Mesh.POINTS to create a point mesh.
-      .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
-      .toMeshBuffer();
+     // Instead of H3DU.MeshBuffer.TRIANGLES, we could use
+     // H3DU.MeshBuffer.LINES to create a wireframe mesh,
+     // or H3DU.MeshBuffer.POINTS to create a point mesh.
+      .evalSurface(H3DU.MeshBuffer.TRIANGLES, resolutionU, resolutionV)
+      .toMeshBuffer(three);
 }
 </pre>
 

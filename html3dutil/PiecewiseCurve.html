@@ -92,7 +92,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
@@ -367,7 +367,7 @@ The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <co
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
 
-<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-12">Parameters</h4>
 
@@ -389,7 +389,7 @@ method if it implements it; otherwise, does a numerical differentiation using th
 
 <p>The <b>principal normal</b> of a curve is the derivative of the “normalized” velocity
 vector divided by that derivative’s length. The normal returned by this method
-<i>should</i> be “normalized” to a glmath. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
+<i>should</i> be “normalized” to a unit vector. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
 
 <h4 id="parameters-13">Parameters</h4>
 

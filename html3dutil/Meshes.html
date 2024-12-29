@@ -67,6 +67,7 @@ points about the z-axis.</li>
   <li><a href="#Meshes.quadsIndices">quadsIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</li>
   <li><a href="#Meshes.recalcNormals">recalcNormals</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.reverseWinding">reverseWinding</a><br />TODO: Not documented yet.</li>
+  <li><a href="#Meshes.setColor">setColor</a><br />TODO: Not documented yet.</li>
   <li><a href="#Meshes.triangleFanIndices">triangleFanIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
   <li><a href="#Meshes.triangleStripIndices">triangleStripIndices</a><br />Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
 </ul>
@@ -683,6 +684,25 @@ Meshes.quadsIndices(mesh.vertexCount())
 
 <p>TODO: Not documented yet. (Type: *)</p>
 
+<p><a name="Meshes.setColor"></a>
+### (static) Meshes.setColor(three, buffer, r, g, b)</p>
+
+<p>TODO: Not documented yet.</p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<ul>
+  <li><code>three</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>buffer</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>r</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>g</code> (Type: *)<br />TODO: Not documented yet.</li>
+  <li><code>b</code> (Type: *)<br />TODO: Not documented yet.</li>
+</ul>
+
+<h4 id="return-value-23">Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
 <p><a name="Meshes.triangleFanIndices"></a>
 ### (static) Meshes.triangleFanIndices(vertexCount)</p>
 
@@ -691,13 +711,13 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last vertex, the first vertex of
 the first trangle, and 1 new vertex.</p>
 
-<h4 id="parameters-23">Parameters</h4>
+<h4 id="parameters-24">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle fan or convex polygon.</li>
 </ul>
 
-<h4 id="return-value-23">Return Value</h4>
+<h4 id="return-value-24">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 
@@ -718,13 +738,13 @@ vertices make up the first triangle, and each additional
 triangle is made up of the last 2 vertices and 1
 new vertex.</p>
 
-<h4 id="parameters-24">Parameters</h4>
+<h4 id="parameters-25">Parameters</h4>
 
 <ul>
   <li><code>vertexCount</code> (Type: number)<br />Number of vertices that make up the triangle strip.</li>
 </ul>
 
-<h4 id="return-value-24">Return Value</h4>
+<h4 id="return-value-25">Return Value</h4>
 
 <p>Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if ‘vertexCount’ is less than 3. (Type: Array.&lt;number&gt;)</p>
 

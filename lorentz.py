@@ -7,7 +7,6 @@ import random
 BINCOMBS = {}
 SPLITBINCOMBS = {}
 
-
 def ccomb(n, k):
     if k < 10:
         return math.comb(n, k)
@@ -16,7 +15,6 @@ def ccomb(n, k):
     v = math.comb(n, k)
     BINCOMBS[(n, k)] = v
     return v
-
 
 def binco2(v, n, k):
     if k < 100 or k > n - 100:
@@ -49,7 +47,6 @@ def binco2(v, n, k):
     v0 = v * s[1]
     return v0
 
-
 def polyshift(nrcoeffs, theta, d, alpha=2):
     # Upward and downward shift of polynomial according to step 5
     # in Holtz et al. 2011, for even integer r>=2 or r=1 (r times
@@ -79,7 +76,6 @@ def polyshift(nrcoeffs, theta, d, alpha=2):
     lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
     return upper, lower
 
-
 def example1():
     # Example function: A concave piecewise
     # polynomial with three continuous derivatives
@@ -107,10 +103,8 @@ def example1():
     )
     return pwp2
 
-
 REALONE = RealFraction(1)
 REALZERO = RealFraction(0)
-
 
 def elevatemulti(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
     if r < 0:
@@ -126,7 +120,6 @@ def elevatemulti(coeffs, r):  # Elevate polynomial in Bernstein form by r degree
         / math.comb(n + r, k)
         for k in range(n + r + 1)
     ]
-
 
 def degelev(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
     if r < 0:
@@ -152,7 +145,6 @@ def degelev(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
             ret[k] += coeffs[k - j] * binrj
     return [ret[i] / math.comb(n + r, i) for i in range(n + r + 1)]
 
-
 class PolyDiff:
     def __init__(self, a, b):
         self.a = a
@@ -164,7 +156,6 @@ class PolyDiff:
     def diff(self, x, d=1):
         return self.a.diff(x, d=d) - self.b.diff(x, d=d)
 
-
 def lorentz2iter(func, coeffs, nPlusR):
     existingNPlusR = len(coeffs) - 1
     if existingNPlusR <= 0 or nPlusR < existingNPlusR:
@@ -175,7 +166,6 @@ def lorentz2iter(func, coeffs, nPlusR):
         raise ValueError
     return [realSimplify(v + w) for v, w in zip(coeffs2, l4)]
 
-
 def lorentz4iter(func, coeffs, nPlusR):
     existingNPlusR = len(coeffs) - 1
     if existingNPlusR <= 0 or nPlusR < existingNPlusR:
@@ -185,7 +175,6 @@ def lorentz4iter(func, coeffs, nPlusR):
     if len(coeffs) != len(l4):
         raise ValueError
     return [realSimplify(v + w) for v, w in zip(coeffs2, l4)]
-
 
 def lorentz4poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=4,
@@ -241,11 +230,9 @@ def lorentz4poly(pwpoly, n):
     # it into a Bernstein coefficient
     return [(vals[i]) / math.comb(n + r, i) for i in range(n + r + 1)]
 
-
 # NOTE: Lorentz operator with r=0 or r=1 of degree n+r
 # is the same as the degree-n Bernstein polynomial, elevated
 # r degrees to degree n+r.
-
 
 def lorentz2polyB(func, n, r=2):
     # Polynomial for Lorentz operator with r=0, 1, 2,
@@ -268,7 +255,6 @@ def lorentz2polyB(func, n, r=2):
         fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
         vals[k] -= fv
     return vals
-
 
 def lorentz2poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
@@ -307,7 +293,6 @@ def lorentz2poly(pwpoly, n):
     # it into a Bernstein coefficient
     return [(vals[i]) / math.comb(n + r, i) for i in range(n + r + 1)]
 
-
 def realSimplify(r):
     if isinstance(r, RealMultiply):
         if isinstance(r.a, RealFraction) and isinstance(r.b, RealFraction):
@@ -334,7 +319,6 @@ def realSimplify(r):
             return realSimplify(s1 - s2)
         return s1 - s2
     return r
-
 
 class C4Function:
     # func must map [0, 1] to (0, 1) and have at least
@@ -520,12 +504,10 @@ class C4Function:
         """- coin(): Function that returns 1 or 0 with a fixed probability."""
         return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
 
-
 def _fb2(fbelow, a, b, v=1):
     if b > a:
         raise ValueError
     return Fraction(realFloor(fbelow(a, b) * v), v)
-
 
 def _fa2(fabove, a, b, v=1):
     if b > a:
@@ -533,7 +515,6 @@ def _fa2(fabove, a, b, v=1):
     mv = realFloor(fabove(a, b) * v)
     imv = int(mv)
     return Fraction(imv, v) if mv == imv else Fraction(imv + 1, v)
-
 
 def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     """A Bernoulli factory for a continuous function f(x) that maps [0, 1]
@@ -639,7 +620,6 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
         lastdegree = degree
         degree = nextdegree(degree) if nextdegree != None else degree * 2
 
-
 def cc():
     # ce = c4example()
     # f = C4Function(ce, 5, lorentz=False,contderivs=4)
@@ -649,24 +629,20 @@ def cc():
     print(ce.value(0.9))
     print(sum(f.simulate(coin) for i in range(50000)) / 50000)
 
-
 from sympy import Min, Max, ceiling, S
 from sympy import Matrix, binomial, chebyshevt, pi, Piecewise, Eq, floor, ceiling
 
 BOUNDMULT = 1000000000000000
-
 
 def upperbound(x, boundmult=BOUNDMULT):
     # Calculates a limited-precision upper bound of x.
     boundmult = S(boundmult)
     return S(int(ceiling(x * boundmult))) / boundmult
 
-
 def lowerbound(x, boundmult=BOUNDMULT):
     # Calculates a limited-precision lower bound of x.
     boundmult = S(boundmult)
     return S(int(floor(x * boundmult))) / boundmult
-
 
 class Intv:
     def __init__(self, v, w=None, boundmult=BOUNDMULT):
@@ -738,14 +714,12 @@ class Intv:
         a4 = a.sup * S(1) / b.sup
         return Intv(min(a1, a2, a3, a4), max(a1, a2, a3, a4))
 
-
 def tachevcoeffs(func, x, n):
     # Sample from func at (n+1) equidistant points
     coeffs = [func.subs(x, S(i) / n) for i in range(n + 1)]
     coeffselev = [coeffs[i * 2] for i in range(n // 2 + 1)]
     coeffselev = degelev(coeffselev, n // 2)
     return [2 * c1 - c2 for c1, c2 in zip(coeffs, coeffselev)]
-
 
 def tachevcoeffsapprox(func, x, n, err=S(1) / 1000):
     # Same as tachevcoeffs, but coefficients are within
@@ -769,7 +743,6 @@ def tachevcoeffsapprox(func, x, n, err=S(1) / 1000):
     # Round to nearest multiple of delta=err/2
     return [floor(v.mid() / delta + S.Half) * delta for v in ret]
 
-
 def _isRandomLess(u, s):
     # Determines whether 'u', a uniform random variate
     # between 0 and 1, is less than 's'.
@@ -784,7 +757,6 @@ def _isRandomLess(u, s):
             return False
         u[0] = (u[0] << sh) | random.randint(0, (1 << sh) - 1)
         u[1] = u[1] << sh
-
 
 class FactoryFunction:
     def __init__(self, func, x):
@@ -911,7 +883,6 @@ class FactoryFunction:
             return 1
         return 0
 
-
 class C3Function(FactoryFunction):
     def __init__(self, func, x, thirdderiv):
         # A Bernoulli factory for functions with a continuous
@@ -941,7 +912,6 @@ class C3Function(FactoryFunction):
     def _diffwidth(self, m):
         return S("1.01") * 5 * self.mm * self.zz / (2 ** (2 * m + 1))
 
-
 def cheb_to_bern(n):
     # Transforms Chebyshev interp. coefficients to Bernstein coefficients
     # Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
@@ -958,7 +928,6 @@ def cheb_to_bern(n):
     ]
     return Matrix(mat)
 
-
 def chebpoly(coeffs, x, a=0, b=1):
     # Polynomial on [a,b] given Chebyshev interpolant coefficients
     if a > b:
@@ -968,7 +937,6 @@ def chebpoly(coeffs, x, a=0, b=1):
         for i in range(0, len(coeffs))
     )
 
-
 def chebpoly2(coeffs, x):
     # Polynomial on [-1,1] given Chebyshev interpolant coefficients
     # If func^{nu} has bounded variation V, nu>=1,
@@ -976,7 +944,6 @@ def chebpoly2(coeffs, x):
     # V is the integral of abs(func^{nu}).
     # Theorem 7.2, Trefethen, Lloyd N., Approximation theory and approximation practice, 2013.  G. Mastroianni and J. Szabados, "Jackson order of approximation by Lagrange interpolation", Acta Mathematica Hungarica, 69 (1995), 73-82.
     return chebpoly(coeffs, x, a=-1, b=1)
-
 
 def chebdegree(eps, totvar, nu):
     # Upper bound on degree of polynomial to achieve error tolerance eps,
@@ -986,13 +953,11 @@ def chebdegree(eps, totvar, nu):
         raise ValueError("'nu' must be 1 or greater")
     return ceiling(nu + (S(4 * totvar) / (pi * eps * nu)) ** (1 / S(nu)))
 
-
 def chebdegree_rough(eps, totvar, nu):
     # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
     # given that func^{nu} has bounded variation totvar on [-1,1].
     # nu>=1
     return chebdegree_01_rough(eps, totvar, nu, a=-1, b=1)
-
 
 def chebdegree_01_rough(eps, totvar, nu, a=0, b=1):
     # Rougher upper bound on degree of polynomial to achieve error tolerance eps,
@@ -1007,7 +972,6 @@ def chebdegree_01_rough(eps, totvar, nu, a=0, b=1):
         + ((S(12733) / 10000) * ((S(b - a) / 2) ** nu) * (totvar) / (eps * nu))
         ** (1 / S(nu))
     )
-
 
 def chebcoeffs(func, x, n, a=0, b=1):
     # Chebyshev interpolant coefficients of degree n
@@ -1041,11 +1005,9 @@ def chebcoeffs(func, x, n, a=0, b=1):
     print(time.time() - tm)
     return ret
 
-
 # fun=exp(-(x + S(49)/10)**2 / (S(1) / 12))
 # fun1=fun.subs(x,x*24-12)
 # cc=chebcoeffs(fun1.subs(x,(x+1)/2),x,100)
-
 
 def cheb_berncoeffs_deg(func, x, delta=S(1) / 1000, nn=10):
     if nn < 1:
@@ -1056,7 +1018,6 @@ def cheb_berncoeffs_deg(func, x, delta=S(1) / 1000, nn=10):
     cc = Matrix(chc)
     bern = cheb_to_bern(nn) * cc
     return [floor(c / delta + S.Half) * delta for c in bern]
-
 
 def cheb_berncoeffs(func, x, eps=S(1) / 1000, totvar=1, nu=3):
     # Calculates Bernstein coefficients of a polynomial that
@@ -1074,7 +1035,6 @@ def cheb_berncoeffs(func, x, eps=S(1) / 1000, totvar=1, nu=3):
     delta = eps / 2
     nn = chebdegree_01_rough(eps / 2, totvar, nu)
     return cheb_berncoeffs_deg(func, x, delta=delta, nn=nn)
-
 
 def akahiraest(func, x, p):
     # Akahira et al. (1992) unbiased estimator of func(x) where
