@@ -12,7 +12,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 
 | Instead of just saying... | Try saying... | Notes |
  --- | ---- | -- |
-| Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, what is more, apart from that | |
+| Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, what is more, apart from that, additionally | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] (for example, _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | award winner | awardee | |
@@ -36,7 +36,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | jury member | juror |Suggested by E. Bernal. |
 | many people | many | Inspired by E. Bernal. |
 | member (_of an association, club, etc._) | adherent, individual. | E. Bernal wrote of his concerns about this word's overuse. |
-| people, persons | men and women, individuals, audience, public, population, [leave out].<br>_Informal:_ folks. | More generally, a more specific term than _people_ or _persons_ is preferred. Inspired by E. Bernal. |
+| people, persons | men and women, individuals, audience, public, population, anyone..., whoever..., [leave out].<br>_Informal:_ folks. | More generally, a more specific term than _people_ or _persons_ is preferred. Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentilic nouns; for example: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
 | say | declare, affirm, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, elaborate, conclude, reply, respond, answer, signal, indicate, point out, maintain, acknowledge, admit. | Spanish and French press articles tend to employ numerous synonyms for this word. |
