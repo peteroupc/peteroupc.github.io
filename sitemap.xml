@@ -52,7 +52,7 @@
 <url><loc>https://peteroupc.github.io/CBOR/binarymime.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.PODOptions.html</loc><lastmod>2024-12-23T19:21:33Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/index.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORObject.html</loc><lastmod>2024-12-29T20:46:53Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORObject.html</loc><lastmod>2024-12-31T02:07:46Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.ConversionType.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.html</loc><lastmod>2024-08-19T10:42:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.JSONOptions.ConversionMode.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
@@ -121,7 +121,7 @@
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.util.DataIO.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.ProtocolStrings.html</loc><lastmod>2024-12-24T16:28:42Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.transforms.PercentEncodingStringTransform.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Idna.html</loc><lastmod>2024-12-27T15:12:20Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Idna.html</loc><lastmod>2024-12-31T02:05:36Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MailDateTime.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.transforms.TransformWithUnget.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MessageDataException.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
@@ -137,7 +137,7 @@
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.DataUris.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.ICharacterEncoding.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.LanguageTags.StringAndQuality.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MediaType.html</loc><lastmod>2024-12-27T15:12:19Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MediaType.html</loc><lastmod>2024-12-31T02:05:36Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.Address.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Encodings.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.DataUrls.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
@@ -159,7 +159,7 @@
 <url><loc>https://peteroupc.github.io/requests.html</loc><lastmod>2024-12-24T16:29:01Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/exporand.pdf</loc><lastmod>2024-11-09T22:04:16Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/logconcave.py</loc><lastmod>2024-12-27T15:12:48Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/colorutil.zip</loc><lastmod>2024-12-29T20:47:26Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/colorutil.zip</loc><lastmod>2024-12-31T02:08:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/TurtleParser/index.html</loc><lastmod>2024-08-08T10:19:24Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/TurtleParser/api/com.upokecenter.util.IWriter.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/TurtleParser/api/com.upokecenter.util.ArrayWriter.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
@@ -265,7 +265,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-subclass.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_evaluators.Roulette.html</loc><lastmod>2024-12-29T20:46:56Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.SurfaceEval.html</loc><lastmod>2024-12-23T00:49:48Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/MathUtil.html</loc><lastmod>2024-12-29T20:46:55Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/MathUtil.html</loc><lastmod>2024-12-29T20:47:29Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_shaders_fragmentshaderlib.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/FrameCounterDiv.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_warpshader.html</loc><lastmod>2024-12-27T17:20:19Z</lastmod></url>
@@ -340,7 +340,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/Superellipsoid.html</loc><lastmod>2024-12-26T14:28:51Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.SurfaceOfRevolution.html</loc><lastmod>2024-12-23T00:49:49Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.html</loc><lastmod>2024-12-27T23:27:16Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/SurfaceBuilder.html</loc><lastmod>2024-12-29T20:46:55Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/SurfaceBuilder.html</loc><lastmod>2024-12-29T20:47:29Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/tutorial-glmath.html</loc><lastmod>2024-12-23T00:49:49Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.CurveEval.html</loc><lastmod>2024-12-23T00:49:49Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_evaluators.SurfaceOfRevolution.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
@@ -389,7 +389,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/BufferAccessor.html</loc><lastmod>2024-12-27T00:50:57Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/BSplineSurface.html</loc><lastmod>2024-12-27T23:27:16Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_pixelateshader.html</loc><lastmod>2024-12-27T17:20:18Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/Global.html</loc><lastmod>2024-12-29T20:46:55Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/Global.html</loc><lastmod>2024-12-29T20:47:30Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_evaluators.Trochoid.html</loc><lastmod>2024-12-26T14:28:51Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Trochoid.html</loc><lastmod>2024-12-23T00:49:49Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_meshes_contourlines.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
@@ -425,7 +425,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/extras_shaders_radgradshader.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Curve.html</loc><lastmod>2024-12-26T14:28:50Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.CubeMap.html</loc><lastmod>2024-12-23T00:49:49Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/GraphicsPath.html</loc><lastmod>2024-12-29T20:46:55Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/GraphicsPath.html</loc><lastmod>2024-12-29T20:47:30Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/InputTracker.html</loc><lastmod>2024-12-26T14:28:51Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.RenderPass3D.html</loc><lastmod>2024-12-07T16:29:49Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.exports.MatrixStack.html</loc><lastmod>2024-12-07T16:29:49Z</lastmod></url>
@@ -467,7 +467,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/extras_meshes_polyhedra.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_meshes_starfield.StarField.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/MeshJSON.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/Meshes.html</loc><lastmod>2024-12-29T20:46:55Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/Meshes.html</loc><lastmod>2024-12-29T20:47:30Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_shaders_marbleshader2.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/BSplineCurve.html</loc><lastmod>2024-12-29T20:46:55Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.BezierCurve.html</loc><lastmod>2024-12-23T00:49:50Z</lastmod></url>
@@ -528,7 +528,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/extras_meshes_text.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_pathtomesh.html</loc><lastmod>2024-12-27T17:20:18Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.RenderPass.html</loc><lastmod>2024-12-07T16:29:50Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/html3dutil/extras_meshes_raypick.html</loc><lastmod>2024-12-27T23:27:17Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/html3dutil/extras_meshes_raypick.html</loc><lastmod>2024-12-29T20:47:30Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_createwasher.html</loc><lastmod>2024-12-27T23:27:16Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/extras_derivedcurves.ruledSurface.html</loc><lastmod>2024-12-26T14:28:51Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html</loc><lastmod>2024-12-26T14:28:50Z</lastmod></url>
@@ -572,8 +572,8 @@
 <url><loc>https://peteroupc.github.io/Numbers/docs/PeterO.Numbers.ERounding.html</loc><lastmod>2024-04-27T05:23:11Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/docs/PeterO.Numbers.EDecimals.html</loc><lastmod>2024-12-24T11:58:53Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/index.html</loc><lastmod>2024-04-27T05:23:06Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimal.html</loc><lastmod>2024-12-27T15:12:21Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EFloat.html</loc><lastmod>2024-12-27T15:12:21Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimal.html</loc><lastmod>2024-12-31T02:05:36Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EFloat.html</loc><lastmod>2024-12-31T02:05:36Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/Home.html</loc><lastmod>2024-04-27T05:23:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ETrapException.html</loc><lastmod>2024-04-27T05:23:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EContext.html</loc><lastmod>2024-12-24T11:58:53Z</lastmod></url>
@@ -583,7 +583,7 @@
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EInteger.html</loc><lastmod>2024-12-24T11:00:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimalExtras.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimals.html</loc><lastmod>2024-12-24T16:28:43Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ERational.html</loc><lastmod>2024-12-27T15:12:22Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ERational.html</loc><lastmod>2024-12-31T02:05:36Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/exporand.html</loc><lastmod>2024-12-27T15:12:43Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomgen.py</loc><lastmod>2024-12-27T15:12:58Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/bernoullicorrect.pdf</loc><lastmod>2024-11-09T22:03:42Z</lastmod></url>
@@ -600,7 +600,7 @@
 <url><loc>https://peteroupc.github.io/music.html</loc><lastmod>2024-05-16T02:15:20Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/fixed.py</loc><lastmod>2024-12-27T15:12:48Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/canvasback/index.html</loc><lastmod>2023-03-20T06:26:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/usage.html</loc><lastmod>2024-12-24T11:58:56Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/usage.html</loc><lastmod>2024-12-30T19:10:30Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/bernoullicorrect.html</loc><lastmod>2023-06-13T15:47:34Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/requestsother.html</loc><lastmod>2024-12-24T16:29:01Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/requestsother.pdf</loc><lastmod>2024-11-09T22:05:30Z</lastmod></url>
@@ -615,7 +615,7 @@
 <url><loc>https://peteroupc.github.io/graphics.pdf</loc><lastmod>2024-11-09T22:04:23Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randextract.html</loc><lastmod>2024-12-27T15:12:43Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/svg.pdf</loc><lastmod>2024-11-09T22:05:41Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/bernoulli.zip</loc><lastmod>2024-12-29T20:47:26Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/bernoulli.zip</loc><lastmod>2024-12-31T02:08:14Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/petero-csharp/index.html</loc><lastmod>2024-12-22T08:56:27Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/petero-csharp/docs/index.html</loc><lastmod>2024-04-27T05:23:10Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/petero-csharp/docs/PeterO.InvariantText.html</loc><lastmod>2024-04-27T05:23:10Z</lastmod></url>
