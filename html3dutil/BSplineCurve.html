@@ -217,6 +217,9 @@ in a B-spline curve.</li>
   <li><a href="#BSplineCurve_fitRange">fitRange</a><br />Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the given range.</li>
   <li><a href="#BSplineCurve.fromBezierCurve">fromBezierCurve</a><br />Creates a B-spline curve from the control points of a Bézier curve.</li>
+  <li><a href="#BSplineCurve.fromConicCurve">fromConicCurve</a><br />Creates a B-spline curve from the control points of a conic curve as described
+in Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations”, 1996.</li>
   <li><a href="#BSplineCurve_getControlPoints">getControlPoints</a><br />Gets a reference to the array of control points used
 in this curve object.</li>
   <li><a href="#BSplineCurve_getKnots">getKnots</a><br />Gets a reference to the array of knots used
@@ -465,13 +468,31 @@ return new PiecewiseCurve(curves)
 }
 </pre>
 
+<p><a name="BSplineCurve.fromConicCurve"></a>
+### (static) BSplineCurve.fromConicCurve(controlPoints, lamda)</p>
+
+<p>Creates a B-spline curve from the control points of a conic curve as described
+in Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations”, 1996.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<ul>
+  <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number»)<br />Same meaning as fromBezierCurve(), except there must be three control points.</li>
+  <li><code>lamda</code> (Type: number)<br />Curvature parameter, which must be 0 or greater. If 1, same as a Bézier quadratic (degree-2) curve. If 0, same as a straight line segment between the first and third control point. If less than 1 (elliptical arc), then closer to 0 means closer to that straight line. If greater than 0 (hyperbola), then the larger, the closer to the straight-line path between the first and second and then from the second to the third control point.</li>
+</ul>
+
+<h4 id="return-value-9">Return Value</h4>
+
+<p>Return value. (Type: <a href="BSplineCurve.html">BSplineCurve</a>)</p>
+
 <p><a name="BSplineCurve_getControlPoints"></a>
 ### BSplineCurve#getControlPoints()</p>
 
 <p>Gets a reference to the array of control points used
 in this curve object.</p>
 
-<h4 id="return-value-9">Return Value</h4>
+<h4 id="return-value-10">Return Value</h4>
 
 <p>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number»)</p>
 
@@ -481,7 +502,7 @@ in this curve object.</p>
 <p>Gets a reference to the array of knots used
 in this curve object.</p>
 
-<h4 id="return-value-10">Return Value</h4>
+<h4 id="return-value-11">Return Value</h4>
 
 <p>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number»)</p>
 
@@ -490,7 +511,7 @@ in this curve object.</p>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
-<h4 id="return-value-11">Return Value</h4>
+<h4 id="return-value-12">Return Value</h4>
 
 <p>The distance from the start of the curve to its end. (Type: number)</p>
 
@@ -502,13 +523,13 @@ of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization.</p>
 
-<h4 id="parameters-9">Parameters</h4>
+<h4 id="parameters-10">Parameters</h4>
 
 <ul>
   <li><code>count</code> (Type: number)<br />Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
 </ul>
 
-<h4 id="return-value-12">Return Value</h4>
+<h4 id="return-value-13">Return Value</h4>
 
 <p>An array of curve positions. The first
 element will be the start of the curve. If “count” is 2 or greater, the last element
@@ -524,13 +545,13 @@ an arc-length parameterization. The positions will be in the form of objects wit
 up to four properties: x, y, z, and w retrieve the first, second, third,
 and fourth coordinate of each position, respectively.</p>
 
-<h4 id="parameters-10">Parameters</h4>
+<h4 id="parameters-11">Parameters</h4>
 
 <ul>
   <li><code>count</code> (Type: number)<br />Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
 </ul>
 
-<h4 id="return-value-13">Return Value</h4>
+<h4 id="return-value-14">Return Value</h4>
 
 <p>An array of curve positions. The first
 element will be the start of the curve. If “count” is 2 or greater, the last element
@@ -555,13 +576,13 @@ the acceleration vector.</p>
 
 <p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
-<h4 id="parameters-11">Parameters</h4>
+<h4 id="parameters-12">Parameters</h4>
 
 <ul>
   <li><code>u</code> (Type: number)<br />The u-coordinate of a point on the curve.</li>
 </ul>
 
-<h4 id="return-value-14">Return Value</h4>
+<h4 id="return-value-15">Return Value</h4>
 
 <p>An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
@@ -577,13 +598,13 @@ method if it implements it; otherwise, does a numerical differentiation using th
 vector divided by that derivative’s length. The normal returned by this method
 <i>should</i> be “normalized” to a unit vector. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
 
-<h4 id="parameters-12">Parameters</h4>
+<h4 id="parameters-13">Parameters</h4>
 
 <ul>
   <li><code>u</code> (Type: number)<br />The u-coordinate of a point on the curve.</li>
 </ul>
 
-<h4 id="return-value-15">Return Value</h4>
+<h4 id="return-value-16">Return Value</h4>
 
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
@@ -593,13 +614,13 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p>Splits this B-spline curve into two at the given point.</p>
 
-<h4 id="parameters-13">Parameters</h4>
+<h4 id="parameters-14">Parameters</h4>
 
 <ul>
   <li><code>u</code> (Type: number)<br />Point on the curve where this curve will be split.</li>
 </ul>
 
-<h4 id="return-value-16">Return Value</h4>
+<h4 id="return-value-17">Return Value</h4>
 
 <p>An array containing two B-spline curves: the
 first is the part of the curve before the given point, and the second
@@ -614,13 +635,13 @@ will be null if <code>u</code> is at or after the end of the curve. (Type: Array
 <p>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
 
-<h4 id="parameters-14">Parameters</h4>
+<h4 id="parameters-15">Parameters</h4>
 
 <ul>
   <li><code>u</code> (Type: number)<br />The u-coordinate of a point on the curve.</li>
 </ul>
 
-<h4 id="return-value-17">Return Value</h4>
+<h4 id="return-value-18">Return Value</h4>
 
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
@@ -645,7 +666,7 @@ should be continuous and have a speed greater than 0 at every
 point on the curve. The arc length parameterization used in
 this method is approximate.</p>
 
-<h4 id="return-value-18">Return Value</h4>
+<h4 id="return-value-19">Return Value</h4>
 
 <p>Return value. Returns this object if this curve already uses an arc length parameterization. (Type: <a href="Curve.html">Curve</a>)</p>
 
@@ -664,7 +685,7 @@ var point = arclen.evaluate(Math.random()*arclen.getLength())
 
 <p>Creates a B-spline curve with uniform knots.</p>
 
-<h4 id="parameters-15">Parameters</h4>
+<h4 id="parameters-16">Parameters</h4>
 
 <ul>
   <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number»)<br />Array of control points as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
@@ -672,7 +693,7 @@ var point = arclen.evaluate(Math.random()*arclen.getLength())
   <li><code>bits</code> (Type: number) (optional)<br />Bits as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
 </ul>
 
-<h4 id="return-value-19">Return Value</h4>
+<h4 id="return-value-20">Return Value</h4>
 
 <p>Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
@@ -684,7 +705,7 @@ versions.) (Type: <a href="BSplineCurve.html">BSplineCurve</a>)</p>
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSurface.html">BSplineSurface</a> constructor.</p>
 
-<h4 id="parameters-16">Parameters</h4>
+<h4 id="parameters-17">Parameters</h4>
 
 <ul>
   <li>
@@ -700,7 +721,7 @@ passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSu
   <li><code>degree</code> (Type: number) (optional)<br />Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
 </ul>
 
-<h4 id="return-value-20">Return Value</h4>
+<h4 id="return-value-21">Return Value</h4>
 
 <p>A uniform knot vector. The first
 knot will be 0 and the last knot will be 1. (This is a change from previous
@@ -712,13 +733,13 @@ versions.) (Type: Array.&lt;number&gt;)</p>
 <p>Finds the velocity (derivative) of
 this curve at the given point.</p>
 
-<h4 id="parameters-17">Parameters</h4>
+<h4 id="parameters-18">Parameters</h4>
 
 <ul>
   <li><code>u</code> (Type: number)<br />Point on the curve to evaluate.</li>
 </ul>
 
-<h4 id="return-value-21">Return Value</h4>
+<h4 id="return-value-22">Return Value</h4>
 
 <p>An array giving the velocity vector.
 It will have as many elements as a control point (or one fewer
