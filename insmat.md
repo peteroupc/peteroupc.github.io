@@ -5,12 +5,12 @@ These are suggestions to improve core and supplemental instructional materials, 
 1. Instructional materials should be open educational resources (OER) that anyone can access and use free, at least for noncommercial purposes (for example, CC-BY-NC-SA or Creative Commons Attribution-NonCommercial-ShareAlike).  There should be a GitHub or GitLab repository containing the source code of the materials. [^1]
 2. Instructional materials should:
 
-    - Devote most time to instruction that is interactive (teacher and students take turns), where the teacher explains and models concepts procedures in small steps, before getting students to apply those concepts and procedures. [^2]
+    - Devote most time to instruction that is interactive (teacher and students take turns), where the teacher explains and models concepts and procedures in small steps before getting students to apply those concepts and procedures. [^2]
     - Assign review questions in class, with low or no stakes, at least once a week using the theory of spaced and interleaved retrieval practice (for example, a quiz of randomly arranged questions from [**last lesson, last week, last unit, and course-so-far**](https://x.com/SuzanneRelou/status/1878428245252558888)).
     - Get every student participating in the lessons as frequently as possible, such as by answering in unison either orally or with mini-whiteboards.
     - Encourage teachers to get every student attending to the lessons, such as by arranging desks in rows facing the teacher, reducing noise and classroom decoration, and banning mobile phone use.
 
-3. In Literacy, instructional materials should be knowledge-rich and follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).  In other subjects, instructional materials should likewise be [**knowledge-rich**](https://link.springer.com/book/10.1007/978-3-031-74661-1).
+3. Instructional materials should be [**knowledge-rich**](https://link.springer.com/book/10.1007/978-3-031-74661-1). In Literacy, they should also follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).
 4. There is guidance for:
 
     - [**Content**](https://www.coreknowledge.org/core-knowledge-sequence/) that could form part of a knowledge-rich curriculum up to eighth grade.
