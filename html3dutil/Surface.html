@@ -54,7 +54,7 @@ method if it implements it; otherwise, does a numerical differentiation
 with respect to the v-axis using the <code>evaluate</code> method.</p>
 
 <p>The <b>bitangent vector</b> is the vector pointing in the direction of the v-axis, or alternatively,
-the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
+the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
@@ -128,7 +128,7 @@ a continuous, unbroken surface such as a sphere, an open
 cylinder, or a disk rotated in three dimensions), this can be the cross product
 of the <a href="Surface.html#Surface_tangent">tangent vector</a>
 and <a href="Surface.html#Surface_bitangent">bitangent vector</a>,
-in that order. The gradient returned by this method <i>should not</i> be “normalized” to a glmath.</p>
+in that order. The gradient returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-3">Parameters</h4>
 
@@ -203,7 +203,7 @@ with respect to the u-axis using the <code>evaluate</code> method.</p>
 
 <p>The <b>tangent vector</b> is the vector pointing in the direction of the u-axis,
 or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
-The tangent vector returned by this method <i>should not</i> be “normalized” to a glmath.</p>
+The tangent vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-5">Parameters</h4>
 
