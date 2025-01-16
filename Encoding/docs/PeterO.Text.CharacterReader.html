@@ -19,52 +19,6 @@
   <li><code>[ReadChar()](#ReadChar)</code> - Reads the next character from a Unicode stream or a string.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String"></a>
-### CharacterReader Constructor</p>
-
-<pre>public CharacterReader(
-    string str);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>str</i>: The parameter  <i>str</i>
- is a text string.</li>
-</ul>
-
-<p><a id="Void_ctor_System_String_Boolean"></a>
-### CharacterReader Constructor</p>
-
-<pre>public CharacterReader(
-    string str,
-    bool skipByteOrderMark);
-</pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li>
-    <p><i>str</i>: The parameter  <i>str</i>
- is a text string.</p>
-  </li>
-  <li>
-    <p><i>skipByteOrderMark</i>: If true and the first character in the string is U+FEFF, skip that character.</p>
-  </li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>System.ArgumentNullException:
-The parameter  <i>str</i>
- is null.</li>
-</ul>
-
 <p><a id="Void_ctor_System_String_Boolean_Boolean"></a>
 ### CharacterReader Constructor</p>
 
@@ -99,13 +53,12 @@ The parameter  <i>str</i>
  is null.</li>
 </ul>
 
-<p><a id="Void_ctor_System_String_Int32_Int32"></a>
+<p><a id="Void_ctor_System_String_Boolean"></a>
 ### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     string str,
-    int offset,
-    int length);
+    bool skipByteOrderMark);
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
@@ -118,28 +71,16 @@ The parameter  <i>str</i>
  is a text string.</p>
   </li>
   <li>
-    <p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
- begins.</p>
-  </li>
-  <li>
-    <p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
- (but not more than  <i>str</i>
- ‘s length).</p>
+    <p><i>skipByteOrderMark</i>: If true and the first character in the string is U+FEFF, skip that character.</p>
   </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-  <li>
-    <p>System.ArgumentException:
-Either “offset” or “length” is less than 0 or greater than “str”’s length, or “str”’s length minus “offset” is less than “length”.</p>
-  </li>
-  <li>
-    <p>System.ArgumentNullException:
+  <li>System.ArgumentNullException:
 The parameter  <i>str</i>
- is null.</p>
-  </li>
+ is null.</li>
 </ul>
 
 <p><a id="Void_ctor_System_String_Int32_Int32_Boolean_Boolean"></a>
@@ -199,38 +140,76 @@ Either  <i>offset</i>
   </li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream"></a>
+<p><a id="Void_ctor_System_String_Int32_Int32"></a>
 ### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
-    System.IO.Stream stream);
+    string str,
+    int offset,
+    int length);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-  <li><i>stream</i>: A readable data stream.</li>
+  <li>
+    <p><i>str</i>: The parameter  <i>str</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>str</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
+ (but not more than  <i>str</i>
+ ‘s length).</p>
+  </li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-  <li>System.ArgumentNullException:
-The parameter  <i>stream</i>
- is null.</li>
+  <li>
+    <p>System.ArgumentException:
+Either “offset” or “length” is less than 0 or greater than “str”’s length, or “str”’s length minus “offset” is less than “length”.</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>str</i>
+ is null.</p>
+  </li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int32"></a>
+<p><a id="Void_ctor_System_String"></a>
+### CharacterReader Constructor</p>
+
+<pre>public CharacterReader(
+    string str);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>str</i>: The parameter  <i>str</i>
+ is a text string.</li>
+</ul>
+
+<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean_Boolean"></a>
 ### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     System.IO.Stream stream,
-    int mode);
+    int mode,
+    bool errorThrow,
+    bool dontSkipUtf8Bom);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -259,6 +238,15 @@ The parameter  <i>stream</i>
 </ul>
 
 <p>.</p>
+
+<ul>
+  <li>
+    <p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p>
+  </li>
+  <li>
+    <p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 (including when “mode” is 0) and this parameter is  <code>true</code> , won’t skip the BOM character if it occurs at the start of the stream.</p>
+  </li>
+</ul>
 
 <p><b>Exceptions:</b></p>
 
@@ -311,17 +299,15 @@ The parameter  <i>stream</i>
   <li><i>errorThrow</i>: When encountering invalid encoding, throw an exception if this parameter is true, or replace it with U+FFFD (replacement character) if this parameter is false.</li>
 </ul>
 
-<p><a id="Void_ctor_System_IO_Stream_Int32_Boolean_Boolean"></a>
+<p><a id="Void_ctor_System_IO_Stream_Int32"></a>
 ### CharacterReader Constructor</p>
 
 <pre>public CharacterReader(
     System.IO.Stream stream,
-    int mode,
-    bool errorThrow,
-    bool dontSkipUtf8Bom);
+    int mode);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -351,13 +337,27 @@ The parameter  <i>stream</i>
 
 <p>.</p>
 
+<p><b>Exceptions:</b></p>
+
 <ul>
-  <li>
-    <p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p>
-  </li>
-  <li>
-    <p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 (including when “mode” is 0) and this parameter is  <code>true</code> , won’t skip the BOM character if it occurs at the start of the stream.</p>
-  </li>
+  <li>System.ArgumentNullException:
+The parameter  <i>stream</i>
+ is null.</li>
+</ul>
+
+<p><a id="Void_ctor_System_IO_Stream"></a>
+### CharacterReader Constructor</p>
+
+<pre>public CharacterReader(
+    System.IO.Stream stream);
+</pre>
+
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U+FFFD).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>stream</i>: A readable data stream.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>

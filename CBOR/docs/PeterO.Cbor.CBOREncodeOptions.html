@@ -26,29 +26,6 @@
   <li><code>[UseIndefLengthStrings](#UseIndefLengthStrings)</code> - Gets a value indicating whether to encode strings with an indefinite-length encoding under certain circumstances.</li>
 </ul>
 
-<p><a id="Void_ctor_Boolean_Boolean"></a>
-### CBOREncodeOptions Constructor</p>
-
-<pre>public CBOREncodeOptions(
-    bool useIndefLengthStrings,
-    bool allowDuplicateKeys);
-</pre>
-
-<p><b>Deprecated.</b> Use the more readable string constructor instead.</p>
-
-<p>Initializes a new instance of the <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li>
-    <p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p>
-  </li>
-  <li>
-    <p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
-  </li>
-</ul>
-
 <p><a id="Void_ctor_Boolean_Boolean_Boolean"></a>
 ### CBOREncodeOptions Constructor</p>
 
@@ -73,6 +50,29 @@
   </li>
   <li>
     <p><i>ctap2Canonical</i>: A value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</p>
+  </li>
+</ul>
+
+<p><a id="Void_ctor_Boolean_Boolean"></a>
+### CBOREncodeOptions Constructor</p>
+
+<pre>public CBOREncodeOptions(
+    bool useIndefLengthStrings,
+    bool allowDuplicateKeys);
+</pre>
+
+<p><b>Deprecated.</b> Use the more readable string constructor instead.</p>
+
+<p>Initializes a new instance of the <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p>
+  </li>
+  <li>
+    <p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
   </li>
 </ul>
 

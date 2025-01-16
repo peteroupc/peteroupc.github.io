@@ -14,10 +14,10 @@
 
 <h3 id="member-summary">Member Summary</h3>
 <ul>
-  <li><code>[AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)](#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T)</code> - Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</li>
-  <li><code>[AddTypeName(string)](#AddTypeName_string)</code> - Adds the fully qualified name of a Java or.</li>
-  <li><code>[AddTypePrefix(string)](#AddTypePrefix_string)</code> - Adds a prefix of a Java or.</li>
-  <li><code>[FilterTypeName(string)](#FilterTypeName_string)</code> - Returns whether the given Java or.</li>
+  <li><code>[AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)](#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T)</code> -</li>
+  <li><code>[AddTypeName(string)](#AddTypeName_string)</code> -</li>
+  <li><code>[AddTypePrefix(string)](#AddTypePrefix_string)</code> -</li>
+  <li><code>[FilterTypeName(string)](#FilterTypeName_string)</code> -</li>
 </ul>
 
 <p><a id="Void_ctor"></a>
@@ -27,137 +27,6 @@
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Cbor.CBORTypeMapper.html">PeterO.Cbor.CBORTypeMapper</a> class.</p>
-
-<p><a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a>
-### AddConverter</p>
-
-<pre>public PeterO.Cbor.CBORTypeMapper AddConverter&lt;T&gt;(
-    System.Type type,
-    PeterO.Cbor.ICBORConverter&lt;T&gt; converter);
-</pre>
-
-<p>Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter). If the CBOR converter converts to and from CBOR objects, it should implement the ICBORToFromConverter interface and provide ToCBORObject and FromCBORObject methods. If the CBOR converter only supports converting to (not from) CBOR objects, it should implement the ICBORConverter interface and provide a ToCBORObject method.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li>
-    <p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p>
-  </li>
-  <li>
-    <p><i>converter</i>: The parameter  <i>converter</i>
- is an ICBORConverter object.</p>
-  </li>
-  <li>
-    <p>&lt;T&gt;: Must be the same as the “type” parameter.</p>
-  </li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>This object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>
-    <p>System.ArgumentNullException:
-The parameter  <i>type</i>
- or  <i>converter</i>
- is null.</p>
-  </li>
-  <li>
-    <p>System.ArgumentException:
-Converter doesn’t contain a proper ToCBORObject method”.</p>
-  </li>
-</ul>
-
-<p><a id="AddTypeName_string"></a>
-### AddTypeName</p>
-
-<pre>public PeterO.Cbor.CBORTypeMapper AddTypeName(
-    string name);
-</pre>
-
-<p>Adds the fully qualified name of a Java or.NET type for use in type matching.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>name</i>: The fully qualified name of a Java or.NET class (for example,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>This object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>
-    <p>System.ArgumentNullException:
-The parameter  <i>name</i>
- is null.</p>
-  </li>
-  <li>
-    <p>System.ArgumentException:
-The parameter  <i>name</i>
- is empty.</p>
-  </li>
-</ul>
-
-<p><a id="AddTypePrefix_string"></a>
-### AddTypePrefix</p>
-
-<pre>public PeterO.Cbor.CBORTypeMapper AddTypePrefix(
-    string prefix);
-</pre>
-
-<p>Adds a prefix of a Java or.NET type for use in type matching. A type matches a prefix if its fully qualified name is or begins with that prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>prefix</i>: The prefix of a Java or.NET type (for example, <code>java.math.</code> or <code>System.Globalization</code>).</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>This object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>
-    <p>System.ArgumentNullException:
-The parameter  <i>prefix</i>
- is null.</p>
-  </li>
-  <li>
-    <p>System.ArgumentException:
-The parameter  <i>prefix</i>
- is empty.</p>
-  </li>
-</ul>
-
-<p><a id="FilterTypeName_string"></a>
-### FilterTypeName</p>
-
-<pre>public bool FilterTypeName(
-    string typeName);
-</pre>
-
-<p>Returns whether the given Java or.NET type name fits the filters given in this mapper.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>typeName</i>: The fully qualified name of a Java or.NET class (for example,  <code>java.math.BigInteger</code>  or  <code>System.Globalization.CultureInfo</code>  ).</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>Either  <code>true</code>  if the given Java or.NET type name fits the filters given in this mapper, or  <code>false</code>  otherwise.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

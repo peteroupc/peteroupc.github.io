@@ -24,35 +24,6 @@
   <li><code>[ToWriter(this System.IO.Stream)](#ToWriter_this_System_IO_Stream)</code> - Wraps an output stream into a writer object.</li>
 </ul>
 
-<p><a id="ToByteReader_this_byte"></a>
-### ToByteReader</p>
-
-<pre>public static PeterO.IByteReader ToByteReader(
-    this byte[] bytes);
-</pre>
-
-<p><b>Deprecated.</b> Use ToReader instead.</p>
-
-<p>Wraps a byte array into a byte reader. In the.NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>bytes</i>: The byte array to wrap into a byte reader.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>An IByteReader object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
- is null.</li>
-</ul>
-
 <p><a id="ToByteReader_this_byte_int_int"></a>
 ### ToByteReader</p>
 
@@ -112,6 +83,35 @@ The parameter  <i>bytes</i>
   </li>
 </ul>
 
+<p><a id="ToByteReader_this_byte"></a>
+### ToByteReader</p>
+
+<pre>public static PeterO.IByteReader ToByteReader(
+    this byte[] bytes);
+</pre>
+
+<p><b>Deprecated.</b> Use ToReader instead.</p>
+
+<p>Wraps a byte array into a byte reader. In the.NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>bytes</i>: The byte array to wrap into a byte reader.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IByteReader object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+ is null.</li>
+</ul>
+
 <p><a id="ToByteReader_this_System_IO_Stream"></a>
 ### ToByteReader</p>
 
@@ -138,33 +138,6 @@ The parameter  <i>bytes</i>
 <ul>
   <li>System.ArgumentNullException:
 The parameter  <i>input</i>
- is null.</li>
-</ul>
-
-<p><a id="ToReader_this_byte"></a>
-### ToReader</p>
-
-<pre>public static PeterO.IReader ToReader(
-    this byte[] bytes);
-</pre>
-
-<p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array. In the.NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>bytes</i>: The byte array to wrap.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A byte reader wrapping the byte array.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
  is null.</li>
 </ul>
 
@@ -220,6 +193,33 @@ Either  <i>offset</i>
 The parameter  <i>bytes</i>
  is null.</p>
   </li>
+</ul>
+
+<p><a id="ToReader_this_byte"></a>
+### ToReader</p>
+
+<pre>public static PeterO.IReader ToReader(
+    this byte[] bytes);
+</pre>
+
+<p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array. In the.NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>bytes</i>: The byte array to wrap.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte reader wrapping the byte array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+ is null.</li>
 </ul>
 
 <p><a id="ToReader_this_System_IO_Stream"></a>

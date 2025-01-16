@@ -23,17 +23,17 @@
 <h3 id="member-summary">Member Summary</h3>
 <ul>
   <li><code>[public static readonly PeterO.Mail.MediaType ApplicationOctetStream;](#ApplicationOctetStream)</code> - Specifies the media type “application/octet-stream”, used for arbitrary binary data.</li>
-  <li><code>[Equals(object)](#Equals_object)</code> - Determines whether this object and another object are equal.</li>
+  <li><code>[Equals(object)](#Equals_object)</code> -</li>
   <li><code>[GetCharset()](#GetCharset)</code> - Gets this media type’s “charset” parameter, naming a character encoding used to represent text in the data that uses this media type.</li>
   <li><code>[GetHashCode()](#GetHashCode)</code> - Calculates the hash code of this object.</li>
-  <li><code>[GetParameter(string)](#GetParameter_string)</code> - Gets the value of a parameter in this media type, such as “charset” or “format”.</li>
-  <li><code>[HasStructuredSuffix(string)](#HasStructuredSuffix_string)</code> - Returns whether this media type’s subtype has the given structured syntax suffix.</li>
+  <li><code>[GetParameter(string)](#GetParameter_string)</code> -</li>
+  <li><code>[HasStructuredSuffix(string)](#HasStructuredSuffix_string)</code> -</li>
   <li><code>[IsMultipart](#IsMultipart)</code> - Gets a value indicating whether this is a multipart media type.</li>
   <li><code>[IsText](#IsText)</code> - Gets a value indicating whether this is a text media type (“text/*”).</li>
   <li><code>[public static readonly PeterO.Mail.MediaType MessageRfc822;](#MessageRfc822)</code> - Specifies the media type “message/rfc822”, used for Internet mail messages.</li>
   <li><code>[Parameters](#Parameters)</code> - Gets a list of the parameter names contained in this media type object and their values.</li>
-  <li><code>[Parse(string)](#Parse_string)</code> - Parses a media type string and returns a media type object.</li>
-  <li><code>[Parse(string, PeterO.Mail.MediaType)](#Parse_string_PeterO_Mail_MediaType)</code> - Parses a media type string and returns a media type object, or the default value if the string is invalid.</li>
+  <li><code>[Parse(string)](#Parse_string)</code> -</li>
+  <li><code>[Parse(string, PeterO.Mail.MediaType)](#Parse_string_PeterO_Mail_MediaType)</code> -</li>
   <li><code>[SubType](#SubType)</code> - Gets this media type’s subtype (for example, “plain” in “text/plain”).</li>
   <li><code>[public static readonly PeterO.Mail.MediaType TextPlainAscii;](#TextPlainAscii)</code> - Specifies the media type “text/plain” and the “charset” parameter “US-ASCII”, used for plain text data that contains only characters within the basic Latin range (U+0000 to U+007F).</li>
   <li><code>[public static readonly PeterO.Mail.MediaType TextPlainUtf8;](#TextPlainUtf8)</code> - Specifies the media type “text/plain” and the “charset” parameter “utf-8”, used for plain text data that may contain characters outside the basic Latin range (U+0000 to U+007F).</li>
@@ -148,26 +148,6 @@
 
 <p>The top level type and subtype of this media type, separated by a slash; for example, “text/plain”.</p>
 
-<p><a id="Equals_object"></a>
-### Equals</p>
-
-<pre>public override bool Equals(
-    object obj);
-</pre>
-
-<p>Determines whether this object and another object are equal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>obj</i>: The parameter  <i>obj</i>
- is an arbitrary object.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code>  if this object and the other object are equal; otherwise,  <code>false</code> .</p>
-
 <p><a id="GetCharset"></a>
 ### GetCharset</p>
 
@@ -191,123 +171,6 @@
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
-
-<p><a id="GetParameter_string"></a>
-### GetParameter</p>
-
-<pre>public string GetParameter(
-    string name);
-</pre>
-
-<p>Gets the value of a parameter in this media type, such as “charset” or “format”.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic uppercase letters A to Z (U+0041 to U+005A) in both strings to basic lowercase letters.).</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>The value of the parameter as a string, or null if the parameter doesn’t exist.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>
-    <p>System.ArgumentNullException:
-The parameter  <i>name</i>
- is null.</p>
-  </li>
-  <li>
-    <p>System.ArgumentException:
-Name is empty.</p>
-  </li>
-</ul>
-
-<p><a id="HasStructuredSuffix_string"></a>
-### HasStructuredSuffix</p>
-
-<pre>public bool HasStructuredSuffix(
-    string suffix);
-</pre>
-
-<p>Returns whether this media type’s subtype has the given structured syntax suffix.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>suffix</i>: A text string identifying a structured syntax suffix without the starting “+”. Examples include “xml” and “json”. The suffix is compared to the end of the media type’s subtype using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic uppercase letters A to Z (U+0041 to U+005A) in both strings to basic lowercase letters.).</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>True if the media type’s subtype ends with, but does not consist of, “+” followed by the  <i>suffix</i>
- parameter (using a basic case-insensitive comparison); otherwise,  <code>false</code> . For example, returns false if  <i>suffix</i>
- is “xml” and the subtype is “+xml”, but returns true if  <i>suffix</i>
- is “xml” and the subtype is “example+xml”. Returns false if  <i>suffix</i>
- is null or an empty string.</p>
-
-<p><a id="Parse_string"></a>
-### Parse</p>
-
-<pre>public static PeterO.Mail.MediaType Parse(
-    string mediaTypeValue);
-</pre>
-
-<p>Parses a media type string and returns a media type object. For further information, see the overload taking a MediaType parameter.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include parameters.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A media type object, or MediaType.TextPlainAscii if  <i>mediaTypeValue</i>
- is empty or syntactically invalid.</p>
-
-<p><a id="Parse_string_PeterO_Mail_MediaType"></a>
-### Parse</p>
-
-<pre>public static PeterO.Mail.MediaType Parse(
-    string str,
-    PeterO.Mail.MediaType defaultValue);
-</pre>
-
-<p>Parses a media type string and returns a media type object, or the default value if the string is invalid. This method checks the syntactic validity of the string, but not whether it has all parameters it’s required to have or whether the parameters themselves are set to valid values for the parameter. This method assumes the given media type string was directly extracted from the Content-Type header field (as defined for email messages) and follows the syntax given in RFC 2045. Accordingly, among other things, the media type string can contain comments (delimited by parentheses).</p>
-
-<p>RFC 2231 extensions allow each media type parameter to be associated with a character encoding and/or language, and support parameter values that span two or more key-value pairs. Parameters making use of RFC 2231 extensions have names with an asterisk (“*”). Such a parameter will be ignored if it is ill-formed because of RFC 2231’s rules (except for illegal percent-decoding or undecodable sequences for the given character encoding). Examples of RFC 2231 extensions follow (both examples encode the same “filename” parameter):</p>
-
-<p><b>text/example; filename*=utf-8’en’filename.txt</b></p>
-
-<p><b>text/example; filename<em>0</em>=utf-8’en’file; filename<em>1</em>=name%2Etxt</b></p>
-
-<p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the media type. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-  <li>
-    <p><i>str</i>: A text string representing a media type. This media type can include parameters.</p>
-  </li>
-  <li>
-    <p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be null.</p>
-  </li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A MediaType object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-  <li>System.ArgumentNullException:
-The parameter  <i>str</i>
- is null.</li>
-</ul>
 
 <p><a id="ToSingleLineString"></a>
 ### ToSingleLineString</p>
