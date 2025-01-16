@@ -14,9 +14,9 @@
 
 <h3 id="member-summary">Member Summary</h3>
 <ul>
-  <li><code>[ToByteReader(this byte[])](#ToByteReader_this_byte)</code> - <b>Deprecated:</b> Use ToReader instead.</li>
-  <li><code>[ToByteReader(this byte[], int, int)](#ToByteReader_this_byte_int_int)</code> - <b>Deprecated:</b> Use ToReader instead.</li>
-  <li><code>[ToByteReader(this System.IO.Stream)](#ToByteReader_this_System_IO_Stream)</code> - <b>Deprecated:</b> Use ToReader instead.</li>
+  <li><code>[ToByteReader(this byte[])](#ToByteReader_this_byte)</code> - <b>Obsolete:</b> Use ToReader instead.</li>
+  <li><code>[ToByteReader(this byte[], int, int)](#ToByteReader_this_byte_int_int)</code> - <b>Obsolete:</b> Use ToReader instead.</li>
+  <li><code>[ToByteReader(this System.IO.Stream)](#ToByteReader_this_System_IO_Stream)</code> - <b>Obsolete:</b> Use ToReader instead.</li>
   <li><code>[ToReader(this byte[])](#ToReader_this_byte)</code> - Wraps a byte array into a byte reader.</li>
   <li><code>[ToReader(this byte[], int, int)](#ToReader_this_byte_int_int)</code> - Wraps a portion of a byte array into a byte reader object.</li>
   <li><code>[ToReader(this System.IO.Stream)](#ToReader_this_System_IO_Stream)</code> - Wraps an input stream into a reader object.</li>
@@ -33,7 +33,7 @@
     int length);
 </pre>
 
-<p><b>Deprecated.</b> Use ToReader instead.</p>
+<p><b>Obsolete.</b> Use ToReader instead.</p>
 
 <p>Wraps a portion of a byte array into a byte reader. In the.NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -90,7 +90,7 @@ The parameter  <i>bytes</i>
     this byte[] bytes);
 </pre>
 
-<p><b>Deprecated.</b> Use ToReader instead.</p>
+<p><b>Obsolete.</b> Use ToReader instead.</p>
 
 <p>Wraps a byte array into a byte reader. In the.NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -119,7 +119,7 @@ The parameter  <i>bytes</i>
     this System.IO.Stream input);
 </pre>
 
-<p><b>Deprecated.</b> Use ToReader instead.</p>
+<p><b>Obsolete.</b> Use ToReader instead.</p>
 
 <p>Wraps a data stream into a byte reader. In the.NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object’s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 

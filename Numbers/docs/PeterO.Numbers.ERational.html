@@ -65,8 +65,8 @@
   <li><code>[FromEDecimal(PeterO.Numbers.EDecimal)](#FromEDecimal_PeterO_Numbers_EDecimal)</code> - Converts an arbitrary-precision decimal number to a rational number.</li>
   <li><code>[FromEFloat(PeterO.Numbers.EFloat)](#FromEFloat_PeterO_Numbers_EFloat)</code> - Converts an arbitrary-precision binary floating-point number to a rational number.</li>
   <li><code>[FromEInteger(PeterO.Numbers.EInteger)](#FromEInteger_PeterO_Numbers_EInteger)</code> - Converts an arbitrary-precision integer to a rational number.</li>
-  <li><code>[FromExtendedDecimal(PeterO.Numbers.EDecimal)](#FromExtendedDecimal_PeterO_Numbers_EDecimal)</code> - <b>Deprecated:</b> Renamed to FromEDecimal.</li>
-  <li><code>[FromExtendedFloat(PeterO.Numbers.EFloat)](#FromExtendedFloat_PeterO_Numbers_EFloat)</code> - <b>Deprecated:</b> Renamed to FromEFloat.</li>
+  <li><code>[FromExtendedDecimal(PeterO.Numbers.EDecimal)](#FromExtendedDecimal_PeterO_Numbers_EDecimal)</code> - <b>Obsolete:</b> Renamed to FromEDecimal.</li>
+  <li><code>[FromExtendedFloat(PeterO.Numbers.EFloat)](#FromExtendedFloat_PeterO_Numbers_EFloat)</code> - <b>Obsolete:</b> Renamed to FromEFloat.</li>
   <li><code>[FromHalfBits(short)](#FromHalfBits_short)</code> - Creates a binary rational number from a binary floating-point number encoded in the IEEE 754 binary16 format (also known as a “half-precision” floating-point number).</li>
   <li><code>[FromInt16(short)](#FromInt16_short)</code> - Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
   <li><code>[FromInt32(int)](#FromInt32_int)</code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
@@ -154,14 +154,14 @@
   <li><code>[ToEFloat(PeterO.Numbers.EContext)](#ToEFloat_PeterO_Numbers_EContext)</code> - Converts this rational number to a binary floating-point number and rounds that result to the given precision.</li>
   <li><code>[ToEFloatExactIfPossible(PeterO.Numbers.EContext)](#ToEFloatExactIfPossible_PeterO_Numbers_EContext)</code> - Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
   <li><code>[ToEInteger()](#ToEInteger)</code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator and discarding the fractional part of the result.</li>
-  <li><code>[ToEIntegerExact()](#ToEIntegerExact)</code> - <b>Deprecated:</b> Renamed to ToEIntegerIfExact.</li>
+  <li><code>[ToEIntegerExact()](#ToEIntegerExact)</code> - <b>Obsolete:</b> Renamed to ToEIntegerIfExact.</li>
   <li><code>[ToEIntegerIfExact()](#ToEIntegerIfExact)</code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
-  <li><code>[ToExtendedDecimal()](#ToExtendedDecimal)</code> - <b>Deprecated:</b> Renamed to ToEDecimal.</li>
-  <li><code>[ToExtendedDecimal(PeterO.Numbers.EContext)](#ToExtendedDecimal_PeterO_Numbers_EContext)</code> - <b>Deprecated:</b> Renamed to ToEDecimal.</li>
-  <li><code>[ToExtendedDecimalExactIfPossible(PeterO.Numbers.EContext)](#ToExtendedDecimalExactIfPossible_PeterO_Numbers_EContext)</code> - <b>Deprecated:</b> Renamed to ToEDecimalExactIfPossible.</li>
-  <li><code>[ToExtendedFloat()](#ToExtendedFloat)</code> - <b>Deprecated:</b> Renamed to ToEFloat.</li>
-  <li><code>[ToExtendedFloat(PeterO.Numbers.EContext)](#ToExtendedFloat_PeterO_Numbers_EContext)</code> - <b>Deprecated:</b> Renamed to ToEFloat.</li>
-  <li><code>[ToExtendedFloatExactIfPossible(PeterO.Numbers.EContext)](#ToExtendedFloatExactIfPossible_PeterO_Numbers_EContext)</code> - <b>Deprecated:</b> Renamed to ToEFloatExactIfPossible.</li>
+  <li><code>[ToExtendedDecimal()](#ToExtendedDecimal)</code> - <b>Obsolete:</b> Renamed to ToEDecimal.</li>
+  <li><code>[ToExtendedDecimal(PeterO.Numbers.EContext)](#ToExtendedDecimal_PeterO_Numbers_EContext)</code> - <b>Obsolete:</b> Renamed to ToEDecimal.</li>
+  <li><code>[ToExtendedDecimalExactIfPossible(PeterO.Numbers.EContext)](#ToExtendedDecimalExactIfPossible_PeterO_Numbers_EContext)</code> - <b>Obsolete:</b> Renamed to ToEDecimalExactIfPossible.</li>
+  <li><code>[ToExtendedFloat()](#ToExtendedFloat)</code> - <b>Obsolete:</b> Renamed to ToEFloat.</li>
+  <li><code>[ToExtendedFloat(PeterO.Numbers.EContext)](#ToExtendedFloat_PeterO_Numbers_EContext)</code> - <b>Obsolete:</b> Renamed to ToEFloat.</li>
+  <li><code>[ToExtendedFloatExactIfPossible(PeterO.Numbers.EContext)](#ToExtendedFloatExactIfPossible_PeterO_Numbers_EContext)</code> - <b>Obsolete:</b> Renamed to ToEFloatExactIfPossible.</li>
   <li><code>[ToHalfBits()](#ToHalfBits)</code> - Converts this value to its closest equivalent as a binary floating-point number, expressed as an integer in the IEEE 754 binary16 format (also known as a “half-precision” floating-point number).</li>
   <li><code>[ToInt16Checked()](#ToInt16Checked)</code> - Converts this number’s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part.</li>
   <li><code>[ToInt16IfExact()](#ToInt16IfExact)</code> - Converts this number’s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
@@ -202,7 +202,7 @@
     PeterO.Numbers.EInteger denominator);
 </pre>
 
-<p><b>Deprecated.</b> Use the Create method instead.</p>
+<p><b>Obsolete.</b> Use the Create method instead.</p>
 
 <p>Initializes a new instance of the <a href="PeterO.Numbers.ERational.html">PeterO.Numbers.ERational</a> class.</p>
 
@@ -1251,7 +1251,7 @@ doesn’t satisfy den.Sign &gt;= 0.</p>
     PeterO.Numbers.EDecimal ef);
 </pre>
 
-<p><b>Deprecated.</b> Renamed to FromEDecimal.</p>
+<p><b>Obsolete.</b> Renamed to FromEDecimal.</p>
 
 <p>Converts an arbitrary-precision decimal number to a rational number.</p>
 
@@ -1272,7 +1272,7 @@ doesn’t satisfy den.Sign &gt;= 0.</p>
     PeterO.Numbers.EFloat ef);
 </pre>
 
-<p><b>Deprecated.</b> Renamed to FromEFloat.</p>
+<p><b>Obsolete.</b> Renamed to FromEFloat.</p>
 
 <p>Converts an arbitrary-precision binary floating-point number to a rational number.</p>
 
@@ -3448,7 +3448,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 <pre>public PeterO.Numbers.EInteger ToEIntegerExact();
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEIntegerIfExact.</p>
+<p><b>Obsolete.</b> Renamed to ToEIntegerIfExact.</p>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</p>
 
@@ -3489,7 +3489,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEDecimal.</p>
+<p><b>Obsolete.</b> Renamed to ToEDecimal.</p>
 
 <p>Converts this rational number to an arbitrary-precision decimal number and rounds the result to the given precision.</p>
 
@@ -3509,7 +3509,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 <pre>public PeterO.Numbers.EDecimal ToExtendedDecimal();
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEDecimal.</p>
+<p><b>Obsolete.</b> Renamed to ToEDecimal.</p>
 
 <p>Converts this rational number to an arbitrary-precision decimal number.</p>
 
@@ -3524,7 +3524,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEDecimalExactIfPossible.</p>
+<p><b>Obsolete.</b> Renamed to ToEDecimalExactIfPossible.</p>
 
 <p>Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
 
@@ -3545,7 +3545,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEFloat.</p>
+<p><b>Obsolete.</b> Renamed to ToEFloat.</p>
 
 <p>Converts this rational number to a binary floating-point number and rounds that result to the given precision.</p>
 
@@ -3565,7 +3565,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 <pre>public PeterO.Numbers.EFloat ToExtendedFloat();
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEFloat.</p>
+<p><b>Obsolete.</b> Renamed to ToEFloat.</p>
 
 <p>Converts this rational number to a binary floating-point number.</p>
 
@@ -3580,7 +3580,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p><b>Deprecated.</b> Renamed to ToEFloatExactIfPossible.</p>
+<p><b>Obsolete.</b> Renamed to ToEFloatExactIfPossible.</p>
 
 <p>Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
 

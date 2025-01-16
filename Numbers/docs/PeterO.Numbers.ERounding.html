@@ -26,10 +26,10 @@
   <li><code>[public static PeterO.Numbers.ERounding HalfEven = 5;](#HalfEven)</code> - Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number that is even.</li>
   <li><code>[public static PeterO.Numbers.ERounding HalfUp = 3;](#HalfUp)</code> - Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number away from zero.</li>
   <li><code>[public static PeterO.Numbers.ERounding None = 0;](#None)</code> - Indicates that rounding will not be used.</li>
-  <li><code>[public static PeterO.Numbers.ERounding Odd = 8;](#Odd)</code> - <b>Deprecated:</b> Consider using ERounding.OddOrZeroFiveUp instead.</li>
+  <li><code>[public static PeterO.Numbers.ERounding Odd = 8;](#Odd)</code> - <b>Obsolete:</b> Consider using ERounding.OddOrZeroFiveUp instead.</li>
   <li><code>[public static PeterO.Numbers.ERounding OddOrZeroFiveUp = 10;](#OddOrZeroFiveUp)</code> - For binary floating point numbers, this is the same as Odd.</li>
   <li><code>[public static PeterO.Numbers.ERounding Up = 1;](#Up)</code> - If there is a fractional part, the number is rounded to the closest representable number away from zero.</li>
-  <li><code>[public static PeterO.Numbers.ERounding ZeroFiveUp = 9;](#ZeroFiveUp)</code> - <b>Deprecated:</b> Use ERounding.OddOrZeroFiveUp instead.</li>
+  <li><code>[public static PeterO.Numbers.ERounding ZeroFiveUp = 9;](#ZeroFiveUp)</code> - <b>Obsolete:</b> Use ERounding.OddOrZeroFiveUp instead.</li>
 </ul>
 
 <p><a id="Ceiling"></a>
@@ -94,7 +94,7 @@
 <pre>public static PeterO.Numbers.ERounding Odd = 8;
 </pre>
 
-<p><b>Deprecated.</b> Consider using ERounding.OddOrZeroFiveUp instead.</p>
+<p><b>Obsolete.</b> Consider using ERounding.OddOrZeroFiveUp instead.</p>
 
 <p>If there is a fractional part and the whole number part is even, the number is rounded to the closest representable odd number away from zero.</p>
 
@@ -120,7 +120,7 @@
 <pre>public static PeterO.Numbers.ERounding ZeroFiveUp = 9;
 </pre>
 
-<p><b>Deprecated.</b> Use ERounding.OddOrZeroFiveUp instead.</p>
+<p><b>Obsolete.</b> Use ERounding.OddOrZeroFiveUp instead.</p>
 
 <p>If there is a fractional part and if the last digit before rounding is 0 or half the radix, the number is rounded to the closest representable number away from zero; otherwise the fractional part is discarded. In overflow, the fractional part is always discarded.</p>
 

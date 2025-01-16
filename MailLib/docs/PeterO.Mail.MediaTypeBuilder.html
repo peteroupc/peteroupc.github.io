@@ -10,14 +10,14 @@
 <pre>public sealed class MediaTypeBuilder
 </pre>
 
-<p><b>Deprecated.</b> Use MediaType.Builder instead.</p>
+<p><b>Obsolete.</b> Use MediaType.Builder instead.</p>
 
 <p>A mutable media type object.</p>
 
 <h3 id="member-summary">Member Summary</h3>
 <ul>
-  <li><code>[IsMultipart](#IsMultipart)</code> - <b>Deprecated:</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘multipart’.</li>
-  <li><code>[IsText](#IsText)</code> - <b>Deprecated:</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘text’.</li>
+  <li><code>[IsMultipart](#IsMultipart)</code> - <b>Obsolete:</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘multipart’.</li>
+  <li><code>[IsText](#IsText)</code> - <b>Obsolete:</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘text’.</li>
   <li><code>[RemoveParameter(string)](#RemoveParameter_string)</code> - Removes a parameter from this builder object.</li>
   <li><code>[SetParameter(string, string)](#SetParameter_string_string)</code> - Sets a parameter’s name and value for this media type.</li>
   <li><code>[SetSubType(string)](#SetSubType_string)</code> - Sets this media type’s subtype, such as “plain” or “xml” .</li>
@@ -87,7 +87,7 @@ The parameter  <i>mt</i>
 <pre>public bool IsMultipart { get; }
 </pre>
 
-<p><b>Deprecated.</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘multipart’.</p>
+<p><b>Obsolete.</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘multipart’.</p>
 
 <p>Gets a value indicating whether this is a multipart media type.</p>
 
@@ -101,7 +101,7 @@ The parameter  <i>mt</i>
 <pre>public bool IsText { get; }
 </pre>
 
-<p><b>Deprecated.</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘text’.</p>
+<p><b>Obsolete.</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string ‘text’.</p>
 
 <p>Gets a value indicating whether this is a text media type.</p>
 
