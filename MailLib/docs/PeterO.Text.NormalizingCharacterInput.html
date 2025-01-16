@@ -48,11 +48,11 @@
   <li><code>[GetChars(PeterO.Text.ICharacterInput, PeterO.Text.Normalization)](#GetChars_PeterO_Text_ICharacterInput_PeterO_Text_Normalization)</code> - <b>Deprecated:</b> Instead of this method, create a NormalizerInput on the input and call ReadChar to get the normalized string’s code points.</li>
   <li><code>[GetChars(string, PeterO.Text.Normalization)](#GetChars_string_PeterO_Text_Normalization)</code> - <b>Deprecated:</b> Instead of this method, create a NormalizerInput on the string and call ReadChar to get the normalized string’s code points.</li>
   <li><code>[IsNormalized(int[], PeterO.Text.Normalization)](#IsNormalized_int_PeterO_Text_Normalization)</code> - <b>Deprecated:</b> Either convert the array to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</li>
-  <li><code>[IsNormalized(PeterO.Text.ICharacterInput, PeterO.Text.Normalization)](#IsNormalized_PeterO_Text_ICharacterInput_PeterO_Text_Normalization)</code> -</li>
-  <li><code>[IsNormalized(string, PeterO.Text.Normalization)](#IsNormalized_string_PeterO_Text_Normalization)</code> -</li>
+  <li><code>[IsNormalized(PeterO.Text.ICharacterInput, PeterO.Text.Normalization)](#IsNormalized_PeterO_Text_ICharacterInput_PeterO_Text_Normalization)</code> - Determines whether the text provided by a character input is normalized.</li>
+  <li><code>[IsNormalized(string, PeterO.Text.Normalization)](#IsNormalized_string_PeterO_Text_Normalization)</code> - Determines whether the given string is in the given Unicode normalization form.</li>
   <li><code>[IsNormalized(System.Collections.Generic.IList, PeterO.Text.Normalization)](#IsNormalized_System_Collections_Generic_IList_PeterO_Text_Normalization)</code> - <b>Deprecated:</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</li>
-  <li><code>[Normalize(string, PeterO.Text.Normalization)](#Normalize_string_PeterO_Text_Normalization)</code> -</li>
-  <li><code>[Read(int[], int, int)](#Read_int_int_int)</code> -</li>
+  <li><code>[Normalize(string, PeterO.Text.Normalization)](#Normalize_string_PeterO_Text_Normalization)</code> - Converts a string to the given Unicode normalization form.</li>
+  <li><code>[Read(int[], int, int)](#Read_int_int_int)</code> - Reads a sequence of Unicode code points from a data source.</li>
   <li><code>[ReadChar()](#ReadChar)</code> - Reads a Unicode character from a data source.</li>
 </ul>
 
@@ -233,6 +233,305 @@ The parameter  <i>str</i>
 <ul>
   <li><i>characterList</i>: The parameter  <i>characterList</i>
  is an IList object.</li>
+</ul>
+
+<p><a id="GetChars_PeterO_Text_ICharacterInput_PeterO_Text_Normalization"></a>
+### GetChars</p>
+
+<pre>public static System.Collections.Generic.IList GetChars(
+    PeterO.Text.ICharacterInput chars,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p><b>Deprecated.</b> Instead of this method, create a NormalizerInput on the input and call ReadChar to get the normalized string’s code points.</p>
+
+<p>Gets a list of normalized code points after reading from a character stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>chars</i>: An object that implements a stream of Unicode characters.</p>
+  </li>
+  <li>
+    <p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A list of the normalized Unicode characters.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>chars</i>
+ is null.</li>
+</ul>
+
+<p><a id="GetChars_string_PeterO_Text_Normalization"></a>
+### GetChars</p>
+
+<pre>public static System.Collections.Generic.IList GetChars(
+    string str,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p><b>Deprecated.</b> Instead of this method, create a NormalizerInput on the string and call ReadChar to get the normalized string’s code points.</p>
+
+<p>Gets a list of normalized code points after reading from a string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>str</i>: The parameter  <i>str</i>
+ is a text string.</p>
+  </li>
+  <li>
+    <p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A list of the normalized Unicode characters.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>str</i>
+ is null.</li>
+</ul>
+
+<p><a id="IsNormalized_int_PeterO_Text_Normalization"></a>
+### IsNormalized</p>
+
+<pre>public static bool IsNormalized(
+    int[] charArray,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p><b>Deprecated.</b> Either convert the array to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
+
+<p>Determines whether the given array of characters is in the given Unicode normalization form.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>charArray</i>: An array of Unicode code points.</p>
+  </li>
+  <li>
+    <p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter “charList” is null.</li>
+</ul>
+
+<p><a id="IsNormalized_PeterO_Text_ICharacterInput_PeterO_Text_Normalization"></a>
+### IsNormalized</p>
+
+<pre>public static bool IsNormalized(
+    PeterO.Text.ICharacterInput chars,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p>Determines whether the text provided by a character input is normalized.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>chars</i>: A object that implements a streamable character input.</p>
+  </li>
+  <li>
+    <p><i>form</i>: Specifies the normalization form to check.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the text is normalized; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>chars</i>
+ is null.</li>
+</ul>
+
+<p><a id="IsNormalized_string_PeterO_Text_Normalization"></a>
+### IsNormalized</p>
+
+<pre>public static bool IsNormalized(
+    string str,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p>Determines whether the given string is in the given Unicode normalization form.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>str</i>: An arbitrary string.</p>
+  </li>
+  <li>
+    <p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>str</i>
+ is null.</li>
+</ul>
+
+<p><a id="IsNormalized_System_Collections_Generic_IList_PeterO_Text_Normalization"></a>
+### IsNormalized</p>
+
+<pre>public static bool IsNormalized(
+    System.Collections.Generic.IList charList,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
+
+<p>Determines whether the given list of characters is in the given Unicode normalization form.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>charList</i>: A list of Unicode code points.</p>
+  </li>
+  <li>
+    <p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given list of characters is in the given Unicode normalization form; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>charList</i>
+ is null.</li>
+</ul>
+
+<p><a id="Normalize_string_PeterO_Text_Normalization"></a>
+### Normalize</p>
+
+<pre>public static string Normalize(
+    string str,
+    PeterO.Text.Normalization form);
+</pre>
+
+<p>Converts a string to the given Unicode normalization form.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>str</i>: An arbitrary string.</p>
+  </li>
+  <li>
+    <p><i>form</i>: The Unicode normalization form to convert to.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The parameter  <i>str</i>
+ converted to the given normalization form.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentException:
+The parameter  <i>str</i>
+ contains an unpaired surrogate code point.</p>
+  </li>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>str</i>
+ is null.</p>
+  </li>
+</ul>
+
+<p><a id="Read_int_int_int"></a>
+### Read</p>
+
+<pre>public sealed int Read(
+    int[] chars,
+    int index,
+    int length);
+</pre>
+
+<p>Reads a sequence of Unicode code points from a data source.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>chars</i>: Output buffer.</p>
+  </li>
+  <li>
+    <p><i>index</i>: An index starting at 0 showing where the desired portion of  <i>chars</i>
+ begins.</p>
+  </li>
+  <li>
+    <p><i>length</i>: The number of elements in the desired portion of  <i>chars</i>
+ (but not more than  <i>chars</i>
+ ‘s length).</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of Unicode code points read, or 0 if the end of the source is reached.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>chars</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.ArgumentException:
+Either  <i>index</i>
+ or  <i>length</i>
+ is less than 0 or greater than  <i>chars</i>
+ ‘s length, or  <i>chars</i>
+ ‘s length minus  <i>index</i>
+ is less than  <i>length</i>
+.</p>
+  </li>
 </ul>
 
 <p><a id="ReadChar"></a>

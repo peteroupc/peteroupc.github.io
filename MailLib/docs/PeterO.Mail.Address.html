@@ -15,7 +15,7 @@
 <h3 id="member-summary">Member Summary</h3>
 <ul>
   <li><code>[Domain](#Domain)</code> - Gets the domain of this email address (the part after the “@” sign).</li>
-  <li><code>[Equals(object)](#Equals_object)</code> -</li>
+  <li><code>[Equals(object)](#Equals_object)</code> - Determines whether this object and another object are equal.</li>
   <li><code>[GetHashCode()](#GetHashCode)</code> - Returns a hash code for this address object.</li>
   <li><code>[LocalPart](#LocalPart)</code> - Gets the local part of this email address (the part before the “@” sign).</li>
   <li><code>[ToString()](#ToString)</code> - Converts this address object to a text string.</li>
@@ -73,6 +73,26 @@ AddressValue is empty.; Address doesn’t contain a ‘@’sign; Invalid local p
 <p><b>Returns:</b></p>
 
 <p>The local part of this email address (the part before the “@” sign).</p>
+
+<p><a id="Equals_object"></a>
+### Equals</p>
+
+<pre>public override bool Equals(
+    object obj);
+</pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>obj</i>: The parameter  <i>obj</i>
+ is an arbitrary object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetHashCode"></a>
 ### GetHashCode</p>

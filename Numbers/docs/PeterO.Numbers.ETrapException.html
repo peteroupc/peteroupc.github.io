@@ -19,7 +19,7 @@
   <li><code>[Context](#Context)</code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
   <li><code>[Error](#Error)</code> - Gets the flag that specifies the primary kind of error in one or more operations (EContext.</li>
   <li><code>[Errors](#Errors)</code> - Gets the flags that were signaled as the result of one or more operations.</li>
-  <li><code>[HasError(int)](#HasError_int)</code> -</li>
+  <li><code>[HasError(int)](#HasError_int)</code> - Returns whether this trap exception specifies all the flags given.</li>
   <li><code>[Result](#Result)</code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
 
@@ -180,6 +180,26 @@ The parameter  <i>flags</i>
 <p><b>Returns:</b></p>
 
 <p>The defined result of the operation that caused the trap.</p>
+
+<p><a id="HasError_int"></a>
+### HasError</p>
+
+<pre>public bool HasError(
+    int flag);
+</pre>
+
+<p>Returns whether this trap exception specifies all the flags given. (Flags are signaled in a trap exception as the result of one or more operations involving arbitrary-precision numbers, such as multiplication of two EDecimals.).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>flag</i>: A combination of one or more flags, such as  <code>EContext.FlagInexact | EContext.FlagRounded</code> .</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>True if this exception pertains to all of the flags given in  <i>flag</i>
+ ; otherwise, false.</p>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

@@ -16,7 +16,7 @@
 <h3 id="member-summary">Member Summary</h3>
 <ul>
   <li><code>[Abs()](#Abs)</code> - Returns the absolute value of this CBOR number.</li>
-  <li><code>[Add(PeterO.Cbor.CBORNumber)](#Add_PeterO_Cbor_CBORNumber)</code> -</li>
+  <li><code>[Add(PeterO.Cbor.CBORNumber)](#Add_PeterO_Cbor_CBORNumber)</code> - Returns the sum of this number and another number.</li>
   <li><code>[CanFitInDouble()](#CanFitInDouble)</code> - Returns whether this object’s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value.</li>
   <li><code>[CanFitInInt32()](#CanFitInInt32)</code> - Returns whether this object’s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</li>
   <li><code>[CanFitInInt64()](#CanFitInInt64)</code> - Returns whether this object’s numerical value is an integer, is -(2^63) or greater, and is less than 2^63.</li>
@@ -25,13 +25,13 @@
   <li><code>[CanTruncatedIntFitInInt32()](#CanTruncatedIntFitInInt32)</code> - Returns whether this object’s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31.</li>
   <li><code>[CanTruncatedIntFitInInt64()](#CanTruncatedIntFitInInt64)</code> - Returns whether this object’s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63.</li>
   <li><code>[CanTruncatedIntFitInUInt64()](#CanTruncatedIntFitInUInt64)</code> - Returns whether this object’s value, converted to an integer by discarding its fractional part, would be 0 or greater, and less than 2^64.</li>
-  <li><code>[CompareTo(int)](#CompareTo_int)</code> -</li>
-  <li><code>[CompareTo(long)](#CompareTo_long)</code> -</li>
-  <li><code>[CompareTo(PeterO.Cbor.CBORNumber)](#CompareTo_PeterO_Cbor_CBORNumber)</code> -</li>
-  <li><code>[Divide(PeterO.Cbor.CBORNumber)](#Divide_PeterO_Cbor_CBORNumber)</code> -</li>
-  <li><code>[FromByte(byte)](#FromByte_byte)</code> -</li>
-  <li><code>[FromCBORObject(PeterO.Cbor.CBORObject)](#FromCBORObject_PeterO_Cbor_CBORObject)</code> -</li>
-  <li><code>[FromInt16(short)](#FromInt16_short)</code> -</li>
+  <li><code>[CompareTo(int)](#CompareTo_int)</code> - Compares this CBOR number with a 32-bit signed integer.</li>
+  <li><code>[CompareTo(long)](#CompareTo_long)</code> - Compares this CBOR number with a 64-bit signed integer.</li>
+  <li><code>[CompareTo(PeterO.Cbor.CBORNumber)](#CompareTo_PeterO_Cbor_CBORNumber)</code> - Compares this CBOR number with another.</li>
+  <li><code>[Divide(PeterO.Cbor.CBORNumber)](#Divide_PeterO_Cbor_CBORNumber)</code> - Returns the quotient of this number and another number.</li>
+  <li><code>[FromByte(byte)](#FromByte_byte)</code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
+  <li><code>[FromCBORObject(PeterO.Cbor.CBORObject)](#FromCBORObject_PeterO_Cbor_CBORObject)</code> - Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.</li>
+  <li><code>[FromInt16(short)](#FromInt16_short)</code> - Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
   <li><code>[IsFinite()](#IsFinite)</code> - Gets a value indicating whether this CBOR object represents a finite number.</li>
   <li><code>[IsInfinity()](#IsInfinity)</code> - Gets a value indicating whether this object represents infinity.</li>
   <li><code>[IsInteger()](#IsInteger)</code> - Gets a value indicating whether this object represents an integer number, that is, a number without a fractional part.</li>
@@ -41,15 +41,15 @@
   <li><code>[IsPositiveInfinity()](#IsPositiveInfinity)</code> - Gets a value indicating whether this object represents positive infinity.</li>
   <li><code>[IsZero()](#IsZero)</code> - Gets a value indicating whether this object’s value equals 0.</li>
   <li><code>[Kind](#Kind)</code> - Gets the underlying form of this CBOR number object.</li>
-  <li><code>[Multiply(PeterO.Cbor.CBORNumber)](#Multiply_PeterO_Cbor_CBORNumber)</code> -</li>
+  <li><code>[Multiply(PeterO.Cbor.CBORNumber)](#Multiply_PeterO_Cbor_CBORNumber)</code> - Returns a CBOR number expressing the product of this number and the given number.</li>
   <li><code>[Negate()](#Negate)</code> - Returns a CBOR number with the same value as this one but with the sign reversed.</li>
-  <li><code>[bool operator &gt;(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_GreaterThan)</code> -</li>
-  <li><code>[bool operator &gt;=(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_GreaterThanOrEqual)</code> -</li>
-  <li><code>[bool operator &lt;(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_LessThan)</code> -</li>
-  <li><code>[bool operator &lt;=(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_LessThanOrEqual)</code> -</li>
-  <li><code>[Remainder(PeterO.Cbor.CBORNumber)](#Remainder_PeterO_Cbor_CBORNumber)</code> -</li>
+  <li><code>[bool operator &gt;(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_GreaterThan)</code> - Returns whether one object’s value is greater than another’s.</li>
+  <li><code>[bool operator &gt;=(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_GreaterThanOrEqual)</code> - Returns whether one object’s value is at least another’s.</li>
+  <li><code>[bool operator &lt;(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_LessThan)</code> - Returns whether one object’s value is less than another’s.</li>
+  <li><code>[bool operator &lt;=(PeterO.Cbor.CBORNumber, PeterO.Cbor.CBORNumber)](#op_LessThanOrEqual)</code> - Returns whether one object’s value is up to another’s.</li>
+  <li><code>[Remainder(PeterO.Cbor.CBORNumber)](#Remainder_PeterO_Cbor_CBORNumber)</code> - Returns the remainder when this number is divided by another number.</li>
   <li><code>[Sign](#Sign)</code> - Gets this value’s sign: -1 if nonzero and negative; 1 if nonzero and positive; 0 if zero.</li>
-  <li><code>[Subtract(PeterO.Cbor.CBORNumber)](#Subtract_PeterO_Cbor_CBORNumber)</code> -</li>
+  <li><code>[Subtract(PeterO.Cbor.CBORNumber)](#Subtract_PeterO_Cbor_CBORNumber)</code> - Returns a number that expresses this number minus another.</li>
   <li><code>[ToByteChecked()](#ToByteChecked)</code> - Converts this number’s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after converting it to an integer by discarding its fractional part.</li>
   <li><code>[ToByteIfExact()](#ToByteIfExact)</code> - Converts this number’s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
   <li><code>[ToByteUnchecked()](#ToByteUnchecked)</code> - Converts this number’s value to an integer by discarding its fractional part, and returns the least-significant bits of its two’s-complement form as a byte (from 0 to 255).</li>
@@ -119,6 +119,39 @@
 <p><b>Return Value:</b></p>
 
 <p>This object’s absolute value without its negative sign.</p>
+
+<p><a id="Add_PeterO_Cbor_CBORNumber"></a>
+### Add</p>
+
+<pre>public PeterO.Cbor.CBORNumber Add(
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns the sum of this number and another number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>b</i>: The number to add with this one.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The sum of this number and another number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>b</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.OutOfMemoryException:
+The exact result of the operation might be too big to fit in memory (or might require more than 2 gigabytes of memory to store).</p>
+  </li>
+</ul>
 
 <p><a id="CanFitInDouble"></a>
 ### CanFitInDouble</p>
@@ -216,6 +249,162 @@
 
 <p><code>true</code>  if this object’s value, converted to an integer by discarding its fractional part, would be 0 or greater, and less than 2^64; otherwise,  <code>false</code> .</p>
 
+<p><a id="CompareTo_int"></a>
+### CompareTo</p>
+
+<pre>public int CompareTo(
+    int other);
+</pre>
+
+<p>Compares this CBOR number with a 32-bit signed integer. In this implementation, the two numbers’ mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>other</i>: A value to compare with. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A negative number, if this value is less than the other object; or 0, if both values are equal; or a positive number, if this value is less than the other object or if the other object is null. This implementation returns a positive number if  <i>other</i>
+ is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency’s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
+
+<p>.</p>
+
+<p><a id="CompareTo_long"></a>
+### CompareTo</p>
+
+<pre>public int CompareTo(
+    long other);
+</pre>
+
+<p>Compares this CBOR number with a 64-bit signed integer. In this implementation, the two numbers’ mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>other</i>: A value to compare with. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A negative number, if this value is less than the other object; or 0, if both values are equal; or a positive number, if this value is less than the other object or if the other object is null. This implementation returns a positive number if  <i>other</i>
+ is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency’s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
+
+<p>.</p>
+
+<p><a id="CompareTo_PeterO_Cbor_CBORNumber"></a>
+### CompareTo</p>
+
+<pre>public sealed int CompareTo(
+    PeterO.Cbor.CBORNumber other);
+</pre>
+
+<p>Compares this CBOR number with another. In this implementation, the two numbers’ mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>other</i>: A value to compare with. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A negative number, if this value is less than the other object; or 0, if both values are equal; or a positive number, if this value is less than the other object or if the other object is null. This implementation returns a positive number if  <i>other</i>
+ is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency’s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
+
+<p>.</p>
+
+<p><a id="Divide_PeterO_Cbor_CBORNumber"></a>
+### Divide</p>
+
+<pre>public PeterO.Cbor.CBORNumber Divide(
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns the quotient of this number and another number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>b</i>: The right-hand side (divisor) to the division operation.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The quotient of this number and another one.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>b</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.OutOfMemoryException:
+The exact result of the operation might be too big to fit in memory (or might require more than 2 gigabytes of memory to store).</p>
+  </li>
+</ul>
+
+<p><a id="FromByte_byte"></a>
+### FromByte</p>
+
+<pre>public static PeterO.Cbor.CBORNumber FromByte(
+    byte inputByte);
+</pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>inputByte</i>: The number to convert as a byte (from 0 to 255).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This number’s value as an arbitrary-precision decimal number.</p>
+
+<p><a id="FromCBORObject_PeterO_Cbor_CBORObject"></a>
+### FromCBORObject</p>
+
+<pre>public static PeterO.Cbor.CBORNumber FromCBORObject(
+    PeterO.Cbor.CBORObject o);
+</pre>
+
+<p>Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.NET or the isNumber() method in Java returns true).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>o</i>: The parameter is a CBOR object representing a number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number object, or null if the given CBOR object is null or does not represent a number.</p>
+
+<p><a id="FromInt16_short"></a>
+### FromInt16</p>
+
+<pre>public static PeterO.Cbor.CBORNumber FromInt16(
+    short inputInt16);
+</pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>inputInt16</i>: The number to convert as a 16-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This number’s value as an arbitrary-precision decimal number.</p>
+
 <p><a id="IsFinite"></a>
 ### IsFinite</p>
 
@@ -312,6 +501,39 @@
 
 <p><code>true</code>  if this object’s value equals 0; otherwise,  <code>false</code> .</p>
 
+<p><a id="Multiply_PeterO_Cbor_CBORNumber"></a>
+### Multiply</p>
+
+<pre>public PeterO.Cbor.CBORNumber Multiply(
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns a CBOR number expressing the product of this number and the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>b</i>: The second operand to the multiplication operation.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A number expressing the product of this number and the given number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>b</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.OutOfMemoryException:
+The exact result of the operation might be too big to fit in memory (or might require more than 2 gigabytes of memory to store).</p>
+  </li>
+</ul>
+
 <p><a id="Negate"></a>
 ### Negate</p>
 
@@ -323,6 +545,204 @@
 <p><b>Return Value:</b></p>
 
 <p>A CBOR number with the same value as this one but with the sign reversed.</p>
+
+<p><a id="op_GreaterThan"></a>
+### Operator <code>&gt;</code></p>
+
+<pre>public static bool operator &gt;(
+    PeterO.Cbor.CBORNumber a,
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns whether one object’s value is greater than another’s.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>a</i>: The left-hand side of the comparison.</p>
+  </li>
+  <li>
+    <p><i>b</i>: The right-hand side of the comparison.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if one object’s value is greater than another’s; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>a</i>
+ is null.</li>
+</ul>
+
+<p><a id="op_GreaterThanOrEqual"></a>
+### Operator <code>&gt;=</code></p>
+
+<pre>public static bool operator &gt;=(
+    PeterO.Cbor.CBORNumber a,
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns whether one object’s value is at least another’s.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>a</i>: The left-hand side of the comparison.</p>
+  </li>
+  <li>
+    <p><i>b</i>: The right-hand side of the comparison.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if one object’s value is at least another’s; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>a</i>
+ is null.</li>
+</ul>
+
+<p><a id="op_LessThan"></a>
+### Operator <code>&lt;</code></p>
+
+<pre>public static bool operator &lt;(
+    PeterO.Cbor.CBORNumber a,
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns whether one object’s value is less than another’s.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>a</i>: The left-hand side of the comparison.</p>
+  </li>
+  <li>
+    <p><i>b</i>: The right-hand side of the comparison.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the first object’s value is less than the other’s; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>a</i>
+ is null.</li>
+</ul>
+
+<p><a id="op_LessThanOrEqual"></a>
+### Operator <code>&lt;=</code></p>
+
+<pre>public static bool operator &lt;=(
+    PeterO.Cbor.CBORNumber a,
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns whether one object’s value is up to another’s.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li>
+    <p><i>a</i>: The left-hand side of the comparison.</p>
+  </li>
+  <li>
+    <p><i>b</i>: The right-hand side of the comparison.</p>
+  </li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if one object’s value is up to another’s; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>System.ArgumentNullException:
+The parameter  <i>a</i>
+ is null.</li>
+</ul>
+
+<p><a id="Remainder_PeterO_Cbor_CBORNumber"></a>
+### Remainder</p>
+
+<pre>public PeterO.Cbor.CBORNumber Remainder(
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns the remainder when this number is divided by another number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>b</i>: The right-hand side (dividend) of the remainder operation.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The remainder when this number is divided by the other number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>b</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.OutOfMemoryException:
+The exact result of the operation might be too big to fit in memory (or might require more than 2 gigabytes of memory to store).</p>
+  </li>
+</ul>
+
+<p><a id="Subtract_PeterO_Cbor_CBORNumber"></a>
+### Subtract</p>
+
+<pre>public PeterO.Cbor.CBORNumber Subtract(
+    PeterO.Cbor.CBORNumber b);
+</pre>
+
+<p>Returns a number that expresses this number minus another.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+  <li><i>b</i>: The second operand to the subtraction.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number that expresses this number minus the given number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+  <li>
+    <p>System.ArgumentNullException:
+The parameter  <i>b</i>
+ is null.</p>
+  </li>
+  <li>
+    <p>System.OutOfMemoryException:
+The exact result of the operation might be too big to fit in memory (or might require more than 2 gigabytes of memory to store).</p>
+  </li>
+</ul>
 
 <p><a id="ToByteChecked"></a>
 ### ToByteChecked</p>
