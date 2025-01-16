@@ -52,7 +52,7 @@
 <url><loc>https://peteroupc.github.io/CBOR/binarymime.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.PODOptions.html</loc><lastmod>2024-12-23T19:21:33Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/index.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORObject.html</loc><lastmod>2025-01-15T14:50:36Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORObject.html</loc><lastmod>2025-01-16T12:19:18Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.ConversionType.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.CBORDateConverter.html</loc><lastmod>2024-08-19T10:42:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/api/com.upokecenter.cbor.JSONOptions.ConversionMode.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
@@ -121,7 +121,7 @@
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.util.DataIO.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.ProtocolStrings.html</loc><lastmod>2024-12-24T16:28:42Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.transforms.PercentEncodingStringTransform.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Idna.html</loc><lastmod>2025-01-15T14:50:36Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Idna.html</loc><lastmod>2025-01-16T12:19:18Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MailDateTime.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.transforms.TransformWithUnget.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MessageDataException.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
@@ -137,7 +137,7 @@
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.DataUris.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.ICharacterEncoding.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.LanguageTags.StringAndQuality.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MediaType.html</loc><lastmod>2025-01-15T14:50:36Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MediaType.html</loc><lastmod>2025-01-16T12:19:18Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.Address.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Encodings.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.DataUrls.html</loc><lastmod>2024-04-27T05:23:05Z</lastmod></url>
@@ -572,8 +572,8 @@
 <url><loc>https://peteroupc.github.io/Numbers/docs/PeterO.Numbers.ERounding.html</loc><lastmod>2024-04-27T05:23:11Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/docs/PeterO.Numbers.EDecimals.html</loc><lastmod>2024-12-24T11:58:53Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/index.html</loc><lastmod>2024-04-27T05:23:06Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimal.html</loc><lastmod>2025-01-15T14:50:37Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EFloat.html</loc><lastmod>2025-01-15T14:50:37Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimal.html</loc><lastmod>2025-01-16T12:19:18Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EFloat.html</loc><lastmod>2025-01-16T12:19:18Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/Home.html</loc><lastmod>2024-04-27T05:23:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ETrapException.html</loc><lastmod>2024-04-27T05:23:06Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EContext.html</loc><lastmod>2024-12-24T11:58:53Z</lastmod></url>
@@ -583,7 +583,7 @@
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EInteger.html</loc><lastmod>2024-12-24T11:00:13Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimalExtras.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.EDecimals.html</loc><lastmod>2024-12-24T16:28:43Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ERational.html</loc><lastmod>2025-01-15T14:50:37Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ERational.html</loc><lastmod>2025-01-16T12:19:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/exporand.html</loc><lastmod>2025-01-15T14:50:53Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomgen.py</loc><lastmod>2025-01-15T14:51:03Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/bernoullicorrect.pdf</loc><lastmod>2024-11-09T22:03:42Z</lastmod></url>
