@@ -18,6 +18,7 @@ from betadist import *
 #  precision in bits.
 #
 
+
 class FInterval:
     """An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
     the lower bound."""
@@ -343,6 +344,7 @@ class FInterval:
     def __repr__(self):
         return "[%s, %s]" % (float(self.inf), float(self.sup))
 
+
 def _polynomialProduct(a, b):
     # Finds the product of two polynomials.  Each polynomial
     # is a list of the following form:
@@ -354,12 +356,14 @@ def _polynomialProduct(a, b):
             ret[i + j] += a[i] * b[j]
     return ret
 
+
 def _polynomialProductA(a, b0, b1):
     ret = [0 for i in range(len(a) + 1)]
     for i in range(len(a)):
         ret[i] += a[i] * b0  # b0 is 0th-order coefficient
         ret[i + 1] += a[i] * b1  # b1 is 1st-order coefficient
     return ret
+
 
 def _polynomialIntegral(p, x=1):
     # Finds the integral of a polynomial at the point x.
