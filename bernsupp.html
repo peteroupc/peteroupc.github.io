@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2024/12/28"><meta name="citation_online_date" content="2024/12/28"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/01/16"><meta name="citation_online_date" content="2025/01/16"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -891,7 +891,9 @@
   <li>
     <p>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f’(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f’(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>, so—</p>
 
-    <p>\(E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])\) \(\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).\)</p>
+\[E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])\]
+
+\[\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).\]
 
     <p>By part 1’s proof, it follows that (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) ≤ (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>−4)) = <em>ρ</em>.  For every integer <em>n</em>≥4, <em>ρ</em> ≤  (<em>M</em>/2)*(1/(7*<em>n</em>)). □</p>
   </li>
@@ -935,7 +937,7 @@
 
 <p><em>Proof.</em> Strukov and Timan (1977)<sup id="fnref:28" role="doc-noteref"><a href="#fn:28" class="footnote" rel="footnote">28</a></sup> proved the following bound:</p>
 
-\[\\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),\]
+\[\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),\]
 
 <p>where <em>Y</em> is a random variable and ω<sub>2</sub>(.) is a <em>second-order modulus of continuity</em> of <em>f</em> (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values in a closed interval, such as the closed unit interval in this case.</p>
 
@@ -943,7 +945,9 @@
 
 <p>Since <em>f</em> is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan’s bound and the bound on <em>Y</em>’s variance leads to—</p>
 
-<p>\(\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)\) \(\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.\)</p>
+\[\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)\]
+
+\[\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.\]
 
 <p>□</p>
 

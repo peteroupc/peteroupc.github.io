@@ -645,7 +645,9 @@ _Proof._
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
 3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f'(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^23], so&mdash;
 
-     $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$ $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$
+     $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$
+
+     $$\le (M/2)(X/n-k/(2n))^2 \le (M/2) Var(X/n).$$
 
      By part 1's proof, it follows that (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For every integer _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
 
@@ -678,7 +680,7 @@ and in turn, plugging in bounds for $\text{Var}[Y]$ leads to the following bound
 
 _Proof._ Strukov and Timan (1977)[^28] proved the following bound:
 
-$$\\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2),$$
 
 where _Y_ is a random variable and &omega;<sub>2</sub>(.) is a _second-order modulus of continuity_ of _f_ (see note below), and where $C$ is 3 if $Y$ takes on any value in the real line, or 15 if $Y$ takes on only values in a closed interval, such as the closed unit interval in this case.
 
@@ -686,7 +688,9 @@ Suppose _Y_ = _X_/_n_, where _X_ is as in Lemma 2.  Then _Y_'s variance (**Var**
 
 Since _f_ is in the Zygmund class, there is an $\omega_2$ for it such that $\omega_{2}(h)\le D h$.  Therefore, applying Strukov and Timan's bound and the bound on _Y_'s variance leads to&mdash;
 
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$ $$\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le C\omega_2((\text{Var}[Y])^{1/2}/2)$$
+
+$$\le CD ((\text{Var}[Y])^{1/2}/2) = CD\sqrt{1/(8n-4)}/2.$$
 
 &#x25a1;
 
