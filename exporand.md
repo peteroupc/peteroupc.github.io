@@ -65,7 +65,7 @@ Comments on other aspects of this document are welcome.
     - [**SampleGeometricBag**](#SampleGeometricBag)
     - [**FillGeometricBag**](#FillGeometricBag)
     - [**kthsmallest**](#kthsmallest)
-    - [**Power-of-Uniform Sub-Algorithm**](#Power_of_Uniform_Sub_Algorithm)
+    - [**Power-of-Uniform Subalgorithm**](#Power_of_Uniform_Subalgorithm)
 - [**Algorithms for the Beta and Exponential Distributions**](#Algorithms_for_the_Beta_and_Exponential_Distributions)
     - [**Beta Distribution**](#Beta_Distribution)
     - [**Exponential Distribution**](#Exponential_Distribution)
@@ -636,9 +636,9 @@ The algorithm is as follows:
     3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + **v**\[0\] + **v**\[1\] + ... + **v**\[_i_ &minus; 1\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
 4. Take the `k`th PSRN (starting at 1), then optionally fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above), then return that number.  (Note that the beta sampler  described later chooses to fill the PSRN this way via this algorithm.)
 
-<a id=Power_of_Uniform_Sub_Algorithm></a>
+<a id=Power_of_Uniform_Subalgorithm></a>
 
-### Power-of-Uniform Sub-Algorithm
+### Power-of-Uniform Subalgorithm
 
 The power-of-uniform subalgorithm is used for certain cases of the beta sampler below.  It returns _U_<sup>_px_/_py_</sup>, where _U_ is a uniform random variate in the interval \[0, 1\] and _px_/_py_ is greater than 1, but unlike the naïve algorithm it supports an arbitrary precision, uses only random bits, and avoids floating-point arithmetic.  It also uses a _complement_ flag to determine whether to return 1 minus the result.
 
@@ -2293,7 +2293,7 @@ The following are some additional articles I have written on the topic of random
 
 [^14]: Hill, T.P. and Schürger, K., 2005. Regularity of digits and significant digits of random variables. _Stochastic processes and their applications_, 115(10), pp.1723-1743.
 
-[^15]: A _non-discrete distribution_ is a probability distribution taking on values that each can't be mapped to a different integer.  An example is a distribution taking on any real number between 0 and 1.
+[^15]: A _nondiscrete distribution_ is a probability distribution taking on values that each can't be mapped to a different integer.  An example is a distribution taking on any real number between 0 and 1.
 
 [^16]: J.F. Williamson, "Random selection of points distributed on curved surfaces", _Physics in Medicine & Biology_ 32(10), 1987.
 
