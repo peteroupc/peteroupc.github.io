@@ -54,8 +54,12 @@
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="getcontext">getContext</h3>
-<pre>public final EContext getContext() Gets the arithmetic context used during the operation that triggered the  trap. May be null.
+
+<pre>public final EContext getContext()
 </pre>
+
+<p>Gets the arithmetic context used during the operation that triggered the
+ trap. May be null.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -65,8 +69,11 @@
 </ul>
 
 <h3 id="getresult">getResult</h3>
-<pre>public final Object getResult() Gets the defined result of the operation that caused the trap.
+
+<pre>public final Object getResult()
 </pre>
+
+<p>Gets the defined result of the operation that caused the trap.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -75,8 +82,13 @@
 </ul>
 
 <h3 id="geterror">getError</h3>
-<pre>public final int getError() Gets the flag that specifies the primary kind of error in one or more  operations (EContext.FlagXXX). This will only be one flag, such as &lt;code&gt;  FlagInexact&lt;/code&gt; or FlagSubnormal.
+
+<pre>public final int getError()
 </pre>
+
+<p>Gets the flag that specifies the primary kind of error in one or more
+ operations (EContext.FlagXXX). This will only be one flag, such as <code>
+ FlagInexact</code> or FlagSubnormal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -86,8 +98,14 @@
 </ul>
 
 <h3 id="geterrors">getErrors</h3>
-<pre>public final int getErrors() Gets the flags that were signaled as the result of one or more operations.  This includes the flag specified in the "flag" parameter, but can include  other flags. For instance, if "flag" is &lt;code&gt;EContext.FlagInexact&lt;/code&gt;, this  parameter might be &lt;code&gt;EContext.FlagInexact | EContext.FlagRounded&lt;/code&gt;.
+
+<pre>public final int getErrors()
 </pre>
+
+<p>Gets the flags that were signaled as the result of one or more operations.
+ This includes the flag specified in the “flag” parameter, but can include
+ other flags. For instance, if “flag” is <code>EContext.FlagInexact</code>, this
+ parameter might be <code>EContext.FlagInexact | EContext.FlagRounded</code>.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -96,8 +114,14 @@
 </ul>
 
 <h3 id="haserror">HasError</h3>
-<pre>public boolean HasError(int flag) Returns whether this trap exception specifies all the flags given. (Flags  are signaled in a trap exception as the result of one or more operations  involving arbitrary-precision numbers, such as multiplication of two  EDecimals.).
+
+<pre>public boolean HasError(int flag)
 </pre>
+
+<p>Returns whether this trap exception specifies all the flags given. (Flags
+ are signaled in a trap exception as the result of one or more operations
+ involving arbitrary-precision numbers, such as multiplication of two
+ EDecimals.).</p>
 
 <p><strong>Parameters:</strong></p>
 

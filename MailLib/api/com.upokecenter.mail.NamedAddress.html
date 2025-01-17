@@ -84,8 +84,15 @@
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="todisplaystringshort">ToDisplayStringShort</h3>
-<pre>public static String ToDisplayStringShort(List&lt;NamedAddress&gt; addresses) Generates a string containing the display names of the given named-address  objects, separated by commas. The generated string is intended to be  displayed for others to see, and is not intended to be parsed by computer  programs. If a named address has no display name, its email address is used  as the display name.
+
+<pre>public static String ToDisplayStringShort(List&lt;NamedAddress&gt; addresses)
 </pre>
+
+<p>Generates a string containing the display names of the given named-address
+ objects, separated by commas. The generated string is intended to be
+ displayed for others to see, and is not intended to be parsed by computer
+ programs. If a named address has no display name, its email address is used
+ as the display name.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -107,8 +114,14 @@
 </ul>
 
 <h3 id="todisplaystring">ToDisplayString</h3>
-<pre>public static String ToDisplayString(List&lt;NamedAddress&gt; addresses) Generates a string containing the display names and email addresses of the  given named-address objects, separated by commas. The generated string is  intended to be displayed for others to see, and is not intended to be parsed  by computer programs.
+
+<pre>public static String ToDisplayString(List&lt;NamedAddress&gt; addresses)
 </pre>
+
+<p>Generates a string containing the display names and email addresses of the
+ given named-address objects, separated by commas. The generated string is
+ intended to be displayed for others to see, and is not intended to be parsed
+ by computer programs.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -130,8 +143,13 @@
 </ul>
 
 <h3 id="parseaddresses">ParseAddresses</h3>
-<pre>public static List&lt;NamedAddress&gt; ParseAddresses(String addressValue) Generates a list of NamedAddress objects from a comma-separated list of  addresses. Each address must follow the syntax accepted by the one-argument  constructor of NamedAddress.
+
+<pre>public static List&lt;NamedAddress&gt; ParseAddresses(String addressValue)
 </pre>
+
+<p>Generates a list of NamedAddress objects from a comma-separated list of
+ addresses. Each address must follow the syntax accepted by the one-argument
+ constructor of NamedAddress.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -154,8 +172,13 @@
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public int hashCode() Calculates the hash code of this object. The exact algorithm used by this  method is not guaranteed to be the same between versions of this library,  and no application or process IDs are used in the hash code calculation.
+
+<pre>public int hashCode()
 </pre>
+
+<p>Calculates the hash code of this object. The exact algorithm used by this
+ method is not guaranteed to be the same between versions of this library,
+ and no application or process IDs are used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -170,8 +193,13 @@
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public boolean equals(Object obj) Determines whether this object and another object are equal. For groups, the  named addresses (display name/email address pairs) must be equal and in the  same order in both objects.
+
+<pre>public boolean equals(Object obj)
 </pre>
+
+<p>Determines whether this object and another object are equal. For groups, the
+ named addresses (display name/email address pairs) must be equal and in the
+ same order in both objects.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -193,8 +221,14 @@
 </ul>
 
 <h3 id="addressesequal">AddressesEqual</h3>
-<pre>public boolean AddressesEqual(NamedAddress na) Determines whether the email addresses stored this object are the same  between this object and the given object, regardless of the display names  they store. For groups, the email addresses must be equal and in the same  order in both objects.
+
+<pre>public boolean AddressesEqual(NamedAddress na)
 </pre>
+
+<p>Determines whether the email addresses stored this object are the same
+ between this object and the given object, regardless of the display names
+ they store. For groups, the email addresses must be equal and in the same
+ order in both objects.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -209,8 +243,13 @@
 </ul>
 
 <h3 id="getname">getName</h3>
-<pre>public final String getName() Gets the display name for this email address, or the email address's value  if the display name is null. Returns an empty string if the address and  display name are null.
+
+<pre>public final String getName()
 </pre>
+
+<p>Gets the display name for this email address, or the email address’s value
+ if the display name is null. Returns an empty string if the address and
+ display name are null.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -219,8 +258,11 @@
 </ul>
 
 <h3 id="getdisplayname">getDisplayName</h3>
-<pre>public final String getDisplayName() Gets the display name for this email address.
+
+<pre>public final String getDisplayName()
 </pre>
+
+<p>Gets the display name for this email address.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -230,8 +272,11 @@
 </ul>
 
 <h3 id="getaddress">getAddress</h3>
-<pre>public final Address getAddress() Gets the email address associated with this object.
+
+<pre>public final Address getAddress()
 </pre>
+
+<p>Gets the email address associated with this object.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -241,8 +286,12 @@
 </ul>
 
 <h3 id="isgroup">isGroup</h3>
-<pre>public final boolean isGroup() Gets a value indicating whether this represents a group of addresses rather  than a single address.
+
+<pre>public final boolean isGroup()
 </pre>
+
+<p>Gets a value indicating whether this represents a group of addresses rather
+ than a single address.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -252,8 +301,12 @@
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this object to a text string. This will generally be the form of  this NamedAddress object as it could appear in a "To" header field.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this object to a text string. This will generally be the form of
+ this NamedAddress object as it could appear in a “To” header field.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -268,8 +321,13 @@
 </ul>
 
 <h3 id="todisplaystring-1">ToDisplayString</h3>
-<pre>public String ToDisplayString() Converts this named-address object to a text string intended to be displayed  for others to see. The returned string is not intended to be parsed by  computer programs.
+
+<pre>public String ToDisplayString()
 </pre>
+
+<p>Converts this named-address object to a text string intended to be displayed
+ for others to see. The returned string is not intended to be parsed by
+ computer programs.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -279,8 +337,12 @@
 </ul>
 
 <h3 id="getgroupaddresses">getGroupAddresses</h3>
-<pre>public final List&lt;NamedAddress&gt; getGroupAddresses() Gets a read-only list of addresses that make up the group, if this object  represents a group, or an empty list otherwise.
+
+<pre>public final List&lt;NamedAddress&gt; getGroupAddresses()
 </pre>
+
+<p>Gets a read-only list of addresses that make up the group, if this object
+ represents a group, or an empty list otherwise.</p>
 
 <p><strong>Returns:</strong></p>
 

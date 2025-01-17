@@ -81,8 +81,8 @@
   </li>
   <li>
     <p><code>final Map&lt;String,String&gt; getParameters()</code><br />
- Gets a list of the parameter names contained in this media type object and
- their values.</p>
+ Gets a list of the names and values of parameters contained in this media
+ type object.</p>
   </li>
   <li>
     <p><code>final String getSubType()</code><br />
@@ -144,15 +144,49 @@
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="textplainascii">TextPlainAscii</h3>
-<pre>public static final MediaType TextPlainAscii Specifies the media type "text/plain" and the "charset" parameter  "US-ASCII", used for plain text data that contains only characters within  the basic Latin range (U+0000 to U+007F). ### TextPlainUtf8
-public static final MediaType TextPlainUtf8 Specifies the media type "text/plain" and the "charset" parameter "utf-8",  used for plain text data that may contain characters outside the basic Latin  range (U+0000 to U+007F). ### MessageRfc822
-public static final MediaType MessageRfc822 Specifies the media type "message/rfc822", used for Internet mail messages. ### ApplicationOctetStream
-public static final MediaType ApplicationOctetStream Specifies the media type "application/octet-stream", used for arbitrary  binary data. ## Method Details
+
+<pre>public static final MediaType TextPlainAscii
 </pre>
 
-<h3 id="gettopleveltype">getTopLevelType</h3>
-<pre>public final String getTopLevelType() Gets the name of this media type's top-level type (such as "text" in  "text/plain", or "audio" in "audio/basic"). The resulting string will be in  lowercase; that is, with its basic uppercase letters ("A" to "Z") converted  to basic lowercase letters ("a" to "z").
+<p>Specifies the media type “text/plain” and the “charset” parameter
+ “US-ASCII”, used for plain text data that contains only characters within
+ the basic Latin range (U+0000 to U+007F).</p>
+
+<h3 id="textplainutf8">TextPlainUtf8</h3>
+
+<pre>public static final MediaType TextPlainUtf8
 </pre>
+
+<p>Specifies the media type “text/plain” and the “charset” parameter “utf-8”,
+ used for plain text data that may contain characters outside the basic Latin
+ range (U+0000 to U+007F).</p>
+
+<h3 id="messagerfc822">MessageRfc822</h3>
+
+<pre>public static final MediaType MessageRfc822
+</pre>
+
+<p>Specifies the media type “message/rfc822”, used for Internet mail messages.</p>
+
+<h3 id="applicationoctetstream">ApplicationOctetStream</h3>
+
+<pre>public static final MediaType ApplicationOctetStream
+</pre>
+
+<p>Specifies the media type “application/octet-stream”, used for arbitrary
+ binary data.</p>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="gettopleveltype">getTopLevelType</h3>
+
+<pre>public final String getTopLevelType()
+</pre>
+
+<p>Gets the name of this media type’s top-level type (such as “text” in
+ “text/plain”, or “audio” in “audio/basic”). The resulting string will be in
+ lowercase; that is, with its basic uppercase letters (“A” to “Z”) converted
+ to basic lowercase letters (“a” to “z”).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -162,8 +196,12 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="hasstructuredsuffix">HasStructuredSuffix</h3>
-<pre>public boolean HasStructuredSuffix(String suffix) Returns whether this media type's subtype has the given structured syntax  suffix.
+
+<pre>public boolean HasStructuredSuffix(String suffix)
 </pre>
+
+<p>Returns whether this media type’s subtype has the given structured syntax
+ suffix.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -188,8 +226,11 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public boolean equals(Object obj) Determines whether this object and another object are equal.
+
+<pre>public boolean equals(Object obj)
 </pre>
+
+<p>Determines whether this object and another object are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -211,8 +252,13 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public int hashCode() Calculates the hash code of this object. The exact algorithm used by this  method may change between versions of this library, and no application or  process IDs are used in the hash code calculation.
+
+<pre>public int hashCode()
 </pre>
+
+<p>Calculates the hash code of this object. The exact algorithm used by this
+ method may change between versions of this library, and no application or
+ process IDs are used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -227,8 +273,13 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="getsubtype">getSubType</h3>
-<pre>public final String getSubType() Gets this media type's subtype (for example, "plain" in "text/plain"). The  resulting string will be in lowercase; that is, with its basic uppercase  letters ("A" to "Z") converted to basic lowercase letters ("a" to "z").
+
+<pre>public final String getSubType()
 </pre>
+
+<p>Gets this media type’s subtype (for example, “plain” in “text/plain”). The
+ resulting string will be in lowercase; that is, with its basic uppercase
+ letters (“A” to “Z”) converted to basic lowercase letters (“a” to “z”).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -237,8 +288,11 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="istext">isText</h3>
-<pre>public final boolean isText() Gets a value indicating whether this is a text media type ("text/*").
+
+<pre>public final boolean isText()
 </pre>
+
+<p>Gets a value indicating whether this is a text media type (“text/*”).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -247,8 +301,11 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="ismultipart">isMultipart</h3>
-<pre>public final boolean isMultipart() Gets a value indicating whether this is a multipart media type.
+
+<pre>public final boolean isMultipart()
 </pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -258,8 +315,14 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="getparameters">getParameters</h3>
-<pre>public final Map&lt;String,String&gt; getParameters() Gets a list of the parameter names contained in this media type object and  their values. Each parameter name will be in lowercase; that is, with its  basic uppercase letters ("A" to "Z") converted to basic lowercase letters  ("a" to "z").
+
+<pre>public final Map&lt;String,String&gt; getParameters()
 </pre>
+
+<p>Gets a list of the names and values of parameters contained in this media
+ type object. Each parameter name will be in lowercase; that is, with its
+ basic uppercase letters (“A” to “Z”) converted to basic lowercase letters
+ (“a” to “z”).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -272,8 +335,14 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this media type to a text string form suitable for inserting in  email headers. Notably, the string contains the value of a Content-Type  header field (without the text necessarily starting with "Content-Type"  followed by a space), and consists of one or more lines.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this media type to a text string form suitable for inserting in
+ email headers. Notably, the string contains the value of a Content-Type
+ header field (without the text necessarily starting with “Content-Type”
+ followed by a space), and consists of one or more lines.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -288,8 +357,14 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="tosinglelinestring">ToSingleLineString</h3>
-<pre>public String ToSingleLineString() Converts this media type to a text string form suitable for inserting in  HTTP headers. Notably, the string contains the value of a Content-Type  header field (without the text necessarily starting with "Content-Type"  followed by a space), and consists of a single line.
+
+<pre>public String ToSingleLineString()
 </pre>
+
+<p>Converts this media type to a text string form suitable for inserting in
+ HTTP headers. Notably, the string contains the value of a Content-Type
+ header field (without the text necessarily starting with “Content-Type”
+ followed by a space), and consists of a single line.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -298,8 +373,15 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="tourisafestring">ToUriSafeString</h3>
-<pre>public String ToUriSafeString() Converts this media type to a text string form suitable for data URIs.  Notably, the string contains the value of a Content-Type header field  (without the text necessarily starting with "Content-Type" followed by a  space), consists of a single line, and uses percent-encoding as necessary or  convenient so that the resulting string can validly appear in a URI path.
+
+<pre>public String ToUriSafeString()
 </pre>
+
+<p>Converts this media type to a text string form suitable for data URIs.
+ Notably, the string contains the value of a Content-Type header field
+ (without the text necessarily starting with “Content-Type” followed by a
+ space), consists of a single line, and uses percent-encoding as necessary or
+ convenient so that the resulting string can validly appear in a URI path.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -308,8 +390,12 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="getcharset">GetCharset</h3>
-<pre>public String GetCharset() Gets this media type's "charset" parameter, naming a character encoding used  to represent text in the data that uses this media type.
+
+<pre>public String GetCharset()
 </pre>
+
+<p>Gets this media type’s “charset” parameter, naming a character encoding used
+ to represent text in the data that uses this media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -325,8 +411,12 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="getparameter">GetParameter</h3>
-<pre>public String GetParameter(String name) Gets the value of a parameter in this media type, such as "charset" or  "format".
+
+<pre>public String GetParameter(String name)
 </pre>
+
+<p>Gets the value of a parameter in this media type, such as “charset” or
+ “format”.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -356,8 +446,13 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="gettypeandsubtype">getTypeAndSubType</h3>
-<pre>public final String getTypeAndSubType() Gets the top level type and subtype of this media type, separated by a  slash; for example, "text/plain". The resulting string will be in lowercase  letters.
+
+<pre>public final String getTypeAndSubType()
 </pre>
+
+<p>Gets the top level type and subtype of this media type, separated by a
+ slash; for example, “text/plain”. The resulting string will be in lowercase
+ letters.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -367,8 +462,12 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="parse">Parse</h3>
-<pre>public static MediaType Parse(String mediaTypeValue) Parses a media type string and returns a media type object. For further  information, see the overload taking a MediaType parameter.
+
+<pre>public static MediaType Parse(String mediaTypeValue)
 </pre>
+
+<p>Parses a media type string and returns a media type object. For further
+ information, see the overload taking a MediaType parameter.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -385,8 +484,10 @@ public static final MediaType ApplicationOctetStream Specifies the media type "a
 </ul>
 
 <h3 id="parse-1">Parse</h3>
+
 <pre>public static MediaType Parse(String str, MediaType defaultValue)
 </pre>
+
 <p>Parses a media type string and returns a media type object, or the
  default value if the string is invalid. This method checks the syntactic
  validity of the string, but not whether it has all parameters it's required

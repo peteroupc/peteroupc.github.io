@@ -487,10 +487,8 @@ function makeRay(startPt, focusPt) {
  * <li><code>index</code> - Index, starting from 0, into the objects array
  * of the shape object that was picked. Is -1 if no object was picked
  * (and the "local" and "world" properties will be absent).
- * <li><code>local</code> - 3-element array giving the X, Y, and
- * z-coordinates of the picked point in object (model) space.
- * <li><code>world</code> - 3-element array giving the X, Y, and
- * z-coordinates of the picked point in world space.</ul>
+ * <li><code>local</code> - 3-element array giving the x-, y-, and z-coordinates of the picked point in object (model) space.
+ * <li><code>world</code> - 3-element array giving the x-, y-, and z-coordinates of the picked point in world space.</ul>
  * @example <caption>The following example shows how a hypothetical scene graph could implement picking objects based on the position of the mouse cursor.</caption>
  * var mousePos = scene.getMousePosInPixels();
  * var viewport = [0, 0, scene.getWidth(), scene.getHeight()];

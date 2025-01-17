@@ -1387,19 +1387,70 @@ Renamed to ToEFloat.</p>
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="nan">NaN</h3>
-<pre>public static final EDecimal NaN A not-a-number value. ### NegativeInfinity
-public static final EDecimal NegativeInfinity Negative infinity, less than any other number. ### NegativeZero
-public static final EDecimal NegativeZero Represents the number negative zero. ### One
-public static final EDecimal One Represents the number 1. ### PositiveInfinity
-public static final EDecimal PositiveInfinity Positive infinity, greater than any other number. ### SignalingNaN
-public static final EDecimal SignalingNaN A not-a-number value that signals an invalid operation flag when it's passed  as an argument to any arithmetic operation in arbitrary-precision decimal. ### Ten
-public static final EDecimal Ten Represents the number 10. ### Zero
-public static final EDecimal Zero Represents the number 0. ## Method Details
+
+<pre>public static final EDecimal NaN
 </pre>
 
-<h3 id="copy">Copy</h3>
-<pre>public EDecimal Copy() Creates a copy of this arbitrary-precision binary number.
+<p>A not-a-number value.</p>
+
+<h3 id="negativeinfinity">NegativeInfinity</h3>
+
+<pre>public static final EDecimal NegativeInfinity
 </pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3 id="negativezero">NegativeZero</h3>
+
+<pre>public static final EDecimal NegativeZero
+</pre>
+
+<p>Represents the number negative zero.</p>
+
+<h3 id="one">One</h3>
+
+<pre>public static final EDecimal One
+</pre>
+
+<p>Represents the number 1.</p>
+
+<h3 id="positiveinfinity">PositiveInfinity</h3>
+
+<pre>public static final EDecimal PositiveInfinity
+</pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3 id="signalingnan">SignalingNaN</h3>
+
+<pre>public static final EDecimal SignalingNaN
+</pre>
+
+<p>A not-a-number value that signals an invalid operation flag when it’s passed
+ as an argument to any arithmetic operation in arbitrary-precision decimal.</p>
+
+<h3 id="ten">Ten</h3>
+
+<pre>public static final EDecimal Ten
+</pre>
+
+<p>Represents the number 10.</p>
+
+<h3 id="zero">Zero</h3>
+
+<pre>public static final EDecimal Zero
+</pre>
+
+<p>Represents the number 0.</p>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="copy">Copy</h3>
+
+<pre>public EDecimal Copy()
+</pre>
+
+<p>Creates a copy of this arbitrary-precision binary number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1408,8 +1459,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="getexponent">getExponent</h3>
-<pre>public final EInteger getExponent() Gets this object's exponent. This object's value will be an integer if the  exponent is positive or zero.
+
+<pre>public final EInteger getExponent()
 </pre>
+
+<p>Gets this object’s exponent. This object’s value will be an integer if the
+ exponent is positive or zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1419,8 +1474,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isfinite">isFinite</h3>
-<pre>public final boolean isFinite() Gets a value indicating whether this object is finite (not infinity or NaN).
+
+<pre>public final boolean isFinite()
 </pre>
+
+<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1430,8 +1488,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isnegative">isNegative</h3>
-<pre>public final boolean isNegative() Gets a value indicating whether this object is negative, including negative  zero.
+
+<pre>public final boolean isNegative()
 </pre>
+
+<p>Gets a value indicating whether this object is negative, including negative
+ zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1441,8 +1503,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="iszero">isZero</h3>
-<pre>public final boolean isZero() Gets a value indicating whether this object's value equals 0.
+
+<pre>public final boolean isZero()
 </pre>
+
+<p>Gets a value indicating whether this object’s value equals 0.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1453,8 +1518,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isinteger">IsInteger</h3>
-<pre>public boolean IsInteger() Returns whether this object's value is an integer.
+
+<pre>public boolean IsInteger()
 </pre>
+
+<p>Returns whether this object’s value is an integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1464,8 +1532,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="getmantissa">getMantissa</h3>
-<pre>public final EInteger getMantissa() Gets this object's unscaled value, or significand, and makes it negative if  this object is negative. If this value is not-a-number (NaN), that value's  absolute value is the NaN's "payload" (diagnostic information).
+
+<pre>public final EInteger getMantissa()
 </pre>
+
+<p>Gets this object’s unscaled value, or significand, and makes it negative if
+ this object is negative. If this value is not-a-number (NaN), that value’s
+ absolute value is the NaN’s “payload” (diagnostic information).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1475,8 +1548,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="signum">signum</h3>
-<pre>public final int signum() Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
+
+<pre>public final int signum()
 </pre>
+
+<p>Gets this value’s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1485,8 +1561,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="getunsignedmantissa">getUnsignedMantissa</h3>
-<pre>public final EInteger getUnsignedMantissa() Gets the absolute value of this object's unscaled value, or significand. If  this value is not-a-number (NaN), that value is the NaN's "payload"  (diagnostic information).
+
+<pre>public final EInteger getUnsignedMantissa()
 </pre>
+
+<p>Gets the absolute value of this object’s unscaled value, or significand. If
+ this value is not-a-number (NaN), that value is the NaN’s “payload”
+ (diagnostic information).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1495,8 +1576,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create">Create</h3>
-<pre>public static EDecimal Create(int mantissaSmall, int exponentSmall) Returns a number with the value &lt;code&gt;exponent*10^significand&lt;/code&gt;.
+
+<pre>public static EDecimal Create(int mantissaSmall, int exponentSmall)
 </pre>
+
+<p>Returns a number with the value <code>exponent*10^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1516,8 +1600,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-1">Create</h3>
-<pre>public static EDecimal Create(EInteger mantissa, int exponentSmall) Creates a number with the value &lt;code&gt;exponent*10^significand&lt;/code&gt;.
+
+<pre>public static EDecimal Create(EInteger mantissa, int exponentSmall)
 </pre>
+
+<p>Creates a number with the value <code>exponent*10^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1543,8 +1630,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-2">Create</h3>
-<pre>public static EDecimal Create(EInteger mantissa, long exponentLong) Creates a number with the value &lt;code&gt;exponent*10^significand&lt;/code&gt;.
+
+<pre>public static EDecimal Create(EInteger mantissa, long exponentLong)
 </pre>
+
+<p>Creates a number with the value <code>exponent*10^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1570,8 +1660,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-3">Create</h3>
-<pre>public static EDecimal Create(EInteger mantissa, EInteger exponent) Creates a number with the value &lt;code&gt;exponent*10^significand&lt;/code&gt;.
+
+<pre>public static EDecimal Create(EInteger mantissa, EInteger exponent)
 </pre>
+
+<p>Creates a number with the value <code>exponent*10^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1598,8 +1691,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-4">Create</h3>
-<pre>public static EDecimal Create(long mantissaLong, int exponentSmall) Creates a number with the value &lt;code&gt;exponent*10^significand&lt;/code&gt;.
+
+<pre>public static EDecimal Create(long mantissaLong, int exponentSmall)
 </pre>
+
+<p>Creates a number with the value <code>exponent*10^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1619,8 +1715,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-5">Create</h3>
-<pre>public static EDecimal Create(long mantissaLong, long exponentLong) Creates a number with the value &lt;code&gt;exponent*10^significand&lt;/code&gt;.
+
+<pre>public static EDecimal Create(long mantissaLong, long exponentLong)
 </pre>
+
+<p>Creates a number with the value <code>exponent*10^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1640,8 +1739,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="createnan">CreateNaN</h3>
-<pre>public static EDecimal CreateNaN(EInteger diag) Creates a not-a-number arbitrary-precision decimal number.
+
+<pre>public static EDecimal CreateNaN(EInteger diag)
 </pre>
+
+<p>Creates a not-a-number arbitrary-precision decimal number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1659,8 +1761,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="createnan-1">CreateNaN</h3>
-<pre>public static EDecimal CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx) Creates a not-a-number arbitrary-precision decimal number.
+
+<pre>public static EDecimal CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx)
 </pre>
+
+<p>Creates a not-a-number arbitrary-precision decimal number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1701,8 +1806,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromdouble">FromDouble</h3>
+
 <pre>public static EDecimal FromDouble(double dbl)
 </pre>
+
 <p>Creates an arbitrary-precision decimal number from a 64-bit binary
  floating-point number. This method computes the exact value of the floating
  point number, not an approximation, as is often the case by converting the
@@ -1739,8 +1846,21 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromdoublebits">FromDoubleBits</h3>
-<pre>public static EDecimal FromDoubleBits(long dblBits) Creates an arbitrary-precision decimal number from a 64-bit binary  floating-point number, encoded in the IEEE 754 binary64 format. This method  computes the exact value of the floating point number, not an approximation,  as is often the case by converting the floating point number to a string  first. Remember, though, that the exact value of a 64-bit binary  floating-point number is not always the value that results when passing a  literal decimal number, since not all decimal numbers can be converted to  exact binary numbers (in the example given, the resulting  arbitrary-precision decimal will be the value of the closest "double" to  0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from  a decimal value, use FromString instead in most cases.
+
+<pre>public static EDecimal FromDoubleBits(long dblBits)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a 64-bit binary
+ floating-point number, encoded in the IEEE 754 binary64 format. This method
+ computes the exact value of the floating point number, not an approximation,
+ as is often the case by converting the floating point number to a string
+ first. Remember, though, that the exact value of a 64-bit binary
+ floating-point number is not always the value that results when passing a
+ literal decimal number, since not all decimal numbers can be converted to
+ exact binary numbers (in the example given, the resulting
+ arbitrary-precision decimal will be the value of the closest “double” to
+ 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from
+ a decimal value, use FromString instead in most cases.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1756,8 +1876,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromeinteger">FromEInteger</h3>
-<pre>public static EDecimal FromEInteger(EInteger bigint) Converts an arbitrary-precision integer to an arbitrary precision decimal.
+
+<pre>public static EDecimal FromEInteger(EInteger bigint)
 </pre>
+
+<p>Converts an arbitrary-precision integer to an arbitrary precision decimal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1772,8 +1895,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromextendedfloat">FromExtendedFloat</h3>
-<pre>@Deprecated public static EDecimal FromExtendedFloat(EFloat ef) Converts an arbitrary-precision binary floating-point number to an arbitrary  precision decimal.
+
+<pre>@Deprecated public static EDecimal FromExtendedFloat(EFloat ef)
 </pre>
+
+<p>Converts an arbitrary-precision binary floating-point number to an arbitrary
+ precision decimal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1788,8 +1915,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromefloat">FromEFloat</h3>
-<pre>public static EDecimal FromEFloat(EFloat bigfloat) Creates an arbitrary-precision decimal number from an arbitrary-precision  binary floating-point number.
+
+<pre>public static EDecimal FromEFloat(EFloat bigfloat)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from an arbitrary-precision
+ binary floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1810,8 +1941,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromboolean">FromBoolean</h3>
-<pre>public static EDecimal FromBoolean(boolean boolValue) Converts a Boolean value (true or false) to an arbitrary-precision decimal  number.
+
+<pre>public static EDecimal FromBoolean(boolean boolValue)
 </pre>
+
+<p>Converts a Boolean value (true or false) to an arbitrary-precision decimal
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1826,8 +1961,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint32">FromInt32</h3>
-<pre>public static EDecimal FromInt32(int valueSmaller) Creates an arbitrary-precision decimal number from a 32-bit signed integer.
+
+<pre>public static EDecimal FromInt32(int valueSmaller)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a 32-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1843,8 +1981,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint64asunsigned">FromInt64AsUnsigned</h3>
-<pre>public static EDecimal FromInt64AsUnsigned(long longerValue) Converts an unsigned integer expressed as a 64-bit signed integer to an  arbitrary-precision decimal number.
+
+<pre>public static EDecimal FromInt64AsUnsigned(long longerValue)
 </pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision decimal number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1864,8 +2006,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint64">FromInt64</h3>
-<pre>public static EDecimal FromInt64(long valueSmall) Creates an arbitrary-precision decimal number from a 64-bit signed integer.
+
+<pre>public static EDecimal FromInt64(long valueSmall)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a 64-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1882,8 +2027,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromsingle">FromSingle</h3>
+
 <pre>public static EDecimal FromSingle(float flt)
 </pre>
+
 <p>Creates an arbitrary-precision decimal number from a 32-bit binary
  floating-point number. This method computes the exact value of the floating
  point number, not an approximation, as is often the case by converting the
@@ -1923,8 +2070,21 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromsinglebits">FromSingleBits</h3>
-<pre>public static EDecimal FromSingleBits(int value) Creates an arbitrary-precision decimal number from a 32-bit binary  floating-point number encoded in the IEEE 754 binary32 format. This method  computes the exact value of the floating point number, not an approximation,  as is often the case by converting the floating point number to a string  first. Remember, though, that the exact value of a 32-bit binary  floating-point number is not always the value that results when passing a  literal decimal number, since not all decimal numbers can be converted to  exact binary numbers (in the example given, the resulting  arbitrary-precision decimal will be the the value of the closest "float" to  0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from  a decimal value, use FromString instead in most cases.
+
+<pre>public static EDecimal FromSingleBits(int value)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a 32-bit binary
+ floating-point number encoded in the IEEE 754 binary32 format. This method
+ computes the exact value of the floating point number, not an approximation,
+ as is often the case by converting the floating point number to a string
+ first. Remember, though, that the exact value of a 32-bit binary
+ floating-point number is not always the value that results when passing a
+ literal decimal number, since not all decimal numbers can be converted to
+ exact binary numbers (in the example given, the resulting
+ arbitrary-precision decimal will be the the value of the closest “float” to
+ 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from
+ a decimal value, use FromString instead in most cases.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1941,8 +2101,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromhalfbits">FromHalfBits</h3>
-<pre>public static EDecimal FromHalfBits(short value) Creates a decimal floating-point number from a binary floating-point number  encoded in the IEEE 754 binary16 format (also known as a "half-precision"  floating-point number). This method computes the exact value of the floating  point number, not an approximation, as is often the case by converting the  floating point number to a string first.
+
+<pre>public static EDecimal FromHalfBits(short value)
 </pre>
+
+<p>Creates a decimal floating-point number from a binary floating-point number
+ encoded in the IEEE 754 binary16 format (also known as a “half-precision”
+ floating-point number). This method computes the exact value of the floating
+ point number, not an approximation, as is often the case by converting the
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1959,8 +2126,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring">FromString</h3>
-<pre>public static EDecimal FromString(char[] chars) Creates an arbitrary-precision decimal number from a sequence of &lt;code&gt;  char&lt;/code&gt; s that represents a number. See &lt;code&gt;FromString(string, int, int,  EContext)&lt;/code&gt; for more information. Note that calling the overload that takes  an EContext is often much faster than creating the EDecimal then calling  &lt;code&gt;RoundToPrecision&lt;/code&gt; on that EDecimal, especially if the context  specifies a precision limit and exponent range.
+
+<pre>public static EDecimal FromString(char[] chars)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of <code>
+ char</code> s that represents a number. See <code>FromString(string, int, int,
+ EContext)</code> for more information. Note that calling the overload that takes
+ an EContext is often much faster than creating the EDecimal then calling
+ <code>RoundToPrecision</code> on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1983,8 +2158,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-1">FromString</h3>
-<pre>public static EDecimal FromString(char[] chars, EContext ctx) Creates an arbitrary-precision decimal number from a sequence of &lt;code&gt;  char&lt;/code&gt; s that represents a number. See &lt;code&gt;FromString(string, int, int,  EContext)&lt;/code&gt; for more information.
+
+<pre>public static EDecimal FromString(char[] chars, EContext ctx)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of <code>
+ char</code> s that represents a number. See <code>FromString(string, int, int,
+ EContext)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2018,8 +2198,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-2">FromString</h3>
-<pre>public static EDecimal FromString(char[] chars, int offset, int length) Creates an arbitrary-precision decimal number from a sequence of &lt;code&gt;  char&lt;/code&gt; s that represents a number. See &lt;code&gt;FromString(string, int, int,  EContext)&lt;/code&gt; for more information. Note that calling the overload that takes  an EContext is often much faster than creating the EDecimal then calling  &lt;code&gt;RoundToPrecision&lt;/code&gt; on that EDecimal, especially if the context  specifies a precision limit and exponent range.
+
+<pre>public static EDecimal FromString(char[] chars, int offset, int length)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of <code>
+ char</code> s that represents a number. See <code>FromString(string, int, int,
+ EContext)</code> for more information. Note that calling the overload that takes
+ an EContext is often much faster than creating the EDecimal then calling
+ <code>RoundToPrecision</code> on that EDecimal, especially if the context
+ specifies a precision limit and exponent range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2062,8 +2250,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-3">FromString</h3>
+
 <pre>public static EDecimal FromString(char[] chars, int offset, int length, EContext ctx)
 </pre>
+
 <p>Creates an arbitrary-precision decimal number from a sequence of <code>
  char</code> s that represents a number.</p>
 <p>The format of the sequence
@@ -2136,8 +2326,17 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-4">FromString</h3>
-<pre>public static EDecimal FromString(byte[] bytes) Creates an arbitrary-precision decimal number from a sequence of bytes  (interpreted as text) that represents a number. See &lt;code&gt;  FromString(string, int, int, EContext)&lt;/code&gt; for more information. Note that  calling the overload that takes an EContext is often much faster than  creating the EDecimal then calling &lt;code&gt;RoundToPrecision&lt;/code&gt; on that  EDecimal, especially if the context specifies a precision limit and exponent  range.
+
+<pre>public static EDecimal FromString(byte[] bytes)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See <code>
+ FromString(string, int, int, EContext)</code> for more information. Note that
+ calling the overload that takes an EContext is often much faster than
+ creating the EDecimal then calling <code>RoundToPrecision</code> on that
+ EDecimal, especially if the context specifies a precision limit and exponent
+ range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2160,8 +2359,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-5">FromString</h3>
-<pre>public static EDecimal FromString(byte[] bytes, EContext ctx) Creates an arbitrary-precision decimal number from a sequence of bytes  (interpreted as text) that represents a number. See &lt;code&gt;  FromString(string, int, int, EContext)&lt;/code&gt; for more information.
+
+<pre>public static EDecimal FromString(byte[] bytes, EContext ctx)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See <code>
+ FromString(string, int, int, EContext)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2196,8 +2400,17 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-6">FromString</h3>
-<pre>public static EDecimal FromString(byte[] bytes, int offset, int length) Creates an arbitrary-precision decimal number from a sequence of bytes  (interpreted as text) that represents a number. See &lt;code&gt;  FromString(string, int, int, EContext)&lt;/code&gt; for more information. Note that  calling the overload that takes an EContext is often much faster than  creating the EDecimal then calling &lt;code&gt;RoundToPrecision&lt;/code&gt; on that  EDecimal, especially if the context specifies a precision limit and exponent  range.
+
+<pre>public static EDecimal FromString(byte[] bytes, int offset, int length)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a sequence of bytes
+ (interpreted as text) that represents a number. See <code>
+ FromString(string, int, int, EContext)</code> for more information. Note that
+ calling the overload that takes an EContext is often much faster than
+ creating the EDecimal then calling <code>RoundToPrecision</code> on that
+ EDecimal, especially if the context specifies a precision limit and exponent
+ range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2240,8 +2453,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-7">FromString</h3>
+
 <pre>public static EDecimal FromString(byte[] bytes, int offset, int length, EContext ctx)
 </pre>
+
 <p>Creates an arbitrary-precision decimal number from a sequence of bytes
  (interpreted as text) that represents a number. Each byte in the sequence
  has to be a code point in the Basic Latin range (0x00 to 0x7f or U+0000 to
@@ -2316,8 +2531,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-8">FromString</h3>
-<pre>public static EDecimal FromString(String str) Creates an arbitrary-precision decimal number from a text string that  represents a number. See &lt;code&gt;FromString(string, int, int, EContext)&lt;/code&gt; for  more information. Note that calling the overload that takes an EContext is  often much faster than creating the EDecimal then calling &lt;code&gt;  RoundToPrecision&lt;/code&gt; on that EDecimal, especially if the context specifies a  precision limit and exponent range.
+
+<pre>public static EDecimal FromString(String str)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a text string that
+ represents a number. See <code>FromString(string, int, int, EContext)</code> for
+ more information. Note that calling the overload that takes an EContext is
+ often much faster than creating the EDecimal then calling <code>
+ RoundToPrecision</code> on that EDecimal, especially if the context specifies a
+ precision limit and exponent range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2340,8 +2563,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-9">FromString</h3>
-<pre>public static EDecimal FromString(String str, EContext ctx) Creates an arbitrary-precision decimal number from a text string that  represents a number. See &lt;code&gt;FromString(string, int, int, EContext)&lt;/code&gt; for  more information.
+
+<pre>public static EDecimal FromString(String str, EContext ctx)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a text string that
+ represents a number. See <code>FromString(string, int, int, EContext)</code> for
+ more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2375,8 +2603,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-10">FromString</h3>
-<pre>public static EDecimal FromString(String str, int offset, int length) Creates an arbitrary-precision decimal number from a text string that  represents a number. See &lt;code&gt;FromString(string, int, int, EContext)&lt;/code&gt; for  more information. Note that calling the overload that takes an EContext is  often much faster than creating the EDecimal then calling &lt;code&gt;  RoundToPrecision&lt;/code&gt; on that EDecimal, especially if the context specifies a  precision limit and exponent range.
+
+<pre>public static EDecimal FromString(String str, int offset, int length)
 </pre>
+
+<p>Creates an arbitrary-precision decimal number from a text string that
+ represents a number. See <code>FromString(string, int, int, EContext)</code> for
+ more information. Note that calling the overload that takes an EContext is
+ often much faster than creating the EDecimal then calling <code>
+ RoundToPrecision</code> on that EDecimal, especially if the context specifies a
+ precision limit and exponent range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2419,8 +2655,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-11">FromString</h3>
+
 <pre>public static EDecimal FromString(String str, int offset, int length, EContext ctx)
 </pre>
+
 <p>Creates an arbitrary-precision decimal number from a text string that
  represents a number.</p>
 <p>The format of the string generally consists
@@ -2492,8 +2730,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="max">Max</h3>
-<pre>public static EDecimal Max(EDecimal first, EDecimal second, EContext ctx) Gets the greater value between two decimal numbers.
+
+<pre>public static EDecimal Max(EDecimal first, EDecimal second, EContext ctx)
 </pre>
+
+<p>Gets the greater value between two decimal numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2531,8 +2772,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="max-1">Max</h3>
-<pre>public static EDecimal Max(EDecimal first, EDecimal second) Gets the greater value between two decimal numbers.
+
+<pre>public static EDecimal Max(EDecimal first, EDecimal second)
 </pre>
+
+<p>Gets the greater value between two decimal numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2563,8 +2807,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="maxmagnitude">MaxMagnitude</h3>
-<pre>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second, EContext ctx) Gets the greater value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Max.
+
+<pre>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second, EContext ctx)
 </pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2598,8 +2846,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="maxmagnitude-1">MaxMagnitude</h3>
-<pre>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second) Gets the greater value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Max.
+
+<pre>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second)
 </pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2626,8 +2878,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="min">Min</h3>
-<pre>public static EDecimal Min(EDecimal first, EDecimal second, EContext ctx) Gets the lesser value between two decimal numbers.
+
+<pre>public static EDecimal Min(EDecimal first, EDecimal second, EContext ctx)
 </pre>
+
+<p>Gets the lesser value between two decimal numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2665,8 +2920,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="min-1">Min</h3>
-<pre>public static EDecimal Min(EDecimal first, EDecimal second) Gets the lesser value between two decimal numbers.
+
+<pre>public static EDecimal Min(EDecimal first, EDecimal second)
 </pre>
+
+<p>Gets the lesser value between two decimal numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2697,8 +2955,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="minmagnitude">MinMagnitude</h3>
-<pre>public static EDecimal MinMagnitude(EDecimal first, EDecimal second, EContext ctx) Gets the lesser value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Min.
+
+<pre>public static EDecimal MinMagnitude(EDecimal first, EDecimal second, EContext ctx)
 </pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2732,8 +2994,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="minmagnitude-1">MinMagnitude</h3>
-<pre>public static EDecimal MinMagnitude(EDecimal first, EDecimal second) Gets the lesser value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Min.
+
+<pre>public static EDecimal MinMagnitude(EDecimal first, EDecimal second)
 </pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2760,8 +3026,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pi">PI</h3>
-<pre>public static EDecimal PI(EContext ctx) Finds the constant π, the circumference of a circle divided by its diameter.
+
+<pre>public static EDecimal PI(EContext ctx)
 </pre>
+
+<p>Finds the constant π, the circumference of a circle divided by its diameter.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2782,8 +3051,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="abs">Abs</h3>
-<pre>public EDecimal Abs() Finds the absolute value of this object (if it's negative, it becomes  positive).
+
+<pre>public EDecimal Abs()
 </pre>
+
+<p>Finds the absolute value of this object (if it’s negative, it becomes
+ positive).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2795,8 +3068,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="copysign">CopySign</h3>
-<pre>public EDecimal CopySign(EDecimal other) Returns a number with the same value as this one, but copying the sign  (positive or negative) of another number. (This method is similar to the  "copy-sign" operation in the General Decimal Arithmetic Specification,  except this method does not necessarily return a copy of this object.).
+
+<pre>public EDecimal CopySign(EDecimal other)
 </pre>
+
+<p>Returns a number with the same value as this one, but copying the sign
+ (positive or negative) of another number. (This method is similar to the
+ “copy-sign” operation in the General Decimal Arithmetic Specification,
+ except this method does not necessarily return a copy of this object.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2817,8 +3096,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="abs-1">Abs</h3>
-<pre>public EDecimal Abs(EContext context) Finds the absolute value of this object (if it's negative, it becomes  positive).
+
+<pre>public EDecimal Abs(EContext context)
 </pre>
+
+<p>Finds the absolute value of this object (if it’s negative, it becomes
+ positive).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2838,8 +3121,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add">Add</h3>
-<pre>public EDecimal Add(EDecimal otherValue) Adds this arbitrary-precision decimal floating-point number and another  arbitrary-precision decimal floating-point number and returns the result.  The exponent for the result is the lower of this arbitrary-precision decimal  floating-point number's exponent and the other arbitrary-precision decimal  floating-point number's exponent.
+
+<pre>public EDecimal Add(EDecimal otherValue)
 </pre>
+
+<p>Adds this arbitrary-precision decimal floating-point number and another
+ arbitrary-precision decimal floating-point number and returns the result.
+ The exponent for the result is the lower of this arbitrary-precision decimal
+ floating-point number’s exponent and the other arbitrary-precision decimal
+ floating-point number’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2857,8 +3147,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add-1">Add</h3>
-<pre>public EDecimal Add(EDecimal otherValue, EContext ctx) Adds this arbitrary-precision decimal floating-point number and another  arbitrary-precision decimal floating-point number and returns the result.
+
+<pre>public EDecimal Add(EDecimal otherValue, EContext ctx)
 </pre>
+
+<p>Adds this arbitrary-precision decimal floating-point number and another
+ arbitrary-precision decimal floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2885,8 +3179,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="compareto">compareTo</h3>
-<pre>public int compareTo(EDecimal other) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(EDecimal other)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -2910,8 +3211,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="compareto-1">compareTo</h3>
-<pre>public int compareTo(int intOther) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(int intOther)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2928,8 +3236,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetovalue">CompareToValue</h3>
+
 <pre>public int CompareToValue(int intOther)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -2956,8 +3266,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="compareto-2">compareTo</h3>
-<pre>public int compareTo(long intOther) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(long intOther)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2974,8 +3291,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetovalue-1">CompareToValue</h3>
+
 <pre>public int CompareToValue(long intOther)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -3002,8 +3321,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetovalue-2">CompareToValue</h3>
+
 <pre>public int CompareToValue(EDecimal other)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -3032,8 +3353,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetobinary">CompareToBinary</h3>
-<pre>public int CompareToBinary(EFloat other) Compares an arbitrary-precision binary floating-point number with this  instance.
+
+<pre>public int CompareToBinary(EFloat other)
 </pre>
+
+<p>Compares an arbitrary-precision binary floating-point number with this
+ instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3052,8 +3377,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetosignal">CompareToSignal</h3>
+
 <pre>public EDecimal CompareToSignal(EDecimal other, EContext ctx)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  treating quiet NaN as signaling. </p>
 <p>In this method, negative zero and
@@ -3086,8 +3413,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototalmagnitude">CompareToTotalMagnitude</h3>
+
 <pre>public int CompareToTotalMagnitude(EDecimal other)
 </pre>
+
 <p>Compares the absolute values of this object and another object, imposing
  a total ordering on all possible values (ignoring their signs). In this
  method: </p>
@@ -3116,8 +3445,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototal">CompareToTotal</h3>
+
 <pre>public int CompareToTotal(EDecimal other, EContext ctx)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: </p>
 <ul> <li>For objects
@@ -3154,8 +3485,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototalmagnitude-1">CompareToTotalMagnitude</h3>
+
 <pre>public int CompareToTotalMagnitude(EDecimal other, EContext ctx)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs). In this method: </p>
 <ul> <li>For objects with the same value, the one with the higher exponent
@@ -3192,8 +3525,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototal-1">CompareToTotal</h3>
+
 <pre>public int CompareToTotal(EDecimal other)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: </p>
 <ul> <li>For objects
@@ -3221,8 +3556,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetowithcontext">CompareToWithContext</h3>
+
 <pre>public EDecimal CompareToWithContext(EDecimal other, EContext ctx)
 </pre>
+
 <p>Compares the mathematical values of this object and another object.
  </p>
 <p>In this method, negative zero and positive zero are considered
@@ -3255,8 +3592,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide">Divide</h3>
-<pre>public EDecimal Divide(EDecimal divisor) Divides this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns the result;  returns NaN instead if the result would have a nonterminating decimal  expansion (including 1/3, 1/12, 1/7, and 2/3); if this is not desired, use  DivideToExponent, or use the Divide overload that takes an EContext.
+
+<pre>public EDecimal Divide(EDecimal divisor)
 </pre>
+
+<p>Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the result;
+ returns NaN instead if the result would have a nonterminating decimal
+ expansion (including 1/3, 1/12, 1/7, and 2/3); if this is not desired, use
+ DivideToExponent, or use the Divide overload that takes an EContext.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3280,8 +3624,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-1">Divide</h3>
-<pre>public EDecimal Divide(EDecimal divisor, EContext ctx) Divides this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns the result.
+
+<pre>public EDecimal Divide(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3314,8 +3662,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divideandremaindernaturalscale">DivideAndRemainderNaturalScale</h3>
-<pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor) Calculates the quotient and remainder using the DivideToIntegerNaturalScale  and the formula in RemainderNaturalScale.
+
+<pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor)
 </pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3331,8 +3683,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divideandremaindernaturalscale-1">DivideAndRemainderNaturalScale</h3>
-<pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor, EContext ctx) Calculates the quotient and remainder using the DivideToIntegerNaturalScale  and the formula in RemainderNaturalScale.
+
+<pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3361,8 +3717,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divremnaturalscale">DivRemNaturalScale</h3>
-<pre>public EDecimal[] DivRemNaturalScale(EDecimal divisor) Divides this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns a two-item  array containing the result of the division and the remainder, in that  order. The result of division is calculated as though by &lt;code&gt;  DivideToIntegerNaturalScale&lt;/code&gt;, and the remainder is calculated as though by  &lt;code&gt;RemainderNaturalScale&lt;/code&gt;.
+
+<pre>public EDecimal[] DivRemNaturalScale(EDecimal divisor)
 </pre>
+
+<p>Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns a two-item
+ array containing the result of the division and the remainder, in that
+ order. The result of division is calculated as though by <code>
+ DivideToIntegerNaturalScale</code>, and the remainder is calculated as though by
+ <code>RemainderNaturalScale</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3381,8 +3745,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divremnaturalscale-1">DivRemNaturalScale</h3>
-<pre>public EDecimal[] DivRemNaturalScale(EDecimal divisor, EContext ctx) Divides this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns a two-item  array containing the result of the division and the remainder, in that  order. The result of division is calculated as though by &lt;code&gt;  DivideToIntegerNaturalScale&lt;/code&gt;, and the remainder is calculated as though by  &lt;code&gt;RemainderNaturalScale&lt;/code&gt;.
+
+<pre>public EDecimal[] DivRemNaturalScale(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Divides this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns a two-item
+ array containing the result of the division and the remainder, in that
+ order. The result of division is calculated as though by <code>
+ DivideToIntegerNaturalScale</code>, and the remainder is calculated as though by
+ <code>RemainderNaturalScale</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3414,8 +3786,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, EContext ctx) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent to the result.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, EContext ctx)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3455,8 +3831,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-1">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, EContext ctx) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent (expressed as a 32-bit signed integer) to the result, using the  half-even rounding mode.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, EContext ctx)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3496,8 +3877,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-2">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, ERounding rounding) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent to the result.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, ERounding rounding)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3528,8 +3913,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-3">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, ERounding rounding) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent (expressed as a 32-bit signed integer) to the result, using the  half-even rounding mode.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, ERounding rounding)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3560,8 +3950,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-4">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent, EContext ctx) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent to the result.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent, EContext ctx)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3601,8 +3995,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-5">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent to the result, using the half-even rounding mode.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result, using the half-even rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3628,8 +4026,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-6">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent (expressed as a 64-bit signed integer) to the result, using the  half-even rounding mode.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 64-bit signed integer) to the result, using the
+ half-even rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3655,8 +4058,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-7">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent (expressed as a 32-bit signed integer) to the result, using the  half-even rounding mode.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent (expressed as a 32-bit signed integer) to the result, using the
+ half-even rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3682,8 +4090,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-8">DivideToExponent</h3>
-<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger desiredExponent, ERounding rounding) Divides two arbitrary-precision decimal numbers, and gives a particular  exponent to the result.
+
+<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger desiredExponent, ERounding rounding)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and gives a particular
+ exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3713,8 +4125,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetointegernaturalscale">DivideToIntegerNaturalScale</h3>
-<pre>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor) Divides two arbitrary-precision decimal numbers, and returns the integer  part of the result, rounded down, with the preferred exponent set to this  value's exponent minus the divisor's exponent.
+
+<pre>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor)
 </pre>
+
+<p>Divides two arbitrary-precision decimal numbers, and returns the integer
+ part of the result, rounded down, with the preferred exponent set to this
+ value’s exponent minus the divisor’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3732,8 +4149,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetointegernaturalscale-1">DivideToIntegerNaturalScale</h3>
-<pre>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor, EContext ctx) Divides this object by another object, and returns the integer part of the  result (which is initially rounded down), with the preferred exponent set to  this value's exponent minus the divisor's exponent.
+
+<pre>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Divides this object by another object, and returns the integer part of the
+ result (which is initially rounded down), with the preferred exponent set to
+ this value’s exponent minus the divisor’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3760,8 +4182,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetointegerzeroscale">DivideToIntegerZeroScale</h3>
-<pre>public EDecimal DivideToIntegerZeroScale(EDecimal divisor, EContext ctx) Divides this object by another object, and returns the integer part of the  result, with the exponent set to 0.
+
+<pre>public EDecimal DivideToIntegerZeroScale(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Divides this object by another object, and returns the integer part of the
+ result, with the exponent set to 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3789,8 +4215,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetosameexponent">DivideToSameExponent</h3>
-<pre>public EDecimal DivideToSameExponent(EDecimal divisor, ERounding rounding) Divides this object by another decimal number and returns a result with the  same exponent as this object (the dividend).
+
+<pre>public EDecimal DivideToSameExponent(EDecimal divisor, ERounding rounding)
 </pre>
+
+<p>Divides this object by another decimal number and returns a result with the
+ same exponent as this object (the dividend).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3815,8 +4245,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public boolean equals(EDecimal other) Determines whether this object's significand, exponent, and properties are  equal to those of another object. Not-a-number values are considered equal  if the rest of their properties are equal.
+
+<pre>public boolean equals(EDecimal other)
 </pre>
+
+<p>Determines whether this object’s significand, exponent, and properties are
+ equal to those of another object. Not-a-number values are considered equal
+ if the rest of their properties are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3832,8 +4267,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="equals-1">equals</h3>
-<pre>public boolean equals(Object obj) Determines whether this object's significand, exponent, and properties are  equal to those of another object and that other object is an  arbitrary-precision decimal number. Not-a-number values are considered equal  if the rest of their properties are equal.
+
+<pre>public boolean equals(Object obj)
 </pre>
+
+<p>Determines whether this object’s significand, exponent, and properties are
+ equal to those of another object and that other object is an
+ arbitrary-precision decimal number. Not-a-number values are considered equal
+ if the rest of their properties are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -3856,8 +4297,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="exp">Exp</h3>
-<pre>public EDecimal Exp(EContext ctx) Finds e (the base of natural logarithms) raised to the power of this  object's value.
+
+<pre>public EDecimal Exp(EContext ctx)
 </pre>
+
+<p>Finds e (the base of natural logarithms) raised to the power of this
+ object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3881,8 +4326,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="expm1">ExpM1</h3>
-<pre>public EDecimal ExpM1(EContext ctx) Finds e (the base of natural logarithms) raised to the power of this  object's value, and subtracts the result by 1 and returns the final result,  in a way that avoids loss of precision if the true result is very close to  0.
+
+<pre>public EDecimal ExpM1(EContext ctx)
 </pre>
+
+<p>Finds e (the base of natural logarithms) raised to the power of this
+ object’s value, and subtracts the result by 1 and returns the final result,
+ in a way that avoids loss of precision if the true result is very close to
+ 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3904,8 +4355,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public int hashCode() Calculates this object's hash code. No application or process IDs are used  in the hash code calculation.
+
+<pre>public int hashCode()
 </pre>
+
+<p>Calculates this object’s hash code. No application or process IDs are used
+ in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -3920,8 +4375,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isinfinity">IsInfinity</h3>
-<pre>public boolean IsInfinity() Gets a value indicating whether this object is positive or negative  infinity.
+
+<pre>public boolean IsInfinity()
 </pre>
+
+<p>Gets a value indicating whether this object is positive or negative
+ infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3931,8 +4390,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isnan">IsNaN</h3>
-<pre>public boolean IsNaN() Gets a value indicating whether this object is not a number (NaN).
+
+<pre>public boolean IsNaN()
 </pre>
+
+<p>Gets a value indicating whether this object is not a number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3942,8 +4404,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isnegativeinfinity">IsNegativeInfinity</h3>
-<pre>public boolean IsNegativeInfinity() Returns whether this object is negative infinity.
+
+<pre>public boolean IsNegativeInfinity()
 </pre>
+
+<p>Returns whether this object is negative infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3953,8 +4418,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="ispositiveinfinity">IsPositiveInfinity</h3>
-<pre>public boolean IsPositiveInfinity() Returns whether this object is positive infinity.
+
+<pre>public boolean IsPositiveInfinity()
 </pre>
+
+<p>Returns whether this object is positive infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3964,8 +4432,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isquietnan">IsQuietNaN</h3>
-<pre>public boolean IsQuietNaN() Gets a value indicating whether this object is a quiet not-a-number value.
+
+<pre>public boolean IsQuietNaN()
 </pre>
+
+<p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3975,8 +4446,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="issignalingnan">IsSignalingNaN</h3>
-<pre>public boolean IsSignalingNaN() Gets a value indicating whether this object is a signaling not-a-number  value.
+
+<pre>public boolean IsSignalingNaN()
 </pre>
+
+<p>Gets a value indicating whether this object is a signaling not-a-number
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3986,8 +4461,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="log">Log</h3>
-<pre>public EDecimal Log(EContext ctx) Finds the natural logarithm of this object, that is, the power (exponent)  that e (the base of natural logarithms) must be raised to in order to equal  this object's value.
+
+<pre>public EDecimal Log(EContext ctx)
 </pre>
+
+<p>Finds the natural logarithm of this object, that is, the power (exponent)
+ that e (the base of natural logarithms) must be raised to in order to equal
+ this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4013,8 +4493,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="log10">Log10</h3>
-<pre>public EDecimal Log10(EContext ctx) Finds the base-10 logarithm of this object, that is, the power (exponent)  that the number 10 must be raised to in order to equal this object's value.
+
+<pre>public EDecimal Log10(EContext ctx)
 </pre>
+
+<p>Finds the base-10 logarithm of this object, that is, the power (exponent)
+ that the number 10 must be raised to in order to equal this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4037,8 +4521,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="log1p">Log1P</h3>
-<pre>public EDecimal Log1P(EContext ctx) Adds 1 to this object's value and finds the natural logarithm of the result,  in a way that avoids loss of precision when this object's value is between 0  and 1.
+
+<pre>public EDecimal Log1P(EContext ctx)
 </pre>
+
+<p>Adds 1 to this object’s value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object’s value is between 0
+ and 1.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4064,8 +4553,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="logn">LogN</h3>
-<pre>public EDecimal LogN(EDecimal baseValue, EContext ctx) Finds the base-N logarithm of this object, that is, the power (exponent)  that the number N must be raised to in order to equal this object's value.
+
+<pre>public EDecimal LogN(EDecimal baseValue, EContext ctx)
 </pre>
+
+<p>Finds the base-N logarithm of this object, that is, the power (exponent)
+ that the number N must be raised to in order to equal this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4095,8 +4588,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft">MovePointLeft</h3>
-<pre>public EDecimal MovePointLeft(int places) Returns a number similar to this number but with the decimal point moved to  the left.
+
+<pre>public EDecimal MovePointLeft(int places)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4114,8 +4611,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft-1">MovePointLeft</h3>
-<pre>public EDecimal MovePointLeft(int places, EContext ctx) Returns a number similar to this number but with the decimal point moved to  the left.
+
+<pre>public EDecimal MovePointLeft(int places, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4142,8 +4643,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft-2">MovePointLeft</h3>
-<pre>public EDecimal MovePointLeft(EInteger bigPlaces) Returns a number similar to this number but with the decimal point moved to  the left.
+
+<pre>public EDecimal MovePointLeft(EInteger bigPlaces)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4161,8 +4666,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft-3">MovePointLeft</h3>
-<pre>public EDecimal MovePointLeft(EInteger bigPlaces, EContext ctx) Returns a number similar to this number but with the decimal point moved to  the left.
+
+<pre>public EDecimal MovePointLeft(EInteger bigPlaces, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4189,8 +4698,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright">MovePointRight</h3>
-<pre>public EDecimal MovePointRight(int places) Returns a number similar to this number but with the decimal point moved to  the right.
+
+<pre>public EDecimal MovePointRight(int places)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4208,8 +4721,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright-1">MovePointRight</h3>
-<pre>public EDecimal MovePointRight(int places, EContext ctx) Returns a number similar to this number but with the decimal point moved to  the right.
+
+<pre>public EDecimal MovePointRight(int places, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4236,8 +4753,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright-2">MovePointRight</h3>
-<pre>public EDecimal MovePointRight(EInteger bigPlaces) Returns a number similar to this number but with the decimal point moved to  the right.
+
+<pre>public EDecimal MovePointRight(EInteger bigPlaces)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4255,8 +4776,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright-3">MovePointRight</h3>
-<pre>public EDecimal MovePointRight(EInteger bigPlaces, EContext ctx) Returns a number similar to this number but with the decimal point moved to  the right.
+
+<pre>public EDecimal MovePointRight(EInteger bigPlaces, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the decimal point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4283,8 +4808,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply">Multiply</h3>
-<pre>public EDecimal Multiply(EDecimal otherValue) Multiplies this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns the result.  The exponent for the result is this arbitrary-precision decimal  floating-point number's exponent plus the other arbitrary-precision decimal  floating-point number's exponent.
+
+<pre>public EDecimal Multiply(EDecimal otherValue)
 </pre>
+
+<p>Multiplies this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the result.
+ The exponent for the result is this arbitrary-precision decimal
+ floating-point number’s exponent plus the other arbitrary-precision decimal
+ floating-point number’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4307,8 +4839,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply-1">Multiply</h3>
-<pre>public EDecimal Multiply(EDecimal op, EContext ctx) Multiplies this arbitrary-precision decimal floating-point number by another  arbitrary-precision decimal floating-point number and returns the result.
+
+<pre>public EDecimal Multiply(EDecimal op, EContext ctx)
 </pre>
+
+<p>Multiplies this arbitrary-precision decimal floating-point number by another
+ arbitrary-precision decimal floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4334,8 +4870,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add-2">Add</h3>
-<pre>public EDecimal Add(long longValue) Adds this arbitrary-precision decimal floating-point number and a 64-bit  signed integer and returns the result. The exponent for the result is the  lower of this arbitrary-precision decimal floating-point number's exponent  and the other 64-bit signed integer's exponent.
+
+<pre>public EDecimal Add(long longValue)
 </pre>
+
+<p>Adds this arbitrary-precision decimal floating-point number and a 64-bit
+ signed integer and returns the result. The exponent for the result is the
+ lower of this arbitrary-precision decimal floating-point number’s exponent
+ and the other 64-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4353,8 +4895,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract">Subtract</h3>
-<pre>public EDecimal Subtract(long longValue) Subtracts a 64-bit signed integer from this arbitrary-precision decimal  floating-point number and returns the result. The exponent for the result is  the lower of this arbitrary-precision decimal floating-point number's  exponent and the other 64-bit signed integer's exponent.
+
+<pre>public EDecimal Subtract(long longValue)
 </pre>
+
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision decimal
+ floating-point number and returns the result. The exponent for the result is
+ the lower of this arbitrary-precision decimal floating-point number’s
+ exponent and the other 64-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4372,8 +4920,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply-2">Multiply</h3>
-<pre>public EDecimal Multiply(long longValue) Multiplies this arbitrary-precision decimal floating-point number by a  64-bit signed integer and returns the result. The exponent for the result is  this arbitrary-precision decimal floating-point number's exponent plus the  other 64-bit signed integer's exponent.
+
+<pre>public EDecimal Multiply(long longValue)
 </pre>
+
+<p>Multiplies this arbitrary-precision decimal floating-point number by a
+ 64-bit signed integer and returns the result. The exponent for the result is
+ this arbitrary-precision decimal floating-point number’s exponent plus the
+ other 64-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4389,8 +4943,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-2">Divide</h3>
-<pre>public EDecimal Divide(long longValue) Divides this arbitrary-precision decimal floating-point number by a 64-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and  2/3); if this is not desired, use DivideToExponent, or use the Divide  overload that takes an EContext.
+
+<pre>public EDecimal Divide(long longValue)
 </pre>
+
+<p>Divides this arbitrary-precision decimal floating-point number by a 64-bit
+ signed integer and returns the result; returns NaN instead if the result
+ would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and
+ 2/3); if this is not desired, use DivideToExponent, or use the Divide
+ overload that takes an EContext.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4414,8 +4975,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add-3">Add</h3>
-<pre>public EDecimal Add(int intValue) Adds this arbitrary-precision decimal floating-point number and a 32-bit  signed integer and returns the result. The exponent for the result is the  lower of this arbitrary-precision decimal floating-point number's exponent  and the other 32-bit signed integer's exponent.
+
+<pre>public EDecimal Add(int intValue)
 </pre>
+
+<p>Adds this arbitrary-precision decimal floating-point number and a 32-bit
+ signed integer and returns the result. The exponent for the result is the
+ lower of this arbitrary-precision decimal floating-point number’s exponent
+ and the other 32-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4433,8 +5000,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract-1">Subtract</h3>
-<pre>public EDecimal Subtract(int intValue) Subtracts a 32-bit signed integer from this arbitrary-precision decimal  floating-point number and returns the result. The exponent for the result is  the lower of this arbitrary-precision decimal floating-point number's  exponent and the other 32-bit signed integer's exponent.
+
+<pre>public EDecimal Subtract(int intValue)
 </pre>
+
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision decimal
+ floating-point number and returns the result. The exponent for the result is
+ the lower of this arbitrary-precision decimal floating-point number’s
+ exponent and the other 32-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4452,8 +5025,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply-3">Multiply</h3>
-<pre>public EDecimal Multiply(int intValue) Multiplies this arbitrary-precision decimal floating-point number by a  32-bit signed integer and returns the result. The exponent for the result is  this arbitrary-precision decimal floating-point number's exponent plus the  other 32-bit signed integer's exponent.
+
+<pre>public EDecimal Multiply(int intValue)
 </pre>
+
+<p>Multiplies this arbitrary-precision decimal floating-point number by a
+ 32-bit signed integer and returns the result. The exponent for the result is
+ this arbitrary-precision decimal floating-point number’s exponent plus the
+ other 32-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4469,8 +5048,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-3">Divide</h3>
-<pre>public EDecimal Divide(int intValue) Divides this arbitrary-precision decimal floating-point number by a 32-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and  2/3); if this is not desired, use DivideToExponent, or use the Divide  overload that takes an EContext.
+
+<pre>public EDecimal Divide(int intValue)
 </pre>
+
+<p>Divides this arbitrary-precision decimal floating-point number by a 32-bit
+ signed integer and returns the result; returns NaN instead if the result
+ would have a nonterminating decimal expansion (including 1/3, 1/12, 1/7, and
+ 2/3); if this is not desired, use DivideToExponent, or use the Divide
+ overload that takes an EContext.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4495,8 +5081,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiplyandadd">MultiplyAndAdd</h3>
-<pre>public EDecimal MultiplyAndAdd(EDecimal multiplicand, EDecimal augend) Multiplies by one decimal number, and then adds another decimal number.
+
+<pre>public EDecimal MultiplyAndAdd(EDecimal multiplicand, EDecimal augend)
 </pre>
+
+<p>Multiplies by one decimal number, and then adds another decimal number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4516,8 +5105,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiplyandadd-1">MultiplyAndAdd</h3>
-<pre>public EDecimal MultiplyAndAdd(EDecimal op, EDecimal augend, EContext ctx) Multiplies by one value, and then adds another value.
+
+<pre>public EDecimal MultiplyAndAdd(EDecimal op, EDecimal augend, EContext ctx)
 </pre>
+
+<p>Multiplies by one value, and then adds another value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4546,8 +5138,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiplyandsubtract">MultiplyAndSubtract</h3>
-<pre>public EDecimal MultiplyAndSubtract(EDecimal op, EDecimal subtrahend, EContext ctx) Multiplies by one value, and then subtracts another value.
+
+<pre>public EDecimal MultiplyAndSubtract(EDecimal op, EDecimal subtrahend, EContext ctx)
 </pre>
+
+<p>Multiplies by one value, and then subtracts another value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4583,8 +5178,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="negate">Negate</h3>
-<pre>public EDecimal Negate() Gets an object with the same value as this one, but with the sign reversed.
+
+<pre>public EDecimal Negate()
 </pre>
+
+<p>Gets an object with the same value as this one, but with the sign reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4597,8 +5195,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="negate-1">Negate</h3>
-<pre>public EDecimal Negate(EContext context) Returns an arbitrary-precision decimal number with the same value as this  object but with the sign reversed.
+
+<pre>public EDecimal Negate(EContext context)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but with the sign reversed.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4619,8 +5221,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="nextminus">NextMinus</h3>
-<pre>public EDecimal NextMinus(EContext ctx) Finds the largest value that's smaller than the given value.
+
+<pre>public EDecimal NextMinus(EContext ctx)
 </pre>
+
+<p>Finds the largest value that’s smaller than the given value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4642,8 +5247,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="nextplus">NextPlus</h3>
-<pre>public EDecimal NextPlus(EContext ctx) Finds the smallest value that's greater than the given value.
+
+<pre>public EDecimal NextPlus(EContext ctx)
 </pre>
+
+<p>Finds the smallest value that’s greater than the given value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4665,8 +5273,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="nexttoward">NextToward</h3>
-<pre>public EDecimal NextToward(EDecimal otherValue, EContext ctx) Finds the next value that is closer to the other object's value than this  object's value. Returns a copy of this value with the same sign as the other  value if both values are equal.
+
+<pre>public EDecimal NextToward(EDecimal otherValue, EContext ctx)
 </pre>
+
+<p>Finds the next value that is closer to the other object’s value than this
+ object’s value. Returns a copy of this value with the same sign as the other
+ value if both values are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4694,8 +5307,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="plus">Plus</h3>
-<pre>public EDecimal Plus(EContext ctx) Rounds this object's value to a given precision, using the given rounding  mode and range of exponent, and also converts negative zero to positive  zero. The idiom &lt;code&gt;EDecimal.SignalingNaN.Plus(ctx)&lt;/code&gt; is useful for  triggering an invalid operation and returning not-a-number (NaN) for custom  arithmetic operations.
+
+<pre>public EDecimal Plus(EContext ctx)
 </pre>
+
+<p>Rounds this object’s value to a given precision, using the given rounding
+ mode and range of exponent, and also converts negative zero to positive
+ zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is useful for
+ triggering an invalid operation and returning not-a-number (NaN) for custom
+ arithmetic operations.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4715,8 +5335,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow">Pow</h3>
-<pre>public EDecimal Pow(EDecimal exponent, EContext ctx) Raises this object's value to the given exponent.
+
+<pre>public EDecimal Pow(EDecimal exponent, EContext ctx)
 </pre>
+
+<p>Raises this object’s value to the given exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4746,8 +5369,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow-1">Pow</h3>
-<pre>public EDecimal Pow(EDecimal exponent) Raises this object's value to the given exponent, using unlimited precision.
+
+<pre>public EDecimal Pow(EDecimal exponent)
 </pre>
+
+<p>Raises this object’s value to the given exponent, using unlimited precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4764,8 +5390,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow-2">Pow</h3>
-<pre>public EDecimal Pow(int exponentSmall, EContext ctx) Raises this object's value to the given exponent.
+
+<pre>public EDecimal Pow(int exponentSmall, EContext ctx)
 </pre>
+
+<p>Raises this object’s value to the given exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4790,8 +5419,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow-3">Pow</h3>
-<pre>public EDecimal Pow(int exponentSmall) Raises this object's value to the given exponent.
+
+<pre>public EDecimal Pow(int exponentSmall)
 </pre>
+
+<p>Raises this object’s value to the given exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4807,8 +5439,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="precision">Precision</h3>
-<pre>public EInteger Precision() Finds the number of digits in this number's significand. Returns 1 if this  value is 0, and 0 if this value is infinity or not-a-number (NaN).
+
+<pre>public EInteger Precision()
 </pre>
+
+<p>Finds the number of digits in this number’s significand. Returns 1 if this
+ value is 0, and 0 if this value is infinity or not-a-number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4817,8 +5453,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize">Quantize</h3>
+
 <pre>public EDecimal Quantize(EInteger desiredExponent, EContext ctx)
 </pre>
+
 <p>Returns an arbitrary-precision decimal number with the same value but a
  new exponent. </p>
 <p>Note that this is not always the same as rounding to a
@@ -4871,8 +5509,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize-1">Quantize</h3>
+
 <pre>public EDecimal Quantize(int desiredExponentInt, ERounding rounding)
 </pre>
+
 <p>Returns an arbitrary-precision decimal number with the same value as this
  one but a new exponent. </p>
 <p><b>Remark:</b> This method can be used to
@@ -4908,8 +5548,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize-2">Quantize</h3>
+
 <pre>public EDecimal Quantize(int desiredExponentInt, EContext ctx)
 </pre>
+
 <p>Returns an arbitrary-precision decimal number with the same value but a
  new exponent. </p>
 <p>Note that this is not always the same as rounding to a
@@ -4962,8 +5604,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize-3">Quantize</h3>
+
 <pre>public EDecimal Quantize(EDecimal otherValue, EContext ctx)
 </pre>
+
 <p>Returns an arbitrary-precision decimal number with the same value as this
  object but with the same exponent as another decimal number. </p>
 <p>Note
@@ -5011,8 +5655,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="reduce">Reduce</h3>
+
 <pre>public EDecimal Reduce(EContext ctx)
 </pre>
+
 <p>Returns an object with the same numerical value as this one but with
  trailing zeros removed from its significand. For example, 1.00 becomes 1.
  </p>
@@ -5037,8 +5683,18 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remainder">Remainder</h3>
-<pre>public EDecimal Remainder(EDecimal divisor, EContext ctx) Returns the remainder that would result when this arbitrary-precision  decimal floating-point number is divided by another arbitrary-precision  decimal floating-point number. The remainder is the number that remains when  the absolute value of this arbitrary-precision decimal floating-point number  is divided (as though by DivideToIntegerZeroScale) by the absolute value of  the other arbitrary-precision decimal floating-point number; the remainder  has the same sign (positive or negative) as this arbitrary-precision decimal  floating-point number.
+
+<pre>public EDecimal Remainder(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Returns the remainder that would result when this arbitrary-precision
+ decimal floating-point number is divided by another arbitrary-precision
+ decimal floating-point number. The remainder is the number that remains when
+ the absolute value of this arbitrary-precision decimal floating-point number
+ is divided (as though by DivideToIntegerZeroScale) by the absolute value of
+ the other arbitrary-precision decimal floating-point number; the remainder
+ has the same sign (positive or negative) as this arbitrary-precision decimal
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5069,8 +5725,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernoroundafterdivide">RemainderNoRoundAfterDivide</h3>
-<pre>public EDecimal RemainderNoRoundAfterDivide(EDecimal divisor, EContext ctx) Finds the remainder that results when dividing two arbitrary-precision  decimal numbers, except the intermediate division is not adjusted to fit the  precision of the given arithmetic context. The value of this object is  divided by the absolute value of the other object; the remainder has the  same sign (positive or negative) as this object's value.
+
+<pre>public EDecimal RemainderNoRoundAfterDivide(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Finds the remainder that results when dividing two arbitrary-precision
+ decimal numbers, except the intermediate division is not adjusted to fit the
+ precision of the given arithmetic context. The value of this object is
+ divided by the absolute value of the other object; the remainder has the
+ same sign (positive or negative) as this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5096,8 +5759,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernaturalscale">RemainderNaturalScale</h3>
-<pre>public EDecimal RemainderNaturalScale(EDecimal divisor) Calculates the remainder of a number by the formula &lt;code&gt;"this" - (("this"  / "divisor") * "divisor")&lt;/code&gt;.
+
+<pre>public EDecimal RemainderNaturalScale(EDecimal divisor)
 </pre>
+
+<p>Calculates the remainder of a number by the formula <code>"this" - (("this"
+ / "divisor") * "divisor")</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5112,8 +5779,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernaturalscale-1">RemainderNaturalScale</h3>
-<pre>public EDecimal RemainderNaturalScale(EDecimal divisor, EContext ctx) Calculates the remainder of a number by the formula "this" - (("this" /  "divisor") * "divisor").
+
+<pre>public EDecimal RemainderNaturalScale(EDecimal divisor, EContext ctx)
 </pre>
+
+<p>Calculates the remainder of a number by the formula “this” - ((“this” /
+ “divisor”) * “divisor”).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5141,8 +5812,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernear">RemainderNear</h3>
+
 <pre>public EDecimal RemainderNear(EDecimal divisor, EContext ctx)
 </pre>
+
 <p>Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object's value by another object's value.
  </p>
@@ -5186,8 +5859,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent">RoundToExponent</h3>
-<pre>public EDecimal RoundToExponent(EInteger exponent, EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to a new exponent if necessary. The resulting number's  Exponent property will not necessarily be the given exponent; use the  Quantize method instead to give the result a particular exponent.
+
+<pre>public EDecimal RoundToExponent(EInteger exponent, EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to a new exponent if necessary. The resulting number’s
+ Exponent property will not necessarily be the given exponent; use the
+ Quantize method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5221,8 +5900,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent-1">RoundToExponent</h3>
-<pre>public EDecimal RoundToExponent(EInteger exponent) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to a new exponent if necessary, using the HalfEven  rounding mode. The resulting number's Exponent property will not necessarily  be the given exponent; use the Quantize method instead to give the result a  particular exponent.
+
+<pre>public EDecimal RoundToExponent(EInteger exponent)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to a new exponent if necessary, using the HalfEven
+ rounding mode. The resulting number’s Exponent property will not necessarily
+ be the given exponent; use the Quantize method instead to give the result a
+ particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5243,8 +5929,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent-2">RoundToExponent</h3>
-<pre>public EDecimal RoundToExponent(EInteger exponent, ERounding rounding) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to a new exponent if necessary, using the given rounding  mode. The resulting number's Exponent property will not necessarily be the  given exponent; use the Quantize method instead to give the result a  particular exponent.
+
+<pre>public EDecimal RoundToExponent(EInteger exponent, ERounding rounding)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to a new exponent if necessary, using the given rounding
+ mode. The resulting number’s Exponent property will not necessarily be the
+ given exponent; use the Quantize method instead to give the result a
+ particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5270,8 +5963,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent-3">RoundToExponent</h3>
-<pre>public EDecimal RoundToExponent(int exponentSmall) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to a new exponent if necessary, using the HalfEven  rounding mode. The resulting number's Exponent property will not necessarily  be the given exponent; use the Quantize method instead to give the result a  particular exponent.
+
+<pre>public EDecimal RoundToExponent(int exponentSmall)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to a new exponent if necessary, using the HalfEven
+ rounding mode. The resulting number’s Exponent property will not necessarily
+ be the given exponent; use the Quantize method instead to give the result a
+ particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5292,8 +5992,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent-4">RoundToExponent</h3>
-<pre>public EDecimal RoundToExponent(int exponentSmall, EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to a new exponent if necessary. The resulting number's  Exponent property will not necessarily be the given exponent; use the  Quantize method instead to give the result a particular exponent.
+
+<pre>public EDecimal RoundToExponent(int exponentSmall, EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to a new exponent if necessary. The resulting number’s
+ Exponent property will not necessarily be the given exponent; use the
+ Quantize method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5327,8 +6033,14 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent-5">RoundToExponent</h3>
-<pre>public EDecimal RoundToExponent(int exponentSmall, ERounding rounding) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to a new exponent if necessary. The resulting number's  Exponent property will not necessarily be the given exponent; use the  Quantize method instead to give the result a particular exponent.
+
+<pre>public EDecimal RoundToExponent(int exponentSmall, ERounding rounding)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to a new exponent if necessary. The resulting number’s
+ Exponent property will not necessarily be the given exponent; use the
+ Quantize method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5355,8 +6067,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponentexact">RoundToExponentExact</h3>
-<pre>public EDecimal RoundToExponentExact(EInteger exponent, EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to the given exponent represented as an  arbitrary-precision integer, and signals an inexact flag if the result would  be inexact. The resulting number's Exponent property will not necessarily be  the given exponent; use the Quantize method instead to give the result a  particular exponent.
+
+<pre>public EDecimal RoundToExponentExact(EInteger exponent, EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to the given exponent represented as an
+ arbitrary-precision integer, and signals an inexact flag if the result would
+ be inexact. The resulting number’s Exponent property will not necessarily be
+ the given exponent; use the Quantize method instead to give the result a
+ particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5391,8 +6111,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponentexact-1">RoundToExponentExact</h3>
-<pre>public EDecimal RoundToExponentExact(int exponentSmall, EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to the given exponent represented as a 32-bit signed  integer, and signals an inexact flag if the result would be inexact. The  resulting number's Exponent property will not necessarily be the given  exponent; use the Quantize method instead to give the result a particular  exponent.
+
+<pre>public EDecimal RoundToExponentExact(int exponentSmall, EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to the given exponent represented as a 32-bit signed
+ integer, and signals an inexact flag if the result would be inexact. The
+ resulting number’s Exponent property will not necessarily be the given
+ exponent; use the Quantize method instead to give the result a particular
+ exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5427,8 +6155,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponentexact-2">RoundToExponentExact</h3>
-<pre>public EDecimal RoundToExponentExact(int exponentSmall, ERounding rounding) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to the given exponent represented as a 32-bit signed  integer, and signals an inexact flag if the result would be inexact. The  resulting number's Exponent property will not necessarily be the given  exponent; use the Quantize method instead to give the result a particular  exponent.
+
+<pre>public EDecimal RoundToExponentExact(int exponentSmall, ERounding rounding)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to the given exponent represented as a 32-bit signed
+ integer, and signals an inexact flag if the result would be inexact. The
+ resulting number’s Exponent property will not necessarily be the given
+ exponent; use the Quantize method instead to give the result a particular
+ exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5454,8 +6190,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegerexact">RoundToIntegerExact</h3>
-<pre>public EDecimal RoundToIntegerExact(EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to an integer, and signals an inexact flag if the result  would be inexact. The resulting number's Exponent property will not  necessarily be 0; use the Quantize method instead to give the result an  exponent of 0.
+
+<pre>public EDecimal RoundToIntegerExact(EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to an integer, and signals an inexact flag if the result
+ would be inexact. The resulting number’s Exponent property will not
+ necessarily be 0; use the Quantize method instead to give the result an
+ exponent of 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5480,8 +6223,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegernoroundedflag">RoundToIntegerNoRoundedFlag</h3>
-<pre>public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to an integer, without adding the &lt;code&gt;FlagInexact&lt;/code&gt; or  &lt;code&gt;FlagRounded&lt;/code&gt; flags. The resulting number's Exponent property will not  necessarily be 0; use the Quantize method instead to give the result an  exponent of 0.
+
+<pre>public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to an integer, without adding the <code>FlagInexact</code> or
+ <code>FlagRounded</code> flags. The resulting number’s Exponent property will not
+ necessarily be 0; use the Quantize method instead to give the result an
+ exponent of 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5507,8 +6257,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegralexact">RoundToIntegralExact</h3>
-<pre>@Deprecated public EDecimal RoundToIntegralExact(EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to an integer, and signals an inexact flag if the result  would be inexact.
+
+<pre>@Deprecated public EDecimal RoundToIntegralExact(EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to an integer, and signals an inexact flag if the result
+ would be inexact.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5533,8 +6288,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegralnoroundedflag">RoundToIntegralNoRoundedFlag</h3>
-<pre>@Deprecated public EDecimal RoundToIntegralNoRoundedFlag(EContext ctx) Returns an arbitrary-precision decimal number with the same value as this  object but rounded to an integer, without adding the &lt;code&gt;FlagInexact&lt;/code&gt; or  &lt;code&gt;FlagRounded&lt;/code&gt; flags.
+
+<pre>@Deprecated public EDecimal RoundToIntegralNoRoundedFlag(EContext ctx)
 </pre>
+
+<p>Returns an arbitrary-precision decimal number with the same value as this
+ object but rounded to an integer, without adding the <code>FlagInexact</code> or
+ <code>FlagRounded</code> flags.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5560,8 +6320,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoprecision">RoundToPrecision</h3>
-<pre>public EDecimal RoundToPrecision(EContext ctx) Rounds this object's value to a given precision, using the given rounding  mode and range of exponent.
+
+<pre>public EDecimal RoundToPrecision(EContext ctx)
 </pre>
+
+<p>Rounds this object’s value to a given precision, using the given rounding
+ mode and range of exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5582,8 +6346,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="preround">PreRound</h3>
-<pre>public EDecimal PreRound(EContext ctx) Returns a number in which the value of this object is rounded to fit the  maximum precision allowed if it has more significant digits than the maximum  precision. The maximum precision allowed is given in an arithmetic context.  This method is designed for preparing operands to a custom arithmetic  operation per the "simplified" arithmetic given in Appendix A of the General  Decimal Arithmetic Specification.
+
+<pre>public EDecimal PreRound(EContext ctx)
 </pre>
+
+<p>Returns a number in which the value of this object is rounded to fit the
+ maximum precision allowed if it has more significant digits than the maximum
+ precision. The maximum precision allowed is given in an arithmetic context.
+ This method is designed for preparing operands to a custom arithmetic
+ operation per the “simplified” arithmetic given in Appendix A of the General
+ Decimal Arithmetic Specification.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5608,8 +6380,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroften">ScaleByPowerOfTen</h3>
-<pre>public EDecimal ScaleByPowerOfTen(int places) Returns a number similar to this number but with the scale adjusted.
+
+<pre>public EDecimal ScaleByPowerOfTen(int places)
 </pre>
+
+<p>Returns a number similar to this number but with the scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5625,8 +6400,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroften-1">ScaleByPowerOfTen</h3>
-<pre>public EDecimal ScaleByPowerOfTen(int places, EContext ctx) Returns a number similar to this number but with the scale adjusted.
+
+<pre>public EDecimal ScaleByPowerOfTen(int places, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5652,8 +6430,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroften-2">ScaleByPowerOfTen</h3>
-<pre>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces) Returns a number similar to this number but with the scale adjusted.
+
+<pre>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces)
 </pre>
+
+<p>Returns a number similar to this number but with the scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5670,8 +6451,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroften-3">ScaleByPowerOfTen</h3>
-<pre>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces, EContext ctx) Returns a number similar to this number but with its scale adjusted.
+
+<pre>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with its scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5703,8 +6487,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="sqrt">Sqrt</h3>
-<pre>public EDecimal Sqrt(EContext ctx) Finds the square root of this object's value.
+
+<pre>public EDecimal Sqrt(EContext ctx)
 </pre>
+
+<p>Finds the square root of this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5729,8 +6516,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="squareroot">SquareRoot</h3>
-<pre>@Deprecated public EDecimal SquareRoot(EContext ctx) Finds the square root of this object's value.
+
+<pre>@Deprecated public EDecimal SquareRoot(EContext ctx)
 </pre>
+
+<p>Finds the square root of this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5755,8 +6545,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract-2">Subtract</h3>
-<pre>public EDecimal Subtract(EDecimal otherValue) Subtracts an arbitrary-precision decimal floating-point number from this  arbitrary-precision decimal floating-point number and returns the result.  The exponent for the result is the lower of this arbitrary-precision decimal  floating-point number's exponent and the other arbitrary-precision decimal  floating-point number's exponent.
+
+<pre>public EDecimal Subtract(EDecimal otherValue)
 </pre>
+
+<p>Subtracts an arbitrary-precision decimal floating-point number from this
+ arbitrary-precision decimal floating-point number and returns the result.
+ The exponent for the result is the lower of this arbitrary-precision decimal
+ floating-point number’s exponent and the other arbitrary-precision decimal
+ floating-point number’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5775,8 +6572,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract-3">Subtract</h3>
-<pre>public EDecimal Subtract(EDecimal otherValue, EContext ctx) Subtracts an arbitrary-precision decimal floating-point number from this  arbitrary-precision decimal floating-point number and returns the result.
+
+<pre>public EDecimal Subtract(EDecimal otherValue, EContext ctx)
 </pre>
+
+<p>Subtracts an arbitrary-precision decimal floating-point number from this
+ arbitrary-precision decimal floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5810,8 +6611,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="todoublebits">ToDoubleBits</h3>
+
 <pre>public long ToDoubleBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 64-bit floating-point
  number encoded in the IEEE 754 binary64 format, using the half-even rounding
  mode. </p>
@@ -5832,8 +6635,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="todouble">ToDouble</h3>
+
 <pre>public double ToDouble()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 64-bit floating-point
  number, using the half-even rounding mode. </p>
 <p>If this value is a NaN,
@@ -5854,8 +6659,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toeinteger">ToEInteger</h3>
-<pre>public EInteger ToEInteger() Converts this value to an arbitrary-precision integer, discarding the  fractional part in this value. Note that depending on the value, especially  the exponent, generating the arbitrary-precision integer may require a huge  amount of memory. Use the ToSizedEInteger method to convert a number to an  EInteger only if the integer fits in a bounded bit range; that method will  throw an exception on overflow.
+
+<pre>public EInteger ToEInteger()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, discarding the
+ fractional part in this value. Note that depending on the value, especially
+ the exponent, generating the arbitrary-precision integer may require a huge
+ amount of memory. Use the ToSizedEInteger method to convert a number to an
+ EInteger only if the integer fits in a bounded bit range; that method will
+ throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5877,8 +6690,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toeintegerexact">ToEIntegerExact</h3>
-<pre>@Deprecated public EInteger ToEIntegerExact() Converts this value to an arbitrary-precision integer, checking whether the  fractional part of the value would be lost. Note that depending on the  value, especially the exponent, generating the arbitrary-precision integer  may require a huge amount of memory. Use the ToSizedEIntegerIfExact method  to convert a number to an EInteger only if the integer fits in a bounded bit  range; that method will throw an exception on overflow.
+
+<pre>@Deprecated public EInteger ToEIntegerExact()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ fractional part of the value would be lost. Note that depending on the
+ value, especially the exponent, generating the arbitrary-precision integer
+ may require a huge amount of memory. Use the ToSizedEIntegerIfExact method
+ to convert a number to an EInteger only if the integer fits in a bounded bit
+ range; that method will throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5899,8 +6720,16 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toeintegerifexact">ToEIntegerIfExact</h3>
-<pre>public EInteger ToEIntegerIfExact() Converts this value to an arbitrary-precision integer, checking whether the  fractional part of the value would be lost. Note that depending on the  value, especially the exponent, generating the arbitrary-precision integer  may require a huge amount of memory. Use the ToSizedEIntegerIfExact method  to convert a number to an EInteger only if the integer fits in a bounded bit  range; that method will throw an exception on overflow.
+
+<pre>public EInteger ToEIntegerIfExact()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ fractional part of the value would be lost. Note that depending on the
+ value, especially the exponent, generating the arbitrary-precision integer
+ may require a huge amount of memory. Use the ToSizedEIntegerIfExact method
+ to convert a number to an EInteger only if the integer fits in a bounded bit
+ range; that method will throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5921,8 +6750,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toengineeringstring">ToEngineeringString</h3>
-<pre>public String ToEngineeringString() Same as toString(), except that when an exponent is used it will be a  multiple of 3.
+
+<pre>public String ToEngineeringString()
 </pre>
+
+<p>Same as toString(), except that when an exponent is used it will be a
+ multiple of 3.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5931,8 +6764,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toextendedfloat">ToExtendedFloat</h3>
-<pre>@Deprecated public EFloat ToExtendedFloat() Creates a binary floating-point number from this object's value. Note that  if the binary floating-point number contains a negative exponent, the  resulting value might not be exact, in which case the resulting binary  floating-point number will be an approximation of this decimal number's  value, using the half-even rounding mode.
+
+<pre>@Deprecated public EFloat ToExtendedFloat()
 </pre>
+
+<p>Creates a binary floating-point number from this object’s value. Note that
+ if the binary floating-point number contains a negative exponent, the
+ resulting value might not be exact, in which case the resulting binary
+ floating-point number will be an approximation of this decimal number’s
+ value, using the half-even rounding mode.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5941,8 +6781,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toefloat">ToEFloat</h3>
-<pre>public EFloat ToEFloat() Creates a binary floating-point number from this object's value. Note that  if the binary floating-point number contains a negative exponent, the  resulting value might not be exact, in which case the resulting binary  floating-point number will be an approximation of this decimal number's  value, using the half-even rounding mode.
+
+<pre>public EFloat ToEFloat()
 </pre>
+
+<p>Creates a binary floating-point number from this object’s value. Note that
+ if the binary floating-point number contains a negative exponent, the
+ resulting value might not be exact, in which case the resulting binary
+ floating-point number will be an approximation of this decimal number’s
+ value, using the half-even rounding mode.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5951,8 +6798,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toplainstring">ToPlainString</h3>
-<pre>public String ToPlainString() Converts this value to a string as though with the toString method, but  without using exponential notation.
+
+<pre>public String ToPlainString()
 </pre>
+
+<p>Converts this value to a string as though with the toString method, but
+ without using exponential notation.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5961,8 +6812,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tohalfbits">ToHalfBits</h3>
+
 <pre>public short ToHalfBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a binary floating-point
  number, expressed as an integer in the IEEE 754 binary16 format (also known
  as a "half-precision" floating-point number). The half-even rounding mode is
@@ -5984,8 +6837,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosinglebits">ToSingleBits</h3>
+
 <pre>public int ToSingleBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 32-bit floating-point
  number encoded in the IEEE 754 binary32 format, using the half-even rounding
  mode. </p>
@@ -6006,8 +6861,10 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosingle">ToSingle</h3>
+
 <pre>public float ToSingle()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 32-bit floating-point
  number, using the half-even rounding mode. </p>
 <p>If this value is a NaN,
@@ -6028,8 +6885,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this value to a text string. Returns a value compatible with this  class's FromString method.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this value to a text string. Returns a value compatible with this
+ class’s FromString method.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -6048,8 +6909,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="ulp">Ulp</h3>
-<pre>public EDecimal Ulp() Returns the unit in the last place. The significand will be 1 and the  exponent will be this number's exponent. Returns 1 with an exponent of 0 if  this number is infinity or not-a-number (NaN).
+
+<pre>public EDecimal Ulp()
 </pre>
+
+<p>Returns the unit in the last place. The significand will be 1 and the
+ exponent will be this number’s exponent. Returns 1 with an exponent of 0 if
+ this number is infinity or not-a-number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6058,8 +6924,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosizedeinteger">ToSizedEInteger</h3>
-<pre>public EInteger ToSizedEInteger(int maxBitLength) Converts this value to an arbitrary-precision integer by discarding its  fractional part and checking whether the resulting integer overflows the  given signed bit count.
+
+<pre>public EInteger ToSizedEInteger(int maxBitLength)
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer by discarding its
+ fractional part and checking whether the resulting integer overflows the
+ given signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6085,8 +6956,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosizedeintegerifexact">ToSizedEIntegerIfExact</h3>
-<pre>public EInteger ToSizedEIntegerIfExact(int maxBitLength) Converts this value to an arbitrary-precision integer, only if this number's  value is an exact integer and that integer does not overflow the given  signed bit count.
+
+<pre>public EInteger ToSizedEIntegerIfExact(int maxBitLength)
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, only if this number’s
+ value is an exact integer and that integer does not overflow the given
+ signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6117,8 +6993,15 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toefloat-1">ToEFloat</h3>
-<pre>public EFloat ToEFloat(EContext ec) Creates a binary floating-point number from this object's value. Note that  if the binary floating-point number contains a negative exponent, the  resulting value might not be exact, in which case the resulting binary  floating-point number will be an approximation of this decimal number's  value.
+
+<pre>public EFloat ToEFloat(EContext ec)
 </pre>
+
+<p>Creates a binary floating-point number from this object’s value. Note that
+ if the binary floating-point number contains a negative exponent, the
+ resulting value might not be exact, in which case the resulting binary
+ floating-point number will be an approximation of this decimal number’s
+ value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6135,8 +7018,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="increment">Increment</h3>
-<pre>public EDecimal Increment() Returns one added to this arbitrary-precision decimal number.
+
+<pre>public EDecimal Increment()
 </pre>
+
+<p>Returns one added to this arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6145,8 +7031,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="decrement">Decrement</h3>
-<pre>public EDecimal Decrement() Returns one subtracted from this arbitrary-precision decimal number.
+
+<pre>public EDecimal Decrement()
 </pre>
+
+<p>Returns one subtracted from this arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6155,8 +7044,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tobytechecked">ToByteChecked</h3>
-<pre>public byte ToByteChecked() Converts this number's value to a byte (from 0 to 255) if it can fit in a  byte (from 0 to 255) after converting it to an integer by discarding its  fractional part.
+
+<pre>public byte ToByteChecked()
 </pre>
+
+<p>Converts this number’s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6173,8 +7067,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tobyteunchecked">ToByteUnchecked</h3>
-<pre>public byte ToByteUnchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a byte (from 0 to 255).
+
+<pre>public byte ToByteUnchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a byte (from 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6184,8 +7083,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tobyteifexact">ToByteIfExact</h3>
-<pre>public byte ToByteIfExact() Converts this number's value to a byte (from 0 to 255) if it can fit in a  byte (from 0 to 255) without rounding to a different numerical value.
+
+<pre>public byte ToByteIfExact()
 </pre>
+
+<p>Converts this number’s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6201,8 +7104,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="frombyte">FromByte</h3>
-<pre>public static EDecimal FromByte(byte inputByte) Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.
+
+<pre>public static EDecimal FromByte(byte inputByte)
 </pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6217,8 +7123,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint16checked">ToInt16Checked</h3>
-<pre>public short ToInt16Checked() Converts this number's value to a 16-bit signed integer if it can fit in a  16-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public short ToInt16Checked()
 </pre>
+
+<p>Converts this number’s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6235,8 +7146,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint16unchecked">ToInt16Unchecked</h3>
-<pre>public short ToInt16Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 16-bit signed integer.
+
+<pre>public short ToInt16Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 16-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6246,8 +7162,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint16ifexact">ToInt16IfExact</h3>
-<pre>public short ToInt16IfExact() Converts this number's value to a 16-bit signed integer if it can fit in a  16-bit signed integer without rounding to a different numerical value.
+
+<pre>public short ToInt16IfExact()
 </pre>
+
+<p>Converts this number’s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6263,8 +7183,11 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint16">FromInt16</h3>
-<pre>public static EDecimal FromInt16(short inputInt16) Converts a 16-bit signed integer to an arbitrary-precision decimal number.
+
+<pre>public static EDecimal FromInt16(short inputInt16)
 </pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision decimal number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6279,8 +7202,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint32checked">ToInt32Checked</h3>
-<pre>public int ToInt32Checked() Converts this number's value to a 32-bit signed integer if it can fit in a  32-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public int ToInt32Checked()
 </pre>
+
+<p>Converts this number’s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6297,8 +7225,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint32unchecked">ToInt32Unchecked</h3>
-<pre>public int ToInt32Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 32-bit signed integer.
+
+<pre>public int ToInt32Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 32-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6308,8 +7241,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint32ifexact">ToInt32IfExact</h3>
-<pre>public int ToInt32IfExact() Converts this number's value to a 32-bit signed integer if it can fit in a  32-bit signed integer without rounding to a different numerical value.
+
+<pre>public int ToInt32IfExact()
 </pre>
+
+<p>Converts this number’s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6325,8 +7262,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint64checked">ToInt64Checked</h3>
-<pre>public long ToInt64Checked() Converts this number's value to a 64-bit signed integer if it can fit in a  64-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public long ToInt64Checked()
 </pre>
+
+<p>Converts this number’s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6343,8 +7285,13 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint64unchecked">ToInt64Unchecked</h3>
-<pre>public long ToInt64Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 64-bit signed integer.
+
+<pre>public long ToInt64Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 64-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -6354,8 +7301,12 @@ public static final EDecimal Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint64ifexact">ToInt64IfExact</h3>
-<pre>public long ToInt64IfExact() Converts this number's value to a 64-bit signed integer if it can fit in a  64-bit signed integer without rounding to a different numerical value.
+
+<pre>public long ToInt64IfExact()
 </pre>
+
+<p>Converts this number’s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 

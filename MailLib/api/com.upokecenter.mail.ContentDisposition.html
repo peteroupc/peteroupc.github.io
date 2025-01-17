@@ -151,13 +151,33 @@
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="attachment">Attachment</h3>
-<pre>public static final ContentDisposition Attachment The content disposition value "attachment" . ### Inline
-public static final ContentDisposition Inline The content disposition value "inline" . ## Method Details
+
+<pre>public static final ContentDisposition Attachment
 </pre>
 
-<h3 id="getdispositiontype">getDispositionType</h3>
-<pre>public final String getDispositionType() Gets a string containing this object's disposition type, such as "inline" or  "attachment". Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8,  unrecognized disposition types should be treated as "attachment". (There is  no default content disposition in a message has no Content-Disposition  header field.). The resulting string will be in lowercase; that is, with its  basic uppercase letters ("A" to "Z") converted to basic lowercase letters  ("a" to "z").
+<p>The content disposition value “attachment” .</p>
+
+<h3 id="inline">Inline</h3>
+
+<pre>public static final ContentDisposition Inline
 </pre>
+
+<p>The content disposition value “inline” .</p>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="getdispositiontype">getDispositionType</h3>
+
+<pre>public final String getDispositionType()
+</pre>
+
+<p>Gets a string containing this object’s disposition type, such as “inline” or
+ “attachment”. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8,
+ unrecognized disposition types should be treated as “attachment”. (There is
+ no default content disposition in a message has no Content-Disposition
+ header field.). The resulting string will be in lowercase; that is, with its
+ basic uppercase letters (“A” to “Z”) converted to basic lowercase letters
+ (“a” to “z”).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -167,8 +187,11 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public boolean equals(Object obj) Determines whether this object and another object are equal.
+
+<pre>public boolean equals(Object obj)
 </pre>
+
+<p>Determines whether this object and another object are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -191,8 +214,13 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public int hashCode() Calculates the hash code of this object. The exact algorithm used by this  method may change between versions of this library, and no application or  process IDs are used in the hash code calculation.
+
+<pre>public int hashCode()
 </pre>
+
+<p>Calculates the hash code of this object. The exact algorithm used by this
+ method may change between versions of this library, and no application or
+ process IDs are used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -207,8 +235,11 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="isinline">isInline</h3>
-<pre>public final boolean isInline() Gets a value indicating whether the disposition type is inline.
+
+<pre>public final boolean isInline()
 </pre>
+
+<p>Gets a value indicating whether the disposition type is inline.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -218,8 +249,11 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="isattachment">isAttachment</h3>
-<pre>public final boolean isAttachment() Gets a value indicating whether the disposition type is attachment.
+
+<pre>public final boolean isAttachment()
 </pre>
+
+<p>Gets a value indicating whether the disposition type is attachment.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -229,8 +263,10 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="getparameters">getParameters</h3>
+
 <pre>public final Map&lt;String,String&gt; getParameters()
 </pre>
+
 <p>Gets a list of parameter names associated with this object and their
  values. Each parameter name will be in lowercase; that is, with its basic
  uppercase letters ("A" to "Z") converted to basic lowercase letters ("a" to
@@ -249,8 +285,15 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this content disposition to a text string form suitable for  inserting in email headers. Notably, the string contains the value of a  Content-Disposition header field (without the text necessarily starting with  "Content-Disposition" followed by a space), and consists of one or more  lines.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this content disposition to a text string form suitable for
+ inserting in email headers. Notably, the string contains the value of a
+ Content-Disposition header field (without the text necessarily starting with
+ “Content-Disposition” followed by a space), and consists of one or more
+ lines.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -265,8 +308,14 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="tosinglelinestring">ToSingleLineString</h3>
-<pre>public String ToSingleLineString() Converts this content disposition to a text string form suitable for  inserting in HTTP headers. Notably, the string contains the value of a  Content-Disposition header field (without the text necessarily starting with  "Content-Disposition" followed by a space), and consists of a single line.
+
+<pre>public String ToSingleLineString()
 </pre>
+
+<p>Converts this content disposition to a text string form suitable for
+ inserting in HTTP headers. Notably, the string contains the value of a
+ Content-Disposition header field (without the text necessarily starting with
+ “Content-Disposition” followed by a space), and consists of a single line.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -275,8 +324,10 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="makefilename">MakeFilename</h3>
+
 <pre>public static String MakeFilename(String str)
 </pre>
+
 <p>Converts a file name from the Content-disposition header field (or
  another string representing a title and an optional file extension) to a
  suitable name for saving data to a file. This method is idempotent; that is,
@@ -360,8 +411,12 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="getfilename">GetFilename</h3>
-<pre>public String GetFilename() Gets an adapted version of the "filename" parameter in this content  disposition object by using the "MakeFilename" method.
+
+<pre>public String GetFilename()
 </pre>
+
+<p>Gets an adapted version of the “filename” parameter in this content
+ disposition object by using the “MakeFilename” method.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -371,8 +426,16 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="getcreationdate">GetCreationDate</h3>
-<pre>public int[] GetCreationDate() Gets the date and time extracted from this content disposition's  "creation-date" parameter, which specifies the date of creation of a file  (RFC 2183 sec. 2.4). The parameter is parsed as though by &lt;code&gt;  MailDateTime.ParseDateString&lt;/code&gt; with obsolete time zones (including "GMT")  allowed. See that method's documentation for information on the format of  this method's return value.
+
+<pre>public int[] GetCreationDate()
 </pre>
+
+<p>Gets the date and time extracted from this content disposition’s
+ “creation-date” parameter, which specifies the date of creation of a file
+ (RFC 2183 sec. 2.4). The parameter is parsed as though by <code>
+ MailDateTime.ParseDateString</code> with obsolete time zones (including “GMT”)
+ allowed. See that method’s documentation for information on the format of
+ this method’s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -384,8 +447,16 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="getmodificationdate">GetModificationDate</h3>
-<pre>public int[] GetModificationDate() Gets the date and time extracted from this content disposition's  "modification-date" parameter, which specifies the date of last modification  of a file (RFC 2183 sec. 2.5). The parameter is parsed as though by &lt;code&gt;  MailDateTime.ParseDateString&lt;/code&gt; with obsolete time zones (including "GMT")  allowed. See that method's documentation for information on the format of  this method's return value.
+
+<pre>public int[] GetModificationDate()
 </pre>
+
+<p>Gets the date and time extracted from this content disposition’s
+ “modification-date” parameter, which specifies the date of last modification
+ of a file (RFC 2183 sec. 2.5). The parameter is parsed as though by <code>
+ MailDateTime.ParseDateString</code> with obsolete time zones (including “GMT”)
+ allowed. See that method’s documentation for information on the format of
+ this method’s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -397,8 +468,16 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="getreaddate">GetReadDate</h3>
-<pre>public int[] GetReadDate() Gets the date and time extracted from this content disposition's "read-date"  parameter, which specifies the date at which a file was last read (RFC 2183  sec. 2.6). The parameter is parsed as though by &lt;code&gt;  MailDateTime.ParseDateString&lt;/code&gt; with obsolete time zones (including "GMT")  allowed. See that method's documentation for information on the format of  this method's return value.
+
+<pre>public int[] GetReadDate()
 </pre>
+
+<p>Gets the date and time extracted from this content disposition’s “read-date”
+ parameter, which specifies the date at which a file was last read (RFC 2183
+ sec. 2.6). The parameter is parsed as though by <code>
+ MailDateTime.ParseDateString</code> with obsolete time zones (including “GMT”)
+ allowed. See that method’s documentation for information on the format of
+ this method’s return value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -410,8 +489,14 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="getparameter">GetParameter</h3>
-<pre>public String GetParameter(String name) Gets a parameter from this disposition object. For the "filename" parameter,  the value of that parameter is not adapted with the  ContentDisposition.MakeFilename method; see the documentation for the  ContentDisposition class.
+
+<pre>public String GetParameter(String name)
 </pre>
+
+<p>Gets a parameter from this disposition object. For the “filename” parameter,
+ the value of that parameter is not adapted with the
+ ContentDisposition.MakeFilename method; see the documentation for the
+ ContentDisposition class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -441,8 +526,12 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="parse">Parse</h3>
-<pre>public static ContentDisposition Parse(String dispoValue) Creates a new content disposition object from the value of a  Content-Disposition header field.
+
+<pre>public static ContentDisposition Parse(String dispoValue)
 </pre>
+
+<p>Creates a new content disposition object from the value of a
+ Content-Disposition header field.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -464,8 +553,10 @@ public static final ContentDisposition Inline The content disposition value "inl
 </ul>
 
 <h3 id="parse-1">Parse</h3>
+
 <pre>public static ContentDisposition Parse(String dispositionValue, ContentDisposition defaultValue)
 </pre>
+
 <p>Parses a content disposition string and returns a content disposition
  object, or the default value if the string is invalid. This method checks
  the syntactic validity of the string, but not whether it has all parameters

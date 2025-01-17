@@ -73,12 +73,20 @@
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="default">Default</h3>
-<pre>public static final JSONOptions Default The default options for converting CBOR objects to JSON. ## Method Details
+
+<pre>public static final JSONOptions Default
 </pre>
 
+<p>The default options for converting CBOR objects to JSON.</p>
+
+<h2 id="method-details">Method Details</h2>
+
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Gets the values of this options object's properties in text form.
+
+<pre>public String toString()
 </pre>
+
+<p>Gets the values of this options object’s properties in text form.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -95,8 +103,17 @@
 </ul>
 
 <h3 id="getpreservenegativezero">getPreserveNegativeZero</h3>
-<pre>public final boolean getPreserveNegativeZero() Gets a value indicating whether the JSON decoder should preserve the  distinction between positive zero and negative zero when the decoder decodes  JSON to a floating-point number format that makes this distinction. For a  value of &lt;code&gt;false&lt;/code&gt;, if the result of parsing a JSON string would be a  floating-point negative zero, that result is a positive zero instead. (Note  that this property has no effect for conversion kind &lt;code&gt;  IntOrFloatFromDouble&lt;/code&gt;, where floating-point zeros are not possible.).
+
+<pre>public final boolean getPreserveNegativeZero()
 </pre>
+
+<p>Gets a value indicating whether the JSON decoder should preserve the
+ distinction between positive zero and negative zero when the decoder decodes
+ JSON to a floating-point number format that makes this distinction. For a
+ value of <code>false</code>, if the result of parsing a JSON string would be a
+ floating-point negative zero, that result is a positive zero instead. (Note
+ that this property has no effect for conversion kind <code>
+ IntOrFloatFromDouble</code>, where floating-point zeros are not possible.).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -106,8 +123,13 @@
 </ul>
 
 <h3 id="getnumberconversion">getNumberConversion</h3>
-<pre>public final JSONOptions.ConversionMode getNumberConversion() Gets a value indicating how JSON numbers are decoded to CBOR objects. None  of the conversion modes affects how CBOR objects are later encoded (such as  via &lt;code&gt;EncodeToBytes&lt;/code&gt;).
+
+<pre>public final JSONOptions.ConversionMode getNumberConversion()
 </pre>
+
+<p>Gets a value indicating how JSON numbers are decoded to CBOR objects. None
+ of the conversion modes affects how CBOR objects are later encoded (such as
+ via <code>EncodeToBytes</code>).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -117,8 +139,12 @@
 </ul>
 
 <h3 id="getwritebasic">getWriteBasic</h3>
-<pre>public final boolean getWriteBasic() Gets a value indicating whether JSON is written using only code points from  the Basic Latin block (U+0000 to U+007F), also known as ASCII.
+
+<pre>public final boolean getWriteBasic()
 </pre>
+
+<p>Gets a value indicating whether JSON is written using only code points from
+ the Basic Latin block (U+0000 to U+007F), also known as ASCII.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -129,8 +155,14 @@
 </ul>
 
 <h3 id="getkeepkeyorder">getKeepKeyOrder</h3>
-<pre>public final boolean getKeepKeyOrder() Gets a value indicating whether to preserve the order in which a map's keys  appear when decoding JSON, by using maps created as though by  CBORObject.NewOrderedMap. If false, key order is not guaranteed to be  preserved when decoding JSON.
+
+<pre>public final boolean getKeepKeyOrder()
 </pre>
+
+<p>Gets a value indicating whether to preserve the order in which a map’s keys
+ appear when decoding JSON, by using maps created as though by
+ CBORObject.NewOrderedMap. If false, key order is not guaranteed to be
+ preserved when decoding JSON.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -140,8 +172,14 @@
 </ul>
 
 <h3 id="getallowduplicatekeys">getAllowDuplicateKeys</h3>
-<pre>public final boolean getAllowDuplicateKeys() Gets a value indicating whether to allow duplicate keys when reading JSON.  Used only when decoding JSON. If this property is &lt;code&gt;true&lt;/code&gt; and a JSON  object has two or more values with the same key, the last value of that key  set forth in the JSON object is taken.
+
+<pre>public final boolean getAllowDuplicateKeys()
 </pre>
+
+<p>Gets a value indicating whether to allow duplicate keys when reading JSON.
+ Used only when decoding JSON. If this property is <code>true</code> and a JSON
+ object has two or more values with the same key, the last value of that key
+ set forth in the JSON object is taken.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -151,8 +189,14 @@
 </ul>
 
 <h3 id="getreplacesurrogates">getReplaceSurrogates</h3>
-<pre>public final boolean getReplaceSurrogates() Gets a value indicating whether surrogate code points not part of a  surrogate pair (which consists of two consecutive &lt;code&gt;char&lt;/code&gt; s forming one  Unicode code point) are each replaced with a replacement character (U+FFFD).  If false, an exception is thrown when such code points are encountered.
+
+<pre>public final boolean getReplaceSurrogates()
 </pre>
+
+<p>Gets a value indicating whether surrogate code points not part of a
+ surrogate pair (which consists of two consecutive <code>char</code> s forming one
+ Unicode code point) are each replaced with a replacement character (U+FFFD).
+ If false, an exception is thrown when such code points are encountered.</p>
 
 <p><strong>Returns:</strong></p>
 

@@ -93,8 +93,12 @@
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="islanguagerange">IsLanguageRange</h3>
-<pre>public static boolean IsLanguageRange(String str) Returns whether the given string is a basic language range under RFC 4647.  Examples include "*", "en-us", and "fr".
+
+<pre>public static boolean IsLanguageRange(String str)
 </pre>
+
+<p>Returns whether the given string is a basic language range under RFC 4647.
+ Examples include “*”, “en-us”, and “fr”.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -110,8 +114,14 @@
 </ul>
 
 <h3 id="islanguagerange-1">IsLanguageRange</h3>
-<pre>public static boolean IsLanguageRange(String str, boolean extended) Returns whether the given string is a basic or extended language range under  RFC 4647. Examples of basic (and extended) language ranges include "*",  "en-us", and "fr". Examples of extended language ranges include "*-de" and  "it-*".
+
+<pre>public static boolean IsLanguageRange(String str, boolean extended)
 </pre>
+
+<p>Returns whether the given string is a basic or extended language range under
+ RFC 4647. Examples of basic (and extended) language ranges include “<em>”,
+ “en-us”, and “fr”. Examples of extended language ranges include “</em>-de” and
+ “it-*”.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -133,8 +143,12 @@
 </ul>
 
 <h3 id="languagetagcase">LanguageTagCase</h3>
-<pre>public static String LanguageTagCase(String str) Sets the given language tag to the case combination recommended by RFC 5646.  For example, "en-us" becomes "en-US", and "zh-hant" becomes "zh-Hant".
+
+<pre>public static String LanguageTagCase(String str)
 </pre>
+
+<p>Sets the given language tag to the case combination recommended by RFC 5646.
+ For example, “en-us” becomes “en-US”, and “zh-hant” becomes “zh-Hant”.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -150,8 +164,11 @@
 </ul>
 
 <h3 id="getlanguagelist">GetLanguageList</h3>
-<pre>public static List&lt;String&gt; GetLanguageList(String str) Parses a language list from a Content-Language header field.
+
+<pre>public static List&lt;String&gt; GetLanguageList(String str)
 </pre>
+
+<p>Parses a language list from a Content-Language header field.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -169,8 +186,11 @@
 </ul>
 
 <h3 id="getrangelistwithquality">GetRangeListWithQuality</h3>
-<pre>public static List&lt;StringAndQuality&gt; GetRangeListWithQuality(String str) Parses a language range list from an Accept-Language header field.
+
+<pre>public static List&lt;StringAndQuality&gt; GetRangeListWithQuality(String str)
 </pre>
+
+<p>Parses a language range list from an Accept-Language header field.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -193,8 +213,11 @@
 </ul>
 
 <h3 id="languagetagfilter">LanguageTagFilter</h3>
-<pre>public static List&lt;String&gt; LanguageTagFilter(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd) Finds the language tags that match a priority list of language ranges.
+
+<pre>public static List&lt;String&gt; LanguageTagFilter(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd)
 </pre>
+
+<p>Finds the language tags that match a priority list of language ranges.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -241,8 +264,11 @@
 </ul>
 
 <h3 id="matcheslanguagetag">MatchesLanguageTag</h3>
-<pre>public static boolean MatchesLanguageTag(String range, String tag) Determines whether the given language tag matches the given language range.
+
+<pre>public static boolean MatchesLanguageTag(String range, String tag)
 </pre>
+
+<p>Determines whether the given language tag matches the given language range.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -271,8 +297,11 @@
 </ul>
 
 <h3 id="languagetaglookup">LanguageTagLookup</h3>
-<pre>public static String LanguageTagLookup(String range, List&lt;String&gt; languages, String defaultValue) Does a language tag lookup (under RFC 4647) for a matching language tag.
+
+<pre>public static String LanguageTagLookup(String range, List&lt;String&gt; languages, String defaultValue)
 </pre>
+
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -312,8 +341,11 @@
 </ul>
 
 <h3 id="languagetaglookup-1">LanguageTagLookup</h3>
-<pre>public static String LanguageTagLookup(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue) Does a language tag lookup (under RFC 4647) for a matching language tag.
+
+<pre>public static String LanguageTagLookup(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue)
 </pre>
+
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -355,8 +387,11 @@
 </ul>
 
 <h3 id="languagetagfilter-1">LanguageTagFilter</h3>
-<pre>public static List&lt;String&gt; LanguageTagFilter(List&lt;String&gt; ranges, List&lt;String&gt; languages) Finds the language tags that match a priority list of basic language ranges.
+
+<pre>public static List&lt;String&gt; LanguageTagFilter(List&lt;String&gt; ranges, List&lt;String&gt; languages)
 </pre>
+
+<p>Finds the language tags that match a priority list of basic language ranges.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -394,8 +429,11 @@
 </ul>
 
 <h3 id="languagetaglookup-2">LanguageTagLookup</h3>
-<pre>public static String LanguageTagLookup(String range, List&lt;String&gt; languages, String defaultValue, boolean extended) Does a language tag lookup (under RFC 4647) for a matching language tag.
+
+<pre>public static String LanguageTagLookup(String range, List&lt;String&gt; languages, String defaultValue, boolean extended)
 </pre>
+
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -438,8 +476,11 @@
 </ul>
 
 <h3 id="languagetaglookup-3">LanguageTagLookup</h3>
-<pre>public static String LanguageTagLookup(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue, boolean extended) Does a language tag lookup (under RFC 4647) for a matching language tag.
+
+<pre>public static String LanguageTagLookup(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue, boolean extended)
 </pre>
+
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -485,8 +526,15 @@
 </ul>
 
 <h3 id="ispotentiallyvalidlanguagetag">IsPotentiallyValidLanguageTag</h3>
-<pre>public static boolean IsPotentiallyValidLanguageTag(String str) Returns true if (1) the given string is a well-formed language tag under RFC  5646 (that is, the string follows the syntax given in section 2.1 of that  RFC), and (2) the language tag contains at most one extended language  subtag, no variant subtags with the same value, and no extension singleton  subtags with the same value.
+
+<pre>public static boolean IsPotentiallyValidLanguageTag(String str)
 </pre>
+
+<p>Returns true if (1) the given string is a well-formed language tag under RFC
+ 5646 (that is, the string follows the syntax given in section 2.1 of that
+ RFC), and (2) the language tag contains at most one extended language
+ subtag, no variant subtags with the same value, and no extension singleton
+ subtags with the same value.</p>
 
 <p><strong>Parameters:</strong></p>
 

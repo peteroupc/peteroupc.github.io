@@ -408,8 +408,16 @@ Renamed to ToMailtoUri.</li>
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="extractheader">ExtractHeader</h3>
-<pre>public static String ExtractHeader(byte[] bytes, String headerFieldName) Extracts the value of a header field from a byte array representing an email  message. The return value is intended for display purposes, not for further  processing, and this method is intended to be used as an error handling tool  for email messages that are slightly malformed. (Note that malformed email  messages ought to be treated with greater suspicion than well-formed email  messages.).
+
+<pre>public static String ExtractHeader(byte[] bytes, String headerFieldName)
 </pre>
+
+<p>Extracts the value of a header field from a byte array representing an email
+ message. The return value is intended for display purposes, not for further
+ processing, and this method is intended to be used as an error handling tool
+ for email messages that are slightly malformed. (Note that malformed email
+ messages ought to be treated with greater suspicion than well-formed email
+ messages.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -442,8 +450,11 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="newbodypart">NewBodyPart</h3>
-<pre>public static Message NewBodyPart() Creates a message object with no header fields.
+
+<pre>public static Message NewBodyPart()
 </pre>
+
+<p>Creates a message object with no header fields.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -452,8 +463,10 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="setcurrentdate">SetCurrentDate</h3>
+
 <pre>public Message SetCurrentDate()
 </pre>
+
 <p>Sets this message's Date header field to the current time as its value,
  with an unspecified time zone offset. </p>
 <p>This method can be used when
@@ -467,8 +480,11 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getbccaddresses">getBccAddresses</h3>
-<pre>@Deprecated public final List&lt;NamedAddress&gt; getBccAddresses() Gets a list of addresses found in the BCC header field or fields.
+
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getBccAddresses()
 </pre>
+
+<p>Gets a list of addresses found in the BCC header field or fields.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -477,8 +493,12 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getbodystring">getBodyString</h3>
-<pre>@Deprecated public final String getBodyString() Gets the body of this message as a text string. See the &lt;code&gt;  GetBodyString()&lt;/code&gt; method.
+
+<pre>@Deprecated public final String getBodyString()
 </pre>
+
+<p>Gets the body of this message as a text string. See the <code>
+ GetBodyString()</code> method.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -493,8 +513,10 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getattachments">GetAttachments</h3>
+
 <pre>public List&lt;Message&gt; GetAttachments()
 </pre>
+
 <p>Gets a list of descendant body parts of this message that are considered
  attachments. An <i>attachment</i> is a body part or descendant body part
  that has a content disposition with a type other than inline. This message
@@ -509,8 +531,15 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getbodystring-1">GetBodyString</h3>
-<pre>public String GetBodyString() Gets the body of this message as a text string. If this message's media type  is "multipart/alternative", returns the result of this method for the last  supported body part. For any other "multipart" media type, returns the  result of this method for the first body part for which this method returns  a text string.
+
+<pre>public String GetBodyString()
 </pre>
+
+<p>Gets the body of this message as a text string. If this message’s media type
+ is “multipart/alternative”, returns the result of this method for the last
+ supported body part. For any other “multipart” media type, returns the
+ result of this method for the first body part for which this method returns
+ a text string.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -530,8 +559,11 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getccaddresses">getCCAddresses</h3>
-<pre>@Deprecated public final List&lt;NamedAddress&gt; getCCAddresses() Gets a list of addresses found in the CC header field or fields.
+
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getCCAddresses()
 </pre>
+
+<p>Gets a list of addresses found in the CC header field or fields.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -540,8 +572,10 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getformattedbodystring">GetFormattedBodyString</h3>
+
 <pre>public String GetFormattedBodyString()
 </pre>
+
 <p>Gets a Hypertext Markup Language (HTML) rendering of this message's text
  body. This method currently supports any message for which <code>
  GetBodyString()</code> gives out a text string and treats the following media
@@ -570,8 +604,16 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="getcontentdisposition">getContentDisposition</h3>
-<pre>public final ContentDisposition getContentDisposition() Gets this message's content disposition. The content disposition specifies  how a user agent should display or otherwise handle this message. Can be set  to null. If set to a disposition or to null, updates the Content-Disposition  header field as appropriate. (There is no default content disposition if  this value is null, and disposition types unrecognized by the application  should be treated as "attachment"; see RFC 2183 sec. 2.8.).
+
+<pre>public final ContentDisposition getContentDisposition()
 </pre>
+
+<p>Gets this message’s content disposition. The content disposition specifies
+ how a user agent should display or otherwise handle this message. Can be set
+ to null. If set to a disposition or to null, updates the Content-Disposition
+ header field as appropriate. (There is no default content disposition if
+ this value is null, and disposition types unrecognized by the application
+ should be treated as “attachment”; see RFC 2183 sec. 2.8.).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -580,9 +622,20 @@ Renamed to ToMailtoUri.</li>
 </ul>
 
 <h3 id="setcontentdisposition">setContentDisposition</h3>
-<pre>public final void setContentDisposition(ContentDisposition value) ### getContentType
-public final MediaType getContentType() Gets this message's media type. When getting, the media type may differ in  certain cases from the value of the Content-Type header field, if any, and  may have a value even if the Content-Type header field is absent from this  message. If set to a media type, updates the Content-Type header field as  appropriate. Cannot be set to null.
+
+<pre>public final void setContentDisposition(ContentDisposition value)
 </pre>
+
+<h3 id="getcontenttype">getContentType</h3>
+
+<pre>public final MediaType getContentType()
+</pre>
+
+<p>Gets this message’s media type. When getting, the media type may differ in
+ certain cases from the value of the Content-Type header field, if any, and
+ may have a value even if the Content-Type header field is absent from this
+ message. If set to a media type, updates the Content-Type header field as
+ appropriate. Cannot be set to null.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -597,9 +650,15 @@ public final MediaType getContentType() Gets this message's media type. When get
 </ul>
 
 <h3 id="setcontenttype">setContentType</h3>
-<pre>public final void setContentType(MediaType value) ### getFileName
-public final String getFileName()
+
+<pre>public final void setContentType(MediaType value)
 </pre>
+
+<h3 id="getfilename">getFileName</h3>
+
+<pre>public final String getFileName()
+</pre>
+
 <p>Gets a file name suggested by this message for saving the message's body
  to a file. For more information on the algorithm, see
  ContentDisposition.MakeFilename.</p>
@@ -617,8 +676,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="getaddresses">GetAddresses</h3>
-<pre>public List&lt;NamedAddress&gt; GetAddresses(String headerName) Gets a list of addresses contained in the header fields with the given name  in this message.
+
+<pre>public List&lt;NamedAddress&gt; GetAddresses(String headerName)
 </pre>
+
+<p>Gets a list of addresses contained in the header fields with the given name
+ in this message.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -650,8 +713,11 @@ public final String getFileName()
 </ul>
 
 <h3 id="getfromaddresses">getFromAddresses</h3>
-<pre>@Deprecated public final List&lt;NamedAddress&gt; getFromAddresses() Gets a list of addresses found in the From header field or fields.
+
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getFromAddresses()
 </pre>
+
+<p>Gets a list of addresses found in the From header field or fields.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -660,8 +726,15 @@ public final String getFileName()
 </ul>
 
 <h3 id="getheaderfields">getHeaderFields</h3>
-<pre>public final List&lt;Map.Entry&lt;String,String&gt;&gt; getHeaderFields() Gets a snapshot of the header fields of this message, in the order in which  they appear in the message. For each item in the list, the key is the header  field's name (where any basic uppercase letters, U+0041 to U+005A, are  converted to basic lowercase letters) and the value is the header field's  value.
+
+<pre>public final List&lt;Map.Entry&lt;String,String&gt;&gt; getHeaderFields()
 </pre>
+
+<p>Gets a snapshot of the header fields of this message, in the order in which
+ they appear in the message. For each item in the list, the key is the header
+ field’s name (where any basic uppercase letters, U+0041 to U+005A, are
+ converted to basic lowercase letters) and the value is the header field’s
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -670,8 +743,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="getparts">getParts</h3>
-<pre>public final List&lt;Message&gt; getParts() Gets a list of all the parts of this message. This list is editable. This  will only be used if the message is a multipart message.
+
+<pre>public final List&lt;Message&gt; getParts()
 </pre>
+
+<p>Gets a list of all the parts of this message. This list is editable. This
+ will only be used if the message is a multipart message.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -681,8 +758,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="getsubject">getSubject</h3>
-<pre>public final String getSubject() Gets this message's subject. The subject's value is found as though  GetHeader("subject") were called.
+
+<pre>public final String getSubject()
 </pre>
+
+<p>Gets this message’s subject. The subject’s value is found as though
+ GetHeader(“subject”) were called.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -691,9 +772,16 @@ public final String getFileName()
 </ul>
 
 <h3 id="setsubject">setSubject</h3>
-<pre>public final void setSubject(String value) ### getToAddresses
-@Deprecated public final List&lt;NamedAddress&gt; getToAddresses() Gets a list of addresses found in the To header field or fields.
+
+<pre>public final void setSubject(String value)
 </pre>
+
+<h3 id="gettoaddresses">getToAddresses</h3>
+
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getToAddresses()
+</pre>
+
+<p>Gets a list of addresses found in the To header field or fields.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -702,8 +790,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="addheader">AddHeader</h3>
+
 <pre>public Message AddHeader(Map.Entry&lt;String,String&gt; header)
 </pre>
+
 <p>Adds a header field to the end of the message's header. </p>
 <p>This
  method updates the ContentType and ContentDisposition properties if those
@@ -735,8 +825,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="addheader-1">AddHeader</h3>
+
 <pre>public Message AddHeader(String name, String value)
 </pre>
+
 <p>Adds a header field to the end of the message's header. </p>
 <p>This
  method updates the ContentType and ContentDisposition properties if those
@@ -773,8 +865,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="generate">Generate</h3>
+
 <pre>public String Generate()
 </pre>
+
 <p>Generates this message's data in text form. </p>
 <p>The generated message
  will have only Basic Latin code points (U+0000 to U+007F), and the transfer
@@ -815,8 +909,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="generatebytes">GenerateBytes</h3>
-<pre>public byte[] GenerateBytes() Generates this message's data as a byte array, using the same algorithm as  the Generate method.
+
+<pre>public byte[] GenerateBytes()
 </pre>
+
+<p>Generates this message’s data as a byte array, using the same algorithm as
+ the Generate method.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -825,8 +923,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="getbody">GetBody</h3>
-<pre>public byte[] GetBody() Gets the byte array for this message's body. This method doesn' t make a  copy of that byte array.
+
+<pre>public byte[] GetBody()
 </pre>
+
+<p>Gets the byte array for this message’s body. This method doesn’ t make a
+ copy of that byte array.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -835,8 +937,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="getdate">GetDate</h3>
+
 <pre>public int[] GetDate()
 </pre>
+
 <p>Gets the date and time extracted from this message's Date header field
  (the value of which is found as though GetHeader("date") were called). See
  <b>MailDateTime.ParseDateString(string, boolean)</b> for more information on
@@ -849,8 +953,11 @@ public final String getFileName()
 </ul>
 
 <h3 id="setdate">SetDate</h3>
-<pre>public Message SetDate(int[] dateTime) Sets this message's Date header field to the given date and time.
+
+<pre>public Message SetDate(int[] dateTime)
 </pre>
+
+<p>Sets this message’s Date header field to the given date and time.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -880,8 +987,11 @@ public final String getFileName()
 </ul>
 
 <h3 id="getbodymessage">GetBodyMessage</h3>
-<pre>public Message GetBodyMessage() Returns the mail message contained in this message's body.
+
+<pre>public Message GetBodyMessage()
 </pre>
+
+<p>Returns the mail message contained in this message’s body.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -891,8 +1001,11 @@ public final String getFileName()
 </ul>
 
 <h3 id="getheader">GetHeader</h3>
-<pre>public Map.Entry&lt;String,String&gt; GetHeader(int index) Gets the name and value of a header field by index.
+
+<pre>public Map.Entry&lt;String,String&gt; GetHeader(int index)
 </pre>
+
+<p>Gets the name and value of a header field by index.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -915,8 +1028,14 @@ public final String getFileName()
 </ul>
 
 <h3 id="getheader-1">GetHeader</h3>
-<pre>public String GetHeader(String name) Gets the first instance of the header field with the specified name, using a  basic case-insensitive comparison. (Two strings are equal in such a  comparison, if they match after converting the basic uppercase letters A to  Z (U+0041 to U+005A) in both strings to basic lowercase letters.).
+
+<pre>public String GetHeader(String name)
 </pre>
+
+<p>Gets the first instance of the header field with the specified name, using a
+ basic case-insensitive comparison. (Two strings are equal in such a
+ comparison, if they match after converting the basic uppercase letters A to
+ Z (U+0041 to U+005A) in both strings to basic lowercase letters.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -938,8 +1057,14 @@ public final String getFileName()
 </ul>
 
 <h3 id="getheaderarray">GetHeaderArray</h3>
-<pre>public String[] GetHeaderArray(String name) Gets an array with the values of all header fields with the specified name,  using a basic case-insensitive comparison. (Two strings are equal in such a  comparison, if they match after converting the basic uppercase letters A to  Z (U+0041 to U+005A) in both strings to basic lowercase letters.).
+
+<pre>public String[] GetHeaderArray(String name)
 </pre>
+
+<p>Gets an array with the values of all header fields with the specified name,
+ using a basic case-insensitive comparison. (Two strings are equal in such a
+ comparison, if they match after converting the basic uppercase letters A to
+ Z (U+0041 to U+005A) in both strings to basic lowercase letters.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -962,8 +1087,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="clearheaders">ClearHeaders</h3>
-<pre>public Message ClearHeaders() Deletes all header fields in this message. Also clears this message's  content disposition and resets its content type to MediaType.TextPlainAscii.
+
+<pre>public Message ClearHeaders()
 </pre>
+
+<p>Deletes all header fields in this message. Also clears this message’s
+ content disposition and resets its content type to MediaType.TextPlainAscii.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -972,8 +1101,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="removeheader">RemoveHeader</h3>
+
 <pre>public Message RemoveHeader(int index)
 </pre>
+
 <p>Removes a header field by index. </p>
 <p>This method updates the
  ContentType and ContentDisposition properties if those header fields have
@@ -999,8 +1130,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="removeheader-1">RemoveHeader</h3>
+
 <pre>public Message RemoveHeader(String name)
 </pre>
+
 <p>Removes all instances of the given header field from this message. If
  this is a multipart message, the header field is not removed from its body
  part headers. A basic case-insensitive comparison is used. (Two strings are
@@ -1030,8 +1163,12 @@ public final String getFileName()
 </ul>
 
 <h3 id="setbody">SetBody</h3>
-<pre>public Message SetBody(byte[] bytes) Sets the body of this message to the given byte array. This method doesn't  make a copy of that byte array.
+
+<pre>public Message SetBody(byte[] bytes)
 </pre>
+
+<p>Sets the body of this message to the given byte array. This method doesn’t
+ make a copy of that byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1052,8 +1189,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="setheader">SetHeader</h3>
+
 <pre>public Message SetHeader(int index, Map.Entry&lt;String,String&gt; header)
 </pre>
+
 <p>Sets the name and value of a header field by index. </p>
 <p>This method
  updates the ContentType and ContentDisposition properties if those header
@@ -1092,8 +1231,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="setheader-1">SetHeader</h3>
+
 <pre>public Message SetHeader(int index, String name, String value)
 </pre>
+
 <p>Sets the name and value of a header field by index. </p>
 <p>This method
  updates the ContentType and ContentDisposition properties if those header
@@ -1135,8 +1276,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="setheader-2">SetHeader</h3>
+
 <pre>public Message SetHeader(int index, String value)
 </pre>
+
 <p>Sets the value of a header field by index without changing its name. </p>
 <p>This method updates the ContentType and ContentDisposition properties if
  those header fields have been modified by this method.</p>
@@ -1173,8 +1316,13 @@ public final String getFileName()
 </ul>
 
 <h3 id="decodeheadervalue">DecodeHeaderValue</h3>
-<pre>public static String DecodeHeaderValue(String name, String value) Decodes RFC 2047 encoded words from the given header field value and returns  a string with those words decoded. For an example of encoded words, see the  constructor for PeterO.Mail.NamedAddress.
+
+<pre>public static String DecodeHeaderValue(String name, String value)
 </pre>
+
+<p>Decodes RFC 2047 encoded words from the given header field value and returns
+ a string with those words decoded. For an example of encoded words, see the
+ constructor for PeterO.Mail.NamedAddress.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1204,8 +1352,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="setheader-3">SetHeader</h3>
+
 <pre>public Message SetHeader(String name, String value)
 </pre>
+
 <p>Sets the value of this message's header field. If a header field with the
  same name exists, its value is replaced. If the header field's name occurs
  more than once, only the first instance of the header field is replaced.
@@ -1244,8 +1394,15 @@ public final String getFileName()
 </ul>
 
 <h3 id="sethtmlbody">SetHtmlBody</h3>
-<pre>public Message SetHtmlBody(String str) Sets the body of this message to the specified string in Hypertext Markup  Language (HTML) format. The character sequences CR (carriage return, "\r",  U+000D), LF (line feed, "\n", U+000A), and CR/LF will be converted to CR/LF  line breaks. Unpaired surrogate code points will be replaced with  replacement characters.
+
+<pre>public Message SetHtmlBody(String str)
 </pre>
+
+<p>Sets the body of this message to the specified string in Hypertext Markup
+ Language (HTML) format. The character sequences CR (carriage return, “\r”,
+ U+000D), LF (line feed, “\n”, U+000A), and CR/LF will be converted to CR/LF
+ line breaks. Unpaired surrogate code points will be replaced with
+ replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1266,8 +1423,15 @@ public final String getFileName()
 </ul>
 
 <h3 id="settextandhtml">SetTextAndHtml</h3>
-<pre>public Message SetTextAndHtml(String text, String html) Sets the body of this message to a multipart body with plain text and  Hypertext Markup Language (HTML) versions of the same message. The character  sequences CR (carriage return, "\r", U+000D), LF (line feed, "\n", U+000A),  and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code  points will be replaced with replacement characters.
+
+<pre>public Message SetTextAndHtml(String text, String html)
 </pre>
+
+<p>Sets the body of this message to a multipart body with plain text and
+ Hypertext Markup Language (HTML) versions of the same message. The character
+ sequences CR (carriage return, “\r”, U+000D), LF (line feed, “\n”, U+000A),
+ and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code
+ points will be replaced with replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1294,8 +1458,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="settextandmarkdown">SetTextAndMarkdown</h3>
+
 <pre>public Message SetTextAndMarkdown(String text, String markdown)
 </pre>
+
 <p>Sets the body of this message to a multipart body with plain text,
  Markdown, and Hypertext Markup Language (HTML) versions of the same message.
  The character sequences CR (carriage return, "\r", U+000D), LF (line feed,
@@ -1339,8 +1505,15 @@ public final String getFileName()
 </ul>
 
 <h3 id="settextbody">SetTextBody</h3>
-<pre>public Message SetTextBody(String str) Sets the body of this message to the specified plain text string. The  character sequences CR (carriage return, "\r", U+000D), LF (line feed, "\n",  U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired  surrogate code points will be replaced with replacement characters. This  method changes this message's media type to plain text.
+
+<pre>public Message SetTextBody(String str)
 </pre>
+
+<p>Sets the body of this message to the specified plain text string. The
+ character sequences CR (carriage return, “\r”, U+000D), LF (line feed, “\n”,
+ U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired
+ surrogate code points will be replaced with replacement characters. This
+ method changes this message’s media type to plain text.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1361,8 +1534,14 @@ public final String getFileName()
 </ul>
 
 <h3 id="addinline">AddInline</h3>
-<pre>public Message AddInline(MediaType mediaType) Adds an inline body part with an empty body and with the given media type to  this message. Before the new body part is added, if this message isn't  already a multipart message, it becomes a "multipart/mixed" message with the  current body converted to an inline body part.
+
+<pre>public Message AddInline(MediaType mediaType)
 </pre>
+
+<p>Adds an inline body part with an empty body and with the given media type to
+ this message. Before the new body part is added, if this message isn’t
+ already a multipart message, it becomes a “multipart/mixed” message with the
+ current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1377,8 +1556,14 @@ public final String getFileName()
 </ul>
 
 <h3 id="addattachment">AddAttachment</h3>
-<pre>public Message AddAttachment(MediaType mediaType) Adds an attachment with an empty body and with the given media type to this  message. Before the new attachment is added, if this message isn't already a  multipart message, it becomes a "multipart/mixed" message with the current  body converted to an inline body part.
+
+<pre>public Message AddAttachment(MediaType mediaType)
 </pre>
+
+<p>Adds an attachment with an empty body and with the given media type to this
+ message. Before the new attachment is added, if this message isn’t already a
+ multipart message, it becomes a “multipart/mixed” message with the current
+ body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1393,8 +1578,10 @@ public final String getFileName()
 </ul>
 
 <h3 id="addattachment-1">AddAttachment</h3>
+
 <pre>public Message AddAttachment(InputStream inputStream, MediaType mediaType)
 </pre>
+
 <p>Adds an attachment to this message in the form of data from the given
  readable stream, and with the given media type. Before the new attachment is
  added, if this message isn't already a multipart message, it becomes a
@@ -1447,8 +1634,15 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="addattachment-2">AddAttachment</h3>
-<pre>public Message AddAttachment(InputStream inputStream, String filename) Adds an attachment to this message in the form of data from the given  readable stream, and with the given file name. Before the new attachment is  added, if this message isn't already a multipart message, it becomes a  "multipart/mixed" message with the current body converted to an inline body  part.
+
+<pre>public Message AddAttachment(InputStream inputStream, String filename)
 </pre>
+
+<p>Adds an attachment to this message in the form of data from the given
+ readable stream, and with the given file name. Before the new attachment is
+ added, if this message isn’t already a multipart message, it becomes a
+ “multipart/mixed” message with the current body converted to an inline body
+ part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1487,8 +1681,15 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="addattachment-3">AddAttachment</h3>
-<pre>public Message AddAttachment(InputStream inputStream, MediaType mediaType, String filename) Adds an attachment to this message in the form of data from the given  readable stream, and with the given media type and file name. Before the new  attachment is added, if this message isn't already a multipart message, it  becomes a "multipart/mixed" message with the current body converted to an  inline body part.
+
+<pre>public Message AddAttachment(InputStream inputStream, MediaType mediaType, String filename)
 </pre>
+
+<p>Adds an attachment to this message in the form of data from the given
+ readable stream, and with the given media type and file name. Before the new
+ attachment is added, if this message isn’t already a multipart message, it
+ becomes a “multipart/mixed” message with the current body converted to an
+ inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1527,8 +1728,10 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="addinline-1">AddInline</h3>
+
 <pre>public Message AddInline(InputStream inputStream, MediaType mediaType)
 </pre>
+
 <p>Adds an inline body part to this message in the form of data from the
  given readable stream, and with the given media type. Before the new body
  part is added, if this message isn't already a multipart message, it becomes
@@ -1581,8 +1784,15 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="addinline-2">AddInline</h3>
-<pre>public Message AddInline(InputStream inputStream, String filename) Adds an inline body part to this message in the form of data from the given  readable stream, and with the given file name. Before the new body part is  added, if this message isn't already a multipart message, it becomes a  "multipart/mixed" message with the current body converted to an inline body  part.
+
+<pre>public Message AddInline(InputStream inputStream, String filename)
 </pre>
+
+<p>Adds an inline body part to this message in the form of data from the given
+ readable stream, and with the given file name. Before the new body part is
+ added, if this message isn’t already a multipart message, it becomes a
+ “multipart/mixed” message with the current body converted to an inline body
+ part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1622,8 +1832,15 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="addinline-3">AddInline</h3>
-<pre>public Message AddInline(InputStream inputStream, MediaType mediaType, String filename) Adds an inline body part to this message in the form of data from the given  readable stream, and with the given media type and file name. Before the new  body part is added, if this message isn't already a multipart message, it  becomes a "multipart/mixed" message with the current body converted to an  inline body part.
+
+<pre>public Message AddInline(InputStream inputStream, MediaType mediaType, String filename)
 </pre>
+
+<p>Adds an inline body part to this message in the form of data from the given
+ readable stream, and with the given media type and file name. Before the new
+ body part is added, if this message isn’t already a multipart message, it
+ becomes a “multipart/mixed” message with the current body converted to an
+ inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1658,8 +1875,12 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="selectlanguagemessage">SelectLanguageMessage</h3>
-<pre>public Message SelectLanguageMessage(List&lt;String&gt; languages) Selects a body part for a multiple-language message(&lt;code&gt;  multipart/multilingual&lt;/code&gt;) according to the given language priority list.
+
+<pre>public Message SelectLanguageMessage(List&lt;String&gt; languages)
 </pre>
+
+<p>Selects a body part for a multiple-language message(<code>
+ multipart/multilingual</code>) according to the given language priority list.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1686,8 +1907,13 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="selectlanguagemessage-1">SelectLanguageMessage</h3>
-<pre>public Message SelectLanguageMessage(List&lt;String&gt; languages, boolean preferOriginals) Selects a body part for a multiple-language message(&lt;code&gt;  multipart/multilingual&lt;/code&gt;) according to the given language priority list and  original-language preference.
+
+<pre>public Message SelectLanguageMessage(List&lt;String&gt; languages, boolean preferOriginals)
 </pre>
+
+<p>Selects a body part for a multiple-language message(<code>
+ multipart/multilingual</code>) according to the given language priority list and
+ original-language preference.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1722,8 +1948,12 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="makemultilingualmessage">MakeMultilingualMessage</h3>
-<pre>public static Message MakeMultilingualMessage(List&lt;Message&gt; messages, List&lt;String&gt; languages) Generates a multilingual message (see RFC 8255) from a list of messages and  a list of language strings.
+
+<pre>public static Message MakeMultilingualMessage(List&lt;Message&gt; messages, List&lt;String&gt; languages)
 </pre>
+
+<p>Generates a multilingual message (see RFC 8255) from a list of messages and
+ a list of language strings.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1771,8 +2001,10 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="frommailtourl">FromMailtoUrl</h3>
+
 <pre>@Deprecated public static Message FromMailtoUrl(String url)
 </pre>
+
 <p>Creates a message object from a MailTo URI (uniform resource identifier).
  For more information, see <b>FromMailtoUri(string)</b>.</p>
 
@@ -1790,8 +2022,16 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="tomailtourl">ToMailtoUrl</h3>
-<pre>@Deprecated public String ToMailtoUrl() Generates a MailTo URI (uniform resource identifier) corresponding to this  message. The following header fields, and only these, are used to generate  the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message  body is included in the URI only if &lt;code&gt;GetBodyString()&lt;/code&gt; would return a  nonempty string. The To header field is included in the URI only if it has  display names or group syntax.
+
+<pre>@Deprecated public String ToMailtoUrl()
 </pre>
+
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this
+ message. The following header fields, and only these, are used to generate
+ the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message
+ body is included in the URI only if <code>GetBodyString()</code> would return a
+ nonempty string. The To header field is included in the URI only if it has
+ display names or group syntax.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1800,8 +2040,28 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="frommailtouri">FromMailtoUri</h3>
-<pre>public static Message FromMailtoUri(String uri) Creates a message object from a MailTo URI (uniform resource identifier).  The MailTo URI can contain key-value pairs that follow a question-mark, as  in the following example: "mailto:me@example.com?subject=A%20Subject". In  this example, "subject" is the subject of the email address. Only certain  keys are supported, namely, "to", "cc", "bcc", "subject", "in-reply-to",  "comments", "keywords", and "body". The first seven are header field names  that will be used to set the returned message's corresponding header fields.  The last, "body", sets the body of the message to the given text. Keys other  than these eight will be ignored. (Keys are compared using a basic  case-sensitive comparison, in which two strings are equal if they match  after converting the basic uppercase letters A to Z (U+0041 to U+005A) in  both strings to basic lowercase letters.) The same key (matched using a  basic case-insensitive comparison) can appear more than once; for "subject",  "cc", "bcc", and "in-reply-to", the last value with the given key is used;  for "to", all header field values as well as the path are combined to a  single To header field; for "keywords" and "comments", each value adds  another header field of the given key; and for "body", the last value with  that key is used as the body.
+
+<pre>public static Message FromMailtoUri(String uri)
 </pre>
+
+<p>Creates a message object from a MailTo URI (uniform resource identifier).
+ The MailTo URI can contain key-value pairs that follow a question-mark, as
+ in the following example: “mailto:me@example.com?subject=A%20Subject”. In
+ this example, “subject” is the subject of the email address. Only certain
+ keys are supported, namely, “to”, “cc”, “bcc”, “subject”, “in-reply-to”,
+ “comments”, “keywords”, and “body”. The first seven are header field names
+ that will be used to set the returned message’s corresponding header fields.
+ The last, “body”, sets the body of the message to the given text. Keys other
+ than these eight will be ignored. (Keys are compared using a basic
+ case-sensitive comparison, in which two strings are equal if they match
+ after converting the basic uppercase letters A to Z (U+0041 to U+005A) in
+ both strings to basic lowercase letters.) The same key (matched using a
+ basic case-insensitive comparison) can appear more than once; for “subject”,
+ “cc”, “bcc”, and “in-reply-to”, the last value with the given key is used;
+ for “to”, all header field values as well as the path are combined to a
+ single To header field; for “keywords” and “comments”, each value adds
+ another header field of the given key; and for “body”, the last value with
+ that key is used as the body.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1817,8 +2077,10 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="frommailtouri-1">FromMailtoUri</h3>
+
 <pre>public static Message FromMailtoUri(URI uri)
 </pre>
+
 <p>Creates a message object from a MailTo URI (uniform resource identifier)
  in the form of a URI object. For more information, see
  <b>FromMailtoUri(string)</b>.</p>
@@ -1843,8 +2105,16 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </ul>
 
 <h3 id="tomailtouri">ToMailtoUri</h3>
-<pre>public String ToMailtoUri() Generates a MailTo URI (uniform resource identifier) corresponding to this  message. The following header fields, and only these, are used to generate  the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message  body is included in the URI only if &lt;code&gt;GetBodyString()&lt;/code&gt; would return a  nonempty string.. The To header field is included in the URI only if it has  display names or group syntax.
+
+<pre>public String ToMailtoUri()
 </pre>
+
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this
+ message. The following header fields, and only these, are used to generate
+ the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message
+ body is included in the URI only if <code>GetBodyString()</code> would return a
+ nonempty string.. The To header field is included in the URI only if it has
+ display names or group syntax.</p>
 
 <p><strong>Returns:</strong></p>
 

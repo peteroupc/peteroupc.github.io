@@ -633,19 +633,69 @@ Renamed to ToEFloatExactIfPossible.</p>
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="nan">NaN</h3>
-<pre>public static final ERational NaN A not-a-number value. ### NegativeInfinity
-public static final ERational NegativeInfinity Negative infinity, less than any other number. ### NegativeZero
-public static final ERational NegativeZero A rational number for negative zero. ### One
-public static final ERational One The rational number one. ### PositiveInfinity
-public static final ERational PositiveInfinity Positive infinity, greater than any other number. ### SignalingNaN
-public static final ERational SignalingNaN A signaling not-a-number value. ### Ten
-public static final ERational Ten The rational number ten. ### Zero
-public static final ERational Zero A rational number for zero. ## Method Details
+
+<pre>public static final ERational NaN
 </pre>
 
-<h3 id="copy">Copy</h3>
-<pre>public ERational Copy() Creates a copy of this arbitrary-precision rational number.
+<p>A not-a-number value.</p>
+
+<h3 id="negativeinfinity">NegativeInfinity</h3>
+
+<pre>public static final ERational NegativeInfinity
 </pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3 id="negativezero">NegativeZero</h3>
+
+<pre>public static final ERational NegativeZero
+</pre>
+
+<p>A rational number for negative zero.</p>
+
+<h3 id="one">One</h3>
+
+<pre>public static final ERational One
+</pre>
+
+<p>The rational number one.</p>
+
+<h3 id="positiveinfinity">PositiveInfinity</h3>
+
+<pre>public static final ERational PositiveInfinity
+</pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3 id="signalingnan">SignalingNaN</h3>
+
+<pre>public static final ERational SignalingNaN
+</pre>
+
+<p>A signaling not-a-number value.</p>
+
+<h3 id="ten">Ten</h3>
+
+<pre>public static final ERational Ten
+</pre>
+
+<p>The rational number ten.</p>
+
+<h3 id="zero">Zero</h3>
+
+<pre>public static final ERational Zero
+</pre>
+
+<p>A rational number for zero.</p>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="copy">Copy</h3>
+
+<pre>public ERational Copy()
+</pre>
+
+<p>Creates a copy of this arbitrary-precision rational number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -654,8 +704,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="getdenominator">getDenominator</h3>
-<pre>public final EInteger getDenominator() Gets this object's denominator.
+
+<pre>public final EInteger getDenominator()
 </pre>
+
+<p>Gets this object’s denominator.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -664,8 +717,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isfinite">isFinite</h3>
-<pre>public final boolean isFinite() Gets a value indicating whether this object is finite (not infinity or NaN).
+
+<pre>public final boolean isFinite()
 </pre>
+
+<p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -675,8 +731,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isnegative">isNegative</h3>
-<pre>public final boolean isNegative() Gets a value indicating whether this object's value is negative (including  negative zero).
+
+<pre>public final boolean isNegative()
 </pre>
+
+<p>Gets a value indicating whether this object’s value is negative (including
+ negative zero).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -687,8 +747,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="iszero">isZero</h3>
-<pre>public final boolean isZero() Gets a value indicating whether this object's value equals 0.
+
+<pre>public final boolean isZero()
 </pre>
+
+<p>Gets a value indicating whether this object’s value equals 0.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -699,8 +762,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isinteger">IsInteger</h3>
-<pre>public boolean IsInteger() Returns whether this object's value is an integer.
+
+<pre>public boolean IsInteger()
 </pre>
+
+<p>Returns whether this object’s value is an integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -710,8 +776,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="getnumerator">getNumerator</h3>
-<pre>public final EInteger getNumerator() Gets this object's numerator.
+
+<pre>public final EInteger getNumerator()
 </pre>
+
+<p>Gets this object’s numerator.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -722,8 +791,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="signum">signum</h3>
-<pre>public final int signum() Gets the sign of this rational number.
+
+<pre>public final int signum()
 </pre>
+
+<p>Gets the sign of this rational number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -732,8 +804,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="getunsignednumerator">getUnsignedNumerator</h3>
-<pre>public final EInteger getUnsignedNumerator() Gets this object's numerator with the sign removed.
+
+<pre>public final EInteger getUnsignedNumerator()
 </pre>
+
+<p>Gets this object’s numerator with the sign removed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -743,8 +818,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="create">Create</h3>
-<pre>public static ERational Create(int numeratorSmall, int denominatorSmall) Creates a rational number with the given numerator and denominator.
+
+<pre>public static ERational Create(int numeratorSmall, int denominatorSmall)
 </pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -770,8 +848,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="create-1">Create</h3>
-<pre>public static ERational Create(long numeratorLong, long denominatorLong) Creates a rational number with the given numerator and denominator.
+
+<pre>public static ERational Create(long numeratorLong, long denominatorLong)
 </pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -797,8 +878,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="create-2">Create</h3>
-<pre>public static ERational Create(EInteger numerator, EInteger denominator) Creates a rational number with the given numerator and denominator.
+
+<pre>public static ERational Create(EInteger numerator, EInteger denominator)
 </pre>
+
+<p>Creates a rational number with the given numerator and denominator.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -830,8 +914,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="createnan">CreateNaN</h3>
-<pre>public static ERational CreateNaN(EInteger diag) Creates a not-a-number arbitrary-precision rational number.
+
+<pre>public static ERational CreateNaN(EInteger diag)
 </pre>
+
+<p>Creates a not-a-number arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -855,8 +942,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="createnan-1">CreateNaN</h3>
-<pre>public static ERational CreateNaN(EInteger diag, boolean signaling, boolean negative) Creates a not-a-number arbitrary-precision rational number.
+
+<pre>public static ERational CreateNaN(EInteger diag, boolean signaling, boolean negative)
 </pre>
+
+<p>Creates a not-a-number arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -894,8 +984,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromdouble">FromDouble</h3>
+
 <pre>public static ERational FromDouble(double flt)
 </pre>
+
 <p>Converts a 64-bit floating-point number to a rational number. This method
  computes the exact value of the floating point number, not an approximation,
  as is often the case by converting the number to a string. </p>
@@ -923,8 +1015,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromextendeddecimal">FromExtendedDecimal</h3>
-<pre>@Deprecated public static ERational FromExtendedDecimal(EDecimal ef) Converts an arbitrary-precision decimal number to a rational number.
+
+<pre>@Deprecated public static ERational FromExtendedDecimal(EDecimal ef)
 </pre>
+
+<p>Converts an arbitrary-precision decimal number to a rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -939,8 +1034,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromextendedfloat">FromExtendedFloat</h3>
-<pre>@Deprecated public static ERational FromExtendedFloat(EFloat ef) Converts an arbitrary-precision binary floating-point number to a rational  number.
+
+<pre>@Deprecated public static ERational FromExtendedFloat(EFloat ef)
 </pre>
+
+<p>Converts an arbitrary-precision binary floating-point number to a rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -956,8 +1055,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromedecimal">FromEDecimal</h3>
-<pre>public static ERational FromEDecimal(EDecimal ef) Converts an arbitrary-precision decimal number to a rational number.
+
+<pre>public static ERational FromEDecimal(EDecimal ef)
 </pre>
+
+<p>Converts an arbitrary-precision decimal number to a rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -983,8 +1085,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromefloat">FromEFloat</h3>
-<pre>public static ERational FromEFloat(EFloat ef) Converts an arbitrary-precision binary floating-point number to a rational  number.
+
+<pre>public static ERational FromEFloat(EFloat ef)
 </pre>
+
+<p>Converts an arbitrary-precision binary floating-point number to a rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1011,8 +1117,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromeinteger">FromEInteger</h3>
-<pre>public static ERational FromEInteger(EInteger bigint) Converts an arbitrary-precision integer to a rational number.
+
+<pre>public static ERational FromEInteger(EInteger bigint)
 </pre>
+
+<p>Converts an arbitrary-precision integer to a rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1027,8 +1136,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromsingle">FromSingle</h3>
+
 <pre>public static ERational FromSingle(float flt)
 </pre>
+
 <p>Converts a 32-bit binary floating-point number to a rational number. This
  method computes the exact value of the floating point number, not an
  approximation, as is often the case by converting the number to a string.
@@ -1059,8 +1170,14 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromsinglebits">FromSingleBits</h3>
-<pre>public static ERational FromSingleBits(int value) Creates a binary rational number from a 32-bit floating-point number encoded  in the IEEE 754 binary32 format. This method computes the exact value of the  floating point number, not an approximation, as is often the case by  converting the number to a string.
+
+<pre>public static ERational FromSingleBits(int value)
 </pre>
+
+<p>Creates a binary rational number from a 32-bit floating-point number encoded
+ in the IEEE 754 binary32 format. This method computes the exact value of the
+ floating point number, not an approximation, as is often the case by
+ converting the number to a string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1076,8 +1193,15 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromhalfbits">FromHalfBits</h3>
-<pre>public static ERational FromHalfBits(short value) Creates a binary rational number from a binary floating-point number encoded  in the IEEE 754 binary16 format (also known as a "half-precision"  floating-point number). This method computes the exact value of the floating  point number, not an approximation, as is often the case by converting the  number to a string.
+
+<pre>public static ERational FromHalfBits(short value)
 </pre>
+
+<p>Creates a binary rational number from a binary floating-point number encoded
+ in the IEEE 754 binary16 format (also known as a “half-precision”
+ floating-point number). This method computes the exact value of the floating
+ point number, not an approximation, as is often the case by converting the
+ number to a string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1093,8 +1217,14 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromdoublebits">FromDoubleBits</h3>
-<pre>public static ERational FromDoubleBits(long value) Creates a binary rational number from a 64-bit floating-point number encoded  in the IEEE 754 binary64 format. This method computes the exact value of the  floating point number, not an approximation, as is often the case by  converting the number to a string.
+
+<pre>public static ERational FromDoubleBits(long value)
 </pre>
+
+<p>Creates a binary rational number from a 64-bit floating-point number encoded
+ in the IEEE 754 binary64 format. This method computes the exact value of the
+ floating point number, not an approximation, as is often the case by
+ converting the number to a string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1110,8 +1240,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromstring">FromString</h3>
-<pre>public static ERational FromString(String str) Creates a rational number from a text string that represents a number. See  &lt;code&gt;FromString(string, int, int)&lt;/code&gt; for more information.
+
+<pre>public static ERational FromString(String str)
 </pre>
+
+<p>Creates a rational number from a text string that represents a number. See
+ <code>FromString(string, int, int)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1134,8 +1268,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromstring-1">FromString</h3>
+
 <pre>public static ERational FromString(String str, int offset, int length)
 </pre>
+
 <p>Creates a rational number from a text string that represents a
  number.</p>
 <p>The format of the string generally consists of:</p>
@@ -1196,8 +1332,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromstring-2">FromString</h3>
-<pre>public static ERational FromString(char[] chars) Creates a rational number from a sequence of &lt;code&gt;char&lt;/code&gt; s that represents  a number. See &lt;code&gt;FromString(string, int, int)&lt;/code&gt; for more information.
+
+<pre>public static ERational FromString(char[] chars)
 </pre>
+
+<p>Creates a rational number from a sequence of <code>char</code> s that represents
+ a number. See <code>FromString(string, int, int)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1220,8 +1360,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromstring-3">FromString</h3>
+
 <pre>public static ERational FromString(char[] chars, int offset, int length)
 </pre>
+
 <p>Creates a rational number from a sequence of <code>char</code> s that
  represents a number.</p>
 <p>The format of the sequence of <code>char</code> s
@@ -1284,8 +1426,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromstring-4">FromString</h3>
-<pre>public static ERational FromString(byte[] bytes) Creates a rational number from a sequence of bytes that represents a number.  See &lt;code&gt;FromString(string, int, int)&lt;/code&gt; for more information.
+
+<pre>public static ERational FromString(byte[] bytes)
 </pre>
+
+<p>Creates a rational number from a sequence of bytes that represents a number.
+ See <code>FromString(string, int, int)</code> for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1308,8 +1454,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromstring-5">FromString</h3>
+
 <pre>public static ERational FromString(byte[] bytes, int offset, int length)
 </pre>
+
 <p>Creates a rational number from a sequence of bytes that represents a
  number.</p>
 <p>The format of the sequence of bytes generally consists
@@ -1370,8 +1518,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetototalmagnitude">CompareToTotalMagnitude</h3>
+
 <pre>public int CompareToTotalMagnitude(ERational other)
 </pre>
+
 <p>Compares the absolute values of this object and another object, imposing
  a total ordering on all possible values (ignoring their signs). In this
  method: </p>
@@ -1400,8 +1550,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetototal">CompareToTotal</h3>
+
 <pre>public int CompareToTotal(ERational other)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: </p>
 <ul> <li>For objects
@@ -1430,8 +1582,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="abs">Abs</h3>
-<pre>public ERational Abs() Returns the absolute value of this rational number, that is, a number with  the same value as this one but as a nonnegative number.
+
+<pre>public ERational Abs()
 </pre>
+
+<p>Returns the absolute value of this rational number, that is, a number with
+ the same value as this one but as a nonnegative number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1440,8 +1596,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="add">Add</h3>
-<pre>public ERational Add(ERational otherValue) Adds this arbitrary-precision rational number and another  arbitrary-precision rational number and returns the result.
+
+<pre>public ERational Add(ERational otherValue)
 </pre>
+
+<p>Adds this arbitrary-precision rational number and another
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1463,8 +1623,15 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="compareto">compareTo</h3>
-<pre>public int compareTo(ERational other) Compares the mathematical value of an arbitrary-precision rational number  with that of this instance. This method currently uses the rules given in  the CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(ERational other)
 </pre>
+
+<p>Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -1487,8 +1654,15 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetovalue">CompareToValue</h3>
-<pre>public int CompareToValue(ERational other) Compares the mathematical value of an arbitrary-precision rational number  with that of this instance. In this method, NaN values are greater than any  other ERational value, and two NaN values (even if their payloads differ)  are treated as equal by this method. This method is not consistent with the  Equals method.
+
+<pre>public int CompareToValue(ERational other)
 </pre>
+
+<p>Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. In this method, NaN values are greater than any
+ other ERational value, and two NaN values (even if their payloads differ)
+ are treated as equal by this method. This method is not consistent with the
+ Equals method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1505,8 +1679,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="max">Max</h3>
-<pre>public static ERational Max(ERational first, ERational second) Gets the greater value between two rational numbers.
+
+<pre>public static ERational Max(ERational first, ERational second)
 </pre>
+
+<p>Gets the greater value between two rational numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1537,8 +1714,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="maxmagnitude">MaxMagnitude</h3>
-<pre>public static ERational MaxMagnitude(ERational first, ERational second) Gets the greater value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Max.
+
+<pre>public static ERational MaxMagnitude(ERational first, ERational second)
 </pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1565,8 +1746,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="min">Min</h3>
-<pre>public static ERational Min(ERational first, ERational second) Gets the lesser value between two rational numbers.
+
+<pre>public static ERational Min(ERational first, ERational second)
 </pre>
+
+<p>Gets the lesser value between two rational numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1597,8 +1781,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="minmagnitude">MinMagnitude</h3>
-<pre>public static ERational MinMagnitude(ERational first, ERational second) Gets the lesser value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Min.
+
+<pre>public static ERational MinMagnitude(ERational first, ERational second)
 </pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1625,8 +1813,15 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="compareto-1">compareTo</h3>
-<pre>public int compareTo(int intOther) Compares the mathematical value of an arbitrary-precision rational number  with that of this instance. This method currently uses the rules given in  the CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(int intOther)
 </pre>
+
+<p>Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. This method currently uses the rules given in
+ the CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1642,8 +1837,15 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetovalue-1">CompareToValue</h3>
-<pre>public int CompareToValue(int intOther) Compares the mathematical value of an arbitrary-precision rational number  with that of this instance. In this method, NaN values are greater than any  other ERational value, and two NaN values (even if their payloads differ)  are treated as equal by this method. This method is not consistent with the  Equals method.
+
+<pre>public int CompareToValue(int intOther)
 </pre>
+
+<p>Compares the mathematical value of an arbitrary-precision rational number
+ with that of this instance. In this method, NaN values are greater than any
+ other ERational value, and two NaN values (even if their payloads differ)
+ are treated as equal by this method. This method is not consistent with the
+ Equals method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1659,8 +1861,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetovalue-2">CompareToValue</h3>
+
 <pre>public int CompareToValue(long intOther)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -1687,8 +1891,15 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="compareto-2">compareTo</h3>
-<pre>public int compareTo(long intOther) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(long intOther)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1705,8 +1916,14 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetobinary">CompareToBinary</h3>
-<pre>public int CompareToBinary(EFloat other) Compares an arbitrary-precision binary floating-point number with this  instance. In this method, NaN values are greater than any other ERational or  EFloat value, and two NaN values (even if their payloads differ) are treated  as equal by this method.
+
+<pre>public int CompareToBinary(EFloat other)
 </pre>
+
+<p>Compares an arbitrary-precision binary floating-point number with this
+ instance. In this method, NaN values are greater than any other ERational or
+ EFloat value, and two NaN values (even if their payloads differ) are treated
+ as equal by this method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1723,8 +1940,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="comparetodecimal">CompareToDecimal</h3>
-<pre>public int CompareToDecimal(EDecimal other) Compares an arbitrary-precision decimal number with this instance.
+
+<pre>public int CompareToDecimal(EDecimal other)
 </pre>
+
+<p>Compares an arbitrary-precision decimal number with this instance.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1741,8 +1961,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="copysign">CopySign</h3>
-<pre>public ERational CopySign(ERational other) Returns a number with the same value as this one, but copying the sign  (positive or negative) of another number.
+
+<pre>public ERational CopySign(ERational other)
 </pre>
+
+<p>Returns a number with the same value as this one, but copying the sign
+ (positive or negative) of another number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1763,8 +1987,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="divide">Divide</h3>
-<pre>public ERational Divide(ERational otherValue) Divides this arbitrary-precision rational number by another  arbitrary-precision rational number and returns the result.
+
+<pre>public ERational Divide(ERational otherValue)
 </pre>
+
+<p>Divides this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1786,8 +2014,17 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public boolean equals(Object obj) Determines whether this object's numerator, denominator, and properties are  equal to those of another object and that other object is an  arbitrary-precision rational number. Not-a-number values are considered  equal if the rest of their properties are equal. This is not the same as  value equality. Notably, two ERationals with the same value, but of which  one is in lowest terms and the other is not, are compared as unequal by this  method (example: 1/2 vs. 5/10).
+
+<pre>public boolean equals(Object obj)
 </pre>
+
+<p>Determines whether this object’s numerator, denominator, and properties are
+ equal to those of another object and that other object is an
+ arbitrary-precision rational number. Not-a-number values are considered
+ equal if the rest of their properties are equal. This is not the same as
+ value equality. Notably, two ERationals with the same value, but of which
+ one is in lowest terms and the other is not, are compared as unequal by this
+ method (example: 1/2 vs. 5/10).</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -1810,8 +2047,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="equals-1">equals</h3>
-<pre>public boolean equals(ERational other) Determines whether this object's numerator, denominator, and properties are  equal to those of another object. Not-a-number values are considered equal  if the rest of their properties are equal.
+
+<pre>public boolean equals(ERational other)
 </pre>
+
+<p>Determines whether this object’s numerator, denominator, and properties are
+ equal to those of another object. Not-a-number values are considered equal
+ if the rest of their properties are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1826,8 +2068,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public int hashCode() Returns the hash code for this instance. No application or process IDs are  used in the hash code calculation.
+
+<pre>public int hashCode()
 </pre>
+
+<p>Returns the hash code for this instance. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -1842,8 +2088,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isinfinity">IsInfinity</h3>
-<pre>public boolean IsInfinity() Gets a value indicating whether this object's value is infinity.
+
+<pre>public boolean IsInfinity()
 </pre>
+
+<p>Gets a value indicating whether this object’s value is infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1853,8 +2102,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isnan">IsNaN</h3>
-<pre>public boolean IsNaN() Returns whether this object is a not-a-number value.
+
+<pre>public boolean IsNaN()
 </pre>
+
+<p>Returns whether this object is a not-a-number value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1864,8 +2116,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isnegativeinfinity">IsNegativeInfinity</h3>
-<pre>public boolean IsNegativeInfinity() Returns whether this object is negative infinity.
+
+<pre>public boolean IsNegativeInfinity()
 </pre>
+
+<p>Returns whether this object is negative infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1875,8 +2130,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="ispositiveinfinity">IsPositiveInfinity</h3>
-<pre>public boolean IsPositiveInfinity() Returns whether this object is positive infinity.
+
+<pre>public boolean IsPositiveInfinity()
 </pre>
+
+<p>Returns whether this object is positive infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1886,8 +2144,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="isquietnan">IsQuietNaN</h3>
-<pre>public boolean IsQuietNaN() Returns whether this object is a quiet not-a-number value.
+
+<pre>public boolean IsQuietNaN()
 </pre>
+
+<p>Returns whether this object is a quiet not-a-number value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1897,8 +2158,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="issignalingnan">IsSignalingNaN</h3>
-<pre>public boolean IsSignalingNaN() Returns whether this object is a signaling not-a-number value (which causes  an error if the value is passed to any arithmetic operation in this class).
+
+<pre>public boolean IsSignalingNaN()
 </pre>
+
+<p>Returns whether this object is a signaling not-a-number value (which causes
+ an error if the value is passed to any arithmetic operation in this class).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1909,8 +2174,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="multiply">Multiply</h3>
-<pre>public ERational Multiply(ERational otherValue) Multiplies this arbitrary-precision rational number by another  arbitrary-precision rational number and returns the result.
+
+<pre>public ERational Multiply(ERational otherValue)
 </pre>
+
+<p>Multiplies this arbitrary-precision rational number by another
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1932,8 +2201,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="negate">Negate</h3>
-<pre>public ERational Negate() Returns a rational number with the same value as this one but with the sign  reversed.
+
+<pre>public ERational Negate()
 </pre>
+
+<p>Returns a rational number with the same value as this one but with the sign
+ reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1942,8 +2215,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="remainder">Remainder</h3>
-<pre>public ERational Remainder(ERational otherValue) Returns the remainder that would result when this arbitrary-precision  rational number is divided by another arbitrary-precision rational number.
+
+<pre>public ERational Remainder(ERational otherValue)
 </pre>
+
+<p>Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by another arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1965,8 +2242,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="subtract">Subtract</h3>
-<pre>public ERational Subtract(ERational otherValue) Subtracts an arbitrary-precision rational number from this  arbitrary-precision rational number and returns the result.
+
+<pre>public ERational Subtract(ERational otherValue)
 </pre>
+
+<p>Subtracts an arbitrary-precision rational number from this
+ arbitrary-precision rational number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1989,8 +2270,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="todouble">ToDouble</h3>
-<pre>public double ToDouble() Converts this value to a 64-bit floating-point number. The half-even  rounding mode is used.
+
+<pre>public double ToDouble()
 </pre>
+
+<p>Converts this value to a 64-bit floating-point number. The half-even
+ rounding mode is used.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2001,8 +2286,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="todoublebits">ToDoubleBits</h3>
+
 <pre>public long ToDoubleBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 64-bit floating-point
  number, expressed as an integer in the IEEE 754 binary64 format. The
  half-even rounding mode is used. </p>
@@ -2023,8 +2310,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tosinglebits">ToSingleBits</h3>
+
 <pre>public int ToSingleBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as 32-bit floating-point
  number, expressed as an integer in the IEEE 754 binary32 format. The
  half-even rounding mode is used. </p>
@@ -2045,8 +2334,10 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tohalfbits">ToHalfBits</h3>
+
 <pre>public short ToHalfBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a binary floating-point
  number, expressed as an integer in the IEEE 754 binary16 format (also known
  as a "half-precision" floating-point number). The half-even rounding mode is
@@ -2068,8 +2359,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tolowestterms">ToLowestTerms</h3>
-<pre>public ERational ToLowestTerms() Converts this value to its form in lowest terms. For example, (8/4) becomes  (4/1).
+
+<pre>public ERational ToLowestTerms()
 </pre>
+
+<p>Converts this value to its form in lowest terms. For example, (8/4) becomes
+ (4/1).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2088,8 +2383,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tosizedeinteger">ToSizedEInteger</h3>
-<pre>public EInteger ToSizedEInteger(int maxBitLength) Converts this value to an arbitrary-precision integer by dividing the  numerator by the denominator, discarding its fractional part, and checking  whether the resulting integer overflows the given signed bit count.
+
+<pre>public EInteger ToSizedEInteger(int maxBitLength)
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer by dividing the
+ numerator by the denominator, discarding its fractional part, and checking
+ whether the resulting integer overflows the given signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2115,8 +2415,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tosizedeintegerifexact">ToSizedEIntegerIfExact</h3>
-<pre>public EInteger ToSizedEIntegerIfExact(int maxBitLength) Converts this value to an arbitrary-precision integer, only if this number's  value is an exact integer and that integer does not overflow the given  signed bit count.
+
+<pre>public EInteger ToSizedEIntegerIfExact(int maxBitLength)
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, only if this number’s
+ value is an exact integer and that integer does not overflow the given
+ signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2146,8 +2451,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toeinteger">ToEInteger</h3>
-<pre>public EInteger ToEInteger() Converts this value to an arbitrary-precision integer by dividing the  numerator by the denominator and discarding the fractional part of the  result.
+
+<pre>public EInteger ToEInteger()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer by dividing the
+ numerator by the denominator and discarding the fractional part of the
+ result.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2163,8 +2473,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toeintegerexact">ToEIntegerExact</h3>
-<pre>@Deprecated public EInteger ToEIntegerExact() Converts this value to an arbitrary-precision integer, checking whether the  value is an exact integer.
+
+<pre>@Deprecated public EInteger ToEIntegerExact()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ value is an exact integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2180,8 +2494,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toeintegerifexact">ToEIntegerIfExact</h3>
-<pre>public EInteger ToEIntegerIfExact() Converts this value to an arbitrary-precision integer, checking whether the  value is an exact integer.
+
+<pre>public EInteger ToEIntegerIfExact()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ value is an exact integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2197,8 +2515,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toedecimal">ToEDecimal</h3>
-<pre>public EDecimal ToEDecimal() Converts this rational number to an arbitrary-precision decimal number.
+
+<pre>public EDecimal ToEDecimal()
 </pre>
+
+<p>Converts this rational number to an arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2208,8 +2529,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toedecimal-1">ToEDecimal</h3>
-<pre>public EDecimal ToEDecimal(EContext ctx) Converts this rational number to an arbitrary-precision decimal number and  rounds the result to the given precision.
+
+<pre>public EDecimal ToEDecimal(EContext ctx)
 </pre>
+
+<p>Converts this rational number to an arbitrary-precision decimal number and
+ rounds the result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2230,8 +2555,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toedecimalexactifpossible">ToEDecimalExactIfPossible</h3>
-<pre>public EDecimal ToEDecimalExactIfPossible(EContext ctx) Converts this rational number to an arbitrary-precision decimal number, but  if the result would have a nonterminating decimal expansion, rounds that  result to the given precision.
+
+<pre>public EDecimal ToEDecimalExactIfPossible(EContext ctx)
 </pre>
+
+<p>Converts this rational number to an arbitrary-precision decimal number, but
+ if the result would have a nonterminating decimal expansion, rounds that
+ result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2254,8 +2584,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toextendeddecimal">ToExtendedDecimal</h3>
-<pre>@Deprecated public EDecimal ToExtendedDecimal() Converts this rational number to an arbitrary-precision decimal number.
+
+<pre>@Deprecated public EDecimal ToExtendedDecimal()
 </pre>
+
+<p>Converts this rational number to an arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2265,8 +2598,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toextendeddecimal-1">ToExtendedDecimal</h3>
-<pre>@Deprecated public EDecimal ToExtendedDecimal(EContext ctx) Converts this rational number to an arbitrary-precision decimal number and  rounds the result to the given precision.
+
+<pre>@Deprecated public EDecimal ToExtendedDecimal(EContext ctx)
 </pre>
+
+<p>Converts this rational number to an arbitrary-precision decimal number and
+ rounds the result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2287,8 +2624,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toextendeddecimalexactifpossible">ToExtendedDecimalExactIfPossible</h3>
-<pre>@Deprecated public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx) Converts this rational number to an arbitrary-precision decimal number, but  if the result would have a nonterminating decimal expansion, rounds that  result to the given precision.
+
+<pre>@Deprecated public EDecimal ToExtendedDecimalExactIfPossible(EContext ctx)
 </pre>
+
+<p>Converts this rational number to an arbitrary-precision decimal number, but
+ if the result would have a nonterminating decimal expansion, rounds that
+ result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2311,8 +2653,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toefloat">ToEFloat</h3>
-<pre>public EFloat ToEFloat() Converts this rational number to a binary floating-point number.
+
+<pre>public EFloat ToEFloat()
 </pre>
+
+<p>Converts this rational number to a binary floating-point number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2322,8 +2667,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toefloat-1">ToEFloat</h3>
-<pre>public EFloat ToEFloat(EContext ctx) Converts this rational number to a binary floating-point number and rounds  that result to the given precision.
+
+<pre>public EFloat ToEFloat(EContext ctx)
 </pre>
+
+<p>Converts this rational number to a binary floating-point number and rounds
+ that result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2344,8 +2693,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toefloatexactifpossible">ToEFloatExactIfPossible</h3>
-<pre>public EFloat ToEFloatExactIfPossible(EContext ctx) Converts this rational number to a binary floating-point number, but if the  result would have a nonterminating binary expansion, rounds that result to  the given precision.
+
+<pre>public EFloat ToEFloatExactIfPossible(EContext ctx)
 </pre>
+
+<p>Converts this rational number to a binary floating-point number, but if the
+ result would have a nonterminating binary expansion, rounds that result to
+ the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2368,8 +2722,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toextendedfloat">ToExtendedFloat</h3>
-<pre>@Deprecated public EFloat ToExtendedFloat() Converts this rational number to a binary floating-point number.
+
+<pre>@Deprecated public EFloat ToExtendedFloat()
 </pre>
+
+<p>Converts this rational number to a binary floating-point number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2379,8 +2736,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toextendedfloat-1">ToExtendedFloat</h3>
-<pre>@Deprecated public EFloat ToExtendedFloat(EContext ctx) Converts this rational number to a binary floating-point number and rounds  that result to the given precision.
+
+<pre>@Deprecated public EFloat ToExtendedFloat(EContext ctx)
 </pre>
+
+<p>Converts this rational number to a binary floating-point number and rounds
+ that result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2401,8 +2762,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toextendedfloatexactifpossible">ToExtendedFloatExactIfPossible</h3>
-<pre>@Deprecated public EFloat ToExtendedFloatExactIfPossible(EContext ctx) Converts this rational number to a binary floating-point number, but if the  result would have a nonterminating binary expansion, rounds that result to  the given precision.
+
+<pre>@Deprecated public EFloat ToExtendedFloatExactIfPossible(EContext ctx)
 </pre>
+
+<p>Converts this rational number to a binary floating-point number, but if the
+ result would have a nonterminating binary expansion, rounds that result to
+ the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2425,8 +2791,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tosingle">ToSingle</h3>
-<pre>public float ToSingle() Converts this value to a 32-bit binary floating-point number. The half-even  rounding mode is used.
+
+<pre>public float ToSingle()
 </pre>
+
+<p>Converts this value to a 32-bit binary floating-point number. The half-even
+ rounding mode is used.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2437,8 +2807,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this object to a text string.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this object to a text string.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -2456,8 +2829,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="increment">Increment</h3>
-<pre>public ERational Increment() Adds one to an arbitrary-precision rational number.
+
+<pre>public ERational Increment()
 </pre>
+
+<p>Adds one to an arbitrary-precision rational number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2466,8 +2842,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="decrement">Decrement</h3>
-<pre>public ERational Decrement() Subtracts one from an arbitrary-precision rational number.
+
+<pre>public ERational Decrement()
 </pre>
+
+<p>Subtracts one from an arbitrary-precision rational number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2476,8 +2855,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="add-1">Add</h3>
-<pre>public ERational Add(int v) Adds this arbitrary-precision rational number and a 32-bit signed integer  and returns the result.
+
+<pre>public ERational Add(int v)
 </pre>
+
+<p>Adds this arbitrary-precision rational number and a 32-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2493,8 +2876,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="subtract-1">Subtract</h3>
-<pre>public ERational Subtract(int v) Subtracts a 32-bit signed integer from this arbitrary-precision rational  number and returns the result.
+
+<pre>public ERational Subtract(int v)
 </pre>
+
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision rational
+ number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2510,8 +2897,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="multiply-1">Multiply</h3>
-<pre>public ERational Multiply(int v) Multiplies this arbitrary-precision rational number by a 32-bit signed  integer and returns the result.
+
+<pre>public ERational Multiply(int v)
 </pre>
+
+<p>Multiplies this arbitrary-precision rational number by a 32-bit signed
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2527,8 +2918,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="divide-1">Divide</h3>
-<pre>public ERational Divide(int v) Divides this arbitrary-precision rational number by a 32-bit signed integer  and returns the result.
+
+<pre>public ERational Divide(int v)
 </pre>
+
+<p>Divides this arbitrary-precision rational number by a 32-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2550,8 +2945,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="remainder-1">Remainder</h3>
-<pre>public ERational Remainder(int v) Returns the remainder that would result when this arbitrary-precision  rational number is divided by a 32-bit signed integer.
+
+<pre>public ERational Remainder(int v)
 </pre>
+
+<p>Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 32-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2573,8 +2972,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="add-2">Add</h3>
-<pre>public ERational Add(long v) Adds this arbitrary-precision rational number and a 64-bit signed integer  and returns the result.
+
+<pre>public ERational Add(long v)
 </pre>
+
+<p>Adds this arbitrary-precision rational number and a 64-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2590,8 +2993,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="subtract-2">Subtract</h3>
-<pre>public ERational Subtract(long v) Subtracts a 64-bit signed integer from this arbitrary-precision rational  number and returns the result.
+
+<pre>public ERational Subtract(long v)
 </pre>
+
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision rational
+ number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2607,8 +3014,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="multiply-2">Multiply</h3>
-<pre>public ERational Multiply(long v) Multiplies this arbitrary-precision rational number by a 64-bit signed  integer and returns the result.
+
+<pre>public ERational Multiply(long v)
 </pre>
+
+<p>Multiplies this arbitrary-precision rational number by a 64-bit signed
+ integer and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2624,8 +3035,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="divide-2">Divide</h3>
-<pre>public ERational Divide(long v) Divides this arbitrary-precision rational number by a 64-bit signed integer  and returns the result.
+
+<pre>public ERational Divide(long v)
 </pre>
+
+<p>Divides this arbitrary-precision rational number by a 64-bit signed integer
+ and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2647,8 +3062,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="remainder-2">Remainder</h3>
-<pre>public ERational Remainder(long v) Returns the remainder that would result when this arbitrary-precision  rational number is divided by a 64-bit signed integer.
+
+<pre>public ERational Remainder(long v)
 </pre>
+
+<p>Returns the remainder that would result when this arbitrary-precision
+ rational number is divided by a 64-bit signed integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2670,8 +3089,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tobytechecked">ToByteChecked</h3>
-<pre>public byte ToByteChecked() Converts this number's value to a byte (from 0 to 255) if it can fit in a  byte (from 0 to 255) after converting it to an integer by discarding its  fractional part.
+
+<pre>public byte ToByteChecked()
 </pre>
+
+<p>Converts this number’s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2688,8 +3112,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tobyteunchecked">ToByteUnchecked</h3>
-<pre>public byte ToByteUnchecked() Converts this number's value to an integer (using ToEInteger), and returns  the least-significant bits of that integer's two's-complement form as a byte  (from 0 to 255).
+
+<pre>public byte ToByteUnchecked()
 </pre>
+
+<p>Converts this number’s value to an integer (using ToEInteger), and returns
+ the least-significant bits of that integer’s two’s-complement form as a byte
+ (from 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2699,8 +3128,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="tobyteifexact">ToByteIfExact</h3>
-<pre>public byte ToByteIfExact() Converts this number's value to a byte (from 0 to 255) if it can fit in a  byte (from 0 to 255) without rounding to a different numerical value.
+
+<pre>public byte ToByteIfExact()
 </pre>
+
+<p>Converts this number’s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2716,8 +3149,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="frombyte">FromByte</h3>
-<pre>public static ERational FromByte(byte inputByte) Converts a byte (from 0 to 255) to an arbitrary-precision rational number.
+
+<pre>public static ERational FromByte(byte inputByte)
 </pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2732,8 +3168,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint16checked">ToInt16Checked</h3>
-<pre>public short ToInt16Checked() Converts this number's value to a 16-bit signed integer if it can fit in a  16-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public short ToInt16Checked()
 </pre>
+
+<p>Converts this number’s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2750,8 +3191,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint16unchecked">ToInt16Unchecked</h3>
-<pre>public short ToInt16Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 16-bit signed integer.
+
+<pre>public short ToInt16Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 16-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2761,8 +3207,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint16ifexact">ToInt16IfExact</h3>
-<pre>public short ToInt16IfExact() Converts this number's value to a 16-bit signed integer if it can fit in a  16-bit signed integer without rounding to a different numerical value.
+
+<pre>public short ToInt16IfExact()
 </pre>
+
+<p>Converts this number’s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2778,8 +3228,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromint16">FromInt16</h3>
-<pre>public static ERational FromInt16(short inputInt16) Converts a 16-bit signed integer to an arbitrary-precision rational number.
+
+<pre>public static ERational FromInt16(short inputInt16)
 </pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2794,8 +3247,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint32checked">ToInt32Checked</h3>
-<pre>public int ToInt32Checked() Converts this number's value to a 32-bit signed integer if it can fit in a  32-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public int ToInt32Checked()
 </pre>
+
+<p>Converts this number’s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2812,8 +3270,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint32unchecked">ToInt32Unchecked</h3>
-<pre>public int ToInt32Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 32-bit signed integer.
+
+<pre>public int ToInt32Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 32-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2823,8 +3286,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint32ifexact">ToInt32IfExact</h3>
-<pre>public int ToInt32IfExact() Converts this number's value to a 32-bit signed integer if it can fit in a  32-bit signed integer without rounding to a different numerical value.
+
+<pre>public int ToInt32IfExact()
 </pre>
+
+<p>Converts this number’s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2840,8 +3307,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromboolean">FromBoolean</h3>
-<pre>public static ERational FromBoolean(boolean boolValue) Converts a Boolean value (true or false) to an arbitrary-precision rational  number.
+
+<pre>public static ERational FromBoolean(boolean boolValue)
 </pre>
+
+<p>Converts a Boolean value (true or false) to an arbitrary-precision rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2856,8 +3327,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromint32">FromInt32</h3>
-<pre>public static ERational FromInt32(int inputInt32) Converts a 32-bit signed integer to an arbitrary-precision rational number.
+
+<pre>public static ERational FromInt32(int inputInt32)
 </pre>
+
+<p>Converts a 32-bit signed integer to an arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2872,8 +3346,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint64checked">ToInt64Checked</h3>
-<pre>public long ToInt64Checked() Converts this number's value to a 64-bit signed integer if it can fit in a  64-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public long ToInt64Checked()
 </pre>
+
+<p>Converts this number’s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2890,8 +3369,13 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint64unchecked">ToInt64Unchecked</h3>
-<pre>public long ToInt64Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 64-bit signed integer.
+
+<pre>public long ToInt64Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 64-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2901,8 +3385,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="toint64ifexact">ToInt64IfExact</h3>
-<pre>public long ToInt64IfExact() Converts this number's value to a 64-bit signed integer if it can fit in a  64-bit signed integer without rounding to a different numerical value.
+
+<pre>public long ToInt64IfExact()
 </pre>
+
+<p>Converts this number’s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2919,8 +3407,12 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromint64asunsigned">FromInt64AsUnsigned</h3>
-<pre>public static ERational FromInt64AsUnsigned(long longerValue) Converts an unsigned integer expressed as a 64-bit signed integer to an  arbitrary-precision rational number.
+
+<pre>public static ERational FromInt64AsUnsigned(long longerValue)
 </pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2939,8 +3431,11 @@ public static final ERational Zero A rational number for zero. ## Method Details
 </ul>
 
 <h3 id="fromint64">FromInt64</h3>
-<pre>public static ERational FromInt64(long inputInt64) Converts a 64-bit signed integer to an arbitrary-precision rational number.
+
+<pre>public static ERational FromInt64(long inputInt64)
 </pre>
+
+<p>Converts a 64-bit signed integer to an arbitrary-precision rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 

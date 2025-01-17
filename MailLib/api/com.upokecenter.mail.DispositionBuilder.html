@@ -64,8 +64,11 @@ Converts this object to a text string.</li>
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="getdispositiontype">getDispositionType</h3>
-<pre>public final String getDispositionType() Gets this value's disposition type, such as "inline" or "attachment".
+
+<pre>public final String getDispositionType()
 </pre>
+
+<p>Gets this value’s disposition type, such as “inline” or “attachment”.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -87,9 +90,16 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="setdispositiontype">setDispositionType</h3>
-<pre>public final void setDispositionType(String value) ### isText
-@Deprecated public final boolean isText() Gets a value indicating whether this is a text media type.
+
+<pre>public final void setDispositionType(String value)
 </pre>
+
+<h3 id="istext">isText</h3>
+
+<pre>@Deprecated public final boolean isText()
+</pre>
+
+<p>Gets a value indicating whether this is a text media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -98,8 +108,11 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="ismultipart">isMultipart</h3>
-<pre>@Deprecated public final boolean isMultipart() Gets a value indicating whether this is a multipart media type.
+
+<pre>@Deprecated public final boolean isMultipart()
 </pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -109,8 +122,11 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="todisposition">ToDisposition</h3>
-<pre>public ContentDisposition ToDisposition() Converts this object to an immutable ContentDisposition object.
+
+<pre>public ContentDisposition ToDisposition()
 </pre>
+
+<p>Converts this object to an immutable ContentDisposition object.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -119,8 +135,14 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="setdispositiontype-1">SetDispositionType</h3>
-<pre>public DispositionBuilder SetDispositionType(String str) Sets the disposition type, such as "inline". This method enables the pattern  of method chaining (for example, &lt;code&gt;new ...().getSet()...().getSet()...()&lt;/code&gt;)  unlike with the DispositionType property in .NET or the setDispositionType  method (with small s) in Java.
+
+<pre>public DispositionBuilder SetDispositionType(String str)
 </pre>
+
+<p>Sets the disposition type, such as “inline”. This method enables the pattern
+ of method chaining (for example, <code>new ...().getSet()...().getSet()...()</code>)
+ unlike with the DispositionType property in .NET or the setDispositionType
+ method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -146,8 +168,12 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="removeparameter">RemoveParameter</h3>
-<pre>public DispositionBuilder RemoveParameter(String name) Removes a parameter from this content disposition. Does nothing if the  parameter's name doesn't exist.
+
+<pre>public DispositionBuilder RemoveParameter(String name)
 </pre>
+
+<p>Removes a parameter from this content disposition. Does nothing if the
+ parameter’s name doesn’t exist.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -171,8 +197,11 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="setparameter">SetParameter</h3>
-<pre>public DispositionBuilder SetParameter(String name, String value) Sets a parameter of this content disposition.
+
+<pre>public DispositionBuilder SetParameter(String name, String value)
 </pre>
+
+<p>Sets a parameter of this content disposition.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -208,8 +237,11 @@ Converts this object to a text string.</li>
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this object to a text string.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this object to a text string.</p>
 
 <p><strong>Overrides:</strong></p>
 

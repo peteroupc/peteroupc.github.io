@@ -123,21 +123,83 @@
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="blank">BLANK</h3>
-<pre>public static final int BLANK Type value for a blank node. ### IRI
-public static final int IRI Type value for an IRI (Internationalized Resource Identifier.). ### LANGSTRING
-public static final int LANGSTRING Type value for a string with a language tag. ### TYPEDSTRING
-public static final int TYPEDSTRING Type value for a piece of data serialized to a string. ### A
-public static final RDFTerm A Predicate for RDF types. ### FIRST
-public static final RDFTerm FIRST Predicate for the first object in a list. ### NIL
-public static final RDFTerm NIL object for nil, the end of a list, or an empty list. ### REST
-public static final RDFTerm REST Predicate for the remaining objects in a list. ### FALSE
-public static final RDFTerm FALSE object for false. ### TRUE
-public static final RDFTerm TRUE object for true. ## Method Details
+
+<pre>public static final int BLANK
 </pre>
 
-<h3 id="fromblanknode">FromBlankNode</h3>
-<pre>public static RDFTerm FromBlankNode(String name) Not documented yet.
+<p>Type value for a blank node.</p>
+
+<h3 id="iri">IRI</h3>
+
+<pre>public static final int IRI
 </pre>
+
+<p>Type value for an IRI (Internationalized Resource Identifier.).</p>
+
+<h3 id="langstring">LANGSTRING</h3>
+
+<pre>public static final int LANGSTRING
+</pre>
+
+<p>Type value for a string with a language tag.</p>
+
+<h3 id="typedstring">TYPEDSTRING</h3>
+
+<pre>public static final int TYPEDSTRING
+</pre>
+
+<p>Type value for a piece of data serialized to a string.</p>
+
+<h3 id="a">A</h3>
+
+<pre>public static final RDFTerm A
+</pre>
+
+<p>Predicate for RDF types.</p>
+
+<h3 id="first">FIRST</h3>
+
+<pre>public static final RDFTerm FIRST
+</pre>
+
+<p>Predicate for the first object in a list.</p>
+
+<h3 id="nil">NIL</h3>
+
+<pre>public static final RDFTerm NIL
+</pre>
+
+<p>object for nil, the end of a list, or an empty list.</p>
+
+<h3 id="rest">REST</h3>
+
+<pre>public static final RDFTerm REST
+</pre>
+
+<p>Predicate for the remaining objects in a list.</p>
+
+<h3 id="false">FALSE</h3>
+
+<pre>public static final RDFTerm FALSE
+</pre>
+
+<p>object for false.</p>
+
+<h3 id="true">TRUE</h3>
+
+<pre>public static final RDFTerm TRUE
+</pre>
+
+<p>object for true.</p>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="fromblanknode">FromBlankNode</h3>
+
+<pre>public static RDFTerm FromBlankNode(String name)
+</pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -163,8 +225,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="fromiri">FromIRI</h3>
-<pre>public static RDFTerm FromIRI(String iri) Not documented yet.
+
+<pre>public static RDFTerm FromIRI(String iri)
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -185,8 +250,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="fromlangstring">FromLangString</h3>
-<pre>public static RDFTerm FromLangString(String str, String languageTag) Not documented yet.
+
+<pre>public static RDFTerm FromLangString(String str, String languageTag)
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -218,8 +286,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="fromtypedstring">FromTypedString</h3>
-<pre>public static RDFTerm FromTypedString(String str) Not documented yet.
+
+<pre>public static RDFTerm FromTypedString(String str)
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -234,8 +305,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="fromtypedstring-1">FromTypedString</h3>
-<pre>public static RDFTerm FromTypedString(String str, String iri) Not documented yet.
+
+<pre>public static RDFTerm FromTypedString(String str, String iri)
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -267,8 +341,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public final boolean equals(Object obj) Not documented yet.
+
+<pre>public final boolean equals(Object obj)
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -289,8 +366,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="getkind">GetKind</h3>
-<pre>public int GetKind() Not documented yet.
+
+<pre>public int GetKind()
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -299,8 +379,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="gettypeorlanguage">GetTypeOrLanguage</h3>
-<pre>public String GetTypeOrLanguage() Gets the language tag or data type for this RDF literal.
+
+<pre>public String GetTypeOrLanguage()
 </pre>
+
+<p>Gets the language tag or data type for this RDF literal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -309,8 +392,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="getvalue">GetValue</h3>
-<pre>public String GetValue() Gets the IRI, blank node identifier, or lexical form of an RDF literal.
+
+<pre>public String GetValue()
 </pre>
+
+<p>Gets the IRI, blank node identifier, or lexical form of an RDF literal.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -319,8 +405,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public final int hashCode() Not documented yet.
+
+<pre>public final int hashCode()
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -335,8 +424,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="isblank">IsBlank</h3>
-<pre>public boolean IsBlank() Gets a value indicating whether this term is a blank node.
+
+<pre>public boolean IsBlank()
 </pre>
+
+<p>Gets a value indicating whether this term is a blank node.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -345,8 +437,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="isiri">IsIRI</h3>
-<pre>public boolean IsIRI(String str) Not documented yet.
+
+<pre>public boolean IsIRI(String str)
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -361,8 +456,11 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="isordinarystring">IsOrdinaryString</h3>
-<pre>public boolean IsOrdinaryString() Not documented yet.
+
+<pre>public boolean IsOrdinaryString()
 </pre>
+
+<p>Not documented yet.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -371,8 +469,12 @@ public static final RDFTerm TRUE object for true. ## Method Details
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public final String toString() Gets a string representation of this RDF term in N-Triples format. The  string will not end in a line break.
+
+<pre>public final String toString()
 </pre>
+
+<p>Gets a string representation of this RDF term in N-Triples format. The
+ string will not end in a line break.</p>
 
 <p><strong>Overrides:</strong></p>
 

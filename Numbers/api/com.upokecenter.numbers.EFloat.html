@@ -1157,19 +1157,72 @@ Renamed to ToEDecimal.</p>
 <h2 id="field-details">Field Details</h2>
 
 <h3 id="nan">NaN</h3>
-<pre>public static final EFloat NaN A not-a-number value. ### NegativeInfinity
-public static final EFloat NegativeInfinity Negative infinity, less than any other number. ### NegativeZero
-public static final EFloat NegativeZero Represents the number negative zero. ### One
-public static final EFloat One Represents the number 1. ### PositiveInfinity
-public static final EFloat PositiveInfinity Positive infinity, greater than any other number. ### SignalingNaN
-public static final EFloat SignalingNaN A not-a-number value that signals an invalid operation flag when it's passed  as an argument to any arithmetic operation in arbitrary-precision binary  floating-point number. ### Ten
-public static final EFloat Ten Represents the number 10. ### Zero
-public static final EFloat Zero Represents the number 0. ## Method Details
+
+<pre>public static final EFloat NaN
 </pre>
 
-<h3 id="getexponent">getExponent</h3>
-<pre>public final EInteger getExponent() Gets this object's exponent. This object's value will be an integer if the  exponent is positive or zero.
+<p>A not-a-number value.</p>
+
+<h3 id="negativeinfinity">NegativeInfinity</h3>
+
+<pre>public static final EFloat NegativeInfinity
 </pre>
+
+<p>Negative infinity, less than any other number.</p>
+
+<h3 id="negativezero">NegativeZero</h3>
+
+<pre>public static final EFloat NegativeZero
+</pre>
+
+<p>Represents the number negative zero.</p>
+
+<h3 id="one">One</h3>
+
+<pre>public static final EFloat One
+</pre>
+
+<p>Represents the number 1.</p>
+
+<h3 id="positiveinfinity">PositiveInfinity</h3>
+
+<pre>public static final EFloat PositiveInfinity
+</pre>
+
+<p>Positive infinity, greater than any other number.</p>
+
+<h3 id="signalingnan">SignalingNaN</h3>
+
+<pre>public static final EFloat SignalingNaN
+</pre>
+
+<p>A not-a-number value that signals an invalid operation flag when it’s passed
+ as an argument to any arithmetic operation in arbitrary-precision binary
+ floating-point number.</p>
+
+<h3 id="ten">Ten</h3>
+
+<pre>public static final EFloat Ten
+</pre>
+
+<p>Represents the number 10.</p>
+
+<h3 id="zero">Zero</h3>
+
+<pre>public static final EFloat Zero
+</pre>
+
+<p>Represents the number 0.</p>
+
+<h2 id="method-details">Method Details</h2>
+
+<h3 id="getexponent">getExponent</h3>
+
+<pre>public final EInteger getExponent()
+</pre>
+
+<p>Gets this object’s exponent. This object’s value will be an integer if the
+ exponent is positive or zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1179,8 +1232,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isfinite">isFinite</h3>
-<pre>public final boolean isFinite() Gets a value indicating whether this object is finite (not infinity or  not-a-number, NaN).
+
+<pre>public final boolean isFinite()
 </pre>
+
+<p>Gets a value indicating whether this object is finite (not infinity or
+ not-a-number, NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1190,8 +1247,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isnegative">isNegative</h3>
-<pre>public final boolean isNegative() Gets a value indicating whether this object is negative, including negative  zero.
+
+<pre>public final boolean isNegative()
 </pre>
+
+<p>Gets a value indicating whether this object is negative, including negative
+ zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1201,8 +1262,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="iszero">isZero</h3>
-<pre>public final boolean isZero() Gets a value indicating whether this object's value equals 0.
+
+<pre>public final boolean isZero()
 </pre>
+
+<p>Gets a value indicating whether this object’s value equals 0.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1213,8 +1277,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="getmantissa">getMantissa</h3>
-<pre>public final EInteger getMantissa() Gets this object's unscaled value, or significand, and makes it negative if  this object is negative. If this value is not-a-number (NaN), that value's  absolute value is the NaN's "payload" (diagnostic information).
+
+<pre>public final EInteger getMantissa()
 </pre>
+
+<p>Gets this object’s unscaled value, or significand, and makes it negative if
+ this object is negative. If this value is not-a-number (NaN), that value’s
+ absolute value is the NaN’s “payload” (diagnostic information).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1224,8 +1293,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="signum">signum</h3>
-<pre>public final int signum() Gets this value's sign: -1 if negative; 1 if positive; 0 if zero.
+
+<pre>public final int signum()
 </pre>
+
+<p>Gets this value’s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1234,8 +1306,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="getunsignedmantissa">getUnsignedMantissa</h3>
-<pre>public final EInteger getUnsignedMantissa() Gets the absolute value of this object's unscaled value, or significand. If  this value is not-a-number (NaN), that value is the NaN's "payload"  (diagnostic information).
+
+<pre>public final EInteger getUnsignedMantissa()
 </pre>
+
+<p>Gets the absolute value of this object’s unscaled value, or significand. If
+ this value is not-a-number (NaN), that value is the NaN’s “payload”
+ (diagnostic information).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1244,8 +1321,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="copy">Copy</h3>
-<pre>public EFloat Copy() Creates a copy of this arbitrary-precision binary number.
+
+<pre>public EFloat Copy()
 </pre>
+
+<p>Creates a copy of this arbitrary-precision binary number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1254,8 +1334,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create">Create</h3>
-<pre>public static EFloat Create(int mantissaSmall, int exponentSmall) Returns an arbitrary-precision number with the value &lt;code&gt;  exponent*2^significand&lt;/code&gt;.
+
+<pre>public static EFloat Create(int mantissaSmall, int exponentSmall)
 </pre>
+
+<p>Returns an arbitrary-precision number with the value <code>
+ exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1275,8 +1359,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-1">Create</h3>
-<pre>public static EFloat Create(EInteger mantissa, int exponentSmall) Returns an arbitrary-precision number with the value &lt;code&gt;  exponent*2^significand&lt;/code&gt;.
+
+<pre>public static EFloat Create(EInteger mantissa, int exponentSmall)
 </pre>
+
+<p>Returns an arbitrary-precision number with the value <code>
+ exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1302,8 +1390,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-2">Create</h3>
-<pre>public static EFloat Create(EInteger mantissa, long exponentLong) Returns an arbitrary-precision number with the value &lt;code&gt;  exponent*2^significand&lt;/code&gt;.
+
+<pre>public static EFloat Create(EInteger mantissa, long exponentLong)
 </pre>
+
+<p>Returns an arbitrary-precision number with the value <code>
+ exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1329,8 +1421,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-3">Create</h3>
-<pre>public static EFloat Create(EInteger mantissa, EInteger exponent) Returns an arbitrary-precision number with the value &lt;code&gt;  exponent*2^significand&lt;/code&gt;.
+
+<pre>public static EFloat Create(EInteger mantissa, EInteger exponent)
 </pre>
+
+<p>Returns an arbitrary-precision number with the value <code>
+ exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1357,8 +1453,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-4">Create</h3>
-<pre>public static EFloat Create(long mantissaLong, int exponentSmall) Returns an arbitrary-precision number with the value &lt;code&gt;  exponent*2^significand&lt;/code&gt;.
+
+<pre>public static EFloat Create(long mantissaLong, int exponentSmall)
 </pre>
+
+<p>Returns an arbitrary-precision number with the value <code>
+ exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1378,8 +1478,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="create-5">Create</h3>
-<pre>public static EFloat Create(long mantissaLong, long exponentLong) Returns an arbitrary-precision number with the value &lt;code&gt;  exponent*2^significand&lt;/code&gt;.
+
+<pre>public static EFloat Create(long mantissaLong, long exponentLong)
 </pre>
+
+<p>Returns an arbitrary-precision number with the value <code>
+ exponent*2^significand</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1399,8 +1503,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="createnan">CreateNaN</h3>
-<pre>public static EFloat CreateNaN(EInteger diag) Creates a not-a-number arbitrary-precision binary number.
+
+<pre>public static EFloat CreateNaN(EInteger diag)
 </pre>
+
+<p>Creates a not-a-number arbitrary-precision binary number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1418,8 +1525,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="createnan-1">CreateNaN</h3>
-<pre>public static EFloat CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx) Creates a not-a-number arbitrary-precision binary number.
+
+<pre>public static EFloat CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx)
 </pre>
+
+<p>Creates a not-a-number arbitrary-precision binary number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1460,8 +1570,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromdoublebits">FromDoubleBits</h3>
-<pre>public static EFloat FromDoubleBits(long dblBits) Creates a binary floating-point number from a 64-bit floating-point number  encoded in the IEEE 754 binary64 format. This method computes the exact  value of the floating point number, not an approximation, as is often the  case by converting the floating point number to a string first.
+
+<pre>public static EFloat FromDoubleBits(long dblBits)
 </pre>
+
+<p>Creates a binary floating-point number from a 64-bit floating-point number
+ encoded in the IEEE 754 binary64 format. This method computes the exact
+ value of the floating point number, not an approximation, as is often the
+ case by converting the floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1477,8 +1593,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromsingle">FromSingle</h3>
+
 <pre>public static EFloat FromSingle(float flt)
 </pre>
+
 <p>Creates a binary floating-point number from a 32-bit floating-point
  number. This method computes the exact value of the floating point number,
  not an approximation, as is often the case by converting the floating point
@@ -1508,8 +1626,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromdouble">FromDouble</h3>
+
 <pre>public static EFloat FromDouble(double dbl)
 </pre>
+
 <p>Creates a binary floating-point number from a 64-bit floating-point
  number. This method computes the exact value of the floating point number,
  not an approximation, as is often the case by converting the floating point
@@ -1537,8 +1657,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromeinteger">FromEInteger</h3>
-<pre>public static EFloat FromEInteger(EInteger bigint) Converts an arbitrary-precision integer to the same value as a binary  floating-point number.
+
+<pre>public static EFloat FromEInteger(EInteger bigint)
 </pre>
+
+<p>Converts an arbitrary-precision integer to the same value as a binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1553,8 +1677,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring">FromString</h3>
+
 <pre>public static EFloat FromString(String str, int offset, int length, EContext ctx)
 </pre>
+
 <p>Creates a binary floating-point number from a text string that represents
  a number. Note that if the string contains a negative exponent, the
  resulting value might not be exact, in which case the resulting binary
@@ -1627,8 +1753,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-1">FromString</h3>
-<pre>public static EFloat FromString(String str) Creates a binary floating-point number from a text string that represents a  number, using an unlimited precision context. For more information, see the  &lt;code&gt;FromString(string, int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(String str)
 </pre>
+
+<p>Creates a binary floating-point number from a text string that represents a
+ number, using an unlimited precision context. For more information, see the
+ <code>FromString(string, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1656,8 +1787,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-2">FromString</h3>
-<pre>public static EFloat FromString(String str, EContext ctx) Creates a binary floating-point number from a text string that represents a  number. For more information, see the &lt;code&gt;FromString(string, int, int,  EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(String str, EContext ctx)
 </pre>
+
+<p>Creates a binary floating-point number from a text string that represents a
+ number. For more information, see the <code>FromString(string, int, int,
+ EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1690,8 +1826,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-3">FromString</h3>
-<pre>public static EFloat FromString(String str, int offset, int length) Creates a binary floating-point number from a text string that represents a  number. For more information, see the &lt;code&gt;FromString(string, int, int,  EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(String str, int offset, int length)
 </pre>
+
+<p>Creates a binary floating-point number from a text string that represents a
+ number. For more information, see the <code>FromString(string, int, int,
+ EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1734,8 +1875,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-4">FromString</h3>
+
 <pre>public static EFloat FromString(char[] chars, int offset, int length, EContext ctx)
 </pre>
+
 <p>Creates a binary floating-point number from a sequence of <code>char</code> s
  that represents a number. Note that if the sequence contains a negative
  exponent, the resulting value might not be exact, in which case the
@@ -1810,8 +1953,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-5">FromString</h3>
-<pre>public static EFloat FromString(char[] chars) Creates a binary floating-point number from a sequence of &lt;code&gt;char&lt;/code&gt; s  that represents a number, using an unlimited precision context. For more  information, see the &lt;code&gt;FromString(string, int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(char[] chars)
 </pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s
+ that represents a number, using an unlimited precision context. For more
+ information, see the <code>FromString(string, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1840,8 +1988,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-6">FromString</h3>
-<pre>public static EFloat FromString(char[] chars, EContext ctx) Creates a binary floating-point number from a sequence of &lt;code&gt;char&lt;/code&gt; s  that represents a number. For more information, see the &lt;code&gt;  FromString(string, int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(char[] chars, EContext ctx)
 </pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s
+ that represents a number. For more information, see the <code>
+ FromString(string, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1875,8 +2028,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-7">FromString</h3>
-<pre>public static EFloat FromString(char[] chars, int offset, int length) Creates a binary floating-point number from a sequence of &lt;code&gt;char&lt;/code&gt; s  that represents a number. For more information, see the &lt;code&gt;  FromString(string, int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(char[] chars, int offset, int length)
 </pre>
+
+<p>Creates a binary floating-point number from a sequence of <code>char</code> s
+ that represents a number. For more information, see the <code>
+ FromString(string, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1915,8 +2073,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-8">FromString</h3>
+
 <pre>public static EFloat FromString(byte[] bytes, int offset, int length, EContext ctx)
 </pre>
+
 <p>Creates a binary floating-point number from a sequence of bytes that
  represents a number. Note that if the sequence contains a negative exponent,
  the resulting value might not be exact, in which case the resulting binary
@@ -1990,8 +2150,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-9">FromString</h3>
-<pre>public static EFloat FromString(byte[] bytes) Creates a binary floating-point number from a sequence of bytes that  represents a number, using an unlimited precision context. For more  information, see the &lt;code&gt;FromString(string, int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(byte[] bytes)
 </pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number, using an unlimited precision context. For more
+ information, see the <code>FromString(string, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2020,8 +2185,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-10">FromString</h3>
-<pre>public static EFloat FromString(byte[] bytes, EContext ctx) Creates a binary floating-point number from a sequence of bytes that  represents a number. For more information, see the &lt;code&gt;FromString(string,  int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(byte[] bytes, EContext ctx)
 </pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number. For more information, see the <code>FromString(string,
+ int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2055,8 +2225,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromstring-11">FromString</h3>
-<pre>public static EFloat FromString(byte[] bytes, int offset, int length) Creates a binary floating-point number from a sequence of bytes that  represents a number. For more information, see the &lt;code&gt;FromString(string,  int, int, EContext)&lt;/code&gt; method.
+
+<pre>public static EFloat FromString(byte[] bytes, int offset, int length)
 </pre>
+
+<p>Creates a binary floating-point number from a sequence of bytes that
+ represents a number. For more information, see the <code>FromString(string,
+ int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2095,8 +2270,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="max">Max</h3>
-<pre>public static EFloat Max(EFloat first, EFloat second, EContext ctx) Gets the greater value between two binary floating-point numbers.
+
+<pre>public static EFloat Max(EFloat first, EFloat second, EContext ctx)
 </pre>
+
+<p>Gets the greater value between two binary floating-point numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2134,8 +2312,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="max-1">Max</h3>
-<pre>public static EFloat Max(EFloat first, EFloat second) Gets the greater value between two binary floating-point numbers.
+
+<pre>public static EFloat Max(EFloat first, EFloat second)
 </pre>
+
+<p>Gets the greater value between two binary floating-point numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2166,8 +2347,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="maxmagnitude">MaxMagnitude</h3>
-<pre>public static EFloat MaxMagnitude(EFloat first, EFloat second, EContext ctx) Gets the greater value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Max.
+
+<pre>public static EFloat MaxMagnitude(EFloat first, EFloat second, EContext ctx)
 </pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2201,8 +2386,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="maxmagnitude-1">MaxMagnitude</h3>
-<pre>public static EFloat MaxMagnitude(EFloat first, EFloat second) Gets the greater value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Max.
+
+<pre>public static EFloat MaxMagnitude(EFloat first, EFloat second)
 </pre>
+
+<p>Gets the greater value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Max.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2229,8 +2418,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="min">Min</h3>
-<pre>public static EFloat Min(EFloat first, EFloat second, EContext ctx) Gets the lesser value between two binary floating-point numbers.
+
+<pre>public static EFloat Min(EFloat first, EFloat second, EContext ctx)
 </pre>
+
+<p>Gets the lesser value between two binary floating-point numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2268,8 +2460,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="min-1">Min</h3>
-<pre>public static EFloat Min(EFloat first, EFloat second) Gets the lesser value between two binary floating-point numbers.
+
+<pre>public static EFloat Min(EFloat first, EFloat second)
 </pre>
+
+<p>Gets the lesser value between two binary floating-point numbers.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2300,8 +2495,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="minmagnitude">MinMagnitude</h3>
-<pre>public static EFloat MinMagnitude(EFloat first, EFloat second, EContext ctx) Gets the lesser value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Min.
+
+<pre>public static EFloat MinMagnitude(EFloat first, EFloat second, EContext ctx)
 </pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2335,8 +2534,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="minmagnitude-1">MinMagnitude</h3>
-<pre>public static EFloat MinMagnitude(EFloat first, EFloat second) Gets the lesser value between two values, ignoring their signs. If the  absolute values are equal, has the same effect as Min.
+
+<pre>public static EFloat MinMagnitude(EFloat first, EFloat second)
 </pre>
+
+<p>Gets the lesser value between two values, ignoring their signs. If the
+ absolute values are equal, has the same effect as Min.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2363,8 +2566,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pi">PI</h3>
-<pre>public static EFloat PI(EContext ctx) Finds the constant π, the circumference of a circle divided by its diameter.
+
+<pre>public static EFloat PI(EContext ctx)
 </pre>
+
+<p>Finds the constant π, the circumference of a circle divided by its diameter.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2385,8 +2591,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="abs">Abs</h3>
-<pre>public EFloat Abs() Finds the absolute value of this object (if it's negative, it becomes  positive).
+
+<pre>public EFloat Abs()
 </pre>
+
+<p>Finds the absolute value of this object (if it’s negative, it becomes
+ positive).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2399,8 +2609,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="abs-1">Abs</h3>
-<pre>public EFloat Abs(EContext context) Finds the absolute value of this object (if it's negative, it becomes  positive).
+
+<pre>public EFloat Abs(EContext context)
 </pre>
+
+<p>Finds the absolute value of this object (if it’s negative, it becomes
+ positive).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2420,8 +2634,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add">Add</h3>
-<pre>public EFloat Add(int intValue) Adds this arbitrary-precision binary floating-point number and a 32-bit  signed integer and returns the result. The exponent for the result is the  lower of this arbitrary-precision binary floating-point number's exponent  and the other 32-bit signed integer's exponent.
+
+<pre>public EFloat Add(int intValue)
 </pre>
+
+<p>Adds this arbitrary-precision binary floating-point number and a 32-bit
+ signed integer and returns the result. The exponent for the result is the
+ lower of this arbitrary-precision binary floating-point number’s exponent
+ and the other 32-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2439,8 +2659,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract">Subtract</h3>
-<pre>public EFloat Subtract(int intValue) Subtracts a 32-bit signed integer from this arbitrary-precision binary  floating-point number and returns the result. The exponent for the result is  the lower of this arbitrary-precision binary floating-point number's  exponent and the other 32-bit signed integer's exponent.
+
+<pre>public EFloat Subtract(int intValue)
 </pre>
+
+<p>Subtracts a 32-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result. The exponent for the result is
+ the lower of this arbitrary-precision binary floating-point number’s
+ exponent and the other 32-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2458,8 +2684,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply">Multiply</h3>
+
 <pre>public EFloat Multiply(int intValue)
 </pre>
+
 <p>Multiplies this arbitrary-precision binary floating-point number by a
  32-bit signed integer and returns the result. The exponent for the result is
  this arbitrary-precision binary floating-point number's exponent plus the
@@ -2482,8 +2710,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide">Divide</h3>
-<pre>public EFloat Divide(int intValue) Divides this arbitrary-precision binary floating-point number by a 32-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,  and so on); if this is not desired, use DivideToExponent, or use the Divide  overload that takes an EContext.
+
+<pre>public EFloat Divide(int intValue)
 </pre>
+
+<p>Divides this arbitrary-precision binary floating-point number by a 32-bit
+ signed integer and returns the result; returns NaN instead if the result
+ would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,
+ and so on); if this is not desired, use DivideToExponent, or use the Divide
+ overload that takes an EContext.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2512,8 +2747,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add-1">Add</h3>
-<pre>public EFloat Add(long longValue) Adds this arbitrary-precision binary floating-point number and a 64-bit  signed integer and returns the result. The exponent for the result is the  lower of this arbitrary-precision binary floating-point number's exponent  and the other 64-bit signed integer's exponent.
+
+<pre>public EFloat Add(long longValue)
 </pre>
+
+<p>Adds this arbitrary-precision binary floating-point number and a 64-bit
+ signed integer and returns the result. The exponent for the result is the
+ lower of this arbitrary-precision binary floating-point number’s exponent
+ and the other 64-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2531,8 +2772,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract-1">Subtract</h3>
-<pre>public EFloat Subtract(long longValue) Subtracts a 64-bit signed integer from this arbitrary-precision binary  floating-point number and returns the result. The exponent for the result is  the lower of this arbitrary-precision binary floating-point number's  exponent and the other 64-bit signed integer's exponent.
+
+<pre>public EFloat Subtract(long longValue)
 </pre>
+
+<p>Subtracts a 64-bit signed integer from this arbitrary-precision binary
+ floating-point number and returns the result. The exponent for the result is
+ the lower of this arbitrary-precision binary floating-point number’s
+ exponent and the other 64-bit signed integer’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2550,8 +2797,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply-1">Multiply</h3>
+
 <pre>public EFloat Multiply(long longValue)
 </pre>
+
 <p>Multiplies this arbitrary-precision binary floating-point number by a
  64-bit signed integer and returns the result. The exponent for the result is
  this arbitrary-precision binary floating-point number's exponent plus the
@@ -2574,8 +2823,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-1">Divide</h3>
-<pre>public EFloat Divide(long longValue) Divides this arbitrary-precision binary floating-point number by a 64-bit  signed integer and returns the result; returns NaN instead if the result  would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,  and so on); if this is not desired, use DivideToExponent, or use the Divide  overload that takes an EContext.
+
+<pre>public EFloat Divide(long longValue)
 </pre>
+
+<p>Divides this arbitrary-precision binary floating-point number by a 64-bit
+ signed integer and returns the result; returns NaN instead if the result
+ would have a nonterminating binary expansion (including 1/3, 1/12, 1/7, 2/3,
+ and so on); if this is not desired, use DivideToExponent, or use the Divide
+ overload that takes an EContext.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2604,8 +2860,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add-2">Add</h3>
-<pre>public EFloat Add(EFloat otherValue) Adds this arbitrary-precision binary floating-point number and another  arbitrary-precision binary floating-point number and returns the result. The  exponent for the result is the lower of this arbitrary-precision binary  floating-point number's exponent and the other arbitrary-precision binary  floating-point number's exponent.
+
+<pre>public EFloat Add(EFloat otherValue)
 </pre>
+
+<p>Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the result. The
+ exponent for the result is the lower of this arbitrary-precision binary
+ floating-point number’s exponent and the other arbitrary-precision binary
+ floating-point number’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2623,8 +2886,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="add-3">Add</h3>
-<pre>public EFloat Add(EFloat otherValue, EContext ctx) Adds this arbitrary-precision binary floating-point number and another  arbitrary-precision binary floating-point number and returns the result.
+
+<pre>public EFloat Add(EFloat otherValue, EContext ctx)
 </pre>
+
+<p>Adds this arbitrary-precision binary floating-point number and another
+ arbitrary-precision binary floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2651,8 +2918,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="compareto">compareTo</h3>
-<pre>public int compareTo(EFloat other) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(EFloat other)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -2675,8 +2949,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetovalue">CompareToValue</h3>
+
 <pre>public int CompareToValue(EFloat other)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -2704,8 +2980,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="compareto-1">compareTo</h3>
-<pre>public int compareTo(int intOther) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(int intOther)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2722,8 +3005,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetovalue-1">CompareToValue</h3>
+
 <pre>public int CompareToValue(int intOther)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -2750,8 +3035,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetovalue-2">CompareToValue</h3>
+
 <pre>public int CompareToValue(long intOther)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. </p>
 <p>This method is not consistent with the Equals
@@ -2778,8 +3065,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="compareto-2">compareTo</h3>
-<pre>public int compareTo(long intOther) Compares the mathematical values of this object and another object,  accepting NaN values. This method currently uses the rules given in the  CompareToValue method, so that it it is not consistent with the Equals  method, but it may change in a future version to use the rules for the  CompareToTotal method instead.
+
+<pre>public int compareTo(long intOther)
 </pre>
+
+<p>Compares the mathematical values of this object and another object,
+ accepting NaN values. This method currently uses the rules given in the
+ CompareToValue method, so that it it is not consistent with the Equals
+ method, but it may change in a future version to use the rules for the
+ CompareToTotal method instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2796,8 +3090,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetosignal">CompareToSignal</h3>
+
 <pre>public EFloat CompareToSignal(EFloat other, EContext ctx)
 </pre>
+
 <p>Compares the mathematical values of this object and another object,
  treating quiet NaN as signaling. </p>
 <p>In this method, negative zero and
@@ -2830,8 +3126,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototal">CompareToTotal</h3>
+
 <pre>public int CompareToTotal(EFloat other, EContext ctx)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: </p>
 <ul> <li>For objects
@@ -2869,8 +3167,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototalmagnitude">CompareToTotalMagnitude</h3>
+
 <pre>public int CompareToTotalMagnitude(EFloat other, EContext ctx)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values (ignoring their signs). In this method: </p>
 <ul> <li>For objects with the same value, the one with the higher exponent
@@ -2908,8 +3208,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototal-1">CompareToTotal</h3>
+
 <pre>public int CompareToTotal(EFloat other)
 </pre>
+
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: </p>
 <ul> <li>For objects
@@ -2938,8 +3240,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetototalmagnitude-1">CompareToTotalMagnitude</h3>
+
 <pre>public int CompareToTotalMagnitude(EFloat other)
 </pre>
+
 <p>Compares the absolute values of this object and another object, imposing
  a total ordering on all possible values (ignoring their signs). In this
  method: </p>
@@ -2968,8 +3272,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="comparetowithcontext">CompareToWithContext</h3>
+
 <pre>public EFloat CompareToWithContext(EFloat other, EContext ctx)
 </pre>
+
 <p>Compares the mathematical values of this object and another object.
  </p>
 <p>In this method, negative zero and positive zero are considered
@@ -3002,8 +3308,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="copysign">CopySign</h3>
-<pre>public EFloat CopySign(EFloat other) Returns a number with the same value as this one, but copying the sign  (positive or negative) of another number. (This method is similar to the  "copy-sign" operation in the General Decimal Arithmetic Specification,  except this method does not necessarily return a copy of this object.).
+
+<pre>public EFloat CopySign(EFloat other)
 </pre>
+
+<p>Returns a number with the same value as this one, but copying the sign
+ (positive or negative) of another number. (This method is similar to the
+ “copy-sign” operation in the General Decimal Arithmetic Specification,
+ except this method does not necessarily return a copy of this object.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3024,8 +3336,16 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-2">Divide</h3>
-<pre>public EFloat Divide(EFloat divisor) Divides this arbitrary-precision binary floating-point number by another  arbitrary-precision binary floating-point number and returns the result;  returns NaN instead if the result would have a nonterminating binary  expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not  desired, use DivideToExponent, or use the Divide overload that takes an  EContext.
+
+<pre>public EFloat Divide(EFloat divisor)
 </pre>
+
+<p>Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the result;
+ returns NaN instead if the result would have a nonterminating binary
+ expansion (including 1/3, 1/12, 1/7, 2/3, and so on); if this is not
+ desired, use DivideToExponent, or use the Divide overload that takes an
+ EContext.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3049,8 +3369,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divide-3">Divide</h3>
-<pre>public EFloat Divide(EFloat divisor, EContext ctx) Divides this arbitrary-precision binary floating-point number by another  arbitrary-precision binary floating-point number and returns the result.
+
+<pre>public EFloat Divide(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3083,8 +3407,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divideandremaindernaturalscale">DivideAndRemainderNaturalScale</h3>
-<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor) Calculates the quotient and remainder using the DivideToIntegerNaturalScale  and the formula in RemainderNaturalScale.
+
+<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor)
 </pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3100,8 +3428,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divideandremaindernaturalscale-1">DivideAndRemainderNaturalScale</h3>
-<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor, EContext ctx) Calculates the quotient and remainder using the DivideToIntegerNaturalScale  and the formula in RemainderNaturalScale.
+
+<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
+ and the formula in RemainderNaturalScale.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3130,8 +3462,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent">DivideToExponent</h3>
-<pre>public EFloat DivideToExponent(EFloat divisor, long desiredExponentSmall, EContext ctx) Divides two arbitrary-precision binary floating-point numbers, and gives a  particular exponent to the result.
+
+<pre>public EFloat DivideToExponent(EFloat divisor, long desiredExponentSmall, EContext ctx)
 </pre>
+
+<p>Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3171,8 +3507,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-1">DivideToExponent</h3>
-<pre>public EFloat DivideToExponent(EFloat divisor, long desiredExponentSmall, ERounding rounding) Divides two arbitrary-precision binary floating-point numbers, and gives a  particular exponent to the result.
+
+<pre>public EFloat DivideToExponent(EFloat divisor, long desiredExponentSmall, ERounding rounding)
 </pre>
+
+<p>Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3203,8 +3543,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-2">DivideToExponent</h3>
-<pre>public EFloat DivideToExponent(EFloat divisor, EInteger exponent, EContext ctx) Divides two arbitrary-precision binary floating-point numbers, and gives a  particular exponent to the result.
+
+<pre>public EFloat DivideToExponent(EFloat divisor, EInteger exponent, EContext ctx)
 </pre>
+
+<p>Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3244,8 +3588,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetoexponent-3">DivideToExponent</h3>
-<pre>public EFloat DivideToExponent(EFloat divisor, EInteger desiredExponent, ERounding rounding) Divides two arbitrary-precision binary floating-point numbers, and gives a  particular exponent to the result.
+
+<pre>public EFloat DivideToExponent(EFloat divisor, EInteger desiredExponent, ERounding rounding)
 </pre>
+
+<p>Divides two arbitrary-precision binary floating-point numbers, and gives a
+ particular exponent to the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3275,8 +3623,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetointegernaturalscale">DivideToIntegerNaturalScale</h3>
-<pre>public EFloat DivideToIntegerNaturalScale(EFloat divisor) Divides two arbitrary-precision binary floating-point numbers, and returns  the integer part of the result, rounded down, with the preferred exponent  set to this value's exponent minus the divisor's exponent.
+
+<pre>public EFloat DivideToIntegerNaturalScale(EFloat divisor)
 </pre>
+
+<p>Divides two arbitrary-precision binary floating-point numbers, and returns
+ the integer part of the result, rounded down, with the preferred exponent
+ set to this value’s exponent minus the divisor’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3294,8 +3647,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetointegernaturalscale-1">DivideToIntegerNaturalScale</h3>
-<pre>public EFloat DivideToIntegerNaturalScale(EFloat divisor, EContext ctx) Divides this object by another object, and returns the integer part of the  result (which is initially rounded down), with the preferred exponent set to  this value's exponent minus the divisor's exponent.
+
+<pre>public EFloat DivideToIntegerNaturalScale(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Divides this object by another object, and returns the integer part of the
+ result (which is initially rounded down), with the preferred exponent set to
+ this value’s exponent minus the divisor’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3321,8 +3679,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetointegerzeroscale">DivideToIntegerZeroScale</h3>
-<pre>public EFloat DivideToIntegerZeroScale(EFloat divisor, EContext ctx) Divides this object by another object, and returns the integer part of the  result, with the exponent set to 0.
+
+<pre>public EFloat DivideToIntegerZeroScale(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Divides this object by another object, and returns the integer part of the
+ result, with the exponent set to 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3350,8 +3712,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="dividetosameexponent">DivideToSameExponent</h3>
-<pre>public EFloat DivideToSameExponent(EFloat divisor, ERounding rounding) Divides this object by another binary floating-point number and returns a  result with the same exponent as this object (the dividend).
+
+<pre>public EFloat DivideToSameExponent(EFloat divisor, ERounding rounding)
 </pre>
+
+<p>Divides this object by another binary floating-point number and returns a
+ result with the same exponent as this object (the dividend).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3376,8 +3742,16 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divremnaturalscale">DivRemNaturalScale</h3>
-<pre>public EFloat[] DivRemNaturalScale(EFloat divisor) Divides this arbitrary-precision binary floating-point number by another  arbitrary-precision binary floating-point number and returns a two-item  array containing the result of the division and the remainder, in that  order. The result of division is calculated as though by &lt;code&gt;  DivideToIntegerNaturalScale&lt;/code&gt;, and the remainder is calculated as though by  &lt;code&gt;RemainderNaturalScale&lt;/code&gt;.
+
+<pre>public EFloat[] DivRemNaturalScale(EFloat divisor)
 </pre>
+
+<p>Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns a two-item
+ array containing the result of the division and the remainder, in that
+ order. The result of division is calculated as though by <code>
+ DivideToIntegerNaturalScale</code>, and the remainder is calculated as though by
+ <code>RemainderNaturalScale</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3396,8 +3770,16 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="divremnaturalscale-1">DivRemNaturalScale</h3>
-<pre>public EFloat[] DivRemNaturalScale(EFloat divisor, EContext ctx) Divides this arbitrary-precision binary floating-point number by another  arbitrary-precision binary floating-point number and returns a two-item  array containing the result of the division and the remainder, in that  order. The result of division is calculated as though by &lt;code&gt;  DivideToIntegerNaturalScale&lt;/code&gt;, and the remainder is calculated as though by  &lt;code&gt;RemainderNaturalScale&lt;/code&gt;.
+
+<pre>public EFloat[] DivRemNaturalScale(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Divides this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns a two-item
+ array containing the result of the division and the remainder, in that
+ order. The result of division is calculated as though by <code>
+ DivideToIntegerNaturalScale</code>, and the remainder is calculated as though by
+ <code>RemainderNaturalScale</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3429,8 +3811,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="equals">equals</h3>
-<pre>public boolean equals(EFloat other) Determines whether this object's significand, exponent, and properties are  equal to those of another object. Not-a-number values are considered equal  if the rest of their properties are equal.
+
+<pre>public boolean equals(EFloat other)
 </pre>
+
+<p>Determines whether this object’s significand, exponent, and properties are
+ equal to those of another object. Not-a-number values are considered equal
+ if the rest of their properties are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3446,8 +3833,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="equals-1">equals</h3>
-<pre>public boolean equals(Object obj) Determines whether this object's significand, exponent, and properties are  equal to those of another object and that other object is an  arbitrary-precision binary floating-point number. Not-a-number values are  considered equal if the rest of their properties are equal.
+
+<pre>public boolean equals(Object obj)
 </pre>
+
+<p>Determines whether this object’s significand, exponent, and properties are
+ equal to those of another object and that other object is an
+ arbitrary-precision binary floating-point number. Not-a-number values are
+ considered equal if the rest of their properties are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -3470,8 +3863,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="equalsinternal">EqualsInternal</h3>
-<pre>public boolean EqualsInternal(EFloat otherValue) Determines whether this object's significand and exponent are equal to those  of another object.
+
+<pre>public boolean EqualsInternal(EFloat otherValue)
 </pre>
+
+<p>Determines whether this object’s significand and exponent are equal to those
+ of another object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3487,8 +3884,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="exp">Exp</h3>
-<pre>public EFloat Exp(EContext ctx) Finds e (the base of natural logarithms) raised to the power of this  object's value.
+
+<pre>public EFloat Exp(EContext ctx)
 </pre>
+
+<p>Finds e (the base of natural logarithms) raised to the power of this
+ object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3511,8 +3912,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="expm1">ExpM1</h3>
-<pre>public EFloat ExpM1(EContext ctx) Finds e (the base of natural logarithms) raised to the power of this  object's value, and subtracts the result by 1 and returns the final result,  in a way that avoids loss of precision if the true result is very close to  0.
+
+<pre>public EFloat ExpM1(EContext ctx)
 </pre>
+
+<p>Finds e (the base of natural logarithms) raised to the power of this
+ object’s value, and subtracts the result by 1 and returns the final result,
+ in a way that avoids loss of precision if the true result is very close to
+ 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3534,8 +3941,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="hashcode">hashCode</h3>
-<pre>public int hashCode() Calculates this object's hash code. No application or process IDs are used  in the hash code calculation.
+
+<pre>public int hashCode()
 </pre>
+
+<p>Calculates this object’s hash code. No application or process IDs are used
+ in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -3550,8 +3961,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isinfinity">IsInfinity</h3>
-<pre>public boolean IsInfinity() Gets a value indicating whether this object is positive or negative  infinity.
+
+<pre>public boolean IsInfinity()
 </pre>
+
+<p>Gets a value indicating whether this object is positive or negative
+ infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3561,8 +3976,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isnan">IsNaN</h3>
-<pre>public boolean IsNaN() Gets a value indicating whether this object is not a number (NaN).
+
+<pre>public boolean IsNaN()
 </pre>
+
+<p>Gets a value indicating whether this object is not a number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3572,8 +3990,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isnegativeinfinity">IsNegativeInfinity</h3>
-<pre>public boolean IsNegativeInfinity() Returns whether this object is negative infinity.
+
+<pre>public boolean IsNegativeInfinity()
 </pre>
+
+<p>Returns whether this object is negative infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3583,8 +4004,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="ispositiveinfinity">IsPositiveInfinity</h3>
-<pre>public boolean IsPositiveInfinity() Returns whether this object is positive infinity.
+
+<pre>public boolean IsPositiveInfinity()
 </pre>
+
+<p>Returns whether this object is positive infinity.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3594,8 +4018,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isquietnan">IsQuietNaN</h3>
-<pre>public boolean IsQuietNaN() Gets a value indicating whether this object is a quiet not-a-number value.
+
+<pre>public boolean IsQuietNaN()
 </pre>
+
+<p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3605,8 +4032,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="issignalingnan">IsSignalingNaN</h3>
-<pre>public boolean IsSignalingNaN() Gets a value indicating whether this object is a signaling not-a-number  value.
+
+<pre>public boolean IsSignalingNaN()
 </pre>
+
+<p>Gets a value indicating whether this object is a signaling not-a-number
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3616,8 +4047,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="log">Log</h3>
-<pre>public EFloat Log(EContext ctx) Finds the natural logarithm of this object, that is, the power (exponent)  that e (the base of natural logarithms) must be raised to in order to equal  this object's value.
+
+<pre>public EFloat Log(EContext ctx)
 </pre>
+
+<p>Finds the natural logarithm of this object, that is, the power (exponent)
+ that e (the base of natural logarithms) must be raised to in order to equal
+ this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3643,8 +4079,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="log10">Log10</h3>
-<pre>public EFloat Log10(EContext ctx) Finds the base-10 logarithm of this object, that is, the power (exponent)  that the number 10 must be raised to in order to equal this object's value.
+
+<pre>public EFloat Log10(EContext ctx)
 </pre>
+
+<p>Finds the base-10 logarithm of this object, that is, the power (exponent)
+ that the number 10 must be raised to in order to equal this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3667,8 +4107,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="log1p">Log1P</h3>
-<pre>public EFloat Log1P(EContext ctx) Adds 1 to this object's value and finds the natural logarithm of the result,  in a way that avoids loss of precision when this object's value is between 0  and 1.
+
+<pre>public EFloat Log1P(EContext ctx)
 </pre>
+
+<p>Adds 1 to this object’s value and finds the natural logarithm of the result,
+ in a way that avoids loss of precision when this object’s value is between 0
+ and 1.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3694,8 +4139,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="logn">LogN</h3>
-<pre>public EFloat LogN(EFloat baseValue, EContext ctx) Finds the base-N logarithm of this object, that is, the power (exponent)  that the number N must be raised to in order to equal this object's value.
+
+<pre>public EFloat LogN(EFloat baseValue, EContext ctx)
 </pre>
+
+<p>Finds the base-N logarithm of this object, that is, the power (exponent)
+ that the number N must be raised to in order to equal this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3724,8 +4173,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft">MovePointLeft</h3>
-<pre>public EFloat MovePointLeft(int places) Returns a number similar to this number but with the radix point moved to  the left.
+
+<pre>public EFloat MovePointLeft(int places)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3743,8 +4196,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft-1">MovePointLeft</h3>
-<pre>public EFloat MovePointLeft(int places, EContext ctx) Returns a number similar to this number but with the radix point moved to  the left.
+
+<pre>public EFloat MovePointLeft(int places, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3771,8 +4228,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft-2">MovePointLeft</h3>
-<pre>public EFloat MovePointLeft(EInteger bigPlaces) Returns a number similar to this number but with the radix point moved to  the left.
+
+<pre>public EFloat MovePointLeft(EInteger bigPlaces)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3790,8 +4251,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointleft-3">MovePointLeft</h3>
-<pre>public EFloat MovePointLeft(EInteger bigPlaces, EContext ctx) Returns a number similar to this number but with the radix point moved to  the left.
+
+<pre>public EFloat MovePointLeft(EInteger bigPlaces, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the left.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3818,8 +4283,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright">MovePointRight</h3>
-<pre>public EFloat MovePointRight(int places) Returns a number similar to this number but with the radix point moved to  the right.
+
+<pre>public EFloat MovePointRight(int places)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3837,8 +4306,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright-1">MovePointRight</h3>
-<pre>public EFloat MovePointRight(int places, EContext ctx) Returns a number similar to this number but with the radix point moved to  the right.
+
+<pre>public EFloat MovePointRight(int places, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3865,8 +4338,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright-2">MovePointRight</h3>
-<pre>public EFloat MovePointRight(EInteger bigPlaces) Returns a number similar to this number but with the radix point moved to  the right.
+
+<pre>public EFloat MovePointRight(EInteger bigPlaces)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3884,8 +4361,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="movepointright-3">MovePointRight</h3>
-<pre>public EFloat MovePointRight(EInteger bigPlaces, EContext ctx) Returns a number similar to this number but with the radix point moved to  the right.
+
+<pre>public EFloat MovePointRight(EInteger bigPlaces, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the radix point moved to
+ the right.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3912,8 +4393,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply-2">Multiply</h3>
-<pre>public EFloat Multiply(EFloat otherValue) Multiplies this arbitrary-precision binary floating-point number by another  arbitrary-precision binary floating-point number and returns the result. The  exponent for the result is this arbitrary-precision binary floating-point  number's exponent plus the other arbitrary-precision binary floating-point  number's exponent.
+
+<pre>public EFloat Multiply(EFloat otherValue)
 </pre>
+
+<p>Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the result. The
+ exponent for the result is this arbitrary-precision binary floating-point
+ number’s exponent plus the other arbitrary-precision binary floating-point
+ number’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3936,8 +4424,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiply-3">Multiply</h3>
-<pre>public EFloat Multiply(EFloat op, EContext ctx) Multiplies this arbitrary-precision binary floating-point number by another  arbitrary-precision binary floating-point number and returns the result.
+
+<pre>public EFloat Multiply(EFloat op, EContext ctx)
 </pre>
+
+<p>Multiplies this arbitrary-precision binary floating-point number by another
+ arbitrary-precision binary floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3963,8 +4455,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiplyandadd">MultiplyAndAdd</h3>
-<pre>public EFloat MultiplyAndAdd(EFloat multiplicand, EFloat augend) Multiplies by one binary floating-point number, and then adds another binary  floating-point number.
+
+<pre>public EFloat MultiplyAndAdd(EFloat multiplicand, EFloat augend)
 </pre>
+
+<p>Multiplies by one binary floating-point number, and then adds another binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3984,8 +4480,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiplyandadd-1">MultiplyAndAdd</h3>
-<pre>public EFloat MultiplyAndAdd(EFloat op, EFloat augend, EContext ctx) Multiplies by one value, and then adds another value.
+
+<pre>public EFloat MultiplyAndAdd(EFloat op, EFloat augend, EContext ctx)
 </pre>
+
+<p>Multiplies by one value, and then adds another value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4014,8 +4513,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="multiplyandsubtract">MultiplyAndSubtract</h3>
-<pre>public EFloat MultiplyAndSubtract(EFloat op, EFloat subtrahend, EContext ctx) Multiplies by one value, and then subtracts another value.
+
+<pre>public EFloat MultiplyAndSubtract(EFloat op, EFloat subtrahend, EContext ctx)
 </pre>
+
+<p>Multiplies by one value, and then subtracts another value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4051,8 +4553,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="negate">Negate</h3>
-<pre>public EFloat Negate() Gets an object with the same value as this one, but with the sign reversed.
+
+<pre>public EFloat Negate()
 </pre>
+
+<p>Gets an object with the same value as this one, but with the sign reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4065,8 +4570,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="negate-1">Negate</h3>
-<pre>public EFloat Negate(EContext context) Returns a binary floating-point number with the same value as this object  but with the sign reversed.
+
+<pre>public EFloat Negate(EContext context)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but with the sign reversed.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4087,8 +4596,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="nextminus">NextMinus</h3>
-<pre>public EFloat NextMinus(EContext ctx) Finds the largest value that's smaller than the given value.
+
+<pre>public EFloat NextMinus(EContext ctx)
 </pre>
+
+<p>Finds the largest value that’s smaller than the given value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4110,8 +4622,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="nextplus">NextPlus</h3>
-<pre>public EFloat NextPlus(EContext ctx) Finds the smallest value that's greater than the given value.
+
+<pre>public EFloat NextPlus(EContext ctx)
 </pre>
+
+<p>Finds the smallest value that’s greater than the given value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4133,8 +4648,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="nexttoward">NextToward</h3>
-<pre>public EFloat NextToward(EFloat otherValue, EContext ctx) Finds the next value that is closer to the other object's value than this  object's value. Returns a copy of this value with the same sign as the other  value if both values are equal.
+
+<pre>public EFloat NextToward(EFloat otherValue, EContext ctx)
 </pre>
+
+<p>Finds the next value that is closer to the other object’s value than this
+ object’s value. Returns a copy of this value with the same sign as the other
+ value if both values are equal.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4162,8 +4682,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="plus">Plus</h3>
-<pre>public EFloat Plus(EContext ctx) Rounds this object's value to a given precision, using the given rounding  mode and range of exponent, and also converts negative zero to positive  zero. The idiom &lt;code&gt;EDecimal.SignalingNaN.Plus(ctx)&lt;/code&gt; is useful for  triggering an invalid operation and returning not-a-number (NaN) for custom  arithmetic operations.
+
+<pre>public EFloat Plus(EContext ctx)
 </pre>
+
+<p>Rounds this object’s value to a given precision, using the given rounding
+ mode and range of exponent, and also converts negative zero to positive
+ zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is useful for
+ triggering an invalid operation and returning not-a-number (NaN) for custom
+ arithmetic operations.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4183,8 +4710,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow">Pow</h3>
-<pre>public EFloat Pow(EFloat exponent) Raises this object's value to the given exponent, using unlimited precision.
+
+<pre>public EFloat Pow(EFloat exponent)
 </pre>
+
+<p>Raises this object’s value to the given exponent, using unlimited precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4201,8 +4731,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow-1">Pow</h3>
-<pre>public EFloat Pow(EFloat exponent, EContext ctx) Raises this object's value to the given exponent.
+
+<pre>public EFloat Pow(EFloat exponent, EContext ctx)
 </pre>
+
+<p>Raises this object’s value to the given exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4232,8 +4765,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow-2">Pow</h3>
-<pre>public EFloat Pow(int exponentSmall, EContext ctx) Raises this object's value to the given exponent.
+
+<pre>public EFloat Pow(int exponentSmall, EContext ctx)
 </pre>
+
+<p>Raises this object’s value to the given exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4258,8 +4794,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="pow-3">Pow</h3>
-<pre>public EFloat Pow(int exponentSmall) Raises this object's value to the given exponent.
+
+<pre>public EFloat Pow(int exponentSmall)
 </pre>
+
+<p>Raises this object’s value to the given exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4275,8 +4814,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="precision">Precision</h3>
-<pre>public EInteger Precision() Finds the number of digits in this number's significand. Returns 1 if this  value is 0, and 0 if this value is infinity or not-a-number (NaN).
+
+<pre>public EInteger Precision()
 </pre>
+
+<p>Finds the number of digits in this number’s significand. Returns 1 if this
+ value is 0, and 0 if this value is infinity or not-a-number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4285,8 +4828,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="isinteger">IsInteger</h3>
-<pre>public boolean IsInteger() Returns whether this object's value is an integer.
+
+<pre>public boolean IsInteger()
 </pre>
+
+<p>Returns whether this object’s value is an integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -4296,8 +4842,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize">Quantize</h3>
+
 <pre>public EFloat Quantize(EInteger desiredExponent, EContext ctx)
 </pre>
+
 <p>Returns a binary floating-point number with the same value but a new
  exponent. </p>
 <p>Note that this is not always the same as rounding to a
@@ -4350,8 +4898,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize-1">Quantize</h3>
+
 <pre>public EFloat Quantize(int desiredExponentInt, EContext ctx)
 </pre>
+
 <p>Returns a binary floating-point number with the same value but a new
  exponent. </p>
 <p>Note that this is not always the same as rounding to a
@@ -4404,8 +4954,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="quantize-2">Quantize</h3>
+
 <pre>public EFloat Quantize(EFloat otherValue, EContext ctx)
 </pre>
+
 <p>Returns a binary floating-point number with the same value as this object
  but with the same exponent as another binary floating-point number.
  </p>
@@ -4453,8 +5005,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="reduce">Reduce</h3>
+
 <pre>public EFloat Reduce(EContext ctx)
 </pre>
+
 <p>Returns an object with the same numerical value as this one but with
  trailing zeros removed from its significand. For example, 1.00 becomes 1.
  </p>
@@ -4479,8 +5033,18 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remainder">Remainder</h3>
-<pre>public EFloat Remainder(EFloat divisor, EContext ctx) Returns the remainder that would result when this arbitrary-precision binary  floating-point number is divided by another arbitrary-precision binary  floating-point number. The remainder is the number that remains when the  absolute value of this arbitrary-precision binary floating-point number is  divided (as though by DivideToIntegerZeroScale) by the absolute value of the  other arbitrary-precision binary floating-point number; the remainder has  the same sign (positive or negative) as this arbitrary-precision binary  floating-point number.
+
+<pre>public EFloat Remainder(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Returns the remainder that would result when this arbitrary-precision binary
+ floating-point number is divided by another arbitrary-precision binary
+ floating-point number. The remainder is the number that remains when the
+ absolute value of this arbitrary-precision binary floating-point number is
+ divided (as though by DivideToIntegerZeroScale) by the absolute value of the
+ other arbitrary-precision binary floating-point number; the remainder has
+ the same sign (positive or negative) as this arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4507,8 +5071,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernoroundafterdivide">RemainderNoRoundAfterDivide</h3>
-<pre>public EFloat RemainderNoRoundAfterDivide(EFloat divisor, EContext ctx) Finds the remainder that results when dividing two arbitrary-precision  binary floating-point numbers. The remainder is the value that remains when  the absolute value of this object is divided by the absolute value of the  other object; the remainder has the same sign (positive or negative) as this  object's value.
+
+<pre>public EFloat RemainderNoRoundAfterDivide(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Finds the remainder that results when dividing two arbitrary-precision
+ binary floating-point numbers. The remainder is the value that remains when
+ the absolute value of this object is divided by the absolute value of the
+ other object; the remainder has the same sign (positive or negative) as this
+ object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4530,8 +5101,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernaturalscale">RemainderNaturalScale</h3>
-<pre>public EFloat RemainderNaturalScale(EFloat divisor) Calculates the remainder of a number by the formula &lt;code&gt;"this" - (("this"  / "divisor") * "divisor")&lt;/code&gt;.
+
+<pre>public EFloat RemainderNaturalScale(EFloat divisor)
 </pre>
+
+<p>Calculates the remainder of a number by the formula <code>"this" - (("this"
+ / "divisor") * "divisor")</code>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4546,8 +5121,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernaturalscale-1">RemainderNaturalScale</h3>
-<pre>public EFloat RemainderNaturalScale(EFloat divisor, EContext ctx) Calculates the remainder of a number by the formula "this" - (("this" /  "divisor") * "divisor").
+
+<pre>public EFloat RemainderNaturalScale(EFloat divisor, EContext ctx)
 </pre>
+
+<p>Calculates the remainder of a number by the formula “this” - ((“this” /
+ “divisor”) * “divisor”).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4575,8 +5154,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="remaindernear">RemainderNear</h3>
+
 <pre>public EFloat RemainderNear(EFloat divisor, EContext ctx)
 </pre>
+
 <p>Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object's value by another object's value.
  </p>
@@ -4620,8 +5201,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent">RoundToExponent</h3>
-<pre>public EFloat RoundToExponent(EInteger exponent, EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to a new exponent if necessary. The resulting number's Exponent  property will not necessarily be the given exponent; use the Quantize method  instead to give the result a particular exponent.
+
+<pre>public EFloat RoundToExponent(EInteger exponent, EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to a new exponent if necessary. The resulting number’s Exponent
+ property will not necessarily be the given exponent; use the Quantize method
+ instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4655,8 +5242,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponent-1">RoundToExponent</h3>
-<pre>public EFloat RoundToExponent(int exponentSmall, EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to a new exponent if necessary. The resulting number's Exponent  property will not necessarily be the given exponent; use the Quantize method  instead to give the result a particular exponent.
+
+<pre>public EFloat RoundToExponent(int exponentSmall, EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to a new exponent if necessary. The resulting number’s Exponent
+ property will not necessarily be the given exponent; use the Quantize method
+ instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4690,8 +5283,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponentexact">RoundToExponentExact</h3>
-<pre>public EFloat RoundToExponentExact(EInteger exponent, EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to the given exponent, and signals an inexact flag if the result  would be inexact. The resulting number's Exponent property will not  necessarily be the given exponent; use the Quantize method instead to give  the result a particular exponent.
+
+<pre>public EFloat RoundToExponentExact(EInteger exponent, EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to the given exponent, and signals an inexact flag if the result
+ would be inexact. The resulting number’s Exponent property will not
+ necessarily be the given exponent; use the Quantize method instead to give
+ the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4726,8 +5326,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponentexact-1">RoundToExponentExact</h3>
-<pre>public EFloat RoundToExponentExact(EInteger exponent, ERounding rounding) Returns a binary number with the same value as this object but rounded to  the given exponent. The resulting number's Exponent property will not  necessarily be the given exponent; use the Quantize method instead to give  the result a particular exponent.
+
+<pre>public EFloat RoundToExponentExact(EInteger exponent, ERounding rounding)
 </pre>
+
+<p>Returns a binary number with the same value as this object but rounded to
+ the given exponent. The resulting number’s Exponent property will not
+ necessarily be the given exponent; use the Quantize method instead to give
+ the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4752,8 +5358,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoexponentexact-2">RoundToExponentExact</h3>
-<pre>public EFloat RoundToExponentExact(int exponentSmall, EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to the given exponent represented as a 32-bit signed integer,  and signals an inexact flag if the result would be inexact. The resulting  number's Exponent property will not necessarily be the given exponent; use  the Quantize method instead to give the result a particular exponent.
+
+<pre>public EFloat RoundToExponentExact(int exponentSmall, EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to the given exponent represented as a 32-bit signed integer,
+ and signals an inexact flag if the result would be inexact. The resulting
+ number’s Exponent property will not necessarily be the given exponent; use
+ the Quantize method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4788,8 +5401,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegerexact">RoundToIntegerExact</h3>
-<pre>public EFloat RoundToIntegerExact(EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to an integer, and signals an inexact flag if the result would  be inexact. The resulting number's Exponent property will not necessarily be  0; use the Quantize method instead to give the result an exponent of 0.
+
+<pre>public EFloat RoundToIntegerExact(EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, and signals an inexact flag if the result would
+ be inexact. The resulting number’s Exponent property will not necessarily be
+ 0; use the Quantize method instead to give the result an exponent of 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4814,8 +5433,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegernoroundedflag">RoundToIntegerNoRoundedFlag</h3>
-<pre>public EFloat RoundToIntegerNoRoundedFlag(EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to an integer, without adding the &lt;code&gt;FlagInexact&lt;/code&gt; or &lt;code&gt;  FlagRounded&lt;/code&gt; flags. The resulting number's Exponent property will not  necessarily be 0; use the Quantize method instead to give the result an  exponent of 0.
+
+<pre>public EFloat RoundToIntegerNoRoundedFlag(EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, without adding the <code>FlagInexact</code> or <code>
+ FlagRounded</code> flags. The resulting number’s Exponent property will not
+ necessarily be 0; use the Quantize method instead to give the result an
+ exponent of 0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4841,8 +5467,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegralexact">RoundToIntegralExact</h3>
-<pre>@Deprecated public EFloat RoundToIntegralExact(EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to an integer, and signals an inexact flag if the result would  be inexact.
+
+<pre>@Deprecated public EFloat RoundToIntegralExact(EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, and signals an inexact flag if the result would
+ be inexact.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4867,8 +5498,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtointegralnoroundedflag">RoundToIntegralNoRoundedFlag</h3>
-<pre>@Deprecated public EFloat RoundToIntegralNoRoundedFlag(EContext ctx) Returns a binary floating-point number with the same value as this object  but rounded to an integer, without adding the &lt;code&gt;FlagInexact&lt;/code&gt; or &lt;code&gt;  FlagRounded&lt;/code&gt; flags.
+
+<pre>@Deprecated public EFloat RoundToIntegralNoRoundedFlag(EContext ctx)
 </pre>
+
+<p>Returns a binary floating-point number with the same value as this object
+ but rounded to an integer, without adding the <code>FlagInexact</code> or <code>
+ FlagRounded</code> flags.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4894,8 +5530,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="roundtoprecision">RoundToPrecision</h3>
-<pre>public EFloat RoundToPrecision(EContext ctx) Rounds this object's value to a given precision, using the given rounding  mode and range of exponent.
+
+<pre>public EFloat RoundToPrecision(EContext ctx)
 </pre>
+
+<p>Rounds this object’s value to a given precision, using the given rounding
+ mode and range of exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4916,8 +5556,16 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="preround">PreRound</h3>
-<pre>public EFloat PreRound(EContext ctx) Returns a number in which the value of this object is rounded to fit the  maximum precision allowed if it has more significant digits than the maximum  precision. The maximum precision allowed is given in an arithmetic context.  This method is designed for preparing operands to a custom arithmetic  operation per the "simplified" arithmetic given in Appendix A of the General  Decimal Arithmetic Specification.
+
+<pre>public EFloat PreRound(EContext ctx)
 </pre>
+
+<p>Returns a number in which the value of this object is rounded to fit the
+ maximum precision allowed if it has more significant digits than the maximum
+ precision. The maximum precision allowed is given in an arithmetic context.
+ This method is designed for preparing operands to a custom arithmetic
+ operation per the “simplified” arithmetic given in Appendix A of the General
+ Decimal Arithmetic Specification.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4942,8 +5590,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroftwo">ScaleByPowerOfTwo</h3>
-<pre>public EFloat ScaleByPowerOfTwo(int places) Returns a number similar to this number but with the scale adjusted.
+
+<pre>public EFloat ScaleByPowerOfTwo(int places)
 </pre>
+
+<p>Returns a number similar to this number but with the scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4958,8 +5609,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroftwo-1">ScaleByPowerOfTwo</h3>
-<pre>public EFloat ScaleByPowerOfTwo(int places, EContext ctx) Returns a number similar to this number but with the scale adjusted.
+
+<pre>public EFloat ScaleByPowerOfTwo(int places, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with the scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4982,8 +5636,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroftwo-2">ScaleByPowerOfTwo</h3>
-<pre>public EFloat ScaleByPowerOfTwo(EInteger bigPlaces) Returns a number similar to this number but with the scale adjusted.
+
+<pre>public EFloat ScaleByPowerOfTwo(EInteger bigPlaces)
 </pre>
+
+<p>Returns a number similar to this number but with the scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4998,8 +5655,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="scalebypoweroftwo-3">ScaleByPowerOfTwo</h3>
-<pre>public EFloat ScaleByPowerOfTwo(EInteger bigPlaces, EContext ctx) Returns a number similar to this number but with its scale adjusted.
+
+<pre>public EFloat ScaleByPowerOfTwo(EInteger bigPlaces, EContext ctx)
 </pre>
+
+<p>Returns a number similar to this number but with its scale adjusted.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5028,8 +5688,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="sqrt">Sqrt</h3>
-<pre>public EFloat Sqrt(EContext ctx) Finds the square root of this object's value.
+
+<pre>public EFloat Sqrt(EContext ctx)
 </pre>
+
+<p>Finds the square root of this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5054,8 +5717,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="squareroot">SquareRoot</h3>
-<pre>@Deprecated public EFloat SquareRoot(EContext ctx) Finds the square root of this object's value.
+
+<pre>@Deprecated public EFloat SquareRoot(EContext ctx)
 </pre>
+
+<p>Finds the square root of this object’s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5080,8 +5746,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract-2">Subtract</h3>
-<pre>public EFloat Subtract(EFloat otherValue) Subtracts an arbitrary-precision binary floating-point number from this  arbitrary-precision binary floating-point number and returns the result. The  exponent for the result is the lower of this arbitrary-precision binary  floating-point number's exponent and the other arbitrary-precision binary  floating-point number's exponent.
+
+<pre>public EFloat Subtract(EFloat otherValue)
 </pre>
+
+<p>Subtracts an arbitrary-precision binary floating-point number from this
+ arbitrary-precision binary floating-point number and returns the result. The
+ exponent for the result is the lower of this arbitrary-precision binary
+ floating-point number’s exponent and the other arbitrary-precision binary
+ floating-point number’s exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5100,8 +5773,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="subtract-3">Subtract</h3>
-<pre>public EFloat Subtract(EFloat otherValue, EContext ctx) Subtracts an arbitrary-precision binary floating-point number from this  arbitrary-precision binary floating-point number and returns the result.
+
+<pre>public EFloat Subtract(EFloat otherValue, EContext ctx)
 </pre>
+
+<p>Subtracts an arbitrary-precision binary floating-point number from this
+ arbitrary-precision binary floating-point number and returns the result.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5135,8 +5812,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="todouble">ToDouble</h3>
-<pre>public double ToDouble() Converts this value to a 64-bit floating-point number encoded in the IEEE  754 binary64 format.
+
+<pre>public double ToDouble()
 </pre>
+
+<p>Converts this value to a 64-bit floating-point number encoded in the IEEE
+ 754 binary64 format.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5148,8 +5829,14 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromsinglebits">FromSingleBits</h3>
-<pre>public static EFloat FromSingleBits(int value) Creates a binary floating-point number from a 32-bit floating-point number  encoded in the IEEE 754 binary32 format. This method computes the exact  value of the floating point number, not an approximation, as is often the  case by converting the floating point number to a string first.
+
+<pre>public static EFloat FromSingleBits(int value)
 </pre>
+
+<p>Creates a binary floating-point number from a 32-bit floating-point number
+ encoded in the IEEE 754 binary32 format. This method computes the exact
+ value of the floating point number, not an approximation, as is often the
+ case by converting the floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5166,8 +5853,15 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromhalfbits">FromHalfBits</h3>
-<pre>public static EFloat FromHalfBits(short value) Creates a binary floating-point number from a binary floating-point number  encoded in the IEEE 754 binary16 format (also known as a "half-precision"  floating-point number). This method computes the exact value of the floating  point number, not an approximation, as is often the case by converting the  floating point number to a string first.
+
+<pre>public static EFloat FromHalfBits(short value)
 </pre>
+
+<p>Creates a binary floating-point number from a binary floating-point number
+ encoded in the IEEE 754 binary16 format (also known as a “half-precision”
+ floating-point number). This method computes the exact value of the floating
+ point number, not an approximation, as is often the case by converting the
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5184,8 +5878,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosinglebits">ToSingleBits</h3>
+
 <pre>public int ToSingleBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as 32-bit floating-point
  number, expressed as an integer in the IEEE 754 binary32 format. The
  half-even rounding mode is used. </p>
@@ -5206,8 +5902,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tohalfbits">ToHalfBits</h3>
+
 <pre>public short ToHalfBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a binary floating-point
  number, expressed as an integer in the IEEE 754 binary16 format (also known
  as a "half-precision" floating-point number). The half-even rounding mode is
@@ -5229,8 +5927,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="todoublebits">ToDoubleBits</h3>
+
 <pre>public long ToDoubleBits()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 64-bit floating-point
  number, expressed as an integer in the IEEE 754 binary64 format. The
  half-even rounding mode is used. </p>
@@ -5251,8 +5951,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toedecimal">ToEDecimal</h3>
-<pre>public EDecimal ToEDecimal() Converts this value to an arbitrary-precision decimal number.
+
+<pre>public EDecimal ToEDecimal()
 </pre>
+
+<p>Converts this value to an arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5261,8 +5964,17 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toeinteger">ToEInteger</h3>
-<pre>public EInteger ToEInteger() Converts this value to an arbitrary-precision integer. Any fractional part  of this value will be discarded when converting to an arbitrary-precision  integer. Note that depending on the value, especially the exponent,  generating the arbitrary-precision integer may require a huge amount of  memory. Use the ToSizedEInteger method to convert a number to an EInteger  only if the integer fits in a bounded bit range; that method will throw an  exception on overflow.
+
+<pre>public EInteger ToEInteger()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer. Any fractional part
+ of this value will be discarded when converting to an arbitrary-precision
+ integer. Note that depending on the value, especially the exponent,
+ generating the arbitrary-precision integer may require a huge amount of
+ memory. Use the ToSizedEInteger method to convert a number to an EInteger
+ only if the integer fits in a bounded bit range; that method will throw an
+ exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5278,8 +5990,16 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toeintegerexact">ToEIntegerExact</h3>
-<pre>@Deprecated public EInteger ToEIntegerExact() Converts this value to an arbitrary-precision integer, checking whether the  value contains a fractional part. Note that depending on the value,  especially the exponent, generating the arbitrary-precision integer may  require a huge amount of memory. Use the ToSizedEIntegerIfExact method to  convert a number to an EInteger only if the integer fits in a bounded bit  range; that method will throw an exception on overflow.
+
+<pre>@Deprecated public EInteger ToEIntegerExact()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ value contains a fractional part. Note that depending on the value,
+ especially the exponent, generating the arbitrary-precision integer may
+ require a huge amount of memory. Use the ToSizedEIntegerIfExact method to
+ convert a number to an EInteger only if the integer fits in a bounded bit
+ range; that method will throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5300,8 +6020,16 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toeintegerifexact">ToEIntegerIfExact</h3>
-<pre>public EInteger ToEIntegerIfExact() Converts this value to an arbitrary-precision integer, checking whether the  value contains a fractional part. Note that depending on the value,  especially the exponent, generating the arbitrary-precision integer may  require a huge amount of memory. Use the ToSizedEIntegerIfExact method to  convert a number to an EInteger only if the integer fits in a bounded bit  range; that method will throw an exception on overflow.
+
+<pre>public EInteger ToEIntegerIfExact()
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ value contains a fractional part. Note that depending on the value,
+ especially the exponent, generating the arbitrary-precision integer may
+ require a huge amount of memory. Use the ToSizedEIntegerIfExact method to
+ convert a number to an EInteger only if the integer fits in a bounded bit
+ range; that method will throw an exception on overflow.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5322,8 +6050,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toengineeringstring">ToEngineeringString</h3>
-<pre>public String ToEngineeringString() Converts this value to an arbitrary-precision decimal number, then returns  the value of that decimal's ToEngineeringString method.
+
+<pre>public String ToEngineeringString()
 </pre>
+
+<p>Converts this value to an arbitrary-precision decimal number, then returns
+ the value of that decimal’s ToEngineeringString method.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5332,8 +6064,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toextendeddecimal">ToExtendedDecimal</h3>
-<pre>@Deprecated public EDecimal ToExtendedDecimal() Converts this value to an arbitrary-precision decimal number.
+
+<pre>@Deprecated public EDecimal ToExtendedDecimal()
 </pre>
+
+<p>Converts this value to an arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5342,8 +6077,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toplainstring">ToPlainString</h3>
-<pre>public String ToPlainString() Converts this value to a string, but without exponential notation.
+
+<pre>public String ToPlainString()
 </pre>
+
+<p>Converts this value to a string, but without exponential notation.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5352,8 +6090,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toshorteststring">ToShortestString</h3>
+
 <pre>public String ToShortestString(EContext ctx)
 </pre>
+
 <p>Returns a string representation of this number's value after rounding
  that value to the given precision (using the given arithmetic context, such
  as <code>EContext.Binary64</code>). If the number after rounding is neither
@@ -5391,8 +6131,10 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosingle">ToSingle</h3>
+
 <pre>public float ToSingle()
 </pre>
+
 <p>Converts this value to its closest equivalent as a 32-bit floating-point
  number. The half-even rounding mode is used. </p>
 <p>If this value is a NaN,
@@ -5413,8 +6155,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tostring">toString</h3>
-<pre>public String toString() Converts this number's value to a text string.
+
+<pre>public String toString()
 </pre>
+
+<p>Converts this number’s value to a text string.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -5435,8 +6180,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="ulp">Ulp</h3>
-<pre>public EFloat Ulp() Returns the unit in the last place. The significand will be 1 and the  exponent will be this number's exponent. Returns 1 with an exponent of 0 if  this number is infinity or not-a-number (NaN).
+
+<pre>public EFloat Ulp()
 </pre>
+
+<p>Returns the unit in the last place. The significand will be 1 and the
+ exponent will be this number’s exponent. Returns 1 with an exponent of 0 if
+ this number is infinity or not-a-number (NaN).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5445,8 +6195,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosizedeinteger">ToSizedEInteger</h3>
-<pre>public EInteger ToSizedEInteger(int maxBitLength) Converts this value to an arbitrary-precision integer by discarding its  fractional part and checking whether the resulting integer overflows the  given signed bit count.
+
+<pre>public EInteger ToSizedEInteger(int maxBitLength)
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer by discarding its
+ fractional part and checking whether the resulting integer overflows the
+ given signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5472,8 +6227,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tosizedeintegerifexact">ToSizedEIntegerIfExact</h3>
-<pre>public EInteger ToSizedEIntegerIfExact(int maxBitLength) Converts this value to an arbitrary-precision integer, only if this number's  value is an exact integer and that integer does not overflow the given  signed bit count.
+
+<pre>public EInteger ToSizedEIntegerIfExact(int maxBitLength)
 </pre>
+
+<p>Converts this value to an arbitrary-precision integer, only if this number’s
+ value is an exact integer and that integer does not overflow the given
+ signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5504,8 +6264,11 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="increment">Increment</h3>
-<pre>public EFloat Increment() Returns one added to this arbitrary-precision binary floating-point number.
+
+<pre>public EFloat Increment()
 </pre>
+
+<p>Returns one added to this arbitrary-precision binary floating-point number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5514,8 +6277,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="decrement">Decrement</h3>
-<pre>public EFloat Decrement() Returns one subtracted from this arbitrary-precision binary floating-point  number.
+
+<pre>public EFloat Decrement()
 </pre>
+
+<p>Returns one subtracted from this arbitrary-precision binary floating-point
+ number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5525,8 +6292,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tobytechecked">ToByteChecked</h3>
-<pre>public byte ToByteChecked() Converts this number's value to a byte (from 0 to 255) if it can fit in a  byte (from 0 to 255) after converting it to an integer by discarding its  fractional part.
+
+<pre>public byte ToByteChecked()
 </pre>
+
+<p>Converts this number’s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5543,8 +6315,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tobyteunchecked">ToByteUnchecked</h3>
-<pre>public byte ToByteUnchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a byte (from 0 to 255).
+
+<pre>public byte ToByteUnchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a byte (from 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5554,8 +6331,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="tobyteifexact">ToByteIfExact</h3>
-<pre>public byte ToByteIfExact() Converts this number's value to a byte (from 0 to 255) if it can fit in a  byte (from 0 to 255) without rounding to a different numerical value.
+
+<pre>public byte ToByteIfExact()
 </pre>
+
+<p>Converts this number’s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255) without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5571,8 +6352,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="frombyte">FromByte</h3>
-<pre>public static EFloat FromByte(byte inputByte) Converts a byte (from 0 to 255) to an arbitrary-precision binary  floating-point number.
+
+<pre>public static EFloat FromByte(byte inputByte)
 </pre>
+
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5588,8 +6373,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint16checked">ToInt16Checked</h3>
-<pre>public short ToInt16Checked() Converts this number's value to a 16-bit signed integer if it can fit in a  16-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public short ToInt16Checked()
 </pre>
+
+<p>Converts this number’s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5606,8 +6396,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint16unchecked">ToInt16Unchecked</h3>
-<pre>public short ToInt16Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 16-bit signed integer.
+
+<pre>public short ToInt16Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 16-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5617,8 +6412,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint16ifexact">ToInt16IfExact</h3>
-<pre>public short ToInt16IfExact() Converts this number's value to a 16-bit signed integer if it can fit in a  16-bit signed integer without rounding to a different numerical value.
+
+<pre>public short ToInt16IfExact()
 </pre>
+
+<p>Converts this number’s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5634,8 +6433,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint16">FromInt16</h3>
-<pre>public static EFloat FromInt16(short inputInt16) Converts a 16-bit signed integer to an arbitrary-precision binary  floating-point number.
+
+<pre>public static EFloat FromInt16(short inputInt16)
 </pre>
+
+<p>Converts a 16-bit signed integer to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5651,8 +6454,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint32checked">ToInt32Checked</h3>
-<pre>public int ToInt32Checked() Converts this number's value to a 32-bit signed integer if it can fit in a  32-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public int ToInt32Checked()
 </pre>
+
+<p>Converts this number’s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5669,8 +6477,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint32unchecked">ToInt32Unchecked</h3>
-<pre>public int ToInt32Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 32-bit signed integer.
+
+<pre>public int ToInt32Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 32-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5680,8 +6493,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint32ifexact">ToInt32IfExact</h3>
-<pre>public int ToInt32IfExact() Converts this number's value to a 32-bit signed integer if it can fit in a  32-bit signed integer without rounding to a different numerical value.
+
+<pre>public int ToInt32IfExact()
 </pre>
+
+<p>Converts this number’s value to a 32-bit signed integer if it can fit in a
+ 32-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5697,8 +6514,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromboolean">FromBoolean</h3>
-<pre>public static EFloat FromBoolean(boolean boolValue) Converts a Boolean value (either true or false) to an arbitrary-precision  binary floating-point number.
+
+<pre>public static EFloat FromBoolean(boolean boolValue)
 </pre>
+
+<p>Converts a Boolean value (either true or false) to an arbitrary-precision
+ binary floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5713,8 +6534,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint32">FromInt32</h3>
-<pre>public static EFloat FromInt32(int inputInt32) Converts a 32-bit signed integer to an arbitrary-precision binary  floating-point number.
+
+<pre>public static EFloat FromInt32(int inputInt32)
 </pre>
+
+<p>Converts a 32-bit signed integer to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5730,8 +6555,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint64checked">ToInt64Checked</h3>
-<pre>public long ToInt64Checked() Converts this number's value to a 64-bit signed integer if it can fit in a  64-bit signed integer after converting it to an integer by discarding its  fractional part.
+
+<pre>public long ToInt64Checked()
 </pre>
+
+<p>Converts this number’s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer after converting it to an integer by discarding its
+ fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5748,8 +6578,13 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint64unchecked">ToInt64Unchecked</h3>
-<pre>public long ToInt64Unchecked() Converts this number's value to an integer by discarding its fractional  part, and returns the least-significant bits of its two's-complement form as  a 64-bit signed integer.
+
+<pre>public long ToInt64Unchecked()
 </pre>
+
+<p>Converts this number’s value to an integer by discarding its fractional
+ part, and returns the least-significant bits of its two’s-complement form as
+ a 64-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5759,8 +6594,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="toint64ifexact">ToInt64IfExact</h3>
-<pre>public long ToInt64IfExact() Converts this number's value to a 64-bit signed integer if it can fit in a  64-bit signed integer without rounding to a different numerical value.
+
+<pre>public long ToInt64IfExact()
 </pre>
+
+<p>Converts this number’s value to a 64-bit signed integer if it can fit in a
+ 64-bit signed integer without rounding to a different numerical value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -5777,8 +6616,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint64asunsigned">FromInt64AsUnsigned</h3>
-<pre>public static EFloat FromInt64AsUnsigned(long longerValue) Converts an unsigned integer expressed as a 64-bit signed integer to an  arbitrary-precision binary number.
+
+<pre>public static EFloat FromInt64AsUnsigned(long longerValue)
 </pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision binary number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5798,8 +6641,12 @@ public static final EFloat Zero Represents the number 0. ## Method Details
 </ul>
 
 <h3 id="fromint64">FromInt64</h3>
-<pre>public static EFloat FromInt64(long inputInt64) Converts a 64-bit signed integer to an arbitrary-precision binary  floating-point number.
+
+<pre>public static EFloat FromInt64(long inputInt64)
 </pre>
+
+<p>Converts a 64-bit signed integer to an arbitrary-precision binary
+ floating-point number.</p>
 
 <p><strong>Parameters:</strong></p>
 

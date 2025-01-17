@@ -61,8 +61,10 @@ Use ToReader instead.</p>
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="toreader">ToReader</h3>
+
 <pre>public static IReader ToReader(byte[] bytes)
 </pre>
+
 <p>Wraps a byte array into a byte reader. The reader will start at the
  beginning of the byte array. </p>
 <p>In the.NET implementation, this method
@@ -90,8 +92,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="toreader-1">ToReader</h3>
+
 <pre>public static IReader ToReader(byte[] bytes, int offset, int length)
 </pre>
+
 <p>Wraps a portion of a byte array into a byte reader object. </p>
 <p>In
  the.NET implementation, this method is implemented as an extension method to
@@ -139,8 +143,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="toreader-2">ToReader</h3>
+
 <pre>public static IReader ToReader(InputStream input)
 </pre>
+
 <p>Wraps an input stream into a reader object. If an IOException is thrown
  by the input stream, the reader object throws IllegalStateException instead.
  </p>
@@ -169,8 +175,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="tobytereader">ToByteReader</h3>
+
 <pre>@Deprecated public static IByteReader ToByteReader(byte[] bytes, int offset, int length)
 </pre>
+
 <p>Wraps a portion of a byte array into a byte reader. </p>
 <p>In the.NET
  implementation, this method is implemented as an extension method to any
@@ -218,8 +226,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="tobytereader-1">ToByteReader</h3>
+
 <pre>@Deprecated public static IByteReader ToByteReader(InputStream input)
 </pre>
+
 <p>Wraps a data stream into a byte reader. </p>
 <p>In the.NET
  implementation, this method is implemented as an extension method to any
@@ -247,8 +257,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="tobytereader-2">ToByteReader</h3>
+
 <pre>@Deprecated public static IByteReader ToByteReader(byte[] bytes)
 </pre>
+
 <p>Wraps a byte array into a byte reader. </p>
 <p>In the.NET implementation,
  this method is implemented as an extension method to any object implementing
@@ -275,8 +287,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="towriter">ToWriter</h3>
+
 <pre>public static IWriter ToWriter(OutputStream output)
 </pre>
+
 <p>Wraps an output stream into a writer object. If an IOException is thrown
  by the input stream, the writer object throws IllegalStateException instead.
  </p>
@@ -305,8 +319,10 @@ Use ToReader instead.</p>
 </ul>
 
 <h3 id="towriter-1">ToWriter</h3>
+
 <pre>public static IWriter ToWriter(IByteWriter output)
 </pre>
+
 <p>Wraps a byte writer (one that only implements a ReadByte method) to a
  writer (one that also implements a three-parameter Read method.) </p>
 <p>In

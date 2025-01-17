@@ -607,9 +607,7 @@ licensed under the Unlicense: https://unlicense.org/
    * segments will be close to the true path of the curve by this
    * value, given in units. If null, undefined, or omitted, default is 1.
    * @returns {Array<Array<number>>} Array of line segments.
-   * Each line segment is an array of four numbers: the X and
-   * y-coordinates of the start point, respectively, then the X and
-   * y-coordinates of the end point, respectively.
+   * Each line segment is an array of four numbers: the x- and y-coordinates of the start point, respectively, then the x- and y-coordinates of the end point, respectively.
    * @memberof! H3DU.GraphicsPath#
    */
   GraphicsPath.prototype.getLines = function(flatness) {
@@ -2081,7 +2079,7 @@ licensed under the Unlicense: https://unlicense.org/
 /**
  * Adds path segments to this path that form a polygon or a connected line segment strand.
  * @param {Array<number>} pointCoords An array of numbers containing the x- and y-coordinates
- * of each point in the sequence of line segments. Each pair of numbers gives the X and y-coordinates, in that order, of one of the points in the sequence.
+ * of each point in the sequence of line segments. Each pair of numbers gives the x- and y-coordinates, in that order, of one of the points in the sequence.
  * The number of elements in the array must be even. If two or more pairs of numbers are given, line
  * segments will connect each point given (except the last) to the next point given.
  * @param {number} closed If "true", the sequence of points describes a closed polygon and a command

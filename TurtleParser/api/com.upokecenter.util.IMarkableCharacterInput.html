@@ -42,8 +42,11 @@
 <h2 id="method-details">Method Details</h2>
 
 <h3 id="getmarkposition">GetMarkPosition</h3>
-<pre>int GetMarkPosition() Gets the zero-based character position in the stream from the last-set mark.
+
+<pre>int GetMarkPosition()
 </pre>
+
+<p>Gets the zero-based character position in the stream from the last-set mark.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -52,8 +55,11 @@
 </ul>
 
 <h3 id="moveback">MoveBack</h3>
-<pre>void MoveBack(int count) Moves the stream position back the given number of characters.
+
+<pre>void MoveBack(int count)
 </pre>
+
+<p>Moves the stream position back the given number of characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -62,8 +68,11 @@
 </ul>
 
 <h3 id="sethardmark">SetHardMark</h3>
-<pre>int SetHardMark() Sets a mark on the stream's current position.
+
+<pre>int SetHardMark()
 </pre>
+
+<p>Sets a mark on the stream’s current position.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -72,8 +81,11 @@
 </ul>
 
 <h3 id="setmarkposition">SetMarkPosition</h3>
-<pre>void SetMarkPosition(int pos) Sets the stream's position from the last set mark.
+
+<pre>void SetMarkPosition(int pos)
 </pre>
+
+<p>Sets the stream’s position from the last set mark.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -82,8 +94,13 @@
 </ul>
 
 <h3 id="setsoftmark">SetSoftMark</h3>
-<pre>int SetSoftMark() If no mark is set, sets a mark on the stream, and characters read before the  currently set mark are no longer available, while characters read after will  be available if MoveBack is called. Otherwise, behaves like GetMarkPosition.
+
+<pre>int SetSoftMark()
 </pre>
+
+<p>If no mark is set, sets a mark on the stream, and characters read before the
+ currently set mark are no longer available, while characters read after will
+ be available if MoveBack is called. Otherwise, behaves like GetMarkPosition.</p>
 
 <p><strong>Returns:</strong></p>
 
