@@ -31,8 +31,7 @@ H3DU.GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
  * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
  * @param {Array<number>} pointCoords An array of numbers containing the x- and y-coordinates
- * of each point in the sequence of line segments. Each pair of numbers gives the X and Y
- * coordinates, in that order, of one of the points in the sequence.
+ * of each point in the sequence of line segments. Each pair of numbers gives the X and y-coordinates, in that order, of one of the points in the sequence.
  * The number of elements in the array must be even. If two or more pairs of numbers are given, line
  * segments will connect each point given (except the last) to the next point given.
  * @param {number} closed If "true", the sequence of points describes a closed polygon and a command

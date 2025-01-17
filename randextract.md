@@ -125,7 +125,7 @@ Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with wh
 - each "die" has a chance of showing different outcomes, and
 - the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number.
 
-More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014\)[^15], (De Schuymer et al. 2003\)[^16]. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions.  In the propositions below, a random variable is _non-degenerate_ if it does not take on a single value with probability 1.
+More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014\)[^15], (De Schuymer et al. 2003\)[^16]. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions.  In the propositions below, a random variable is _nondegenerate_ if it does not take on a single value with probability 1.
 
 **Proposition 1.** _Let X and Y be real-valued nondegenerate random variables.  Then Algorithm M outputs 1 or 0 with equal probability if and only if X and Y are statistically indifferent._
 

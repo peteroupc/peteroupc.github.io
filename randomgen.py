@@ -3921,7 +3921,7 @@ class RandomGen:
     def wiener(self, st, en, step=1.0, mu=0.0, sigma=1.0):
         """Generates random variates following a Wiener
         process (Brownian motion). Each element of the return
-        value contains a timestamp and a random variate in that order."""
+        value contains a time stamp and a random variate in that order."""
         if st == en:
             return [[st, self.normal(mu * st, sigma * math.sqrt(st))]]
         ret = []
