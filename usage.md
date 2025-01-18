@@ -100,6 +100,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | people/persons present/attending | (the) attendees, the audience, the attending public |Inspired by E. Bernal. |
 | people/persons think | it is thought, it is commonly thought, it is believed, the general belief is, we think, they believe, by popular belief |Inspired by E. Bernal. |
 | point in time | time, instant, moment |Inspired by E. Bernal. |
+| pregnant people | the pregnant, pregnant women |  |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
 | rain conditions, rainy conditions | rain. _Or as appropriate_: drizzle, showers, squalls, light rain, heavy rain, downpours. |Inspired by E. Bernal. |
 | (they) saved their lives | (they) were saved, (they) saved their life |Inspired by E. Bernal. |
