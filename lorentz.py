@@ -519,7 +519,7 @@ def _fa2(fabove, a, b, v=1):
 def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     """A Bernoulli factory for a continuous function f(x) that maps [0, 1]
      to [0, 1] (and where f(x) is polynomially bounded).  Returns either 1
-     with probability f(x) (where x is the probability that the given coin
+     with probability f(x) (where x is the probability that the specified coin
      outputs 1) and 0 otherwise.  The function f(x) is defined by two
     sequences of polynomials in Bernstein form that converge to f(x)
     from above and below and meet consistency requirements on their coefficients.
@@ -529,9 +529,8 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
     - fabove(n, k): A lambda that calculates the kth Bernstein coefficient (not the value),
       or an upper bound thereof, for the degree-n upper polynomial.
     - fbound(n): A lambda that returns a tuple or list specifying a lower and upper bound
-       among the values of fbelow and fabove, respectively, for the given n.
-     - nextdegree(n): A lambda that returns the next degree after the
-       given degree n for which a polynomial is available; the lambda
+       among the values of fbelow and fabove, respectively, for the specified n.
+     - nextdegree(n): A lambda that returns the next degree after the specified degree n for which a polynomial is available; the lambda
        must return an integer greater than n.
        Optional.  If not given, the first degree is 1 and the next degree is n*2
        (so that for each power of 2 as well as 1, a polynomial of that degree

@@ -415,7 +415,7 @@ CLASSES
      |      values.
      |
      |  nextto(self, desiredRow)
-     |      Generates the row of Pascal's triangle with the given row number,
+     |      Generates the row of Pascal's triangle with the specified row number,
      |      skipping all rows in between.  The return value is a list of
      |      row-number-choose-k values.
      |
@@ -604,7 +604,7 @@ CLASSES
      |  exponential(self, lamda=1.0)
      |
      |  exprandfill(self, a, bits)
-     |      Fills the unsampled bits of the given exponential random variate
+     |      Fills the unsampled bits of the specified exponential random variate
      |      'a' as necessary to make a number whose fractional part
      |      has 'bits' many bits.  If the number's fractional part already has
      |      that many bits or more, the number is rounded using the round-to-nearest,
@@ -620,7 +620,7 @@ CLASSES
      |
      |  exprandnew(self, lamdanum=1, lamdaden=1)
      |      Returns an object to serve as a partially-sampled
-     |      exponential random variate with the given
+     |      exponential random variate with the specified
      |      rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
      |      the first is a multiple of 1/(2^X), the second is X, the third is the integer
      |      part (initially -1 to indicate the integer part wasn't sampled yet),
@@ -634,7 +634,7 @@ CLASSES
      |
      |  fromDyadicDecompCode(self, code, precision=53)
      |      Generates a uniform random variate contained in a box described
-     |          by the given universal dyadic decomposition code.
+     |          by the specified universal dyadic decomposition code.
      |          - code: A list returned by the getDyadicDecompCode
      |            or getDyadicDecompCodePdf method.
      |          - precision: Desired minimum precision in number of binary digits
@@ -692,7 +692,7 @@ CLASSES
      |  gbas01(self, coin, k=385)
      |      Estimates the mean of a random variable lying in [0, 1].
      |      This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
-     |      number is less the result of the given function or 0 otherwise.
+     |      number is less the result of the specified function or 0 otherwise.
      |      The estimate is unbiased but has nonzero probability of being
      |      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
      |      coin: A function that returns a number in [0, 1].
@@ -712,7 +712,7 @@ CLASSES
      |  geometric(self, p)
      |
      |  getDyadicDecompCode(self, point, f=None, fbox=None)
-     |      Finds a code describing the position and size of a box that covers the given
+     |      Finds a code describing the position and size of a box that covers the specified
      |      point in the universal dyadic decomposition for random variate generation.
      |      - point: A list of coordinates of a point in space.  This method assumes
      |        the point was a randomly generated member of a geometric set (such as a
@@ -744,7 +744,7 @@ CLASSES
      |      arXiv:1603.05238v1  [cs.IT], 2016.
      |
      |  getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None, precision=53)
-     |      Finds a code describing the position and size of a box that covers the given
+     |      Finds a code describing the position and size of a box that covers the specified
      |      point in the universal dyadic decomposition for random variate generation,
      |      based on a nonuniform probability density function.  It generates a
      |      random variate for this purpose, so the return value may differ from call to
@@ -758,14 +758,14 @@ CLASSES
      |        containing N coordinates describing a point in space, and returns the probability
      |        density of that point as a single number.  If this parameter is given, however:
      |        - This method assumes the PDF is unimodal and strictly decreasing in every direction away from the PDF's mode, and may return incorrect results if that is not the case.
-     |        - If the given PDF outputs floating-point numbers, the resulting
+     |        - If the specified PDF outputs floating-point numbers, the resulting
      |          dyadic decomposition code may be inaccurate due to rounding errors.
      |      - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
      |        at a box. This method takes as input a list containing N items, where each item
      |        is a list containing the lowest and highest value of the box for the
      |        corresponding dimension.  Returns a list
      |        containing two items: the lower bound and the upper bound, respectively, of the
-     |        PDF anywhere in the given box.  If this parameter is
+     |        PDF anywhere in the specified box.  If this parameter is
      |        given, this method assumes the PDF is continuous almost everywhere and bounded
      |        from above; the dyadic decomposition will generally work only if that is the case.
      |      - precision: Precision of random variates generated by this method, in binary digits
@@ -837,7 +837,7 @@ CLASSES
      |       list if 'numSamples' is zero.
      |        The algorithm is thanks to a _Stack Overflow_
      |      answer (`questions/61393463`) by John McClane.
-     |      Raises an error if there is no solution for the given
+     |      Raises an error if there is no solution for the specified
      |      parameters.
      |
      |  intsInRangeWithSum(self, numSamples, numPerSample, mn, mx, sum)
@@ -852,7 +852,7 @@ CLASSES
      |       list if 'numSamples' is zero.
      |        The algorithm is thanks to a _Stack Overflow_
      |      answer (`questions/61393463`) by John McClane.
-     |      Raises an error if there is no solution for the given
+     |      Raises an error if there is no solution for the specified
      |      parameters.
      |
      |  intsInRangesWithSum(self, numSamples, ranges, total)
@@ -872,7 +872,7 @@ CLASSES
      |        This is a modification I made to an algorithm that
      |          was contributed in a _Stack Overflow_
      |      answer (`questions/61393463`) by John McClane.
-     |      Raises an error if there is no solution for the given
+     |      Raises an error if there is no solution for the specified
      |      parameters.
      |
      |  kth_smallest_of_n_u01(self, k, n)
@@ -1167,7 +1167,7 @@ CLASSES
      |  simplex_point(self, points)
      |      Generates an independent and uniform random point on the surface of an N-dimensional
      |      simplex (line segment, triangle, tetrahedron, etc.)
-     |      with the given coordinates.
+     |      with the specified coordinates.
      |
      |  slicesample(self, pdf, n, xstart=0.1)
      |      Slice sampling of R. M. Neal.
@@ -1208,7 +1208,7 @@ CLASSES
      |       as many items as the array passed to 'func'.
      |      iterations - Maximum number of iterations in which to run the
      |       optimization process.  Default is 200.
-     |      constrain - Optional. A function that takes the given array of
+     |      constrain - Optional. A function that takes the specified array of
      |       parameters and constrains them to fit the bounds of a valid
      |       array of parameters. This function modifies the array in place.
      |      a - Optional.  A setting used in the optimization process; greater than 0.
@@ -1234,13 +1234,13 @@ CLASSES
      |          curved surfaces", Physics in Medicine & Biology 32(10), 1987.
      |      - f: Takes two parameters (u and v) and returns
      |        a 3-element array expressing
-     |        a 3-dimensional position at the given point.
+     |        a 3-dimensional position at the specified point.
      |      - bounds: Two 2-element arrays expressing bounds
      |        for u and v.  Of the form [[umin, umax], [vmin,
      |        vmax]].
      |      - ngrad: Takes two parameters (u and v) and returns
      |        the norm of the gradient (stretch factor)
-     |        at the given point.  Can be None, in which
+     |        at the specified point.  Can be None, in which
      |        the norm-of-gradient is calculated numerically.
      |      - gmax: Maximum norm-of-gradient
      |        for entire surface.
@@ -1558,18 +1558,18 @@ CLASSES
      |  __truediv__(a, b)
      |
      |  acos(a)
-     |      Calculates an approximation of the inverse cosine of the given number.
+     |      Calculates an approximation of the inverse cosine of the specified number.
      |
      |  asin(a)
-     |      Calculates an approximation of the inverse sine of the given number.
+     |      Calculates an approximation of the inverse sine of the specified number.
      |
      |  atan2(y, x)
      |      Calculates the approximate measure, in radians, of the angle formed by the
-     |      x-axis and a line determined by the origin and the given coordinates of a 2D
+     |      x-axis and a line determined by the origin and the specified coordinates of a 2D
      |      point.  This is also known as the inverse tangent.
      |
      |  cos(a)
-     |      Calculates the approximate cosine of the given angle; the angle is in radians.
+     |      Calculates the approximate cosine of the specified angle; the angle is in radians.
      |      For the fraction size used by this class, this method is accurate to within
      |      1 unit in the last place of the correctly rounded result for every input
      |      in the range [-pi*2, pi*2].
@@ -1591,17 +1591,17 @@ CLASSES
      |  round(a)
      |
      |  sin(a)
-     |      Calculates the approximate sine of the given angle; the angle is in radians.
+     |      Calculates the approximate sine of the specified angle; the angle is in radians.
      |      For the fraction size used by this class, this method is accurate to within
      |      1 unit in the last place of the correctly rounded result for every input
      |      in the range [-pi*2, pi*2].
      |      This method's accuracy decreases beyond that range.
      |
      |  sqrt(a)
-     |      Calculates an approximation of the square root of the given number.
+     |      Calculates an approximation of the square root of the specified number.
      |
      |  tan(a)
-     |      Calculates the approximate tangent of the given angle; the angle is in radians.
+     |      Calculates the approximate tangent of the specified angle; the angle is in radians.
      |      For the fraction size used by this class, this method is accurate to within
      |      2 units in the last place of the correctly rounded result for every input
      |      in the range [-pi*2, pi*2].
@@ -1613,7 +1613,7 @@ CLASSES
      |  v(i)
      |      Converts a string, integer, Decimal, or other number type into
      |      a fixed-point number.  If the parameter is a Fixed, returns itself.
-     |      If the given number is a noninteger, returns the closest value to
+     |      If the specified number is a noninteger, returns the closest value to
      |      a Fixed after rounding using the round-to-nearest-ties-to-even
      |      rounding mode.  The parameter is recommended to be a string
      |      or integer, and is not recommended to be a `float`.
@@ -1786,7 +1786,7 @@ CLASSES
      |
      |  coin(self, c)
      |      Convenience method to generate a function that returns
-     |      1 (heads) with the given probability c (which must be in [0, 1])
+     |      1 (heads) with the specified probability c (which must be in [0, 1])
      |      and 0 (tails) otherwise.
      |
      |  complement(self, f)
@@ -1945,7 +1945,7 @@ CLASSES
      |      - fabove(n, k): Calculates the kth Bernstein coefficient (not the value),
      |        or an upper bound thereof, for the degree-n upper polynomial.
      |      - fbound(n): Returns a tuple or list specifying a lower and upper bound
-     |         among the values of fbelow and fabove, respectively, for the given n.
+     |         among the values of fbelow and fabove, respectively, for the specified n.
      |       - nextdegree(n): Returns a lambda returning the next degree after the
      |         given degree n for which a polynomial is available; the lambda
      |         must return an integer greater than n.
@@ -2110,7 +2110,7 @@ CLASSES
      |
      |  next(self, coin)
      |      Returns the next result of the flip from a coin or die
-     |      that is transformed from the given input coin or die by the function
+     |      that is transformed from the specified input coin or die by the function
      |      represented by this Dice Enterprise object.
      |      coin - In the case of coins-to-dice or coins-to-coins (see the "append_poly" method),
      |         this specifies the _input coin_, which must be a function that
@@ -4319,7 +4319,7 @@ FUNCTIONS
 
     geobagcompare(bag, f)
         Returns 1 with probability f(U), where U is the value that
-          the given geometric bag turns out to hold, or 0 otherwise.
+          the specified geometric bag turns out to hold, or 0 otherwise.
           This method samples bits from the geometric bag as necessary.
         - b: Geometric bag, that is, an ordinary Python list
            that holds a list of bits from left to

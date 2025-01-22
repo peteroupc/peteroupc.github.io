@@ -32,7 +32,7 @@ def maxiopen(func, x):
     return maximum(func, x, Interval.open(0, 1))
 
 def bernpoly(a, x):
-    # Create a polynomial in Bernstein form using the given
+    # Create a polynomial in Bernstein form using the specified
     # array of coefficients and the symbol x.  The polynomial's
     # degree is the length of 'a' minus 1.
     pt = x

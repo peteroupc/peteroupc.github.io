@@ -111,7 +111,7 @@ class Fixed:
         """
         Converts a string, integer, Decimal, or other number type into
         a fixed-point number.  If the parameter is a Fixed, returns itself.
-        If the given number is a noninteger, returns the closest value to
+        If the specified number is a noninteger, returns the closest value to
         a Fixed after rounding using the round-to-nearest-ties-to-even
         rounding mode.  The parameter is recommended to be a string
         or integer, and is not recommended to be a `float`.
@@ -297,7 +297,7 @@ class Fixed:
 
     def asin(a):
         """
-        Calculates an approximation of the inverse sine of the given number.
+        Calculates an approximation of the inverse sine of the specified number.
         """
         av = Fixed.v(a)
         if av < -1 or av > 1:
@@ -306,7 +306,7 @@ class Fixed:
 
     def acos(a):
         """
-        Calculates an approximation of the inverse cosine of the given number.
+        Calculates an approximation of the inverse cosine of the specified number.
         """
         av = Fixed.v(a)
         if av < -1 or av > 1:
@@ -315,7 +315,7 @@ class Fixed:
 
     def sqrt(a):
         """
-        Calculates an approximation of the square root of the given number.
+        Calculates an approximation of the square root of the specified number.
         """
         return Fixed.v(a).pow(Fixed(Fixed.HALF))
 
@@ -485,7 +485,7 @@ class Fixed:
 
     def sin(a):
         """
-        Calculates the approximate sine of the given angle; the angle is in radians.
+        Calculates the approximate sine of the specified angle; the angle is in radians.
         For the fraction size used by this class, this method is accurate to within
         1 unit in the last place of the correctly rounded result for every input
         in the range [-pi*2, pi*2].
@@ -499,7 +499,7 @@ class Fixed:
 
     def cos(a):
         """
-        Calculates the approximate cosine of the given angle; the angle is in radians.
+        Calculates the approximate cosine of the specified angle; the angle is in radians.
         For the fraction size used by this class, this method is accurate to within
         1 unit in the last place of the correctly rounded result for every input
         in the range [-pi*2, pi*2].
@@ -528,7 +528,7 @@ class Fixed:
 
     def tan(a):
         """
-        Calculates the approximate tangent of the given angle; the angle is in radians.
+        Calculates the approximate tangent of the specified angle; the angle is in radians.
         For the fraction size used by this class, this method is accurate to within
         2 units in the last place of the correctly rounded result for every input
         in the range [-pi*2, pi*2].
@@ -543,7 +543,7 @@ class Fixed:
     def atan2(y, x):
         """
         Calculates the approximate measure, in radians, of the angle formed by the
-        x-axis and a line determined by the origin and the given coordinates of a 2D
+        x-axis and a line determined by the origin and the specified coordinates of a 2D
         point.  This is also known as the inverse tangent.
         """
         rx = Fixed.v(x).value

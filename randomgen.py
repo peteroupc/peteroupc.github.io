@@ -842,7 +842,7 @@ class PascalTriangle:
         return self._buildAliasTable2(r[desiredRow // 2], desiredRow)
 
     def nextto(self, desiredRow):
-        """Generates the row of Pascal's triangle with the given row number,
+        """Generates the row of Pascal's triangle with the specified row number,
         skipping all rows in between.  The return value is a list of
         row-number-choose-k values."""
         if self.rownumber - 1 == desiredRow:
@@ -2351,7 +2351,7 @@ class RandomGen:
 
     def exprandnew(self, lamdanum=1, lamdaden=1):
         """Returns an object to serve as a partially-sampled
-        exponential random variate with the given
+        exponential random variate with the specified
         rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
         the first is a multiple of 1/(2^X), the second is X, the third is the integer
         part (initially -1 to indicate the integer part wasn't sampled yet),
@@ -2364,7 +2364,7 @@ class RandomGen:
         return [0, 0, -1, lamdanum, lamdaden]
 
     def exprandfill(self, a, bits):
-        """Fills the unsampled bits of the given exponential random variate
+        """Fills the unsampled bits of the specified exponential random variate
         'a' as necessary to make a number whose fractional part
         has 'bits' many bits.  If the number's fractional part already has
         that many bits or more, the number is rounded using the round-to-nearest,
@@ -2804,8 +2804,7 @@ class RandomGen:
         algorithm called "simultaneous perturbation
         stochastic approximation", which is a randomized
         search for the minimum value of the objective function.
-        func - Objective function, a function that calculates a score for the
-         given array of parameters and returns that score.  The score is a
+        func - Objective function, a function that calculates a score for the specified array of parameters and returns that score.  The score is a
          single number; the lower the score, the better.
          The score can be negative.  (Note that the problem of maximizing
          the score is the same as minimizing it except
@@ -2815,7 +2814,7 @@ class RandomGen:
          as many items as the array passed to 'func'.
         iterations - Maximum number of iterations in which to run the
          optimization process.  Default is 200.
-        constrain - Optional. A function that takes the given array of
+        constrain - Optional. A function that takes the specified array of
          parameters and constrains them to fit the bounds of a valid
          array of parameters. This function modifies the array in place.
         a - Optional.  A setting used in the optimization process; greater than 0.
@@ -2890,8 +2889,7 @@ class RandomGen:
 
     def monte_carlo_integrate(self, func, bounds, samples=1000):
         """
-        Estimates the integral (volume) of a function within the
-        given bounds using Monte Carlo integration, which generates
+        Estimates the integral (volume) of a function within the specified bounds using Monte Carlo integration, which generates
         an estimate using the help of randomization.
         func - Function to integrate.  Takes the same number
            of parameters as the length of bounds.
@@ -3064,7 +3062,7 @@ class RandomGen:
     def simplex_point(self, points):
         """Generates an independent and uniform random point on the surface of an N-dimensional
         simplex (line segment, triangle, tetrahedron, etc.)
-        with the given coordinates."""
+        with the specified coordinates."""
         ret = []
         if len(points) > len(points[0]) + 1:
             raise ValueError
@@ -3134,13 +3132,13 @@ class RandomGen:
             curved surfaces", Physics in Medicine & Biology 32(10), 1987.
         - f: Takes two parameters (u and v) and returns
           a 3-element array expressing
-          a 3-dimensional position at the given point.
+          a 3-dimensional position at the specified point.
         - bounds: Two 2-element arrays expressing bounds
           for u and v.  Of the form [[umin, umax], [vmin,
           vmax]].
         - ngrad: Takes two parameters (u and v) and returns
           the norm of the gradient (stretch factor)
-          at the given point.  Can be None, in which
+          at the specified point.  Can be None, in which
           the norm-of-gradient is calculated numerically.
         - gmax: Maximum norm-of-gradient
           for entire surface.
@@ -3291,7 +3289,7 @@ class RandomGen:
     def gbas01(self, coin, k=385):
         """Estimates the mean of a random variable lying in [0, 1].
         This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
-        number is less the result of the given function or 0 otherwise.
+        number is less the result of the specified function or 0 otherwise.
         The estimate is unbiased but has nonzero probability of being
         greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
         coin: A function that returns a number in [0, 1].
@@ -3341,7 +3339,7 @@ class RandomGen:
           This is a modification I made to an algorithm that
             was contributed in a _Stack Overflow_
         answer (`questions/61393463`) by John McClane.
-        Raises an error if there is no solution for the given
+        Raises an error if there is no solution for the specified
         parameters."""
         mintotal = sum([x[0] for x in ranges])
         maxtotal = sum([x[1] for x in ranges])
@@ -3393,7 +3391,7 @@ class RandomGen:
          list if 'numSamples' is zero.
           The algorithm is thanks to a _Stack Overflow_
         answer (`questions/61393463`) by John McClane.
-        Raises an error if there is no solution for the given
+        Raises an error if there is no solution for the specified
         parameters."""
         adjsum = sum - numPerSample * mn
         # Min, max, sum negative
@@ -3461,7 +3459,7 @@ class RandomGen:
          list if 'numSamples' is zero.
           The algorithm is thanks to a _Stack Overflow_
         answer (`questions/61393463`) by John McClane.
-        Raises an error if there is no solution for the given
+        Raises an error if there is no solution for the specified
         parameters."""
         adjsum = sum - numPerSample * mn
         # Min, max, sum negative
@@ -3998,7 +3996,7 @@ class RandomGen:
 
     def fromDyadicDecompCode(self, code, precision=53):
         """Generates a uniform random variate contained in a box described
-            by the given universal dyadic decomposition code.
+            by the specified universal dyadic decomposition code.
             - code: A list returned by the getDyadicDecompCode
               or getDyadicDecompCodePdf method.
             - precision: Desired minimum precision in number of binary digits
@@ -4037,7 +4035,7 @@ class RandomGen:
 
     def getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None, precision=53):
         """
-        Finds a code describing the position and size of a box that covers the given
+        Finds a code describing the position and size of a box that covers the specified
         point in the universal dyadic decomposition for random variate generation,
         based on a nonuniform probability density function.  It generates a
         random variate for this purpose, so the return value may differ from call to
@@ -4051,14 +4049,14 @@ class RandomGen:
           containing N coordinates describing a point in space, and returns the probability
           density of that point as a single number.  If this parameter is given, however:
           - This method assumes the PDF is unimodal and strictly decreasing in every direction away from the PDF's mode, and may return incorrect results if that is not the case.
-          - If the given PDF outputs floating-point numbers, the resulting
+          - If the specified PDF outputs floating-point numbers, the resulting
             dyadic decomposition code may be inaccurate due to rounding errors.
         - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
           at a box. This method takes as input a list containing N items, where each item
           is a list containing the lowest and highest value of the box for the
           corresponding dimension.  Returns a list
           containing two items: the lower bound and the upper bound, respectively, of the
-          PDF anywhere in the given box.  If this parameter is
+          PDF anywhere in the specified box.  If this parameter is
           given, this method assumes the PDF is continuous almost everywhere and bounded
           from above; the dyadic decomposition will generally work only if that is the case.
         - precision: Precision of random variates generated by this method, in binary digits
@@ -4101,7 +4099,7 @@ class RandomGen:
 
     def getDyadicDecompCode(self, point, f=None, fbox=None):
         """
-        Finds a code describing the position and size of a box that covers the given
+        Finds a code describing the position and size of a box that covers the specified
         point in the universal dyadic decomposition for random variate generation.
         - point: A list of coordinates of a point in space.  This method assumes
           the point was a randomly generated member of a geometric set (such as a
@@ -4662,7 +4660,7 @@ class DensityTiling:
             pdfevals[x] = ret
             return ret
         except:
-            # Assume there is a pole at infinity at the given point
+            # Assume there is a pole at infinity at the specified point
             pdfevals[x] = math.inf
             return math.inf
 

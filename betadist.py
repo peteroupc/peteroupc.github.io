@@ -1085,7 +1085,7 @@ def psrnexpo(rg):
 
 def geobagcompare(bag, f):
     """Returns 1 with probability f(U), where U is the value that
-      the given geometric bag turns out to hold, or 0 otherwise.
+      the specified geometric bag turns out to hold, or 0 otherwise.
       This method samples bits from the geometric bag as necessary.
     - b: Geometric bag, that is, an ordinary Python list
        that holds a list of bits from left to

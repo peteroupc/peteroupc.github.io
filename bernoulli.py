@@ -264,7 +264,7 @@ class Bernoulli:
     def _uniform_less_nd(self, bag, num, den):
         """Determines whether a uniformly-distributed random number
         (given as an incomplete binary expansion that is built up
-         as necessary) is less than the given fraction (in the interval [0, 1])
+         as necessary) is less than the specified fraction (in the interval [0, 1])
          expressed as a numerator and denominator."""
         a = num
         if num == 0:
@@ -302,7 +302,7 @@ class Bernoulli:
     def _uniform_less(self, bag, frac):
         """Determines whether a uniformly-distributed random number
         (given as an incomplete binary expansion that is built up
-         as necessary) is less than the given Fraction (in the interval [0, 1])."""
+         as necessary) is less than the specified Fraction (in the interval [0, 1])."""
         frac = frac if isinstance(frac, Fraction) else Fraction(frac)
         # NOTE: Fractions are not compared and subtracted directly because
         # doing so is very costly in Python
@@ -332,7 +332,7 @@ class Bernoulli:
 
     def coin(self, c):
         """Convenience method to generate a function that returns
-        1 (heads) with the given probability c (which must be in [0, 1])
+        1 (heads) with the specified probability c (which must be in [0, 1])
         and 0 (tails) otherwise."""
         if c == 0:
             return lambda: 0
@@ -1156,9 +1156,8 @@ class Bernoulli:
         - fabove(n, k): Calculates the kth Bernstein coefficient (not the value),
           or an upper bound thereof, for the degree-n upper polynomial.
         - fbound(n): Returns a tuple or list specifying a lower and upper bound
-           among the values of fbelow and fabove, respectively, for the given n.
-         - nextdegree(n): Returns a lambda returning the next degree after the
-           given degree n for which a polynomial is available; the lambda
+           among the values of fbelow and fabove, respectively, for the specified n.
+         - nextdegree(n): Returns a lambda returning the next degree after the specified degree n for which a polynomial is available; the lambda
            must return an integer greater than n.
            Optional.  If not given, the first degree is 1 and the next degree is n*2
            (so that for each power of 2 as well as 1, a polynomial of that degree
@@ -1660,7 +1659,7 @@ class DiceEnterprise:
 
     def next(self, coin):
         """Returns the next result of the flip from a coin or die
-        that is transformed from the given input coin or die by the function
+        that is transformed from the specified input coin or die by the function
         represented by this Dice Enterprise object.
         coin - In the case of coins-to-dice or coins-to-coins (see the "append_poly" method),
            this specifies the _input coin_, which must be a function that

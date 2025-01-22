@@ -1567,7 +1567,7 @@ The following pseudocode, `LinearGradientPoint`, gets the color at the specified
         return lastStop[1]
     end
 
-> **Note:** Linear gradients are often the basis for 2-dimensional gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point. (The name comes from U.S. patent 6879327B1, "Creating gradient fills", which expired in March 2022.)  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the given 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to reduce banding include either dithering techniques[^36] or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
+> **Note:** Linear gradients are often the basis for 2-dimensional gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point. (The name comes from U.S. patent 6879327B1, "Creating gradient fills", which expired in March 2022.)  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the specified 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to reduce banding include either dithering techniques[^36] or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
 
 <a id=Pseudocode></a>
 
@@ -1707,7 +1707,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 >
 > 1. `SpectrumToTristim(refl, D65, CIE1931)` computes the reflectance curve's [**XYZ color**](#CIE_XYZ) (where a Y of 1 is the D65/2 white point).
 > 2. `SpectrumToTristim(refl, D50, CIE1931)` is the same, except white is the D50/2 white point.
-> 3. `SpectrumToTristim(PerfectWhite, light, cmf)` computes the white point for the given illuminant `light` and the color matching functions `cmf`.
+> 3. `SpectrumToTristim(PerfectWhite, light, cmf)` computes the white point for the specified illuminant `light` and the color matching functions `cmf`.
 > 4. `SpectrumToTristim(PerfectWhite, D65, CIE1931)` computes the D65/2 white point.
 > 5. `XYZTosRGB(SpectrumToTristim(refl, D65, CIE1931))` computes the reflectance curve's [**encoded sRGB**](#RGB_Color_Spaces) color.
 > 6. `XYZTosRGB(CIE1931(wl))` computes the encoded sRGB color of a light source that emits light only at the wavelength `wl` (a _monochromatic stimulus_), where the wavelength is expressed in nm.
@@ -1718,7 +1718,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  As a blackbody's temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.
 
-The `Planckian` method shown next models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).[^44].  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
+The `Planckian` method shown next models the spectral power distribution (SPD) of a blackbody with the specified temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).[^44].  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
 
     METHOD Planckian(wl, temp)
         num = pow(wl, -5)
@@ -1737,7 +1737,7 @@ The `Planckian` method shown next models the spectral power distribution (SPD) o
 
 > **Note:** If `TEMP` is 2856, the `BlackbodySPD` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates[^18] to those of the given color.  The CCT calculation uses the CIE 1931 standard observer. (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) points is more than 0.05.)
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates[^18] to those of the specified color.  The CCT calculation uses the CIE 1931 standard observer. (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) points is more than 0.05.)
 
 The following method (`XYZToCCT`), which computes an approximate CCT from an [**XYZ color**](#CIE_XYZ), is based on McCamy's formula from 1992.
 
@@ -1827,7 +1827,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^6]: For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
 
-[^7]: Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside hardware and driver development for solid-state lighting, luminaires, or display devices.
+[^7]: Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them.
 
 [^8]: B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".
 
