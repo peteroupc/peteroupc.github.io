@@ -921,8 +921,7 @@ CLASSES
      |      need not be equal to 1.
      |
      |  monte_carlo_integrate(self, func, bounds, samples=1000)
-     |      Estimates the integral (volume) of a function within the
-     |      given bounds using Monte Carlo integration, which generates
+     |      Estimates the integral (volume) of a function within the specified bounds using Monte Carlo integration, which generates
      |      an estimate using the help of randomization.
      |      func - Function to integrate.  Takes the same number
      |         of parameters as the length of bounds.
@@ -1197,8 +1196,7 @@ CLASSES
      |      algorithm called "simultaneous perturbation
      |      stochastic approximation", which is a randomized
      |      search for the minimum value of the objective function.
-     |      func - Objective function, a function that calculates a score for the
-     |       given array of parameters and returns that score.  The score is a
+     |      func - Objective function, a function that calculates a score for the specified array of parameters and returns that score.  The score is a
      |       single number; the lower the score, the better.
      |       The score can be negative.  (Note that the problem of maximizing
      |       the score is the same as minimizing it except
@@ -1946,8 +1944,7 @@ CLASSES
      |        or an upper bound thereof, for the degree-n upper polynomial.
      |      - fbound(n): Returns a tuple or list specifying a lower and upper bound
      |         among the values of fbelow and fabove, respectively, for the specified n.
-     |       - nextdegree(n): Returns a lambda returning the next degree after the
-     |         given degree n for which a polynomial is available; the lambda
+     |       - nextdegree(n): Returns a lambda returning the next degree after the specified degree n for which a polynomial is available; the lambda
      |         must return an integer greater than n.
      |         Optional.  If not given, the first degree is 1 and the next degree is n*2
      |         (so that for each power of 2 as well as 1, a polynomial of that degree
