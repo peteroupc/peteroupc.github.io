@@ -37,7 +37,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | many people | many | Inspired by E. Bernal. |
 | member (_of an association, club, etc._) | adherent, individual. | E. Bernal wrote of his concerns about this word's overuse. |
 | people, persons | men and women, individuals, audience, public, population, anyone..., whoever..., [leave out].<br>_Informal:_ folks. | More generally, a more specific term than _people_ or _persons_ is preferred. Inspired by E. Bernal. |
-| people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider gentilic nouns; for example: _people living in Italy_ &rarr; _Italians_. |
+| people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider, for example: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
 | say | declare, affirm, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, elaborate, conclude, reply, respond, answer, signal, indicate, point out, maintain, acknowledge, admit. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, speak with, talk with, converse with, chat with | Suggested by E. Bernal. |
