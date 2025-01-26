@@ -786,11 +786,11 @@ Renamed to DivRemNaturalScale.</p>
   </li>
   <li>
     <p><code>EFloat NextMinus(EContext ctx)</code><br />
- Finds the largest value that’s smaller than the given value.</p>
+ Finds the largest value that’s smaller than the specified value.</p>
   </li>
   <li>
     <p><code>EFloat NextPlus(EContext ctx)</code><br />
- Finds the smallest value that’s greater than the given value.</p>
+ Finds the smallest value that’s greater than the specified value.</p>
   </li>
   <li>
     <p><code>EFloat NextToward(EFloat otherValue,
@@ -804,27 +804,28 @@ Renamed to DivRemNaturalScale.</p>
   </li>
   <li>
     <p><code>EFloat Plus(EContext ctx)</code><br />
- Rounds this object’s value to a given precision, using the given rounding
- mode and range of exponent, and also converts negative zero to positive
- zero.</p>
+ Rounds this object’s value to the specified precision, using the specified
+ rounding mode and range of exponent, and also converts negative zero to
+ positive zero.</p>
   </li>
   <li>
     <p><code>EFloat Pow(int exponentSmall)</code><br />
- Raises this object’s value to the given exponent.</p>
+ Raises this object’s value to the specified exponent.</p>
   </li>
   <li>
     <p><code>EFloat Pow(int exponentSmall,
  EContext ctx)</code><br />
- Raises this object’s value to the given exponent.</p>
+ Raises this object’s value to the specified exponent.</p>
   </li>
   <li>
     <p><code>EFloat Pow(EFloat exponent)</code><br />
- Raises this object’s value to the given exponent, using unlimited precision.</p>
+ Raises this object’s value to the specified exponent, using unlimited
+ precision.</p>
   </li>
   <li>
     <p><code>EFloat Pow(EFloat exponent,
  EContext ctx)</code><br />
- Raises this object’s value to the given exponent.</p>
+ Raises this object’s value to the specified exponent.</p>
   </li>
   <li>
     <p><code>EInteger Precision()</code><br />
@@ -880,8 +881,9 @@ Renamed to DivRemNaturalScale.</p>
   <li>
     <p><code>EFloat RemainderNear(EFloat divisor,
  EContext ctx)</code><br />
- Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object’s value by another object’s value.</p>
+ Finds the distance to the closest multiple of the specified divisor,
+ based on the result of dividing this object’s value by another object’s
+ value.</p>
   </li>
   <li>
     <p><code>EFloat RemainderNoRoundAfterDivide(EFloat divisor,
@@ -905,21 +907,21 @@ Renamed to DivRemNaturalScale.</p>
     <p><code>EFloat RoundToExponentExact(int exponentSmall,
  EContext ctx)</code><br />
  Returns a binary floating-point number with the same value as this object
- but rounded to the given exponent represented as a 32-bit signed integer,
- and signals an inexact flag if the result would be inexact.</p>
+ but rounded to the specified exponent represented as a 32-bit signed
+ integer, and signals an inexact flag if the result would be inexact.</p>
   </li>
   <li>
     <p><code>EFloat RoundToExponentExact(EInteger exponent,
  EContext ctx)</code><br />
  Returns a binary floating-point number with the same value as this object
- but rounded to the given exponent, and signals an inexact flag if the result
- would be inexact.</p>
+ but rounded to the specified exponent, and signals an inexact flag if the
+ result would be inexact.</p>
   </li>
   <li>
     <p><code>EFloat RoundToExponentExact(EInteger exponent,
  ERounding rounding)</code><br />
  Returns a binary number with the same value as this object but rounded to
- the given exponent.</p>
+ the specified exponent.</p>
   </li>
   <li>
     <p><code>EFloat RoundToIntegerExact(EContext ctx)</code><br />
@@ -945,8 +947,8 @@ Renamed to RoundToIntegerNoRoundedFlag.</p>
   </li>
   <li>
     <p><code>EFloat RoundToPrecision(EContext ctx)</code><br />
- Rounds this object’s value to a given precision, using the given rounding
- mode and range of exponent.</p>
+ Rounds this object’s value to the specified precision, using the specified
+ rounding mode and range of exponent.</p>
   </li>
   <li>
     <p><code>EFloat ScaleByPowerOfTwo(int places)</code><br />
@@ -1119,8 +1121,8 @@ Renamed to ToEDecimal.</p>
   <li>
     <p><code>String ToShortestString(EContext ctx)</code><br />
  Returns a string representation of this number’s value after rounding
- that value to the given precision (using the given arithmetic context, such
- as EContext.Binary64).</p>
+ that value to the specified precision (using the specified arithmetic
+ context, such as EContext.Binary64).</p>
   </li>
   <li>
     <p><code>float ToSingle()</code><br />
@@ -1136,12 +1138,12 @@ Renamed to ToEDecimal.</p>
     <p><code>EInteger ToSizedEInteger(int maxBitLength)</code><br />
  Converts this value to an arbitrary-precision integer by discarding its
  fractional part and checking whether the resulting integer overflows the
- given signed bit count.</p>
+ specified signed bit count.</p>
   </li>
   <li>
     <p><code>EInteger ToSizedEIntegerIfExact(int maxBitLength)</code><br />
  Converts this value to an arbitrary-precision integer, only if this number’s
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.</p>
   </li>
   <li>
@@ -2585,9 +2587,9 @@ Renamed to ToEDecimal.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The constant π rounded to the given precision. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the
- precision is unlimited (the context’s Precision property is 0).</li>
+  <li>The constant π rounded to the specified precision. Signals
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>ctx</code> is
+ null or the precision is unlimited (the context’s Precision property is 0).</li>
 </ul>
 
 <h3 id="abs">Abs</h3>
@@ -3446,7 +3448,7 @@ Renamed to ToEDecimal.</p>
  and exponent range of the result. This context will be used only in the
  division portion of the remainder calculation; as a result, it’s possible
  for the remainder to have a higher precision than given in this context.
- Flags will be set on the given context only if the context’s <code>
+ Flags will be set on the specified context only if the context’s <code>
  HasFlags</code> is true and the integer part of the division result doesn’t fit
  the precision and exponent range without rounding. Can be null, in which the
  precision is unlimited and no additional rounding, other than the rounding
@@ -3486,7 +3488,7 @@ Renamed to ToEDecimal.</p>
  if the result must be scaled down to have the same exponent as this value.
  If the precision given in the context is other than 0, calls the Quantize
  method with both arguments equal to the result of the operation (and can
- signal FlagInvalid and return NaN if the result doesn’t fit the given
+ signal FlagInvalid and return NaN if the result doesn’t fit the specified
  precision). If <code>HasFlags</code> of the context is true, will also store the
  flags resulting from the operation (the flags are in addition to the
  pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3567,7 +3569,7 @@ Renamed to ToEDecimal.</p>
  if the result must be scaled down to have the same exponent as this value.
  If the precision given in the context is other than 0, calls the Quantize
  method with both arguments equal to the result of the operation (and can
- signal FlagInvalid and return NaN if the result doesn’t fit the given
+ signal FlagInvalid and return NaN if the result doesn’t fit the specified
  precision). If <code>HasFlags</code> of the context is true, will also store the
  flags resulting from the operation (the flags are in addition to the
  pre-existing flags). Can be null, in which case the default rounding mode is
@@ -3708,7 +3710,7 @@ Renamed to ToEDecimal.</p>
  will be set to 0. Signals FlagDivideByZero and returns infinity if the
  divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns
  not-a-number (NaN) if the divisor and the dividend are 0, or if the result
- doesn’t fit the given precision.</li>
+ doesn’t fit the specified precision.</li>
 </ul>
 
 <h3 id="dividetosameexponent">DivideToSameExponent</h3>
@@ -3792,7 +3794,7 @@ Renamed to ToEDecimal.</p>
  and exponent range of the result. This context will be used only in the
  division portion of the remainder calculation; as a result, it’s possible
  for the remainder to have a higher precision than given in this context.
- Flags will be set on the given context only if the context’s <code>
+ Flags will be set on the specified context only if the context’s <code>
  HasFlags</code> is true and the integer part of the division result doesn’t fit
  the precision and exponent range without rounding. Can be null, in which the
  precision is unlimited and no additional rounding, other than the rounding
@@ -3906,8 +3908,8 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>Exponential of this object. If this object’s value is 1, returns an
- approximation to “ e” within the given precision. Signals FlagInvalid and
- returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the
+ approximation to “ e” within the specified precision. Signals FlagInvalid
+ and returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the
  precision is unlimited (the context’s Precision property is 0).</li>
 </ul>
 
@@ -4600,7 +4602,7 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat NextMinus(EContext ctx)
 </pre>
 
-<p>Finds the largest value that’s smaller than the given value.</p>
+<p>Finds the largest value that’s smaller than the specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4615,10 +4617,10 @@ Renamed to ToEDecimal.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Returns the largest value that’s less than the given value. Returns
- negative infinity if the result is negative infinity. Signals FlagInvalid
- and returns not-a-number (NaN) if the parameter <code>ctx</code> is null, the
- precision is 0, or <code>ctx</code> has an unlimited exponent range.</li>
+  <li>Returns the largest value that’s less than the specified value.
+ Returns negative infinity if the result is negative infinity. Signals
+ FlagInvalid and returns not-a-number (NaN) if the parameter <code>ctx</code> is
+ null, the precision is 0, or <code>ctx</code> has an unlimited exponent range.</li>
 </ul>
 
 <h3 id="nextplus">NextPlus</h3>
@@ -4626,7 +4628,7 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat NextPlus(EContext ctx)
 </pre>
 
-<p>Finds the smallest value that’s greater than the given value.</p>
+<p>Finds the smallest value that’s greater than the specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4641,7 +4643,7 @@ Renamed to ToEDecimal.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Returns the smallest value that’s greater than the given
+  <li>Returns the smallest value that’s greater than the specified
  value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter
  <code>ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
  exponent range.</li>
@@ -4686,11 +4688,11 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat Plus(EContext ctx)
 </pre>
 
-<p>Rounds this object’s value to a given precision, using the given rounding
- mode and range of exponent, and also converts negative zero to positive
- zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is useful for
- triggering an invalid operation and returning not-a-number (NaN) for custom
- arithmetic operations.</p>
+<p>Rounds this object’s value to the specified precision, using the specified
+ rounding mode and range of exponent, and also converts negative zero to
+ positive zero. The idiom <code>EDecimal.SignalingNaN.Plus(ctx)</code> is useful
+ for triggering an invalid operation and returning not-a-number (NaN) for
+ custom arithmetic operations.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4714,7 +4716,8 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat Pow(EFloat exponent)
 </pre>
 
-<p>Raises this object’s value to the given exponent, using unlimited precision.</p>
+<p>Raises this object’s value to the specified exponent, using unlimited
+ precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4735,7 +4738,7 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat Pow(EFloat exponent, EContext ctx)
 </pre>
 
-<p>Raises this object’s value to the given exponent.</p>
+<p>Raises this object’s value to the specified exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4769,7 +4772,7 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat Pow(int exponentSmall, EContext ctx)
 </pre>
 
-<p>Raises this object’s value to the given exponent.</p>
+<p>Raises this object’s value to the specified exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4798,7 +4801,7 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat Pow(int exponentSmall)
 </pre>
 
-<p>Raises this object’s value to the given exponent.</p>
+<p>Raises this object’s value to the specified exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4892,9 +4895,9 @@ Renamed to ToEDecimal.</p>
 <ul>
   <li>A binary floating-point number with the same value as this object
  but with the exponent changed. Signals FlagInvalid and returns not-a-number
- (NaN) if this object is infinity, if the rounded result can’t fit the given
- precision, or if the context defines an exponent range and the given
- exponent is outside that range.</li>
+ (NaN) if this object is infinity, if the rounded result can’t fit the
+ specified precision, or if the context defines an exponent range and the
+ specified exponent is outside that range.</li>
 </ul>
 
 <h3 id="quantize-1">Quantize</h3>
@@ -4948,9 +4951,9 @@ Renamed to ToEDecimal.</p>
 <ul>
   <li>A binary floating-point number with the same value as this object
  but with the exponent changed. Signals FlagInvalid and returns not-a-number
- (NaN) if this object is infinity, if the rounded result can’t fit the given
- precision, or if the context defines an exponent range and the given
- exponent is outside that range.</li>
+ (NaN) if this object is infinity, if the rounded result can’t fit the
+ specified precision, or if the context defines an exponent range and the
+ specified exponent is outside that range.</li>
 </ul>
 
 <h3 id="quantize-2">Quantize</h3>
@@ -4999,9 +5002,9 @@ Renamed to ToEDecimal.</p>
 <ul>
   <li>A binary floating-point number with the same value as this object
  but with the exponent changed. Signals FlagInvalid and returns not-a-number
- (NaN) if the result can’t fit the given precision without rounding, or if
- the arithmetic context defines an exponent range and the given exponent is
- outside that range.</li>
+ (NaN) if the result can’t fit the specified precision without rounding, or
+ if the arithmetic context defines an exponent range and the specified
+ exponent is outside that range.</li>
 </ul>
 
 <h3 id="reduce">Reduce</h3>
@@ -5067,7 +5070,7 @@ Renamed to ToEDecimal.</p>
  dividend (the other arbitrary-precision binary floating-point number) is
  nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor
  and the dividend are 0, or if the result of the division doesn’t fit the
- given precision.</li>
+ specified precision.</li>
 </ul>
 
 <h3 id="remaindernoroundafterdivide">RemainderNoRoundAfterDivide</h3>
@@ -5097,7 +5100,7 @@ Renamed to ToEDecimal.</p>
 <ul>
   <li>The remainder of the two numbers. Signals FlagInvalid and returns
  not-a-number (NaN) if the divisor is 0, or if the result doesn’t fit the
- given precision.</li>
+ specified precision.</li>
 </ul>
 
 <h3 id="remaindernaturalscale">RemainderNaturalScale</h3>
@@ -5139,7 +5142,7 @@ Renamed to ToEDecimal.</p>
  and exponent range of the result. This context will be used only in the
  division portion of the remainder calculation; as a result, it’s possible
  for the return value to have a higher precision than given in this context.
- Flags will be set on the given context only if the context’s <code>
+ Flags will be set on the specified context only if the context’s <code>
  HasFlags</code> is true and the integer part of the division result doesn’t fit
  the precision and exponent range without rounding. Can be null, in which the
  precision is unlimited and no additional rounding, other than the rounding
@@ -5158,11 +5161,11 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat RemainderNear(EFloat divisor, EContext ctx)
 </pre>
 
-<p>Finds the distance to the closest multiple of the given divisor, based on
- the result of dividing this object's value by another object's value.
- </p>
-<ul> <li>If this and the other object divide evenly, the result is
- 0.</li><li>If the remainder's absolute value is less than half of the
+<p>Finds the distance to the closest multiple of the specified divisor,
+ based on the result of dividing this object's value by another object's
+ value. </p>
+<ul> <li>If this and the other object divide evenly, the result
+ is 0.</li><li>If the remainder's absolute value is less than half of the
  divisor's absolute value, the result has the same sign as this object and
  will be the distance to the closest multiple.</li><li>If the remainder's
  absolute value is more than half of the divisor's absolute value, the result
@@ -5196,7 +5199,7 @@ Renamed to ToEDecimal.</p>
 <ul>
   <li>The distance of the closest multiple. Signals FlagInvalid and
  returns not-a-number (NaN) if the divisor is 0, or either the result of
- integer division (the quotient) or the remainder wouldn’t fit the given
+ integer division (the quotient) or the remainder wouldn’t fit the specified
  precision.</li>
 </ul>
 
@@ -5207,8 +5210,8 @@ Renamed to ToEDecimal.</p>
 
 <p>Returns a binary floating-point number with the same value as this object
  but rounded to a new exponent if necessary. The resulting number’s Exponent
- property will not necessarily be the given exponent; use the Quantize method
- instead to give the result a particular exponent.</p>
+ property will not necessarily be the specified exponent; use the Quantize
+ method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5234,11 +5237,12 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest value
- representable in the given precision. If the result can’t fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to the given exponent when rounding,
- and the given exponent is outside the valid range of the arithmetic context.</li>
+ representable in the specified precision. If the result can’t fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to the specified
+ exponent when rounding, and the specified exponent is outside the valid
+ range of the arithmetic context.</li>
 </ul>
 
 <h3 id="roundtoexponent-1">RoundToExponent</h3>
@@ -5248,8 +5252,8 @@ Renamed to ToEDecimal.</p>
 
 <p>Returns a binary floating-point number with the same value as this object
  but rounded to a new exponent if necessary. The resulting number’s Exponent
- property will not necessarily be the given exponent; use the Quantize method
- instead to give the result a particular exponent.</p>
+ property will not necessarily be the specified exponent; use the Quantize
+ method instead to give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5275,11 +5279,12 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest value
- representable in the given precision. If the result can’t fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to the given exponent when rounding,
- and the given exponent is outside the valid range of the arithmetic context.</li>
+ representable in the specified precision. If the result can’t fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to the specified
+ exponent when rounding, and the specified exponent is outside the valid
+ range of the arithmetic context.</li>
 </ul>
 
 <h3 id="roundtoexponentexact">RoundToExponentExact</h3>
@@ -5288,10 +5293,10 @@ Renamed to ToEDecimal.</p>
 </pre>
 
 <p>Returns a binary floating-point number with the same value as this object
- but rounded to the given exponent, and signals an inexact flag if the result
- would be inexact. The resulting number’s Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to give
- the result a particular exponent.</p>
+ but rounded to the specified exponent, and signals an inexact flag if the
+ result would be inexact. The resulting number’s Exponent property will not
+ necessarily be the specified exponent; use the Quantize method instead to
+ give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5317,12 +5322,12 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest value
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can’t fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can’t fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
- changed to the given exponent when rounding, and the given exponent is
- outside the valid range of the arithmetic context.</li>
+ changed to the specified exponent when rounding, and the specified exponent
+ is outside the valid range of the arithmetic context.</li>
 </ul>
 
 <h3 id="roundtoexponentexact-1">RoundToExponentExact</h3>
@@ -5331,9 +5336,9 @@ Renamed to ToEDecimal.</p>
 </pre>
 
 <p>Returns a binary number with the same value as this object but rounded to
- the given exponent. The resulting number’s Exponent property will not
- necessarily be the given exponent; use the Quantize method instead to give
- the result a particular exponent.</p>
+ the specified exponent. The resulting number’s Exponent property will not
+ necessarily be the specified exponent; use the Quantize method instead to
+ give the result a particular exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5354,7 +5359,7 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary number rounded to the closest value representable in the
- given precision.</li>
+ specified precision.</li>
 </ul>
 
 <h3 id="roundtoexponentexact-2">RoundToExponentExact</h3>
@@ -5363,10 +5368,11 @@ Renamed to ToEDecimal.</p>
 </pre>
 
 <p>Returns a binary floating-point number with the same value as this object
- but rounded to the given exponent represented as a 32-bit signed integer,
- and signals an inexact flag if the result would be inexact. The resulting
- number’s Exponent property will not necessarily be the given exponent; use
- the Quantize method instead to give the result a particular exponent.</p>
+ but rounded to the specified exponent represented as a 32-bit signed
+ integer, and signals an inexact flag if the result would be inexact. The
+ resulting number’s Exponent property will not necessarily be the specified
+ exponent; use the Quantize method instead to give the result a particular
+ exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5392,12 +5398,12 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest value
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can’t fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can’t fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
- changed to the given exponent when rounding, and the given exponent is
- outside the valid range of the arithmetic context.</li>
+ changed to the specified exponent when rounding, and the specified exponent
+ is outside the valid range of the arithmetic context.</li>
 </ul>
 
 <h3 id="roundtointegerexact">RoundToIntegerExact</h3>
@@ -5424,8 +5430,8 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest integer
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can’t fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can’t fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
  changed to 0 when rounding, and 0 is outside the valid range of the
@@ -5459,11 +5465,11 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest integer
- representable in the given precision. If the result can’t fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to 0 when rounding, and 0 is outside
- the valid range of the arithmetic context.</li>
+ representable in the specified precision. If the result can’t fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to 0 when rounding, and
+ 0 is outside the valid range of the arithmetic context.</li>
 </ul>
 
 <h3 id="roundtointegralexact">RoundToIntegralExact</h3>
@@ -5489,8 +5495,8 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest integer
- representable in the given precision. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can’t fit the given precision without
+ representable in the specified precision. Signals FlagInvalid and returns
+ not-a-number (NaN) if the result can’t fit the specified precision without
  rounding. Signals FlagInvalid and returns not-a-number (NaN) if the
  arithmetic context defines an exponent range, the new exponent must be
  changed to 0 when rounding, and 0 is outside the valid range of the
@@ -5522,11 +5528,11 @@ Renamed to ToEDecimal.</p>
 
 <ul>
   <li>A binary floating-point number rounded to the closest integer
- representable in the given precision. If the result can’t fit the precision,
- additional digits are discarded to make it fit. Signals FlagInvalid and
- returns not-a-number (NaN) if the arithmetic context defines an exponent
- range, the new exponent must be changed to 0 when rounding, and 0 is outside
- the valid range of the arithmetic context.</li>
+ representable in the specified precision. If the result can’t fit the
+ precision, additional digits are discarded to make it fit. Signals
+ FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines
+ an exponent range, the new exponent must be changed to 0 when rounding, and
+ 0 is outside the valid range of the arithmetic context.</li>
 </ul>
 
 <h3 id="roundtoprecision">RoundToPrecision</h3>
@@ -5534,8 +5540,8 @@ Renamed to ToEDecimal.</p>
 <pre>public EFloat RoundToPrecision(EContext ctx)
 </pre>
 
-<p>Rounds this object’s value to a given precision, using the given rounding
- mode and range of exponent.</p>
+<p>Rounds this object’s value to the specified precision, using the specified
+ rounding mode and range of exponent.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5582,11 +5588,11 @@ Renamed to ToEDecimal.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>This object rounded to the given precision. Returns this object and
- signals no flags if <code>ctx</code> is null or specifies an unlimited precision,
- if this object is infinity or not-a-number (including signaling NaN), or if
- the number’s value has no more significant digits than the maximum precision
- given in <code>ctx</code>.</li>
+  <li>This object rounded to the specified precision. Returns this object
+ and signals no flags if <code>ctx</code> is null or specifies an unlimited
+ precision, if this object is infinity or not-a-number (including signaling
+ NaN), or if the number’s value has no more significant digits than the
+ maximum precision given in <code>ctx</code>.</li>
 </ul>
 
 <h3 id="scalebypoweroftwo">ScaleByPowerOfTwo</h3>
@@ -6095,18 +6101,19 @@ Renamed to ToEDecimal.</p>
 </pre>
 
 <p>Returns a string representation of this number's value after rounding
- that value to the given precision (using the given arithmetic context, such
- as <code>EContext.Binary64</code>). If the number after rounding is neither
- infinity nor not-a-number (NaN), returns the shortest decimal form of this
- number's value (in terms of decimal digits starting with the first nonzero
- digit and ending with the last nonzero digit) that results in the rounded
- number after the decimal form is converted to binary floating-point format
- (using the given arithmetic context).</p>
-<p>The following example converts
- an EFloat number to its shortest round-tripping decimal form using the same
- precision as the <code>double</code> type in Java and.NET:</p>
-<pre> string str =
- efloat.ToShortestString(EContext.Binary64); </pre>
+ that value to the specified precision (using the specified arithmetic
+ context, such as <code>EContext.Binary64</code>). If the number after rounding
+ is neither infinity nor not-a-number (NaN), returns the shortest decimal
+ form of this number's value (in terms of decimal digits starting with the
+ first nonzero digit and ending with the last nonzero digit) that results in
+ the rounded number after the decimal form is converted to binary
+ floating-point format (using the specified arithmetic context).</p>
+<p>The
+ following example converts an EFloat number to its shortest round-tripping
+ decimal form using the same precision as the <code>double</code> type in Java
+ and.NET:</p>
+<pre> string str = efloat.ToShortestString(EContext.Binary64);
+ </pre>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6122,7 +6129,7 @@ Renamed to ToEDecimal.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Shortest decimal form of this number’s value for the given
+  <li>Shortest decimal form of this number’s value for the specified
  arithmetic context. The text string will be in exponential notation
  (expressed as a number 1 or greater, but less than 10, times a power of 10)
  if the number’s first nonzero decimal digit is more than five digits after
@@ -6201,7 +6208,7 @@ Renamed to ToEDecimal.</p>
 
 <p>Converts this value to an arbitrary-precision integer by discarding its
  fractional part and checking whether the resulting integer overflows the
- given signed bit count.</p>
+ specified signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6232,7 +6239,7 @@ Renamed to ToEDecimal.</p>
 </pre>
 
 <p>Converts this value to an arbitrary-precision integer, only if this number’s
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>

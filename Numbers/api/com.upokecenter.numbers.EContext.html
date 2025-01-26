@@ -140,24 +140,24 @@
   </li>
   <li>
     <p><code>boolean ExponentWithinRange(EInteger exponent)</code><br />
- Determines whether a number can have the given Exponent property under this
- arithmetic context.</p>
+ Determines whether a number can have the specified Exponent property under
+ this arithmetic context.</p>
   </li>
   <li>
     <p><code>static EContext ForPrecision(int precision)</code><br />
- Creates a new arithmetic context using the given maximum number of digits,
- an unlimited exponent range, and the HalfUp rounding mode.</p>
+ Creates a new arithmetic context using the specified maximum number of
+ digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
   </li>
   <li>
     <p><code>static EContext ForPrecisionAndRounding(int precision,
  ERounding rounding)</code><br />
  Creates a new EContext object initialized with an unlimited exponent range,
- and the given rounding mode and maximum precision.</p>
+ and the specified rounding mode and maximum precision.</p>
   </li>
   <li>
     <p><code>static EContext ForRounding(ERounding rounding)</code><br />
  Creates a new EContext object initialized with an unlimited precision, an
- unlimited exponent range, and the given rounding mode.</p>
+ unlimited exponent range, and the specified rounding mode.</p>
   </li>
   <li>
     <p><code>final boolean getAdjustExponent()</code><br />
@@ -217,7 +217,7 @@
   <li>
     <p><code>final ERounding getRounding()</code><br />
  Gets the desired rounding mode when converting numbers that can’t be
- represented in the given precision and exponent range.</p>
+ represented in the specified precision and exponent range.</p>
   </li>
   <li>
     <p><code>final int getTraps()</code><br />
@@ -241,14 +241,14 @@
   <li>
     <p><code>&lt;T&gt; T TriggerTraps(T result,
  EContext trappableContext)</code><br />
- Throws trap exceptions if the given context has flags set that also have
- traps enabled for them in this context, and adds the given context’s flags
- to this context if HasFlags for this context is true.</p>
+ Throws trap exceptions if the specified context has flags set that also have
+ traps enabled for them in this context, and adds the specified context’s
+ flags to this context if HasFlags for this context is true.</p>
   </li>
   <li>
     <p><code>EContext WithAdjustExponent(boolean adjustExponent)</code><br />
  Copies this EContext and sets the copy’s “AdjustExponent” property to the
- given value.</p>
+ specified value.</p>
   </li>
   <li>
     <p><code>EContext WithBigExponentRange(EInteger exponentMin,
@@ -267,7 +267,7 @@
   <li>
     <p><code>EContext WithExponentClamp(boolean clamp)</code><br />
  Copies this arithmetic context and sets the copy’s “ClampNormalExponents”
- flag to the given value.</p>
+ flag to the specified value.</p>
   </li>
   <li>
     <p><code>EContext WithExponentRange(int exponentMinSmall,
@@ -291,7 +291,7 @@
   <li>
     <p><code>EContext WithPrecisionInBits(boolean isPrecisionBits)</code><br />
  Copies this EContext and sets the copy’s “IsPrecisionInBits” property to the
- given value.</p>
+ specified value.</p>
   </li>
   <li>
     <p><code>EContext WithRounding(ERounding rounding)</code><br />
@@ -300,11 +300,11 @@
   <li>
     <p><code>EContext WithSimplified(boolean simplified)</code><br />
  Copies this EContext and sets the copy’s “IsSimplified” property to the
- given value.</p>
+ specified value.</p>
   </li>
   <li>
     <p><code>EContext WithTraps(int traps)</code><br />
- Copies this EContext with Traps set to the given value.</p>
+ Copies this EContext with Traps set to the specified value.</p>
   </li>
   <li><code>EContext WithUnlimitedExponents()</code><br />
  Copies this EContext with an unlimited exponent range.</li>
@@ -709,13 +709,13 @@
 </pre>
 
 <p>Gets the desired rounding mode when converting numbers that can’t be
- represented in the given precision and exponent range.</p>
+ represented in the specified precision and exponent range.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
   <li>The desired rounding mode when converting numbers that can’t be
- represented in the given precision and exponent range.</li>
+ represented in the specified precision and exponent range.</li>
 </ul>
 
 <h3 id="gettraps">getTraps</h3>
@@ -746,8 +746,8 @@
 <pre>public static EContext ForPrecision(int precision)
 </pre>
 
-<p>Creates a new arithmetic context using the given maximum number of digits,
- an unlimited exponent range, and the HalfUp rounding mode.</p>
+<p>Creates a new arithmetic context using the specified maximum number of
+ digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -767,7 +767,7 @@
 </pre>
 
 <p>Creates a new EContext object initialized with an unlimited exponent range,
- and the given rounding mode and maximum precision.</p>
+ and the specified rounding mode and maximum precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -792,7 +792,7 @@
 </pre>
 
 <p>Creates a new EContext object initialized with an unlimited precision, an
- unlimited exponent range, and the given rounding mode.</p>
+ unlimited exponent range, and the specified rounding mode.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -824,8 +824,8 @@
 <pre>public boolean ExponentWithinRange(EInteger exponent)
 </pre>
 
-<p>Determines whether a number can have the given Exponent property under this
- arithmetic context.</p>
+<p>Determines whether a number can have the specified Exponent property under
+ this arithmetic context.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -837,10 +837,10 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if a number can have the given Exponent property under
- this arithmetic context; otherwise, <code>false</code>. If this context allows
- unlimited precision, returns true for the exponent EMax and any exponent
- less than EMax.</li>
+  <li><code>true</code> if a number can have the specified Exponent property
+ under this arithmetic context; otherwise, <code>false</code>. If this context
+ allows unlimited precision, returns true for the exponent EMax and any
+ exponent less than EMax.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -892,7 +892,7 @@
 </pre>
 
 <p>Copies this EContext and sets the copy’s “AdjustExponent” property to the
- given value.</p>
+ specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1001,7 +1001,7 @@
 </pre>
 
 <p>Copies this arithmetic context and sets the copy’s “ClampNormalExponents”
- flag to the given value.</p>
+ flag to the specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1078,7 +1078,7 @@
 </pre>
 
 <p>Copies this EContext and sets the copy’s “IsPrecisionInBits” property to the
- given value.</p>
+ specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1118,7 +1118,7 @@
 </pre>
 
 <p>Copies this EContext and sets the copy’s “IsSimplified” property to the
- given value.</p>
+ specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1137,9 +1137,9 @@
 <pre>public EContext WithTraps(int traps)
 </pre>
 
-<p>Copies this EContext with Traps set to the given value. (Also sets HasFlags
- on the copy to <code>True</code>, but this may change in version 2.0 of this
- library.).</p>
+<p>Copies this EContext with Traps set to the specified value. (Also sets
+ HasFlags on the copy to <code>True</code>, but this may change in version 2.0 of
+ this library.).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1189,9 +1189,9 @@
 <pre>public &lt;T&gt; T TriggerTraps(T result, EContext trappableContext)
 </pre>
 
-<p>Throws trap exceptions if the given context has flags set that also have
- traps enabled for them in this context, and adds the given context’s flags
- to this context if HasFlags for this context is true. This is not a
+<p>Throws trap exceptions if the specified context has flags set that also have
+ traps enabled for them in this context, and adds the specified context’s
+ flags to this context if HasFlags for this context is true. This is not a
  general-purpose method; it is intended to support custom implementations of
  arithmetic operations.</p>
 

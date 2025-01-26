@@ -194,8 +194,8 @@
   <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
   <li>The following notation for intervals is used: [<code>a</code>, <code>b</code>) means “<code>a</code> or greater, but less than <code>b</code>”.  (<code>a</code>, <code>b</code>) means “greater than <code>a</code>, but less than <code>b</code>”.  (<code>a</code>, <code>b</code>] means “greater than <code>a</code> and less than or equal to <code>b</code>”. [<code>a</code>, <code>b</code>] means “<code>a</code> or greater and <code>b</code> or less”.</li>
   <li><code>log1p(x)</code> is equivalent to <code>ln(1 + x)</code> and is a “robust” alternative to <code>ln(1 + x)</code> where <code>x</code> is a floating-point number (Pedersen 2018)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
-  <li><code>MakeRatio(n, d)</code> creates a rational number with the given numerator <code>n</code> and denominator <code>d</code>.</li>
-  <li><code>Sum(list)</code> calculates the sum of the numbers in the given list of integers or rational numbers.  (Summing floating-point numbers naïvely can introduce round-off errors.)</li>
+  <li><code>MakeRatio(n, d)</code> creates a rational number with the specified numerator <code>n</code> and denominator <code>d</code>.</li>
+  <li><code>Sum(list)</code> calculates the sum of the numbers in the specified list of integers or rational numbers.  (Summing floating-point numbers naïvely can introduce round-off errors.)</li>
 </ul>
 
 <p><a id="Uniform_Random_Integers"></a></p>
@@ -768,7 +768,7 @@ END METHOD
 
 <ol>
   <li><code>RandomKItemsFromFile</code> implements <a href="https://en.wikipedia.org/wiki/Reservoir_sampling"><strong><em>reservoir sampling</em></strong></a>; it chooses up to <code>k</code> random items from a file of indefinite size (<code>file</code>). Although the pseudocode refers to files and lines, the technique works whenever items are retrieved one at a time from a data set or list whose size is not known in advance.  In the pseudocode, <code>ITEM_OUTPUT(item, thisIndex)</code> is a placeholder for code that returns the item to store in the list; this can include the item’s value, its index starting at 0, or both.</li>
-  <li><code>RandomKItemsInOrder</code> returns a list of up to <code>k</code> random items from the given list (<code>list</code>), in the order in which they appeared in the list.  It is based on a technique presented in (Devroye 1986)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>, p. 620.</li>
+  <li><code>RandomKItemsInOrder</code> returns a list of up to <code>k</code> random items from the specified list (<code>list</code>), in the order in which they appeared in the list.  It is based on a technique presented in (Devroye 1986)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>, p. 620.</li>
 </ol>
 
 <p> </p>
@@ -1013,7 +1013,7 @@ END METHOD
 
 <p><a id="General_Non_Uniform_Distributions"></a></p>
 
-<h2 id="general-non-uniform-distributions">General Non-Uniform Distributions</h2>
+<h2 id="general-nonuniform-distributions">General Non-Uniform Distributions</h2>
 
 <p>Some applications need to choose random values such that some of them have a greater chance to be chosen than others (a <em>nonuniform</em> distribution). Most of the techniques in this section show how to use the <a href="#Uniform_Random_Integers"><strong>uniform random integer methods</strong></a> to generate such random values.</p>
 
@@ -1032,14 +1032,14 @@ END METHOD
 <ul>
   <li><code>WeightedChoice</code> takes a single list <code>weights</code> of weights (integers 0 or greater) and returns the <em>index</em> of a weight from that list.  The greater the weight, the greater the chance its index will be chosen.</li>
   <li><code>CumulativeWeightedChoice</code> takes a single list <code>weights</code> of N <em>cumulative weights</em>; they start at 0 and the next weight is not less than the previous.  Returns a number in the interval [0, N - 1).</li>
-  <li><code>NormalizeRatios</code> calculates a list of integers with the same proportions as the given list of rational numbers (numbers of the form <code>x/y</code>).  This is useful for converting rational weights to integer weights for use in <code>WeightedChoice</code>.</li>
+  <li><code>NormalizeRatios</code> calculates a list of integers with the same proportions as the specified list of rational numbers (numbers of the form <code>x/y</code>).  This is useful for converting rational weights to integer weights for use in <code>WeightedChoice</code>.</li>
   <li><code>gcd(a, b)</code> is the greatest common divisor between two numbers (where <code>gcd(0, a) = gcd(a, 0) = a</code> whenever <code>a &gt;= 0</code>).</li>
 </ul>
 
 <p> </p>
 
 <pre>METHOD WChoose(weights, value)
-    // Choose the index according to the given value
+    // Choose the index according to the specified value
     runningValue = 0
     for i in 0...size(weights) - 1
        if weights[i] &gt; 0
@@ -1061,7 +1061,7 @@ END METHOD
 METHOD CumulativeWeightedChoice(weights)
     if size(weights)==0 or weights[0]!=0: return error
     value = RNDINTEXC(weights[size(weights) - 1])
-    // Choose the index according to the given value
+    // Choose the index according to the specified value
     for i in 0...size(weights) - 1
        // Choose only if difference is positive
        if weights[i] &lt; weights[i+1] and
@@ -1325,7 +1325,7 @@ END METHOD
 
 <p><a id="Specific_Non_Uniform_Distributions"></a></p>
 
-<h2 id="specific-non-uniform-distributions">Specific Non-Uniform Distributions</h2>
+<h2 id="specific-nonuniform-distributions">Specific Non-Uniform Distributions</h2>
 
 <p>This section contains information on some of the most common nonuniform probability distributions.</p>
 
@@ -1354,7 +1354,7 @@ END METHOD
 
 <h3 id="binomial-distribution">Binomial Distribution</h3>
 
-<p>The <em>binomial distribution</em> uses two parameters: <code>trials</code> and <code>p</code>.  This distribution models the number of successes in a fixed number of independent trials (equal to <code>trials</code>), each with the same probability of success (equal to <code>p</code>, where <code>p &lt;= 0</code> means never, <code>p &gt;= 1</code> means always, and <code>p = 1/2</code> means an equal chance of success or failure).  In this document, <code>Binomial(trials, p)</code> is a binomial random variate with the given parameters.</p>
+<p>The <em>binomial distribution</em> uses two parameters: <code>trials</code> and <code>p</code>.  This distribution models the number of successes in a fixed number of independent trials (equal to <code>trials</code>), each with the same probability of success (equal to <code>p</code>, where <code>p &lt;= 0</code> means never, <code>p &gt;= 1</code> means always, and <code>p = 1/2</code> means an equal chance of success or failure).  In this document, <code>Binomial(trials, p)</code> is a binomial random variate with the specified parameters.</p>
 
 <p>This distribution has a simple implementation: <code>count = 0; for i in 0...trials: count=count+ZeroOrOne(px, py)</code>.  But for large numbers of trials, this can be very slow.</p>
 
@@ -1899,7 +1899,7 @@ END METHOD
   <li>A <strong>continuous-time process</strong> models random behavior at every moment, not just at discrete times.  There are two popular examples:
     <ul>
       <li>A <em>Wiener process</em> (also known as <em>Brownian motion</em>) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the drift (or average value per time unit), <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.  A <em>Brownian bridge</em> (Revuz and Yor 1999)<sup id="fnref:73" role="doc-noteref"><a href="#fn:73" class="footnote" rel="footnote">73</a></sup> modifies a Wiener process as follows: For each time X, calculate <code>W(X) - W(E) * (X - S) / (E - S)</code>, where <code>S</code> and <code>E</code> are the starting and ending times of the process, respectively, and <code>W(X)</code> and <code>W(E)</code> are the state at times X and E, respectively.</li>
-      <li>In a <em>Poisson point process</em>, the time between each event is its own exponential random variate with its own rate parameter (for example, <code>Expo(rate)</code>) (see “<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>”). The process is <em>homogeneous</em> if all the rates are the same, and <em>inhomogeneous</em> if the rate is a function of the “time stamp” before each event jump (the <em>hazard rate function</em>); to generate arrival times here, potential arrival times are generated at the maximum possible rate (<code>maxrate</code>) and each one is accepted if <code>RNDRANGEMinMaxExc(0, maxrate) &lt; thisrate</code>, where <code>thisrate</code> is the rate for the given arrival time (Lewis and Shedler 1979)<sup id="fnref:74" role="doc-noteref"><a href="#fn:74" class="footnote" rel="footnote">74</a></sup>.</li>
+      <li>In a <em>Poisson point process</em>, the time between each event is its own exponential random variate with its own rate parameter (for example, <code>Expo(rate)</code>) (see “<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>”). The process is <em>homogeneous</em> if all the rates are the same, and <em>inhomogeneous</em> if the rate is a function of the “time stamp” before each event jump (the <em>hazard rate function</em>); to generate arrival times here, potential arrival times are generated at the maximum possible rate (<code>maxrate</code>) and each one is accepted if <code>RNDRANGEMinMaxExc(0, maxrate) &lt; thisrate</code>, where <code>thisrate</code> is the rate for the specified arrival time (Lewis and Shedler 1979)<sup id="fnref:74" role="doc-noteref"><a href="#fn:74" class="footnote" rel="footnote">74</a></sup>.</li>
     </ul>
   </li>
 </ul>
@@ -2045,7 +2045,7 @@ END METHOD
 <ul>
   <li>The values of the CDF or PDF-like function are often calculated in practice as <strong>floating-point numbers</strong> of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java’s <code>double</code> and <code>float</code>)<sup id="fnref:79" role="doc-noteref"><a href="#fn:79" class="footnote" rel="footnote">79</a></sup>. (In general, calculating the values this way will already lead to an approximate sampling algorithm that doesn’t allow controlling for the approximation error.) In that case, there are various ways to turn these numbers to rational numbers or integers.
     <ol>
-      <li>One way is to use <code>FPRatio(x)</code> (in the pseudocode below), which is lossless and calculates the rational number for the given floating-point number <code>x</code>.</li>
+      <li>One way is to use <code>FPRatio(x)</code> (in the pseudocode below), which is lossless and calculates the rational number for the specified floating-point number <code>x</code>.</li>
       <li>Another way is to scale and round the values to integers (for example, <code>floor(x * mult)</code> if <code>floor(x * mult) &lt; 0.5</code> and <code>ceil(x * mult)</code> otherwise, where <code>mult</code> is a large integer); this is not lossless.</li>
     </ol>
   </li>
@@ -2205,7 +2205,7 @@ END METHOD
 
 <h4 id="markov-chain-monte-carlo">Markov-Chain Monte Carlo</h4>
 
-<p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling from a probability distribution by building a <em>Markov chain</em> of random values that approach the given distribution as the chain takes more steps.  In general, however, MCMC is approximate, it doesn’t allow for controlling the approximation error, and the values generated by a given chain will have a statistical <em>dependence</em> on each other (which is why techniques such as “thinning” — keeping only every Nth sample — are often employed).<sup id="fnref:88" role="doc-noteref"><a href="#fn:88" class="footnote" rel="footnote">88</a></sup></p>
+<p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling from a probability distribution by building a <em>Markov chain</em> of random values that approach the specified distribution as the chain takes more steps.  In general, however, MCMC is approximate, it doesn’t allow for controlling the approximation error, and the values generated by a given chain will have a statistical <em>dependence</em> on each other (which is why techniques such as “thinning” — keeping only every Nth sample — are often employed).<sup id="fnref:88" role="doc-noteref"><a href="#fn:88" class="footnote" rel="footnote">88</a></sup></p>
 
 <p>MCMC algorithms<sup id="fnref:89" role="doc-noteref"><a href="#fn:89" class="footnote" rel="footnote">89</a></sup> include <em>Metropolis–Hastings</em>, <em>slice sampling</em>, and <em>Gibbs sampling</em> (see also the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a number sampled at random from the previous distribution (<em>conditional distributions</em>), that converge to a <em>joint distribution</em>.</p>
 
@@ -2223,7 +2223,7 @@ END METHOD
 
 <ul>
   <li><code>values</code> is a list of rational numbers. The numbers should be arranged in ascending order.</li>
-  <li><code>weights</code> is a list of rational-valued weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number’s weight, the greater the probability that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
+  <li><code>weights</code> is a list of rational-valued weights for the specified numbers (where each number and its weight have the same index in both lists).   The greater a number’s weight, the greater the probability that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
 </ul>
 
 <p> </p>
@@ -2270,7 +2270,7 @@ above for returning more than one random variate in one call.</p>
 
 <p><a id="Index_of_Non_Uniform_Distributions"></a></p>
 
-<h3 id="index-of-non-uniform-distributions">Index of Non-Uniform Distributions</h3>
+<h3 id="index-of-nonuniform-distributions">Index of Non-Uniform Distributions</h3>
 
 <p><strong>Many distributions here require random real numbers.</strong></p>
 
@@ -2343,7 +2343,7 @@ above for returning more than one random variate in one call.</p>
     </ul>
   </li>
   <li><strong>Double logarithmic distribution</strong>⬦: <code>(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))</code> (see also Saucier 2000, p. 15, which shows the wrong x-axes).</li>
-  <li><strong>Erlang distribution</strong>: <code>GammaDist(n)/lamda</code>, where <code>n</code> is an integer greater than 0.  Returns a number that simulates a sum of <code>n</code> exponential random variates with the given <code>lamda</code> parameter.</li>
+  <li><strong>Erlang distribution</strong>: <code>GammaDist(n)/lamda</code>, where <code>n</code> is an integer greater than 0.  Returns a number that simulates a sum of <code>n</code> exponential random variates with the specified <code>lamda</code> parameter.</li>
   <li><strong>Estoup distribution</strong>: See zeta distribution.</li>
   <li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a), a)</code>, where <code>a</code> is a shape parameter.</li>
   <li><strong>Fréchet distribution</strong>: See generalized extreme value distribution.</li>
@@ -3000,7 +3000,7 @@ END METHOD
       <p>Barthe, F., Guédon, O., et al., “A probabilistic approach to the geometry of the lP^N-ball”, Annals of Probability 33(2), 2005. <a href="#fnref:107" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:108" role="doc-endnote">
-      <p>Alternatively, if <code>p</code> is an integer greater than 0, generate a random point on the surface of an ball with <code>N+p</code> dimensions and the given radius (for example, using <code>RandomPointOnSphere(N+p,radius,p)</code>), then discard the last <code>p</code> coordinates of that point (Corollary 1 of Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951). <a href="#fnref:108" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Alternatively, if <code>p</code> is an integer greater than 0, generate a random point on the surface of an ball with <code>N+p</code> dimensions and the specified radius (for example, using <code>RandomPointOnSphere(N+p,radius,p)</code>), then discard the last <code>p</code> coordinates of that point (Corollary 1 of Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951). <a href="#fnref:108" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:109" role="doc-endnote">
       <p>See the <em>Mathematics Stack Exchange</em> question titled “Random multivariate in hyperannulus”, <code>questions/1885630</code>. <a href="#fnref:109" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

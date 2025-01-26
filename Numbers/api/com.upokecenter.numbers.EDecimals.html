@@ -32,7 +32,8 @@
   </li>
   <li>
     <p><code>static EDecimal Canonical(EDecimal ed)</code><br />
- Returns a canonical version of the given arbitrary-precision number object.</p>
+ Returns a canonical version of the specified arbitrary-precision number
+ object.</p>
   </li>
   <li>
     <p><code>static int CompareTotal(EDecimal ed,
@@ -50,18 +51,18 @@
   </li>
   <li>
     <p><code>static EDecimal Copy(EDecimal ed)</code><br />
- Creates a copy of the given arbitrary-precision number object.</p>
+ Creates a copy of the specified arbitrary-precision number object.</p>
   </li>
   <li>
     <p><code>static EDecimal CopyAbs(EDecimal ed)</code><br />
  Returns an arbitrary-precision number object with the same value as the
- given number object but with a nonnegative sign (that is, the given number
- object’s absolute value).</p>
+ specified number object but with a nonnegative sign (that is, the specified
+ number object’s absolute value).</p>
   </li>
   <li>
     <p><code>static EDecimal CopyNegate(EDecimal ed)</code><br />
  Returns an arbitrary-precision number object with the sign reversed from the
- given number object.</p>
+ specified number object.</p>
   </li>
   <li>
     <p><code>static EDecimal CopySign(EDecimal ed,
@@ -83,53 +84,53 @@
   </li>
   <li>
     <p><code>static boolean IsCanonical(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is in a
+ Returns whether the specified arbitrary-precision number object is in a
  canonical form.</p>
   </li>
   <li>
     <p><code>static boolean IsFinite(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is neither null
- nor infinity nor not-a-number (NaN).</p>
+ Returns whether the specified arbitrary-precision number object is neither
+ null nor infinity nor not-a-number (NaN).</p>
   </li>
   <li>
     <p><code>static boolean IsInfinite(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is positive or
- negative infinity.</p>
+ Returns whether the specified arbitrary-precision number object is positive
+ or negative infinity.</p>
   </li>
   <li>
     <p><code>static boolean IsNaN(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is a
+ Returns whether the specified arbitrary-precision number object is a
  not-a-number (NaN).</p>
   </li>
   <li>
     <p><code>static boolean IsNormal(EDecimal ed,
  EContext ec)</code><br />
- Returns whether the given number is a normal number.</p>
+ Returns whether the specified number is a normal number.</p>
   </li>
   <li>
     <p><code>static boolean IsQuietNaN(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is a quiet
+ Returns whether the specified arbitrary-precision number object is a quiet
  not-a-number (NaN).</p>
   </li>
   <li>
     <p><code>static boolean IsSignalingNaN(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is a signaling
- not-a-number (NaN).</p>
+ Returns whether the specified arbitrary-precision number object is a
+ signaling not-a-number (NaN).</p>
   </li>
   <li>
     <p><code>static boolean IsSigned(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is negative
+ Returns whether the specified arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or negative
  zero).</p>
   </li>
   <li>
     <p><code>static boolean IsSubnormal(EDecimal ed,
  EContext ec)</code><br />
- Returns whether the given number is a subnormal number.</p>
+ Returns whether the specified number is a subnormal number.</p>
   </li>
   <li>
     <p><code>static boolean IsZero(EDecimal ed)</code><br />
- Returns whether the given arbitrary-precision number object is zero
+ Returns whether the specified arbitrary-precision number object is zero
  (positive zero or negative zero).</p>
   </li>
   <li>
@@ -165,7 +166,7 @@
  EDecimal scale,
  EContext ec)</code><br />
  Returns an arbitrary-precision decimal number with the same value as this
- object but with the given exponent, expressed as an arbitrary-precision
+ object but with the specified exponent, expressed as an arbitrary-precision
  decimal number.</p>
   </li>
   <li>
@@ -255,7 +256,7 @@
 
 <ul>
   <li>An arbitrary-precision decimal number with the closest representable
- value to the given integer.</li>
+ value to the specified integer.</li>
 </ul>
 
 <h3 id="booleantoedecimal">BooleanToEDecimal</h3>
@@ -281,7 +282,7 @@
 
 <ul>
   <li>Either 1 if <code>b</code> is true, or 0 if <code>b</code> is false.. The
- result will be rounded as specified by the given context, if any.</li>
+ result will be rounded as specified by the specified context, if any.</li>
 </ul>
 
 <h3 id="iscanonical">IsCanonical</h3>
@@ -289,7 +290,7 @@
 <pre>public static boolean IsCanonical(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is in a
+<p>Returns whether the specified arbitrary-precision number object is in a
  canonical form. For the current version of EDecimal, all EDecimal objects
  are in a canonical form.</p>
 
@@ -310,8 +311,8 @@
 <pre>public static boolean IsFinite(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is neither null
- nor infinity nor not-a-number (NaN).</p>
+<p>Returns whether the specified arbitrary-precision number object is neither
+ null nor infinity nor not-a-number (NaN).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -322,8 +323,8 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Either <code>true</code> if the given arbitrary-precision number object
- is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
+  <li>Either <code>true</code> if the specified arbitrary-precision number
+ object is neither null nor infinity nor not-a-number (NaN), or <code>false</code>
  otherwise.</li>
 </ul>
 
@@ -332,8 +333,8 @@
 <pre>public static boolean IsInfinite(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is positive or
- negative infinity.</p>
+<p>Returns whether the specified arbitrary-precision number object is positive
+ or negative infinity.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -344,8 +345,8 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Either <code>true</code> if the given arbitrary-precision number object
- is positive or negative infinity, or <code>false</code> otherwise.</li>
+  <li>Either <code>true</code> if the specified arbitrary-precision number
+ object is positive or negative infinity, or <code>false</code> otherwise.</li>
 </ul>
 
 <h3 id="isnan">IsNaN</h3>
@@ -353,7 +354,7 @@
 <pre>public static boolean IsNaN(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is a
+<p>Returns whether the specified arbitrary-precision number object is a
  not-a-number (NaN).</p>
 
 <p><strong>Parameters:</strong></p>
@@ -373,7 +374,7 @@
 <pre>public static boolean IsNormal(EDecimal ed, EContext ec)
 </pre>
 
-<p>Returns whether the given number is a <i>normal</i> number. A
+<p>Returns whether the specified number is a <i>normal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
  notation with one digit before the radix point) is less than the minimum
@@ -386,24 +387,27 @@
   <li>
     <p><code>ed</code> - An arbitrary-precision number object.</p>
   </li>
-  <li><code>ec</code> - &lt;p&gt;A context specifying the exponent range of arbitrary-precision
- numbers. Can be null. If AdjustExponent of the given context is <code>
+  <li>
+    <p><code>ec</code> - &lt;p&gt;A context specifying the exponent range of arbitrary-precision
+ numbers. Can be null. If AdjustExponent of the specified context is <code>
  true</code>, a nonzero number is normal if the number’s exponent (when that number
  is expressed in scientific notation with one nonzero digit before the radix
- point) is at least the given context’s EMax property (for example, if EMax
- is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
- <sup>-102</sup> is not). If AdjustExponent of the given context is <code>
- false</code>, a nonzero number is subnormal if the number’s Exponent property is
- at least given context’s EMax property (for example, if EMax is -100, 23456</li>
-  <li>10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is not).&lt;/p&gt;</li>
+ point) is at least the specified context’s EMax property (for example, if
+ EMax is -100, 2.3456 * 10 <sup>-99</sup> is normal, but 2.3456 * 10
+ <sup>-102</sup> is not). If AdjustExponent of the specified context is
+ <code>false</code>, a nonzero number is subnormal if the number’s Exponent
+ property is at least given context’s EMax property (for example, if EMax is
+ -100, 23456 * 10 <sup>-99</sup> is normal, but 23456 * 10 <sup>-102</sup> is
+ not).&lt;/p&gt;</p>
+  </li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Either <code>true</code> if the given number is subnormal, or <code>
- false</code> otherwise. Returns <code>true</code> if the given context is null or
- HasExponentRange of the given context is <code>false</code>.</li>
+  <li>Either <code>true</code> if the specified number is subnormal, or <code>
+ false</code> otherwise. Returns <code>true</code> if the specified context is null or
+ HasExponentRange of the specified context is <code>false</code>.</li>
 </ul>
 
 <h3 id="isquietnan">IsQuietNaN</h3>
@@ -411,7 +415,7 @@
 <pre>public static boolean IsQuietNaN(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is a quiet
+<p>Returns whether the specified arbitrary-precision number object is a quiet
  not-a-number (NaN).</p>
 
 <p><strong>Parameters:</strong></p>
@@ -431,7 +435,7 @@
 <pre>public static boolean IsSigned(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is negative
+<p>Returns whether the specified arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or negative
  zero).</p>
 
@@ -452,8 +456,8 @@
 <pre>public static boolean IsSignalingNaN(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is a signaling
- not-a-number (NaN).</p>
+<p>Returns whether the specified arbitrary-precision number object is a
+ signaling not-a-number (NaN).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -485,7 +489,7 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A text string identifying the given number class as follows: 0 =
+  <li>A text string identifying the specified number class as follows: 0 =
  “+Normal”; 1 = “-Normal”, 2 = “+Subnormal”, 3 = “-Subnormal”, 4 = “+Zero”, 5
  = “-Zero”, 6 = “+Infinity”, 7 = “-Infinity”, 8 = “NaN”, 9 = “sNaN”.</li>
 </ul>
@@ -520,11 +524,11 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A 32-bit signed integer identifying the given number object, number
- class as follows: 0 = positive normal; 1 = negative normal, 2 = positive
- subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative zero, 6 =
- positive infinity, 7 = negative infinity, 8 = quiet not-a-number (NaN), 9 =
- signaling NaN.</li>
+  <li>A 32-bit signed integer identifying the specified number object,
+ number class as follows: 0 = positive normal; 1 = negative normal, 2 =
+ positive subnormal, 3 = negative subnormal, 4 = positive zero, 5 = negative
+ zero, 6 = positive infinity, 7 = negative infinity, 8 = quiet not-a-number
+ (NaN), 9 = signaling NaN.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -538,7 +542,7 @@
 <pre>public static boolean IsSubnormal(EDecimal ed, EContext ec)
 </pre>
 
-<p>Returns whether the given number is a <i>subnormal</i> number. A
+<p>Returns whether the specified number is a <i>subnormal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent property
  (or the number's exponent when that number is expressed in scientific
  notation with one digit before the radix point) is less than the minimum
@@ -550,27 +554,25 @@
   <li>
     <p><code>ed</code> - An arbitrary-precision number object.</p>
   </li>
-  <li>
-    <p><code>ec</code> - &lt;p&gt;A context specifying the exponent range of arbitrary-precision
- numbers. Can be null. If AdjustExponent of the given context is <code>
+  <li><code>ec</code> - &lt;p&gt;A context specifying the exponent range of arbitrary-precision
+ numbers. Can be null. If AdjustExponent of the specified context is <code>
  true</code>, a nonzero number is subnormal if the number’s exponent (when that
  number is expressed in scientific notation with one nonzero digit before the
- radix point) is less than the given context’s EMax property (for example, if
- EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but 2.3456 * 10
- <sup>-99</sup> is not). If AdjustExponent of the given context is <code>
- false</code>, a nonzero number is subnormal if the number’s Exponent property is
- less than the given context’s EMax property (for example, if EMax is -100,
- 23456 * 10 <sup>-102</sup> is subnormal, but 23456 * 10 <sup>-99</sup> is
- not).&lt;/p&gt;</p>
-  </li>
+ radix point) is less than the specified context’s EMax property (for
+ example, if EMax is -100, 2.3456 * 10 <sup>-102</sup> is subnormal, but
+ 2.3456 * 10 <sup>-99</sup> is not). If AdjustExponent of the specified
+ context is <code>false</code>, a nonzero number is subnormal if the number’s
+ Exponent property is less than the specified context’s EMax property (for
+ example, if EMax is -100, 23456 * 10 <sup>-102</sup> is subnormal, but 23456</li>
+  <li>10 <sup>-99</sup> is not).&lt;/p&gt;</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Either <code>true</code> if the given number is subnormal, or <code>
- false</code> otherwise. Returns <code>false</code> if the given context is null or
- HasExponentRange of the given context is <code>false</code>.</li>
+  <li>Either <code>true</code> if the specified number is subnormal, or <code>
+ false</code> otherwise. Returns <code>false</code> if the specified context is null or
+ HasExponentRange of the specified context is <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -584,7 +586,7 @@
 <pre>public static boolean IsZero(EDecimal ed)
 </pre>
 
-<p>Returns whether the given arbitrary-precision number object is zero
+<p>Returns whether the specified arbitrary-precision number object is zero
  (positive zero or negative zero).</p>
 
 <p><strong>Parameters:</strong></p>
@@ -596,8 +598,8 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given number has a value of zero (positive zero
- or negative zero); otherwise, <code>false</code>.</li>
+  <li><code>true</code> if the specified number has a value of zero (positive
+ zero or negative zero); otherwise, <code>false</code>.</li>
 </ul>
 
 <h3 id="logb">LogB</h3>
@@ -625,7 +627,7 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The base-10 exponent of the given number (when that number is
+  <li>The base-10 exponent of the specified number (when that number is
  expressed in scientific notation with one nonzero digit before the radix
  point). Signals DivideByZero and returns negative infinity if <code>ed</code> is
  zero. Returns positive infinity if <code>ed</code> is positive infinity or
@@ -666,12 +668,12 @@
 
 <ul>
   <li>The given arbitrary-precision decimal number whose decimal point is
- moved the given number of places. Signals an invalid operation and returns
- not-a-number (NaN) if <code>ed2</code> is infinity or NaN, has an Exponent
- property other than 0. Signals an invalid operation and returns not-a-number
- (NaN) if <code>ec</code> defines a limited precision and exponent range and if
- <code>ed2</code> ‘s absolute value is greater than twice the sum of the context’s
- EMax property and its Precision property.</li>
+ moved the specified number of places. Signals an invalid operation and
+ returns not-a-number (NaN) if <code>ed2</code> is infinity or NaN, has an
+ Exponent property other than 0. Signals an invalid operation and returns
+ not-a-number (NaN) if <code>ec</code> defines a limited precision and exponent
+ range and if <code>ed2</code> ‘s absolute value is greater than twice the sum of
+ the context’s EMax property and its Precision property.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -698,8 +700,8 @@
     <p><code>ed2</code> - An arbitrary-precision number indicating the number of digits to
  shift the first operand’s significand. Must be an integer with an exponent
  of 0. If this parameter is positive, the significand is shifted to the left
- by the given number of digits. If this parameter is negative, the
- significand is shifted to the right by the given number of digits.</p>
+ by the specified number of digits. If this parameter is negative, the
+ significand is shifted to the right by the specified number of digits.</p>
   </li>
   <li>
     <p><code>ec</code> - An arithmetic context to control the precision of
@@ -711,7 +713,7 @@
 
 <ul>
   <li>An arbitrary-precision decimal number whose significand is shifted
- the given number of digits. Signals an invalid operation and returns NaN
+ the specified number of digits. Signals an invalid operation and returns NaN
  (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is not an
  integer, is negative, has an exponent other than 0, or has an absolute value
  that exceeds the maximum precision specified in the context.</li>
@@ -744,11 +746,11 @@
     <p><code>ed2</code> - An arbitrary-precision number indicating the number of digits to
  rotate the first operand’s significand. Must be an integer with an exponent
  of 0. If this parameter is positive, the significand is shifted to the left
- by the given number of digits and the most-significant digits shifted out of
- the significand become the least-significant digits instead. If this
- parameter is negative, the significand is shifted to the right by the given
- number of digits and the least-significant digits shifted out of the
- significand become the most-significant digits instead.</p>
+ by the specified number of digits and the most-significant digits shifted
+ out of the significand become the least-significant digits instead. If this
+ parameter is negative, the significand is shifted to the right by the
+ specified number of digits and the least-significant digits shifted out of
+ the significand become the most-significant digits instead.</p>
   </li>
   <li>
     <p><code>ec</code> - An arithmetic context to control the precision of
@@ -761,7 +763,7 @@
 
 <ul>
   <li>An arbitrary-precision decimal number whose significand is rotated
- the given number of digits. Signals an invalid operation and returns NaN
+ the specified number of digits. Signals an invalid operation and returns NaN
  (not-a-number) if <code>ed2</code> is a signaling NaN or if <code>ed2</code> is not an
  integer, is negative, has an exponent other than 0, or has an absolute value
  that exceeds the maximum precision specified in the context.</li>
@@ -866,7 +868,7 @@
 <pre>public static EDecimal Copy(EDecimal ed)
 </pre>
 
-<p>Creates a copy of the given arbitrary-precision number object.</p>
+<p>Creates a copy of the specified arbitrary-precision number object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -877,7 +879,7 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A copy of the given arbitrary-precision number object.</li>
+  <li>A copy of the specified arbitrary-precision number object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -891,8 +893,8 @@
 <pre>public static EDecimal Canonical(EDecimal ed)
 </pre>
 
-<p>Returns a canonical version of the given arbitrary-precision number object.
- In this method, this method behaves like the Copy method.</p>
+<p>Returns a canonical version of the specified arbitrary-precision number
+ object. In this method, this method behaves like the Copy method.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -912,8 +914,8 @@
 </pre>
 
 <p>Returns an arbitrary-precision number object with the same value as the
- given number object but with a nonnegative sign (that is, the given number
- object’s absolute value).</p>
+ specified number object but with a nonnegative sign (that is, the specified
+ number object’s absolute value).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -925,7 +927,7 @@
 
 <ul>
   <li>An arbitrary-precision number object with the same value as the
- given number object but with a nonnegative sign.</li>
+ specified number object but with a nonnegative sign.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -940,7 +942,7 @@
 </pre>
 
 <p>Returns an arbitrary-precision number object with the sign reversed from the
- given number object.</p>
+ specified number object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -952,7 +954,7 @@
 
 <ul>
   <li>An arbitrary-precision number object with the sign reversed from the
- given number object.</li>
+ specified number object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1021,8 +1023,8 @@
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>Either <code>true</code> if the given arbitrary-precision numbers have
- the same exponent, they both are not-a-number (NaN), or they both are
+  <li>Either <code>true</code> if the specified arbitrary-precision numbers
+ have the same exponent, they both are not-a-number (NaN), or they both are
  infinity (positive, negative, or both); otherwise, <code>false</code>.</li>
 </ul>
 
@@ -1065,7 +1067,7 @@
 </pre>
 
 <p>Returns an arbitrary-precision decimal number with the same value as this
- object but with the given exponent, expressed as an arbitrary-precision
+ object but with the specified exponent, expressed as an arbitrary-precision
  decimal number. </p>
 <p>Note that this is not always the same as rounding to
  a given number of decimal places, since it can fail if the difference
@@ -1104,9 +1106,9 @@
 <ul>
   <li>An arbitrary-precision decimal number with the same value as this
  object but with the exponent changed. Signals FlagInvalid and returns
- not-a-number (NaN) if the result can’t fit the given precision without
+ not-a-number (NaN) if the result can’t fit the specified precision without
  rounding, or if the arithmetic context defines an exponent range and the
- given exponent is outside that range.</li>
+ specified exponent is outside that range.</li>
 </ul>
 
 <h3 id="and">And</h3>

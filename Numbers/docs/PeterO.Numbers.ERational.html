@@ -32,9 +32,9 @@
   <li><code>[CompareToValue(PeterO.Numbers.ERational)](#CompareToValue_PeterO_Numbers_ERational)</code> - Compares the mathematical value of an arbitrary-precision rational number with that of this instance.</li>
   <li><code>[Copy()](#Copy)</code> - Creates a copy of this arbitrary-precision rational number.</li>
   <li><code>[CopySign(PeterO.Numbers.ERational)](#CopySign_PeterO_Numbers_ERational)</code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-  <li><code>[Create(int, int)](#Create_int_int)</code> - Creates a rational number with the given numerator and denominator.</li>
-  <li><code>[Create(long, long)](#Create_long_long)</code> - Creates a rational number with the given numerator and denominator.</li>
-  <li><code>[Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)](#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger)</code> - Creates a rational number with the given numerator and denominator.</li>
+  <li><code>[Create(int, int)](#Create_int_int)</code> - Creates a rational number with the specified numerator and denominator.</li>
+  <li><code>[Create(long, long)](#Create_long_long)</code> - Creates a rational number with the specified numerator and denominator.</li>
+  <li><code>[Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)](#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger)</code> - Creates a rational number with the specified numerator and denominator.</li>
   <li><code>[CreateNaN(PeterO.Numbers.EInteger)](#CreateNaN_PeterO_Numbers_EInteger)</code> - Creates a not-a-number arbitrary-precision rational number.</li>
   <li><code>[CreateNaN(PeterO.Numbers.EInteger, bool, bool)](#CreateNaN_PeterO_Numbers_EInteger_bool_bool)</code> - Creates a not-a-number arbitrary-precision rational number.</li>
   <li><code>[Decrement()](#Decrement)</code> - Subtracts one from an arbitrary-precision rational number.</li>
@@ -130,7 +130,7 @@
   <li><code>[PeterO.Numbers.ERational operator %(PeterO.Numbers.ERational, PeterO.Numbers.ERational)](#op_Modulus)</code> - Returns the remainder that would result when an arbitrary-precision rational number is divided by another arbitrary-precision rational number.</li>
   <li><code>[PeterO.Numbers.ERational operator &#x2a;(PeterO.Numbers.ERational, PeterO.Numbers.ERational)](#op_Multiply)</code> - Multiplies an arbitrary-precision rational number by another arbitrary-precision rational number and returns the result.</li>
   <li><code>[PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational, PeterO.Numbers.ERational)](#op_Subtraction)</code> - Subtracts an arbitrary-precision rational number from this instance.</li>
-  <li><code>[PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational)](#op_UnaryNegation)</code> - Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</li>
+  <li><code>[PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational)](#op_UnaryNegation)</code> - Returns an arbitrary-precision rational number with the same value as the specified one but with its sign reversed.</li>
   <li><code>[public static readonly PeterO.Numbers.ERational PositiveInfinity;](#PositiveInfinity)</code> - Positive infinity, greater than any other number.</li>
   <li><code>[Remainder(int)](#Remainder_int)</code> - Returns the remainder that would result when this arbitrary-precision rational number is divided by a 32-bit signed integer.</li>
   <li><code>[Remainder(long)](#Remainder_long)</code> - Returns the remainder that would result when this arbitrary-precision rational number is divided by a 64-bit signed integer.</li>
@@ -148,11 +148,11 @@
   <li><code>[ToDouble()](#ToDouble)</code> - Converts this value to a 64-bit floating-point number.</li>
   <li><code>[ToDoubleBits()](#ToDoubleBits)</code> - Converts this value to its closest equivalent as a 64-bit floating-point number, expressed as an integer in the IEEE 754 binary64 format.</li>
   <li><code>[ToEDecimal()](#ToEDecimal)</code> - Converts this rational number to an arbitrary-precision decimal number.</li>
-  <li><code>[ToEDecimal(PeterO.Numbers.EContext)](#ToEDecimal_PeterO_Numbers_EContext)</code> - Converts this rational number to an arbitrary-precision decimal number and rounds the result to the given precision.</li>
-  <li><code>[ToEDecimalExactIfPossible(PeterO.Numbers.EContext)](#ToEDecimalExactIfPossible_PeterO_Numbers_EContext)</code> - Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
+  <li><code>[ToEDecimal(PeterO.Numbers.EContext)](#ToEDecimal_PeterO_Numbers_EContext)</code> - Converts this rational number to an arbitrary-precision decimal number and rounds the result to the specified precision.</li>
+  <li><code>[ToEDecimalExactIfPossible(PeterO.Numbers.EContext)](#ToEDecimalExactIfPossible_PeterO_Numbers_EContext)</code> - Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the specified precision.</li>
   <li><code>[ToEFloat()](#ToEFloat)</code> - Converts this rational number to a binary floating-point number.</li>
-  <li><code>[ToEFloat(PeterO.Numbers.EContext)](#ToEFloat_PeterO_Numbers_EContext)</code> - Converts this rational number to a binary floating-point number and rounds that result to the given precision.</li>
-  <li><code>[ToEFloatExactIfPossible(PeterO.Numbers.EContext)](#ToEFloatExactIfPossible_PeterO_Numbers_EContext)</code> - Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
+  <li><code>[ToEFloat(PeterO.Numbers.EContext)](#ToEFloat_PeterO_Numbers_EContext)</code> - Converts this rational number to a binary floating-point number and rounds that result to the specified precision.</li>
+  <li><code>[ToEFloatExactIfPossible(PeterO.Numbers.EContext)](#ToEFloatExactIfPossible_PeterO_Numbers_EContext)</code> - Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the specified precision.</li>
   <li><code>[ToEInteger()](#ToEInteger)</code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator and discarding the fractional part of the result.</li>
   <li><code>[ToEIntegerExact()](#ToEIntegerExact)</code> - <b>Obsolete:</b> Renamed to ToEIntegerIfExact.</li>
   <li><code>[ToEIntegerIfExact()](#ToEIntegerIfExact)</code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
@@ -178,8 +178,8 @@
   <li><code>[ToSByteUnchecked()](#ToSByteUnchecked)</code> - Converts this number’s value to an integer by discarding its fractional part, and returns the least-significant bits of its two’s-complement form as an 8-bit signed integer.</li>
   <li><code>[ToSingle()](#ToSingle)</code> - Converts this value to a 32-bit binary floating-point number.</li>
   <li><code>[ToSingleBits()](#ToSingleBits)</code> - Converts this value to its closest equivalent as 32-bit floating-point number, expressed as an integer in the IEEE 754 binary32 format.</li>
-  <li><code>[ToSizedEInteger(int)](#ToSizedEInteger_int)</code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the given signed bit count.</li>
-  <li><code>[ToSizedEIntegerIfExact(int)](#ToSizedEIntegerIfExact_int)</code> - Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the given signed bit count.</li>
+  <li><code>[ToSizedEInteger(int)](#ToSizedEInteger_int)</code> - Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the specified signed bit count.</li>
+  <li><code>[ToSizedEIntegerIfExact(int)](#ToSizedEIntegerIfExact_int)</code> - Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the specified signed bit count.</li>
   <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
   <li><code>[ToUInt16Checked()](#ToUInt16Checked)</code> - Converts this number’s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
   <li><code>[ToUInt16IfExact()](#ToUInt16IfExact)</code> - Converts this number’s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
@@ -759,7 +759,7 @@ The parameter  <i>other</i>
     int denominatorSmall);
 </pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Creates a rational number with the specified numerator and denominator.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -791,7 +791,7 @@ The denominator is zero.</li>
     long denominatorLong);
 </pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Creates a rational number with the specified numerator and denominator.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -823,7 +823,7 @@ The denominator is zero.</li>
     PeterO.Numbers.EInteger denominator);
 </pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Creates a rational number with the specified numerator and denominator.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1538,7 +1538,7 @@ Either  <i>offset</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision rational number with the same value as the given sequence of bytes.</p>
+<p>An arbitrary-precision rational number with the same value as the specified sequence of bytes.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1640,7 +1640,7 @@ Either  <i>offset</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision rational number with the same value as the given sequence of  <code>char</code>  s.</p>
+<p>An arbitrary-precision rational number with the same value as the specified sequence of  <code>char</code>  s.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1742,7 +1742,7 @@ Either  <i>offset</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision rational number with the same value as the given string.</p>
+<p>An arbitrary-precision rational number with the same value as the specified string.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3069,7 +3069,7 @@ The parameter “otherValue” is null.</li>
     PeterO.Numbers.ERational bigValue);
 </pre>
 
-<p>Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</p>
+<p>Returns an arbitrary-precision rational number with the same value as the specified one but with its sign reversed.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3330,7 +3330,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Converts this rational number to an arbitrary-precision decimal number and rounds the result to the given precision.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number and rounds the result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3340,7 +3340,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating decimal expansion.</p>
+<p>The value of the rational number, rounded to the specified precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating decimal expansion.</p>
 
 <p><a id="ToEDecimal"></a>
 ### ToEDecimal</p>
@@ -3361,7 +3361,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3380,7 +3380,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Converts this rational number to a binary floating-point number and rounds that result to the given precision.</p>
+<p>Converts this rational number to a binary floating-point number and rounds that result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3390,7 +3390,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating binary expansion.</p>
+<p>The value of the rational number, rounded to the specified precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating binary expansion.</p>
 
 <p><a id="ToEFloat"></a>
 ### ToEFloat</p>
@@ -3411,7 +3411,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
+<p>Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3491,7 +3491,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Obsolete.</b> Renamed to ToEDecimal.</p>
 
-<p>Converts this rational number to an arbitrary-precision decimal number and rounds the result to the given precision.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number and rounds the result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3501,7 +3501,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating decimal expansion.</p>
+<p>The value of the rational number, rounded to the specified precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating decimal expansion.</p>
 
 <p><a id="ToExtendedDecimal"></a>
 ### ToExtendedDecimal</p>
@@ -3526,7 +3526,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Obsolete.</b> Renamed to ToEDecimalExactIfPossible.</p>
 
-<p>Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3547,7 +3547,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Obsolete.</b> Renamed to ToEFloat.</p>
 
-<p>Converts this rational number to a binary floating-point number and rounds that result to the given precision.</p>
+<p>Converts this rational number to a binary floating-point number and rounds that result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3557,7 +3557,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating binary expansion.</p>
+<p>The value of the rational number, rounded to the specified precision. Returns not-a-number (NaN) if the context is null and the result can’t be exact because it has a nonterminating binary expansion.</p>
 
 <p><a id="ToExtendedFloat"></a>
 ### ToExtendedFloat</p>
@@ -3582,7 +3582,7 @@ This object’s value is infinity or not-a-number (NaN).</li>
 
 <p><b>Obsolete.</b> Renamed to ToEFloatExactIfPossible.</p>
 
-<p>Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</p>
+<p>Converts this rational number to a binary floating-point number, but if the result would have a nonterminating binary expansion, rounds that result to the specified precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3862,7 +3862,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     int maxBitLength);
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the given signed bit count.</p>
+<p>Converts this value to an arbitrary-precision integer by dividing the numerator by the denominator, discarding its fractional part, and checking whether the resulting integer overflows the specified signed bit count.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3888,7 +3888,7 @@ This object’s value is infinity or not-a-number (NaN), or this number’s valu
     int maxBitLength);
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the given signed bit count.</p>
+<p>Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the specified signed bit count.</p>
 
 <p><b>Parameters:</b></p>
 

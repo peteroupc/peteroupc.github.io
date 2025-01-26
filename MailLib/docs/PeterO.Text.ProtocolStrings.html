@@ -32,8 +32,8 @@
 
 <h3 id="member-summary">Member Summary</h3>
 <ul>
-  <li><code>[IsInFreeformClass(string)](#IsInFreeformClass_string)</code> - Determines whether the given string belongs in RFC 8264’s FreeformClass.</li>
-  <li><code>[IsInIdentifierClass(string)](#IsInIdentifierClass_string)</code> - Determines whether the given string belongs in RFC 8264’s IdentifierClass.</li>
+  <li><code>[IsInFreeformClass(string)](#IsInFreeformClass_string)</code> - Determines whether the specified string belongs in RFC 8264’s FreeformClass.</li>
+  <li><code>[IsInIdentifierClass(string)](#IsInIdentifierClass_string)</code> - Determines whether the specified string belongs in RFC 8264’s IdentifierClass.</li>
   <li><code>[NicknameEnforce(string)](#NicknameEnforce_string)</code> - Checks the validity of a string serving as a “memorable, human-friendly name” for something (see RFC 8266), as opposed to that thing’s identity for authentication or authorization purposes (see sec.</li>
   <li><code>[NicknameForComparison(string)](#NicknameForComparison_string)</code> - Prepares for comparison a string serving as a “memorable, human-friendly name” for something (see RFC 8266), as opposed to that thing’s identity for authentication or authorization purposes (see sec.</li>
   <li><code>[OpaqueStringEnforce(string)](#OpaqueStringEnforce_string)</code> - Checks the validity of a string serving as an arbitrary single-line sequence of characters, such as a passphrase.</li>
@@ -50,7 +50,7 @@
     string str);
 </pre>
 
-<p>Determines whether the given string belongs in RFC 8264’s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U+0021 to U+007E), but excludes control characters and separators. Horizontal tab, U+0009, and other code points in the range U+0000 to U+001F, are among the excluded characters.</p>
+<p>Determines whether the specified string belongs in RFC 8264’s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U+0021 to U+007E), but excludes control characters and separators. Horizontal tab, U+0009, and other code points in the range U+0000 to U+001F, are among the excluded characters.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -60,7 +60,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is empty or contains only characters allowed in RFC 8264’s FreeformClass (in the contexts required); otherwise,  <code>false</code> . Returns  <code>false</code>  if  <i>str</i>
+<p><code>true</code>  if the specified string is empty or contains only characters allowed in RFC 8264’s FreeformClass (in the contexts required); otherwise,  <code>false</code> . Returns  <code>false</code>  if  <i>str</i>
  is null.</p>
 
 <p><a id="IsInIdentifierClass_string"></a>
@@ -70,7 +70,7 @@
     string str);
 </pre>
 
-<p>Determines whether the given string belongs in RFC 8264’s IdentifierClass. In general, the IdentifierClass contains all code points in the FreeformClass, except certain uncommon letters and digits, spaces, as well as punctuation and symbols outside the Basic Latin range (U+0000 to U+007F).</p>
+<p>Determines whether the specified string belongs in RFC 8264’s IdentifierClass. In general, the IdentifierClass contains all code points in the FreeformClass, except certain uncommon letters and digits, spaces, as well as punctuation and symbols outside the Basic Latin range (U+0000 to U+007F).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -80,7 +80,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is empty or contains only characters allowed in RFC 8264’s IdentifierClass (in the contexts required); otherwise,  <code>false</code> . Returns  <code>false</code>  if  <i>str</i>
+<p><code>true</code>  if the specified string is empty or contains only characters allowed in RFC 8264’s IdentifierClass (in the contexts required); otherwise,  <code>false</code> . Returns  <code>false</code>  if  <i>str</i>
  is null.</p>
 
 <p><a id="NicknameEnforce_string"></a>

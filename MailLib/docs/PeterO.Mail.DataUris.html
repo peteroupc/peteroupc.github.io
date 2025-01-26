@@ -27,7 +27,7 @@ data:application/octet-stream;base64, AAAAAA==
   <li><code>[DataUriBytes(System.Uri)](#DataUriBytes_System_Uri)</code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array, where the Data URI is given as a URI object.</li>
   <li><code>[DataUriMediaType(string)](#DataUriMediaType_string)</code> - Extracts the media type from a Data URI (uniform resource identifier) in the form of a text string.</li>
   <li><code>[DataUriMediaType(System.Uri)](#DataUriMediaType_System_Uri)</code> - Extracts the media type from a Data URI (uniform resource identifier) in the form of a URI object.</li>
-  <li><code>[MakeDataUri(byte[], PeterO.Mail.MediaType)](#MakeDataUri_byte_PeterO_Mail_MediaType)</code> - Encodes data with the given media type in a Data URI (uniform resource identifier).</li>
+  <li><code>[MakeDataUri(byte[], PeterO.Mail.MediaType)](#MakeDataUri_byte_PeterO_Mail_MediaType)</code> - Encodes data with the specified media type in a Data URI (uniform resource identifier).</li>
   <li><code>[MakeDataUri(string)](#MakeDataUri_string)</code> - Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
 
@@ -152,7 +152,7 @@ The parameter  <i>uri</i>
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Encodes data with the given media type in a Data URI (uniform resource identifier).</p>
+<p>Encodes data with the specified media type in a Data URI (uniform resource identifier).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -167,7 +167,7 @@ The parameter  <i>uri</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A Data URI that encodes the given data and media type.</p>
+<p>A Data URI that encodes the specified data and media type.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -195,7 +195,7 @@ The parameter  <i>bytes</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A Data URI that encodes the given text.</p>
+<p>A Data URI that encodes the specified text.</p>
 
 <p><b>Exceptions:</b></p>
 

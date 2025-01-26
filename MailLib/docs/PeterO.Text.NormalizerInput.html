@@ -46,8 +46,8 @@
 <h3 id="member-summary">Member Summary</h3>
 <ul>
   <li><code>[IsNormalized(PeterO.Text.ICharacterInput, PeterO.Text.Normalization)](#IsNormalized_PeterO_Text_ICharacterInput_PeterO_Text_Normalization)</code> - Determines whether the text provided by a character input is normalized.</li>
-  <li><code>[IsNormalized(string, PeterO.Text.Normalization)](#IsNormalized_string_PeterO_Text_Normalization)</code> - Determines whether the given string is in the given Unicode normalization form.</li>
-  <li><code>[Normalize(string, PeterO.Text.Normalization)](#Normalize_string_PeterO_Text_Normalization)</code> - Converts a string to the given Unicode normalization form.</li>
+  <li><code>[IsNormalized(string, PeterO.Text.Normalization)](#IsNormalized_string_PeterO_Text_Normalization)</code> - Determines whether the specified string is in the specified Unicode normalization form.</li>
+  <li><code>[Normalize(string, PeterO.Text.Normalization)](#Normalize_string_PeterO_Text_Normalization)</code> - Converts a string to the specified Unicode normalization form.</li>
   <li><code>[Read(int[], int, int)](#Read_int_int_int)</code> - Reads a sequence of Unicode code points from a data source.</li>
   <li><code>[ReadChar()](#ReadChar)</code> - Reads a Unicode character from a data source.</li>
 </ul>
@@ -229,7 +229,7 @@ The parameter  <i>chars</i>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Determines whether the given string is in the given Unicode normalization form.</p>
+<p>Determines whether the specified string is in the specified Unicode normalization form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -244,7 +244,7 @@ The parameter  <i>chars</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given string is in the given Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
+<p><code>true</code>  if the specified string is in the specified Unicode normalization form; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -262,7 +262,7 @@ The parameter  <i>str</i>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Converts a string to the given Unicode normalization form.</p>
+<p>Converts a string to the specified Unicode normalization form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -278,7 +278,7 @@ The parameter  <i>str</i>
 <p><b>Return Value:</b></p>
 
 <p>The parameter  <i>str</i>
- converted to the given normalization form.</p>
+ converted to the specified normalization form.</p>
 
 <p><b>Exceptions:</b></p>
 

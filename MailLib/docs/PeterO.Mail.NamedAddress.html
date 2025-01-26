@@ -15,7 +15,7 @@
 <h3 id="member-summary">Member Summary</h3>
 <ul>
   <li><code>[Address](#Address)</code> - Gets the email address associated with this object.</li>
-  <li><code>[AddressesEqual(PeterO.Mail.NamedAddress)](#AddressesEqual_PeterO_Mail_NamedAddress)</code> - Determines whether the email addresses stored this object are the same between this object and the given object, regardless of the display names they store.</li>
+  <li><code>[AddressesEqual(PeterO.Mail.NamedAddress)](#AddressesEqual_PeterO_Mail_NamedAddress)</code> - Determines whether the email addresses stored this object are the same between this object and the specified object, regardless of the display names they store.</li>
   <li><code>[DisplayName](#DisplayName)</code> - Gets the display name for this email address.</li>
   <li><code>[Equals(object)](#Equals_object)</code> - Determines whether this object and another object are equal.</li>
   <li><code>[GetHashCode()](#GetHashCode)</code> - Calculates the hash code of this object.</li>
@@ -24,8 +24,8 @@
   <li><code>[Name](#Name)</code> - Gets the display name for this email address, or the email address’s value if the display name is null.</li>
   <li><code>[ParseAddresses(string)](#ParseAddresses_string)</code> - Generates a list of NamedAddress objects from a comma-separated list of addresses.</li>
   <li><code>[ToDisplayString()](#ToDisplayString)</code> - Converts this named-address object to a text string intended to be displayed for others to see.</li>
-  <li><code>[ToDisplayString(System.Collections.Generic.IList)](#ToDisplayString_System_Collections_Generic_IList)</code> - Generates a string containing the display names and email addresses of the given named-address objects, separated by commas.</li>
-  <li><code>[ToDisplayStringShort(System.Collections.Generic.IList)](#ToDisplayStringShort_System_Collections_Generic_IList)</code> - Generates a string containing the display names of the given named-address objects, separated by commas.</li>
+  <li><code>[ToDisplayString(System.Collections.Generic.IList)](#ToDisplayString_System_Collections_Generic_IList)</code> - Generates a string containing the display names and email addresses of the specified named-address objects, separated by commas.</li>
+  <li><code>[ToDisplayStringShort(System.Collections.Generic.IList)](#ToDisplayStringShort_System_Collections_Generic_IList)</code> - Generates a string containing the display names of the specified named-address objects, separated by commas.</li>
   <li><code>[ToString()](#ToString)</code> - Converts this object to a text string.</li>
 </ul>
 
@@ -87,7 +87,7 @@ Address has an invalid syntax.; Address has an invalid syntax.</p>
     PeterO.Mail.Address address);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given display name and email address.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the specified display name and email address.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -116,7 +116,7 @@ The parameter  <i>address</i>
     string address);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given display name and email address.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the specified display name and email address.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -146,7 +146,7 @@ The parameter  <i>address</i>
     string domain);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given name and an email address made up of its local part and domain.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the specified name and an email address made up of its local part and domain.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -274,7 +274,7 @@ GroupName is empty.; A mailbox in the list is a group.</p>
     PeterO.Mail.NamedAddress na);
 </pre>
 
-<p>Determines whether the email addresses stored this object are the same between this object and the given object, regardless of the display names they store. For groups, the email addresses must be equal and in the same order in both objects.</p>
+<p>Determines whether the email addresses stored this object are the same between this object and the specified object, regardless of the display names they store. For groups, the email addresses must be equal and in the same order in both objects.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -352,7 +352,7 @@ The parameter  <i>addressValue</i>
     System.Collections.Generic.IList addresses);
 </pre>
 
-<p>Generates a string containing the display names and email addresses of the given named-address objects, separated by commas. The generated string is intended to be displayed for others to see, and is not intended to be parsed by computer programs.</p>
+<p>Generates a string containing the display names and email addresses of the specified named-address objects, separated by commas. The generated string is intended to be displayed for others to see, and is not intended to be parsed by computer programs.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -362,7 +362,7 @@ The parameter  <i>addressValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A string containing the display names and email addresses of the given named-address objects, separated by commas.</p>
+<p>A string containing the display names and email addresses of the specified named-address objects, separated by commas.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -391,7 +391,7 @@ The parameter  <i>addresses</i>
     System.Collections.Generic.IList addresses);
 </pre>
 
-<p>Generates a string containing the display names of the given named-address objects, separated by commas. The generated string is intended to be displayed for others to see, and is not intended to be parsed by computer programs. If a named address has no display name, its email address is used as the display name.</p>
+<p>Generates a string containing the display names of the specified named-address objects, separated by commas. The generated string is intended to be displayed for others to see, and is not intended to be parsed by computer programs. If a named address has no display name, its email address is used as the display name.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -401,7 +401,7 @@ The parameter  <i>addresses</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A string containing the display names of the given named-address objects, separated by commas.</p>
+<p>A string containing the display names of the specified named-address objects, separated by commas.</p>
 
 <p><b>Exceptions:</b></p>
 

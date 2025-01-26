@@ -250,15 +250,15 @@
   </li>
   <li>
     <p><code>boolean ContainsKey(CBORObject key)</code><br />
- Determines whether a value of the given key exists in this object.</p>
+ Determines whether a value of the specified key exists in this object.</p>
   </li>
   <li>
     <p><code>boolean ContainsKey(Object objKey)</code><br />
- Determines whether a value of the given key exists in this object.</p>
+ Determines whether a value of the specified key exists in this object.</p>
   </li>
   <li>
     <p><code>boolean ContainsKey(String key)</code><br />
- Determines whether a value of the given key exists in this object.</p>
+ Determines whether a value of the specified key exists in this object.</p>
   </li>
   <li>
     <p><code>static CBORObject DecodeFromBytes(byte[] data)</code><br />
@@ -268,7 +268,7 @@
     <p><code>static CBORObject DecodeFromBytes(byte[] data,
  CBOREncodeOptions options)</code><br />
  Generates a CBOR object from an array of CBOR-encoded bytes, using the
- given CBOREncodeOptions object to control the decoding
+ specified CBOREncodeOptions object to control the decoding
  process.</p>
   </li>
   <li>
@@ -276,7 +276,7 @@
  CBOREncodeOptions enc,
  Type t)</code><br />
  Generates an object of an arbitrary type from an array of CBOR-encoded
- bytes, using the given CBOREncodeOptions object to control the
+ bytes, using the specified CBOREncodeOptions object to control the
  decoding process.</p>
   </li>
   <li>
@@ -286,7 +286,7 @@
  CBORTypeMapper mapper,
  PODOptions pod)</code><br />
  Generates an object of an arbitrary type from an array of CBOR-encoded
- bytes, using the given CBOREncodeOptions object to control the
+ bytes, using the specified CBOREncodeOptions object to control the
  decoding process.</p>
   </li>
   <li>
@@ -566,8 +566,8 @@ Use FromERational instead.</p>
     <p><code>static CBORObject FromObject(Object obj,
  CBORTypeMapper mapper,
  PODOptions options)</code><br />
- Generates a CBORObject from an arbitrary object, using the given options
- to control how certain objects are converted to CBOR objects.</p>
+ Generates a CBORObject from an arbitrary object, using the specified
+ options to control how certain objects are converted to CBOR objects.</p>
   </li>
   <li>
     <p><code>static CBORObject FromObject(Object obj,
@@ -692,22 +692,22 @@ Use FromCBORObjectAndTag instead.</p>
   <li>
     <p><code>boolean HasMostInnerTag(int tagValue)</code><br />
  Returns whether this object has an innermost tag and that tag is of the
- given number.</p>
+ specified number.</p>
   </li>
   <li>
     <p><code>boolean HasMostInnerTag(com.upokecenter.numbers.EInteger bigTagValue)</code><br />
  Returns whether this object has an innermost tag and that tag is of the
- given number, expressed as an arbitrary-precision number.</p>
+ specified number, expressed as an arbitrary-precision number.</p>
   </li>
   <li>
     <p><code>boolean HasMostOuterTag(int tagValue)</code><br />
  Returns whether this object has an outermost tag and that tag is of the
- given number.</p>
+ specified number.</p>
   </li>
   <li>
     <p><code>boolean HasMostOuterTag(com.upokecenter.numbers.EInteger bigTagValue)</code><br />
  Returns whether this object has an outermost tag and that tag is of the
- given number.</p>
+ specified number.</p>
   </li>
   <li>
     <p><code>boolean HasOneTag()</code><br />
@@ -715,21 +715,21 @@ Use FromCBORObjectAndTag instead.</p>
   </li>
   <li>
     <p><code>boolean HasOneTag(int tagValue)</code><br />
- Returns whether this object has only one tag and that tag is the given
+ Returns whether this object has only one tag and that tag is the specified
  number.</p>
   </li>
   <li>
     <p><code>boolean HasOneTag(com.upokecenter.numbers.EInteger bigTagValue)</code><br />
- Returns whether this object has only one tag and that tag is the given
+ Returns whether this object has only one tag and that tag is the specified
  number, expressed as an arbitrary-precision integer.</p>
   </li>
   <li>
     <p><code>boolean HasTag(int tagValue)</code><br />
- Returns whether this object has a tag of the given number.</p>
+ Returns whether this object has a tag of the specified number.</p>
   </li>
   <li>
     <p><code>boolean HasTag(com.upokecenter.numbers.EInteger bigTagValue)</code><br />
- Returns whether this object has a tag of the given number.</p>
+ Returns whether this object has a tag of the specified number.</p>
   </li>
   <li>
     <p><code>CBORObject Insert(int index,
@@ -837,7 +837,7 @@ Use the CBORObject overload instead.</p>
   </li>
   <li>
     <p><code>boolean RemoveAt(int index)</code><br />
- Removes the item at the given index of this CBOR array.</p>
+ Removes the item at the specified index of this CBOR array.</p>
   </li>
   <li>
     <p><code>void set(int index,
@@ -859,8 +859,8 @@ Use the CBORObject overload instead.</p>
   <li>
     <p><code>CBORObject Set(int key,
  CBORObject mapValue)</code><br />
- Sets the value of a CBORObject of type Array at the given index to the given
- value.</p>
+ Sets the value of a CBORObject of type Array at the specified index to the
+ specified value.</p>
   </li>
   <li>
     <p><code>CBORObject Set(CBORObject mapKey,
@@ -1031,7 +1031,7 @@ Use the CBORObject overload instead.</p>
     <p><code>static void Write(String str,
  OutputStream stream,
  CBOREncodeOptions options)</code><br />
- Writes a text string in CBOR format to a data stream, using the given
+ Writes a text string in CBOR format to a data stream, using the specified
  options to control the encoding process.</p>
   </li>
   <li>
@@ -1080,8 +1080,8 @@ Use the CBORObject overload instead.</p>
  JSONOptions options)</code><br />
  Converts this object to a text string in JavaScript object Notation
  (JSON) format, as in the ToJSONString method, and writes that string to a
- data stream in UTF-8, using the given JSON options to control the encoding
- process.</p>
+ data stream in UTF-8, using the specified JSON options to control the
+ encoding process.</p>
   </li>
   <li>
     <p><code>void WriteTo(OutputStream stream)</code><br />
@@ -1431,8 +1431,8 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>index</code> - Index starting at 0 of the element, or the integer key to this
- map. (If this is a map, the given index can be any 32-bit signed integer,
- even a negative one.).</li>
+ map. (If this is a map, the specified index can be any 32-bit signed
+ integer, even a negative one.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1440,8 +1440,8 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>The CBOR object referred to by index or key in this array or map. If
  this is a CBOR map, returns <code>null</code> (not <code>CBORObject.Null</code>) if
- an item with the given key doesn’t exist (but this behavior may change to
- throwing an exception in version 5.0 or later).</li>
+ an item with the specified key doesn’t exist (but this behavior may change
+ to throwing an exception in version 5.0 or later).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1472,8 +1472,8 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>index</code> - Index starting at 0 of the element, or the integer key to this
- map. (If this is a map, the given index can be any 32-bit signed integer,
- even a negative one.).</li>
+ map. (If this is a map, the specified index can be any 32-bit signed
+ integer, even a negative one.).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1511,9 +1511,9 @@ Use the CBORObject overload instead.</p>
  any object convertible to a CBOR integer.</p>
   </li>
   <li>
-    <p><code>defaultValue</code> - A value to return if an item with the given key doesn’t
- exist, or if the CBOR object is an array and the key is not an integer 0 or
- greater and less than the size of the array.</p>
+    <p><code>defaultValue</code> - A value to return if an item with the specified key
+ doesn’t exist, or if the CBOR object is an array and the key is not an
+ integer 0 or greater and less than the size of the array.</p>
   </li>
 </ul>
 
@@ -1522,7 +1522,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>The CBOR object referred to by index or key in this array or map. If
  this is a CBOR map, returns <code>null</code> (not <code>CBORObject.Null</code>) if
- an item with the given key doesn’t exist.</li>
+ an item with the specified key doesn’t exist.</li>
 </ul>
 
 <h3 id="getordefault-1">GetOrDefault</h3>
@@ -1544,9 +1544,9 @@ Use the CBORObject overload instead.</p>
  convertible to a CBOR integer.</p>
   </li>
   <li>
-    <p><code>defaultValue</code> - A value to return if an item with the given key doesn’t
- exist, or if the CBOR object is an array and the key is not an integer 0 or
- greater and less than the size of the array.</p>
+    <p><code>defaultValue</code> - A value to return if an item with the specified key
+ doesn’t exist, or if the CBOR object is an array and the key is not an
+ integer 0 or greater and less than the size of the array.</p>
   </li>
 </ul>
 
@@ -1555,7 +1555,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>The CBOR object referred to by index or key in this array or map. If
  this is a CBOR map, returns <code>null</code> (not <code>CBORObject.Null</code>) if
- an item with the given key doesn’t exist.</li>
+ an item with the specified key doesn’t exist.</li>
 </ul>
 
 <h3 id="getordefault-2">GetOrDefault</h3>
@@ -1575,8 +1575,8 @@ Use the CBORObject overload instead.</p>
  array, and can be null. If this is a CBOR array, defaultValue is returned.</p>
   </li>
   <li>
-    <p><code>defaultValue</code> - A value to return if an item with the given key doesn’t
- exist, or if the CBOR object is an array.</p>
+    <p><code>defaultValue</code> - A value to return if an item with the specified key
+ doesn’t exist, or if the CBOR object is an array.</p>
   </li>
 </ul>
 
@@ -1585,7 +1585,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>The CBOR object referred to by index or key in this array or map. If
  this is a CBOR map, returns <code>null</code> (not <code>CBORObject.Null</code>) if
- an item with the given key doesn’t exist.</li>
+ an item with the specified key doesn’t exist.</li>
 </ul>
 
 <h3 id="get-1">get</h3>
@@ -1609,7 +1609,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>The CBOR object referred to by index or key in this array or map. If
  this is a CBOR map, returns <code>null</code> (not <code>CBORObject.Null</code>) if
- an item with the given key doesn’t exist.</li>
+ an item with the specified key doesn’t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1677,7 +1677,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li>The CBOR object referred to by key in this map. Returns <code>null</code>
- if an item with the given key doesn’t exist.</li>
+ if an item with the specified key doesn’t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1731,7 +1731,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object decoded from the given byte array.</li>
+  <li>A CBOR object decoded from the specified byte array.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1765,8 +1765,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An array of CBOR objects decoded from the given byte array. Returns
- an empty array if <code>data</code> is empty.</li>
+  <li>An array of CBOR objects decoded from the specified byte array.
+ Returns an empty array if <code>data</code> is empty.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1807,8 +1807,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An array of CBOR objects decoded from the given byte array. Returns
- an empty array if <code>data</code> is empty.</li>
+  <li>An array of CBOR objects decoded from the specified byte array.
+ Returns an empty array if <code>data</code> is empty.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1850,7 +1850,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>A list of CBOR objects read from the JSON sequence. Objects that
  could not be parsed are replaced with <code>null</code> (as opposed to <code>
- CBORObject.Null</code>) in the given list.</li>
+ CBORObject.Null</code>) in the specified list.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1942,7 +1942,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>A list of CBOR objects read from the JSON sequence. Objects that
  could not be parsed are replaced with <code>null</code> (as opposed to <code>
- CBORObject.Null</code>) in the given list.</li>
+ CBORObject.Null</code>) in the specified list.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1964,7 +1964,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Generates a CBOR object from an array of CBOR-encoded bytes, using the
- given <code>CBOREncodeOptions</code> object to control the decoding
+ specified <code>CBOREncodeOptions</code> object to control the decoding
  process.</p>
 <p>The following example (originally written in C# for the.NET
  version) implements a method that decodes a text string from a CBOR byte
@@ -1992,9 +1992,9 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object decoded from the given byte array. Returns null (as
- opposed to CBORObject.Null) if <code>data</code> is empty and the AllowEmpty
- property is set on the given options object.</li>
+  <li>A CBOR object decoded from the specified byte array. Returns null
+ (as opposed to CBORObject.Null) if <code>data</code> is empty and the AllowEmpty
+ property is set on the specified options object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2004,7 +2004,7 @@ Use the CBORObject overload instead.</p>
     <p><code>CBORException</code> - There was an error in reading or
  parsing the data. This includes cases where not all of the byte array
  represents a CBOR object. This exception is also thrown if the parameter
- <code>data</code> is empty unless the AllowEmpty property is set on the given
+ <code>data</code> is empty unless the AllowEmpty property is set on the specified
  options object.</p>
   </li>
   <li>
@@ -2264,8 +2264,8 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>
     <p><code>CBORException</code> - The given type <code>t</code> , or
- this object’s CBOR type, is not supported, or the given object’s nesting is
- too deep, or another error occurred when serializing the object.</p>
+ this object’s CBOR type, is not supported, or the specified object’s nesting
+ is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>t</code> is null.</p>
@@ -2313,8 +2313,8 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>
     <p><code>CBORException</code> - The given type <code>t</code>, or this
- object’s CBOR type, is not supported, or the given object’s nesting is too
- deep, or another error occurred when serializing the object.</p>
+ object’s CBOR type, is not supported, or the specified object’s nesting is
+ too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>t</code> is null.</p>
@@ -2383,13 +2383,13 @@ Use the CBORObject overload instead.</p>
  following cases are checked in the logical order given (rather than the
  strict order in which they are implemented by this library):</p>
 <ul><li>If
- the type is <code>CBORObject</code> , return this object.</li><li>If the given
- object is <code>CBORObject.Null</code> (with or without tags), returns <code>
- null</code> .</li><li>If the object is of a type corresponding to a type converter
- mentioned in the <code>mapper</code> parameter, that converter will be used to
- convert the CBOR object to an object of the given type. Type converters can
- be used to override the default conversion behavior of almost any
- object.</li><li>If the type is <code>object</code> , return this
+ the type is <code>CBORObject</code> , return this object.</li><li>If the
+ specified object is <code>CBORObject.Null</code> (with or without tags), returns
+ <code>null</code> .</li><li>If the object is of a type corresponding to a type
+ converter mentioned in the <code>mapper</code> parameter, that converter will be
+ used to convert the CBOR object to an object of the specified type. Type
+ converters can be used to override the default conversion behavior of almost
+ any object.</li><li>If the type is <code>object</code> , return this
  object.</li><li>If the type is <code>char</code> , converts single-character CBOR
  text strings and CBOR integers from 0 through 65535 to a <code>char</code> object
  and returns that <code>char</code> object.</li><li>If the type is <code>boolean</code>
@@ -2430,9 +2430,9 @@ Use the CBORObject overload instead.</p>
   library (in .NET) or the <code>
  com.github.peteroupc/numbers</code>  artifact (in Java), or if the type is
  <code>BigInteger</code> or <code>BigDecimal</code> in the Java version, converts the
- given object to a number of the corresponding type and throws an exception
- (currently IllegalStateException) if the object does not represent a number
- (for this purpose, infinity and not-a-number values, but not <code>
+ specified object to a number of the corresponding type and throws an
+ exception (currently IllegalStateException) if the object does not represent
+ a number (for this purpose, infinity and not-a-number values, but not <code>
  CBORObject.Null</code> , are considered numbers). Currently, this is equivalent to
  the result of <code>AsEFloat()</code> , <code>AsEDecimal()</code> , <code>AsEInteger</code>
  , or <code>AsERational()</code> , respectively, but may change slightly in the
@@ -2483,31 +2483,32 @@ Use the CBORObject overload instead.</p>
  to this method, where the object will contain all keys and values in this
  CBOR map.</li><li>If the type is an enumeration constant ("enum"), and this
  CBOR object is an integer or text string, returns the enumeration constant
- with the given number or name, respectively. (Enumeration constants made up
- of multiple enumeration constants, as allowed by .NET, can only be matched
- by number this way.)</li><li>If the type is <code>java.util.Date</code> (or <code>
- Date</code> in Java) , returns a date/time object if the CBOR object's outermost
- tag == 0 || tag == 1. For tag 1, this method treats the CBOR object as a
- number of seconds since the start of 1970, which is based on the POSIX
- definition of "seconds since the Epoch", a definition that does not count
- leap seconds. In this method, this number of seconds assumes the use of a
- proleptic Gregorian calendar, in which the rules regarding the number of
- days in each month and which years are leap years are the same for all years
- as they were in 1970 (including without regard to time zone differences or
- transitions from other calendars to the Gregorian). The string format used
- in tag 0 supports only years up to 4 decimal digits long. For tag 1, CBOR
- objects that express infinity or not-a-number (NaN) are treated as invalid
- by this method. This default behavior for <code>java.util.Date</code> and <code>Date</code>
- can be changed by passing a suitable CBORTypeMapper to this method, such as
- a CBORTypeMapper that registers a CBORDateConverter for <code>java.util.Date</code> or
- <code>Date</code> objects. See the examples.</li><li>If the type is <code>java.net.URI</code>
- (or <code>URI</code> in Java), returns a URI object if possible.</li><li>If the
- type is <code>java.util.UUID</code> (or <code>UUID</code> in Java), returns a UUID object if
+ with the specified number or name, respectively. (Enumeration constants made
+ up of multiple enumeration constants, as allowed by .NET, can only be
+ matched by number this way.)</li><li>If the type is <code>java.util.Date</code> (or
+ <code>Date</code> in Java) , returns a date/time object if the CBOR object's
+ outermost tag == 0 || tag == 1. For tag 1, this method treats the CBOR
+ object as a number of seconds since the start of 1970, which is based on the
+ POSIX definition of "seconds since the Epoch", a definition that does not
+ count leap seconds. In this method, this number of seconds assumes the use
+ of a proleptic Gregorian calendar, in which the rules regarding the number
+ of days in each month and which years are leap years are the same for all
+ years as they were in 1970 (including without regard to time zone
+ differences or transitions from other calendars to the Gregorian). The
+ string format used in tag 0 supports only years up to 4 decimal digits long.
+ For tag 1, CBOR objects that express infinity or not-a-number (NaN) are
+ treated as invalid by this method. This default behavior for <code>
+ java.util.Date</code> and <code>Date</code> can be changed by passing a suitable
+ CBORTypeMapper to this method, such as a CBORTypeMapper that registers a
+ CBORDateConverter for <code>java.util.Date</code> or <code>Date</code> objects. See the
+ examples.</li><li>If the type is <code>java.net.URI</code> (or <code>URI</code> in Java),
+ returns a URI object if possible.</li><li>If the type is <code>java.util.UUID</code> (or
+ <code>UUID</code> in Java), returns a UUID object if
  possible.</li><li>Plain-Old-Data deserialization: If the object is a type
  not specially handled above, the type includes a zero-parameter constructor
  (default or not), this CBOR object is a CBOR map, and the "mapper" parameter
  (if any) allows this type to be eligible for Plain-Old-Data deserialization,
- then this method checks the given type for eligible setters as
+ then this method checks the specified type for eligible setters as
  follows:</li><li>(*) In the .NET version, eligible setters are the public,
  nonstatic setters of properties with a public, nonstatic getter. Eligible
  setters also include public, nonstatic, non- <code>static final</code> , non- <code>
@@ -2526,7 +2527,7 @@ Use the CBORObject overload instead.</p>
  nonstatic, nonfinal fields are also eligible setters. If a class has two or
  more otherwise eligible setters (methods and/or fields) with the same name,
  but different parameter type, they are not eligible setters.</li><li>Then,
- the method creates an object of the given type and invokes each eligible
+ the method creates an object of the specified type and invokes each eligible
  setter with the corresponding value in the CBOR map, if any. Key names in
  the map are matched to eligible setters according to the rules described in
  the <code>PODOptions</code> documentation. Note that for
@@ -2594,8 +2595,8 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>
     <p><code>CBORException</code> - The given type <code>t</code> , or
- this object’s CBOR type, is not supported, or the given object’s nesting is
- too deep, or another error occurred when serializing the object.</p>
+ this object’s CBOR type, is not supported, or the specified object’s nesting
+ is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>t</code> or <code>options</code> is
@@ -2609,7 +2610,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Generates an object of an arbitrary type from an array of CBOR-encoded
- bytes, using the given <code>CBOREncodeOptions</code> object to control the
+ bytes, using the specified <code>CBOREncodeOptions</code> object to control the
  decoding process. It is equivalent to DecodeFromBytes followed by ToObject.
  See the documentation for those methods for more information.</p>
 
@@ -2648,9 +2649,10 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An object of the given type decoded from the given byte array.
- Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty and
- the AllowEmpty property is set on the given CBOREncodeOptions object.</li>
+  <li>An object of the specified type decoded from the specified byte
+ array. Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty
+ and the AllowEmpty property is set on the specified CBOREncodeOptions
+ object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2660,10 +2662,10 @@ Use the CBORObject overload instead.</p>
     <p><code>CBORException</code> - There was an error in reading or
  parsing the data. This includes cases where not all of the byte array
  represents a CBOR object. This exception is also thrown if the parameter
- <code>data</code> is empty unless the AllowEmpty property is set on the given
- options object. Also thrown if the given type <code>t</code>, or this object’s
- CBOR type, is not supported, or the given object’s nesting is too deep, or
- another error occurred when serializing the object.</p>
+ <code>data</code> is empty unless the AllowEmpty property is set on the specified
+ options object. Also thrown if the specified type <code>t</code>, or this
+ object’s CBOR type, is not supported, or the specified object’s nesting is
+ too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
@@ -2678,7 +2680,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Generates an object of an arbitrary type from an array of CBOR-encoded
- bytes, using the given <code>CBOREncodeOptions</code> object to control the
+ bytes, using the specified <code>CBOREncodeOptions</code> object to control the
  decoding process. It is equivalent to DecodeFromBytes followed by ToObject.
  See the documentation for those methods for more information.</p>
 
@@ -2708,9 +2710,10 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An object of the given type decoded from the given byte array.
- Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty and
- the AllowEmpty property is set on the given CBOREncodeOptions object.</li>
+  <li>An object of the specified type decoded from the specified byte
+ array. Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty
+ and the AllowEmpty property is set on the specified CBOREncodeOptions
+ object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2720,10 +2723,10 @@ Use the CBORObject overload instead.</p>
     <p><code>CBORException</code> - There was an error in reading or
  parsing the data. This includes cases where not all of the byte array
  represents a CBOR object. This exception is also thrown if the parameter
- <code>data</code> is empty unless the AllowEmpty property is set on the given
- options object. Also thrown if the given type <code>t</code>, or this object’s
- CBOR type, is not supported, or the given object’s nesting is too deep, or
- another error occurred when serializing the object.</p>
+ <code>data</code> is empty unless the AllowEmpty property is set on the specified
+ options object. Also thrown if the specified type <code>t</code>, or this
+ object’s CBOR type, is not supported, or the specified object’s nesting is
+ too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
@@ -2771,9 +2774,10 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An object of the given type decoded from the given byte array.
- Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty and
- the AllowEmpty property is set on the given CBOREncodeOptions object.</li>
+  <li>An object of the specified type decoded from the specified byte
+ array. Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty
+ and the AllowEmpty property is set on the specified CBOREncodeOptions
+ object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2783,10 +2787,10 @@ Use the CBORObject overload instead.</p>
     <p><code>CBORException</code> - There was an error in reading or
  parsing the data. This includes cases where not all of the byte array
  represents a CBOR object. This exception is also thrown if the parameter
- <code>data</code> is empty unless the AllowEmpty property is set on the given
- options object. Also thrown if the given type <code>t</code>, or this object’s
- CBOR type, is not supported, or the given object’s nesting is too deep, or
- another error occurred when serializing the object.</p>
+ <code>data</code> is empty unless the AllowEmpty property is set on the specified
+ options object. Also thrown if the specified type <code>t</code>, or this
+ object’s CBOR type, is not supported, or the specified object’s nesting is
+ too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
@@ -2825,9 +2829,10 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An object of the given type decoded from the given byte array.
- Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty and
- the AllowEmpty property is set on the given CBOREncodeOptions object.</li>
+  <li>An object of the specified type decoded from the specified byte
+ array. Returns null (as opposed to CBORObject.Null) if <code>data</code> is empty
+ and the AllowEmpty property is set on the specified CBOREncodeOptions
+ object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2837,10 +2842,10 @@ Use the CBORObject overload instead.</p>
     <p><code>CBORException</code> - There was an error in reading or
  parsing the data. This includes cases where not all of the byte array
  represents a CBOR object. This exception is also thrown if the parameter
- <code>data</code> is empty unless the AllowEmpty property is set on the given
- options object. Also thrown if the given type <code>t</code>, or this object’s
- CBOR type, is not supported, or the given object’s nesting is too deep, or
- another error occurred when serializing the object.</p>
+ <code>data</code> is empty unless the AllowEmpty property is set on the specified
+ options object. Also thrown if the specified type <code>t</code>, or this
+ object’s CBOR type, is not supported, or the specified object’s nesting is
+ too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p><code>NullPointerException</code> - The parameter <code>data</code> is null, or the
@@ -3241,7 +3246,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object generated from the given integer.</li>
+  <li>A CBOR object generated from the specified integer.</li>
 </ul>
 
 <h3 id="fromobject-8">FromObject</h3>
@@ -3260,7 +3265,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object generated from the given integer.</li>
+  <li>A CBOR object generated from the specified integer.</li>
 </ul>
 
 <h3 id="frombool">FromBool</h3>
@@ -3317,7 +3322,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object generated from the given integer.</li>
+  <li>A CBOR object generated from the specified integer.</li>
 </ul>
 
 <h3 id="fromobject-10">FromObject</h3>
@@ -3364,7 +3369,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object generated from the given number.</li>
+  <li>A CBOR object generated from the specified number.</li>
 </ul>
 
 <h3 id="fromobject-11">FromObject</h3>
@@ -3409,7 +3414,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object generated from the given number.</li>
+  <li>A CBOR object generated from the specified number.</li>
 </ul>
 
 <h3 id="fromobject-12">FromObject</h3>
@@ -3428,7 +3433,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object generated from the given number.</li>
+  <li>A CBOR object generated from the specified number.</li>
 </ul>
 
 <h3 id="frombytearray">FromByteArray</h3>
@@ -3450,8 +3455,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object where each element of the given byte array is copied
- to a new array, or CBORObject.Null if the value is null.</li>
+  <li>A CBOR object where each element of the specified byte array is
+ copied to a new array, or CBORObject.Null if the value is null.</li>
 </ul>
 
 <h3 id="fromobject-13">FromObject</h3>
@@ -3470,8 +3475,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object where each element of the given byte array is copied
- to a new array, or CBORObject.Null if the value is null.</li>
+  <li>A CBOR object where each element of the specified byte array is
+ copied to a new array, or CBORObject.Null if the value is null.</li>
 </ul>
 
 <h3 id="fromcborarray">FromCBORArray</h3>
@@ -3490,8 +3495,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object where each element of the given array is copied to a
- new array, or CBORObject.Null if the value is null.</li>
+  <li>A CBOR object where each element of the specified array is copied to
+ a new array, or CBORObject.Null if the value is null.</li>
 </ul>
 
 <h3 id="fromobject-14">FromObject</h3>
@@ -3529,8 +3534,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR array object where each element of the given array is copied
- to a new array, or CBORObject.Null if the value is null.</li>
+  <li>A CBOR array object where each element of the specified array is
+ copied to a new array, or CBORObject.Null if the value is null.</li>
 </ul>
 
 <h3 id="fromobject-16">FromObject</h3>
@@ -3549,8 +3554,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR array object where each element of the given array is copied
- to a new array, or CBORObject.Null if the value is null.</li>
+  <li>A CBOR array object where each element of the specified array is
+ copied to a new array, or CBORObject.Null if the value is null.</li>
 </ul>
 
 <h3 id="fromobject-17">FromObject</h3>
@@ -3578,7 +3583,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object corresponding to the given object. Returns
+  <li>A CBOR object corresponding to the specified object. Returns
  CBORObject.Null if the object is null.</li>
 </ul>
 
@@ -3612,7 +3617,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object corresponding to the given object. Returns
+  <li>A CBOR object corresponding to the specified object. Returns
  CBORObject.Null if the object is null.</li>
 </ul>
 
@@ -3652,7 +3657,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object corresponding to the given object. Returns
+  <li>A CBOR object corresponding to the specified object. Returns
  CBORObject.Null if the object is null.</li>
 </ul>
 
@@ -3667,19 +3672,18 @@ Use the CBORObject overload instead.</p>
 <pre>public static CBORObject FromObject(Object obj, CBORTypeMapper mapper, PODOptions options)
 </pre>
 
-<p>Generates a CBORObject from an arbitrary object, using the given options
- to control how certain objects are converted to CBOR objects. The following
- cases are checked in the logical order given (rather than the strict order
- in which they are implemented by this library):</p>
-<ul><li> <code>null</code> is
- converted to <code>CBORObject.Null</code> .</li><li>A <code>CBORObject</code> is
- returned as itself.</li><li>If the object is of a type corresponding to a
- type converter mentioned in the <code>mapper</code> parameter, that converter
- will be used to convert the object to a CBOR object. Type converters can be
- used to override the default conversion behavior of almost any
- object.</li><li>A <code>char</code> is converted to an integer (from 0 through
- 65535), and returns a CBOR object of that integer. (This is a change in
- version 4.0 from previous versions, which converted <code>char</code> , except
+<p>Generates a CBORObject from an arbitrary object, using the specified
+ options to control how certain objects are converted to CBOR objects. The
+ following cases are checked in the logical order given (rather than the
+ strict order in which they are implemented by this library):</p>
+<ul><li> <code>null</code> is converted to <code>CBORObject.Null</code> .</li><li>A
+ <code>CBORObject</code> is returned as itself.</li><li>If the object is of a type
+ corresponding to a type converter mentioned in the <code>mapper</code> parameter,
+ that converter will be used to convert the object to a CBOR object. Type
+ converters can be used to override the default conversion behavior of almost
+ any object.</li><li>A <code>char</code> is converted to an integer (from 0
+ through 65535), and returns a CBOR object of that integer. (This is a change
+ in version 4.0 from previous versions, which converted <code>char</code> , except
  surrogate code points from 0xd800 through 0xdfff, into single-character text
  strings.)</li><li>A <code>boolean</code> (<code>boolean</code> in Java) is converted
  to <code>CBORObject.True</code> or <code>CBORObject.False</code> .</li><li>A <code>
@@ -3747,9 +3751,9 @@ Use the CBORObject overload instead.</p>
  eligible getters.</li></ul>
 <p><b>REMARK:</b> .NET enumeration (<code>
  Enum</code>) constants could also have been converted to text strings with <code>
- toString()</code> , but that method will return multiple names if the given Enum
- object is a combination of Enum objects (for example if the object is <code>
- FileAccess.Read | FileAccess.Write</code>). More generally, if Enums are
+ toString()</code> , but that method will return multiple names if the specified
+ Enum object is a combination of Enum objects (for example if the object is
+ <code>FileAccess.Read | FileAccess.Write</code>). More generally, if Enums are
  converted to text strings, constants from Enum types with the <code>Flags</code>
  attribute, and constants from the same Enum type that share an underlying
  value, should not be passed to this method.</p>
@@ -3807,7 +3811,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object corresponding to the given object. Returns
+  <li>A CBOR object corresponding to the specified object. Returns
  CBORObject.Null if the object is null.</li>
 </ul>
 
@@ -3819,7 +3823,7 @@ Use the CBORObject overload instead.</p>
   </li>
   <li>
     <p><code>CBORException</code> - An error occurred while
- converting the given object to a CBOR object.</p>
+ converting the specified object to a CBOR object.</p>
   </li>
 </ul>
 
@@ -4009,7 +4013,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>A CBOR object where the object <code>cborObj</code> is given the tag
  <code>smallTag</code>. If “valueOb” is null, returns a version of CBORObject.Null
- with the given tag.</li>
+ with the specified tag.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -4383,7 +4387,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>A list of CBOR objects read from the JSON sequence. Objects that
  could not be parsed are replaced with <code>null</code> (as opposed to <code>
- CBORObject.Null</code>) in the given list.</li>
+ CBORObject.Null</code>) in the specified list.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -4434,7 +4438,7 @@ Use the CBORObject overload instead.</p>
 <ul>
   <li>A list of CBOR objects read from the JSON sequence. Objects that
  could not be parsed are replaced with <code>null</code> (as opposed to <code>
- CBORObject.Null</code>) in the given list.</li>
+ CBORObject.Null</code>) in the specified list.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -4765,7 +4769,7 @@ Use the CBORObject overload instead.</p>
 <pre>public static void Write(String str, OutputStream stream, CBOREncodeOptions options) throws IOException
 </pre>
 
-<p>Writes a text string in CBOR format to a data stream, using the given
+<p>Writes a text string in CBOR format to a data stream, using the specified
  options to control the encoding process.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -5858,7 +5862,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean ContainsKey(Object objKey)
 </pre>
 
-<p>Determines whether a value of the given key exists in this object.</p>
+<p>Determines whether a value of the specified key exists in this object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5869,8 +5873,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given key is found, or <code>false</code> if the
- given key is not found or this object is not a map.</li>
+  <li><code>true</code> if the specified key is found, or <code>false</code> if the
+ specified key is not found or this object is not a map.</li>
 </ul>
 
 <h3 id="containskey-1">ContainsKey</h3>
@@ -5878,7 +5882,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean ContainsKey(CBORObject key)
 </pre>
 
-<p>Determines whether a value of the given key exists in this object.</p>
+<p>Determines whether a value of the specified key exists in this object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5890,8 +5894,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given key is found, or <code>false</code> if the
- given key is not found or this object is not a map.</li>
+  <li><code>true</code> if the specified key is found, or <code>false</code> if the
+ specified key is not found or this object is not a map.</li>
 </ul>
 
 <h3 id="containskey-2">ContainsKey</h3>
@@ -5899,7 +5903,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean ContainsKey(String key)
 </pre>
 
-<p>Determines whether a value of the given key exists in this object.</p>
+<p>Determines whether a value of the specified key exists in this object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -5911,8 +5915,8 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given key (as a CBOR object) is found, or <code>
- false</code> if the given key is not found or this object is not a map.</li>
+  <li><code>true</code> if the specified key (as a CBOR object) is found, or
+ <code>false</code> if the specified key is not found or this object is not a map.</li>
 </ul>
 
 <h3 id="encodetobytes">EncodeToBytes</h3>
@@ -5993,10 +5997,10 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>CBORException</code> - Thrown if the pointer is null, or
- if the pointer is invalid, or if there is no object at the given pointer, or
- the special key “-“ appears in the pointer in the context of an array (not a
- map), or if the pointer is nonempty and this object has a CBOR type other
- than array or map.</li>
+ if the pointer is invalid, or if there is no object at the specified
+ pointer, or the special key “-“ appears in the pointer in the context of an
+ array (not a map), or if the pointer is nonempty and this object has a CBOR
+ type other than array or map.</li>
 </ul>
 
 <h3 id="atjsonpointer-1">AtJSONPointer</h3>
@@ -6039,10 +6043,10 @@ Use the CBORObject overload instead.</p>
   <li>An object within the specified JSON object. Returns this object if
  pointer is the empty string (even if this object has a CBOR type other than
  array or map). Returns <code>defaultValue</code> if the pointer is null, or if
- the pointer is invalid, or if there is no object at the given pointer, or
- the special key “-“ appears in the pointer in the context of an array (not a
- map), or if the pointer is nonempty and this object has a CBOR type other
- than array or map.</li>
+ the pointer is invalid, or if there is no object at the specified pointer,
+ or the special key “-“ appears in the pointer in the context of an array
+ (not a map), or if the pointer is nonempty and this object has a CBOR type
+ other than array or map.</li>
 </ul>
 
 <h3 id="applyjsonpatch">ApplyJSONPatch</h3>
@@ -6216,7 +6220,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean HasOneTag(int tagValue)
 </pre>
 
-<p>Returns whether this object has only one tag and that tag is the given
+<p>Returns whether this object has only one tag and that tag is the specified
  number.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -6229,7 +6233,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>true</code> if this object has only one tag and that tag is the
- given number; otherwise, <code>false</code>.</li>
+ specified number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6243,7 +6247,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean HasOneTag(com.upokecenter.numbers.EInteger bigTagValue)
 </pre>
 
-<p>Returns whether this object has only one tag and that tag is the given
+<p>Returns whether this object has only one tag and that tag is the specified
  number, expressed as an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -6256,7 +6260,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>true</code> if this object has only one tag and that tag is the
- given number; otherwise, <code>false</code>.</li>
+ specified number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6289,7 +6293,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Returns whether this object has an innermost tag and that tag is of the
- given number.</p>
+ specified number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6301,7 +6305,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>true</code> if this object has an innermost tag and that tag is of
- the given number; otherwise, <code>false</code>.</li>
+ the specified number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6316,7 +6320,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Returns whether this object has an innermost tag and that tag is of the
- given number, expressed as an arbitrary-precision number.</p>
+ specified number, expressed as an arbitrary-precision number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6328,7 +6332,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>true</code> if this object has an innermost tag and that tag is of
- the given number; otherwise, <code>false</code>.</li>
+ the specified number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6348,7 +6352,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Returns whether this object has an outermost tag and that tag is of the
- given number.</p>
+ specified number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6360,7 +6364,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>true</code> if this object has an outermost tag and that tag is of
- the given number; otherwise, <code>false</code>.</li>
+ the specified number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6375,7 +6379,7 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Returns whether this object has an outermost tag and that tag is of the
- given number.</p>
+ specified number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6387,7 +6391,7 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li><code>true</code> if this object has an outermost tag and that tag is of
- the given number; otherwise, <code>false</code>.</li>
+ the specified number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6406,7 +6410,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean HasTag(int tagValue)
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Returns whether this object has a tag of the specified number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6417,7 +6421,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if this object has a tag of the given number;
+  <li><code>true</code> if this object has a tag of the specified number;
  otherwise, <code>false</code>.</li>
 </ul>
 
@@ -6437,7 +6441,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean HasTag(com.upokecenter.numbers.EInteger bigTagValue)
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Returns whether this object has a tag of the specified number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6448,7 +6452,7 @@ Use the CBORObject overload instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if this object has a tag of the given number;
+  <li><code>true</code> if this object has a tag of the specified number;
  otherwise, <code>false</code>.</li>
 </ul>
 
@@ -6558,8 +6562,8 @@ Use the CBORObject overload instead.</p>
 
 <p>If this object is an array, removes the first instance of the specified item
  (once converted to a CBOR object) from the array. If this object is a map,
- removes the item with the given key (once converted to a CBOR object) from
- the map.</p>
+ removes the item with the specified key (once converted to a CBOR object)
+ from the map.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6590,7 +6594,7 @@ Use the CBORObject overload instead.</p>
 <pre>public boolean RemoveAt(int index)
 </pre>
 
-<p>Removes the item at the given index of this CBOR array.</p>
+<p>Removes the item at the specified index of this CBOR array.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6602,8 +6606,8 @@ Use the CBORObject overload instead.</p>
 
 <ul>
   <li>Returns “true” if the object was removed. Returns “false” if the
- given index is less than 0, or is at least as high as the number of items in
- the array.</li>
+ specified index is less than 0, or is at least as high as the number of
+ items in the array.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -6618,8 +6622,8 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>If this object is an array, removes the first instance of the specified item
- from the array. If this object is a map, removes the item with the given key
- from the map.</p>
+ from the array. If this object is a map, removes the item with the specified
+ key from the map.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6651,8 +6655,8 @@ Use the CBORObject overload instead.</p>
 </pre>
 
 <p>Maps an object to a key in this CBOR map, or adds the value if the key
- doesn’t exist. If this is a CBOR array, instead sets the value at the given
- index to the given value.</p>
+ doesn’t exist. If this is a CBOR array, instead sets the value at the
+ specified index to the specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6738,8 +6742,8 @@ Use the CBORObject overload instead.</p>
 <pre>public CBORObject Set(int key, CBORObject mapValue)
 </pre>
 
-<p>Sets the value of a CBORObject of type Array at the given index to the given
- value.</p>
+<p>Sets the value of a CBORObject of type Array at the specified index to the
+ specified value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -7047,13 +7051,14 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 
 <p>Converts this object to a text string in JavaScript object Notation
  (JSON) format, as in the ToJSONString method, and writes that string to a
- data stream in UTF-8, using the given JSON options to control the encoding
- process. If the CBOR object contains CBOR maps, or is a CBOR map, the order
- in which the keys to the map are written out to the JSON string is undefined
- unless the map was created using the NewOrderedMap method. The example code
- given in <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b>
- can be used to write out certain keys of a CBOR map in a given order to a
- JSON string.</p>
+ data stream in UTF-8, using the specified JSON options to control the
+ encoding process. If the CBOR object contains CBOR maps, or is a CBOR map,
+ the order in which the keys to the map are written out to the JSON string is
+ undefined unless the map was created using the NewOrderedMap method. The
+ example code given in
+ <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b> can be
+ used to write out certain keys of a CBOR map in a given order to a JSON
+ string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -7107,7 +7112,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A CBOR object storing the given floating-point number.</li>
+  <li>A CBOR object storing the specified floating-point number.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -7326,7 +7331,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
  with it to a data stream, where that integer is passed to this method as a
  64-bit signed integer. This is a low-level method that is useful for
  implementing custom CBOR encoding methodologies. This method encodes the
- given major type and value in the shortest form allowed for the major
+ specified major type and value in the shortest form allowed for the major
  type.</p>
 <p>There are other useful things to note when encoding CBOR that
  are not covered by this WriteValue method. To mark the start of an
@@ -7387,7 +7392,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
  with it to a data stream, where that integer is passed to this method as a
  32-bit signed integer. This is a low-level method that is useful for
  implementing custom CBOR encoding methodologies. This method encodes the
- given major type and value in the shortest form allowed for the major
+ specified major type and value in the shortest form allowed for the major
  type.</p>
 <p>There are other useful things to note when encoding CBOR that
  are not covered by this WriteValue method. To mark the start of an
@@ -7466,7 +7471,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
  with it to a data stream, where that integer is passed to this method as an
  arbitrary-precision integer. This is a low-level method that is useful for
  implementing custom CBOR encoding methodologies. This method encodes the
- given major type and value in the shortest form allowed for the major
+ specified major type and value in the shortest form allowed for the major
  type.</p>
 <p>There are other useful things to note when encoding CBOR that
  are not covered by this WriteValue method. To mark the start of an

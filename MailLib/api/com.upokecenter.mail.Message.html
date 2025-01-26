@@ -113,27 +113,27 @@
 <ul>
   <li>
     <p><code>Message AddAttachment(MediaType mediaType)</code><br />
- Adds an attachment with an empty body and with the given media type to this
- message.</p>
+ Adds an attachment with an empty body and with the specified media type to
+ this message.</p>
   </li>
   <li>
     <p><code>Message AddAttachment(InputStream inputStream,
  MediaType mediaType)</code><br />
- Adds an attachment to this message in the form of data from the given
- readable stream, and with the given media type.</p>
+ Adds an attachment to this message in the form of data from the specified
+ readable stream, and with the specified media type.</p>
   </li>
   <li>
     <p><code>Message AddAttachment(InputStream inputStream,
  MediaType mediaType,
  String filename)</code><br />
- Adds an attachment to this message in the form of data from the given
- readable stream, and with the given media type and file name.</p>
+ Adds an attachment to this message in the form of data from the specified
+ readable stream, and with the specified media type and file name.</p>
   </li>
   <li>
     <p><code>Message AddAttachment(InputStream inputStream,
  String filename)</code><br />
- Adds an attachment to this message in the form of data from the given
- readable stream, and with the given file name.</p>
+ Adds an attachment to this message in the form of data from the specified
+ readable stream, and with the specified file name.</p>
   </li>
   <li>
     <p><code>Message AddHeader(String name,
@@ -146,27 +146,27 @@
   </li>
   <li>
     <p><code>Message AddInline(MediaType mediaType)</code><br />
- Adds an inline body part with an empty body and with the given media type to
- this message.</p>
+ Adds an inline body part with an empty body and with the specified media
+ type to this message.</p>
   </li>
   <li>
     <p><code>Message AddInline(InputStream inputStream,
  MediaType mediaType)</code><br />
  Adds an inline body part to this message in the form of data from the
- given readable stream, and with the given media type.</p>
+ specified readable stream, and with the specified media type.</p>
   </li>
   <li>
     <p><code>Message AddInline(InputStream inputStream,
  MediaType mediaType,
  String filename)</code><br />
- Adds an inline body part to this message in the form of data from the given
- readable stream, and with the given media type and file name.</p>
+ Adds an inline body part to this message in the form of data from the
+ specified readable stream, and with the specified media type and file name.</p>
   </li>
   <li>
     <p><code>Message AddInline(InputStream inputStream,
  String filename)</code><br />
- Adds an inline body part to this message in the form of data from the given
- readable stream, and with the given file name.</p>
+ Adds an inline body part to this message in the form of data from the
+ specified readable stream, and with the specified file name.</p>
   </li>
   <li>
     <p><code>Message ClearHeaders()</code><br />
@@ -175,8 +175,8 @@
   <li>
     <p><code>static String DecodeHeaderValue(String name,
  String value)</code><br />
- Decodes RFC 2047 encoded words from the given header field value and returns
- a string with those words decoded.</p>
+ Decodes RFC 2047 encoded words from the specified header field value and
+ returns a string with those words decoded.</p>
   </li>
   <li>
     <p><code>static String ExtractHeader(byte[] bytes,
@@ -209,8 +209,8 @@ Renamed to FromMailtoUri.</p>
   </li>
   <li>
     <p><code>List&lt;NamedAddress&gt; GetAddresses(String headerName)</code><br />
- Gets a list of addresses contained in the header fields with the given name
- in this message.</p>
+ Gets a list of addresses contained in the header fields with the specified
+ name in this message.</p>
   </li>
   <li>
     <p><code>List&lt;Message&gt; GetAttachments()</code><br />
@@ -320,23 +320,23 @@ Use GetAddresses(\To) instead.</p>
   </li>
   <li>
     <p><code>Message RemoveHeader(String name)</code><br />
- Removes all instances of the given header field from this message.</p>
+ Removes all instances of the specified header field from this message.</p>
   </li>
   <li>
     <p><code>Message SelectLanguageMessage(List&lt;String&gt; languages)</code><br />
  Selects a body part for a multiple-language message(
- multipart/multilingual) according to the given language priority list.</p>
+ multipart/multilingual) according to the specified language priority list.</p>
   </li>
   <li>
     <p><code>Message SelectLanguageMessage(List&lt;String&gt; languages,
  boolean preferOriginals)</code><br />
  Selects a body part for a multiple-language message(
- multipart/multilingual) according to the given language priority list and
- original-language preference.</p>
+ multipart/multilingual) according to the specified language priority list
+ and original-language preference.</p>
   </li>
   <li>
     <p><code>Message SetBody(byte[] bytes)</code><br />
- Sets the body of this message to the given byte array.</p>
+ Sets the body of this message to the specified byte array.</p>
   </li>
   <li><code>final void setContentDisposition(ContentDisposition value)</code><br />
   </li>
@@ -349,7 +349,7 @@ Use GetAddresses(\To) instead.</p>
   </li>
   <li>
     <p><code>Message SetDate(int[] dateTime)</code><br />
- Sets this message’s Date header field to the given date and time.</p>
+ Sets this message’s Date header field to the specified date and time.</p>
   </li>
   <li>
     <p><code>Message SetHeader(int index,
@@ -427,8 +427,8 @@ Renamed to ToMailtoUri.</li>
   </li>
   <li>
     <p><code>headerFieldName</code> - The name of the header field to extract. This name
- will be compared with the names of header fields in the given message using
- a basic case-insensitive comparison. (Two strings are equal in such a
+ will be compared with the names of header fields in the specified message
+ using a basic case-insensitive comparison. (Two strings are equal in such a
  comparison, if they match after converting the basic uppercase letters A to
  Z (U+0041 to U+005A) in both strings to basic lowercase letters.).</p>
   </li>
@@ -437,8 +437,8 @@ Renamed to ToMailtoUri.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The value of the first instance of the header field with the given
- name. Leading space and/or tab bytes (0x20 and/or 0x09) and CR/LF
+  <li>The value of the first instance of the header field with the
+ specified name. Leading space and/or tab bytes (0x20 and/or 0x09) and CR/LF
  (0x0d/0x0a) pairs will be removed from the header field value, and the value
  is treated as encoded in UTF-8 (an 8-bit encoding form of the Unicode
  Standard) where illegally encoded UTF-8 is replaced as appropriate with
@@ -680,8 +680,8 @@ Renamed to ToMailtoUri.</li>
 <pre>public List&lt;NamedAddress&gt; GetAddresses(String headerName)
 </pre>
 
-<p>Gets a list of addresses contained in the header fields with the given name
- in this message.</p>
+<p>Gets a list of addresses contained in the header fields with the specified
+ name in this message.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -693,7 +693,7 @@ Renamed to ToMailtoUri.</li>
 
 <ul>
   <li>A list of addresses, in the order in which they appear in this
- message’s header fields of the given name.</li>
+ message’s header fields of the specified name.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -957,7 +957,7 @@ Renamed to ToMailtoUri.</li>
 <pre>public Message SetDate(int[] dateTime)
 </pre>
 
-<p>Sets this message’s Date header field to the given date and time.</p>
+<p>Sets this message’s Date header field to the specified date and time.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1075,9 +1075,9 @@ Renamed to ToMailtoUri.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An array containing the values of all header fields with the given
- name, in the order they appear in the message. The array will be empty if no
- header field has that name.</li>
+  <li>An array containing the values of all header fields with the
+ specified name, in the order they appear in the message. The array will be
+ empty if no header field has that name.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1134,7 +1134,7 @@ Renamed to ToMailtoUri.</li>
 <pre>public Message RemoveHeader(String name)
 </pre>
 
-<p>Removes all instances of the given header field from this message. If
+<p>Removes all instances of the specified header field from this message. If
  this is a multipart message, the header field is not removed from its body
  part headers. A basic case-insensitive comparison is used. (Two strings are
  equal in such a comparison, if they match after converting the basic
@@ -1167,8 +1167,8 @@ Renamed to ToMailtoUri.</li>
 <pre>public Message SetBody(byte[] bytes)
 </pre>
 
-<p>Sets the body of this message to the given byte array. This method doesn’t
- make a copy of that byte array.</p>
+<p>Sets the body of this message to the specified byte array. This method
+ doesn’t make a copy of that byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1320,9 +1320,9 @@ Renamed to ToMailtoUri.</li>
 <pre>public static String DecodeHeaderValue(String name, String value)
 </pre>
 
-<p>Decodes RFC 2047 encoded words from the given header field value and returns
- a string with those words decoded. For an example of encoded words, see the
- constructor for PeterO.Mail.NamedAddress.</p>
+<p>Decodes RFC 2047 encoded words from the specified header field value and
+ returns a string with those words decoded. For an example of encoded words,
+ see the constructor for PeterO.Mail.NamedAddress.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1538,10 +1538,10 @@ Renamed to ToMailtoUri.</li>
 <pre>public Message AddInline(MediaType mediaType)
 </pre>
 
-<p>Adds an inline body part with an empty body and with the given media type to
- this message. Before the new body part is added, if this message isn’t
- already a multipart message, it becomes a “multipart/mixed” message with the
- current body converted to an inline body part.</p>
+<p>Adds an inline body part with an empty body and with the specified media
+ type to this message. Before the new body part is added, if this message
+ isn’t already a multipart message, it becomes a “multipart/mixed” message
+ with the current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1560,10 +1560,10 @@ Renamed to ToMailtoUri.</li>
 <pre>public Message AddAttachment(MediaType mediaType)
 </pre>
 
-<p>Adds an attachment with an empty body and with the given media type to this
- message. Before the new attachment is added, if this message isn’t already a
- multipart message, it becomes a “multipart/mixed” message with the current
- body converted to an inline body part.</p>
+<p>Adds an attachment with an empty body and with the specified media type to
+ this message. Before the new attachment is added, if this message isn’t
+ already a multipart message, it becomes a “multipart/mixed” message with the
+ current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1582,26 +1582,25 @@ Renamed to ToMailtoUri.</li>
 <pre>public Message AddAttachment(InputStream inputStream, MediaType mediaType)
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the given
- readable stream, and with the given media type. Before the new attachment is
- added, if this message isn't already a multipart message, it becomes a
- "multipart/mixed" message with the current body converted to an inline body
- part.</p>
-<p> The following example (written in C# for the.NET version) is an
- extension method that adds an attachment from a byte array to a message.
- </p>
-<pre>public static Message AddAttachmentFromBytes(Message msg,
- byte[] bytes, MediaType mediaType) { {
+<p>Adds an attachment to this message in the form of data from the specified
+ readable stream, and with the specified media type. Before the new
+ attachment is added, if this message isn't already a multipart message, it
+ becomes a "multipart/mixed" message with the current body converted to an
+ inline body part.</p>
+<p> The following example (written in C# for the.NET
+ version) is an extension method that adds an attachment from a byte array to
+ a message. </p>
+<pre>public static Message AddAttachmentFromBytes(* Message msg, byte[] bytes, MediaType mediaType) { {
 MemoryStream fs = null;
 try {
-fs = new
- MemoryStream(bytes);
+fs = * new java.io.ByteArrayInputStream(bytes);
  return msg.AddAttachment(fs, mediaType);
 }
 finally {
 try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 }
-} }</pre>
+}
+ }</pre>
 <p>.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1638,9 +1637,9 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <pre>public Message AddAttachment(InputStream inputStream, String filename)
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the given
- readable stream, and with the given file name. Before the new attachment is
- added, if this message isn’t already a multipart message, it becomes a
+<p>Adds an attachment to this message in the form of data from the specified
+ readable stream, and with the specified file name. Before the new attachment
+ is added, if this message isn’t already a multipart message, it becomes a
  “multipart/mixed” message with the current body converted to an inline body
  part.</p>
 
@@ -1685,10 +1684,10 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <pre>public Message AddAttachment(InputStream inputStream, MediaType mediaType, String filename)
 </pre>
 
-<p>Adds an attachment to this message in the form of data from the given
- readable stream, and with the given media type and file name. Before the new
- attachment is added, if this message isn’t already a multipart message, it
- becomes a “multipart/mixed” message with the current body converted to an
+<p>Adds an attachment to this message in the form of data from the specified
+ readable stream, and with the specified media type and file name. Before the
+ new attachment is added, if this message isn’t already a multipart message,
+ it becomes a “multipart/mixed” message with the current body converted to an
  inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1733,19 +1732,17 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </pre>
 
 <p>Adds an inline body part to this message in the form of data from the
- given readable stream, and with the given media type. Before the new body
- part is added, if this message isn't already a multipart message, it becomes
- a "multipart/mixed" message with the current body converted to an inline
- body part.</p>
-<p> The following example (written in C# for the.NET version)
- is an extension method that adds an inline body part from a byte array to a
- message. </p>
-<pre>public static Message AddInlineFromBytes(Message msg,
- byte[] bytes, MediaType mediaType) { {
+ specified readable stream, and with the specified media type. Before the new
+ body part is added, if this message isn't already a multipart message, it
+ becomes a "multipart/mixed" message with the current body converted to an
+ inline body part.</p>
+<p> The following example (written in C# for the.NET
+ version) is an extension method that adds an inline body part from a byte
+ array to a message. </p>
+<pre>public static Message AddInlineFromBytes(* Message msg, byte[] bytes, MediaType mediaType) { {
 MemoryStream fs = null;
 try {
-fs = new
- MemoryStream(bytes);
+fs = * new java.io.ByteArrayInputStream(bytes);
  return msg.AddInline(fs, mediaType);
 }
 finally {
@@ -1788,11 +1785,11 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <pre>public Message AddInline(InputStream inputStream, String filename)
 </pre>
 
-<p>Adds an inline body part to this message in the form of data from the given
- readable stream, and with the given file name. Before the new body part is
- added, if this message isn’t already a multipart message, it becomes a
- “multipart/mixed” message with the current body converted to an inline body
- part.</p>
+<p>Adds an inline body part to this message in the form of data from the
+ specified readable stream, and with the specified file name. Before the new
+ body part is added, if this message isn’t already a multipart message, it
+ becomes a “multipart/mixed” message with the current body converted to an
+ inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1836,11 +1833,11 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <pre>public Message AddInline(InputStream inputStream, MediaType mediaType, String filename)
 </pre>
 
-<p>Adds an inline body part to this message in the form of data from the given
- readable stream, and with the given media type and file name. Before the new
- body part is added, if this message isn’t already a multipart message, it
- becomes a “multipart/mixed” message with the current body converted to an
- inline body part.</p>
+<p>Adds an inline body part to this message in the form of data from the
+ specified readable stream, and with the specified media type and file name.
+ Before the new body part is added, if this message isn’t already a multipart
+ message, it becomes a “multipart/mixed” message with the current body
+ converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1880,7 +1877,7 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </pre>
 
 <p>Selects a body part for a multiple-language message(<code>
- multipart/multilingual</code>) according to the given language priority list.</p>
+ multipart/multilingual</code>) according to the specified language priority list.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1892,11 +1889,11 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The best matching body part for the given languages. If the body
+  <li>The best matching body part for the specified languages. If the body
  part has no subject, then the top-level subject is used. If this message is
  not a multipart/multilingual message or has fewer than two body parts,
- returns this object. If no body part matches the given languages, returns
- the last body part if its language is “zxx”, or the second body part
+ returns this object. If no body part matches the specified languages,
+ returns the last body part if its language is “zxx”, or the second body part
  otherwise.</li>
 </ul>
 
@@ -1912,8 +1909,8 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 </pre>
 
 <p>Selects a body part for a multiple-language message(<code>
- multipart/multilingual</code>) according to the given language priority list and
- original-language preference.</p>
+ multipart/multilingual</code>) according to the specified language priority list
+ and original-language preference.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1924,8 +1921,8 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
   </li>
   <li>
     <p><code>preferOriginals</code> - If true, a body part marked as the original language
- version is chosen if it matches one of the given language ranges, even if
- the original language has a lower priority than another language with a
+ version is chosen if it matches one of the specified language ranges, even
+ if the original language has a lower priority than another language with a
  matching body part.</p>
   </li>
 </ul>
@@ -1933,11 +1930,11 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The best matching body part for the given languages. If the body
+  <li>The best matching body part for the specified languages. If the body
  part has no subject, then the top-level subject is used. If this message is
  not a multipart/multilingual message or has fewer than two body parts,
- returns this object. If no body part matches the given languages, returns
- the last body part if its language is “zxx”, or the second body part
+ returns this object. If no body part matches the specified languages,
+ returns the last body part if its language is “zxx”, or the second body part
  otherwise.</li>
 </ul>
 
@@ -2017,8 +2014,8 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A Message object created from the given MailTo URI. Returs null if
- <code>url</code> is null, is syntactically invalid, or is not a MailTo URI.</li>
+  <li>A Message object created from the specified MailTo URI. Returs null
+ if <code>url</code> is null, is syntactically invalid, or is not a MailTo URI.</li>
 </ul>
 
 <h3 id="tomailtourl">ToMailtoUrl</h3>
@@ -2051,17 +2048,17 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
  keys are supported, namely, “to”, “cc”, “bcc”, “subject”, “in-reply-to”,
  “comments”, “keywords”, and “body”. The first seven are header field names
  that will be used to set the returned message’s corresponding header fields.
- The last, “body”, sets the body of the message to the given text. Keys other
- than these eight will be ignored. (Keys are compared using a basic
+ The last, “body”, sets the body of the message to the specified text. Keys
+ other than these eight will be ignored. (Keys are compared using a basic
  case-sensitive comparison, in which two strings are equal if they match
  after converting the basic uppercase letters A to Z (U+0041 to U+005A) in
  both strings to basic lowercase letters.) The same key (matched using a
  basic case-insensitive comparison) can appear more than once; for “subject”,
- “cc”, “bcc”, and “in-reply-to”, the last value with the given key is used;
- for “to”, all header field values as well as the path are combined to a
- single To header field; for “keywords” and “comments”, each value adds
- another header field of the given key; and for “body”, the last value with
- that key is used as the body.</p>
+ “cc”, “bcc”, and “in-reply-to”, the last value with the specified key is
+ used; for “to”, all header field values as well as the path are combined to
+ a single To header field; for “keywords” and “comments”, each value adds
+ another header field of the specified key; and for “body”, the last value
+ with that key is used as the body.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2072,8 +2069,8 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A Message object created from the given MailTo URI. Returs null if
- <code>uri</code> is null, is syntactically invalid, or is not a MailTo URI.</li>
+  <li>A Message object created from the specified MailTo URI. Returs null
+ if <code>uri</code> is null, is syntactically invalid, or is not a MailTo URI.</li>
 </ul>
 
 <h3 id="frommailtouri-1">FromMailtoUri</h3>
@@ -2094,8 +2091,8 @@ try { if (fs != null) { fs.close(); } } catch (java.io.IOException ex) {}
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>A Message object created from the given MailTo URI. Returs null if
- <code>uri</code> is null, is syntactically invalid, or is not a MailTo URI.</li>
+  <li>A Message object created from the specified MailTo URI. Returs null
+ if <code>uri</code> is null, is syntactically invalid, or is not a MailTo URI.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

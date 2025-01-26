@@ -76,19 +76,19 @@
   <li><code>[Clear()](#Clear)</code> - Removes all items from this CBOR array or all keys and values from this CBOR map.</li>
   <li><code>[CompareTo(PeterO.Cbor.CBORObject)](#CompareTo_PeterO_Cbor_CBORObject)</code> - Compares two CBOR objects.</li>
   <li><code>[CompareToIgnoreTags(PeterO.Cbor.CBORObject)](#CompareToIgnoreTags_PeterO_Cbor_CBORObject)</code> - Compares this object and another CBOR object, ignoring the tags they have, if any.</li>
-  <li><code>[ContainsKey(object)](#ContainsKey_object)</code> - Determines whether a value of the given key exists in this object.</li>
-  <li><code>[ContainsKey(PeterO.Cbor.CBORObject)](#ContainsKey_PeterO_Cbor_CBORObject)</code> - Determines whether a value of the given key exists in this object.</li>
-  <li><code>[ContainsKey(string)](#ContainsKey_string)</code> - Determines whether a value of the given key exists in this object.</li>
+  <li><code>[ContainsKey(object)](#ContainsKey_object)</code> - Determines whether a value of the specified key exists in this object.</li>
+  <li><code>[ContainsKey(PeterO.Cbor.CBORObject)](#ContainsKey_PeterO_Cbor_CBORObject)</code> - Determines whether a value of the specified key exists in this object.</li>
+  <li><code>[ContainsKey(string)](#ContainsKey_string)</code> - Determines whether a value of the specified key exists in this object.</li>
   <li><code>[Count](#Count)</code> - Gets the number of keys in this map, or the number of items in this array, or 0 if this item is neither an array nor a map.</li>
   <li><code>[DecodeFromBytes(byte[])](#DecodeFromBytes_byte)</code> - Generates a CBOR object from an array of CBOR-encoded bytes.</li>
-  <li><code>[DecodeFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions)](#DecodeFromBytes_byte_PeterO_Cbor_CBOREncodeOptions)</code> - Generates a CBOR object from an array of CBOR-encoded bytes, using the given CBOREncodeOptions object to control the decoding process.</li>
-  <li><code>[DecodeObjectFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions, System.Type)](#DecodeObjectFromBytes_byte_PeterO_Cbor_CBOREncodeOptions_System_Type)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given CBOREncodeOptions object to control the decoding process.</li>
-  <li><code>[DecodeObjectFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions, System.Type, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#DecodeObjectFromBytes_byte_PeterO_Cbor_CBOREncodeOptions_System_Type_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given CBOREncodeOptions object to control the decoding process.</li>
+  <li><code>[DecodeFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions)](#DecodeFromBytes_byte_PeterO_Cbor_CBOREncodeOptions)</code> - Generates a CBOR object from an array of CBOR-encoded bytes, using the specified CBOREncodeOptions object to control the decoding process.</li>
+  <li><code>[DecodeObjectFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions, System.Type)](#DecodeObjectFromBytes_byte_PeterO_Cbor_CBOREncodeOptions_System_Type)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified CBOREncodeOptions object to control the decoding process.</li>
+  <li><code>[DecodeObjectFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions, System.Type, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#DecodeObjectFromBytes_byte_PeterO_Cbor_CBOREncodeOptions_System_Type_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified CBOREncodeOptions object to control the decoding process.</li>
   <li><code>[DecodeObjectFromBytes(byte[], System.Type)](#DecodeObjectFromBytes_byte_System_Type)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes.</li>
   <li><code>[DecodeObjectFromBytes(byte[], System.Type, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#DecodeObjectFromBytes_byte_System_Type_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes.</li>
   <li><code>[DecodeObjectFromBytes&lt;T&gt;(byte[])](#DecodeObjectFromBytes_T_byte)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes.</li>
-  <li><code>[DecodeObjectFromBytes&lt;T&gt;(byte[], PeterO.Cbor.CBOREncodeOptions)](#DecodeObjectFromBytes_T_byte_PeterO_Cbor_CBOREncodeOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given CBOREncodeOptions object to control the decoding process.</li>
-  <li><code>[DecodeObjectFromBytes&lt;T&gt;(byte[], PeterO.Cbor.CBOREncodeOptions, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#DecodeObjectFromBytes_T_byte_PeterO_Cbor_CBOREncodeOptions_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given CBOREncodeOptions object to control the decoding process.</li>
+  <li><code>[DecodeObjectFromBytes&lt;T&gt;(byte[], PeterO.Cbor.CBOREncodeOptions)](#DecodeObjectFromBytes_T_byte_PeterO_Cbor_CBOREncodeOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified CBOREncodeOptions object to control the decoding process.</li>
+  <li><code>[DecodeObjectFromBytes&lt;T&gt;(byte[], PeterO.Cbor.CBOREncodeOptions, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#DecodeObjectFromBytes_T_byte_PeterO_Cbor_CBOREncodeOptions_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified CBOREncodeOptions object to control the decoding process.</li>
   <li><code>[DecodeObjectFromBytes&lt;T&gt;(byte[], PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#DecodeObjectFromBytes_T_byte_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates an object of an arbitrary type from an array of CBOR-encoded bytes.</li>
   <li><code>[DecodeSequenceFromBytes(byte[])](#DecodeSequenceFromBytes_byte)</code> - Generates a sequence of CBOR objects from an array of CBOR-encoded bytes.</li>
   <li><code>[DecodeSequenceFromBytes(byte[], PeterO.Cbor.CBOREncodeOptions)](#DecodeSequenceFromBytes_byte_PeterO_Cbor_CBOREncodeOptions)</code> - Generates a sequence of CBOR objects from an array of CBOR-encoded bytes.</li>
@@ -136,7 +136,7 @@
   <li><code>[FromObject(long[])](#FromObject_long)</code> - <b>Obsolete:</b> Use FromInt64 instead. Generates a CBOR object from an array of 64-bit integers.</li>
   <li><code>[FromObject(object)](#FromObject_object)</code> - Generates a CBORObject from an arbitrary object.</li>
   <li><code>[FromObject(object, PeterO.Cbor.CBORTypeMapper)](#FromObject_object_PeterO_Cbor_CBORTypeMapper)</code> - Generates a CBORObject from an arbitrary object.</li>
-  <li><code>[FromObject(object, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#FromObject_object_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates a CBORObject from an arbitrary object, using the given options to control how certain objects are converted to CBOR objects.</li>
+  <li><code>[FromObject(object, PeterO.Cbor.CBORTypeMapper, PeterO.Cbor.PODOptions)](#FromObject_object_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions)</code> - Generates a CBORObject from an arbitrary object, using the specified options to control how certain objects are converted to CBOR objects.</li>
   <li><code>[FromObject(object, PeterO.Cbor.PODOptions)](#FromObject_object_PeterO_Cbor_PODOptions)</code> - Generates a CBORObject from an arbitrary object.</li>
   <li><code>[FromObject(PeterO.Cbor.CBORObject[])](#FromObject_PeterO_Cbor_CBORObject)</code> - <b>Obsolete:</b> Don’t use a function and use Nullable Reference Types to guard against nulls. <b>Obsolete:</b> Use FromCBORArray instead.</li>
   <li><code>[FromObject(PeterO.Numbers.EDecimal)](#FromObject_PeterO_Numbers_EDecimal)</code> - <b>Obsolete:</b> Use FromEDecimal instead.</li>
@@ -165,15 +165,15 @@
   <li><code>[GetOrDefault(int, PeterO.Cbor.CBORObject)](#GetOrDefault_int_PeterO_Cbor_CBORObject)</code> - Gets the value of a CBOR object by integer index in this array, or a default value if that value is not found.</li>
   <li><code>[GetOrDefault(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)](#GetOrDefault_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject)</code> - Gets the value of a CBOR object by integer index in this array or by CBOR object key in this map, or a default value if that value is not found.</li>
   <li><code>[GetOrDefault(string, PeterO.Cbor.CBORObject)](#GetOrDefault_string_PeterO_Cbor_CBORObject)</code> - Gets the value of a CBOR object by string key in a map, or a default value if that value is not found.</li>
-  <li><code>[HasMostInnerTag(int)](#HasMostInnerTag_int)</code> - Returns whether this object has an innermost tag and that tag is of the given number.</li>
-  <li><code>[HasMostInnerTag(PeterO.Numbers.EInteger)](#HasMostInnerTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has an innermost tag and that tag is of the given number, expressed as an arbitrary-precision number.</li>
-  <li><code>[HasMostOuterTag(int)](#HasMostOuterTag_int)</code> - Returns whether this object has an outermost tag and that tag is of the given number.</li>
-  <li><code>[HasMostOuterTag(PeterO.Numbers.EInteger)](#HasMostOuterTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has an outermost tag and that tag is of the given number.</li>
+  <li><code>[HasMostInnerTag(int)](#HasMostInnerTag_int)</code> - Returns whether this object has an innermost tag and that tag is of the specified number.</li>
+  <li><code>[HasMostInnerTag(PeterO.Numbers.EInteger)](#HasMostInnerTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has an innermost tag and that tag is of the specified number, expressed as an arbitrary-precision number.</li>
+  <li><code>[HasMostOuterTag(int)](#HasMostOuterTag_int)</code> - Returns whether this object has an outermost tag and that tag is of the specified number.</li>
+  <li><code>[HasMostOuterTag(PeterO.Numbers.EInteger)](#HasMostOuterTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has an outermost tag and that tag is of the specified number.</li>
   <li><code>[HasOneTag()](#HasOneTag)</code> - Returns whether this object has only one tag.</li>
-  <li><code>[HasOneTag(int)](#HasOneTag_int)</code> - Returns whether this object has only one tag and that tag is the given number.</li>
-  <li><code>[HasOneTag(PeterO.Numbers.EInteger)](#HasOneTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has only one tag and that tag is the given number, expressed as an arbitrary-precision integer.</li>
-  <li><code>[HasTag(int)](#HasTag_int)</code> - Returns whether this object has a tag of the given number.</li>
-  <li><code>[HasTag(PeterO.Numbers.EInteger)](#HasTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has a tag of the given number.</li>
+  <li><code>[HasOneTag(int)](#HasOneTag_int)</code> - Returns whether this object has only one tag and that tag is the specified number.</li>
+  <li><code>[HasOneTag(PeterO.Numbers.EInteger)](#HasOneTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has only one tag and that tag is the specified number, expressed as an arbitrary-precision integer.</li>
+  <li><code>[HasTag(int)](#HasTag_int)</code> - Returns whether this object has a tag of the specified number.</li>
+  <li><code>[HasTag(PeterO.Numbers.EInteger)](#HasTag_PeterO_Numbers_EInteger)</code> - Returns whether this object has a tag of the specified number.</li>
   <li><code>[Insert(int, object)](#Insert_int_object)</code> - <b>Obsolete:</b> Use the CBORObject overload instead.</li>
   <li><code>[Insert(int, PeterO.Cbor.CBORObject)](#Insert_int_PeterO_Cbor_CBORObject)</code> - Inserts a CBORObject at the specified position in this CBOR array.</li>
   <li><code>[IsFalse](#IsFalse)</code> - Gets a value indicating whether this value is a CBOR false value, whether tagged or not.</li>
@@ -206,8 +206,8 @@
   <li><code>[ReadSequence(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)](#ReadSequence_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions)</code> - Reads a sequence of objects in CBOR format from a data stream.</li>
   <li><code>[Remove(object)](#Remove_object)</code> - If this object is an array, removes the first instance of the specified item (once converted to a CBOR object) from the array.</li>
   <li><code>[Remove(PeterO.Cbor.CBORObject)](#Remove_PeterO_Cbor_CBORObject)</code> - If this object is an array, removes the first instance of the specified item from the array.</li>
-  <li><code>[RemoveAt(int)](#RemoveAt_int)</code> - Removes the item at the given index of this CBOR array.</li>
-  <li><code>[Set(int, PeterO.Cbor.CBORObject)](#Set_int_PeterO_Cbor_CBORObject)</code> - Sets the value of a CBORObject of type Array at the given index to the given value.</li>
+  <li><code>[RemoveAt(int)](#RemoveAt_int)</code> - Removes the item at the specified index of this CBOR array.</li>
+  <li><code>[Set(int, PeterO.Cbor.CBORObject)](#Set_int_PeterO_Cbor_CBORObject)</code> - Sets the value of a CBORObject of type Array at the specified index to the specified value.</li>
   <li><code>[Set(object, object)](#Set_object_object)</code> - <b>Obsolete:</b> Use the CBORObject overload instead.</li>
   <li><code>[Set(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)](#Set_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject)</code> - Maps an object to a key in this CBOR map, or adds the value if the key doesn’t exist.</li>
   <li><code>[SimpleValue](#SimpleValue)</code> - Gets the simple value ID of this CBOR object, or -1 if the object is not a simple value.</li>
@@ -253,7 +253,7 @@
   <li><code>[Write(sbyte, System.IO.Stream)](#Write_sbyte_System_IO_Stream)</code> - Writes an 8-bit signed integer in CBOR format to a data stream.</li>
   <li><code>[Write(short, System.IO.Stream)](#Write_short_System_IO_Stream)</code> - Writes a 16-bit signed integer in CBOR format to a data stream.</li>
   <li><code>[Write(string, System.IO.Stream)](#Write_string_System_IO_Stream)</code> - Writes a text string in CBOR format to a data stream.</li>
-  <li><code>[Write(string, System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)](#Write_string_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions)</code> - Writes a text string in CBOR format to a data stream, using the given options to control the encoding process.</li>
+  <li><code>[Write(string, System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)](#Write_string_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions)</code> - Writes a text string in CBOR format to a data stream, using the specified options to control the encoding process.</li>
   <li><code>[Write(uint, System.IO.Stream)](#Write_uint_System_IO_Stream)</code> - Writes a 32-bit unsigned integer in CBOR format to a data stream.</li>
   <li><code>[Write(ulong, System.IO.Stream)](#Write_ulong_System_IO_Stream)</code> - Writes a 64-bit unsigned integer in CBOR format to a data stream.</li>
   <li><code>[Write(ushort, System.IO.Stream)](#Write_ushort_System_IO_Stream)</code> - Writes a 16-bit unsigned integer in CBOR format to a data stream.</li>
@@ -263,7 +263,7 @@
   <li><code>[WriteFloatingPointValue(System.IO.Stream, float, int)](#WriteFloatingPointValue_System_IO_Stream_float_int)</code> - Writes a 32-bit binary floating-point number in CBOR format to a data stream, either in its 64- or 32-bit form, or its rounded 16-bit equivalent.</li>
   <li><code>[WriteJSON(object, System.IO.Stream)](#WriteJSON_object_System_IO_Stream)</code> - Converts an arbitrary object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8.</li>
   <li><code>[WriteJSONTo(System.IO.Stream)](#WriteJSONTo_System_IO_Stream)</code> - Converts this object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8.</li>
-  <li><code>[WriteJSONTo(System.IO.Stream, PeterO.Cbor.JSONOptions)](#WriteJSONTo_System_IO_Stream_PeterO_Cbor_JSONOptions)</code> - Converts this object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8, using the given JSON options to control the encoding process.</li>
+  <li><code>[WriteJSONTo(System.IO.Stream, PeterO.Cbor.JSONOptions)](#WriteJSONTo_System_IO_Stream_PeterO_Cbor_JSONOptions)</code> - Converts this object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8, using the specified JSON options to control the encoding process.</li>
   <li><code>[WriteTo(System.IO.Stream)](#WriteTo_System_IO_Stream)</code> - Writes this CBOR object to a data stream.</li>
   <li><code>[WriteTo(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)](#WriteTo_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions)</code> - Writes this CBOR object to a data stream, using the specified options for encoding the data to CBOR format.</li>
   <li><code>[WriteValue(System.IO.Stream, int, int)](#WriteValue_System_IO_Stream_int_int)</code> - Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit signed integer.</li>
@@ -457,7 +457,7 @@ This object is not a map.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The CBOR object referred to by key in this map. Returns  <code>null</code>  if an item with the given key doesn’t exist.</p>
+<p>The CBOR object referred to by key in this map. Returns  <code>null</code>  if an item with the specified key doesn’t exist.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1047,7 +1047,7 @@ This object’s type is not a text string (for the purposes of this method, infi
 <p><b>Return Value:</b></p>
 
 <p>An object within the specified JSON object. Returns this object if pointer is the empty string (even if this object has a CBOR type other than array or map). Returns  <i>defaultValue</i>
- if the pointer is null, or if the pointer is invalid, or if there is no object at the given pointer, or the special key “-“ appears in the pointer in the context of an array (not a map), or if the pointer is nonempty and this object has a CBOR type other than array or map.</p>
+ if the pointer is null, or if the pointer is invalid, or if there is no object at the specified pointer, or the special key “-“ appears in the pointer in the context of an array (not a map), or if the pointer is nonempty and this object has a CBOR type other than array or map.</p>
 
 <p><a id="AtJSONPointer_string"></a>
 ### AtJSONPointer</p>
@@ -1072,7 +1072,7 @@ This object’s type is not a text string (for the purposes of this method, infi
 
 <ul>
   <li>PeterO.Cbor.CBORException:
-Thrown if the pointer is null, or if the pointer is invalid, or if there is no object at the given pointer, or the special key “-“ appears in the pointer in the context of an array (not a map), or if the pointer is nonempty and this object has a CBOR type other than array or map.</li>
+Thrown if the pointer is null, or if the pointer is invalid, or if there is no object at the specified pointer, or the special key “-“ appears in the pointer in the context of an array (not a map), or if the pointer is nonempty and this object has a CBOR type other than array or map.</li>
 </ul>
 
 <p><a id="CalcEncodedSize"></a>
@@ -1204,7 +1204,7 @@ This object is not a CBOR array or CBOR map.</li>
     object objKey);
 </pre>
 
-<p>Determines whether a value of the given key exists in this object.</p>
+<p>Determines whether a value of the specified key exists in this object.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1215,7 +1215,7 @@ This object is not a CBOR array or CBOR map.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given key is found, or  <code>false</code>  if the given key is not found or this object is not a map.</p>
+<p><code>true</code>  if the specified key is found, or  <code>false</code>  if the specified key is not found or this object is not a map.</p>
 
 <p><a id="ContainsKey_PeterO_Cbor_CBORObject"></a>
 ### ContainsKey</p>
@@ -1224,7 +1224,7 @@ This object is not a CBOR array or CBOR map.</li>
     PeterO.Cbor.CBORObject key);
 </pre>
 
-<p>Determines whether a value of the given key exists in this object.</p>
+<p>Determines whether a value of the specified key exists in this object.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1234,7 +1234,7 @@ This object is not a CBOR array or CBOR map.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given key is found, or  <code>false</code>  if the given key is not found or this object is not a map.</p>
+<p><code>true</code>  if the specified key is found, or  <code>false</code>  if the specified key is not found or this object is not a map.</p>
 
 <p><a id="ContainsKey_string"></a>
 ### ContainsKey</p>
@@ -1243,7 +1243,7 @@ This object is not a CBOR array or CBOR map.</li>
     string key);
 </pre>
 
-<p>Determines whether a value of the given key exists in this object.</p>
+<p>Determines whether a value of the specified key exists in this object.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1253,7 +1253,7 @@ This object is not a CBOR array or CBOR map.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the given key (as a CBOR object) is found, or  <code>false</code>  if the given key is not found or this object is not a map.</p>
+<p><code>true</code>  if the specified key (as a CBOR object) is found, or  <code>false</code>  if the specified key is not found or this object is not a map.</p>
 
 <p><a id="DecodeFromBytes_byte_PeterO_Cbor_CBOREncodeOptions"></a>
 ### DecodeFromBytes</p>
@@ -1263,7 +1263,7 @@ This object is not a CBOR array or CBOR map.</li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process.</p>
+<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the specified  <code>CBOREncodeOptions</code>  object to control the decoding process.</p>
 
 <p>The following example (originally written in C# for the.NET version) implements a method that decodes a text string from a CBOR byte array. It’s successful only if the CBOR object contains an untagged text string.</p>
 
@@ -1290,8 +1290,8 @@ This object is not a CBOR array or CBOR map.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given options object.</p>
+<p>A CBOR object decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified options object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1299,7 +1299,7 @@ This object is not a CBOR array or CBOR map.</li>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1326,7 +1326,7 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object decoded from the given byte array.</p>
+<p>A CBOR object decoded from the specified byte array.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1354,7 +1354,7 @@ The parameter  <i>data</i>
     PeterO.Cbor.PODOptions pod);
 </pre>
 
-<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
+<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1378,8 +1378,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1387,8 +1387,8 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type  <i>t</i>
-, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type  <i>t</i>
+, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1409,7 +1409,7 @@ The parameter  <i>data</i>
     System.Type t);
 </pre>
 
-<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
+<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1427,8 +1427,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1436,8 +1436,8 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type  <i>t</i>
-, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type  <i>t</i>
+, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1479,8 +1479,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1488,8 +1488,8 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type  <i>t</i>
-, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type  <i>t</i>
+, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1523,8 +1523,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1532,8 +1532,8 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type  <i>t</i>
-, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type  <i>t</i>
+, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1553,7 +1553,7 @@ The parameter  <i>data</i>
     PeterO.Cbor.PODOptions pod);
 </pre>
 
-<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
+<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1577,8 +1577,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1586,7 +1586,7 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type “T”, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type “T”, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1605,7 +1605,7 @@ The parameter  <i>data</i>
     PeterO.Cbor.CBOREncodeOptions enc);
 </pre>
 
-<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
+<p>Generates an object of an arbitrary type from an array of CBOR-encoded bytes, using the specified  <code>CBOREncodeOptions</code>  object to control the decoding process. It is equivalent to DecodeFromBytes followed by ToObject. See the documentation for those methods for more information.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1623,8 +1623,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1632,7 +1632,7 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type “T”, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type “T”, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1672,8 +1672,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1681,7 +1681,7 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type “T”, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type “T”, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1713,8 +1713,8 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object of the given type decoded from the given byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
- is empty and the AllowEmpty property is set on the given CBOREncodeOptions object.</p>
+<p>An object of the specified type decoded from the specified byte array. Returns null (as opposed to CBORObject.Null) if  <i>data</i>
+ is empty and the AllowEmpty property is set on the specified CBOREncodeOptions object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1722,7 +1722,7 @@ The parameter  <i>data</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
- is empty unless the AllowEmpty property is set on the given options object. Also thrown if the given type “T”, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ is empty unless the AllowEmpty property is set on the specified options object. Also thrown if the specified type “T”, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -1754,7 +1754,7 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An array of CBOR objects decoded from the given byte array. Returns an empty array if  <i>data</i>
+<p>An array of CBOR objects decoded from the specified byte array. Returns an empty array if  <i>data</i>
  is empty.</p>
 
 <p><b>Exceptions:</b></p>
@@ -1789,7 +1789,7 @@ The parameter  <i>data</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An array of CBOR objects decoded from the given byte array. Returns an empty array if  <i>data</i>
+<p>An array of CBOR objects decoded from the specified byte array. Returns an empty array if  <i>data</i>
  is empty.</p>
 
 <p><b>Exceptions:</b></p>
@@ -1922,7 +1922,7 @@ The parameter  <i>options</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object generated from the given integer.</p>
+<p>A CBOR object generated from the specified integer.</p>
 
 <p><a id="FromByteArray_byte"></a>
 ### FromByteArray</p>
@@ -1941,7 +1941,7 @@ The parameter  <i>options</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object where each element of the given byte array is copied to a new array, or CBORObject.Null if the value is null.</p>
+<p>A CBOR object where each element of the specified byte array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <p><a id="FromCBORArray_PeterO_Cbor_CBORObject"></a>
 ### FromCBORArray</p>
@@ -1960,7 +1960,7 @@ The parameter  <i>options</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
+<p>A CBOR object where each element of the specified array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <p><a id="FromCBORObjectAndTag_PeterO_Cbor_CBORObject_int"></a>
 ### FromCBORObjectAndTag</p>
@@ -1989,7 +1989,7 @@ The parameter  <i>options</i>
 
 <p>A CBOR object where the object  <i>cborObj</i>
  is given the tag  <i>smallTag</i>
-. If “valueOb” is null, returns a version of CBORObject.Null with the given tag.</p>
+. If “valueOb” is null, returns a version of CBORObject.Null with the specified tag.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2071,7 +2071,7 @@ The parameter  <i>bigintTag</i>
 
 <p>A CBOR object where the object  <i>o</i>
  is given the tag  <i>tag</i>
-. If “valueOb” is null, returns a version of CBORObject.Null with the given tag.</p>
+. If “valueOb” is null, returns a version of CBORObject.Null with the specified tag.</p>
 
 <p><a id="FromDecimal_decimal"></a>
 ### FromDecimal</p>
@@ -2111,7 +2111,7 @@ The parameter  <i>bigintTag</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object generated from the given number.</p>
+<p>A CBOR object generated from the specified number.</p>
 
 <p><a id="FromEDecimal_PeterO_Numbers_EDecimal"></a>
 ### FromEDecimal</p>
@@ -2270,7 +2270,7 @@ The parameter  <i>bigintTag</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object storing the given floating-point number.</p>
+<p>A CBOR object storing the specified floating-point number.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2318,7 +2318,7 @@ The parameter  <i>byteCount</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object generated from the given integer.</p>
+<p>A CBOR object generated from the specified integer.</p>
 
 <p><a id="FromInt32_int"></a>
 ### FromInt32</p>
@@ -2577,7 +2577,7 @@ The byte array contains invalid encoding or is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the specified list.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2618,7 +2618,7 @@ The byte array is not empty and does not begin with a record separator byte (0x1
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the specified list.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2895,7 +2895,7 @@ The string is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object where each element of the given byte array is copied to a new array, or CBORObject.Null if the value is null.</p>
+<p>A CBOR object where each element of the specified byte array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <p><a id="FromObject_decimal"></a>
 ### FromObject</p>
@@ -2937,7 +2937,7 @@ The string is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object generated from the given number.</p>
+<p>A CBOR object generated from the specified number.</p>
 
 <p><a id="FromObject_float"></a>
 ### FromObject</p>
@@ -2999,7 +2999,7 @@ The string is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR array object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
+<p>A CBOR array object where each element of the specified array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <p><a id="FromObject_long"></a>
 ### FromObject</p>
@@ -3040,7 +3040,7 @@ The string is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR array object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
+<p>A CBOR array object where each element of the specified array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <p><a id="FromObject_object_PeterO_Cbor_CBORTypeMapper_PeterO_Cbor_PODOptions"></a>
 ### FromObject</p>
@@ -3051,7 +3051,7 @@ The string is not in JSON format.</p>
     PeterO.Cbor.PODOptions options);
 </pre>
 
-<p>Generates a CBORObject from an arbitrary object, using the given options to control how certain objects are converted to CBOR objects. The following cases are checked in the logical order given (rather than the strict order in which they are implemented by this library):</p>
+<p>Generates a CBORObject from an arbitrary object, using the specified options to control how certain objects are converted to CBOR objects. The following cases are checked in the logical order given (rather than the strict order in which they are implemented by this library):</p>
 
 <ul>
   <li>
@@ -3124,7 +3124,7 @@ The string is not in JSON format.</p>
   </li>
 </ul>
 
-<p><b>REMARK:</b> .NET enumeration (  <code>Enum</code>  ) constants could also have been converted to text strings with  <code>ToString()</code>  , but that method will return multiple names if the given Enum object is a combination of Enum objects (for example if the object is  <code>FileAccess.Read | FileAccess.Write</code>  ). More generally, if Enums are converted to text strings, constants from Enum types with the  <code>Flags</code>  attribute, and constants from the same Enum type that share an underlying value, should not be passed to this method.</p>
+<p><b>REMARK:</b> .NET enumeration (  <code>Enum</code>  ) constants could also have been converted to text strings with  <code>ToString()</code>  , but that method will return multiple names if the specified Enum object is a combination of Enum objects (for example if the object is  <code>FileAccess.Read | FileAccess.Write</code>  ). More generally, if Enums are converted to text strings, constants from Enum types with the  <code>Flags</code>  attribute, and constants from the same Enum type that share an underlying value, should not be passed to this method.</p>
 
 <p>The following example (originally written in C# for the DotNet version) uses a CBORTypeMapper to change how DateTime objects are converted to CBOR. In this case, such objects are converted to CBOR objects with tag 1 that store numbers giving the number of seconds since the start of 1970.</p>
 
@@ -3168,7 +3168,7 @@ The string is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
+<p>A CBOR object corresponding to the specified object. Returns CBORObject.Null if the object is null.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3180,7 +3180,7 @@ The parameter  <i>options</i>
   </li>
   <li>
     <p>PeterO.Cbor.CBORException:
-An error occurred while converting the given object to a CBOR object.</p>
+An error occurred while converting the specified object to a CBOR object.</p>
   </li>
 </ul>
 
@@ -3209,7 +3209,7 @@ An error occurred while converting the given object to a CBOR object.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
+<p>A CBOR object corresponding to the specified object. Returns CBORObject.Null if the object is null.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3244,7 +3244,7 @@ The parameter  <i>mapper</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
+<p>A CBOR object corresponding to the specified object. Returns CBORObject.Null if the object is null.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3274,7 +3274,7 @@ The parameter  <i>options</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
+<p>A CBOR object corresponding to the specified object. Returns CBORObject.Null if the object is null.</p>
 
 <p><a id="FromObject_PeterO_Cbor_CBORObject"></a>
 ### FromObject</p>
@@ -3448,7 +3448,7 @@ The parameter  <i>options</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object generated from the given integer.</p>
+<p>A CBOR object generated from the specified integer.</p>
 
 <p><a id="FromObject_string"></a>
 ### FromObject</p>
@@ -3674,7 +3674,7 @@ The parameter  <i>simpleValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object generated from the given number.</p>
+<p>A CBOR object generated from the specified number.</p>
 
 <p><a id="FromString_string"></a>
 ### FromString</p>
@@ -3825,13 +3825,13 @@ This object is not a byte string.</li>
     <p><i>key</i>: An arbitrary object. If this is a CBOR map, this parameter is converted to a CBOR object serving as the key to the map or index to the array, and can be null. If this is a CBOR array, the key must be an integer 0 or greater and less than the size of the array, and may be any object convertible to a CBOR integer.</p>
   </li>
   <li>
-    <p><i>defaultValue</i>: A value to return if an item with the given key doesn’t exist, or if the CBOR object is an array and the key is not an integer 0 or greater and less than the size of the array.</p>
+    <p><i>defaultValue</i>: A value to return if an item with the specified key doesn’t exist, or if the CBOR object is an array and the key is not an integer 0 or greater and less than the size of the array.</p>
   </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns  <code>null</code>  (not  <code>CBORObject.Null</code>  ) if an item with the given key doesn’t exist.</p>
+<p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns  <code>null</code>  (not  <code>CBORObject.Null</code>  ) if an item with the specified key doesn’t exist.</p>
 
 <p><a id="GetOrDefault_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject"></a>
 ### GetOrDefault</p>
@@ -3850,13 +3850,13 @@ This object is not a byte string.</li>
     <p><i>cborkey</i>: An arbitrary CBORObject. If this is a CBOR map, this parameter is converted to a CBOR object serving as the key to the map or index to the array, and can be null. If this is a CBOR array, the key must be an integer 0 or greater and less than the size of the array, and may be any object convertible to a CBOR integer.</p>
   </li>
   <li>
-    <p><i>defaultValue</i>: A value to return if an item with the given key doesn’t exist, or if the CBOR object is an array and the key is not an integer 0 or greater and less than the size of the array.</p>
+    <p><i>defaultValue</i>: A value to return if an item with the specified key doesn’t exist, or if the CBOR object is an array and the key is not an integer 0 or greater and less than the size of the array.</p>
   </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns  <code>null</code>  (not  <code>CBORObject.Null</code>  ) if an item with the given key doesn’t exist.</p>
+<p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns  <code>null</code>  (not  <code>CBORObject.Null</code>  ) if an item with the specified key doesn’t exist.</p>
 
 <p><a id="GetOrDefault_string_PeterO_Cbor_CBORObject"></a>
 ### GetOrDefault</p>
@@ -3875,13 +3875,13 @@ This object is not a byte string.</li>
     <p><i>key</i>: An arbitrary string. If this is a CBOR map, this parameter is converted to a CBOR object serving as the key to the map or index to the array, and can be null. If this is a CBOR array, defaultValue is returned.</p>
   </li>
   <li>
-    <p><i>defaultValue</i>: A value to return if an item with the given key doesn’t exist, or if the CBOR object is an array.</p>
+    <p><i>defaultValue</i>: A value to return if an item with the specified key doesn’t exist, or if the CBOR object is an array.</p>
   </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns  <code>null</code>  (not  <code>CBORObject.Null</code>  ) if an item with the given key doesn’t exist.</p>
+<p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns  <code>null</code>  (not  <code>CBORObject.Null</code>  ) if an item with the specified key doesn’t exist.</p>
 
 <p><a id="HasMostInnerTag_int"></a>
 ### HasMostInnerTag</p>
@@ -3890,7 +3890,7 @@ This object is not a byte string.</li>
     int tagValue);
 </pre>
 
-<p>Returns whether this object has an innermost tag and that tag is of the given number.</p>
+<p>Returns whether this object has an innermost tag and that tag is of the specified number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3900,7 +3900,7 @@ This object is not a byte string.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has an innermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has an innermost tag and that tag is of the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3917,7 +3917,7 @@ The parameter  <i>tagValue</i>
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
 
-<p>Returns whether this object has an innermost tag and that tag is of the given number, expressed as an arbitrary-precision number.</p>
+<p>Returns whether this object has an innermost tag and that tag is of the specified number, expressed as an arbitrary-precision number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3927,7 +3927,7 @@ The parameter  <i>tagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has an innermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has an innermost tag and that tag is of the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3951,7 +3951,7 @@ The parameter  <i>bigTagValue</i>
     int tagValue);
 </pre>
 
-<p>Returns whether this object has an outermost tag and that tag is of the given number.</p>
+<p>Returns whether this object has an outermost tag and that tag is of the specified number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3961,7 +3961,7 @@ The parameter  <i>bigTagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has an outermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has an outermost tag and that tag is of the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -3978,7 +3978,7 @@ The parameter  <i>tagValue</i>
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
 
-<p>Returns whether this object has an outermost tag and that tag is of the given number.</p>
+<p>Returns whether this object has an outermost tag and that tag is of the specified number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3988,7 +3988,7 @@ The parameter  <i>tagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has an outermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has an outermost tag and that tag is of the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4012,7 +4012,7 @@ The parameter  <i>bigTagValue</i>
     int tagValue);
 </pre>
 
-<p>Returns whether this object has only one tag and that tag is the given number.</p>
+<p>Returns whether this object has only one tag and that tag is the specified number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4022,7 +4022,7 @@ The parameter  <i>bigTagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has only one tag and that tag is the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has only one tag and that tag is the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4039,7 +4039,7 @@ The parameter  <i>tagValue</i>
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
 
-<p>Returns whether this object has only one tag and that tag is the given number, expressed as an arbitrary-precision integer.</p>
+<p>Returns whether this object has only one tag and that tag is the specified number, expressed as an arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4049,7 +4049,7 @@ The parameter  <i>tagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has only one tag and that tag is the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has only one tag and that tag is the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4085,7 +4085,7 @@ The parameter  <i>bigTagValue</i>
     int tagValue);
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Returns whether this object has a tag of the specified number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4095,7 +4095,7 @@ The parameter  <i>bigTagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has a tag of the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4119,7 +4119,7 @@ The parameter  <i>tagValue</i>
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Returns whether this object has a tag of the specified number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4129,7 +4129,7 @@ The parameter  <i>tagValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has a tag of the specified number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4572,7 +4572,7 @@ The data stream contains invalid encoding or is not in JSON format.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the specified list.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4611,7 +4611,7 @@ The data stream is not empty and does not begin with a record separator byte (0x
 
 <p><b>Return Value:</b></p>
 
-<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the given list.</p>
+<p>A list of CBOR objects read from the JSON sequence. Objects that could not be parsed are replaced with  <code>null</code>  (as opposed to  <code>CBORObject.Null</code>  ) in the specified list.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4711,7 +4711,7 @@ There was an error in reading or parsing the data, including if the last CBOR ob
     object obj);
 </pre>
 
-<p>If this object is an array, removes the first instance of the specified item (once converted to a CBOR object) from the array. If this object is a map, removes the item with the given key (once converted to a CBOR object) from the map.</p>
+<p>If this object is an array, removes the first instance of the specified item (once converted to a CBOR object) from the array. If this object is a map, removes the item with the specified key (once converted to a CBOR object) from the map.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4744,7 +4744,7 @@ The object is not an array or map.</p>
     PeterO.Cbor.CBORObject obj);
 </pre>
 
-<p>If this object is an array, removes the first instance of the specified item from the array. If this object is a map, removes the item with the given key from the map.</p>
+<p>If this object is an array, removes the first instance of the specified item from the array. If this object is a map, removes the item with the specified key from the map.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4777,7 +4777,7 @@ The object is not an array or map.</p>
     int index);
 </pre>
 
-<p>Removes the item at the given index of this CBOR array.</p>
+<p>Removes the item at the specified index of this CBOR array.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4787,7 +4787,7 @@ The object is not an array or map.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns “true” if the object was removed. Returns “false” if the given index is less than 0, or is at least as high as the number of items in the array.</p>
+<p>Returns “true” if the object was removed. Returns “false” if the specified index is less than 0, or is at least as high as the number of items in the array.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4804,7 +4804,7 @@ This object is not a CBOR array.</li>
     PeterO.Cbor.CBORObject mapValue);
 </pre>
 
-<p>Sets the value of a CBORObject of type Array at the given index to the given value.</p>
+<p>Sets the value of a CBORObject of type Array at the specified index to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4838,7 +4838,7 @@ MapValue is not a an array.</li>
 
 <p><b>Obsolete.</b> Use the CBORObject overload instead.</p>
 
-<p>Maps an object to a key in this CBOR map, or adds the value if the key doesn’t exist. If this is a CBOR array, instead sets the value at the given index to the given value.</p>
+<p>Maps an object to a key in this CBOR map, or adds the value if the key doesn’t exist. If this is a CBOR array, instead sets the value at the specified index to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -5061,11 +5061,11 @@ The parameter  <i>options</i>
     <p>If the type is  <code>CBORObject</code>  , return this object.</p>
   </li>
   <li>
-    <p>If the given object is  <code>CBORObject.Null</code>  (with or without tags), returns  <code>null</code>  .</p>
+    <p>If the specified object is  <code>CBORObject.Null</code>  (with or without tags), returns  <code>null</code>  .</p>
   </li>
   <li>
     <p>If the object is of a type corresponding to a type converter mentioned in the  <i>mapper</i>
- parameter, that converter will be used to convert the CBOR object to an object of the given type. Type converters can be used to override the default conversion behavior of almost any object.</p>
+ parameter, that converter will be used to convert the CBOR object to an object of the specified type. Type converters can be used to override the default conversion behavior of almost any object.</p>
   </li>
   <li>
     <p>If the type is  <code>object</code>  , return this object.</p>
@@ -5107,7 +5107,7 @@ The parameter  <i>options</i>
     <p>If the type is  <code>String</code>  , returns the result of AsString.</p>
   </li>
   <li>
-    <p>If the type is  <code>EFloat</code>  ,  <code>EDecimal</code>  ,  <code>EInteger</code>  , or  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a> artifact (in Java), or if the type is  <code>BigInteger</code>  or  <code>BigDecimal</code>  in the Java version, converts the given object to a number of the corresponding type and throws an exception (currently InvalidOperationException) if the object does not represent a number (for this purpose, infinity and not-a-number values, but not  <code>CBORObject.Null</code>  , are considered numbers). Currently, this is equivalent to the result of  <code>AsEFloat()</code>  ,  <code>AsEDecimal()</code>  ,  <code>AsEInteger</code>  , or  <code>AsERational()</code>  , respectively, but may change slightly in the next major version. Note that in the case of  <code>EFloat</code>  , if this object represents a decimal number with a fractional part, the conversion may lose information depending on the number, and if the object is a rational number with a nonterminating binary expansion, the number returned is a binary floating-point number rounded to a high but limited precision. In the case of  <code>EDecimal</code>  , if this object expresses a rational number with a nonterminating decimal expansion, returns a decimal number rounded to 34 digits of precision. In the case of  <code>EInteger</code>  , if this CBOR object expresses a floating-point number, it is converted to an integer by discarding its fractional part, and if this CBOR object expresses a rational number, it is converted to an integer by dividing the numerator by the denominator and discarding the fractional part of the result, and this method throws an exception (currently OverflowException, but may change in the next major version) if this object expresses infinity or a not-a-number value.</p>
+    <p>If the type is  <code>EFloat</code>  ,  <code>EDecimal</code>  ,  <code>EInteger</code>  , or  <code>ERational</code>  in the <a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a> library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a> artifact (in Java), or if the type is  <code>BigInteger</code>  or  <code>BigDecimal</code>  in the Java version, converts the specified object to a number of the corresponding type and throws an exception (currently InvalidOperationException) if the object does not represent a number (for this purpose, infinity and not-a-number values, but not  <code>CBORObject.Null</code>  , are considered numbers). Currently, this is equivalent to the result of  <code>AsEFloat()</code>  ,  <code>AsEDecimal()</code>  ,  <code>AsEInteger</code>  , or  <code>AsERational()</code>  , respectively, but may change slightly in the next major version. Note that in the case of  <code>EFloat</code>  , if this object represents a decimal number with a fractional part, the conversion may lose information depending on the number, and if the object is a rational number with a nonterminating binary expansion, the number returned is a binary floating-point number rounded to a high but limited precision. In the case of  <code>EDecimal</code>  , if this object expresses a rational number with a nonterminating decimal expansion, returns a decimal number rounded to 34 digits of precision. In the case of  <code>EInteger</code>  , if this CBOR object expresses a floating-point number, it is converted to an integer by discarding its fractional part, and if this CBOR object expresses a rational number, it is converted to an integer by dividing the numerator by the denominator and discarding the fractional part of the result, and this method throws an exception (currently OverflowException, but may change in the next major version) if this object expresses infinity or a not-a-number value.</p>
   </li>
   <li>
     <p>In the.NET version, if the type is a nullable (for example,  <code>Nullable&lt;int&gt;</code>  or  <code>int?</code>  , returns  <code>null</code>  if this CBOR object is null, or this object’s value converted to the nullable’s underlying type, for example,  <code>int</code>  .</p>
@@ -5128,7 +5128,7 @@ The parameter  <i>options</i>
     <p>If the type is Dictionary, ReadOnlyDictionary or the generic or nongeneric IDictionary or IReadOnlyDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p>
   </li>
   <li>
-    <p>If the type is an enumeration constant (“enum”), and this CBOR object is an integer or text string, returns the enumeration constant with the given number or name, respectively. (Enumeration constants made up of multiple enumeration constants, as allowed by .NET, can only be matched by number this way.)</p>
+    <p>If the type is an enumeration constant (“enum”), and this CBOR object is an integer or text string, returns the enumeration constant with the specified number or name, respectively. (Enumeration constants made up of multiple enumeration constants, as allowed by .NET, can only be matched by number this way.)</p>
   </li>
   <li>
     <p>If the type is  <code>DateTime</code>  (or  <code>Date</code>  in Java) , returns a date/time object if the CBOR object’s outermost tag is 0 or 1. For tag 1, this method treats the CBOR object as a number of seconds since the start of 1970, which is based on the POSIX definition of “seconds since the Epoch”, a definition that does not count leap seconds. In this method, this number of seconds assumes the use of a proleptic Gregorian calendar, in which the rules regarding the number of days in each month and which years are leap years are the same for all years as they were in 1970 (including without regard to time zone differences or transitions from other calendars to the Gregorian). The string format used in tag 0 supports only years up to 4 decimal digits long. For tag 1, CBOR objects that express infinity or not-a-number (NaN) are treated as invalid by this method. This default behavior for  <code>DateTime</code>  and  <code>Date</code>  can be changed by passing a suitable CBORTypeMapper to this method, such as a CBORTypeMapper that registers a CBORDateConverter for  <code>DateTime</code>  or  <code>Date</code>  objects. See the examples.</p>
@@ -5140,7 +5140,7 @@ The parameter  <i>options</i>
     <p>If the type is  <code>Guid</code>  (or  <code>UUID</code>  in Java), returns a UUID object if possible.</p>
   </li>
   <li>
-    <p>Plain-Old-Data deserialization: If the object is a type not specially handled above, the type includes a zero-parameter constructor (default or not), this CBOR object is a CBOR map, and the “mapper” parameter (if any) allows this type to be eligible for Plain-Old-Data deserialization, then this method checks the given type for eligible setters as follows:</p>
+    <p>Plain-Old-Data deserialization: If the object is a type not specially handled above, the type includes a zero-parameter constructor (default or not), this CBOR object is a CBOR map, and the “mapper” parameter (if any) allows this type to be eligible for Plain-Old-Data deserialization, then this method checks the specified type for eligible setters as follows:</p>
   </li>
   <li>
     <p>(*) In the .NET version, eligible setters are the public, nonstatic setters of properties with a public, nonstatic getter. Eligible setters also include public, nonstatic, non-  <code>const</code>  , non-  <code>readonly</code>  fields. If a class has two properties and/or fields of the form “X” and “IsX”, where “X” is any name, or has multiple properties and/or fields with the same name, those properties and fields are ignored.</p>
@@ -5149,7 +5149,7 @@ The parameter  <i>options</i>
     <p>(*) In the Java version, eligible setters are public, nonstatic methods starting with “set” followed by a character other than a basic digit or lowercase letter, that is, other than “a” to “z” or “0” to “9”, that take one parameter. The class containing an eligible setter must have a public, nonstatic method with the same name, but starting with “get” or “is” rather than “set”, that takes no parameters and does not return void. (For example, if a class has “public setValue(String)” and “public getValue()”, “setValue” is an eligible setter. However, “setValue()” and “setValue(String, int)” are not eligible setters.) In addition, public, nonstatic, nonfinal fields are also eligible setters. If a class has two or more otherwise eligible setters (methods and/or fields) with the same name, but different parameter type, they are not eligible setters.</p>
   </li>
   <li>
-    <p>Then, the method creates an object of the given type and invokes each eligible setter with the corresponding value in the CBOR map, if any. Key names in the map are matched to eligible setters according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible setters. For the Java version, the object creation may fail in the case of a nested nonstatic class.</p>
+    <p>Then, the method creates an object of the specified type and invokes each eligible setter with the corresponding value in the CBOR map, if any. Key names in the map are matched to eligible setters according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible setters. For the Java version, the object creation may fail in the case of a nested nonstatic class.</p>
   </li>
 </ul>
 
@@ -5204,7 +5204,7 @@ The parameter  <i>options</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 The given type  <i>t</i>
- , or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ , or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -5245,7 +5245,7 @@ The parameter  <i>t</i>
   <li>
     <p>PeterO.Cbor.CBORException:
 The given type  <i>t</i>
-, or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+, or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -5345,7 +5345,7 @@ The given object’s nesting is too deep, or another error occurred when seriali
   <li>
     <p>PeterO.Cbor.CBORException:
 The given type  <i>t</i>
- , or this object’s CBOR type, is not supported, or the given object’s nesting is too deep, or another error occurred when serializing the object.</p>
+ , or this object’s CBOR type, is not supported, or the specified object’s nesting is too deep, or another error occurred when serializing the object.</p>
   </li>
   <li>
     <p>System.ArgumentNullException:
@@ -6129,7 +6129,7 @@ An I/O error occurred.</p>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Writes a text string in CBOR format to a data stream, using the given options to control the encoding process.</p>
+<p>Writes a text string in CBOR format to a data stream, using the specified options to control the encoding process.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -6490,7 +6490,7 @@ The parameter  <i>outputStream</i>
     PeterO.Cbor.JSONOptions options);
 </pre>
 
-<p>Converts this object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8, using the given JSON options to control the encoding process. If the CBOR object contains CBOR maps, or is a CBOR map, the order in which the keys to the map are written out to the JSON string is undefined unless the map was created using the NewOrderedMap method. The example code given in <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b> can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+<p>Converts this object to a text string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8, using the specified JSON options to control the encoding process. If the CBOR object contains CBOR maps, or is a CBOR map, the order in which the keys to the map are written out to the JSON string is undefined unless the map was created using the NewOrderedMap method. The example code given in <b>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</b> can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -6787,7 +6787,7 @@ An I/O error occurred.</p>
     int value);
 </pre>
 
-<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit signed integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit signed integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the specified major type and value in the shortest form allowed for the major type.</p>
 
 <p>There are other useful things to note when encoding CBOR that are not covered by this WriteValue method. To mark the start of an indefinite-length array, write the 8-bit byte 0x9f to the output stream. To mark the start of an indefinite-length map, write the 8-bit byte 0xbf to the output stream. To mark the end of an indefinite-length array or map, write the 8-bit byte 0xff to the output stream.</p>
 
@@ -6861,7 +6861,7 @@ The parameter  <i>outputStream</i>
     long value);
 </pre>
 
-<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit signed integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit signed integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the specified major type and value in the shortest form allowed for the major type.</p>
 
 <p>There are other useful things to note when encoding CBOR that are not covered by this WriteValue method. To mark the start of an indefinite-length array, write the 8-bit byte 0x9f to the output stream. To mark the start of an indefinite-length map, write the 8-bit byte 0xbf to the output stream. To mark the end of an indefinite-length array or map, write the 8-bit byte 0xff to the output stream. For examples, see the WriteValue(Stream, int, int) overload.</p>
 
@@ -6906,7 +6906,7 @@ The parameter  <i>outputStream</i>
     PeterO.Numbers.EInteger bigintValue);
 </pre>
 
-<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as an arbitrary-precision integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as an arbitrary-precision integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the specified major type and value in the shortest form allowed for the major type.</p>
 
 <p>There are other useful things to note when encoding CBOR that are not covered by this WriteValue method. To mark the start of an indefinite-length array, write the 8-bit byte 0x9f to the output stream. To mark the start of an indefinite-length map, write the 8-bit byte 0xbf to the output stream. To mark the end of an indefinite-length array or map, write the 8-bit byte 0xff to the output stream.</p>
 
@@ -6955,7 +6955,7 @@ The parameter  <i>outputStream</i>
 
 <p><b>This API is not CLS-compliant.</b></p>
 
-<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit unsigned integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit unsigned integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the specified major type and value in the shortest form allowed for the major type.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -6994,7 +6994,7 @@ The parameter  <i>outputStream</i>
 
 <p><b>This API is not CLS-compliant.</b></p>
 
-<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit unsigned integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit unsigned integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the specified major type and value in the shortest form allowed for the major type.</p>
 
 <p><b>Parameters:</b></p>
 

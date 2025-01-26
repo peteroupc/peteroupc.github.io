@@ -562,7 +562,7 @@
  the syntactic validity of the string, but not whether it has all parameters
  it's required to have or whether the parameters themselves are set to valid
  values for the parameter. </p>
-<p>This method assumes the given content
+<p>This method assumes the specified content
  disposition string was directly extracted from the Content-Disposition
  header field (as defined for email messages) and follows the syntax given in
  RFC 2183. Accordingly, among other things, the content disposition string
@@ -573,7 +573,7 @@
  key-value pairs. Parameters making use of RFC 2231 extensions have names
  with an asterisk ("*"). Such a parameter will be ignored if it is ill-formed
  because of RFC 2231's rules (except for illegal percent-decoding or
- undecodable sequences for the given character encoding). Examples of RFC
+ undecodable sequences for the specified character encoding). Examples of RFC
  2231 extensions follow (both examples encode the same "filename"
  parameter):</p>
 <p><b>inline; filename*=utf-8'en'filename.txt</b></p>

@@ -10,7 +10,7 @@
 <pre>public static class Encodings
 </pre>
 
-<p>Contains methods for converting text from one character encoding to another. This class also contains convenience methods for converting strings and other character inputs to sequences of bytes and vice versa. The WHATWG Encoding Standard defines algorithms for the most common character encodings used on Web pages and recommends the UTF-8 encoding for new specifications and Web pages. Calling the  <code>GetEncoding(name)</code>  method returns one of the character encodings with the given name under the Encoding Standard.</p>
+<p>Contains methods for converting text from one character encoding to another. This class also contains convenience methods for converting strings and other character inputs to sequences of bytes and vice versa. The WHATWG Encoding Standard defines algorithms for the most common character encodings used on Web pages and recommends the UTF-8 encoding for new specifications and Web pages. Calling the  <code>GetEncoding(name)</code>  method returns one of the character encodings with the specified name under the Encoding Standard.</p>
 
 <p>Now let’s define some terms.</p>
 
@@ -111,29 +111,29 @@
   <li><code>[DecodeToString(this PeterO.Text.ICharacterEncoding, byte[])](#DecodeToString_this_PeterO_Text_ICharacterEncoding_byte)</code> - Reads a byte array from a data source and converts the bytes from a given encoding to a text string.</li>
   <li><code>[DecodeToString(this PeterO.Text.ICharacterEncoding, byte[], int, int)](#DecodeToString_this_PeterO_Text_ICharacterEncoding_byte_int_int)</code> - Reads a portion of a byte array from a data source and converts the bytes from a given encoding to a text string.</li>
   <li><code>[DecodeToString(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)](#DecodeToString_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader)</code> - Reads bytes from a data source and converts the bytes from a given encoding to a text string.</li>
-  <li><code>[DecodeToString(this PeterO.Text.ICharacterEncoding, System.IO.Stream)](#DecodeToString_this_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Decodes data read from a data stream into a text string in the given character encoding.</li>
+  <li><code>[DecodeToString(this PeterO.Text.ICharacterEncoding, System.IO.Stream)](#DecodeToString_this_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Decodes data read from a data stream into a text string in the specified character encoding.</li>
   <li><code>[EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoder)](#EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using a given character encoding.</li>
-  <li><code>[EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoder, bool)](#EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_bool)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder and fallback strategy.</li>
-  <li><code>[EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding)](#EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
+  <li><code>[EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoder, bool)](#EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_bool)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder and fallback strategy.</li>
+  <li><code>[EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding)](#EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder.</li>
   <li><code>[EncodeToBytes(this string, PeterO.Text.ICharacterEncoding)](#EncodeToBytes_this_string_PeterO_Text_ICharacterEncoding)</code> - Reads Unicode characters from a text string and writes them to a byte array encoded in a given character encoding.</li>
-  <li><code>[EncodeToBytes(this string, PeterO.Text.ICharacterEncoding, bool)](#EncodeToBytes_this_string_PeterO_Text_ICharacterEncoding_bool)</code> - Reads Unicode characters from a text string and writes them to a byte array encoded in a given character encoding and using the given encoder fallback strategy.</li>
+  <li><code>[EncodeToBytes(this string, PeterO.Text.ICharacterEncoding, bool)](#EncodeToBytes_this_string_PeterO_Text_ICharacterEncoding_bool)</code> - Reads Unicode characters from a text string and writes them to a byte array encoded in a given character encoding and using the specified encoder fallback strategy.</li>
   <li><code>[EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoder, PeterO.IWriter)](#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_PeterO_IWriter)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded in a given character encoding.</li>
   <li><code>[EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoder, System.IO.Stream)](#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_System_IO_Stream)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded in a given character encoding.</li>
-  <li><code>[EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding, PeterO.IWriter)](#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_PeterO_IWriter)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
-  <li><code>[EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding, System.IO.Stream)](#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
+  <li><code>[EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding, PeterO.IWriter)](#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_PeterO_IWriter)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder.</li>
+  <li><code>[EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding, System.IO.Stream)](#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder.</li>
   <li><code>[EncodeToWriter(this string, PeterO.Text.ICharacterEncoding, PeterO.IWriter)](#EncodeToWriter_this_string_PeterO_Text_ICharacterEncoding_PeterO_IWriter)</code> - Converts a text string to bytes and writes the bytes to an output byte writer.</li>
   <li><code>[EncodeToWriter(this string, PeterO.Text.ICharacterEncoding, System.IO.Stream)](#EncodeToWriter_this_string_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Converts a text string to bytes and writes the bytes to an output data stream.</li>
   <li><code>[GetDecoderInput(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)](#GetDecoderInput_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader)</code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
   <li><code>[GetDecoderInput(this PeterO.Text.ICharacterEncoding, System.IO.Stream)](#GetDecoderInput_this_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Converts a character encoding into a character input stream, given a data stream.</li>
   <li><code>[GetDecoderInputSkipBom(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)](#GetDecoderInputSkipBom_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader)</code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
   <li><code>[GetDecoderInputSkipBom(this PeterO.Text.ICharacterEncoding, System.IO.Stream)](#GetDecoderInputSkipBom_this_PeterO_Text_ICharacterEncoding_System_IO_Stream)</code> - Converts a character encoding into a character input stream, given a readable data stream.</li>
-  <li><code>[GetEncoding(string)](#GetEncoding_string)</code> - Returns a character encoding from the given name.</li>
-  <li><code>[GetEncoding(string, bool)](#GetEncoding_string_bool)</code> - Returns a character encoding from the given name.</li>
-  <li><code>[GetEncoding(string, bool, bool)](#GetEncoding_string_bool_bool)</code> - Returns a character encoding from the given name.</li>
+  <li><code>[GetEncoding(string)](#GetEncoding_string)</code> - Returns a character encoding from the specified name.</li>
+  <li><code>[GetEncoding(string, bool)](#GetEncoding_string_bool)</code> - Returns a character encoding from the specified name.</li>
+  <li><code>[GetEncoding(string, bool, bool)](#GetEncoding_string_bool_bool)</code> - Returns a character encoding from the specified name.</li>
   <li><code>[InputToString(this PeterO.Text.ICharacterInput)](#InputToString_this_PeterO_Text_ICharacterInput)</code> - Reads Unicode characters from a character input and converts them to a text string.</li>
   <li><code>[ResolveAlias(string)](#ResolveAlias_string)</code> - Resolves a character encoding’s name to a standard form.</li>
   <li><code>[ResolveAliasForEmail(string)](#ResolveAliasForEmail_string)</code> - Resolves a character encoding’s name to a canonical form, using rules more suitable for email.</li>
-  <li><code>[StringToBytes(this PeterO.Text.ICharacterEncoder, string)](#StringToBytes_this_PeterO_Text_ICharacterEncoder_string)</code> - Converts a text string to a byte array using the given character encoder.</li>
+  <li><code>[StringToBytes(this PeterO.Text.ICharacterEncoder, string)](#StringToBytes_this_PeterO_Text_ICharacterEncoder_string)</code> - Converts a text string to a byte array using the specified character encoder.</li>
   <li><code>[StringToBytes(this PeterO.Text.ICharacterEncoding, string)](#StringToBytes_this_PeterO_Text_ICharacterEncoding_string)</code> - Converts a text string to a byte array encoded in a given character encoding.</li>
   <li><code>[StringToInput(this string)](#StringToInput_this_string)</code> - Converts a text string to a character input.</li>
   <li><code>[StringToInput(this string, int, int)](#StringToInput_this_string_int_int)</code> - Converts a portion of a text string to a character input.</li>
@@ -259,7 +259,7 @@ The parameter  <i>enc</i>
     System.IO.Stream input);
 </pre>
 
-<p>Decodes data read from a data stream into a text string in the given character encoding. In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>encoding.DecodeToString(input)</code> . If the object’s class already has a DecodeToString method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Decodes data read from a data stream into a text string in the specified character encoding. In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>encoding.DecodeToString(input)</code> . If the object’s class already has a DecodeToString method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>enc.DecodeToString(input)</code> . If the object’s class already has a  <code>DecodeToString</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -329,7 +329,7 @@ The parameter  <i>encoding</i>
     bool htmlFallback);
 </pre>
 
-<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder and fallback strategy. In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoder,
+<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder and fallback strategy. In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoder,
             htmlFallback)</code> . If the object’s class already has a  <code>EncodeToBytes</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
@@ -411,7 +411,7 @@ The parameter  <i>encoder</i>
     PeterO.Text.ICharacterEncoding encoding);
 </pre>
 
-<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder. When writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoding)</code> . If the object’s class already has a  <code>EncodeToBytes</code>  method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder. When writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoding)</code> . If the object’s class already has a  <code>EncodeToBytes</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -445,7 +445,7 @@ The parameter  <i>encoding</i>
     bool htmlFallback);
 </pre>
 
-<p>Reads Unicode characters from a text string and writes them to a byte array encoded in a given character encoding and using the given encoder fallback strategy. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U+FFFD). In the.NET implementation, this method is implemented as an extension method to any object implementing string and can be called as follows:  <code>str.EncodeToBytes(enc, htmlFallback)</code> . If the object’s class already has a  <code>EncodeToBytes</code>  method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Reads Unicode characters from a text string and writes them to a byte array encoded in a given character encoding and using the specified encoder fallback strategy. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U+FFFD). In the.NET implementation, this method is implemented as an extension method to any object implementing string and can be called as follows:  <code>str.EncodeToBytes(enc, htmlFallback)</code> . If the object’s class already has a  <code>EncodeToBytes</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -591,7 +591,7 @@ The parameter  <i>encoder</i>
     PeterO.IWriter writer);
 </pre>
 
-<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder. When writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoding)</code> . If the object’s class already has a EncodeToBytes method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder. When writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoding)</code> . If the object’s class already has a EncodeToBytes method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToWriter(encoding, writer)</code> . If the object’s class already has a  <code>EncodeToWriter</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -626,7 +626,7 @@ The parameter  <i>encoding</i>
     System.IO.Stream output);
 </pre>
 
-<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder. When writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoding)</code> . If the object’s class already has a EncodeToBytes method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Reads Unicode characters from a character input and writes them to a byte array encoded using the specified character encoder. When writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToBytes(encoding)</code> . If the object’s class already has a EncodeToBytes method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterInput and can be called as follows:  <code>input.EncodeToWriter(encoding, output)</code> . If the object’s class already has a  <code>EncodeToWriter</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -800,7 +800,7 @@ The parameter  <i>encoding</i>
     PeterO.IByteReader stream);
 </pre>
 
-<p>Converts a character encoding into a character input stream, given a streamable source of bytes. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the given character encoding. This method implements the “decode” algorithm specified in the Encoding standard.</p>
+<p>Converts a character encoding into a character input stream, given a streamable source of bytes. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the specified character encoding. This method implements the “decode” algorithm specified in the Encoding standard.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object’s class already has a  <code>GetDecoderInputSkipBom</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -827,7 +827,7 @@ The parameter  <i>encoding</i>
     System.IO.Stream input);
 </pre>
 
-<p>Converts a character encoding into a character input stream, given a readable data stream. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the given character encoding.This method implements the “decode” algorithm specified in the Encoding standard. In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object’s class already has a  <code>GetDecoderInputSkipBom</code>  method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Converts a character encoding into a character input stream, given a readable data stream. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the specified character encoding.This method implements the “decode” algorithm specified in the Encoding standard. In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows:  <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object’s class already has a  <code>GetDecoderInputSkipBom</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -853,7 +853,7 @@ The parameter  <i>encoding</i>
     bool allowReplacement);
 </pre>
 
-<p>Returns a character encoding from the given name.</p>
+<p>Returns a character encoding from the specified name.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -871,7 +871,7 @@ The parameter  <i>encoding</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object that enables encoding and decoding text in the given character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
+<p>An object that enables encoding and decoding text in the specified character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
 
 <p><a id="GetEncoding_string_bool"></a>
 ### GetEncoding</p>
@@ -881,7 +881,7 @@ The parameter  <i>encoding</i>
     bool forEmail);
 </pre>
 
-<p>Returns a character encoding from the given name.</p>
+<p>Returns a character encoding from the specified name.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -896,7 +896,7 @@ The parameter  <i>encoding</i>
 
 <p><b>Return Value:</b></p>
 
-<p>An object that enables encoding and decoding text in the given character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
+<p>An object that enables encoding and decoding text in the specified character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
 
 <p><a id="GetEncoding_string"></a>
 ### GetEncoding</p>
@@ -905,7 +905,7 @@ The parameter  <i>encoding</i>
     string name);
 </pre>
 
-<p>Returns a character encoding from the given name.</p>
+<p>Returns a character encoding from the specified name.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1096,7 +1096,7 @@ The parameter  <i>reader</i>
     string str);
 </pre>
 
-<p>Converts a text string to a byte array using the given character encoder. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U+FFFD), and when writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoder and can be called as follows:  <code>encoder.StringToBytes(str)</code> . If the object’s class already has a StringToBytes method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Converts a text string to a byte array using the specified character encoder. When reading the string, any unpaired surrogate characters are replaced with the replacement character (U+FFFD), and when writing to the byte array, any characters that can’t be encoded are replaced with the byte 0x3f (the question mark character). In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoder and can be called as follows:  <code>encoder.StringToBytes(str)</code> . If the object’s class already has a StringToBytes method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p>In the.NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoder and can be called as follows:  <code>encoder.StringToBytes(str)</code> . If the object’s class already has a  <code>StringToBytes</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -1147,7 +1147,7 @@ The parameter  <i>encoder</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A byte array containing the string encoded in the given text encoding.</p>
+<p>A byte array containing the string encoded in the specified text encoding.</p>
 
 <p><b>Exceptions:</b></p>
 

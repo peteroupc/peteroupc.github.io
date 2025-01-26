@@ -145,17 +145,17 @@
   <li>
     <p><code>static ERational Create(int numeratorSmall,
  int denominatorSmall)</code><br />
- Creates a rational number with the given numerator and denominator.</p>
+ Creates a rational number with the specified numerator and denominator.</p>
   </li>
   <li>
     <p><code>static ERational Create(long numeratorLong,
  long denominatorLong)</code><br />
- Creates a rational number with the given numerator and denominator.</p>
+ Creates a rational number with the specified numerator and denominator.</p>
   </li>
   <li>
     <p><code>static ERational Create(EInteger numerator,
  EInteger denominator)</code><br />
- Creates a rational number with the given numerator and denominator.</p>
+ Creates a rational number with the specified numerator and denominator.</p>
   </li>
   <li>
     <p><code>static ERational CreateNaN(EInteger diag)</code><br />
@@ -473,13 +473,13 @@ Renamed to FromEFloat.</p>
   <li>
     <p><code>EDecimal ToEDecimal(EContext ctx)</code><br />
  Converts this rational number to an arbitrary-precision decimal number and
- rounds the result to the given precision.</p>
+ rounds the result to the specified precision.</p>
   </li>
   <li>
     <p><code>EDecimal ToEDecimalExactIfPossible(EContext ctx)</code><br />
  Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds that
- result to the given precision.</p>
+ result to the specified precision.</p>
   </li>
   <li>
     <p><code>EFloat ToEFloat()</code><br />
@@ -488,13 +488,13 @@ Renamed to FromEFloat.</p>
   <li>
     <p><code>EFloat ToEFloat(EContext ctx)</code><br />
  Converts this rational number to a binary floating-point number and rounds
- that result to the given precision.</p>
+ that result to the specified precision.</p>
   </li>
   <li>
     <p><code>EFloat ToEFloatExactIfPossible(EContext ctx)</code><br />
  Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that result to
- the given precision.</p>
+ the specified precision.</p>
   </li>
   <li>
     <p><code>EInteger ToEInteger()</code><br />
@@ -616,12 +616,12 @@ Renamed to ToEFloatExactIfPossible.</p>
     <p><code>EInteger ToSizedEInteger(int maxBitLength)</code><br />
  Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator, discarding its fractional part, and checking
- whether the resulting integer overflows the given signed bit count.</p>
+ whether the resulting integer overflows the specified signed bit count.</p>
   </li>
   <li>
     <p><code>EInteger ToSizedEIntegerIfExact(int maxBitLength)</code><br />
  Converts this value to an arbitrary-precision integer, only if this number’s
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.</p>
   </li>
   <li>
@@ -822,7 +822,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 <pre>public static ERational Create(int numeratorSmall, int denominatorSmall)
 </pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Creates a rational number with the specified numerator and denominator.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -852,7 +852,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 <pre>public static ERational Create(long numeratorLong, long denominatorLong)
 </pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Creates a rational number with the specified numerator and denominator.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -882,7 +882,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 <pre>public static ERational Create(EInteger numerator, EInteger denominator)
 </pre>
 
-<p>Creates a rational number with the given numerator and denominator.</p>
+<p>Creates a rational number with the specified numerator and denominator.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1257,7 +1257,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <ul>
   <li>An arbitrary-precision rational number with the same value as the
- given string.</li>
+ specified string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1349,7 +1349,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <ul>
   <li>An arbitrary-precision rational number with the same value as the
- given sequence of <code>char</code> s.</li>
+ specified sequence of <code>char</code> s.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1443,7 +1443,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <ul>
   <li>An arbitrary-precision rational number with the same value as the
- given sequence of bytes.</li>
+ specified sequence of bytes.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2389,7 +2389,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <p>Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator, discarding its fractional part, and checking
- whether the resulting integer overflows the given signed bit count.</p>
+ whether the resulting integer overflows the specified signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2420,7 +2420,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 </pre>
 
 <p>Converts this value to an arbitrary-precision integer, only if this number’s
- value is an exact integer and that integer does not overflow the given
+ value is an exact integer and that integer does not overflow the specified
  signed bit count.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2534,7 +2534,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 </pre>
 
 <p>Converts this rational number to an arbitrary-precision decimal number and
- rounds the result to the given precision.</p>
+ rounds the result to the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2549,9 +2549,9 @@ Renamed to ToEFloatExactIfPossible.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can’t be
- exact because it has a nonterminating decimal expansion.</li>
+  <li>The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can’t be exact because it has a nonterminating decimal expansion.</li>
 </ul>
 
 <h3 id="toedecimalexactifpossible">ToEDecimalExactIfPossible</h3>
@@ -2561,7 +2561,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <p>Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds that
- result to the given precision.</p>
+ result to the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2603,7 +2603,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 </pre>
 
 <p>Converts this rational number to an arbitrary-precision decimal number and
- rounds the result to the given precision.</p>
+ rounds the result to the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2618,9 +2618,9 @@ Renamed to ToEFloatExactIfPossible.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can’t be
- exact because it has a nonterminating decimal expansion.</li>
+  <li>The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can’t be exact because it has a nonterminating decimal expansion.</li>
 </ul>
 
 <h3 id="toextendeddecimalexactifpossible">ToExtendedDecimalExactIfPossible</h3>
@@ -2630,7 +2630,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <p>Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds that
- result to the given precision.</p>
+ result to the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2672,7 +2672,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 </pre>
 
 <p>Converts this rational number to a binary floating-point number and rounds
- that result to the given precision.</p>
+ that result to the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2687,9 +2687,9 @@ Renamed to ToEFloatExactIfPossible.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can’t be
- exact because it has a nonterminating binary expansion.</li>
+  <li>The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can’t be exact because it has a nonterminating binary expansion.</li>
 </ul>
 
 <h3 id="toefloatexactifpossible">ToEFloatExactIfPossible</h3>
@@ -2699,7 +2699,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <p>Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that result to
- the given precision.</p>
+ the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2741,7 +2741,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 </pre>
 
 <p>Converts this rational number to a binary floating-point number and rounds
- that result to the given precision.</p>
+ that result to the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2756,9 +2756,9 @@ Renamed to ToEFloatExactIfPossible.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The value of the rational number, rounded to the given precision.
- Returns not-a-number (NaN) if the context is null and the result can’t be
- exact because it has a nonterminating binary expansion.</li>
+  <li>The value of the rational number, rounded to the specified
+ precision. Returns not-a-number (NaN) if the context is null and the result
+ can’t be exact because it has a nonterminating binary expansion.</li>
 </ul>
 
 <h3 id="toextendedfloatexactifpossible">ToExtendedFloatExactIfPossible</h3>
@@ -2768,7 +2768,7 @@ Renamed to ToEFloatExactIfPossible.</p>
 
 <p>Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that result to
- the given precision.</p>
+ the specified precision.</p>
 
 <p><strong>Parameters:</strong></p>
 

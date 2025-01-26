@@ -106,8 +106,8 @@ Determines whether the text provided by a character input is normalized.</p>
     <p><code>static boolean IsNormalized(String str,
  Normalization form)</code><br />
  Deprecated.
-Determines whether the given string is in the given Unicode normalization
- form.</p>
+Determines whether the specified string is in the specified Unicode
+ normalization form.</p>
   </li>
   <li>
     <p><code>static boolean IsNormalized(List&lt;Integer&gt; charList,
@@ -120,7 +120,7 @@ Either convert the list to a String or wrap it in an ICharacterInput and
     <p><code>static String Normalize(String str,
  Normalization form)</code><br />
  Deprecated.
-Converts a string to the given Unicode normalization form.</p>
+Converts a string to the specified Unicode normalization form.</p>
   </li>
   <li>
     <p><code>int Read(int[] chars,
@@ -173,7 +173,7 @@ Reads a Unicode character from a data source.</p>
 <pre>public static String Normalize(String str, Normalization form)
 </pre>
 
-<p>Converts a string to the given Unicode normalization form.</p>
+<p>Converts a string to the specified Unicode normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -189,7 +189,8 @@ Reads a Unicode character from a data source.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The parameter <code>str</code> converted to the given normalization form.</li>
+  <li>The parameter <code>str</code> converted to the specified normalization
+ form.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -209,8 +210,8 @@ Reads a Unicode character from a data source.</p>
 <pre>public static boolean IsNormalized(String str, Normalization form)
 </pre>
 
-<p>Determines whether the given string is in the given Unicode normalization
- form.</p>
+<p>Determines whether the specified string is in the specified Unicode
+ normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -227,7 +228,7 @@ Reads a Unicode character from a data source.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given string is in the given Unicode
+  <li><code>true</code> if the specified string is in the specified Unicode
  normalization form; otherwise, <code>false</code>. Returns <code>false</code> if the
  string contains an unpaired surrogate code point.</li>
 </ul>
@@ -305,8 +306,8 @@ Reads a Unicode character from a data source.</p>
 <pre>@Deprecated public static boolean IsNormalized(int[] charArray, Normalization form)
 </pre>
 
-<p>Determines whether the given array of characters is in the given Unicode
- normalization form.</p>
+<p>Determines whether the specified array of characters is in the specified
+ Unicode normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -323,8 +324,8 @@ Reads a Unicode character from a data source.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given list of characters is in the given Unicode
- normalization form; otherwise, <code>false</code>.</li>
+  <li><code>true</code> if the specified list of characters is in the specified
+ Unicode normalization form; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -338,8 +339,8 @@ Reads a Unicode character from a data source.</p>
 <pre>@Deprecated public static boolean IsNormalized(List&lt;Integer&gt; charList, Normalization form)
 </pre>
 
-<p>Determines whether the given list of characters is in the given Unicode
- normalization form.</p>
+<p>Determines whether the specified list of characters is in the specified
+ Unicode normalization form.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -356,8 +357,8 @@ Reads a Unicode character from a data source.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given list of characters is in the given Unicode
- normalization form; otherwise, <code>false</code>.</li>
+  <li><code>true</code> if the specified list of characters is in the specified
+ Unicode normalization form; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

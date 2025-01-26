@@ -268,7 +268,8 @@ Renamed to ToInt64Unchecked.</p>
   </li>
   <li>
     <p><code>EInteger Gcd(EInteger bigintSecond)</code><br />
- Returns the greatest common divisor of this integer and the given integer.</p>
+ Returns the greatest common divisor of this integer and the specified
+ integer.</p>
   </li>
   <li>
     <p><code>int GetDigitCount()</code><br />
@@ -609,7 +610,7 @@ Use Pow instead.</p>
   </li>
   <li>
     <p><code>String ToRadixString(int radix)</code><br />
- Generates a string representing the value of this object, in the given
+ Generates a string representing the value of this object, in the specified
  radix.</p>
   </li>
   <li>
@@ -939,7 +940,7 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An arbitrary-precision integer with the same value as the given
+  <li>An arbitrary-precision integer with the same value as the specified
  string.</li>
 </ul>
 
@@ -967,10 +968,10 @@ Use Pow instead.</p>
 <ul>
   <li>
     <p><code>str</code> - A text string. The desired portion of the string must contain
- only characters allowed by the given radix, except that it may start with a
- minus sign (“-“, U+002D) to indicate a negative number. The desired portion
- is not allowed to contain white space characters, including spaces. The
- desired portion may start with any number of zeros.</p>
+ only characters allowed by the specified radix, except that it may start
+ with a minus sign (“-“, U+002D) to indicate a negative number. The desired
+ portion is not allowed to contain white space characters, including spaces.
+ The desired portion may start with any number of zeros.</p>
   </li>
   <li>
     <p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
@@ -1121,7 +1122,7 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An arbitrary-precision integer with the same value as the given
+  <li>An arbitrary-precision integer with the same value as the specified
  sequence of <code>char</code> s.</li>
 </ul>
 
@@ -1150,11 +1151,11 @@ Use Pow instead.</p>
 <ul>
   <li>
     <p><code>cs</code> - A text sequence of <code>char</code> s. The desired portion of the
- sequence of <code>char</code> s must contain only characters allowed by the given
- radix, except that it may start with a minus sign (“-“, U+002D) to indicate
- a negative number. The desired portion is not allowed to contain white space
- characters, including spaces. The desired portion may start with any number
- of zeros.</p>
+ sequence of <code>char</code> s must contain only characters allowed by the
+ specified radix, except that it may start with a minus sign (“-“, U+002D) to
+ indicate a negative number. The desired portion is not allowed to contain
+ white space characters, including spaces. The desired portion may start with
+ any number of zeros.</p>
   </li>
   <li>
     <p><code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
@@ -1312,7 +1313,7 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>An arbitrary-precision integer with the same value as the given
+  <li>An arbitrary-precision integer with the same value as the specified
  sequence of bytes.</li>
 </ul>
 
@@ -1344,10 +1345,10 @@ Use Pow instead.</p>
   <li>
     <p><code>bytes</code> - A sequence of bytes (interpreted as text). The desired portion
  of the sequence of bytes (interpreted as text) must contain only characters
- allowed by the given radix, except that it may start with a minus sign (“-“,
- U+002D) to indicate a negative number. The desired portion is not allowed to
- contain white space characters, including spaces. The desired portion may
- start with any number of zeros.</p>
+ allowed by the specified radix, except that it may start with a minus sign
+ (“-“, U+002D) to indicate a negative number. The desired portion is not
+ allowed to contain white space characters, including spaces. The desired
+ portion may start with any number of zeros.</p>
   </li>
   <li>
     <p><code>radix</code> - A base from 2 to 36. Depending on the radix, the sequence of
@@ -2250,9 +2251,9 @@ Use Pow instead.</p>
 <pre>public EInteger Gcd(EInteger bigintSecond)
 </pre>
 
-<p>Returns the greatest common divisor of this integer and the given integer.
- The greatest common divisor (GCD) is also known as the greatest common
- factor (GCF). This method works even if either or both integers are
+<p>Returns the greatest common divisor of this integer and the specified
+ integer. The greatest common divisor (GCD) is also known as the greatest
+ common factor (GCF). This method works even if either or both integers are
  negative.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2264,7 +2265,8 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li>The greatest common divisor of this integer and the given integer.</li>
+  <li>The greatest common divisor of this integer and the specified
+ integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2427,8 +2429,8 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given bit is set in the two’ s-complement form
- (see <code>com.upokecenter.numbers.EDecimal</code>) of this object’s value;
+  <li><code>true</code> if the specified bit is set in the two’ s-complement
+ form (see <code>com.upokecenter.numbers.EDecimal</code>) of this object’s value;
  otherwise, <code>false</code>.</li>
 </ul>
 
@@ -2456,8 +2458,8 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given bit is set in the two’ s-complement form
- (see <code>com.upokecenter.numbers.EDecimal</code>) of this object’s value;
+  <li><code>true</code> if the specified bit is set in the two’ s-complement
+ form (see <code>com.upokecenter.numbers.EDecimal</code>) of this object’s value;
  otherwise, <code>false</code>.</li>
 </ul>
 
@@ -2551,7 +2553,7 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given bit is set in this number’s absolute
+  <li><code>true</code> if the specified bit is set in this number’s absolute
  value.</li>
 </ul>
 
@@ -2578,7 +2580,7 @@ Use Pow instead.</p>
 <p><strong>Returns:</strong></p>
 
 <ul>
-  <li><code>true</code> if the given bit is set in this number’s absolute
+  <li><code>true</code> if the specified bit is set in this number’s absolute
  value.</li>
 </ul>
 
@@ -3678,7 +3680,7 @@ Use Pow instead.</p>
 <pre>public String ToRadixString(int radix)
 </pre>
 
-<p>Generates a string representing the value of this object, in the given
+<p>Generates a string representing the value of this object, in the specified
  radix.</p>
 
 <p><strong>Parameters:</strong></p>

@@ -209,8 +209,8 @@
   <li><code>[Negate(PeterO.Numbers.EContext)](#Negate_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but with the sign reversed.</li>
   <li><code>[public static readonly PeterO.Numbers.EFloat NegativeInfinity;](#NegativeInfinity)</code> - Negative infinity, less than any other number.</li>
   <li><code>[public static readonly PeterO.Numbers.EFloat NegativeZero;](#NegativeZero)</code> - Represents the number negative zero.</li>
-  <li><code>[NextMinus(PeterO.Numbers.EContext)](#NextMinus_PeterO_Numbers_EContext)</code> - Finds the largest value that’s smaller than the given value.</li>
-  <li><code>[NextPlus(PeterO.Numbers.EContext)](#NextPlus_PeterO_Numbers_EContext)</code> - Finds the smallest value that’s greater than the given value.</li>
+  <li><code>[NextMinus(PeterO.Numbers.EContext)](#NextMinus_PeterO_Numbers_EContext)</code> - Finds the largest value that’s smaller than the specified value.</li>
+  <li><code>[NextPlus(PeterO.Numbers.EContext)](#NextPlus_PeterO_Numbers_EContext)</code> - Finds the smallest value that’s greater than the specified value.</li>
   <li><code>[NextToward(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#NextToward_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Finds the next value that is closer to the other object’s value than this object’s value.</li>
   <li><code>[public static readonly PeterO.Numbers.EFloat One;](#One)</code> - Represents the number 1.</li>
   <li><code>[PeterO.Numbers.EFloat operator +(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)](#op_Addition)</code> - Adds an arbitrary-precision binary floating-point number and another arbitrary-precision binary floating-point number and returns the result.</li>
@@ -222,12 +222,12 @@
   <li><code>[PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)](#op_Subtraction)</code> - Subtracts one arbitrary-precision binary floating-point number from another.</li>
   <li><code>[PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat)](#op_UnaryNegation)</code> - Gets an object with the same value as this one, but with the sign reversed.</li>
   <li><code>[PI(PeterO.Numbers.EContext)](#PI_PeterO_Numbers_EContext)</code> - Finds the constant π, the circumference of a circle divided by its diameter.</li>
-  <li><code>[Plus(PeterO.Numbers.EContext)](#Plus_PeterO_Numbers_EContext)</code> - Rounds this object’s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
+  <li><code>[Plus(PeterO.Numbers.EContext)](#Plus_PeterO_Numbers_EContext)</code> - Rounds this object’s value to the specified precision, using the specified rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
   <li><code>[public static readonly PeterO.Numbers.EFloat PositiveInfinity;](#PositiveInfinity)</code> - Positive infinity, greater than any other number.</li>
-  <li><code>[Pow(int)](#Pow_int)</code> - Raises this object’s value to the given exponent.</li>
-  <li><code>[Pow(int, PeterO.Numbers.EContext)](#Pow_int_PeterO_Numbers_EContext)</code> - Raises this object’s value to the given exponent.</li>
-  <li><code>[Pow(PeterO.Numbers.EFloat)](#Pow_PeterO_Numbers_EFloat)</code> - Raises this object’s value to the given exponent, using unlimited precision.</li>
-  <li><code>[Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Raises this object’s value to the given exponent.</li>
+  <li><code>[Pow(int)](#Pow_int)</code> - Raises this object’s value to the specified exponent.</li>
+  <li><code>[Pow(int, PeterO.Numbers.EContext)](#Pow_int_PeterO_Numbers_EContext)</code> - Raises this object’s value to the specified exponent.</li>
+  <li><code>[Pow(PeterO.Numbers.EFloat)](#Pow_PeterO_Numbers_EFloat)</code> - Raises this object’s value to the specified exponent, using unlimited precision.</li>
+  <li><code>[Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Raises this object’s value to the specified exponent.</li>
   <li><code>[Precision()](#Precision)</code> - Finds the number of digits in this number’s significand.</li>
   <li><code>[PreRound(PeterO.Numbers.EContext)](#PreRound_PeterO_Numbers_EContext)</code> - Returns a number in which the value of this object is rounded to fit the maximum precision allowed if it has more significant digits than the maximum precision.</li>
   <li><code>[Quantize(int, PeterO.Numbers.EContext)](#Quantize_int_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value but a new exponent.</li>
@@ -237,18 +237,18 @@
   <li><code>[Remainder(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#Remainder_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Returns the remainder that would result when this arbitrary-precision binary floating-point number is divided by another arbitrary-precision binary floating-point number.</li>
   <li><code>[RemainderNaturalScale(PeterO.Numbers.EFloat)](#RemainderNaturalScale_PeterO_Numbers_EFloat)</code> - Calculates the remainder of a number by the formula “this” - ((“this” / “divisor”) * “divisor”).</li>
   <li><code>[RemainderNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#RemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Calculates the remainder of a number by the formula “this” - ((“this” / “divisor”) * “divisor”).</li>
-  <li><code>[RemainderNear(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#RemainderNear_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object’s value by another object’s value.</li>
+  <li><code>[RemainderNear(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#RemainderNear_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Finds the distance to the closest multiple of the specified divisor, based on the result of dividing this object’s value by another object’s value.</li>
   <li><code>[RemainderNoRoundAfterDivide(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)](#RemainderNoRoundAfterDivide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext)</code> - Finds the remainder that results when dividing two arbitrary-precision binary floating-point numbers.</li>
   <li><code>[RoundToExponent(int, PeterO.Numbers.EContext)](#RoundToExponent_int_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to a new exponent if necessary.</li>
   <li><code>[RoundToExponent(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)](#RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to a new exponent if necessary.</li>
-  <li><code>[RoundToExponentExact(int, PeterO.Numbers.EContext)](#RoundToExponentExact_int_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to the given exponent represented as a 32-bit signed integer, and signals an inexact flag if the result would be inexact.</li>
-  <li><code>[RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)](#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
-  <li><code>[RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.ERounding)](#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding)</code> - Returns a binary number with the same value as this object but rounded to the given exponent.</li>
+  <li><code>[RoundToExponentExact(int, PeterO.Numbers.EContext)](#RoundToExponentExact_int_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to the specified exponent represented as a 32-bit signed integer, and signals an inexact flag if the result would be inexact.</li>
+  <li><code>[RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)](#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to the specified exponent, and signals an inexact flag if the result would be inexact.</li>
+  <li><code>[RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.ERounding)](#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding)</code> - Returns a binary number with the same value as this object but rounded to the specified exponent.</li>
   <li><code>[RoundToIntegerExact(PeterO.Numbers.EContext)](#RoundToIntegerExact_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
   <li><code>[RoundToIntegerNoRoundedFlag(PeterO.Numbers.EContext)](#RoundToIntegerNoRoundedFlag_PeterO_Numbers_EContext)</code> - Returns a binary floating-point number with the same value as this object but rounded to an integer, without adding the FlagInexact or FlagRounded flags.</li>
   <li><code>[RoundToIntegralExact(PeterO.Numbers.EContext)](#RoundToIntegralExact_PeterO_Numbers_EContext)</code> - <b>Obsolete:</b> Renamed to RoundToIntegerExact.</li>
   <li><code>[RoundToIntegralNoRoundedFlag(PeterO.Numbers.EContext)](#RoundToIntegralNoRoundedFlag_PeterO_Numbers_EContext)</code> - <b>Obsolete:</b> Renamed to RoundToIntegerNoRoundedFlag.</li>
-  <li><code>[RoundToPrecision(PeterO.Numbers.EContext)](#RoundToPrecision_PeterO_Numbers_EContext)</code> - Rounds this object’s value to a given precision, using the given rounding mode and range of exponent.</li>
+  <li><code>[RoundToPrecision(PeterO.Numbers.EContext)](#RoundToPrecision_PeterO_Numbers_EContext)</code> - Rounds this object’s value to the specified precision, using the specified rounding mode and range of exponent.</li>
   <li><code>[ScaleByPowerOfTwo(int)](#ScaleByPowerOfTwo_int)</code> - Returns a number similar to this number but with the scale adjusted.</li>
   <li><code>[ScaleByPowerOfTwo(int, PeterO.Numbers.EContext)](#ScaleByPowerOfTwo_int_PeterO_Numbers_EContext)</code> - Returns a number similar to this number but with the scale adjusted.</li>
   <li><code>[ScaleByPowerOfTwo(PeterO.Numbers.EInteger)](#ScaleByPowerOfTwo_PeterO_Numbers_EInteger)</code> - Returns a number similar to this number but with the scale adjusted.</li>
@@ -287,11 +287,11 @@
   <li><code>[ToSByteChecked()](#ToSByteChecked)</code> - Converts this number’s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after converting it to an integer by discarding its fractional part.</li>
   <li><code>[ToSByteIfExact()](#ToSByteIfExact)</code> - Converts this number’s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
   <li><code>[ToSByteUnchecked()](#ToSByteUnchecked)</code> - Converts this number’s value to an integer by discarding its fractional part, and returns the least-significant bits of its two’s-complement form as an 8-bit signed integer.</li>
-  <li><code>[ToShortestString(PeterO.Numbers.EContext)](#ToShortestString_PeterO_Numbers_EContext)</code> - Returns a string representation of this number’s value after rounding that value to the given precision (using the given arithmetic context, such as EContext.</li>
+  <li><code>[ToShortestString(PeterO.Numbers.EContext)](#ToShortestString_PeterO_Numbers_EContext)</code> - Returns a string representation of this number’s value after rounding that value to the specified precision (using the specified arithmetic context, such as EContext.</li>
   <li><code>[ToSingle()](#ToSingle)</code> - Converts this value to its closest equivalent as a 32-bit floating-point number.</li>
   <li><code>[ToSingleBits()](#ToSingleBits)</code> - Converts this value to its closest equivalent as 32-bit floating-point number, expressed as an integer in the IEEE 754 binary32 format.</li>
-  <li><code>[ToSizedEInteger(int)](#ToSizedEInteger_int)</code> - Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the given signed bit count.</li>
-  <li><code>[ToSizedEIntegerIfExact(int)](#ToSizedEIntegerIfExact_int)</code> - Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the given signed bit count.</li>
+  <li><code>[ToSizedEInteger(int)](#ToSizedEInteger_int)</code> - Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the specified signed bit count.</li>
+  <li><code>[ToSizedEIntegerIfExact(int)](#ToSizedEIntegerIfExact_int)</code> - Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the specified signed bit count.</li>
   <li><code>[ToString()](#ToString)</code> - Converts this number’s value to a text string.</li>
   <li><code>[ToUInt16Checked()](#ToUInt16Checked)</code> - Converts this number’s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
   <li><code>[ToUInt16IfExact()](#ToUInt16IfExact)</code> - Converts this number’s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
@@ -1347,7 +1347,7 @@ Attempted to divide by zero.</li>
     <p><i>divisor</i>: The number to divide by.</p>
   </li>
   <li>
-    <p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it’s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context’s  <code>HasFlags</code>  is true and the integer part of the division result doesn’t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p>
+    <p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it’s possible for the remainder to have a higher precision than given in this context. Flags will be set on the specified context only if the context’s  <code>HasFlags</code>  is true and the integer part of the division result doesn’t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p>
   </li>
 </ul>
 
@@ -1397,7 +1397,7 @@ Attempted to divide by zero.</li>
     <p><i>desiredExponentSmall</i>: The desired exponent. A negative number places the cutoff point to the right of the usual radix point (so a negative number means the number of binary digit places to round to). A positive number places the cutoff point to the left of the usual radix point.</p>
   </li>
   <li>
-    <p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn’t fit the given precision). If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p>
+    <p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn’t fit the specified precision). If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p>
   </li>
 </ul>
 
@@ -1484,7 +1484,7 @@ Attempted to divide by zero.</li>
     <p><i>exponent</i>: The desired exponent. A negative number places the cutoff point to the right of the usual radix point (so a negative number means the number of binary digit places to round to). A positive number places the cutoff point to the left of the usual radix point.</p>
   </li>
   <li>
-    <p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn’t fit the given precision). If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p>
+    <p><i>ctx</i>: An arithmetic context object to control the rounding mode to use if the result must be scaled down to have the same exponent as this value. If the precision given in the context is other than 0, calls the Quantize method with both arguments equal to the result of the operation (and can signal FlagInvalid and return NaN if the result doesn’t fit the specified precision). If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p>
   </li>
 </ul>
 
@@ -1560,7 +1560,7 @@ Attempted to divide by zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The integer part of the quotient of the two objects. The exponent will be set to 0. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result doesn’t fit the given precision.</p>
+<p>The integer part of the quotient of the two objects. The exponent will be set to 0. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result doesn’t fit the specified precision.</p>
 
 <p><a id="DivideToSameExponent_PeterO_Numbers_EFloat_PeterO_Numbers_ERounding"></a>
 ### DivideToSameExponent</p>
@@ -1604,7 +1604,7 @@ Attempted to divide by zero.</li>
     <p><i>divisor</i>: The number to divide by.</p>
   </li>
   <li>
-    <p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it’s possible for the remainder to have a higher precision than given in this context. Flags will be set on the given context only if the context’s  <code>HasFlags</code>  is true and the integer part of the division result doesn’t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p>
+    <p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it’s possible for the remainder to have a higher precision than given in this context. Flags will be set on the specified context only if the context’s  <code>HasFlags</code>  is true and the integer part of the division result doesn’t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p>
   </li>
 </ul>
 
@@ -1706,7 +1706,7 @@ Attempted to divide by zero.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Exponential of this object. If this object’s value is 1, returns an approximation to “ e” within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+<p>Exponential of this object. If this object’s value is 1, returns an approximation to “ e” within the specified precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context’s Precision property is 0).</p>
 
 <p><a id="ExpM1_PeterO_Numbers_EContext"></a>
@@ -3550,7 +3550,7 @@ The parameter  <i>op</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Finds the largest value that’s smaller than the given value.</p>
+<p>Finds the largest value that’s smaller than the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3560,7 +3560,7 @@ The parameter  <i>op</i>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns the largest value that’s less than the given value. Returns negative infinity if the result is negative infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+<p>Returns the largest value that’s less than the specified value. Returns negative infinity if the result is negative infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null, the precision is 0, or  <i>ctx</i>
  has an unlimited exponent range.</p>
 
@@ -3571,7 +3571,7 @@ The parameter  <i>op</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Finds the smallest value that’s greater than the given value.</p>
+<p>Finds the smallest value that’s greater than the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3581,7 +3581,7 @@ The parameter  <i>op</i>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns the smallest value that’s greater than the given value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+<p>Returns the smallest value that’s greater than the specified value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null, the precision is 0, or  <i>ctx</i>
  has an unlimited exponent range.</p>
 
@@ -4475,7 +4475,7 @@ The parameter  <i>bthis</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The negated form of the given number. If the given number is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
+<p>The negated form of the specified number. If the specified number is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -4502,7 +4502,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The constant π rounded to the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
+<p>The constant π rounded to the specified precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
  is null or the precision is unlimited (the context’s Precision property is 0).</p>
 
 <p><a id="Plus_PeterO_Numbers_EContext"></a>
@@ -4512,7 +4512,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Rounds this object’s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero. The idiom  <code>EDecimal.SignalingNaN.Plus(ctx)</code>  is useful for triggering an invalid operation and returning not-a-number (NaN) for custom arithmetic operations.</p>
+<p>Rounds this object’s value to the specified precision, using the specified rounding mode and range of exponent, and also converts negative zero to positive zero. The idiom  <code>EDecimal.SignalingNaN.Plus(ctx)</code>  is useful for triggering an invalid operation and returning not-a-number (NaN) for custom arithmetic operations.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4533,7 +4533,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Raises this object’s value to the given exponent.</p>
+<p>Raises this object’s value to the specified exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4557,7 +4557,7 @@ The parameter  <i>bigValue</i>
     int exponentSmall);
 </pre>
 
-<p>Raises this object’s value to the given exponent.</p>
+<p>Raises this object’s value to the specified exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4577,7 +4577,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Raises this object’s value to the given exponent.</p>
+<p>Raises this object’s value to the specified exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4602,7 +4602,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EFloat exponent);
 </pre>
 
-<p>Raises this object’s value to the given exponent, using unlimited precision.</p>
+<p>Raises this object’s value to the specified exponent, using unlimited precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4643,7 +4643,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>This object rounded to the given precision. Returns this object and signals no flags if  <i>ctx</i>
+<p>This object rounded to the specified precision. Returns this object and signals no flags if  <i>ctx</i>
  is null or specifies an unlimited precision, if this object is infinity or not-a-number (including signaling NaN), or if the number’s value has no more significant digits than the maximum precision given in  <i>ctx</i>
 .</p>
 
@@ -4682,7 +4682,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if this object is infinity, if the rounded result can’t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
+<p>A binary floating-point number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if this object is infinity, if the rounded result can’t fit the specified precision, or if the context defines an exponent range and the specified exponent is outside that range.</p>
 
 <p><a id="Quantize_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a>
 ### Quantize</p>
@@ -4709,7 +4709,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the given precision without rounding, or if the arithmetic context defines an exponent range and the given exponent is outside that range.</p>
+<p>A binary floating-point number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the specified precision without rounding, or if the arithmetic context defines an exponent range and the specified exponent is outside that range.</p>
 
 <p><a id="Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a>
 ### Quantize</p>
@@ -4748,7 +4748,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if this object is infinity, if the rounded result can’t fit the given precision, or if the context defines an exponent range and the given exponent is outside that range.</p>
+<p>A binary floating-point number with the same value as this object but with the exponent changed. Signals FlagInvalid and returns not-a-number (NaN) if this object is infinity, if the rounded result can’t fit the specified precision, or if the context defines an exponent range and the specified exponent is outside that range.</p>
 
 <p><a id="Reduce_PeterO_Numbers_EContext"></a>
 ### Reduce</p>
@@ -4793,7 +4793,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder that would result when this arbitrary-precision binary floating-point number is divided by another arbitrary-precision binary floating-point number. Signals FlagDivideByZero and returns infinity if the divisor (this arbitrary-precision binary floating-point number) is 0 and the dividend (the other arbitrary-precision binary floating-point number) is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result of the division doesn’t fit the given precision.</p>
+<p>The remainder that would result when this arbitrary-precision binary floating-point number is divided by another arbitrary-precision binary floating-point number. Signals FlagDivideByZero and returns infinity if the divisor (this arbitrary-precision binary floating-point number) is 0 and the dividend (the other arbitrary-precision binary floating-point number) is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0, or if the result of the division doesn’t fit the specified precision.</p>
 
 <p><a id="RemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a>
 ### RemainderNaturalScale</p>
@@ -4812,7 +4812,7 @@ The parameter  <i>bigValue</i>
     <p><i>divisor</i>: The number to divide by.</p>
   </li>
   <li>
-    <p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it’s possible for the return value to have a higher precision than given in this context. Flags will be set on the given context only if the context’s  <code>HasFlags</code>  is true and the integer part of the division result doesn’t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p>
+    <p><i>ctx</i>: An arithmetic context object to control the precision, rounding, and exponent range of the result. This context will be used only in the division portion of the remainder calculation; as a result, it’s possible for the return value to have a higher precision than given in this context. Flags will be set on the specified context only if the context’s  <code>HasFlags</code>  is true and the integer part of the division result doesn’t fit the precision and exponent range without rounding. Can be null, in which the precision is unlimited and no additional rounding, other than the rounding down to an integer after division, is needed.</p>
   </li>
 </ul>
 
@@ -4847,7 +4847,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object’s value by another object’s value.</p>
+<p>Finds the distance to the closest multiple of the specified divisor, based on the result of dividing this object’s value by another object’s value.</p>
 
 <ul>
   <li>
@@ -4879,7 +4879,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The distance of the closest multiple. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn’t fit the given precision.</p>
+<p>The distance of the closest multiple. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn’t fit the specified precision.</p>
 
 <p><a id="RemainderNoRoundAfterDivide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a>
 ### RemainderNoRoundAfterDivide</p>
@@ -4905,7 +4905,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The remainder of the two numbers. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or if the result doesn’t fit the given precision.</p>
+<p>The remainder of the two numbers. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or if the result doesn’t fit the specified precision.</p>
 
 <p><a id="RoundToExponent_int_PeterO_Numbers_EContext"></a>
 ### RoundToExponent</p>
@@ -4915,7 +4915,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a binary floating-point number with the same value as this object but rounded to a new exponent if necessary. The resulting number’s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object but rounded to a new exponent if necessary. The resulting number’s Exponent property will not necessarily be the specified exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4930,7 +4930,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest value representable in the given precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest value representable in the specified precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the specified exponent when rounding, and the specified exponent is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a>
 ### RoundToExponent</p>
@@ -4940,7 +4940,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a binary floating-point number with the same value as this object but rounded to a new exponent if necessary. The resulting number’s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object but rounded to a new exponent if necessary. The resulting number’s Exponent property will not necessarily be the specified exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4955,7 +4955,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest value representable in the given precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest value representable in the specified precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the specified exponent when rounding, and the specified exponent is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToExponentExact_int_PeterO_Numbers_EContext"></a>
 ### RoundToExponentExact</p>
@@ -4965,7 +4965,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a binary floating-point number with the same value as this object but rounded to the given exponent represented as a 32-bit signed integer, and signals an inexact flag if the result would be inexact. The resulting number’s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object but rounded to the specified exponent represented as a 32-bit signed integer, and signals an inexact flag if the result would be inexact. The resulting number’s Exponent property will not necessarily be the specified exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4980,7 +4980,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest value representable in the specified precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the specified precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the specified exponent when rounding, and the specified exponent is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a>
 ### RoundToExponentExact</p>
@@ -4990,7 +4990,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a binary floating-point number with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact. The resulting number’s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
+<p>Returns a binary floating-point number with the same value as this object but rounded to the specified exponent, and signals an inexact flag if the result would be inexact. The resulting number’s Exponent property will not necessarily be the specified exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -5005,7 +5005,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest value representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the given exponent when rounding, and the given exponent is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest value representable in the specified precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the specified precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to the specified exponent when rounding, and the specified exponent is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding"></a>
 ### RoundToExponentExact</p>
@@ -5015,7 +5015,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.ERounding rounding);
 </pre>
 
-<p>Returns a binary number with the same value as this object but rounded to the given exponent. The resulting number’s Exponent property will not necessarily be the given exponent; use the Quantize method instead to give the result a particular exponent.</p>
+<p>Returns a binary number with the same value as this object but rounded to the specified exponent. The resulting number’s Exponent property will not necessarily be the specified exponent; use the Quantize method instead to give the result a particular exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -5030,7 +5030,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary number rounded to the closest value representable in the given precision.</p>
+<p>A binary number rounded to the closest value representable in the specified precision.</p>
 
 <p><a id="RoundToIntegerExact_PeterO_Numbers_EContext"></a>
 ### RoundToIntegerExact</p>
@@ -5049,7 +5049,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest integer representable in the specified precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the specified precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToIntegerNoRoundedFlag_PeterO_Numbers_EContext"></a>
 ### RoundToIntegerNoRoundedFlag</p>
@@ -5068,7 +5068,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest integer representable in the given precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest integer representable in the specified precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToIntegralExact_PeterO_Numbers_EContext"></a>
 ### RoundToIntegralExact</p>
@@ -5089,7 +5089,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest integer representable in the specified precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can’t fit the specified precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToIntegralNoRoundedFlag_PeterO_Numbers_EContext"></a>
 ### RoundToIntegralNoRoundedFlag</p>
@@ -5110,7 +5110,7 @@ The parameter  <i>bigValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary floating-point number rounded to the closest integer representable in the given precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
+<p>A binary floating-point number rounded to the closest integer representable in the specified precision. If the result can’t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside the valid range of the arithmetic context.</p>
 
 <p><a id="RoundToPrecision_PeterO_Numbers_EContext"></a>
 ### RoundToPrecision</p>
@@ -5119,7 +5119,7 @@ The parameter  <i>bigValue</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Rounds this object’s value to a given precision, using the given rounding mode and range of exponent.</p>
+<p>Rounds this object’s value to the specified precision, using the specified rounding mode and range of exponent.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -5785,7 +5785,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Returns a string representation of this number’s value after rounding that value to the given precision (using the given arithmetic context, such as  <code>EContext.Binary64</code>  ). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form of this number’s value (in terms of decimal digits starting with the first nonzero digit and ending with the last nonzero digit) that results in the rounded number after the decimal form is converted to binary floating-point format (using the given arithmetic context).</p>
+<p>Returns a string representation of this number’s value after rounding that value to the specified precision (using the specified arithmetic context, such as  <code>EContext.Binary64</code>  ). If the number after rounding is neither infinity nor not-a-number (NaN), returns the shortest decimal form of this number’s value (in terms of decimal digits starting with the first nonzero digit and ending with the last nonzero digit) that results in the rounded number after the decimal form is converted to binary floating-point format (using the specified arithmetic context).</p>
 
 <p>The following example converts an EFloat number to its shortest round-tripping decimal form using the same precision as the  <code>double</code>  type in Java and.NET:</p>
 
@@ -5800,7 +5800,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>Shortest decimal form of this number’s value for the given arithmetic context. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if the number’s first nonzero decimal digit is more than five digits after the decimal point, or if the number’s exponent is greater than 0 and its value is 10, 000, 000 or greater.</p>
+<p>Shortest decimal form of this number’s value for the specified arithmetic context. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if the number’s first nonzero decimal digit is more than five digits after the decimal point, or if the number’s exponent is greater than 0 and its value is 10, 000, 000 or greater.</p>
 
 <p><a id="ToSingle"></a>
 ### ToSingle</p>
@@ -5833,7 +5833,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
     int maxBitLength);
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the given signed bit count.</p>
+<p>Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the specified signed bit count.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -5859,7 +5859,7 @@ This object’s value is infinity or not-a-number (NaN), or this number’s valu
     int maxBitLength);
 </pre>
 
-<p>Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the given signed bit count.</p>
+<p>Converts this value to an arbitrary-precision integer, only if this number’s value is an exact integer and that integer does not overflow the specified signed bit count.</p>
 
 <p><b>Parameters:</b></p>
 
