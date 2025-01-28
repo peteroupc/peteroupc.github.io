@@ -142,7 +142,7 @@ For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means tha
 
 **Proposition 2.** _Let X and Y be real-valued nondegenerate random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent._
 
-_Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if _X_ is statistically preferred to _Y_ and vice versa (that is, P(_X_>_Y_) + P(_X_=_Y_)/2 >= P(_Y_>_X_) + P(_Y_=_X_)/2) (De Schuymer et al. 2003\)[^16].  Because both random variables are nondegenerate, P(_X_>_Y_) or P(_Y_>_X_) or both are nonzero, and P(_X_=_Y_) < 1. Moreover, because both random variables are identically distributed, their distribution functions _F_<sub>_X_</sub> and  _F_<sub>_Y_</sub> are the same, and therefore their values and expectations for any given _z_ (for example, _F_<sub>_X_</sub>(_z_) and E[_F_<sub>_X_</sub>(_z_)], respectively) are the same.
+_Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if _X_ is statistically preferred to _Y_ and vice versa (that is, P(_X_>_Y_) + P(_X_=_Y_)/2 >= P(_Y_>_X_) + P(_Y_=_X_)/2) (De Schuymer et al. 2003\)[^16].  Because both random variables are nondegenerate, P(_X_>_Y_) or P(_Y_>_X_) or both are nonzero, and P(_X_=_Y_) < 1. Moreover, because both random variables are identically distributed, their distribution functions _F_<sub>_X_</sub> and  _F_<sub>_Y_</sub> are the same, and therefore their values and expectations for any particular _z_ (for example, _F_<sub>_X_</sub>(_z_) and E[_F_<sub>_X_</sub>(_z_)], respectively) are the same.
 
 If we look at Theorem 3.12 in (Montes Gutiérrez 2014\)[^15], we see that we can replace&mdash;
 
