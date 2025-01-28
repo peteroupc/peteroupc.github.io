@@ -72,9 +72,6 @@ input tracker.</li>
   <li><a href="#extras_camera_InputTracker_mousePos">mousePos</a><br />Returns the current mouse position, delta
 mouse position, and delta mouse wheel
 position (see the “update” method).</li>
-  <li><a href="#extras_camera_InputTracker_mousewheel">mousewheel</a><br /><strong>Obsolete: Will be removed in the future. Use the
-mousePos method to find out whether the user
-has rotated the mouse wheel.</strong></li>
   <li><a href="#extras_camera_InputTracker_update">update</a><br />Retrieves the current position of the mouse within
 the page’s client area, as detected by the input
 tracker and calculates the “delta mouse position”,
@@ -300,23 +297,6 @@ position.
 If this object's update method wasn't called, all these values
 will be 0. (Type: Object)
 
-<a name="extras_camera_InputTracker_mousewheel"></a>
-### module:extras/camera~InputTracker#mousewheel(func)
-
-**Deprecated: Will be removed in the future. Use the
-mousePos method to find out whether the user
-has rotated the mouse wheel.**
-
-Sets a function to handle mouse wheel events.
-
-#### Parameters
-
-* `func` (Type: function)<br />A function.
-
-#### Return Value
-
-Return value. (Type: Object)
-
 <a name="extras_camera_InputTracker_update"></a>
 ### module:extras/camera~InputTracker#update()
 
@@ -354,20 +334,6 @@ This object. (Type: InputTracker)
 <h3 id="navigation">Navigation</h3>
 
 <ul>
-  <li><a href="BSplineCurve.html">BSplineCurve</a></li>
-  <li><a href="BSplineSurface.html">BSplineSurface</a></li>
-  <li><a href="Curve.html">Curve</a></li>
-  <li><a href="CurveBuilder.html">CurveBuilder</a></li>
-  <li><a href="GraphicsPath.html">GraphicsPath</a></li>
-  <li><a href="H3DU.html">H3DU</a></li>
-  <li><a href="MathUtil.html">MathUtil</a></li>
-  <li><a href="MeshBuffer.html">MeshBuffer</a></li>
-  <li><a href="Meshes.html">Meshes</a></li>
-  <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
-  <li><a href="ShapeGroup.html">ShapeGroup</a></li>
-  <li><a href="Surface.html">Surface</a></li>
-  <li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
-  <li><a href="Transform.html">Transform</a></li>
   <li><a href="extras_camera.html">module:extras/camera</a></li>
   <li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
   <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
