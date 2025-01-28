@@ -668,7 +668,7 @@ Camera.prototype.getPosition = function() {
 };
 
 /**
- * Moves the camera the given distance, but not too close
+ * Moves the camera the specified distance, but not too close
  * to the reference point.
  * @param {number} dist The distance to move. Positive
  * values mean forward, and negative distances mean back.
@@ -678,7 +678,7 @@ Camera.prototype.moveClose = function(dist) {
   return this.setDistance(this.getDistance() - dist);
 };
 /**
- * Moves the camera forward the given distance.
+ * Moves the camera forward the specified distance.
  * @param {number} dist The distance to move. Positive
  * values mean forward, and negative distances mean back.
  * @returns {Camera} This object.

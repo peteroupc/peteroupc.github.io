@@ -300,11 +300,11 @@
 <pre><code>public PeterO.Numbers.ERounding Rounding { get; }
 </code></pre>
 
-<p>Gets the desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</p>
+<p>Gets the desired rounding mode when converting numbers that can&#39;t be represented in the specified precision and exponent range.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</p>
+<p>The desired rounding mode when converting numbers that can&#39;t be represented in the specified precision and exponent range.</p>
 
 <h3>Traps</h3>
 
@@ -334,7 +334,7 @@
     PeterO.Numbers.EInteger exponent);
 </code></pre>
 
-<p>Determines whether a number can have the given Exponent property under this precision context.</p>
+<p>Determines whether a number can have the specified Exponent property under this precision context.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -344,7 +344,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>True if a number can have the given Exponent property under this precision context; otherwise, false. If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+<p>True if a number can have the specified Exponent property under this precision context; otherwise, false. If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -360,7 +360,7 @@ is null.</li>
     int precision);
 </code></pre>
 
-<p>Creates a new precision context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
+<p>Creates a new precision context using the specified maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -379,7 +379,7 @@ is null.</li>
     PeterO.Numbers.ERounding rounding);
 </code></pre>
 
-<p>Creates a new PrecisionContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</p>
+<p>Creates a new PrecisionContext object initialized with an unlimited exponent range, and the specified rounding mode and maximum precision.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -398,7 +398,7 @@ is null.</li>
     PeterO.Numbers.ERounding rounding);
 </code></pre>
 
-<p>Creates a new PrecisionContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</p>
+<p>Creates a new PrecisionContext object initialized with an unlimited precision, an unlimited exponent range, and the specified rounding mode.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -427,7 +427,7 @@ is null.</li>
     bool adjustExponent);
 </code></pre>
 
-<p>Copies this PrecisionContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</p>
+<p>Copies this PrecisionContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -513,7 +513,7 @@ is null.</li>
     bool clamp);
 </code></pre>
 
-<p>Copies this precision context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</p>
+<p>Copies this precision context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -580,7 +580,7 @@ is null.</li>
     bool isPrecisionBits);
 </code></pre>
 
-<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</p>
+<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -616,7 +616,7 @@ is null.</li>
     bool simplified);
 </code></pre>
 
-<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</p>
+<p>Copies this PrecisionContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -634,7 +634,7 @@ is null.</li>
     int traps);
 </code></pre>
 
-<p>Copies this PrecisionContext with Traps set to the given value.</p>
+<p>Copies this PrecisionContext with Traps set to the specified value.</p>
 
 <p><b>Parameters:</b></p>
 

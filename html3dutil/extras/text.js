@@ -260,7 +260,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
 
 /**
  * Creates a group of shapes containing the primitives needed to
- * draw text in the given position, size, and color.
+ * draw text in the specified position, size, and color.
  * For the text to show upright, the coordinate system should have the
  * x-axis pointing right and the y-axis pointing down (for example, an
  * orthographic projection where the left and top coordinates are less

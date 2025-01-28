@@ -27,20 +27,20 @@
 </pre>
 
 <h2 id="normalizerisnormalizedstring-form">Normalizer.IsNormalized(string[, form])</h2>
-<p>Returns whether the given string is in a Unicode normalization form.
+<p>Returns whether the specified string is in a Unicode normalization form.
 The form can be <code>Normalization.NFC</code>, <code>Normalization.NFD</code>, <code>Normalization.NFKC</code>,
 or <code>Normalization.NFKD</code>.  If not given, NFC is assumed.  Returns false if the string
 is null or contains an unpaired surrogate code point.</p>
 
 <h2 id="normalizernormalizestring-form">Normalizer.Normalize(string[, form])</h2>
-<p>Converts the given string is in a Unicode normalization form.
+<p>Converts the specified string is in a Unicode normalization form.
 The form can be <code>Normalization.NFC</code>, <code>Normalization.NFD</code>, <code>Normalization.NFKC</code>,
 or <code>Normalization.NFKD</code>.  If not given, NFC is assumed.  Throws an error if the
 string is null.  Replaces unpaired surrogate code points in the string with
 U+FFFD (the replacement character).</p>
 
 <h2 id="idnaencodedomainnamestring">Idna.EncodeDomainName(string)</h2>
-<p>Tries to encode each label of the given domain name into Punycode.  Labels
+<p>Tries to encode each label of the specified domain name into Punycode.  Labels
 where this is not possible remain unchanged.  The labels are not checked for
 validity beyond the Punycode checks.</p>
 

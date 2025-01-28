@@ -36,18 +36,18 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#Surface_bitangent">bitangent</a><br />Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.</li>
+  <li><a href="#Surface_bitangent">bitangent</a><br />Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.</li>
   <li><a href="#Surface_endPoints">endPoints</a><br />Returns the starting and ending u- and v-coordinates of this surface.</li>
-  <li><a href="#Surface_evaluate">evaluate</a><br />Finds the position of this surface at the given u- and v-coordinates.</li>
-  <li><a href="#Surface_gradient">gradient</a><br />Finds an approximate gradient vector of this surface at the given u- and v-coordinates.</li>
-  <li><a href="#Surface_normal">normal</a><br />Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.</li>
-  <li><a href="#Surface_tangent">tangent</a><br />Finds an approximate tangent vector of this surface at the given u- and v-coordinates.</li>
+  <li><a href="#Surface_evaluate">evaluate</a><br />Finds the position of this surface at the specified u- and v-coordinates.</li>
+  <li><a href="#Surface_gradient">gradient</a><br />Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</li>
+  <li><a href="#Surface_normal">normal</a><br />Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.</li>
+  <li><a href="#Surface_tangent">tangent</a><br />Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.</li>
 </ul>
 
 <p><a name="Surface_bitangent"></a>
 ### Surface#bitangent(u, v)</p>
 
-<p>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.</p>
+<p>Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.</p>
 
 <p>The implementation in <a href="Surface.html">Surface</a> calls the evaluator’s <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
@@ -99,7 +99,7 @@ method.</p>
 <p><a name="Surface_evaluate"></a>
 ### Surface#evaluate(u, v)</p>
 
-<p>Finds the position of this surface at the given u- and v-coordinates.</p>
+<p>Finds the position of this surface at the specified u- and v-coordinates.</p>
 
 <h4 id="parameters-2">Parameters</h4>
 
@@ -116,7 +116,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <p><a name="Surface_gradient"></a>
 ### Surface#gradient(u, v)</p>
 
-<p>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.</p>
+<p>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</p>
 
 <p>The implementation in <a href="Surface.html">Surface</a> calls the evaluator’s <code>gradient</code>
 method if it implements it; otherwise uses the surface’s tangent and bitangent vectors to implement the gradient
@@ -178,7 +178,7 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 <p><a name="Surface_normal"></a>
 ### Surface#normal(u, v)</p>
 
-<p>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+<p>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but “normalized” to a unit vector.</p>
 
 <h4 id="parameters-4">Parameters</h4>
@@ -196,7 +196,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <p><a name="Surface_tangent"></a>
 ### Surface#tangent(u, v)</p>
 
-<p>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
+<p>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 The implementation in <a href="Surface.html">Surface</a> calls the evaluator’s <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the u-axis using the <code>evaluate</code> method.</p>

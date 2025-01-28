@@ -344,7 +344,7 @@ BspTree.prototype._clipflip2 = function(other) {
 };
 /**
  * Generates a BSP tree that consists of the solid areas of
- * this tree or the given tree or both.
+ * this tree or the specified tree or both.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  */
@@ -358,7 +358,7 @@ BspTree.prototype.union = function(other) {
 };
 /**
  * Generates a BSP tree that consists of the solid areas of
- * this tree that are not common to the given tree.
+ * this tree that are not common to the specified tree.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  */
@@ -372,7 +372,7 @@ BspTree.prototype.difference = function(other) {
 };
 /**
  * Generates a BSP tree that consists of the solid areas common
- * to both this tree and the given tree.
+ * to both this tree and the specified tree.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  */
@@ -386,7 +386,7 @@ BspTree.prototype.intersection = function(other) {
 };
 /**
  * Generates a BSP tree that consists of the solid areas of
- * this tree or the given tree but not both.
+ * this tree or the specified tree but not both.
  * @param {BspTree} other The second BSP tree.
  * @returns {BspTree} The resulting tree.
  */

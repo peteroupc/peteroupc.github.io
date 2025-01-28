@@ -317,9 +317,9 @@ Operation.prototype.get = function(index) {
   return this.nodes[index];
 };
 /**
- * Returns whether this operation is of the given type.
+ * Returns whether this operation is of the specified type.
  * @param {string} op An operation type such as "plus" or "pow".
- * @returns {boolean} True if this operation is of the given type; otherwise, false.
+ * @returns {boolean} True if this operation is of the specified type; otherwise, false.
  */
 Operation.prototype.isOperation = function(op) {
   "use strict";
@@ -1048,8 +1048,8 @@ Constant.prototype.negate = function() {
   return new Constant(-this.value);
 };
 /**
- * Returns a constant with the given value added to this one,
- * or an expression that adds this constant and the given operation.
+ * Returns a constant with the specified value added to this one,
+ * or an expression that adds this constant and the specified operation.
  * @param {Number|Expression} x A number or an expression.
  * @returns {Operation} Return value.
  */
@@ -1062,8 +1062,8 @@ Constant.prototype.add = function(x) {
   return this.combineOp("plus", x);
 };
 /**
- * Returns a constant with the given value subtracted from this one,
- * or an expression that subtracts the given operation from this constant.
+ * Returns a constant with the specified value subtracted from this one,
+ * or an expression that subtracts the specified operation from this constant.
  * @param {Number|Expression} x A number or an expression.
  * @returns {Object} Return value.
  */
@@ -1073,8 +1073,8 @@ Constant.prototype.subtract = function(x) {
   return this.add(typeof x === "number" ? -x : x.negate());
 };
 /**
- * Returns a constant with the given value multiplied by this one,
- * or an expression that multiplies this constant and the given operation.
+ * Returns a constant with the specified value multiplied by this one,
+ * or an expression that multiplies this constant and the specified operation.
  * @param {Number|Expression} x A number or an expression.
  * @returns {Object} Return value.
  */
@@ -1087,8 +1087,8 @@ Constant.prototype.multiply = function(x) {
   return this.combineOp("mul", x);
 };
 /**
- * Returns a constant with the given value divided by this one,
- * or an expression that divides this constant and the given operation.
+ * Returns a constant with the specified value divided by this one,
+ * or an expression that divides this constant and the specified operation.
  * @param {Number|Expression} x A number or an expression.
  * @returns {Object} Return value.
  */

@@ -467,7 +467,7 @@ function makeRay(startPt, focusPt) {
 /* exported raypick */
 /**
  * Finds the three-dimensional shape object and world-space coordinates
- * corresponding to the given two-dimensional (X and Y) coordinates.
+ * corresponding to the specified two-dimensional (X and Y) coordinates.
  * @param x Two-dimensional x-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of
  * MathUtil.vec3fromWindowPoint.
  * @param y Two-dimensional y-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of

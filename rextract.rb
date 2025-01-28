@@ -103,9 +103,9 @@ def extractFace2(tree, randomFace, numFaces, output)
   end
 end
 
-# Uses the given extractor tree to
-# extract randomness from the given bit (0 or 1)
-# and write output bits to the given array.
+# Uses the specified extractor tree to
+# extract randomness from the specified bit (0 or 1)
+# and write output bits to the specified array.
 # The bit is assumed to come from an unfair coin.
 # Depth is an internal parameter.
 def extract(tree, bit, output, depth=0)

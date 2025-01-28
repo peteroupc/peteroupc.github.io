@@ -472,7 +472,7 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
 };
 
 /**
- * Finds a tight bounding box within the given three-dimensional
+ * Finds a tight bounding box within the specified three-dimensional
  * area that encloses this implicit surface.
  * @param {number} xsize Number of grid points along the x-axis. Must be 2 or greater.
  * @param {number} ysize Number of grid points along the y-axis. Must be 2 or greater.
@@ -485,10 +485,10 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
  * @param {number} zmax Greatest value along the z-axis.
  * @returns {Array<number>} An array of six numbers describing a tight
  * axis-aligned bounding box
- * that fits this implicit surface within the given area. The first three numbers
+ * that fits this implicit surface within the specified area. The first three numbers
  * are the smallest-valued x-, y-, and z-coordinates, and the
  * last three are the largest-valued x-, y-, and z-coordinates.
- * If no part of the boundary of the surface lies within the given
+ * If no part of the boundary of the surface lies within the specified
  * area, returns the array [Inf, Inf, Inf, -Inf,
  * -Inf, -Inf].
  */
@@ -533,10 +533,9 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
   return bounds;
 };
 /**
- * Evaluates the grid points of the given three-dimensional area and adds to the
- * given mesh those points that are on or close to the boundary of this
+ * Evaluates the grid points of the specified three-dimensional area and adds to the specified mesh those points that are on or close to the boundary of this
  * implicit surface
- * within the given area.
+ * within the specified area.
  * @param {Mesh} mesh Mesh to store the points in.
  * @param {number} xsize Number of grid points along the x-axis. Must be 2 or greater.
  * @param {number} ysize Number of grid points along the y-axis. Must be 2 or greater.
@@ -575,9 +574,8 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
   return this;
 };
 /**
- * Evaluates the grid points of the given three-dimensional area and adds to the
- * given mesh the triangles and normals that make up the boundary of
- * this implicit surface within the given area.
+ * Evaluates the grid points of the specified three-dimensional area and adds to the specified mesh the triangles and normals that make up the boundary of
+ * this implicit surface within the specified area.
  * @param {Mesh} mesh Mesh to store the points in.
  * @param {number} xsize Number of grid points along the x-axis. Must be 2 or greater.
  * @param {number} ysize Number of grid points along the y-axis. Must be 2 or greater.

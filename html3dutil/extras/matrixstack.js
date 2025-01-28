@@ -39,7 +39,7 @@ MatrixStack.prototype.loadIdentity = function() {
   return this;
 };
 /**
- * Modifies the matrix at the top of this stack by replacing it with the given matrix.
+ * Modifies the matrix at the top of this stack by replacing it with the specified matrix.
  * @param {Array<number>} mat A matrix to replace the top of the stack with.
  * @returns {MatrixStack} This object.
  */
@@ -49,7 +49,7 @@ MatrixStack.prototype.loadMatrix = function(mat) {
 };
 /**
  * Modifies the matrix at the top of this stack by replacing it with the
- * transpose of the given matrix.
+ * transpose of the specified matrix.
  * @param {Array<number>} mat A matrix whose transpose will
  * replace the top of the stack.
  * @returns {MatrixStack} This object.

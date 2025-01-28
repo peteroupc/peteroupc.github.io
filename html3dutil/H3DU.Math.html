@@ -73,7 +73,7 @@ configurable control points.</li>
 <li><a href="#H3DU.Math.mat3copy">mat3copy</a><br>Returns a copy of a 3 &times; 3 matrix.</li>
 <li><a href="#H3DU.Math.mat3identity">mat3identity</a><br>Returns the identity 3 &times; 3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).</li>
-<li><a href="#H3DU.Math.mat3invert">mat3invert</a><br>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.</li>
+<li><a href="#H3DU.Math.mat3invert">mat3invert</a><br>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the specified transformation.</li>
 <li><a href="#H3DU.Math.mat3multiply">mat3multiply</a><br>Multiplies two 3 &times; 3 matrices.</li>
 <li><a href="#H3DU.Math.mat3transform">mat3transform</a><br>Transforms a 3-element vector with a 3 &times; 3 matrix and returns
 the transformed vector.</li>
@@ -86,8 +86,8 @@ in the form of a view frustum, or the limits in the &quot;camera&quot;&#39;s vie
 <li><a href="#H3DU.Math.mat4identity">mat4identity</a><br>Returns the identity 4 &times; 4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).</li>
 <li><a href="#H3DU.Math.mat4inverseTranspose3">mat4inverseTranspose3</a><br>Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
-the given 4 &times; 4 matrix.</li>
-<li><a href="#H3DU.Math.mat4invert">mat4invert</a><br>Finds the inverse of a 4 &times; 4 matrix, describing a transformation that undoes the given transformation.</li>
+the specified 4 &times; 4 matrix.</li>
+<li><a href="#H3DU.Math.mat4invert">mat4invert</a><br>Finds the inverse of a 4 &times; 4 matrix, describing a transformation that undoes the specified transformation.</li>
 <li><a href="#H3DU.Math.mat4isIdentity">mat4isIdentity</a><br>Returns whether a 4 &times; 4 matrix is the identity matrix.</li>
 <li><a href="#H3DU.Math.mat4lookat">mat4lookat</a><br>Returns a 4 &times; 4 matrix that represents a camera view,
 transforming world space coordinates to <i>eye space</i>
@@ -107,10 +107,10 @@ given an x-axis field of view.</li>
 <li><a href="#H3DU.Math.mat4projectVec3">mat4projectVec3</a><br>Transforms a 3-element vector with a 4 &times; 4 matrix and returns
 a perspective-correct version of the vector as a 3D point.</li>
 <li><a href="#H3DU.Math.mat4rotate">mat4rotate</a><br>Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>,
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>,
 and returns a new matrix.</li>
 <li><a href="#H3DU.Math.mat4rotated">mat4rotated</a><br>Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>.</li>
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>.</li>
 <li><a href="#H3DU.Math.mat4scale">mat4scale</a><br>Multiplies a 4 &times; 4 matrix by a scaling transformation.</li>
 <li><a href="#H3DU.Math.mat4scaleInPlace">mat4scaleInPlace</a><br>Modifies a 4 &times; 4 matrix by multiplying it by a
 scaling transformation.</li>
@@ -133,33 +133,31 @@ a new matrix.</li>
 unless all the normal&#39;s components are 0, and returns a new plane with the result.</li>
 <li><a href="#H3DU.Math.planeNormalizeInPlace">planeNormalizeInPlace</a><br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.html">unit vector</a>,
 unless all the normal&#39;s components are 0, and sets this plane to the result.</li>
-<li><a href="#H3DU.Math.quatConjugate">quatConjugate</a><br>Returns a quaternion that describes a rotation that undoes the given rotation (an &quot;inverted&quot; rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion&#39;s <a href="tutorial-glmath.html">axis of rotation</a>).</li>
+<li><a href="#H3DU.Math.quatConjugate">quatConjugate</a><br>Returns a quaternion that describes a rotation that undoes the specified rotation (an &quot;inverted&quot; rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion&#39;s <a href="tutorial-glmath.html">axis of rotation</a>).</li>
 <li><a href="#H3DU.Math.quatCopy">quatCopy</a><br>Returns a copy of a quaternion.</li>
 <li><a href="#H3DU.Math.quatDot">quatDot</a><br>Finds the dot product of two quaternions.</li>
 <li><a href="#H3DU.Math.quatFromAxisAngle">quatFromAxisAngle</a><br>Generates a quaternion from a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>,</li>
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>,</li>
 <li><a href="#H3DU.Math.quatFromMat4">quatFromMat4</a><br>Generates a quaternion from the vector rotation described in a 4 &times; 4 matrix.</li>
 <li><a href="#H3DU.Math.quatFromTaitBryan">quatFromTaitBryan</a><br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).</li>
 <li><a href="#H3DU.Math.quatFromVectors">quatFromVectors</a><br>Generates a quaternion describing a rotation between
 two 3-element vectors.</li>
 <li><a href="#H3DU.Math.quatIdentity">quatIdentity</a><br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).</li>
-<li><a href="#H3DU.Math.quatInvert">quatInvert</a><br>Returns a quaternion that describes a rotation that undoes the given rotation (an &quot;inverted&quot; rotation) and is converted to a <a href="tutorial-glmath.html">unit vector</a>.</li>
+<li><a href="#H3DU.Math.quatInvert">quatInvert</a><br>Returns a quaternion that describes a rotation that undoes the specified rotation (an &quot;inverted&quot; rotation) and is converted to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.quatIsIdentity">quatIsIdentity</a><br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).</li>
 <li><a href="#H3DU.Math.quatLength">quatLength</a><br>Returns the distance of this quaternion from the origin.</li>
 <li><a href="#H3DU.Math.quatMultiply">quatMultiply</a><br>Multiplies two quaternions, creating a composite rotation.</li>
-<li><a href="#H3DU.Math.quatNlerp">quatNlerp</a><br>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a linear interpolation function, and converts
+<li><a href="#H3DU.Math.quatNlerp">quatNlerp</a><br>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a linear interpolation function, and converts
 it to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.quatNormalize">quatNormalize</a><br>Converts a quaternion to a <a href="tutorial-glmath.html">unit vector</a>; returns a new quaternion.</li>
 <li><a href="#H3DU.Math.quatNormalizeInPlace">quatNormalizeInPlace</a><br>Converts a quaternion to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.quatRotate">quatRotate</a><br>Multiplies a quaternion by a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>.</li>
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>.</li>
 <li><a href="#H3DU.Math.quatScale">quatScale</a><br>Multiplies each element of a quaternion by a factor
 and returns the result as a new quaternion.</li>
 <li><a href="#H3DU.Math.quatScaleInPlace">quatScaleInPlace</a><br>Multiplies each element of a quaternion by a factor
 and stores the result in that quaternion.</li>
-<li><a href="#H3DU.Math.quatSlerp">quatSlerp</a><br>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a spherical interpolation function.</li>
+<li><a href="#H3DU.Math.quatSlerp">quatSlerp</a><br>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a spherical interpolation function.</li>
 <li><a href="#H3DU.Math.quatToAxisAngle">quatToAxisAngle</a><br>Calculates the vector rotation for this quaternion in the form
 of the angle to rotate the vector by and an <a href="tutorial-glmath.html">axis of rotation</a> to
 rotate that vector around.</li>
@@ -171,7 +169,7 @@ in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).<
 quaternion&#39;s vector rotation.</li>
 <li><a href="#H3DU.Math.vec2abs">vec2abs</a><br>Returns a new 2-element
 vector with the absolute value of each of its components.</li>
-<li><a href="#H3DU.Math.vec2absInPlace">vec2absInPlace</a><br>Sets each component of the given 2-element
+<li><a href="#H3DU.Math.vec2absInPlace">vec2absInPlace</a><br>Sets each component of the specified 2-element
 vector to its absolute value.</li>
 <li><a href="#H3DU.Math.vec2add">vec2add</a><br>Adds two 2-element vectors and returns a new
 vector with the result.</li>
@@ -179,9 +177,9 @@ vector with the result.</li>
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec2assign">vec2assign</a><br>Assigns the values of a 2-element vector into another
 2-element vector.</li>
-<li><a href="#H3DU.Math.vec2clamp">vec2clamp</a><br>Returns a 2-element vector in which each element of the given 2-element vector is clamped
+<li><a href="#H3DU.Math.vec2clamp">vec2clamp</a><br>Returns a 2-element vector in which each element of the specified 2-element vector is clamped
 so it&#39;s not less than one value or greater than another value.</li>
-<li><a href="#H3DU.Math.vec2clampInPlace">vec2clampInPlace</a><br>Clamps each element of the given 2-element vector
+<li><a href="#H3DU.Math.vec2clampInPlace">vec2clampInPlace</a><br>Clamps each element of the specified 2-element vector
 so it&#39;s not less than one value or greater than another value.</li>
 <li><a href="#H3DU.Math.vec2copy">vec2copy</a><br>Returns a copy of a 2-element vector.</li>
 <li><a href="#H3DU.Math.vec2dist">vec2dist</a><br>Finds the straight-line distance from one three-element vector
@@ -203,21 +201,21 @@ the same length but opposite direction.</li>
 <li><a href="#H3DU.Math.vec2normalize">vec2normalize</a><br>Converts a 2-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
 <li><a href="#H3DU.Math.vec2normalizeInPlace">vec2normalizeInPlace</a><br>Converts a 2-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.vec2perp">vec2perp</a><br>Returns an arbitrary 2-element vector that is perpendicular
-(orthogonal) to the given 2-element vector.</li>
-<li><a href="#H3DU.Math.vec2proj">vec2proj</a><br>Returns the projection of a 2-element vector on the given
+(orthogonal) to the specified 2-element vector.</li>
+<li><a href="#H3DU.Math.vec2proj">vec2proj</a><br>Returns the projection of a 2-element vector on the specified
 reference vector.</li>
 <li><a href="#H3DU.Math.vec2reflect">vec2reflect</a><br>Returns a vector that reflects off a surface.</li>
 <li><a href="#H3DU.Math.vec2scale">vec2scale</a><br>Multiplies each element of a 2-element vector by a factor.</li>
 <li><a href="#H3DU.Math.vec2scaleInPlace">vec2scaleInPlace</a><br>Multiplies each element of a 2-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor.</li>
+but its length is multiplied by the specified factor.</li>
 <li><a href="#H3DU.Math.vec2sub">vec2sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.</li>
 <li><a href="#H3DU.Math.vec2subInPlace">vec2subInPlace</a><br>Subtracts the second vector from the first vector and stores
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec3abs">vec3abs</a><br>Returns a new 3-element
 vector with the absolute value of each of its components.</li>
-<li><a href="#H3DU.Math.vec3absInPlace">vec3absInPlace</a><br>Sets each component of the given 3-element
+<li><a href="#H3DU.Math.vec3absInPlace">vec3absInPlace</a><br>Sets each component of the specified 3-element
 vector to its absolute value.</li>
 <li><a href="#H3DU.Math.vec3add">vec3add</a><br>Adds two 3-element vectors and returns a new
 vector with the result.</li>
@@ -225,9 +223,9 @@ vector with the result.</li>
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec3assign">vec3assign</a><br>Assigns the values of a 3-element vector into another
 3-element vector.</li>
-<li><a href="#H3DU.Math.vec3clamp">vec3clamp</a><br>Returns a 3-element vector in which each element of the given 3-element vector is clamped
+<li><a href="#H3DU.Math.vec3clamp">vec3clamp</a><br>Returns a 3-element vector in which each element of the specified 3-element vector is clamped
 so it&#39;s not less than one value or greater than another value.</li>
-<li><a href="#H3DU.Math.vec3clampInPlace">vec3clampInPlace</a><br>Clamps each element of the given 3-element vector
+<li><a href="#H3DU.Math.vec3clampInPlace">vec3clampInPlace</a><br>Clamps each element of the specified 3-element vector
 so it&#39;s not less than one value or greater than another value.</li>
 <li><a href="#H3DU.Math.vec3copy">vec3copy</a><br>Returns a copy of a 3-element vector.</li>
 <li><a href="#H3DU.Math.vec3cross">vec3cross</a><br>Finds the cross product of two 3-element vectors (called A and B).</li>
@@ -236,7 +234,7 @@ to another, treating both as 3D points.</li>
 <li><a href="#H3DU.Math.vec3dot">vec3dot</a><br>Finds the dot product of two 3-element vectors.</li>
 <li><a href="#H3DU.Math.vec3fromWindowPoint">vec3fromWindowPoint</a><br>Unprojects the <i>window coordinates</i> given in a
 3-element vector,
-using the given transformation matrix and viewport
+using the specified transformation matrix and viewport
 rectangle.</li>
 <li><a href="#H3DU.Math.vec3length">vec3length</a><br>Returns the distance of this 3-element vector from the origin,
 also known as its <i>length</i> or <i>magnitude</i>.</li>
@@ -254,25 +252,25 @@ the same length but opposite direction.</li>
 <li><a href="#H3DU.Math.vec3normalize">vec3normalize</a><br>Converts a 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
 <li><a href="#H3DU.Math.vec3normalizeInPlace">vec3normalizeInPlace</a><br>Converts a 3-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
 <li><a href="#H3DU.Math.vec3perp">vec3perp</a><br>Returns an arbitrary 3-element vector that is perpendicular
-(orthogonal) to the given 3-element vector.</li>
-<li><a href="#H3DU.Math.vec3proj">vec3proj</a><br>Returns the projection of a 3-element vector on the given
+(orthogonal) to the specified 3-element vector.</li>
+<li><a href="#H3DU.Math.vec3proj">vec3proj</a><br>Returns the projection of a 3-element vector on the specified
 reference vector.</li>
 <li><a href="#H3DU.Math.vec3reflect">vec3reflect</a><br>Returns a vector that reflects off a surface.</li>
 <li><a href="#H3DU.Math.vec3scale">vec3scale</a><br>Multiplies each element of a 3-element vector by a factor.</li>
 <li><a href="#H3DU.Math.vec3scaleInPlace">vec3scaleInPlace</a><br>Multiplies each element of a 3-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor.</li>
+but its length is multiplied by the specified factor.</li>
 <li><a href="#H3DU.Math.vec3sub">vec3sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.</li>
 <li><a href="#H3DU.Math.vec3subInPlace">vec3subInPlace</a><br>Subtracts the second vector from the first vector and stores
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec3toWindowPoint">vec3toWindowPoint</a><br>Transforms the 3D point specified in this 3-element vector to its
 <i>window coordinates</i>
-using the given transformation matrix and viewport rectangle.</li>
+using the specified transformation matrix and viewport rectangle.</li>
 <li><a href="#H3DU.Math.vec3triple">vec3triple</a><br>Finds the scalar triple product of three vectors (A, B, and C).</li>
 <li><a href="#H3DU.Math.vec4abs">vec4abs</a><br>Returns a new 4-element
 vector with the absolute value of each of its components.</li>
-<li><a href="#H3DU.Math.vec4absInPlace">vec4absInPlace</a><br>Sets each component of the given 4-element
+<li><a href="#H3DU.Math.vec4absInPlace">vec4absInPlace</a><br>Sets each component of the specified 4-element
 vector to its absolute value.</li>
 <li><a href="#H3DU.Math.vec4add">vec4add</a><br>Adds two 4-element vectors and returns a new
 vector with the result.</li>
@@ -280,8 +278,8 @@ vector with the result.</li>
 the result in the first vector.</li>
 <li><a href="#H3DU.Math.vec4assign">vec4assign</a><br>Assigns the values of a 4-element vector into another
 4-element vector.</li>
-<li><a href="#H3DU.Math.vec4clamp">vec4clamp</a><br>Returns a 4-element vector in which each element of the given 4-element vector is clamped</li>
-<li><a href="#H3DU.Math.vec4clampInPlace">vec4clampInPlace</a><br>Clamps each element of the given 4-element vector
+<li><a href="#H3DU.Math.vec4clamp">vec4clamp</a><br>Returns a 4-element vector in which each element of the specified 4-element vector is clamped</li>
+<li><a href="#H3DU.Math.vec4clampInPlace">vec4clampInPlace</a><br>Clamps each element of the specified 4-element vector
 so it&#39;s not less than one value or greater than another value.</li>
 <li><a href="#H3DU.Math.vec4copy">vec4copy</a><br>Returns a copy of a 4-element vector.</li>
 <li><a href="#H3DU.Math.vec4dot">vec4dot</a><br>Finds the dot product of two 4-element vectors.</li>
@@ -296,14 +294,14 @@ the same length but opposite direction.</li>
 the same length but opposite direction.</li>
 <li><a href="#H3DU.Math.vec4normalize">vec4normalize</a><br>Converts a 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>; returns a new vector.</li>
 <li><a href="#H3DU.Math.vec4normalizeInPlace">vec4normalizeInPlace</a><br>Converts a 4-element vector to a <a href="tutorial-glmath.html">unit vector</a>.</li>
-<li><a href="#H3DU.Math.vec4proj">vec4proj</a><br>Returns the projection of a 4-element vector on the given
+<li><a href="#H3DU.Math.vec4proj">vec4proj</a><br>Returns the projection of a 4-element vector on the specified
 reference vector.</li>
 <li><a href="#H3DU.Math.vec4scale">vec4scale</a><br>Multiplies each element of a 4-element vector by a factor, returning
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor.</li>
+but with its length multiplied by the specified factor.</li>
 <li><a href="#H3DU.Math.vec4scaleInPlace">vec4scaleInPlace</a><br>Multiplies each element of a 4-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor.</li>
+but its length is multiplied by the specified factor.</li>
 <li><a href="#H3DU.Math.vec4sub">vec4sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.</li>
 <li><a href="#H3DU.Math.vec4subInPlace">vec4subInPlace</a><br>Subtracts the second vector from the first vector and stores
@@ -460,7 +458,7 @@ center. (Type: Array.&lt;number&gt;)</p>
 <h3>(static) H3DU.Math.boxDimensions(box)</h3>
 
 <p>Finds the dimensions of a 3D bounding box. This is done by subtracting
-the first three values of the given array with its last three values.</p>
+the first three values of the specified array with its last three values.</p>
 
 <h4>Parameters</h4>
 
@@ -504,7 +502,7 @@ corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 a new vector with the result.</p>
 
 <p>Linear RGB is linear because of its linear relationship of light emitted
-by a surface of the given color.</p>
+by a surface of the specified color.</p>
 
 <h4>Parameters</h4>
 
@@ -515,7 +513,7 @@ by a surface of the given color.</p>
 <h4>Return Value</h4>
 
 <p>A three-element vector giving
-the red, green, and blue components, in that order, of the given color
+the red, green, and blue components, in that order, of the specified color
 in linear sRGB. The alpha component will be as specified
 in the &quot;srgb&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 
@@ -527,7 +525,7 @@ in the &quot;srgb&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 a new vector with the result.</p>
 
 <p>Linear RGB is linear because of its linear relationship of light emitted
-by a surface of the given color.</p>
+by a surface of the specified color.</p>
 
 <h4>Parameters</h4>
 
@@ -538,7 +536,7 @@ by a surface of the given color.</p>
 <h4>Return Value</h4>
 
 <p>lin A four-element vector giving
-the red, green, blue, and alpha components, in that order, of the given color
+the red, green, blue, and alpha components, in that order, of the specified color
 in companded sRGB. The alpha component will be as specified
 in the &quot;lin&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 
@@ -666,7 +664,7 @@ vectors unchanged when they are transformed with this matrix).</p>
 
 <h3>(static) H3DU.Math.mat3invert(m)</h3>
 
-<p>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.</p>
+<p>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the specified transformation.</p>
 
 <h4>Parameters</h4>
 
@@ -837,7 +835,7 @@ vectors unchanged when they are transformed with this matrix).</p>
 <h3>(static) H3DU.Math.mat4inverseTranspose3(m4)</h3>
 
 <p>Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
-the given 4 &times; 4 matrix.</p>
+the specified 4 &times; 4 matrix.</p>
 
 <p>This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
 for transforming surface normals in order to keep them perpendicular
@@ -862,7 +860,7 @@ can&#39;t be inverted, returns the identity 3 &times; 3 matrix. (Type: Array.&lt
 
 <h3>(static) H3DU.Math.mat4invert(m)</h3>
 
-<p>Finds the inverse of a 4 &times; 4 matrix, describing a transformation that undoes the given transformation.</p>
+<p>Finds the inverse of a 4 &times; 4 matrix, describing a transformation that undoes the specified transformation.</p>
 
 <h4>Parameters</h4>
 
@@ -1255,10 +1253,10 @@ the transformed vector&#39;s x-, y-, and z-coordinates. (Type: Array.&lt;number&
 <h3>(static) H3DU.Math.mat4rotate(mat, angle, v, vy, vz)</h3>
 
 <p>Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>,
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>,
 and returns a new matrix.
 The effect will be that the rotation transformation will
-happen before the transformation described in the given matrix,
+happen before the transformation described in the specified matrix,
 when applied in the global coordinate frame.</p>
 
 <h4>Parameters</h4>
@@ -1280,7 +1278,7 @@ when applied in the global coordinate frame.</p>
 <h3>(static) H3DU.Math.mat4rotated(angle, v, vy, vz)</h3>
 
 <p>Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>.</p>
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -1587,7 +1585,7 @@ current normal&#39;s length.</p>
 
 <h3>(static) H3DU.Math.quatConjugate(quat)</h3>
 
-<p>Returns a quaternion that describes a rotation that undoes the given rotation (an &quot;inverted&quot; rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion&#39;s <a href="tutorial-glmath.html">axis of rotation</a>). The return value won&#39;t necessarily be a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>Returns a quaternion that describes a rotation that undoes the specified rotation (an &quot;inverted&quot; rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion&#39;s <a href="tutorial-glmath.html">axis of rotation</a>). The return value won&#39;t necessarily be a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -1647,7 +1645,7 @@ their components (for example, <b>a</b>&#39;s X times <b>b</b>&#39;s X).</p>
 <h3>(static) H3DU.Math.quatFromAxisAngle(angle, v, vy, vz)</h3>
 
 <p>Generates a quaternion from a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>,</p>
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>,</p>
 
 <h4>Parameters</h4>
 
@@ -1740,7 +1738,7 @@ will be a unit vector. (Type: Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.Math.quatInvert(quat)</h3>
 
-<p>Returns a quaternion that describes a rotation that undoes the given rotation (an &quot;inverted&quot; rotation) and is converted to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>Returns a quaternion that describes a rotation that undoes the specified rotation (an &quot;inverted&quot; rotation) and is converted to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -1829,8 +1827,7 @@ in that order, and the cross product is not commutative (see also <a href="H3DU.
 
 <h3>(static) H3DU.Math.quatNlerp(q1, q2, factor)</h3>
 
-<p>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a linear interpolation function, and converts
+<p>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a linear interpolation function, and converts
 it to a <a href="tutorial-glmath.html">unit vector</a>.
 This is called a normalized linear interpolation, or &quot;nlerp&quot;.</p>
 
@@ -1908,7 +1905,7 @@ Note that due to rounding error, the vector&#39;s length might not be exactly eq
 <h3>(static) H3DU.Math.quatRotate(quat, angle, v, vy, vz)</h3>
 
 <p>Multiplies a quaternion by a rotation transformation that rotates vectors
-by the given rotation angle and around the given <a href="tutorial-glmath.html">axis of rotation</a>.
+by the specified rotation angle and around the specified <a href="tutorial-glmath.html">axis of rotation</a>.
 The result is such that the angle-axis
 rotation happens before the quaternion&#39;s rotation when applied
 in the global coordinate frame.</p>
@@ -1980,8 +1977,7 @@ and stores the result in that quaternion.</p>
 
 <h3>(static) H3DU.Math.quatSlerp(q1, q2, factor)</h3>
 
-<p>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a spherical interpolation function.
+<p>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a spherical interpolation function.
 This is called spherical linear interpolation, or &quot;slerp&quot;. (A spherical
 interpolation finds the shortest angle between the two quaternions -- which
 are treated as 4D vectors -- and then finds a vector with a smaller angle
@@ -2112,7 +2108,7 @@ vector with the absolute value of each of its components.</p>
 
 <h3>(static) H3DU.Math.vec2absInPlace(a)</h3>
 
-<p>Sets each component of the given 2-element
+<p>Sets each component of the specified 2-element
 vector to its absolute value.</p>
 
 <h4>Parameters</h4>
@@ -2134,7 +2130,7 @@ vector with the result. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come &quot;between&quot; the two vectors given (at their shortest angle) if all three start
 at the same position.</ul></p>
 
@@ -2158,7 +2154,7 @@ the result in the first vector. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come &quot;between&quot; the two vectors given (at their shortest angle) if all three start
 at the same position.</ul></p>
 
@@ -2195,7 +2191,7 @@ at the same position.</ul></p>
 
 <h3>(static) H3DU.Math.vec2clamp(a, min, max)</h3>
 
-<p>Returns a 2-element vector in which each element of the given 2-element vector is clamped
+<p>Returns a 2-element vector in which each element of the specified 2-element vector is clamped
 so it&#39;s not less than one value or greater than another value.</p>
 
 <h4>Parameters</h4>
@@ -2214,7 +2210,7 @@ so it&#39;s not less than one value or greater than another value.</p>
 
 <h3>(static) H3DU.Math.vec2clampInPlace(a, min, max)</h3>
 
-<p>Clamps each element of the given 2-element vector
+<p>Clamps each element of the specified 2-element vector
 so it&#39;s not less than one value or greater than another value.</p>
 
 <h4>Parameters</h4>
@@ -2477,7 +2473,7 @@ Note that due to rounding error, the vector&#39;s length might not be exactly eq
 <h3>(static) H3DU.Math.vec2perp(vec)</h3>
 
 <p>Returns an arbitrary 2-element vector that is perpendicular
-(orthogonal) to the given 2-element vector. The return value
+(orthogonal) to the specified 2-element vector. The return value
 will not be converted to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
@@ -2495,7 +2491,7 @@ vector. Returns (0,0) if &quot;vec&quot; is (0,0). (Type: Array.&lt;number&gt;)<
 
 <h3>(static) H3DU.Math.vec2proj(vec, refVec)</h3>
 
-<p>Returns the projection of a 2-element vector on the given
+<p>Returns the projection of a 2-element vector on the specified
 reference vector. Assuming both vectors
 start at the same point, the resulting vector
 will be parallel to the
@@ -2542,7 +2538,7 @@ as &quot;incident&quot; but is reflected away from the surface. (Type: Array.&lt
 
 <p>Multiplies each element of a 2-element vector by a factor. Returns
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor. If the factor
+but with its length multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector&#39;s components will all be 0.</p>
 
@@ -2563,7 +2559,7 @@ in the opposite direction; if zero, the vector&#39;s components will all be 0.</
 
 <p>Multiplies each element of a 2-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor. If the factor
+but its length is multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector&#39;s components will all be 0.</p>
 
@@ -2639,7 +2635,7 @@ vector with the absolute value of each of its components.</p>
 
 <h3>(static) H3DU.Math.vec3absInPlace(a)</h3>
 
-<p>Sets each component of the given 3-element
+<p>Sets each component of the specified 3-element
 vector to its absolute value.</p>
 
 <h4>Parameters</h4>
@@ -2661,7 +2657,7 @@ vector with the result. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come &quot;between&quot; the two vectors given (at their shortest angle) if all three start
 at the same position.</ul></p>
 
@@ -2685,7 +2681,7 @@ the result in the first vector. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come &quot;between&quot; the two vectors given (at their shortest angle) if all three start
 at the same position.</ul></p>
 
@@ -2722,7 +2718,7 @@ at the same position.</ul></p>
 
 <h3>(static) H3DU.Math.vec3clamp(a, min, max)</h3>
 
-<p>Returns a 3-element vector in which each element of the given 3-element vector is clamped
+<p>Returns a 3-element vector in which each element of the specified 3-element vector is clamped
 so it&#39;s not less than one value or greater than another value.</p>
 
 <h4>Parameters</h4>
@@ -2741,7 +2737,7 @@ so it&#39;s not less than one value or greater than another value.</p>
 
 <h3>(static) H3DU.Math.vec3clampInPlace(a, min, max)</h3>
 
-<p>Clamps each element of the given 3-element vector
+<p>Clamps each element of the specified 3-element vector
 so it&#39;s not less than one value or greater than another value.</p>
 
 <h4>Parameters</h4>
@@ -2932,7 +2928,7 @@ if(H3DU.Math.vec3dot(vector, vector)&lt;20*20) {
 
 <p>Unprojects the <i>window coordinates</i> given in a
 3-element vector,
-using the given transformation matrix and viewport
+using the specified transformation matrix and viewport
 rectangle.</p>
 
 <p>In the window coordinate space, x-coordinates increase
@@ -3165,7 +3161,7 @@ Note that due to rounding error, the vector&#39;s length might not be exactly eq
 <h3>(static) H3DU.Math.vec3perp(vec)</h3>
 
 <p>Returns an arbitrary 3-element vector that is perpendicular
-(orthogonal) to the given 3-element vector. The return value
+(orthogonal) to the specified 3-element vector. The return value
 will not be converted to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
@@ -3183,7 +3179,7 @@ vector. Returns (0,0,0) if &quot;vec&quot; is (0,0,0). (Type: Array.&lt;number&g
 
 <h3>(static) H3DU.Math.vec3proj(vec, refVec)</h3>
 
-<p>Returns the projection of a 3-element vector on the given
+<p>Returns the projection of a 3-element vector on the specified
 reference vector. Assuming both vectors
 start at the same point, the resulting vector
 will be parallel to the
@@ -3230,7 +3226,7 @@ as &quot;incident&quot; but is reflected away from the surface. (Type: Array.&lt
 
 <p>Multiplies each element of a 3-element vector by a factor. Returns
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor. If the factor
+but with its length multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector&#39;s components will all be 0.</p>
 
@@ -3251,7 +3247,7 @@ in the opposite direction; if zero, the vector&#39;s components will all be 0.</
 
 <p>Multiplies each element of a 3-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor. If the factor
+but its length is multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector&#39;s components will all be 0.</p>
 
@@ -3312,7 +3308,7 @@ This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (T
 
 <p>Transforms the 3D point specified in this 3-element vector to its
 <i>window coordinates</i>
-using the given transformation matrix and viewport rectangle.</p>
+using the specified transformation matrix and viewport rectangle.</p>
 
 <h4>Parameters</h4>
 
@@ -3390,7 +3386,7 @@ vector with the absolute value of each of its components.</p>
 
 <h3>(static) H3DU.Math.vec4absInPlace(a)</h3>
 
-<p>Sets each component of the given 4-element
+<p>Sets each component of the specified 4-element
 vector to its absolute value.</p>
 
 <h4>Parameters</h4>
@@ -3412,7 +3408,7 @@ vector with the result. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come &quot;between&quot; the two vectors given (at their shortest angle) if all three start
 at the same position.</ul></p>
 
@@ -3436,7 +3432,7 @@ the result in the first vector. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come &quot;between&quot; the two vectors given (at their shortest angle) if all three start
 at the same position.</ul></p>
 
@@ -3474,7 +3470,7 @@ This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (T
 
 <h3>(static) H3DU.Math.vec4clamp(a, min, max)</h3>
 
-<p>Returns a 4-element vector in which each element of the given 4-element vector is clamped</p>
+<p>Returns a 4-element vector in which each element of the specified 4-element vector is clamped</p>
 
 <h4>Parameters</h4>
 
@@ -3492,7 +3488,7 @@ This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (T
 
 <h3>(static) H3DU.Math.vec4clampInPlace(a, min, max)</h3>
 
-<p>Clamps each element of the given 4-element vector
+<p>Clamps each element of the specified 4-element vector
 so it&#39;s not less than one value or greater than another value.</p>
 
 <h4>Parameters</h4>
@@ -3669,7 +3665,7 @@ Note that due to rounding error, the vector&#39;s length might not be exactly eq
 
 <h3>(static) H3DU.Math.vec4proj(vec, refVec)</h3>
 
-<p>Returns the projection of a 4-element vector on the given
+<p>Returns the projection of a 4-element vector on the specified
 reference vector. Assuming both vectors
 start at the same point, the resulting vector
 will be parallel to the
@@ -3698,7 +3694,7 @@ length is 0 or extremely close to 0. (Type: Array.&lt;number&gt;)</p>
 
 <p>Multiplies each element of a 4-element vector by a factor, returning
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor. If the factor
+but with its length multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector&#39;s components will all be 0.</p>
 
@@ -3719,7 +3715,7 @@ in the opposite direction; if zero, the vector&#39;s components will all be 0.</
 
 <p>Multiplies each element of a 4-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor. If the factor
+but its length is multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector&#39;s components will all be 0.</p>
 

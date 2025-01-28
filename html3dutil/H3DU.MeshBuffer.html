@@ -71,12 +71,12 @@ return geom
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#H3DU.MeshBuffer.fromPositions">fromPositions</a><br />Creates a new mesh buffer with the given array of vertex positions.</li>
-  <li><a href="#H3DU.MeshBuffer.fromPositionsNormals">fromPositionsNormals</a><br />Creates a new mesh buffer with the given array of vertex positions
+  <li><a href="#H3DU.MeshBuffer.fromPositions">fromPositions</a><br />Creates a new mesh buffer with the specified array of vertex positions.</li>
+  <li><a href="#H3DU.MeshBuffer.fromPositionsNormals">fromPositionsNormals</a><br />Creates a new mesh buffer with the specified array of vertex positions
 and vertex normals.</li>
-  <li><a href="#H3DU.MeshBuffer.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br />Creates a new mesh buffer with the given array of vertex positions,
+  <li><a href="#H3DU.MeshBuffer.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br />Creates a new mesh buffer with the specified array of vertex positions,
 vertex normals, and texture coordinates.</li>
-  <li><a href="#H3DU.MeshBuffer.fromPositionsUV">fromPositionsUV</a><br />Creates a new mesh buffer with the given array of vertex positions
+  <li><a href="#H3DU.MeshBuffer.fromPositionsUV">fromPositionsUV</a><br />Creates a new mesh buffer with the specified array of vertex positions
 and texture coordinates.</li>
   <li><a href="#H3DU.MeshBuffer_getAttribute">getAttribute</a><br />Gets a vertex attribute included in this mesh buffer.</li>
   <li><a href="#H3DU.MeshBuffer_getBounds">getBounds</a><br />Finds the tightest
@@ -107,9 +107,9 @@ existing attribute’s information).</li>
 mesh buffer (or sets an
 existing attribute’s information), taking a semantic index as
 an additional parameter.</li>
-  <li><a href="#H3DU.MeshBuffer_setColor">setColor</a><br />Sets all the vertices in this mesh to the given color, by
+  <li><a href="#H3DU.MeshBuffer_setColor">setColor</a><br />Sets all the vertices in this mesh to the specified color, by
 assigning each value with the attribute semantic <code>COLOR</code>
-to the given color.</li>
+to the specified color.</li>
   <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br />Sets the vertex indices used by this mesh buffer.</li>
   <li><a href="#H3DU.MeshBuffer_setType">setType</a><br />Sets the type of graphics primitives stored in this mesh buffer.</li>
   <li><a href="#H3DU.MeshBuffer_transform">transform</a><br />Transforms the positions and normals of all the vertices currently
@@ -143,7 +143,7 @@ or point) in this mesh buffer.</li>
 <p><a name="H3DU.MeshBuffer.fromPositions"></a>
 ### (static) H3DU.MeshBuffer.fromPositions(vertices, [indices])</p>
 
-<p>Creates a new mesh buffer with the given array of vertex positions.</p>
+<p>Creates a new mesh buffer with the specified array of vertex positions.</p>
 
 <h4 id="parameters">Parameters</h4>
 
@@ -200,7 +200,7 @@ var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
 <p><a name="H3DU.MeshBuffer.fromPositionsNormals"></a>
 ### (static) H3DU.MeshBuffer.fromPositionsNormals(vertices, [indices])</p>
 
-<p>Creates a new mesh buffer with the given array of vertex positions
+<p>Creates a new mesh buffer with the specified array of vertex positions
 and vertex normals.</p>
 
 <h4 id="parameters-1">Parameters</h4>
@@ -262,7 +262,7 @@ var meshBuffer=MeshBuffer.fromPositionsNormals(vertices, indices);
 <p><a name="H3DU.MeshBuffer.fromPositionsNormalsUV"></a>
 ### (static) H3DU.MeshBuffer.fromPositionsNormalsUV(vertices, [indices])</p>
 
-<p>Creates a new mesh buffer with the given array of vertex positions,
+<p>Creates a new mesh buffer with the specified array of vertex positions,
 vertex normals, and texture coordinates.</p>
 
 <h4 id="parameters-2">Parameters</h4>
@@ -326,7 +326,7 @@ var meshBuffer=MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 <p><a name="H3DU.MeshBuffer.fromPositionsUV"></a>
 ### (static) H3DU.MeshBuffer.fromPositionsUV(vertices, [indices])</p>
 
-<p>Creates a new mesh buffer with the given array of vertex positions
+<p>Creates a new mesh buffer with the specified array of vertex positions
 and texture coordinates.</p>
 
 <h4 id="parameters-3">Parameters</h4>
@@ -405,7 +405,7 @@ var meshBuffer=MeshBuffer.fromPositionsUV(vertices, indices);
       </tbody>
     </table>
   </li>
-  <li><code>semanticIndex</code> (Type: number) (optional)<br />The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if “name” is a string. Otherwise, if null or omitted, the default value is 0.</li>
+  <li><code>semanticIndex</code> (Type: number) (optional)<br />The set index of the attribute for the specified semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if “name” is a string. Otherwise, if null or omitted, the default value is 0.</li>
 </ul>
 
 <h4 id="return-value-4">Return Value</h4>
@@ -775,7 +775,7 @@ stored in a vertex buffer.
 
 #### Return Value
 
-This object. Throws an error if the given
+This object. Throws an error if the specified
 semantic is unsupported. (Type: MeshBuffer)
 
 <a name="H3DU.MeshBuffer_setAttributeEx"></a>
@@ -791,7 +791,7 @@ stored in a vertex buffer.
 #### Parameters
 
 * `name` (Type: number | string)<br />An attribute semantic, such as <a href="Semantic.html#Semantic.POSITION">Semantic.POSITION</a>, "POSITION", or "TEXCOORD_0". Throws an error if this value is a string and the string is invalid.
-* `index` (Type: number)<br />The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
+* `index` (Type: number)<br />The semantic index of the attribute for the specified semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if "name" is a string.
 * `buffer` (Type: Float32Array | Array | BufferAccessor)<br />The buffer where the per-vertex data is stored. If this parameter is an (untyped) Array, converts that parameter to a Float32Array.
 * `countPerValue` (Type: number) (optional)<br />The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If "buffer" is a BufferAccessor, the value of "countPerValue" is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.
 * `offset` (Type: number) (optional)<br />The index into the array (starting from 0) where the first per-vertex item starts. If null, undefined, or omitted, the default is 0. Throws an error if less than 0. If "buffer" is a BufferAccessor, the value of "offset" is taken from that accessor and this parameter is ignored.
@@ -799,15 +799,15 @@ stored in a vertex buffer.
 
 #### Return Value
 
-This object.Throws an error if the given
+This object.Throws an error if the specified
 semantic is unsupported. (Type: MeshBuffer)
 
 <a name="H3DU.MeshBuffer_setColor"></a>
 ### H3DU.MeshBuffer#setColor(color)
 
-Sets all the vertices in this mesh to the given color, by
+Sets all the vertices in this mesh to the specified color, by
 assigning each value with the attribute semantic <code>COLOR</code>
-to the given color. (If the attribute's count per value
+to the specified color. (If the attribute's count per value
 is less than 4, each such value will be set to as many elements of the converted 4-element
 color as possible.) If an attribute with the semantic <code>COLOR</code>
 doesn't exist, an attribute with the semantic <code>COLOR_0</code> and a count per
@@ -947,7 +947,7 @@ or point) in this mesh buffer.
 #### Parameters
 
 * `primitiveIndex` (Type: number)<br />The index (counting from 0) of the primitive whose indices will be retrieved.
-* `ret` (Type: Array.&lt;number&gt;)<br />An array where the vertex indices for the given primitive will be stored. If this mesh buffer stores triangles, three indices will be stored; if lines, two; and if points, one.
+* `ret` (Type: Array.&lt;number&gt;)<br />An array where the vertex indices for the specified primitive will be stored. If this mesh buffer stores triangles, three indices will be stored; if lines, two; and if points, one.
 
 #### Return Value
 

@@ -246,7 +246,7 @@ The algorithm, called **Algorithm D** in this document, follows.
     - Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the maximum range of _f_ in a window of size _h_.
     - For example, if _f_ is _Lipschitz continuous_ with Lipschitz constant _M_ or less[^13], its modulus of continuity is _&omega;_(_h_) = _M_\*_h_. The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
     - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-2. Run _Algorithm C_ with the given parameters _p_, _q_, $\kappa$, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
+2. Run _Algorithm C_ with the specified parameters _p_, _q_, $\kappa$, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
 A simpler version of _Algorithm D_ takes the sample mean as the basis for the randomized estimate, that is, _n_ samples are taken from the stream and averaged.  As with _Algorithm D_, the following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm, called **Algorithm E** in this document, follows:

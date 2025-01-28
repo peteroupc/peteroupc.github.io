@@ -67,7 +67,7 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
  * @param {string} name Name from the OBJ file of the portion
  * of the model to use.
  * @returns {H3DU.ShapeGroup} Group of shapes. The group
- * will be empty if no shapes with the given name exist.
+ * will be empty if no shapes with the specified name exist.
  */
 H3DU.ObjData.prototype.toShapeFromName = function(name) {
   var multi = new H3DU.ShapeGroup();

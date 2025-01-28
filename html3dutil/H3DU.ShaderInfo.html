@@ -68,7 +68,7 @@ a raster effect (postprocessing effect) to a texture.</li>
 a raster effect to a texture.</li>
 <li><a href="#H3DU.ShaderInfo.makeInvertEffect">makeInvertEffect</a><br>Generates source code for a shader program that inverts the colors of a texture.</li>
 <li><a href="#H3DU.ShaderInfo_setSemantic">setSemantic</a><br>Sets the semantic for a vertex attribute.</li>
-<li><a href="#H3DU.ShaderInfo_setUniformSemantic">setUniformSemantic</a><br>Sets a semantic for the given named uniform.</li>
+<li><a href="#H3DU.ShaderInfo_setUniformSemantic">setUniformSemantic</a><br>Sets a semantic for the specified named uniform.</li>
 <li><a href="#H3DU.ShaderInfo_setUniforms">setUniforms</a><br>Sets the values of one or more uniforms used by this shader program.</li>
 </ul>
 
@@ -177,7 +177,7 @@ a raster effect (postprocessing effect) to a texture.</p>
 
 <p>vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)</p>
 
-<p>where <code>sampler</code> is the texture sampler, <code>uvCoord</code> is the texture coordinates ranging from 0 to 1 in each component, <code>textureSize</code> is the dimensions of the texture in pixels, and the return value is the new color at the given texture coordinates. Besides this requirement, the shader code is also free to define additional uniforms, constants, functions, and so on (but not another &quot;main&quot; function).</p></li>
+<p>where <code>sampler</code> is the texture sampler, <code>uvCoord</code> is the texture coordinates ranging from 0 to 1 in each component, <code>textureSize</code> is the dimensions of the texture in pixels, and the return value is the new color at the specified texture coordinates. Besides this requirement, the shader code is also free to define additional uniforms, constants, functions, and so on (but not another &quot;main&quot; function).</p></li>
 </ul>
 
 <h4>Return Value</h4>
@@ -222,19 +222,19 @@ a raster effect to a texture.</p>
 <ul>
 <li><code>name</code> (Type: string)<br>Name of the attribute.</li>
 <li><code>semantic</code> (Type: Number | String)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;.</li>
-<li><code>semanticIndex</code> (Type: number)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;semantic&quot; is a string.</li>
+<li><code>semanticIndex</code> (Type: number)<br>The set index of the attribute for the specified semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;semantic&quot; is a string.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. Throws an error if the given
+<p>This object. Throws an error if the specified
 semantic is unsupported. (Type: <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>)</p>
 
 <p><a name='H3DU.ShaderInfo_setUniformSemantic'></a></p>
 
 <h3>H3DU.ShaderInfo#setUniformSemantic(u, sem)</h3>
 
-<p>Sets a semantic for the given named uniform.</p>
+<p>Sets a semantic for the specified named uniform.</p>
 
 <h4>Parameters</h4>
 

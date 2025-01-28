@@ -68,7 +68,7 @@ ObjData.prototype.loadTextures=function(scene,resolved,rejected){
  * @param {string} name Name from the OBJ file of the portion
  * of the model to use.
  * @return {glutil.ShapeGroup} Group of shapes. The group
- * will be empty if no shapes with the given name exist.
+ * will be empty if no shapes with the specified name exist.
  */
 ObjData.prototype.toShapeFromName=function(scene, name){
  var multi=new ShapeGroup();

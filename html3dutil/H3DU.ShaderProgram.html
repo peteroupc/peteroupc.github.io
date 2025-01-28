@@ -42,13 +42,13 @@ log is output to the JavaScript console.</p>
 
 <ul>
 <li><a href="#H3DU.ShaderProgram_dispose">dispose</a><br>Disposes resources from this shader program.</li>
-<li><a href="#H3DU.ShaderProgram_get">get</a><br>Gets the location of the given uniform or attribute&#39;s name in this program.</li>
+<li><a href="#H3DU.ShaderProgram_get">get</a><br>Gets the location of the specified uniform or attribute&#39;s name in this program.</li>
 <li><a href="#H3DU.ShaderProgram_getContext">getContext</a><br>Gets the WebGL context associated with this shader program object.</li>
 <li><a href="#H3DU.ShaderProgram.getDefaultFragment">getDefaultFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultFragment">H3DU.ShaderInfo.getDefaultFragment</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.getDefaultVertex">getDefaultVertex</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.getDefaultVertex">H3DU.ShaderInfo.getDefaultVertex</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.getEdgeDetectEffect">getEdgeDetectEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEdgeDetectEffect">H3DU.ShaderInfo.makeEdgeDetectEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.getInvertEffect">getInvertEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeInvertEffect">H3DU.ShaderInfo.makeInvertEffect</a> instead.</b></li>
-<li><a href="#H3DU.ShaderProgram_getUniform">getUniform</a><br>Gets the value of the given uniform in this program.</li>
+<li><a href="#H3DU.ShaderProgram_getUniform">getUniform</a><br>Gets the value of the specified uniform in this program.</li>
 <li><a href="#H3DU.ShaderProgram.makeCopyEffect">makeCopyEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeCopyEffect">H3DU.ShaderInfo.makeCopyEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.makeEffect">makeEffect</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffect">H3DU.ShaderInfo.makeEffect</a> instead.</b></li>
 <li><a href="#H3DU.ShaderProgram.makeEffectFragment">makeEffectFragment</a><br><b>Deprecated: Use <a href="H3DU.ShaderInfo.html#H3DU.ShaderInfo.makeEffectFragment">H3DU.ShaderInfo.makeEffectFragment</a> instead.</b></li>
@@ -71,7 +71,7 @@ context associated with it.</li>
 
 <h3>H3DU.ShaderProgram#get(name)</h3>
 
-<p>Gets the location of the given uniform or attribute&#39;s name in this program.
+<p>Gets the location of the specified uniform or attribute&#39;s name in this program.
 (Although the location may change each time the shader program
 is linked, that normally only happens upon construction
 in the case of H3DU.ShaderInfo.)</p>
@@ -167,7 +167,7 @@ the source texture&#39;s edges.</p>
 
 <h3>H3DU.ShaderProgram#getUniform(name)</h3>
 
-<p>Gets the value of the given uniform in this program. This method
+<p>Gets the value of the specified uniform in this program. This method
 may be called at any time, even if this program is not currently the
 active program in the WebGL context.</p>
 
@@ -211,7 +211,7 @@ a raster effect (postprocessing effect) to a texture.</p>
 
 <p>vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize)</p>
 
-<p>where <code>sampler</code> is the texture sampler, <code>uvCoord</code> is the texture coordinates ranging from 0 to 1 in each component, <code>textureSize</code> is the dimensions of the texture in pixels, and the return value is the new color at the given texture coordinates. Besides this requirement, the shader code is also free to define additional uniforms, constants, functions, and so on (but not another &quot;main&quot; function).</p></li>
+<p>where <code>sampler</code> is the texture sampler, <code>uvCoord</code> is the texture coordinates ranging from 0 to 1 in each component, <code>textureSize</code> is the dimensions of the texture in pixels, and the return value is the new color at the specified texture coordinates. Besides this requirement, the shader code is also free to define additional uniforms, constants, functions, and so on (but not another &quot;main&quot; function).</p></li>
 </ul>
 
 <h4>Return Value</h4>

@@ -20,7 +20,7 @@ export const Polyhedra = function() {
   // NOTE: empty because no instance properties
 };
 /**
- * Normalizes the distance from the origin to each vertex in the given
+ * Normalizes the distance from the origin to each vertex in the specified
  * array to a fixed radius.
  * @param {Array<number>} vertices An array of vertices, where each
  * vertex's x-, y-, and z-coordinates are stored as three elements of that array.
@@ -61,7 +61,7 @@ Polyhedra.makeSphere = function(vi, radius, level) {
   const vertices = vi[0];
   const indices = vi[1];
   if(typeof level === "undefined" || level === null || level <= 0) {
-    // Scale the vertices to the given radius
+    // Scale the vertices to the specified radius
     let i;
     for (i = 0; i < vertices.length; i += 3) {
       vertices[i] *= radius;

@@ -40,29 +40,29 @@ the HTML 3D Library. Example:</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.ArcLengthParamCurve_accel">accel</a><br>Finds an approximate acceleration vector at the given u-coordinate of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_accel">accel</a><br>Finds an approximate acceleration vector at the specified u-coordinate of this curve.</li>
 <li><a href="#H3DU.ArcLengthParamCurve_arcLength">arcLength</a><br>Finds the arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.</li>
+curve and the point at the specified u-coordinate of this curve.</li>
 <li><a href="#H3DU.ArcLengthParamCurve_endPoints">endPoints</a><br>Gets the endpoints of this curve.</li>
-<li><a href="#H3DU.ArcLengthParamCurve_evaluate">evaluate</a><br>Generates a point on the curve which is the given distance away
+<li><a href="#H3DU.ArcLengthParamCurve_evaluate">evaluate</a><br>Generates a point on the curve which is the specified distance away
 from the start of the curve.</li>
-<li><a href="#H3DU.ArcLengthParamCurve_getCoordinate">getCoordinate</a><br>Finds the u-coordinate for the point on the curve which is the given distance away
+<li><a href="#H3DU.ArcLengthParamCurve_getCoordinate">getCoordinate</a><br>Finds the u-coordinate for the point on the curve which is the specified distance away
 from the start of the curve.</li>
 <li><a href="#H3DU.ArcLengthParamCurve_getPoints">getPoints</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.ArcLengthParamCurve_normal">normal</a><br>Finds an approximate principal normal vector at the given u-coordinate of this curve.</li>
-<li><a href="#H3DU.ArcLengthParamCurve_velocity">velocity</a><br>Finds an approximate velocity vector at the given u-coordinate of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_normal">normal</a><br>Finds an approximate principal normal vector at the specified u-coordinate of this curve.</li>
+<li><a href="#H3DU.ArcLengthParamCurve_velocity">velocity</a><br>Finds an approximate velocity vector at the specified u-coordinate of this curve.</li>
 </ul>
 
 <p><a name='H3DU.ArcLengthParamCurve_accel'></a></p>
 
 <h3>H3DU.ArcLengthParamCurve#accel(u)</h3>
 
-<p>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+<p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second derivative of the curve&#39;s position at the specified coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -80,7 +80,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <h3>H3DU.ArcLengthParamCurve#arcLength(u)</h3>
 
 <p>Finds the arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.</p>
+curve and the point at the specified u-coordinate of this curve.</p>
 
 <h4>Parameters</h4>
 
@@ -90,7 +90,7 @@ curve and the point at the given u-coordinate of this curve.</p>
 
 <h4>Return Value</h4>
 
-<p>The arc length of this curve at the given u-coordinate. (Type: Array.&lt;number&gt;)</p>
+<p>The arc length of this curve at the specified u-coordinate. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.ArcLengthParamCurve_endPoints'></a></p>
 
@@ -109,7 +109,7 @@ total length). (Type: Array.&lt;number&gt;)</p>
 
 <h3>H3DU.ArcLengthParamCurve#evaluate(u)</h3>
 
-<p>Generates a point on the curve which is the given distance away
+<p>Generates a point on the curve which is the specified distance away
 from the start of the curve.</p>
 
 <h4>Parameters</h4>
@@ -120,14 +120,14 @@ from the start of the curve.</p>
 
 <h4>Return Value</h4>
 
-<p>An array specifying the position of the given
+<p>An array specifying the position of the specified
 point. It will have as many elements as for the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.ArcLengthParamCurve_getCoordinate'></a></p>
 
 <h3>H3DU.ArcLengthParamCurve#getCoordinate(u)</h3>
 
-<p>Finds the u-coordinate for the point on the curve which is the given distance away
+<p>Finds the u-coordinate for the point on the curve which is the specified distance away
 from the start of the curve. This can be used as the u-coordinate to
 pass to the underlying <a href="H3DU.Curve.html">curve evaluator object</a>&#39;s
 methods. (Note that velocity and acceleration depend on parameterization; for
@@ -142,7 +142,7 @@ than for this one, even though both vectors generally point in the same directio
 
 <h4>Return Value</h4>
 
-<p>The u-coordinate for the given point. (Type: number)</p>
+<p>The u-coordinate for the specified point. (Type: number)</p>
 
 <h4>Example</h4>
 
@@ -177,7 +177,7 @@ points.push(this.getCoordinate(dist));
 
 <h3>H3DU.ArcLengthParamCurve#normal(u)</h3>
 
-<p>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+<p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
 
@@ -200,12 +200,12 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <h3>H3DU.ArcLengthParamCurve#velocity(u)</h3>
 
-<p>Finds an approximate velocity vector at the given u-coordinate of this curve.
+<p>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).</p>
 
-<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>velocity</b> of a curve is a vector which is the derivative of the curve&#39;s position at the specified coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 

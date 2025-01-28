@@ -28,7 +28,7 @@ of a frame buffer using a particular shader.</li>
 <li><a href="#H3DU.Batch3D_getProjectionViewMatrix">getProjectionViewMatrix</a><br>Gets the current projection matrix multiplied by the current
 view matrix for this batch of shapes.</li>
 <li><a href="#H3DU.Batch3D_getShape">getShape</a><br>Gets the shape or shape group located
-in this batch at the given index.</li>
+in this batch at the specified index.</li>
 <li><a href="#H3DU.Batch3D_getViewMatrix">getViewMatrix</a><br>Gets the current view matrix for this batch of shapes.</li>
 <li><a href="#H3DU.Batch3D_ortho2DAspect">ortho2DAspect</a><br>Uses a 2D orthographic projection for this batch.</li>
 <li><a href="#H3DU.Batch3D_orthoAspect">orthoAspect</a><br>Uses an orthographic projection for this batch.</li>
@@ -38,7 +38,7 @@ and points) composed by all shapes in this batch of shapes.</li>
 <li><a href="#H3DU.Batch3D_removeShape">removeShape</a><br>Removes all instances of a 3D shape from this batch of shapes.</li>
 <li><a href="#H3DU.Batch3D_setLookAt">setLookAt</a><br>Sets this batch&#39;s view matrix to represent a camera view.</li>
 <li><a href="#H3DU.Batch3D_setProjectionMatrix">setProjectionMatrix</a><br>Sets the projection matrix for this batch.</li>
-<li><a href="#H3DU.Batch3D_setShape">setShape</a><br>Sets a shape or shape group at the given index in this batch.</li>
+<li><a href="#H3DU.Batch3D_setShape">setShape</a><br>Sets a shape or shape group at the specified index in this batch.</li>
 <li><a href="#H3DU.Batch3D_setViewMatrix">setViewMatrix</a><br>Sets the current view matrix for this batch of shapes.</li>
 <li><a href="#H3DU.Batch3D_shapeCount">shapeCount</a><br>Returns the number of shapes and/or shape groups that
 are direct children of this batch.</li>
@@ -124,7 +124,7 @@ projection-view matrix. (Type: Array.&lt;number&gt;)</p>
 <h3>H3DU.Batch3D#getShape(index)</h3>
 
 <p>Gets the shape or shape group located
-in this batch at the given index.</p>
+in this batch at the specified index.</p>
 
 <h4>Parameters</h4>
 
@@ -135,7 +135,7 @@ in this batch at the given index.</p>
 <h4>Return Value</h4>
 
 <p>The shape or shape group located
-in this batch at the given index, or null if none is found there. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
+in this batch at the specified index, or null if none is found there. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 
 <p><a name='H3DU.Batch3D_getViewMatrix'></a></p>
 
@@ -293,13 +293,13 @@ This method takes a camera&#39;s position (<code>eye</code>), and the point the 
 
 <h3>H3DU.Batch3D#setShape(index, shape)</h3>
 
-<p>Sets a shape or shape group at the given index in this batch.</p>
+<p>Sets a shape or shape group at the specified index in this batch.</p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>index</code> (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.</li>
-<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>Shape object to set at the given index.</li>
+<li><code>shape</code> (Type: <a href="H3DU.Shape.html">H3DU.Shape</a> | <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)<br>Shape object to set at the specified index.</li>
 </ul>
 
 <h4>Return Value</h4>

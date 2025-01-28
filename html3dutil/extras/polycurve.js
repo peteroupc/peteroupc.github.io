@@ -179,7 +179,7 @@ licensed under the Unlicense: https://unlicense.org/
 /** @ignore */
     H3DU.PolynomialCurve.makeBezierMatrix = function(degree) {
      // Generates a matrix where each row
-     // is a Bernstein polynomial of the given degree.
+     // is a Bernstein polynomial of the specified degree.
       if(degree > 36) {
         // Degrees higher than 36 not supported,
         // since that would result in matrix entries

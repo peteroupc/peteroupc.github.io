@@ -92,8 +92,7 @@ highest order to the lowest, with respect to the parameter
 column <code>(3, 4, 2, 10)</code> describes the polynomial
 3xt<sup>3</sup> + 4xt<sup>2</sup> + 2xt + 10x, where <code>x</code>
 is the input control point. The polynomials
-are added together to get the final coordinate of the curve at the
-given <code>t</code> value.</p>
+are added together to get the final coordinate of the curve at the specified <code>t</code> value.</p>
 
 <p>The following JavaScript code shows an example of a basis matrix – the
 cubic Bézier basis matrix.<br /></p>
@@ -196,9 +195,9 @@ coordinate.</li>
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#BSplineCurve_accel">accel</a><br />Finds an approximate acceleration vector at the given u-coordinate of this curve.</li>
+  <li><a href="#BSplineCurve_accel">accel</a><br />Finds an approximate acceleration vector at the specified u-coordinate of this curve.</li>
   <li><a href="#BSplineCurve_arcLength">arcLength</a><br />Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.</li>
+curve and the point at the specified u-coordinate of this curve.</li>
   <li><a href="#BSplineCurve_changeEnds">changeEnds</a><br />Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.</li>
@@ -215,7 +214,7 @@ and to the line between the next-to-last and last control points.</li>
   <li><a href="#BSplineCurve_evaluate">evaluate</a><br />Evaluates the curve function based on a point
 in a B-spline curve.</li>
   <li><a href="#BSplineCurve_fitRange">fitRange</a><br />Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.</li>
+path as this one but has its u-coordinates remapped to fit the specified range.</li>
   <li><a href="#BSplineCurve.fromBezierCurve">fromBezierCurve</a><br />Creates a B-spline curve from the control points of a Bézier curve.</li>
   <li><a href="#BSplineCurve.fromConicCurve">fromConicCurve</a><br />Creates a B-spline curve from the control points of a conic curve as described
 in Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
@@ -229,10 +228,10 @@ in this curve object.</li>
 of u-coordinates.</li>
   <li><a href="#BSplineCurve_getPointsAsObjects">getPointsAsObjects</a><br />Gets an array of positions on the curve at fixed intervals
 of u-coordinates.</li>
-  <li><a href="#BSplineCurve_jerk">jerk</a><br />Finds an approximate jerk vector at the given u-coordinate of this curve.</li>
-  <li><a href="#BSplineCurve_normal">normal</a><br />Finds an approximate principal normal vector at the given u-coordinate of this curve.</li>
-  <li><a href="#BSplineCurve_split">split</a><br />Splits this B-spline curve into two at the given point.</li>
-  <li><a href="#BSplineCurve_tangent">tangent</a><br />Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.</li>
+  <li><a href="#BSplineCurve_jerk">jerk</a><br />Finds an approximate jerk vector at the specified u-coordinate of this curve.</li>
+  <li><a href="#BSplineCurve_normal">normal</a><br />Finds an approximate principal normal vector at the specified u-coordinate of this curve.</li>
+  <li><a href="#BSplineCurve_split">split</a><br />Splits this B-spline curve into two at the specified point.</li>
+  <li><a href="#BSplineCurve_tangent">tangent</a><br />Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.</li>
   <li><a href="#BSplineCurve_toArcLengthParam">toArcLengthParam</a><br />Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.</li>
@@ -240,7 +239,7 @@ an <i>arc length parameterization</i>.</li>
   <li><a href="#BSplineCurve.uniformKnots">uniformKnots</a><br />Generates a knot vector with uniform knots, to be
 passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
   <li><a href="#BSplineCurve_velocity">velocity</a><br />Finds the velocity (derivative) of
-this curve at the given point.</li>
+this curve at the specified point.</li>
 </ul>
 
 <p><a name="BSplineCurve.DIVIDE_BIT"></a>
@@ -260,12 +259,12 @@ If this bit is set, the length of each control point must be at least 2.</p>
 <p><a name="BSplineCurve_accel"></a>
 ### BSplineCurve#accel(u)</p>
 
-<p>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+<p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the specified coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
@@ -282,7 +281,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### BSplineCurve#arcLength(u)</p>
 
 <p>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
 
@@ -296,7 +295,7 @@ method if it implements it; otherwise, calculates a numerical integral using the
 
 <h4 id="return-value-1">Return Value</h4>
 
-<p>The approximate arc length of this curve at the given u-coordinate. (Type: number)</p>
+<p>The approximate arc length of this curve at the specified u-coordinate. (Type: number)</p>
 
 <p><a name="BSplineCurve_changeEnds"></a>
 ### BSplineCurve#changeEnds(ep1, ep2)</p>
@@ -420,7 +419,7 @@ points.push(curve.evaluate(i/10.0));
 ### BSplineCurve#fitRange(ep1, ep2)</p>
 
 <p>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 For example, this method can be used to shrink the range of u-coordinates
 from [-π, π] to [0, 1] without shortening the path of the curve.
 Here, -π now maps to 0, and π now maps to 1.</p>
@@ -569,12 +568,12 @@ var buffer=new THREE.BufferGeometry()
 <p><a name="BSplineCurve_jerk"></a>
 ### BSplineCurve#jerk(u)</p>
 
-<p>Finds an approximate jerk vector at the given u-coordinate of this curve.
+<p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
 
-<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the specified coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-12">Parameters</h4>
 
@@ -590,7 +589,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <p><a name="BSplineCurve_normal"></a>
 ### BSplineCurve#normal(u)</p>
 
-<p>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+<p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
 
@@ -612,7 +611,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <p><a name="BSplineCurve_split"></a>
 ### BSplineCurve#split(u)</p>
 
-<p>Splits this B-spline curve into two at the given point.</p>
+<p>Splits this B-spline curve into two at the specified point.</p>
 
 <h4 id="parameters-14">Parameters</h4>
 
@@ -623,8 +622,8 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <h4 id="return-value-17">Return Value</h4>
 
 <p>An array containing two B-spline curves: the
-first is the part of the curve before the given point, and the second
-is the part of the curve after the given point. The first element
+first is the part of the curve before the specified point, and the second
+is the part of the curve after the specified point. The first element
 will be null if <code>u</code> is at or before the start of the curve.
 The second element
 will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="BSplineCurve.html">BSplineCurve</a>&gt;)</p>
@@ -632,7 +631,7 @@ will be null if <code>u</code> is at or after the end of the curve. (Type: Array
 <p><a name="BSplineCurve_tangent"></a>
 ### BSplineCurve#tangent(u)</p>
 
-<p>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+<p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
 
 <h4 id="parameters-15">Parameters</h4>
@@ -731,7 +730,7 @@ versions.) (Type: Array.&lt;number&gt;)</p>
 ### BSplineCurve#velocity(u)</p>
 
 <p>Finds the velocity (derivative) of
-this curve at the given point.</p>
+this curve at the specified point.</p>
 
 <h4 id="parameters-18">Parameters</h4>
 

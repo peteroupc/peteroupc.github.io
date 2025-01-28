@@ -63,7 +63,7 @@
 <li><code><a href="#One">One</a></code> - Gets the arbitrary-precision integer for one.</li>
 <li><code><a href="#ONE">public static readonly PeterO.BigInteger ONE;</a></code> - BigInteger for the number one.</li>
 <li><code><a href="#toBytes_bool">toBytes(bool)</a></code> - Returns a byte array of this object&#39;s value.</li>
-<li><code><a href="#toRadixString_int">toRadixString(int)</a></code> - Generates a string representing the value of this object, in the given radix.</li>
+<li><code><a href="#toRadixString_int">toRadixString(int)</a></code> - Generates a string representing the value of this object, in the specified radix.</li>
 <li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string in base 10.</li>
 <li><code><a href="#valueOf_long">valueOf(long)</a></code> - Converts a 64-bit signed integer to a big integer.</li>
 <li><code><a href="#Zero">Zero</a></code> - Gets the arbitrary-precision integer for zero.</li>
@@ -233,7 +233,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string. The string must contain only characters allowed by the given radix, except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The string is not allowed to contain white space characters, including spaces.</p></li>
+<li><p><i>str</i>: A text string. The string must contain only characters allowed by the specified radix, except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The string is not allowed to contain white space characters, including spaces.</p></li>
 <li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the string can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p></li>
 </ul>
 
@@ -326,7 +326,7 @@ is in an invalid format.</p></li>
     int radix);
 </pre>
 
-<p>Generates a string representing the value of this object, in the given radix.</p>
+<p>Generates a string representing the value of this object, in the specified radix.</p>
 
 <p><b>Parameters:</b></p>
 

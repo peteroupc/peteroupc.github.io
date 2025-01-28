@@ -42,40 +42,40 @@ the HTML 3D Library. Example:</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.Trochoid_accel">accel</a><br>Finds an approximate acceleration vector at the given u-coordinate of this curve.</li>
+<li><a href="#H3DU.Trochoid_accel">accel</a><br>Finds an approximate acceleration vector at the specified u-coordinate of this curve.</li>
 <li><a href="#H3DU.Trochoid_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.</li>
+curve and the point at the specified u-coordinate of this curve.</li>
 <li><a href="#H3DU.Trochoid_changeEnds">changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.</li>
 <li><a href="#H3DU.Trochoid_endPoints">endPoints</a><br>Gets the endpoints of this curve.</li>
-<li><a href="#H3DU.Trochoid_evaluate">evaluate</a><br>Generates a point on the curve from the given u-coordinate.</li>
+<li><a href="#H3DU.Trochoid_evaluate">evaluate</a><br>Generates a point on the curve from the specified u-coordinate.</li>
 <li><a href="#H3DU.Trochoid_fitRange">fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.</li>
+path as this one but has its u-coordinates remapped to fit the specified range.</li>
 <li><a href="#H3DU.Trochoid_getLength">getLength</a><br>Convenience method for getting the total length of this curve.</li>
 <li><a href="#H3DU.Trochoid_getPoints">getPoints</a><br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.</li>
 <li><a href="#H3DU.Trochoid_getPointsAsObjects">getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.</li>
-<li><a href="#H3DU.Trochoid_jerk">jerk</a><br>Finds an approximate jerk vector at the given u-coordinate of this curve.</li>
-<li><a href="#H3DU.Trochoid_normal">normal</a><br>Finds an approximate principal normal vector at the given u-coordinate of this curve.</li>
-<li><a href="#H3DU.Trochoid_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.</li>
+<li><a href="#H3DU.Trochoid_jerk">jerk</a><br>Finds an approximate jerk vector at the specified u-coordinate of this curve.</li>
+<li><a href="#H3DU.Trochoid_normal">normal</a><br>Finds an approximate principal normal vector at the specified u-coordinate of this curve.</li>
+<li><a href="#H3DU.Trochoid_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.</li>
 <li><a href="#H3DU.Trochoid_toArcLengthParam">toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.</li>
-<li><a href="#H3DU.Trochoid_velocity">velocity</a><br>Finds the velocity (derivative) of this curve at the given point.</li>
+<li><a href="#H3DU.Trochoid_velocity">velocity</a><br>Finds the velocity (derivative) of this curve at the specified point.</li>
 </ul>
 
 <p><a name='H3DU.Trochoid_accel'></a></p>
 
 <h3>H3DU.Trochoid#accel(u)</h3>
 
-<p>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+<p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve&#39;s position at the specified coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -93,7 +93,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <h3>H3DU.Trochoid#arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
 
@@ -107,7 +107,7 @@ method if it implements it; otherwise, calculates a numerical integral using the
 
 <h4>Return Value</h4>
 
-<p>The approximate arc length of this curve at the given u-coordinate. (Type: number)</p>
+<p>The approximate arc length of this curve at the specified u-coordinate. (Type: number)</p>
 
 <p><a name='H3DU.Trochoid_changeEnds'></a></p>
 
@@ -158,7 +158,7 @@ and the second number is the end of the curve. * (Type: Array.&lt;number&gt;)</p
 
 <h3>H3DU.Trochoid#evaluate(u)</h3>
 
-<p>Generates a point on the curve from the given u-coordinate.</p>
+<p>Generates a point on the curve from the specified u-coordinate.</p>
 
 <h4>Parameters</h4>
 
@@ -176,7 +176,7 @@ Only the x- and y-coordinates will be other than 0. (Type: Array.&lt;number&gt;)
 <h3>H3DU.Trochoid#fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
@@ -259,12 +259,12 @@ var buffer=new THREE.BufferGeometry()
 
 <h3>H3DU.Trochoid#jerk(u)</h3>
 
-<p>Finds an approximate jerk vector at the given u-coordinate of this curve.
+<p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
 
-<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve&#39;s position at the specified coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -281,7 +281,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <h3>H3DU.Trochoid#normal(u)</h3>
 
-<p>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+<p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="H3DU.Curve.html">H3DU.Curve</a> calls the evaluator&#39;s <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
 
@@ -304,7 +304,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <h3>H3DU.Trochoid#tangent(u)</h3>
 
-<p>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+<p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but &quot;normalized&quot; to a unit vector.</p>
 
 <h4>Parameters</h4>
@@ -347,7 +347,7 @@ this method is approximate.</p>
 
 <h3>H3DU.Trochoid#velocity(u)</h3>
 
-<p>Finds the velocity (derivative) of this curve at the given point.</p>
+<p>Finds the velocity (derivative) of this curve at the specified point.</p>
 
 <h4>Parameters</h4>
 

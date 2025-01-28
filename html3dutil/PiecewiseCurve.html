@@ -50,16 +50,16 @@ return new PiecewiseCurve(curves)
 <h3 id="methods">Methods</h3>
 
 <ul>
-  <li><a href="#PiecewiseCurve_accel">accel</a><br />Finds an approximate acceleration vector at the given u-coordinate of this curve.</li>
+  <li><a href="#PiecewiseCurve_accel">accel</a><br />Finds an approximate acceleration vector at the specified u-coordinate of this curve.</li>
   <li><a href="#PiecewiseCurve_arcLength">arcLength</a><br />Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.</li>
+curve and the point at the specified u-coordinate of this curve.</li>
   <li><a href="#PiecewiseCurve_changeEnds">changeEnds</a><br />Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.</li>
   <li><a href="#PiecewiseCurve_endPoints">endPoints</a><br />Returns the starting and ending u-coordinates of this curve.</li>
-  <li><a href="#PiecewiseCurve_evaluate">evaluate</a><br />Finds the position of this curve at the given u-coordinate.</li>
+  <li><a href="#PiecewiseCurve_evaluate">evaluate</a><br />Finds the position of this curve at the specified u-coordinate.</li>
   <li><a href="#PiecewiseCurve_fitRange">fitRange</a><br />Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.</li>
+path as this one but has its u-coordinates remapped to fit the specified range.</li>
   <li><a href="#PiecewiseCurve.fromCatmullRomSpline">fromCatmullRomSpline</a><br />Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull–Rom spline.</li>
   <li><a href="#PiecewiseCurve.fromEllipseArc">fromEllipseArc</a><br />Creates a piecewise curve that describes an arc running along an axis-aligned
@@ -75,24 +75,24 @@ cubic TCB spline (tension/continuity/bias spline, also known as Kochanek–Barte
 of u-coordinates.</li>
   <li><a href="#PiecewiseCurve_getPointsAsObjects">getPointsAsObjects</a><br />Gets an array of positions on the curve at fixed intervals
 of u-coordinates.</li>
-  <li><a href="#PiecewiseCurve_jerk">jerk</a><br />Finds an approximate jerk vector at the given u-coordinate of this curve.</li>
-  <li><a href="#PiecewiseCurve_normal">normal</a><br />Finds an approximate principal normal vector at the given u-coordinate of this curve.</li>
-  <li><a href="#PiecewiseCurve_tangent">tangent</a><br />Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.</li>
+  <li><a href="#PiecewiseCurve_jerk">jerk</a><br />Finds an approximate jerk vector at the specified u-coordinate of this curve.</li>
+  <li><a href="#PiecewiseCurve_normal">normal</a><br />Finds an approximate principal normal vector at the specified u-coordinate of this curve.</li>
+  <li><a href="#PiecewiseCurve_tangent">tangent</a><br />Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.</li>
   <li><a href="#PiecewiseCurve_toArcLengthParam">toArcLengthParam</a><br />Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.</li>
-  <li><a href="#PiecewiseCurve_velocity">velocity</a><br />Finds an approximate velocity vector at the given u-coordinate of this curve.</li>
+  <li><a href="#PiecewiseCurve_velocity">velocity</a><br />Finds an approximate velocity vector at the specified u-coordinate of this curve.</li>
 </ul>
 
 <p><a name="PiecewiseCurve_accel"></a>
 ### PiecewiseCurve#accel(u)</p>
 
-<p>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+<p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.</p>
 
-<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve’s position at the specified coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-1">Parameters</h4>
 
@@ -109,7 +109,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#arcLength(u)</p>
 
 <p>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.</p>
+curve and the point at the specified u-coordinate of this curve.</p>
 
 <h4 id="parameters-2">Parameters</h4>
 
@@ -119,7 +119,7 @@ curve and the point at the given u-coordinate of this curve.</p>
 
 <h4 id="return-value-1">Return Value</h4>
 
-<p>The approximate arc length of this curve at the given u-coordinate. (Type: number)</p>
+<p>The approximate arc length of this curve at the specified u-coordinate. (Type: number)</p>
 
 <p><a name="PiecewiseCurve_changeEnds"></a>
 ### PiecewiseCurve#changeEnds(ep1, ep2)</p>
@@ -166,7 +166,7 @@ of curves that make up this piecewise curve.</p>
 <p><a name="PiecewiseCurve_evaluate"></a>
 ### PiecewiseCurve#evaluate(u)</p>
 
-<p>Finds the position of this curve at the given u-coordinate.</p>
+<p>Finds the position of this curve at the specified u-coordinate.</p>
 
 <h4 id="parameters-4">Parameters</h4>
 
@@ -183,7 +183,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#fitRange(ep1, ep2)</p>
 
 <p>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 For example, this method can be used to shrink the range of u-coordinates
 from [-π, π] to [0, 1] without shortening the path of the curve.
 Here, -π now maps to 0, and π now maps to 1.</p>
@@ -362,12 +362,12 @@ var buffer=new THREE.BufferGeometry()
 <p><a name="PiecewiseCurve_jerk"></a>
 ### PiecewiseCurve#jerk(u)</p>
 
-<p>Finds an approximate jerk vector at the given u-coordinate of this curve.
+<p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.</p>
 
-<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the given coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve’s position at the specified coordinate. The vector returned by this method <i>should not</i> be “normalized” to a unit vector.</p>
 
 <h4 id="parameters-12">Parameters</h4>
 
@@ -383,7 +383,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <p><a name="PiecewiseCurve_normal"></a>
 ### PiecewiseCurve#normal(u)</p>
 
-<p>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+<p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
 
@@ -405,7 +405,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <p><a name="PiecewiseCurve_tangent"></a>
 ### PiecewiseCurve#tangent(u)</p>
 
-<p>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+<p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
 
 <h4 id="parameters-14">Parameters</h4>
@@ -456,7 +456,7 @@ var point = arclen.evaluate(Math.random()*arclen.getLength())
 <p><a name="PiecewiseCurve_velocity"></a>
 ### PiecewiseCurve#velocity(u)</p>
 
-<p>Finds an approximate velocity vector at the given u-coordinate of this curve.</p>
+<p>Finds an approximate velocity vector at the specified u-coordinate of this curve.</p>
 
 <h4 id="parameters-15">Parameters</h4>
 

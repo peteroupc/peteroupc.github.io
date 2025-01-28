@@ -91,8 +91,7 @@ highest order to the lowest, with respect to the parameter
 column <code>(3, 4, 2, 10)</code> describes the polynomial
 3xt<sup>3</sup> + 4xt<sup>2</sup> + 2xt + 10x, where <code>x</code>
 is the input control point. The polynomials
-are added together to get the final coordinate of the curve at the
-given <code>t</code> value.</p>
+are added together to get the final coordinate of the curve at the specified <code>t</code> value.</p>
 
 <p>The following JavaScript code shows an example of a basis matrix – the
 cubic Bézier basis matrix.<br /></p>
@@ -212,12 +211,12 @@ in a B-spline curve.</li>
 in this curve object.</li>
   <li><a href="#H3DU.BSplineCurve_getKnots">getKnots</a><br />Gets a reference to the array of knots used
 in this curve object.</li>
-  <li><a href="#H3DU.BSplineCurve_split">split</a><br />Splits this B-spline curve into two at the given point.</li>
+  <li><a href="#H3DU.BSplineCurve_split">split</a><br />Splits this B-spline curve into two at the specified point.</li>
   <li><a href="#H3DU.BSplineCurve.uniform">uniform</a><br />Creates a B-spline curve with uniform knots.</li>
   <li><a href="#H3DU.BSplineCurve.uniformKnots">uniformKnots</a><br />Generates a knot vector with uniform knots, to be
 passed to the BSplineCurve or BSplineSurface constructor.</li>
   <li><a href="#H3DU.BSplineCurve_velocity">velocity</a><br />Finds the velocity (derivative) of
-this curve at the given point.</li>
+this curve at the specified point.</li>
 </ul>
 
 <p><a name="H3DU.BSplineCurve.DIVIDE_BIT"></a>
@@ -377,7 +376,7 @@ in this curve object.</p>
 <p><a name="H3DU.BSplineCurve_split"></a>
 ### H3DU.BSplineCurve#split(u)</p>
 
-<p>Splits this B-spline curve into two at the given point.</p>
+<p>Splits this B-spline curve into two at the specified point.</p>
 
 <h4 id="parameters-5">Parameters</h4>
 
@@ -388,8 +387,8 @@ in this curve object.</p>
 <h4 id="return-value-7">Return Value</h4>
 
 <p>An array containing two B-spline curves: the
-first is the part of the curve before the given point, and the second
-is the part of the curve after the given point. The first element
+first is the part of the curve before the specified point, and the second
+is the part of the curve after the specified point. The first element
 will be null if <code>u</code> is at or before the start of the curve.
 The second element
 will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;BSplineCurve&gt;)</p>
@@ -445,7 +444,7 @@ versions.) (Type: Array.&lt;number&gt;)</p>
 ### H3DU.BSplineCurve#velocity(u)</p>
 
 <p>Finds the velocity (derivative) of
-this curve at the given point.</p>
+this curve at the specified point.</p>
 
 <h4 id="parameters-8">Parameters</h4>
 

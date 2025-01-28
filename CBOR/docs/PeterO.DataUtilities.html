@@ -16,12 +16,12 @@
 
 <h3 id="member-summary">Member Summary</h3>
 <ul>
-  <li><code>[CodePointAt(string, int)](#CodePointAt_string_int)</code> - Gets the Unicode code point at the given index of the string.</li>
-  <li><code>[CodePointAt(string, int, int)](#CodePointAt_string_int_int)</code> - Gets the Unicode code point at the given index of the string.</li>
-  <li><code>[CodePointBefore(string, int)](#CodePointBefore_string_int)</code> - Gets the Unicode code point just before the given index of the string.</li>
-  <li><code>[CodePointBefore(string, int, int)](#CodePointBefore_string_int_int)</code> - Gets the Unicode code point just before the given index of the string.</li>
+  <li><code>[CodePointAt(string, int)](#CodePointAt_string_int)</code> - Gets the Unicode code point at the specified index of the string.</li>
+  <li><code>[CodePointAt(string, int, int)](#CodePointAt_string_int_int)</code> - Gets the Unicode code point at the specified index of the string.</li>
+  <li><code>[CodePointBefore(string, int)](#CodePointBefore_string_int)</code> - Gets the Unicode code point just before the specified index of the string.</li>
+  <li><code>[CodePointBefore(string, int, int)](#CodePointBefore_string_int_int)</code> - Gets the Unicode code point just before the specified index of the string.</li>
   <li><code>[CodePointCompare(string, string)](#CodePointCompare_string_string)</code> - Compares two strings in Unicode code point order.</li>
-  <li><code>[CodePointLength(string)](#CodePointLength_string)</code> - Finds the number of Unicode code points in the given text string.</li>
+  <li><code>[CodePointLength(string)](#CodePointLength_string)</code> - Finds the number of Unicode code points in the specified text string.</li>
   <li><code>[GetUtf8Bytes(string, bool)](#GetUtf8Bytes_string_bool)</code> - Encodes a string in UTF-8 as a byte array.</li>
   <li><code>[GetUtf8Bytes(string, bool, bool)](#GetUtf8Bytes_string_bool_bool)</code> - Encodes a string in UTF-8 as a byte array.</li>
   <li><code>[GetUtf8Length(string, bool)](#GetUtf8Length_string_bool)</code> - Calculates the number of bytes needed to encode a string in UTF-8.</li>
@@ -46,7 +46,7 @@
     int index);
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.</p>
+<p>Gets the Unicode code point at the specified index of the string.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -62,7 +62,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>The Unicode code point at the given position. Returns -1 if  <i>index</i>
+<p>The Unicode code point at the specified position. Returns -1 if  <i>index</i>
  is 0 or less, or is greater than or equal to the string’s length. Returns the replacement character (U+FFFD) if the code point at that position is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
 
 <p><b>Exceptions:</b></p>
@@ -82,7 +82,7 @@ The parameter  <i>str</i>
     int surrogateBehavior);
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.</p>
+<p>Gets the Unicode code point at the specified index of the string.</p>
 
 <p>The following example shows how to iterate a text string code point by code point, terminating the loop when an unpaired surrogate is found.</p>
 
@@ -105,13 +105,13 @@ The parameter  <i>str</i>
     <p><i>index</i>: Index of the current position into the string.</p>
   </li>
   <li>
-    <p><i>surrogateBehavior</i>: Specifies what kind of value to return if the code point at the given index is an unpaired surrogate code point: if 0, return the replacement character (U + FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p>
+    <p><i>surrogateBehavior</i>: Specifies what kind of value to return if the code point at the specified index is an unpaired surrogate code point: if 0, return the replacement character (U + FFFD); if 1, return the value of the surrogate code point; if neither 0 nor 1, return -1.</p>
   </li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The Unicode code point at the given position. Returns -1 if  <i>index</i>
+<p>The Unicode code point at the specified position. Returns -1 if  <i>index</i>
  is 0 or less, or is greater than or equal to the string’s length. Returns a value as specified under  <i>surrogateBehavior</i>
  if the code point at that position is an unpaired surrogate code point. If the return value is 65536 (0x10000) or greater, the code point takes up two UTF-16 code units.</p>
 
@@ -131,7 +131,7 @@ The parameter  <i>str</i>
     int index);
 </pre>
 
-<p>Gets the Unicode code point just before the given index of the string.</p>
+<p>Gets the Unicode code point just before the specified index of the string.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -167,7 +167,7 @@ The parameter  <i>str</i>
     int surrogateBehavior);
 </pre>
 
-<p>Gets the Unicode code point just before the given index of the string.</p>
+<p>Gets the Unicode code point just before the specified index of the string.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -230,7 +230,7 @@ The parameter  <i>str</i>
     string str);
 </pre>
 
-<p>Finds the number of Unicode code points in the given text string. Unpaired surrogate code points increase this number by 1. This is not necessarily the length of the string in “char” s.</p>
+<p>Finds the number of Unicode code points in the specified text string. Unpaired surrogate code points increase this number by 1. This is not necessarily the length of the string in “char” s.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -241,7 +241,7 @@ The parameter  <i>str</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The number of Unicode code points in the given string.</p>
+<p>The number of Unicode code points in the specified string.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -365,7 +365,7 @@ The string contains an unpaired surrogate code point and  <i>replace</i>
 
 <p><b>Return Value:</b></p>
 
-<p>The number of bytes needed to encode the given string in UTF-8, or -1 if the string contains an unpaired surrogate code point and  <i>replace</i>
+<p>The number of bytes needed to encode the specified string in UTF-8, or -1 if the string contains an unpaired surrogate code point and  <i>replace</i>
  is false.</p>
 
 <p><b>Exceptions:</b></p>

@@ -40,13 +40,13 @@ value to the start of the next.</li>
 <ul>
   <li><a href="#BufferAccessor_copy">copy</a><br />Copies the values of this accessor into a new vertex attribute object.</li>
   <li><a href="#BufferAccessor_count">count</a><br />Gets the number of <a href="BufferAccessor.html#BufferAccessor_buffer">values</a> defined for this accessor.</li>
-  <li><a href="#BufferAccessor_get">get</a><br />Gets the first element of the attribute value with the given vertex index.</li>
+  <li><a href="#BufferAccessor_get">get</a><br />Gets the first element of the attribute value with the specified vertex index.</li>
   <li><a href="#BufferAccessor_getVec">getVec</a><br />Gets the elements of a vertex attribute value.</li>
   <li><a href="#BufferAccessor.makeBlank">makeBlank</a><br />Generates a vertex attribute buffer, with each value set to all zeros.</li>
   <li><a href="#BufferAccessor.makeIndices">makeIndices</a><br />Generates an array of increasing vertex indices.</li>
   <li><a href="#BufferAccessor.merge">merge</a><br />Merges two vertex attributes, whose vertices can be indexed differently, into one
 combined vertex attribute.</li>
-  <li><a href="#BufferAccessor_set">set</a><br />Sets the first element of the attribute value with the given vertex index.</li>
+  <li><a href="#BufferAccessor_set">set</a><br />Sets the first element of the attribute value with the specified vertex index.</li>
   <li><a href="#BufferAccessor_setVec">setVec</a><br />Sets the elements of a vertex attribute value.</li>
   <li><a href="#BufferAccessor_setXy">setXy</a><br />Sets the first and second elements of a vertex attribute value.</li>
   <li><a href="#BufferAccessor_setXyz">setXyz</a><br />Sets the first, second, and third elements of a vertex attribute value.</li>
@@ -116,7 +116,7 @@ equal to the <a href="BufferAccessor.html#BufferAccessor_countPerValue">count pe
 <p><a name="BufferAccessor_get"></a>
 ### BufferAccessor#get(index)</p>
 
-<p>Gets the first element of the attribute value with the given vertex index.</p>
+<p>Gets the first element of the attribute value with the specified vertex index.</p>
 
 <p>Note that currently, this method does no bounds checking beyond the
 checking naturally done when accessing the attribute’s buffer.</p>
@@ -129,7 +129,7 @@ checking naturally done when accessing the attribute’s buffer.</p>
 
 <h4 id="return-value-2">Return Value</h4>
 
-<p>The first element of the given attribute value. (Type: number)</p>
+<p>The first element of the specified attribute value. (Type: number)</p>
 
 <p><a name="BufferAccessor_getVec"></a>
 ### BufferAccessor#getVec(index, vec)</p>
@@ -143,7 +143,7 @@ checking naturally done when accessing the attribute’s buffer.</p>
 
 <ul>
   <li><code>index</code> (Type: number)<br />A numeric index, starting from 0, that identifies a value stored in the attribute’s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute’s count per value (see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>).</li>
+  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array whose elements will be set to those of the value at the specified index. The number of elements copied to this array is the attribute’s count per value (see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>).</li>
 </ul>
 
 <h4 id="return-value-3">Return Value</h4>
@@ -234,7 +234,7 @@ values as the sum of the lengths of “indices1” and “indices2”. (Type: <a
 <p><a name="BufferAccessor_set"></a>
 ### BufferAccessor#set(index, value)</p>
 
-<p>Sets the first element of the attribute value with the given vertex index.</p>
+<p>Sets the first element of the attribute value with the specified vertex index.</p>
 
 <p>Note that currently, this method does no bounds checking beyond the
 checking naturally done when writing to the attribute’s buffer.</p>
@@ -263,7 +263,7 @@ where noted otherwise.</p>
 
 <ul>
   <li><code>index</code> (Type: number)<br />A numeric index, starting from 0, that identifies a value stored in the attribute’s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array containing the elements to copy to the value at the given index. The number of elements copied is this array’s length or the attribute’s count per value (see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>), whichever is less.</li>
+  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array containing the elements to copy to the value at the specified index. The number of elements copied is this array’s length or the attribute’s count per value (see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>), whichever is less.</li>
 </ul>
 
 <h4 id="return-value-8">Return Value</h4>
@@ -283,8 +283,8 @@ where noted otherwise.</p>
 
 <ul>
   <li><code>index</code> (Type: number)<br />A numeric index, starting from 0, that identifies a value stored in the attribute’s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-  <li><code>x</code> (Type: number)<br />The value to copy to the first element of the value at the given index, if the attribute stores 1-element or bigger values.</li>
-  <li><code>y</code> (Type: number)<br />The value to copy to the second element of the value at the given index, if the attribute stores 2-element or bigger values.</li>
+  <li><code>x</code> (Type: number)<br />The value to copy to the first element of the value at the specified index, if the attribute stores 1-element or bigger values.</li>
+  <li><code>y</code> (Type: number)<br />The value to copy to the second element of the value at the specified index, if the attribute stores 2-element or bigger values.</li>
 </ul>
 
 <h4 id="return-value-9">Return Value</h4>
@@ -304,9 +304,9 @@ where noted otherwise.</p>
 
 <ul>
   <li><code>index</code> (Type: number)<br />A numeric index, starting from 0, that identifies a value stored in the attribute’s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-  <li><code>x</code> (Type: number)<br />The value to copy to the first element of the value at the given index, if the attribute stores 1-element or bigger values.</li>
-  <li><code>y</code> (Type: number)<br />The value to copy to the second element of the value at the given index, if the attribute stores 2-element or bigger values.</li>
-  <li><code>z</code> (Type: number)<br />The value to copy to the third element of the value at the given index, if the attribute stores 3-element or bigger values.</li>
+  <li><code>x</code> (Type: number)<br />The value to copy to the first element of the value at the specified index, if the attribute stores 1-element or bigger values.</li>
+  <li><code>y</code> (Type: number)<br />The value to copy to the second element of the value at the specified index, if the attribute stores 2-element or bigger values.</li>
+  <li><code>z</code> (Type: number)<br />The value to copy to the third element of the value at the specified index, if the attribute stores 3-element or bigger values.</li>
 </ul>
 
 <h4 id="return-value-10">Return Value</h4>

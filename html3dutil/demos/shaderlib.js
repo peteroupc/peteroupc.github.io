@@ -22,7 +22,7 @@ function renderTexture(scene, shader, width, height) {
   "use strict";
   if(typeof width === "undefined" || width === null)width = 512;
   if(typeof height === "undefined" || height === null)height = 512;
-  // Create a frame buffer info with the given dimensions
+  // Create a frame buffer info with the specified dimensions
   var fbo = new H3DU.FrameBufferInfo(width, height);
   // Render to the frame buffer
   scene.render([

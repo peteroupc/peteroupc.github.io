@@ -52,11 +52,11 @@ SurfaceOfRevolution.prototype.endPoints = function() {
   return [0, MathUtil.PiTimes2, this.minval, this.maxval];
 };
 /**
- * Finds the coordinates of the given point of this surface.
+ * Finds the coordinates of the specified point of this surface.
  * @param {number} u The u-coordinate of the surface to evaluate.
  * @param {number} v The v-coordinate of the surface to evaluate.
  * @returns {Array<number>} An array containing the coordinates
- * of the position at the given point. It will have three elements.
+ * of the position at the specified point. It will have three elements.
  */
 SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   const curvepos = this.curve.evaluate(v);

@@ -51,8 +51,7 @@ of the methods of <code>CalculatorState</code>:</p>
 means that up to that many digits will be shown on the display.  The calculator program sets this to
 18 (at the <code>MainForm</code> constructor), but this can be set to any number desired (as long as it’s 1 or more).
 <code>CalculatorState</code> use the CBOR library’s <code>ExtendedDecimal</code> class for storing numbers and doing
-operations on them, and it uses that library’s <code>PrecisionContext</code> class to limit their precision to the
-given number of digits.</p>
+operations on them, and it uses that library’s <code>PrecisionContext</code> class to limit their precision to the specified number of digits.</p>
 
 <p>The <code>Text</code> property gets a string showing what the calculator is currently displaying.  This string is
 retrieved each time a button is pressed and the text box at the top is updated with that string.</p>

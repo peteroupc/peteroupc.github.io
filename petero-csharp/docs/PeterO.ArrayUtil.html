@@ -26,8 +26,8 @@
   <li><code>[CompareLists&lt;T&gt;(System.Collections.Generic.IList&lt;T&gt;, System.Collections.Generic.IList&lt;T&gt;) where T : System.IComparable&lt;T&gt;T](#CompareLists_T_System_Collections_Generic_IList_T_System_Collections_Generic_IList_T_where_T_System_IComparable_T_T)</code> - Compares two lists with the same type of items.</li>
   <li><code>[FindItem&lt;T&gt;(System.Collections.Generic.IEnumerable&lt;T&gt;, System.Predicate&lt;T&gt;, T)](#FindItem_T_System_Collections_Generic_IEnumerable_T_System_Predicate_T_T)</code> - Not documented yet.</li>
   <li><code>[FindItem&lt;T&gt;(System.Collections.Generic.IEnumerable&lt;T&gt;, T, T)](#FindItem_T_System_Collections_Generic_IEnumerable_T_T_T)</code> - Finds an item or returns a default value if an item is not found.</li>
-  <li><code>[Reverse&lt;T&gt;(System.Collections.Generic.IList&lt;T&gt;)](#Reverse_T_System_Collections_Generic_IList_T)</code> - Reverses the order of the elements in the given list.</li>
-  <li><code>[Reverse&lt;T&gt;(System.Collections.Generic.IList&lt;T&gt;, int, int)](#Reverse_T_System_Collections_Generic_IList_T_int_int)</code> - Reverses the order of the elements in the given list at the specified index and length.</li>
+  <li><code>[Reverse&lt;T&gt;(System.Collections.Generic.IList&lt;T&gt;)](#Reverse_T_System_Collections_Generic_IList_T)</code> - Reverses the order of the elements in the specified list.</li>
+  <li><code>[Reverse&lt;T&gt;(System.Collections.Generic.IList&lt;T&gt;, int, int)](#Reverse_T_System_Collections_Generic_IList_T_int_int)</code> - Reverses the order of the elements in the specified list at the specified index and length.</li>
   <li><code>[Shuffle&lt;T&gt;(System.Collections.Generic.IList&lt;T&gt;, System.Random)](#Shuffle_T_System_Collections_Generic_IList_T_System_Random)</code> - Randomizes the order of a list’s items.</li>
   <li><code>[ToArray&lt;T&gt;(System.Collections.Generic.IEnumerable&lt;T&gt;)](#ToArray_T_System_Collections_Generic_IEnumerable_T)</code> - Converts an enumerable to an array.</li>
 </ul>
@@ -437,7 +437,7 @@ The parameter  <i>items</i>
     System.Collections.Generic.IList&lt;T&gt; list);
 </pre>
 
-<p>Reverses the order of the elements in the given list.</p>
+<p>Reverses the order of the elements in the specified list.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -468,7 +468,7 @@ The parameter  <i>list</i>
     int count);
 </pre>
 
-<p>Reverses the order of the elements in the given list at the specified index and length.</p>
+<p>Reverses the order of the elements in the specified list at the specified index and length.</p>
 
 <p><b>Parameters:</b></p>
 

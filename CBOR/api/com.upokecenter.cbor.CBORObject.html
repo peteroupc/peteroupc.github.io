@@ -7008,7 +7008,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
  especially if the average serialized object is much smaller than the maximum
  size given (for example, if the maximum size is 20000 bytes, but the average
  serialized object has a size of 50 bytes).</p>
-<pre> byte[] backing = new
+<pre> byte backing = new
  byte[20000]; /* maximum supported JSON size in bytes*/ byte[] bytes1,
  bytes2; {
 java.io.ByteArrayOutputStream ms = null;
@@ -7618,7 +7618,7 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
  serialized object is much smaller than the maximum size given (for example,
  if the maximum size is 20000 bytes, but the average serialized object has a
  size of 50 bytes).</p>
-<pre> byte[] backing = new byte[20000]; /* maximum
+<pre> byte backing = new byte[20000]; /* maximum
  supported CBOR size in bytes*/ byte[] bytes1, bytes2; using (MemoryStream ms
  = new java.io.ByteArrayInputStream(backing)) { /* throws UnsupportedOperationException if too big*/
  cborObject.WriteTo(ms); bytes1 = new byte[ms.getPosition()]; /* Copy serialized

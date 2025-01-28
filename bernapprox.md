@@ -94,7 +94,7 @@ The goal is now to find a polynomial of degree $n$, written in Bernstein form, s
 For some of the polynomials given earlier, a degree $n$ can be found so that the degree-$n$ polynomial is within $\epsilon$ of $f$, if $f$ is continuous and meets other conditions.  In general, to find the degree $n$, solve the error bound's equation for $n$ and round the solution up to the nearest integer.  See the following table, where:
 
 - $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
-- $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
+- $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the specified Hölder exponent _&alpha;_).
 - $L_r$ is not less than $f$'s $r$-th derivative's Lipschitz constant.
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | And a value of _n_ that achieves the bound is:  | Notes |
@@ -259,7 +259,7 @@ If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (
 In the following table:
 
 - $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
-- $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the given Hölder exponent _&alpha;_).
+- $H_r$ is not less than $f$'s $r$-th derivative's Hölder constant (for the specified Hölder exponent _&alpha;_).
 - $L_r$ is not less than $f$'s $r$-th derivative's Lipschitz constant.
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: | And a value of _n_ that achieves the bound is:  | Notes |
@@ -306,7 +306,7 @@ Readers are requested to let me know of additional solutions to the following pr
 
 1. Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.
 
-    The approximation error must be no more than a constant times $1/n^{r/2}$ if the given class has only functions with continuous $r$-th derivative.
+    The approximation error must be no more than a constant times $1/n^{r/2}$ if the specified class has only functions with continuous $r$-th derivative.
 
     Methods that use only integer arithmetic and addition and multiplication of rational numbers are preferred (thus, Chebyshev interpolants and other methods that involve cosines, sines, $\pi$, $\exp$, and $\ln$ are not preferred).
 

@@ -22,7 +22,7 @@ H3DU.Polyhedra = function() {
   "use strict";
 };
 /**
- * Normalizes the distance from the origin to each vertex in the given
+ * Normalizes the distance from the origin to each vertex in the specified
  * array to a fixed radius.
  * @param {Array<number>} vertices An array of vertices, where each
  * vertex's x-, y-, and z-coordinates are stored as three elements of that array.

@@ -30,20 +30,20 @@ to create a B&eacute;zier surface.</b></p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.BezierSurface_bitangent">bitangent</a><br>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_bitangent">bitangent</a><br>Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.</li>
 <li><a href="#H3DU.BezierSurface_endPoints">endPoints</a><br>Returns the starting and ending u- and v-coordinates of this surface.</li>
 <li><a href="#H3DU.BezierSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
 in a B&eacute;zier surface.</li>
-<li><a href="#H3DU.BezierSurface_gradient">gradient</a><br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.</li>
-<li><a href="#H3DU.BezierSurface_normal">normal</a><br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.</li>
-<li><a href="#H3DU.BezierSurface_tangent">tangent</a><br>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_gradient">gradient</a><br>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_normal">normal</a><br>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.</li>
+<li><a href="#H3DU.BezierSurface_tangent">tangent</a><br>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.</li>
 </ul>
 
 <p><a name='H3DU.BezierSurface_bitangent'></a></p>
 
 <h3>H3DU.BezierSurface#bitangent(u, v)</h3>
 
-<p>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.</p>
+<p>Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.</p>
 
 <p>The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
@@ -99,7 +99,7 @@ the evaluation. It will have as many elements as a control point, as specified i
 
 <h3>H3DU.BezierSurface#gradient(u, v)</h3>
 
-<p>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.</p>
+<p>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</p>
 
 <p>The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>gradient</code>
 method if it implements it; otherwise uses the surface&#39;s tangent and bitangent vectors to implement the gradient
@@ -129,7 +129,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <h3>H3DU.BezierSurface#normal(u, v)</h3>
 
-<p>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+<p>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but &quot;normalized&quot; to a unit vector.</p>
 
 <h4>Parameters</h4>
@@ -148,7 +148,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <h3>H3DU.BezierSurface#tangent(u, v)</h3>
 
-<p>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
+<p>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the u-axis using the <code>evaluate</code> method.</p>

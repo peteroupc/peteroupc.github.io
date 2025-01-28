@@ -38,13 +38,13 @@ value to the start of the next.</li>
 <ul>
   <li><a href="#H3DU.BufferAccessor_copy">copy</a><br />Copies the values of this accessor into a new vertex attribute object.</li>
   <li><a href="#H3DU.BufferAccessor_count">count</a><br />Gets the number of values defined for this accessor.</li>
-  <li><a href="#H3DU.BufferAccessor_get">get</a><br />Gets the first element of the attribute value with the given vertex index.</li>
+  <li><a href="#H3DU.BufferAccessor_get">get</a><br />Gets the first element of the attribute value with the specified vertex index.</li>
   <li><a href="#H3DU.BufferAccessor_getVec">getVec</a><br />Gets the elements of a vertex attribute value.</li>
   <li><a href="#H3DU.BufferAccessor.makeBlank">makeBlank</a><br />Generates a vertex attribute buffer, with each value set to all zeros.</li>
   <li><a href="#H3DU.BufferAccessor.makeIndices">makeIndices</a><br />Generates an array of increasing vertex indices.</li>
   <li><a href="#H3DU.BufferAccessor.merge">merge</a><br />Merges two vertex attributes, whose vertices can be indexed differently, into one
 combined vertex attribute.</li>
-  <li><a href="#H3DU.BufferAccessor_set">set</a><br />Sets the first element of the attribute value with the given vertex index.</li>
+  <li><a href="#H3DU.BufferAccessor_set">set</a><br />Sets the first element of the attribute value with the specified vertex index.</li>
   <li><a href="#H3DU.BufferAccessor_setVec">setVec</a><br />Sets the elements of a vertex attribute value.</li>
 </ul>
 
@@ -112,7 +112,7 @@ equal to the count per value.</p>
 <p><a name="H3DU.BufferAccessor_get"></a>
 ### H3DU.BufferAccessor#get(index)</p>
 
-<p>Gets the first element of the attribute value with the given vertex index.</p>
+<p>Gets the first element of the attribute value with the specified vertex index.</p>
 
 <p>Note that currently, this method does no bounds checking beyond the
 checking naturally done when accessing the attribute’s buffer.</p>
@@ -125,7 +125,7 @@ checking naturally done when accessing the attribute’s buffer.</p>
 
 <h4 id="return-value-2">Return Value</h4>
 
-<p>The first element of the given attribute value. (Type: number)</p>
+<p>The first element of the specified attribute value. (Type: number)</p>
 
 <p><a name="H3DU.BufferAccessor_getVec"></a>
 ### H3DU.BufferAccessor#getVec(index, vec)</p>
@@ -139,7 +139,7 @@ checking naturally done when accessing the attribute’s buffer.</p>
 
 <ul>
   <li><code>index</code> (Type: number)<br />A numeric index, starting from 0, that identifies a value stored in the attribute’s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute’s count per value (see BufferAccessor#countPerValue).</li>
+  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array whose elements will be set to those of the value at the specified index. The number of elements copied to this array is the attribute’s count per value (see BufferAccessor#countPerValue).</li>
 </ul>
 
 <h4 id="return-value-3">Return Value</h4>
@@ -230,7 +230,7 @@ values as the sum of the lengths of “indices1” and “indices2”. (Type: Bu
 <p><a name="H3DU.BufferAccessor_set"></a>
 ### H3DU.BufferAccessor#set(index, value)</p>
 
-<p>Sets the first element of the attribute value with the given vertex index.</p>
+<p>Sets the first element of the attribute value with the specified vertex index.</p>
 
 <p>Note that currently, this method does no bounds checking beyond the
 checking naturally done when writing to the attribute’s buffer.</p>
@@ -259,7 +259,7 @@ where noted otherwise.</p>
 
 <ul>
   <li><code>index</code> (Type: number)<br />A numeric index, starting from 0, that identifies a value stored in the attribute’s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array containing the elements to copy to the value at the given index. The number of elements copied is this array’s length or the attribute’s count per value (see BufferAccessor#countPerValue), whichever is less.</li>
+  <li><code>vec</code> (Type: Array.&lt;number&gt;)<br />An array containing the elements to copy to the value at the specified index. The number of elements copied is this array’s length or the attribute’s count per value (see BufferAccessor#countPerValue), whichever is less.</li>
 </ul>
 
 <h4 id="return-value-8">Return Value</h4>
