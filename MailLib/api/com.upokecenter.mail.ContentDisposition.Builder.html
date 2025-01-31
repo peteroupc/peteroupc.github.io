@@ -22,16 +22,6 @@
  Gets this value’s disposition type, such as “inline” or “attachment”.</p>
   </li>
   <li>
-    <p><code>final boolean isMultipart()</code><br />
- Deprecated.
-Irrelevant for content dispositions; will be removed in the future.</p>
-  </li>
-  <li>
-    <p><code>final boolean isText()</code><br />
- Deprecated.
-Irrelevant for content dispositions; will be removed in the future.</p>
-  </li>
-  <li>
     <p><code>ContentDisposition.Builder RemoveParameter(String name)</code><br />
  Removes a parameter from this content disposition.</p>
   </li>
@@ -86,33 +76,6 @@ Irrelevant for content dispositions; will be removed in the future.</p>
 
 <pre>public final void setDispositionType(String value)
 </pre>
-
-<h3 id="istext">isText</h3>
-
-<pre>@Deprecated public final boolean isText()
-</pre>
-
-<p>Gets a value indicating whether this is a text media type.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-  <li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3 id="ismultipart">isMultipart</h3>
-
-<pre>@Deprecated public final boolean isMultipart()
-</pre>
-
-<p>Gets a value indicating whether this is a multipart media type.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-  <li><code>true</code> If this is a multipart media type; otherwise, <code>
- false</code>.</li>
-</ul>
 
 <h3 id="todisposition">ToDisposition</h3>
 

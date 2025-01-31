@@ -15,8 +15,6 @@
 <h3 id="member-summary">Member Summary</h3>
 <ul>
   <li><code>[DispositionType](#DispositionType)</code> - Gets or sets this value’s disposition type, such as “inline” or “attachment”.</li>
-  <li><code>[IsMultipart](#IsMultipart)</code> - <b>Obsolete:</b> Irrelevant for content dispositions; will be removed in the future.</li>
-  <li><code>[IsText](#IsText)</code> - <b>Obsolete:</b> Irrelevant for content dispositions; will be removed in the future.</li>
   <li><code>[RemoveParameter(string)](#RemoveParameter_string)</code> - Removes a parameter from this content disposition.</li>
   <li><code>[SetDispositionType(string)](#SetDispositionType_string)</code> - Sets the disposition type, such as “inline”.</li>
   <li><code>[SetParameter(string, string)](#SetParameter_string_string)</code> - Sets a parameter of this content disposition.</li>
@@ -31,7 +29,7 @@
     PeterO.Mail.ContentDisposition mt);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the data from the specified content disposition.</p>
+<p>Initializes a new instance of the  class using the data from the specified content disposition.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -84,7 +82,7 @@ Type is empty.</p>
 <pre>public Builder();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the disposition type “attachment” .</p>
+<p>Initializes a new instance of the  class using the disposition type “attachment” .</p>
 
 <p><a id="DispositionType"></a>
 ### DispositionType</p>
@@ -110,34 +108,6 @@ The property is being set and the value is null.</p>
 The property is being set and the value is an empty string.</p>
   </li>
 </ul>
-
-<p><a id="IsMultipart"></a>
-### IsMultipart</p>
-
-<pre>public bool IsMultipart { get; }
-</pre>
-
-<p><b>Obsolete.</b> Irrelevant for content dispositions; will be removed in the future.</p>
-
-<p>Gets a value indicating whether this is a multipart media type.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code> .</p>
-
-<p><a id="IsText"></a>
-### IsText</p>
-
-<pre>public bool IsText { get; }
-</pre>
-
-<p><b>Obsolete.</b> Irrelevant for content dispositions; will be removed in the future.</p>
-
-<p>Gets a value indicating whether this is a text media type.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <p><a id="RemoveParameter_string"></a>
 ### RemoveParameter</p>
