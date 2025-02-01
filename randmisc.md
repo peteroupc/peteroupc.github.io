@@ -456,6 +456,12 @@ In this algorithm:
 
 > **Note:** An important property for use in statistical estimation is _identifiability_.  A family of distributions is _identifiable_ if it has the property that if two parameter vectors (_&theta;_<sub>1</sub> and _&theta;_<sub>2</sub>) determine the same distribution, then _&theta;_<sub>1</sub> must equal _&theta;_<sub>2</sub>.
 
+Although many statistical distributions (especially single-variable ones) tend to be presented in research papers nowadays, they don't end up in a serious application.  Thus, no distribution introduced in 2023 or later will be mentioned in this article unless it is cited in a paper that&mdash;
+
+- is not mainly about new properties of the distribution,
+- does not itself present a new statistical distribution, and
+- uses the distribution in a nontrivial application (much more than distribution fitting or a simulation study).
+
 <a id=Certain_Distributions></a>
 
 ## Certain Distributions
@@ -467,31 +473,32 @@ In the following table, _U_ is a uniform random variate between 0 and 1, and all
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
 | Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020\)[^53]. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or (_E_/_&beta;_)<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is an exponential random variate with rate 1. |
 | Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997\)[^54] | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in \[0, 1]. |
+| Slash (Rogers and Tukey 1972)[^55] | _N_/_U_<sup>1/_q_</sup>, where _N_ is a normal(0, 1) random variate. | _q_ &gt; 0. |
 | Lomax(_&alpha;_). | (1&minus;_U_)<sup>&minus;1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
-| Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^55]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
+| Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016\)[^56]. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
 | Topp&ndash;Leone(_&alpha;_). | 1&minus;sqrt(1&minus;_U_<sup>1/_&alpha;_</sup>). | _&alpha;_ > 0. |
-| Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^56]. | Sum of _N_ zero-truncated Poisson(_a_) random variates, where _N_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_.[^57] | _a_>0, _b_>0. |
-| Bell(_a_) (Castellares et al. 2020)[^56]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
-| Discrete Pareto(_&delta;_, _p_) (Buddana and Kozubowski 2014)[^58] | 1 plus the number of failures before the first success, with each success having probability 1&minus;exp(&minus;_Z_), where _Z_ is a gamma(1/_&delta;_) variate times &minus;_&delta;_\*ln(1&minus;_p_). | _&delta;_ > 0, and 0&lt;_p_&lt;1. |
-| Neyman type A(_&delta;_, _&tau;_) (Batsidis and Lemonte 2021)[^59]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
-| Gamma exponential (Kudryavtsev 2019)[^60]. | _&delta;_\*Gamma(_t_)<sup>1/_&nu;_</sup>/Gamma(_s_)<sup>_r_/_&nu;_</sup>, where Gamma(_x_) is a gamma(_x_) variate. | 0 &le; _r_ &lt; 1; _&nu;_ &ne; 0; _s_>0; _t_>0; _&delta;_>0. |
-| Extended xgamma (Saha et al. 2019)[^61] | Gamma(_&alpha;_ + _c_) variate divided by _&theta;_, where _c_ is either 0 with probability _&theta;_/(_&theta;_+_&beta;_), or 2 otherwise. | _&theta;_>0, _&alpha;_>0, _&beta;_ &ge; 0. |
-| Generalized Pareto(_a_, _b_) (McNeil et al. 2010)[^62] | _a_\*((1/(1&minus;_U_))<sup>_b_</sup>&minus;1)/_b_. | _a_>0; _b_>0. |
-| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^63], (Azzalini 2022)[^64]. | _Z_ if _T_ &le; _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
-| Skew normal (Azzalini 1985)[^65]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
-| Logarithmic skew normal (Gómez-Déniz et al. 2020)[^66] | exp(SNE(_&lambda;_,_&lambda;_)\*_&sigma;_+_&mu;_). | _&mu;_ and _&lambda;_ are real numbers; _&sigma;_ > 0. SNE is described later. |
-| Tilted beta binomial (Hahn 2022)[^67] | Binomial(_n_, Tilted-beta(_&theta;_, _v_, _&alpha;_, _&beta;_)) variate. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0, _&beta;_>0; _n_ &ge; 0 is an integer. |
-| Two-piece distribution (Rubio and Steel 2020)[^68]. | _&mu;_ &minus; abs(_Z_)\*_sigma1_ with probability _sigma1_/(_sigma1_+_sigma2_), or _&mu;_ + abs(_Z_)\*_sigma2_ otherwise. | _&mu;_ is a real number; _sigma1_>0; _sigma2_>0; _Z_ follows a symmetric distribution around 0. |
-| Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^69] | Two-piece distribution where _Z_ is exponential-power(_&alpha;_). | _&alpha;_>0; _&mu;_ is a real number; _sigma1_>0; _sigma2_>0. |
+| Bell&ndash;Touchard(_a_, _b_) (Castellares et al. 2020)[^57]. | Sum of _P_ zero-truncated Poisson(_a_) random variates, where _P_ is Poisson with parameter _b_\*exp(_a_)&minus;_b_.[^58] | _a_>0, _b_>0. |
+| Bell(_a_) (Castellares et al. 2020)[^57]. | Bell&ndash;Touchard(_a_, 0). | _a_>0. |
+| Discrete Pareto(_&delta;_, _p_) (Buddana and Kozubowski 2014)[^59] | 1 plus the number of failures before the first success, with each success having probability 1&minus;exp(&minus;_Z_), where _Z_ is a gamma(1/_&delta;_) variate times &minus;_&delta;_\*ln(1&minus;_p_). | _&delta;_ > 0, and 0&lt;_p_&lt;1. |
+| Neyman type A(_&delta;_, _&tau;_) (Batsidis and Lemonte 2021)[^60]| Bell&ndash;Touchard(_&tau;_, _&delta;_\*exp(&minus;_&tau;_)). | _&delta;_>0, _&tau;_>0. |
+| Gamma exponential (Kudryavtsev 2019)[^61]. | _&delta;_\*Gamma(_t_)<sup>1/_&nu;_</sup>/Gamma(_s_)<sup>_r_/_&nu;_</sup>, where Gamma(_x_) is a gamma(_x_) variate. | 0 &le; _r_ &lt; 1; _&nu;_ &ne; 0; _s_>0; _t_>0; _&delta;_>0. |
+| Extended xgamma (Saha et al. 2019)[^62] | Gamma(_&alpha;_ + _c_) variate divided by _&theta;_, where _c_ is either 0 with probability _&theta;_/(_&theta;_+_&beta;_), or 2 otherwise. | _&theta;_>0, _&alpha;_>0, _&beta;_ &ge; 0. |
+| Generalized Pareto(_a_, _b_) (McNeil et al. 2010)[^63] | _a_\*((1/(1&minus;_U_))<sup>_b_</sup>&minus;1)/_b_. | _a_>0; _b_>0. |
+| Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^64], (Azzalini 2022)[^65]. | _Z_ if _T_ &le; _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
+| Skew normal (Azzalini 1985)[^66]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
+| Logarithmic skew normal (Gómez-Déniz et al. 2020)[^67] | exp(SNE(_&lambda;_,_&lambda;_)\*_&sigma;_+_&mu;_). | _&mu;_ and _&lambda;_ are real numbers; _&sigma;_ > 0. SNE is described later. |
+| Tilted beta binomial (Hahn 2022)[^68] | Binomial(_n_, Tilted-beta(_&theta;_, _v_, _&alpha;_, _&beta;_)) variate. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0, _&beta;_>0; _n_ &ge; 0 is an integer. |
+| Two-piece distribution (Rubio and Steel 2020)[^69]. | _&mu;_ &minus; abs(_Z_)\*_sigma1_ with probability _sigma1_/(_sigma1_+_sigma2_), or _&mu;_ + abs(_Z_)\*_sigma2_ otherwise. | _&mu;_ is a real number; _sigma1_>0; _sigma2_>0; _Z_ follows a symmetric distribution around 0. |
+| Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^70] | Two-piece distribution where _Z_ is exponential-power(_&alpha;_). | _&alpha;_>0; _&mu;_ is a real number; _sigma1_>0; _sigma2_>0. |
 
 | This distribution: | Can be sampled with the following algorithms: | And uses these parameters: |
  --- | --- | --- |
-| Offset-symmetric Gaussian (Sadeghi and Korki 2021)[^70] | (1) Generate either 1 or 0 with equal probability, call it _b_; (2) generate _Y_, a Normal(0, _&sigma;_) random variate (standard deviation _&sigma;_), and if _Y_ < _m_, repeat this step; (3) return (_Y_ &minus; _m_)\*(_b_\*2 &minus; 1). | _m_>0; _&sigma;_>0. |
-| Generalized skew normal (SNE(_&lambda;_,_&xi;_)) (Henze 1986)[^71] | **First algorithm:** (1) Generate _Y_ and _Z_, two Normal(0,1) variates; (2) if _Z_<_Y_\*_&lambda;_+_&xi;_, return _Y_; else go to 1. **Second algorithm:** (1) Let _il_=1/sqrt(1+_&lambda;_<sup>2</sup>); (2) Generate _Y_ and _Z_, two Normal(0,1) variates; (3) if _Y_>&minus;_&xi;_\*_il_, return _Y_\*_&lambda;_\*_il_ + _Z_; else go to 2. | _&lambda;_ and _&xi;_ are real numbers. |
-| Generalized geometric (Francis-Staite and White 2022)[^72] | (1) Set _ret_ to 1; (2) with probability _&rho;_(_ret_), add 1 to _ret_ and repeat this step; otherwise, return _ret_. | 0 &le; _&rho;_(_k_) &le; 1 for each _k_. |
-| Generalized Sibuya (Kozubowski and Podgórski 2018)[^73] | (1) Set _ret_ to 1; (2) with probability _&alpha;_/(_&nu;_+_ret_), return _ret_; otherwise, add 1 to _ret_ and repeat this step. | _&alpha;_ < _&nu;_ + 1, and _&nu;_ &ge; 0.[^74] |
-| Himanshu (Agarwal and Pandey 2022)[^75] | (1) Set _ret_ to 0; (2) flip coin that shows heads with probability _p_, _n_ times; (3) if any flip shows 0 (tails), add 1 to _ret_ and go to 2; otherwise, return _ret_. | 0 &le; _p_ &le; 1; _n_ &ge; 1 is an integer. |
-| Tilted beta (Hahn and López Martín 2005)[^76] | (1) With probability _&theta;_, return a beta(_&alpha;_, _&beta;_) variate; (2) Generate a uniform variate in (0, 1), call it _x_; (3) Flip coin that returns 1 with probability _x_, and another that returns 1 with probability _v_; (4) If both coins return 1 or both return 0, return _x_; otherwise go to step 2. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0; _&beta;_>0. |
+| Offset-symmetric Gaussian (Sadeghi and Korki 2021)[^71] | (1) Generate either 1 or 0 with equal probability, call it _b_; (2) generate _Y_, a Normal(0, _&sigma;_) random variate (standard deviation _&sigma;_), and if _Y_ < _m_, repeat this step; (3) return (_Y_ &minus; _m_)\*(_b_\*2 &minus; 1). | _m_>0; _&sigma;_>0. |
+| Generalized skew normal (SNE(_&lambda;_,_&xi;_)) (Henze 1986)[^72] | **First algorithm:** (1) Generate _Y_ and _Z_, two Normal(0,1) variates; (2) if _Z_<_Y_\*_&lambda;_+_&xi;_, return _Y_; else go to 1. **Second algorithm:** (1) Let _il_=1/sqrt(1+_&lambda;_<sup>2</sup>); (2) Generate _Y_ and _Z_, two Normal(0,1) variates; (3) if _Y_>&minus;_&xi;_\*_il_, return _Y_\*_&lambda;_\*_il_ + _Z_; else go to 2. | _&lambda;_ and _&xi;_ are real numbers. |
+| Generalized geometric (Francis-Staite and White 2022)[^73] | (1) Set _ret_ to 1; (2) with probability _&rho;_(_ret_), add 1 to _ret_ and repeat this step; otherwise, return _ret_. | 0 &le; _&rho;_(_k_) &le; 1 for each _k_. |
+| Generalized Sibuya (Kozubowski and Podgórski 2018)[^74] | (1) Set _ret_ to 1; (2) with probability _&alpha;_/(_&nu;_+_ret_), return _ret_; otherwise, add 1 to _ret_ and repeat this step. | _&alpha;_ < _&nu;_ + 1, and _&nu;_ &ge; 0.[^75] |
+| Himanshu (Agarwal and Pandey 2022)[^76] | (1) Set _ret_ to 0; (2) flip coin that shows heads with probability _p_, _n_ times; (3) if any flip shows 0 (tails), add 1 to _ret_ and go to 2; otherwise, return _ret_. | 0 &le; _p_ &le; 1; _n_ &ge; 1 is an integer. |
+| Tilted beta (Hahn and López Martín 2005)[^77] | (1) With probability _&theta;_, return a beta(_&alpha;_, _&beta;_) variate; (2) Generate a uniform variate in (0, 1), call it _x_; (3) Flip coin that returns 1 with probability _x_, and another that returns 1 with probability _v_; (4) If both coins return 1 or both return 0, return _x_; otherwise go to step 2. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0; _&beta;_>0. |
 
 <a id=Random_Variate_Generation_via_Quantiles></a>
 
@@ -512,20 +519,20 @@ Take the following situation:
 - Let _&beta;_ be the digit base of digits in _x_'s fractional part (such as 2 for binary).
 - Suppose _Q_(_z_) is continuous on the open interval (_a_, _b_).
 
-Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020\)[^77]):
+Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020\)[^78]):
 
 1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of _Q_(_f_(_a_)) and an upper bound of _Q_(_f_(_b_)) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
 2. Return _low_+(_high_&minus;_low_)/2.
 
 In some cases, it may be possible to calculate the needed digit size in advance.
 
-As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ with Lipschitz constant _L_ or less on the interval \[_a_, _b_\][^78], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
+As one example, if _f_(_t_) = _t_ (the identity function) and the quantile function is _Lipschitz continuous_ with Lipschitz constant _L_ or less on the interval \[_a_, _b_\][^79], then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
 1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the ideal quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
-This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020[^77]).
+This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020[^78]).
 
 A similar algorithm can exist even if the quantile function _Q_ is not Lipschitz continuous on the interval \[_a_, _b_\].
 
@@ -535,17 +542,17 @@ Specifically, if&mdash;
 - _Q_ on the interval \[_a_, _b_\] is continuous and has a minimum and maximum, and
 - _Q_ on \[_a_, _b_\] admits a continuous and strictly increasing function _&omega;_(_&delta;_) as a _modulus of continuity_,
 
-then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum-minus-minimum in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.[^79]).[^80]
+then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum-minus-minimum in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.[^80]).[^81]
 
 For example&mdash;
 
-- if _Q_ is Lipschitz continuous[^78] with Lipschitz constant _L_ or less on \[_a_, _b_\], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
-- if _Q_ is Hölder continuous with Hölder constant _M_ or less and Hölder exponent _&alpha;_ on that interval [^81], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
+- if _Q_ is Lipschitz continuous[^79] with Lipschitz constant _L_ or less on \[_a_, _b_\], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
+- if _Q_ is Hölder continuous with Hölder constant _M_ or less and Hölder exponent _&alpha;_ on that interval [^82], then the function is no "steeper" than that of _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance. (Indeed, for this reason, the algorithms don't satisfy [**desirable properties for PSRN samplers**](https://peteroupc.github.io/exporand.html#Properties).)  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
 - The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.
-- That PDF, or a function proportional to it, must be known, must be less than or equal to a finite number, and must be continuous "almost everywhere" (the set of discontinuous points is "zero-volume", that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020\)[^77]).
+- That PDF, or a function proportional to it, must be known, must be less than or equal to a finite number, and must be continuous "almost everywhere" (the set of discontinuous points is "zero-volume", that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020\)[^78]).
 
 Here is a sketch of how this rejection sampler might work:
 
@@ -558,7 +565,7 @@ Here is a sketch of how this rejection sampler might work:
 
 ## Batching Random Samples via Randomness Extraction
 
-Devroye and Gravel (2020\)[^77] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits given that it produces a specific output _Y_ (or _P_(_X_ | _Y_) for short):
+Devroye and Gravel (2020\)[^78] suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits given that it produces a specific output _Y_ (or _P_(_X_ | _Y_) for short):
 
 1. Start with the interval [0, 1].
 2. For each pair (_X_, _Y_) in the batch, the interval shrinks from below by _P_(_X_&minus;1 | _Y_) and from above by _P_(_X_ | _Y_). (For example, if \[0.2, 0.8\] \(range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is \[0.2+0.1\*0.6, 0.2+0.8\*0.6] = [0.26, 0.68].  For correctness, though, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)
@@ -566,7 +573,7 @@ Devroye and Gravel (2020\)[^77] suggest the following randomness extractor to re
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-The issue of finding _P_(_X_ | _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^82], _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to give out _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
+The issue of finding _P_(_X_ | _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^83], _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to give out _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
 
 Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
@@ -591,7 +598,7 @@ The rest of this section deals with oracles that go beyond coins.
 - _f_ is continuous on the closed interval, and
 - _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)
 
-(Jacob and Thiery 2015\)[^83]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
+(Jacob and Thiery 2015\)[^84]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
 In the algorithm below, let _K_ be a rational number greater than the maximum value of _f_ on the closed interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_K_.
 
@@ -606,13 +613,13 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 > 2. Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number _x_: With probability (_x_&minus;3)/(10&minus;3), add 1 to _heads_.
 > 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the specified probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
 
-**Algorithm 2.** Suppose the oracle is in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^84], and the following are four of these distributions.
+**Algorithm 2.** Suppose the oracle is in the form of a fair die.  The number of faces of the die, _n_, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than _n_.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2\)[^85], and the following are four of these distributions.
 
-**_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^84].
+**_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153\)[^85].
 
 **_Random variate with mean n._** Likewise, it's trivial to generate variates with a mean of _n_: Do "Bernoulli 1/n" trials as described earlier until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined "geometric" random variates.)
 
-**_Binomial with parameters n and 1/n._** Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20\)[^84]\:
+**_Binomial with parameters n and 1/n._** Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20\)[^85]\:
 
 1. Take items from the oracle until the same item is taken twice.
 2. Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.
@@ -632,7 +639,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
     3. If the last item taken in the previous substep is in _U_ at a position **greater than _i_**, add _P_ to _L_ (if not already present).
 5. Return the number of items in _L_.
 
-> **Note:** Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown _n_ can be sampled with the oracle?[^85] The result applies to a family of (discrete) distributions with the same unknown parameter _n_, starting with either 1 or a greater integer.  Let Supp(_m_) be the set of values taken on by the distribution with parameter equal to _m_.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:
+> **Note:** Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown _n_ can be sampled with the oracle?[^86] The result applies to a family of (discrete) distributions with the same unknown parameter _n_, starting with either 1 or a greater integer.  Let Supp(_m_) be the set of values taken on by the distribution with parameter equal to _m_.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:
 
 > - There is a computable function _f_(_k_) that gives out a positive number.
 > - For each _n_, Supp(_n_) is included in Supp(_n_+1).
@@ -640,7 +647,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 >
 > Moreover, by Proposition 5.5 of Duvignau, a family meeting the conditions above can be sampled without additional randomness (besides the oracle) if and only if Supp(1) has no more than one element.
 >
-> **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^86], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
+> **Example:** Let _n_&ge; 2 be an integer.<br>The family of Bernoulli distributions, taking on 1 with probability exp(&minus;_n_) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/_n_)<sup>_f_(1)</sup> for any _f_.  This is consistent with the results for _Bernoulli factories_ (Keane and O'Brien 1994)[^87], where a coin that shows heads with unknown probability _&lambda;_ = 1/_n_ cannot be turned into a coin that shows heads with probability g(_&lambda;_) = exp(&minus;1/_&lambda;_) = exp(&minus;_n_) since _g_ is not polynomially bounded (away from 0).<br>However, a Bernoulli family, taking on 1 with probability _h_(_n_) = (1+ln(_n_))/_n_ and 0 with probability 1&minus;_h_(_n_), _can_ be simulated, because min(_h_(_n_), 1&minus;_h_(_n_)) &ge; (1/_n_)<sup>3</sup>.
 
 <a id=Additional_Algorithms></a>
 
@@ -653,24 +660,24 @@ The following algorithms are included here because they require applying an arbi
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
 
-The algorithm to achieve this goal follows (see Lee et al. 2014[^87]\)\:
+The algorithm to achieve this goal follows (see Lee et al. 2014[^88]\)\:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^87].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
+> **Example:** An example from Lee et al. (2014\)[^88].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value ("long-run average") is that mean.
 >
 > **Notes:**
 >
 > 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected value or "long-run average") is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 1 or 0 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
-> 2. (Lee et al. 2014, Corollary 4\)[^87]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
+> 2. (Lee et al. 2014, Corollary 4\)[^88]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
 >     - When Algorithm 2 finishes, add _b_ to its return value.
 > 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another nondiscrete distribution), then calculating the probability can lead to numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", earlier).
 
-**Algorithm 4.** Suppose the oracle produces random variates all greater than or equal to _a_ (which is a known rational number), and with an unknown mean (_&mu;_).  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^83].  This can be done using the algorithm below.  In the algorithm:
+**Algorithm 4.** Suppose the oracle produces random variates all greater than or equal to _a_ (which is a known rational number), and with an unknown mean (_&mu;_).  The goal is to use the oracle to produce nonnegative random variates with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nowhere decreasing in that interval (Jacob and Thiery 2015\)[^84].  This can be done using the algorithm below.  In the algorithm:
 
 - _f_(_&mu;_) must be a function that can be written as&mdash;<br>_c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ...,<br>which is an infinite series where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)
@@ -683,11 +690,11 @@ The algorithm follows.
 4. Multiply _w_ by _&psi;_ and add 1 to _k_.
 5. With probability _&psi;_, go to step 2.  Otherwise, return _ret_.
 
-Now, assume the oracle's numbers are all less than or equal to _b_ (rather than greater than or equal to _a_), where _b_ is a known rational number.  Then _f_ must be 0 or greater everywhere in (&minus;_&infin;_, _b_\] and be nowhere increasing there (Jacob and Thiery 2015\)[^83], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, _z_ = _b_ &minus;_&mu;_; (2) in step 2, multiply _prod_ by _b_ &minus; _x_ rather than _x_ &minus; _a_.
+Now, assume the oracle's numbers are all less than or equal to _b_ (rather than greater than or equal to _a_), where _b_ is a known rational number.  Then _f_ must be 0 or greater everywhere in (&minus;_&infin;_, _b_\] and be nowhere increasing there (Jacob and Thiery 2015\)[^84], and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, _z_ = _b_ &minus;_&mu;_; (2) in step 2, multiply _prod_ by _b_ &minus; _x_ rather than _x_ &minus; _a_.
 
 > **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  Otherwise, the algorithm can introduce numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", earlier).  See also note 3 on the previous algorithm.
 
-**Algorithm 5.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^88], (Akahira et al. 1992)[^89].
+**Algorithm 5.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^89], (Akahira et al. 1992)[^90].
 
 - First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), ...$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must approach $f(\lambda)$ with increasing $n$ (that is, $g_n$ must _converge pointwise_ to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article "[**Approximations in Bernstein Form**](https://peteroupc.github.io/bernapprox.html)".
 - Second, define probabilities $p_0, p_1, p_2, ...$ that are positive and sum to 1 (except $p_0$ can be 0).  An example is $p_n = p(1-p)^n$, where $0\lt p\lt 1$.
@@ -697,7 +704,7 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 3. If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n[k]-k\cdot g_{n-1}[k-1]/n - (n-k) g_{n-1}[k]/n)/p_n$ (letting $g_0[k]=0$ letting $g_m[j]=0$ whenever $j\lt 0$ or $j\gt m$).  (**Note:** This implies that if $g_n = g_{n-1}$, then $E(n,k)$ is 0.)
 4. Return $E(n, k)$.
 
-The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^89].  It can be shown that this condition is the same as: $g_1(\lambda) + |g_2(\lambda) - g_1(\lambda)| + |g_3(\lambda) - g_2(\lambda)| + ...$ is finite whenever $0\lt\lambda\lt 1$. [^90]
+The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^90].  It can be shown that this condition is the same as: $g_1(\lambda) + |g_2(\lambda) - g_1(\lambda)| + |g_3(\lambda) - g_2(\lambda)| + ...$ is finite whenever $0\lt\lambda\lt 1$. [^91]
 
 > **Note:** It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
@@ -819,78 +826,80 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^54]: Marshall, A.W. and Olkin, I., 1997. A new method for adding a parameter to a family of distributions with application to the exponential and Weibull families. Biometrika, 84(3), pp.641-652.
 
-[^55]: Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).
+[^55]: Rogers, W.H., Tukey, J.W., "Understanding some long-tailed statistical distributions", _Statistica Neerlandica_ 26(3), 1972.
 
-[^56]: Castellares, F., Lemonte, A.J., Moreno, G., "On the two-parameter Bell-Touchard discrete distribution", _Communications in Statistics
+[^56]: Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).
+
+[^57]: Castellares, F., Lemonte, A.J., Moreno, G., "On the two-parameter Bell-Touchard discrete distribution", _Communications in Statistics
     - Theory and Methods_ 4, (2020).
 
-[^57]: The similar Bell&ndash;Touchard process is the sum of the first _N_ variates from an infinite sequence of zero-truncated Poisson(_a_) random variates, where _N_ is the number of events of a Poisson process with rate _b_\*exp(_a_)&minus;_b_ (Freud, T., Rodriguez, P.M., "[**The Bell-Touchard counting process**](https://arxiv.org/abs/2203.16737v2)", arXiv:2203.16737v2 [math.PR], 2022).
+[^58]: The similar Bell&ndash;Touchard process is the sum of the first _N_ variates from an infinite sequence of zero-truncated Poisson(_a_) random variates, where _N_ is the number of events of a Poisson process with rate _b_\*exp(_a_)&minus;_b_ (Freud, T., Rodriguez, P.M., "[**The Bell-Touchard counting process**](https://arxiv.org/abs/2203.16737v2)", arXiv:2203.16737v2 [math.PR], 2022).
 
-[^58]: Buddana, Amrutha, and Tomasz J. Kozubowski. "Discrete Pareto distributions." Economic Quality Control 29, no. 2 (2014): 143-156.
+[^59]: Buddana, Amrutha, and Tomasz J. Kozubowski. "Discrete Pareto distributions." Economic Quality Control 29, no. 2 (2014): 143-156.
 
-[^59]: Batsidis, A., Lemonte, A.J., "On Goodness-of-Fit Tests for the Neyman Type A Distribution", REVSTAT-Statistical Journal (accepted Nov. 2021).
+[^60]: Batsidis, A., Lemonte, A.J., "On Goodness-of-Fit Tests for the Neyman Type A Distribution", REVSTAT-Statistical Journal (accepted Nov. 2021).
 
-[^60]: Kudryavtsev, A.A., "On the representation of gamma-exponential and generalized negative binomial distributions", Inform. Appl. 13 (2019)
+[^61]: Kudryavtsev, A.A., "On the representation of gamma-exponential and generalized negative binomial distributions", Inform. Appl. 13 (2019)
 
-[^61]: Saha, M., et al., "[**The extended xgamma distribution**](https://arxiv.org/abs/1909.01103)", arXiv:1909.01103 [math.ST], 2019.
+[^62]: Saha, M., et al., "[**The extended xgamma distribution**](https://arxiv.org/abs/1909.01103)", arXiv:1909.01103 [math.ST], 2019.
 
-[^62]: McNeil, et al., "Quantitative risk management", 2010.
+[^63]: McNeil, et al., "Quantitative risk management", 2010.
 
-[^63]: Azzalini, A., Capitanio, A., "Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution." Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389.
+[^64]: Azzalini, A., Capitanio, A., "Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution." Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389.
 
-[^64]: Azzalini, A., "An overview on the progeny of the skew-normal family&mdash; A personal perspective", Journal of Multivariate Analysis 188, March 2022.
+[^65]: Azzalini, A., "An overview on the progeny of the skew-normal family&mdash; A personal perspective", Journal of Multivariate Analysis 188, March 2022.
 
-[^65]: Azzalini, Adelchi. "A class of distributions which includes the normal ones." Scandinavian journal of statistics (1985): 171-178.
+[^66]: Azzalini, Adelchi. "A class of distributions which includes the normal ones." Scandinavian journal of statistics (1985): 171-178.
 
-[^66]: Gómez-Déniz, Emilio, and E. Calderín-Ojeda. "[**On the usefulness of the logarithmic skew normal distribution for describing claims size data**](https://www.hindawi.com/journals/mpe/2020/1420618/)." Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, "The logarithmic skew-normal distributions are moment-indeterminate", _Journal of Applied Probability_ 46) studied the logarithmic skew normal distribution with _&mu;_=0 and _&sigma;_=1.
+[^67]: Gómez-Déniz, Emilio, and E. Calderín-Ojeda. "[**On the usefulness of the logarithmic skew normal distribution for describing claims size data**](https://www.hindawi.com/journals/mpe/2020/1420618/)." Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, "The logarithmic skew-normal distributions are moment-indeterminate", _Journal of Applied Probability_ 46) studied the logarithmic skew normal distribution with _&mu;_=0 and _&sigma;_=1.
 
-[^67]: Hahn, Eugene D. "The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation." Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22.
+[^68]: Hahn, Eugene D. "The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation." Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22.
 
-[^68]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. [**https://doi.org/10.1111/j.1740-9713.2020.01352.x**](https://doi.org/10.1111/j.1740-9713.2020.01352.x)
+[^69]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. [**https://doi.org/10.1111/j.1740-9713.2020.01352.x**](https://doi.org/10.1111/j.1740-9713.2020.01352.x)
 
-[^69]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213
+[^70]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213
 
-[^70]: Sadeghi, Parastoo, and Mehdi Korki. "Offset-Symmetric Gaussians for Differential Privacy." arXiv preprint arXiv:2110.06412 (2021).
+[^71]: Sadeghi, Parastoo, and Mehdi Korki. "Offset-Symmetric Gaussians for Differential Privacy." arXiv preprint arXiv:2110.06412 (2021).
 
-[^71]: Henze, Norbert. "A probabilistic representation of the 'skew-normal' distribution." Scandinavian journal of statistics (1986): 271-275. SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
+[^72]: Henze, Norbert. "A probabilistic representation of the 'skew-normal' distribution." Scandinavian journal of statistics (1986): 271-275. SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
 
-[^72]: Francis-Staite, Kelli, and Langford White. "[**Analysis of sojourn time distributions for semi-Markov models**](https://arxiv.org/abs/2206.10865)", arXiv:2206.10865 (2022).
+[^73]: Francis-Staite, Kelli, and Langford White. "[**Analysis of sojourn time distributions for semi-Markov models**](https://arxiv.org/abs/2206.10865)", arXiv:2206.10865 (2022).
 
-[^73]: Kozubowski, Tomasz J., and Krzysztof Podgórski. "A generalized Sibuya distribution." Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887.
+[^74]: Kozubowski, Tomasz J., and Krzysztof Podgórski. "A generalized Sibuya distribution." Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887.
 
-[^74]: If _&nu;_ = 0, this is the ordinary Sibuya distribution.
+[^75]: If _&nu;_ = 0, this is the ordinary Sibuya distribution.
 
-[^75]: Agarwal, A., Pandey, H., "Himanshu distribution and its applications", Bulletin of Mathematics and Statistics Research 10(4), 2022.
+[^76]: Agarwal, A., Pandey, H., "Himanshu distribution and its applications", Bulletin of Mathematics and Statistics Research 10(4), 2022.
 
-[^76]: Hahn, E.D., López Martín, M.d.M., "Robust project management with the tilted beta distribution", 2015.
+[^77]: Hahn, E.D., López Martín, M.d.M., "Robust project management with the tilted beta distribution", 2015.
 
-[^77]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
+[^78]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
-[^78]: A Lipschitz continuous function, with Lipschitz constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function's slope is no "steeper" than that of _L_\*_x_.
+[^79]: A Lipschitz continuous function, with Lipschitz constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function's slope is no "steeper" than that of _L_\*_x_.
 
-[^79]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
+[^80]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 
-[^80]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  That's why there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_), for every _&epsilon;_&gt;0, whenever _x_ and _y_ lie in that interval and whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
+[^81]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  That's why there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_), for every _&epsilon;_&gt;0, whenever _x_ and _y_ lie in that interval and whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
 
-[^81]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
+[^82]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
-[^82]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^83]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^83]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^84]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
-[^84]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).
+[^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).
 
-[^85]: There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
+[^86]: There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
-[^86]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^87]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^87]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
+[^88]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^88]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
+[^89]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
 
-[^89]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
+[^90]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
-[^90]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
+[^91]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 <a id=License></a>
 

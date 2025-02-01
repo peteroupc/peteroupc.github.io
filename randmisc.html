@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2025/01/27"><meta name="citation_online_date" content="2025/01/27"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2025/02/01"><meta name="citation_online_date" content="2025/02/01"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -650,6 +650,14 @@
   <p><strong>Note:</strong> An important property for use in statistical estimation is <em>identifiability</em>.  A family of distributions is <em>identifiable</em> if it has the property that if two parameter vectors (<em>θ</em><sub>1</sub> and <em>θ</em><sub>2</sub>) determine the same distribution, then <em>θ</em><sub>1</sub> must equal <em>θ</em><sub>2</sub>.</p>
 </blockquote>
 
+<p>Although many statistical distributions (especially single-variable ones) tend to be presented in research papers nowadays, they don’t end up in a serious application.  Thus, no distribution introduced in 2023 or later will be mentioned in this article unless it is cited in a paper that—</p>
+
+<ul>
+  <li>is not mainly about new properties of the distribution,</li>
+  <li>does not itself present a new statistical distribution, and</li>
+  <li>uses the distribution in a nontrivial application (much more than distribution fitting or a simulation study).</li>
+</ul>
+
 <p><a id="Certain_Distributions"></a></p>
 
 <h2 id="certain-distributions">Certain Distributions</h2>
@@ -681,12 +689,17 @@
       <td><em>α</em> in [0, 1].</td>
     </tr>
     <tr>
+      <td>Slash (Rogers and Tukey 1972)<sup id="fnref:55" role="doc-noteref"><a href="#fn:55" class="footnote" rel="footnote">55</a></sup></td>
+      <td><em>N</em>/<em>U</em><sup>1/<em>q</em></sup>, where <em>N</em> is a normal(0, 1) random variate.</td>
+      <td><em>q</em> &gt; 0.</td>
+    </tr>
+    <tr>
       <td>Lomax(<em>α</em>).</td>
       <td>(1−<em>U</em>)<sup>−1/<em>α</em></sup>−1.</td>
       <td><em>α</em> &gt; 0.</td>
     </tr>
     <tr>
-      <td>Power Lomax(<em>α</em>, <em>β</em>) (Rady et al. 2016)<sup id="fnref:55" role="doc-noteref"><a href="#fn:55" class="footnote" rel="footnote">55</a></sup>.</td>
+      <td>Power Lomax(<em>α</em>, <em>β</em>) (Rady et al. 2016)<sup id="fnref:56" role="doc-noteref"><a href="#fn:56" class="footnote" rel="footnote">56</a></sup>.</td>
       <td><em>L</em><sup>1/<em>β</em></sup></td>
       <td><em>β</em> &gt; 0; <em>L</em> is Lomax(<em>α</em>).</td>
     </tr>
@@ -696,67 +709,67 @@
       <td><em>α</em> &gt; 0.</td>
     </tr>
     <tr>
-      <td>Bell–Touchard(<em>a</em>, <em>b</em>) (Castellares et al. 2020)<sup id="fnref:56" role="doc-noteref"><a href="#fn:56" class="footnote" rel="footnote">56</a></sup>.</td>
-      <td>Sum of <em>N</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)−<em>b</em>.<sup id="fnref:57" role="doc-noteref"><a href="#fn:57" class="footnote" rel="footnote">57</a></sup></td>
+      <td>Bell–Touchard(<em>a</em>, <em>b</em>) (Castellares et al. 2020)<sup id="fnref:57" role="doc-noteref"><a href="#fn:57" class="footnote" rel="footnote">57</a></sup>.</td>
+      <td>Sum of <em>P</em> zero-truncated Poisson(<em>a</em>) random variates, where <em>P</em> is Poisson with parameter <em>b</em>*exp(<em>a</em>)−<em>b</em>.<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">58</a></sup></td>
       <td><em>a</em>&gt;0, <em>b</em>&gt;0.</td>
     </tr>
     <tr>
-      <td>Bell(<em>a</em>) (Castellares et al. 2020)<sup id="fnref:56:1" role="doc-noteref"><a href="#fn:56" class="footnote" rel="footnote">56</a></sup>.</td>
+      <td>Bell(<em>a</em>) (Castellares et al. 2020)<sup id="fnref:57:1" role="doc-noteref"><a href="#fn:57" class="footnote" rel="footnote">57</a></sup>.</td>
       <td>Bell–Touchard(<em>a</em>, 0).</td>
       <td><em>a</em>&gt;0.</td>
     </tr>
     <tr>
-      <td>Discrete Pareto(<em>δ</em>, <em>p</em>) (Buddana and Kozubowski 2014)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">58</a></sup></td>
+      <td>Discrete Pareto(<em>δ</em>, <em>p</em>) (Buddana and Kozubowski 2014)<sup id="fnref:59" role="doc-noteref"><a href="#fn:59" class="footnote" rel="footnote">59</a></sup></td>
       <td>1 plus the number of failures before the first success, with each success having probability 1−exp(−<em>Z</em>), where <em>Z</em> is a gamma(1/<em>δ</em>) variate times −<em>δ</em>*ln(1−<em>p</em>).</td>
       <td><em>δ</em> &gt; 0, and 0&lt;<em>p</em>&lt;1.</td>
     </tr>
     <tr>
-      <td>Neyman type A(<em>δ</em>, <em>τ</em>) (Batsidis and Lemonte 2021)<sup id="fnref:59" role="doc-noteref"><a href="#fn:59" class="footnote" rel="footnote">59</a></sup></td>
+      <td>Neyman type A(<em>δ</em>, <em>τ</em>) (Batsidis and Lemonte 2021)<sup id="fnref:60" role="doc-noteref"><a href="#fn:60" class="footnote" rel="footnote">60</a></sup></td>
       <td>Bell–Touchard(<em>τ</em>, <em>δ</em>*exp(−<em>τ</em>)).</td>
       <td><em>δ</em>&gt;0, <em>τ</em>&gt;0.</td>
     </tr>
     <tr>
-      <td>Gamma exponential (Kudryavtsev 2019)<sup id="fnref:60" role="doc-noteref"><a href="#fn:60" class="footnote" rel="footnote">60</a></sup>.</td>
+      <td>Gamma exponential (Kudryavtsev 2019)<sup id="fnref:61" role="doc-noteref"><a href="#fn:61" class="footnote" rel="footnote">61</a></sup>.</td>
       <td><em>δ</em>*Gamma(<em>t</em>)<sup>1/<em>ν</em></sup>/Gamma(<em>s</em>)<sup><em>r</em>/<em>ν</em></sup>, where Gamma(<em>x</em>) is a gamma(<em>x</em>) variate.</td>
       <td>0 ≤ <em>r</em> &lt; 1; <em>ν</em> ≠ 0; <em>s</em>&gt;0; <em>t</em>&gt;0; <em>δ</em>&gt;0.</td>
     </tr>
     <tr>
-      <td>Extended xgamma (Saha et al. 2019)<sup id="fnref:61" role="doc-noteref"><a href="#fn:61" class="footnote" rel="footnote">61</a></sup></td>
+      <td>Extended xgamma (Saha et al. 2019)<sup id="fnref:62" role="doc-noteref"><a href="#fn:62" class="footnote" rel="footnote">62</a></sup></td>
       <td>Gamma(<em>α</em> + <em>c</em>) variate divided by <em>θ</em>, where <em>c</em> is either 0 with probability <em>θ</em>/(<em>θ</em>+<em>β</em>), or 2 otherwise.</td>
       <td><em>θ</em>&gt;0, <em>α</em>&gt;0, <em>β</em> ≥ 0.</td>
     </tr>
     <tr>
-      <td>Generalized Pareto(<em>a</em>, <em>b</em>) (McNeil et al. 2010)<sup id="fnref:62" role="doc-noteref"><a href="#fn:62" class="footnote" rel="footnote">62</a></sup></td>
+      <td>Generalized Pareto(<em>a</em>, <em>b</em>) (McNeil et al. 2010)<sup id="fnref:63" role="doc-noteref"><a href="#fn:63" class="footnote" rel="footnote">63</a></sup></td>
       <td><em>a</em>*((1/(1−<em>U</em>))<sup><em>b</em></sup>−1)/<em>b</em>.</td>
       <td><em>a</em>&gt;0; <em>b</em>&gt;0.</td>
     </tr>
     <tr>
-      <td>Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)<sup id="fnref:63" role="doc-noteref"><a href="#fn:63" class="footnote" rel="footnote">63</a></sup>, (Azzalini 2022)<sup id="fnref:64" role="doc-noteref"><a href="#fn:64" class="footnote" rel="footnote">64</a></sup>.</td>
+      <td>Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)<sup id="fnref:64" role="doc-noteref"><a href="#fn:64" class="footnote" rel="footnote">64</a></sup>, (Azzalini 2022)<sup id="fnref:65" role="doc-noteref"><a href="#fn:65" class="footnote" rel="footnote">65</a></sup>.</td>
       <td><em>Z</em> if <em>T</em> ≤ <em>w</em>(<em>Z</em>), or −<em>Z</em> otherwise.</td>
       <td><em>Z</em> follows a symmetric distribution around 0; <em>T</em> follows a symmetric distribution (not necessarily around 0). <em>w</em>(<em>x</em>) satisfies −<em>w</em>(<em>x</em>) = <em>w</em>(−<em>x</em>).</td>
     </tr>
     <tr>
-      <td>Skew normal (Azzalini 1985)<sup id="fnref:65" role="doc-noteref"><a href="#fn:65" class="footnote" rel="footnote">65</a></sup>.</td>
+      <td>Skew normal (Azzalini 1985)<sup id="fnref:66" role="doc-noteref"><a href="#fn:66" class="footnote" rel="footnote">66</a></sup>.</td>
       <td>Skew symmetric with <em>Z</em> and <em>T</em> both separate Normal(0, 1) variates, and <em>w</em>(<em>x</em>) = <em>x</em>*<em>α</em>.</td>
       <td><em>α</em> is a real number.</td>
     </tr>
     <tr>
-      <td>Logarithmic skew normal (Gómez-Déniz et al. 2020)<sup id="fnref:66" role="doc-noteref"><a href="#fn:66" class="footnote" rel="footnote">66</a></sup></td>
+      <td>Logarithmic skew normal (Gómez-Déniz et al. 2020)<sup id="fnref:67" role="doc-noteref"><a href="#fn:67" class="footnote" rel="footnote">67</a></sup></td>
       <td>exp(SNE(<em>λ</em>,<em>λ</em>)*<em>σ</em>+<em>μ</em>).</td>
       <td><em>μ</em> and <em>λ</em> are real numbers; <em>σ</em> &gt; 0. SNE is described later.</td>
     </tr>
     <tr>
-      <td>Tilted beta binomial (Hahn 2022)<sup id="fnref:67" role="doc-noteref"><a href="#fn:67" class="footnote" rel="footnote">67</a></sup></td>
+      <td>Tilted beta binomial (Hahn 2022)<sup id="fnref:68" role="doc-noteref"><a href="#fn:68" class="footnote" rel="footnote">68</a></sup></td>
       <td>Binomial(<em>n</em>, Tilted-beta(<em>θ</em>, <em>v</em>, <em>α</em>, <em>β</em>)) variate.</td>
       <td>0 ≤ <em>θ</em> ≤ 1;  0 ≤ <em>v</em> ≤ 1; <em>α</em>&gt;0, <em>β</em>&gt;0; <em>n</em> ≥ 0 is an integer.</td>
     </tr>
     <tr>
-      <td>Two-piece distribution (Rubio and Steel 2020)<sup id="fnref:68" role="doc-noteref"><a href="#fn:68" class="footnote" rel="footnote">68</a></sup>.</td>
+      <td>Two-piece distribution (Rubio and Steel 2020)<sup id="fnref:69" role="doc-noteref"><a href="#fn:69" class="footnote" rel="footnote">69</a></sup>.</td>
       <td><em>μ</em> − abs(<em>Z</em>)*<em>sigma1</em> with probability <em>sigma1</em>/(<em>sigma1</em>+<em>sigma2</em>), or <em>μ</em> + abs(<em>Z</em>)*<em>sigma2</em> otherwise.</td>
       <td><em>μ</em> is a real number; <em>sigma1</em>&gt;0; <em>sigma2</em>&gt;0; <em>Z</em> follows a symmetric distribution around 0.</td>
     </tr>
     <tr>
-      <td>Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)<sup id="fnref:69" role="doc-noteref"><a href="#fn:69" class="footnote" rel="footnote">69</a></sup></td>
+      <td>Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)<sup id="fnref:70" role="doc-noteref"><a href="#fn:70" class="footnote" rel="footnote">70</a></sup></td>
       <td>Two-piece distribution where <em>Z</em> is exponential-power(<em>α</em>).</td>
       <td><em>α</em>&gt;0; <em>μ</em> is a real number; <em>sigma1</em>&gt;0; <em>sigma2</em>&gt;0.</td>
     </tr>
@@ -773,32 +786,32 @@
   </thead>
   <tbody>
     <tr>
-      <td>Offset-symmetric Gaussian (Sadeghi and Korki 2021)<sup id="fnref:70" role="doc-noteref"><a href="#fn:70" class="footnote" rel="footnote">70</a></sup></td>
+      <td>Offset-symmetric Gaussian (Sadeghi and Korki 2021)<sup id="fnref:71" role="doc-noteref"><a href="#fn:71" class="footnote" rel="footnote">71</a></sup></td>
       <td>(1) Generate either 1 or 0 with equal probability, call it <em>b</em>; (2) generate <em>Y</em>, a Normal(0, <em>σ</em>) random variate (standard deviation <em>σ</em>), and if <em>Y</em> &lt; <em>m</em>, repeat this step; (3) return (<em>Y</em> − <em>m</em>)*(<em>b</em>*2 − 1).</td>
       <td><em>m</em>&gt;0; <em>σ</em>&gt;0.</td>
     </tr>
     <tr>
-      <td>Generalized skew normal (SNE(<em>λ</em>,<em>ξ</em>)) (Henze 1986)<sup id="fnref:71" role="doc-noteref"><a href="#fn:71" class="footnote" rel="footnote">71</a></sup></td>
+      <td>Generalized skew normal (SNE(<em>λ</em>,<em>ξ</em>)) (Henze 1986)<sup id="fnref:72" role="doc-noteref"><a href="#fn:72" class="footnote" rel="footnote">72</a></sup></td>
       <td><strong>First algorithm:</strong> (1) Generate <em>Y</em> and <em>Z</em>, two Normal(0,1) variates; (2) if <em>Z</em>&lt;<em>Y</em>*<em>λ</em>+<em>ξ</em>, return <em>Y</em>; else go to 1. <strong>Second algorithm:</strong> (1) Let <em>il</em>=1/sqrt(1+<em>λ</em><sup>2</sup>); (2) Generate <em>Y</em> and <em>Z</em>, two Normal(0,1) variates; (3) if <em>Y</em>&gt;−<em>ξ</em>*<em>il</em>, return <em>Y</em>*<em>λ</em>*<em>il</em> + <em>Z</em>; else go to 2.</td>
       <td><em>λ</em> and <em>ξ</em> are real numbers.</td>
     </tr>
     <tr>
-      <td>Generalized geometric (Francis-Staite and White 2022)<sup id="fnref:72" role="doc-noteref"><a href="#fn:72" class="footnote" rel="footnote">72</a></sup></td>
+      <td>Generalized geometric (Francis-Staite and White 2022)<sup id="fnref:73" role="doc-noteref"><a href="#fn:73" class="footnote" rel="footnote">73</a></sup></td>
       <td>(1) Set <em>ret</em> to 1; (2) with probability <em>ρ</em>(<em>ret</em>), add 1 to <em>ret</em> and repeat this step; otherwise, return <em>ret</em>.</td>
       <td>0 ≤ <em>ρ</em>(<em>k</em>) ≤ 1 for each <em>k</em>.</td>
     </tr>
     <tr>
-      <td>Generalized Sibuya (Kozubowski and Podgórski 2018)<sup id="fnref:73" role="doc-noteref"><a href="#fn:73" class="footnote" rel="footnote">73</a></sup></td>
+      <td>Generalized Sibuya (Kozubowski and Podgórski 2018)<sup id="fnref:74" role="doc-noteref"><a href="#fn:74" class="footnote" rel="footnote">74</a></sup></td>
       <td>(1) Set <em>ret</em> to 1; (2) with probability <em>α</em>/(<em>ν</em>+<em>ret</em>), return <em>ret</em>; otherwise, add 1 to <em>ret</em> and repeat this step.</td>
-      <td><em>α</em> &lt; <em>ν</em> + 1, and <em>ν</em> ≥ 0.<sup id="fnref:74" role="doc-noteref"><a href="#fn:74" class="footnote" rel="footnote">74</a></sup></td>
+      <td><em>α</em> &lt; <em>ν</em> + 1, and <em>ν</em> ≥ 0.<sup id="fnref:75" role="doc-noteref"><a href="#fn:75" class="footnote" rel="footnote">75</a></sup></td>
     </tr>
     <tr>
-      <td>Himanshu (Agarwal and Pandey 2022)<sup id="fnref:75" role="doc-noteref"><a href="#fn:75" class="footnote" rel="footnote">75</a></sup></td>
+      <td>Himanshu (Agarwal and Pandey 2022)<sup id="fnref:76" role="doc-noteref"><a href="#fn:76" class="footnote" rel="footnote">76</a></sup></td>
       <td>(1) Set <em>ret</em> to 0; (2) flip coin that shows heads with probability <em>p</em>, <em>n</em> times; (3) if any flip shows 0 (tails), add 1 to <em>ret</em> and go to 2; otherwise, return <em>ret</em>.</td>
       <td>0 ≤ <em>p</em> ≤ 1; <em>n</em> ≥ 1 is an integer.</td>
     </tr>
     <tr>
-      <td>Tilted beta (Hahn and López Martín 2005)<sup id="fnref:76" role="doc-noteref"><a href="#fn:76" class="footnote" rel="footnote">76</a></sup></td>
+      <td>Tilted beta (Hahn and López Martín 2005)<sup id="fnref:77" role="doc-noteref"><a href="#fn:77" class="footnote" rel="footnote">77</a></sup></td>
       <td>(1) With probability <em>θ</em>, return a beta(<em>α</em>, <em>β</em>) variate; (2) Generate a uniform variate in (0, 1), call it <em>x</em>; (3) Flip coin that returns 1 with probability <em>x</em>, and another that returns 1 with probability <em>v</em>; (4) If both coins return 1 or both return 0, return <em>x</em>; otherwise go to step 2.</td>
       <td>0 ≤ <em>θ</em> ≤ 1;  0 ≤ <em>v</em> ≤ 1; <em>α</em>&gt;0; <em>β</em>&gt;0.</td>
     </tr>
@@ -828,7 +841,7 @@
   <li>Suppose <em>Q</em>(<em>z</em>) is continuous on the open interval (<em>a</em>, <em>b</em>).</li>
 </ul>
 
-<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>ε</em> with probability 1 (see (Devroye and Gravel 2020)<sup id="fnref:77" role="doc-noteref"><a href="#fn:77" class="footnote" rel="footnote">77</a></sup>):</p>
+<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>ε</em> with probability 1 (see (Devroye and Gravel 2020)<sup id="fnref:78" role="doc-noteref"><a href="#fn:78" class="footnote" rel="footnote">78</a></sup>):</p>
 
 <ol>
   <li>Generate additional digits of <em>x</em> uniformly at random—thus shortening the interval [<em>a</em>, <em>b</em>]—until a lower bound of <em>Q</em>(<em>f</em>(<em>a</em>)) and an upper bound of <em>Q</em>(<em>f</em>(<em>b</em>)) differ by no more than 2*<em>ε</em>.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
@@ -837,7 +850,7 @@
 
 <p>In some cases, it may be possible to calculate the needed digit size in advance.</p>
 
-<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> with Lipschitz constant <em>L</em> or less on the interval [<em>a</em>, <em>b</em>]<sup id="fnref:78" role="doc-noteref"><a href="#fn:78" class="footnote" rel="footnote">78</a></sup>, then the following algorithm generates a quantile with error tolerance <em>ε</em>:</p>
+<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> with Lipschitz constant <em>L</em> or less on the interval [<em>a</em>, <em>b</em>]<sup id="fnref:79" role="doc-noteref"><a href="#fn:79" class="footnote" rel="footnote">79</a></sup>, then the following algorithm generates a quantile with error tolerance <em>ε</em>:</p>
 
 <ol>
   <li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) − ln(<em>ε</em>)) / ln(<em>β</em>)). For each digit among the first <em>d</em> digits in <em>x</em>’s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
@@ -845,7 +858,7 @@
   <li>Return <em>low</em>+(<em>high</em>−<em>low</em>)/2.</li>
 </ol>
 
-<p>This algorithm chooses a random interval of size equal to <em>β</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval’s bounds are guaranteed to vary by no more than 2*<em>ε</em> (actually <em>ε</em>, but the calculation in step 2 adds an additional error of at most <em>ε</em>), which is needed to meet the tolerance <em>ε</em> (see also Devroye and Gravel 2020<sup id="fnref:77:1" role="doc-noteref"><a href="#fn:77" class="footnote" rel="footnote">77</a></sup>).</p>
+<p>This algorithm chooses a random interval of size equal to <em>β</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval’s bounds are guaranteed to vary by no more than 2*<em>ε</em> (actually <em>ε</em>, but the calculation in step 2 adds an additional error of at most <em>ε</em>), which is needed to meet the tolerance <em>ε</em> (see also Devroye and Gravel 2020<sup id="fnref:78:1" role="doc-noteref"><a href="#fn:78" class="footnote" rel="footnote">78</a></sup>).</p>
 
 <p>A similar algorithm can exist even if the quantile function <em>Q</em> is not Lipschitz continuous on the interval [<em>a</em>, <em>b</em>].</p>
 
@@ -857,20 +870,20 @@
   <li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a continuous and strictly increasing function <em>ω</em>(<em>δ</em>) as a <em>modulus of continuity</em>,</li>
 </ul>
 
-<p>then <em>d</em> in step 1 above can be calculated as—<br />  max(0, ceil(−ln(<em>ω</em><sup>−1</sup>(<em>ε</em>))/ln(<em>β</em>))),<br />where <em>ω</em><sup>−1</sup>(<em>ε</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>ω</em>(<em>δ</em>) gives the quantile function’s maximum-minus-minimum in a window of size <em>δ</em>, and the inverse modulus <em>ω</em><sup>−1</sup>(<em>ε</em>) finds a window small enough that the quantile function differs by no more than <em>ε</em> in the window.<sup id="fnref:79" role="doc-noteref"><a href="#fn:79" class="footnote" rel="footnote">79</a></sup>).<sup id="fnref:80" role="doc-noteref"><a href="#fn:80" class="footnote" rel="footnote">80</a></sup></p>
+<p>then <em>d</em> in step 1 above can be calculated as—<br />  max(0, ceil(−ln(<em>ω</em><sup>−1</sup>(<em>ε</em>))/ln(<em>β</em>))),<br />where <em>ω</em><sup>−1</sup>(<em>ε</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>ω</em>(<em>δ</em>) gives the quantile function’s maximum-minus-minimum in a window of size <em>δ</em>, and the inverse modulus <em>ω</em><sup>−1</sup>(<em>ε</em>) finds a window small enough that the quantile function differs by no more than <em>ε</em> in the window.<sup id="fnref:80" role="doc-noteref"><a href="#fn:80" class="footnote" rel="footnote">80</a></sup>).<sup id="fnref:81" role="doc-noteref"><a href="#fn:81" class="footnote" rel="footnote">81</a></sup></p>
 
 <p>For example—</p>
 
 <ul>
-  <li>if <em>Q</em> is Lipschitz continuous<sup id="fnref:78:1" role="doc-noteref"><a href="#fn:78" class="footnote" rel="footnote">78</a></sup> with Lipschitz constant <em>L</em> or less on [<em>a</em>, <em>b</em>], then the function is no “steeper” than that of <em>ω</em>(<em>δ</em>) = <em>L</em>*<em>δ</em>, so <em>ω</em><sup>−1</sup>(<em>ε</em>) = <em>ε</em>/<em>L</em>, and</li>
-  <li>if <em>Q</em> is Hölder continuous with Hölder constant <em>M</em> or less and Hölder exponent <em>α</em> on that interval <sup id="fnref:81" role="doc-noteref"><a href="#fn:81" class="footnote" rel="footnote">81</a></sup>, then the function is no “steeper” than that of <em>ω</em>(<em>δ</em>) = <em>M</em>*<em>δ</em><sup><em>α</em></sup>, so <em>ω</em><sup>−1</sup>(<em>ε</em>) = (<em>ε</em>/<em>M</em>)<sup>1/<em>α</em></sup>.</li>
+  <li>if <em>Q</em> is Lipschitz continuous<sup id="fnref:79:1" role="doc-noteref"><a href="#fn:79" class="footnote" rel="footnote">79</a></sup> with Lipschitz constant <em>L</em> or less on [<em>a</em>, <em>b</em>], then the function is no “steeper” than that of <em>ω</em>(<em>δ</em>) = <em>L</em>*<em>δ</em>, so <em>ω</em><sup>−1</sup>(<em>ε</em>) = <em>ε</em>/<em>L</em>, and</li>
+  <li>if <em>Q</em> is Hölder continuous with Hölder constant <em>M</em> or less and Hölder exponent <em>α</em> on that interval <sup id="fnref:82" role="doc-noteref"><a href="#fn:82" class="footnote" rel="footnote">82</a></sup>, then the function is no “steeper” than that of <em>ω</em>(<em>δ</em>) = <em>M</em>*<em>δ</em><sup><em>α</em></sup>, so <em>ω</em><sup>−1</sup>(<em>ε</em>) = (<em>ε</em>/<em>M</em>)<sup>1/<em>α</em></sup>.</li>
 </ul>
 
 <p>The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance. (Indeed, for this reason, the algorithms don’t satisfy <a href="https://peteroupc.github.io/exporand.html#Properties"><strong>desirable properties for PSRN samplers</strong></a>.)  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:</p>
 
 <ul>
   <li>The target distribution must have a probability density function (PDF), as is the case with the normal and exponential distributions.</li>
-  <li>That PDF, or a function proportional to it, must be known, must be less than or equal to a finite number, and must be continuous “almost everywhere” (the set of discontinuous points is “zero-volume”, that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020)<sup id="fnref:77:2" role="doc-noteref"><a href="#fn:77" class="footnote" rel="footnote">77</a></sup>).</li>
+  <li>That PDF, or a function proportional to it, must be known, must be less than or equal to a finite number, and must be continuous “almost everywhere” (the set of discontinuous points is “zero-volume”, that is, has Lebesgue measure zero) (see also (Devroye and Gravel 2020)<sup id="fnref:78:2" role="doc-noteref"><a href="#fn:78" class="footnote" rel="footnote">78</a></sup>).</li>
 </ul>
 
 <p>Here is a sketch of how this rejection sampler might work:</p>
@@ -889,7 +902,7 @@
 <table>
   <tbody>
     <tr>
-      <td>Devroye and Gravel (2020)<sup id="fnref:77:3" role="doc-noteref"><a href="#fn:77" class="footnote" rel="footnote">77</a></sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits given that it produces a specific output <em>Y</em> (or <em>P</em>(<em>X</em></td>
+      <td>Devroye and Gravel (2020)<sup id="fnref:78:3" role="doc-noteref"><a href="#fn:78" class="footnote" rel="footnote">78</a></sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits given that it produces a specific output <em>Y</em> (or <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) for short):</td>
     </tr>
   </tbody>
@@ -917,7 +930,7 @@
   <tbody>
     <tr>
       <td>The issue of finding <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup id="fnref:82" role="doc-noteref"><a href="#fn:82" class="footnote" rel="footnote">82</a></sup>, <em>P</em>(<em>X</em></td>
+      <td><em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup id="fnref:83" role="doc-noteref"><a href="#fn:83" class="footnote" rel="footnote">83</a></sup>, <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to give out <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011…, then <em>P</em>(<em>X</em></td>
       <td><em>Y</em>) is 0.1010 / 0.101011…).</td>
@@ -961,7 +974,7 @@
   <li><em>f</em>(<em>μ</em>) is greater than or equal to <em>ε</em>*min((<em>μ</em> − <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> − <em>μ</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>ε</em> greater than 0 (loosely speaking, <em>f</em> is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)</li>
 </ul>
 
-<p>(Jacob and Thiery 2015)<sup id="fnref:83" role="doc-noteref"><a href="#fn:83" class="footnote" rel="footnote">83</a></sup>. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
+<p>(Jacob and Thiery 2015)<sup id="fnref:84" role="doc-noteref"><a href="#fn:84" class="footnote" rel="footnote">84</a></sup>. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
 
 <p>In the algorithm below, let <em>K</em> be a rational number greater than the maximum value of <em>f</em> on the closed interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>λ</em>) = <em>f</em>(<em>a</em> + (<em>b</em>−<em>a</em>)*<em>λ</em>)/<em>K</em>.</p>
 
@@ -982,13 +995,13 @@
   </ol>
 </blockquote>
 
-<p><strong>Algorithm 2.</strong> Suppose the oracle is in the form of a fair die.  The number of faces of the die, <em>n</em>, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than <em>n</em>.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup id="fnref:84" role="doc-noteref"><a href="#fn:84" class="footnote" rel="footnote">84</a></sup>, and the following are four of these distributions.</p>
+<p><strong>Algorithm 2.</strong> Suppose the oracle is in the form of a fair die.  The number of faces of the die, <em>n</em>, is at least 2 but otherwise unknown. Each face shows a different integer 0 or greater and less than <em>n</em>.  The question arises: Which probability distributions based on the number of faces can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup id="fnref:85" role="doc-noteref"><a href="#fn:85" class="footnote" rel="footnote">85</a></sup>, and the following are four of these distributions.</p>
 
-<p><strong><em>Bernoulli 1/n.</em></strong> It’s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup id="fnref:84:1" role="doc-noteref"><a href="#fn:84" class="footnote" rel="footnote">84</a></sup>.</p>
+<p><strong><em>Bernoulli 1/n.</em></strong> It’s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup id="fnref:85:1" role="doc-noteref"><a href="#fn:85" class="footnote" rel="footnote">85</a></sup>.</p>
 
 <p><strong><em>Random variate with mean n.</em></strong> Likewise, it’s trivial to generate variates with a mean of <em>n</em>: Do “Bernoulli 1/n” trials as described earlier until a trial returns 0, then return the number of trials done this way.  (This is related to the ambiguously defined “geometric” random variates.)</p>
 
-<p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)<sup id="fnref:84:2" role="doc-noteref"><a href="#fn:84" class="footnote" rel="footnote">84</a></sup>:</p>
+<p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)<sup id="fnref:85:2" role="doc-noteref"><a href="#fn:85" class="footnote" rel="footnote">85</a></sup>:</p>
 
 <ol>
   <li>Take items from the oracle until the same item is taken twice.</li>
@@ -1019,7 +1032,7 @@
 </ol>
 
 <blockquote>
-  <p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?<sup id="fnref:85" role="doc-noteref"><a href="#fn:85" class="footnote" rel="footnote">85</a></sup> The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:</p>
+  <p><strong>Note:</strong> Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?<sup id="fnref:86" role="doc-noteref"><a href="#fn:86" class="footnote" rel="footnote">86</a></sup> The result applies to a family of (discrete) distributions with the same unknown parameter <em>n</em>, starting with either 1 or a greater integer.  Let Supp(<em>m</em>) be the set of values taken on by the distribution with parameter equal to <em>m</em>.  Then that family can be sampled using the oracle (with or without additional randomness) if and only if:</p>
 </blockquote>
 
 <blockquote>
@@ -1031,7 +1044,7 @@
 
   <p>Moreover, by Proposition 5.5 of Duvignau, a family meeting the conditions above can be sampled without additional randomness (besides the oracle) if and only if Supp(1) has no more than one element.</p>
 
-  <p><strong>Example:</strong> Let <em>n</em>≥ 2 be an integer.<br />The family of Bernoulli distributions, taking on 1 with probability exp(−<em>n</em>) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/<em>n</em>)<sup><em>f</em>(1)</sup> for any <em>f</em>.  This is consistent with the results for <em>Bernoulli factories</em> (Keane and O’Brien 1994)<sup id="fnref:86" role="doc-noteref"><a href="#fn:86" class="footnote" rel="footnote">86</a></sup>, where a coin that shows heads with unknown probability <em>λ</em> = 1/<em>n</em> cannot be turned into a coin that shows heads with probability g(<em>λ</em>) = exp(−1/<em>λ</em>) = exp(−<em>n</em>) since <em>g</em> is not polynomially bounded (away from 0).<br />However, a Bernoulli family, taking on 1 with probability <em>h</em>(<em>n</em>) = (1+ln(<em>n</em>))/<em>n</em> and 0 with probability 1−<em>h</em>(<em>n</em>), <em>can</em> be simulated, because min(<em>h</em>(<em>n</em>), 1−<em>h</em>(<em>n</em>)) ≥ (1/<em>n</em>)<sup>3</sup>.</p>
+  <p><strong>Example:</strong> Let <em>n</em>≥ 2 be an integer.<br />The family of Bernoulli distributions, taking on 1 with probability exp(−<em>n</em>) and 0 otherwise, cannot be simulated this way, because that probability decays faster than the rate (1/<em>n</em>)<sup><em>f</em>(1)</sup> for any <em>f</em>.  This is consistent with the results for <em>Bernoulli factories</em> (Keane and O’Brien 1994)<sup id="fnref:87" role="doc-noteref"><a href="#fn:87" class="footnote" rel="footnote">87</a></sup>, where a coin that shows heads with unknown probability <em>λ</em> = 1/<em>n</em> cannot be turned into a coin that shows heads with probability g(<em>λ</em>) = exp(−1/<em>λ</em>) = exp(−<em>n</em>) since <em>g</em> is not polynomially bounded (away from 0).<br />However, a Bernoulli family, taking on 1 with probability <em>h</em>(<em>n</em>) = (1+ln(<em>n</em>))/<em>n</em> and 0 with probability 1−<em>h</em>(<em>n</em>), <em>can</em> be simulated, because min(<em>h</em>(<em>n</em>), 1−<em>h</em>(<em>n</em>)) ≥ (1/<em>n</em>)<sup>3</sup>.</p>
 </blockquote>
 
 <p><a id="Additional_Algorithms"></a></p>
@@ -1047,7 +1060,7 @@
   <li>the mean of <em>f</em>(<em>X</em>) is not less than <em>δ</em>, where <em>δ</em> is a known rational number greater than 0.</li>
 </ul>
 
-<p>The algorithm to achieve this goal follows (see Lee et al. 2014<sup id="fnref:87" role="doc-noteref"><a href="#fn:87" class="footnote" rel="footnote">87</a></sup>):</p>
+<p>The algorithm to achieve this goal follows (see Lee et al. 2014<sup id="fnref:88" role="doc-noteref"><a href="#fn:88" class="footnote" rel="footnote">88</a></sup>):</p>
 
 <ol>
   <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>μ</em>)) anywhere.  Create a <em>ν</em> input coin that does the following: “Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.”</li>
@@ -1055,14 +1068,14 @@
 </ol>
 
 <blockquote>
-  <p><strong>Example:</strong> An example from Lee et al. (2014)<sup id="fnref:87:1" role="doc-noteref"><a href="#fn:87" class="footnote" rel="footnote">87</a></sup>.  Say the oracle produces uniform random variates in [0, 3*<em>π</em>], and let <em>f</em>(<em>ν</em>) = sin(<em>ν</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>π</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (“long-run average”) is that mean.</p>
+  <p><strong>Example:</strong> An example from Lee et al. (2014)<sup id="fnref:88:1" role="doc-noteref"><a href="#fn:88" class="footnote" rel="footnote">88</a></sup>.  Say the oracle produces uniform random variates in [0, 3*<em>π</em>], and let <em>f</em>(<em>ν</em>) = sin(<em>ν</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>π</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))</code>, so the algorithm can produce nonnegative random variates whose expected value (“long-run average”) is that mean.</p>
 
   <p><strong>Notes:</strong></p>
 
   <ol>
     <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected value or “long-run average”) is not the same as averaging to <em>f</em>(<em>μ</em>) where <em>μ</em> is the mean of the oracle’s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 1 or 0 with equal probability, and <em>f</em>(<em>ν</em>) = exp(−<em>ν</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(−1) − exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(−1/2).</li>
     <li>
-      <p>(Lee et al. 2014, Corollary 4)<sup id="fnref:87:2" role="doc-noteref"><a href="#fn:87" class="footnote" rel="footnote">87</a></sup>: If <em>f</em>(<em>μ</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>δ</em>, <em>δ</em> &gt; <em>b</em>, and <em>δ</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
+      <p>(Lee et al. 2014, Corollary 4)<sup id="fnref:88:2" role="doc-noteref"><a href="#fn:88" class="footnote" rel="footnote">88</a></sup>: If <em>f</em>(<em>μ</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>δ</em>, <em>δ</em> &gt; <em>b</em>, and <em>δ</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
       <ul>
         <li>Use <em>f</em>(<em>ν</em>) = <em>f</em>(<em>ν</em>) − <em>b</em>, and use <em>δ</em> = <em>δ</em> − <em>b</em>.</li>
@@ -1074,7 +1087,7 @@
   </ol>
 </blockquote>
 
-<p><strong>Algorithm 4.</strong> Suppose the oracle produces random variates all greater than or equal to <em>a</em> (which is a known rational number), and with an unknown mean (<em>μ</em>).  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>μ</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>∞</em>) and is nowhere decreasing in that interval (Jacob and Thiery 2015)<sup id="fnref:83:1" role="doc-noteref"><a href="#fn:83" class="footnote" rel="footnote">83</a></sup>.  This can be done using the algorithm below.  In the algorithm:</p>
+<p><strong>Algorithm 4.</strong> Suppose the oracle produces random variates all greater than or equal to <em>a</em> (which is a known rational number), and with an unknown mean (<em>μ</em>).  The goal is to use the oracle to produce nonnegative random variates with mean <em>f</em>(<em>μ</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>∞</em>) and is nowhere decreasing in that interval (Jacob and Thiery 2015)<sup id="fnref:84:1" role="doc-noteref"><a href="#fn:84" class="footnote" rel="footnote">84</a></sup>.  This can be done using the algorithm below.  In the algorithm:</p>
 
 <ul>
   <li><em>f</em>(<em>μ</em>) must be a function that can be written as—<br /><em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + …,<br />which is an infinite series where <em>z</em> = <em>μ</em>−<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
@@ -1091,13 +1104,13 @@
   <li>With probability <em>ψ</em>, go to step 2.  Otherwise, return <em>ret</em>.</li>
 </ol>
 
-<p>Now, assume the oracle’s numbers are all less than or equal to <em>b</em> (rather than greater than or equal to <em>a</em>), where <em>b</em> is a known rational number.  Then <em>f</em> must be 0 or greater everywhere in (−<em>∞</em>, <em>b</em>] and be nowhere increasing there (Jacob and Thiery 2015)<sup id="fnref:83:2" role="doc-noteref"><a href="#fn:83" class="footnote" rel="footnote">83</a></sup>, and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, <em>z</em> = <em>b</em> −<em>μ</em>; (2) in step 2, multiply <em>prod</em> by <em>b</em> − <em>x</em> rather than <em>x</em> − <em>a</em>.</p>
+<p>Now, assume the oracle’s numbers are all less than or equal to <em>b</em> (rather than greater than or equal to <em>a</em>), where <em>b</em> is a known rational number.  Then <em>f</em> must be 0 or greater everywhere in (−<em>∞</em>, <em>b</em>] and be nowhere increasing there (Jacob and Thiery 2015)<sup id="fnref:84:2" role="doc-noteref"><a href="#fn:84" class="footnote" rel="footnote">84</a></sup>, and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, <em>z</em> = <em>b</em> −<em>μ</em>; (2) in step 2, multiply <em>prod</em> by <em>b</em> − <em>x</em> rather than <em>x</em> − <em>a</em>.</p>
 
 <blockquote>
   <p><strong>Note:</strong> This algorithm is exact if the oracle produces only rational numbers <em>and</em> if all <em>c</em>[<em>i</em>] are rational numbers.  Otherwise, the algorithm can introduce numerical errors unless care is taken (see note 2 in “Distributions with nowhere increasing or nowhere decreasing weights”, earlier).  See also note 3 on the previous algorithm.</p>
 </blockquote>
 
-<p><strong>Algorithm 5.</strong> Suppose there is a coin that shows heads (or 1) with the unknown probability <em>λ</em>, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is <em>f</em>(<em>λ</em>), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)<sup id="fnref:88" role="doc-noteref"><a href="#fn:88" class="footnote" rel="footnote">88</a></sup>, (Akahira et al. 1992)<sup id="fnref:89" role="doc-noteref"><a href="#fn:89" class="footnote" rel="footnote">89</a></sup>.</p>
+<p><strong>Algorithm 5.</strong> Suppose there is a coin that shows heads (or 1) with the unknown probability <em>λ</em>, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is <em>f</em>(<em>λ</em>), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)<sup id="fnref:89" role="doc-noteref"><a href="#fn:89" class="footnote" rel="footnote">89</a></sup>, (Akahira et al. 1992)<sup id="fnref:90" role="doc-noteref"><a href="#fn:90" class="footnote" rel="footnote">90</a></sup>.</p>
 
 <ul>
   <li>First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), …$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must approach $f(\lambda)$ with increasing $n$ (that is, $g_n$ must <em>converge pointwise</em> to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article “<a href="https://peteroupc.github.io/bernapprox.html"><strong>Approximations in Bernstein Form</strong></a>”.</li>
@@ -1114,11 +1127,11 @@
 <table>
   <tbody>
     <tr>
-      <td>The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials— \(p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},\) over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)<sup id="fnref:89:1" role="doc-noteref"><a href="#fn:89" class="footnote" rel="footnote">89</a></sup>.  It can be shown that this condition is the same as: $g_1(\lambda) +</td>
+      <td>The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials— \(p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},\) over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)<sup id="fnref:90:1" role="doc-noteref"><a href="#fn:90" class="footnote" rel="footnote">90</a></sup>.  It can be shown that this condition is the same as: $g_1(\lambda) +</td>
       <td>g_2(\lambda) - g_1(\lambda)</td>
       <td>+</td>
       <td>g_3(\lambda) - g_2(\lambda)</td>
-      <td>+ …$ is finite whenever $0\lt\lambda\lt 1$. <sup id="fnref:90" role="doc-noteref"><a href="#fn:90" class="footnote" rel="footnote">90</a></sup></td>
+      <td>+ …$ is finite whenever $0\lt\lambda\lt 1$. <sup id="fnref:91" role="doc-noteref"><a href="#fn:91" class="footnote" rel="footnote">91</a></sup></td>
     </tr>
   </tbody>
 </table>
@@ -1307,113 +1320,116 @@
       <p>Marshall, A.W. and Olkin, I., 1997. A new method for adding a parameter to a family of distributions with application to the exponential and Weibull families. Biometrika, 84(3), pp.641-652. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:55" role="doc-endnote">
-      <p>Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., “The power Lomax distribution with an application to bladder cancer data”, (2016). <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Rogers, W.H., Tukey, J.W., “Understanding some long-tailed statistical distributions”, <em>Statistica Neerlandica</em> 26(3), 1972. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:56" role="doc-endnote">
-      <p>Castellares, F., Lemonte, A.J., Moreno, G., “On the two-parameter Bell-Touchard discrete distribution”, <em>Communications in Statistics
-- Theory and Methods</em> 4, (2020). <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:56:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., “The power Lomax distribution with an application to bladder cancer data”, (2016). <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:57" role="doc-endnote">
-      <p>The similar Bell–Touchard process is the sum of the first <em>N</em> variates from an infinite sequence of zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is the number of events of a Poisson process with rate <em>b</em>*exp(<em>a</em>)−<em>b</em> (Freud, T., Rodriguez, P.M., “<a href="https://arxiv.org/abs/2203.16737v2"><strong>The Bell-Touchard counting process</strong></a>”, arXiv:2203.16737v2 [math.PR], 2022). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Castellares, F., Lemonte, A.J., Moreno, G., “On the two-parameter Bell-Touchard discrete distribution”, <em>Communications in Statistics
+- Theory and Methods</em> 4, (2020). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:57:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:58" role="doc-endnote">
-      <p>Buddana, Amrutha, and Tomasz J. Kozubowski. “Discrete Pareto distributions.” Economic Quality Control 29, no. 2 (2014): 143-156. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The similar Bell–Touchard process is the sum of the first <em>N</em> variates from an infinite sequence of zero-truncated Poisson(<em>a</em>) random variates, where <em>N</em> is the number of events of a Poisson process with rate <em>b</em>*exp(<em>a</em>)−<em>b</em> (Freud, T., Rodriguez, P.M., “<a href="https://arxiv.org/abs/2203.16737v2"><strong>The Bell-Touchard counting process</strong></a>”, arXiv:2203.16737v2 [math.PR], 2022). <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:59" role="doc-endnote">
-      <p>Batsidis, A., Lemonte, A.J., “On Goodness-of-Fit Tests for the Neyman Type A Distribution”, REVSTAT-Statistical Journal (accepted Nov. 2021). <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Buddana, Amrutha, and Tomasz J. Kozubowski. “Discrete Pareto distributions.” Economic Quality Control 29, no. 2 (2014): 143-156. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:60" role="doc-endnote">
-      <p>Kudryavtsev, A.A., “On the representation of gamma-exponential and generalized negative binomial distributions”, Inform. Appl. 13 (2019) <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Batsidis, A., Lemonte, A.J., “On Goodness-of-Fit Tests for the Neyman Type A Distribution”, REVSTAT-Statistical Journal (accepted Nov. 2021). <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:61" role="doc-endnote">
-      <p>Saha, M., et al., “<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>”, arXiv:1909.01103 [math.ST], 2019. <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Kudryavtsev, A.A., “On the representation of gamma-exponential and generalized negative binomial distributions”, Inform. Appl. 13 (2019) <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:62" role="doc-endnote">
-      <p>McNeil, et al., “Quantitative risk management”, 2010. <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Saha, M., et al., “<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>”, arXiv:1909.01103 [math.ST], 2019. <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:63" role="doc-endnote">
-      <p>Azzalini, A., Capitanio, A., “Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>McNeil, et al., “Quantitative risk management”, 2010. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:64" role="doc-endnote">
-      <p>Azzalini, A., “An overview on the progeny of the skew-normal family— A personal perspective”, Journal of Multivariate Analysis 188, March 2022. <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Azzalini, A., Capitanio, A., “Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution.” Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389. <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:65" role="doc-endnote">
-      <p>Azzalini, Adelchi. “A class of distributions which includes the normal ones.” Scandinavian journal of statistics (1985): 171-178. <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Azzalini, A., “An overview on the progeny of the skew-normal family— A personal perspective”, Journal of Multivariate Analysis 188, March 2022. <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:66" role="doc-endnote">
-      <p>Gómez-Déniz, Emilio, and E. Calderín-Ojeda. “<a href="https://www.hindawi.com/journals/mpe/2020/1420618/"><strong>On the usefulness of the logarithmic skew normal distribution for describing claims size data</strong></a>.” Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, “The logarithmic skew-normal distributions are moment-indeterminate”, <em>Journal of Applied Probability</em> 46) studied the logarithmic skew normal distribution with <em>μ</em>=0 and <em>σ</em>=1. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Azzalini, Adelchi. “A class of distributions which includes the normal ones.” Scandinavian journal of statistics (1985): 171-178. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:67" role="doc-endnote">
-      <p>Hahn, Eugene D. “The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation.” Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22. <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gómez-Déniz, Emilio, and E. Calderín-Ojeda. “<a href="https://www.hindawi.com/journals/mpe/2020/1420618/"><strong>On the usefulness of the logarithmic skew normal distribution for describing claims size data</strong></a>.” Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, “The logarithmic skew-normal distributions are moment-indeterminate”, <em>Journal of Applied Probability</em> 46) studied the logarithmic skew normal distribution with <em>μ</em>=0 and <em>σ</em>=1. <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:68" role="doc-endnote">
-      <p>Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. <a href="https://doi.org/10.1111/j.1740-9713.2020.01352.x"><strong>https://doi.org/10.1111/j.1740-9713.2020.01352.x</strong></a> <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Hahn, Eugene D. “The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation.” Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:69" role="doc-endnote">
-      <p>A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213 <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. <a href="https://doi.org/10.1111/j.1740-9713.2020.01352.x"><strong>https://doi.org/10.1111/j.1740-9713.2020.01352.x</strong></a> <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:70" role="doc-endnote">
-      <p>Sadeghi, Parastoo, and Mehdi Korki. “Offset-Symmetric Gaussians for Differential Privacy.” arXiv preprint arXiv:2110.06412 (2021). <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213 <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:71" role="doc-endnote">
-      <p>Henze, Norbert. “A probabilistic representation of the ‘skew-normal’ distribution.” Scandinavian journal of statistics (1986): 271-275. SNE(<em>λ</em>,0) is distributed as Azzalini’s skew normal distribution. <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Sadeghi, Parastoo, and Mehdi Korki. “Offset-Symmetric Gaussians for Differential Privacy.” arXiv preprint arXiv:2110.06412 (2021). <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:72" role="doc-endnote">
-      <p>Francis-Staite, Kelli, and Langford White. “<a href="https://arxiv.org/abs/2206.10865"><strong>Analysis of sojourn time distributions for semi-Markov models</strong></a>”, arXiv:2206.10865 (2022). <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Henze, Norbert. “A probabilistic representation of the ‘skew-normal’ distribution.” Scandinavian journal of statistics (1986): 271-275. SNE(<em>λ</em>,0) is distributed as Azzalini’s skew normal distribution. <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:73" role="doc-endnote">
-      <p>Kozubowski, Tomasz J., and Krzysztof Podgórski. “A generalized Sibuya distribution.” Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Francis-Staite, Kelli, and Langford White. “<a href="https://arxiv.org/abs/2206.10865"><strong>Analysis of sojourn time distributions for semi-Markov models</strong></a>”, arXiv:2206.10865 (2022). <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:74" role="doc-endnote">
-      <p>If <em>ν</em> = 0, this is the ordinary Sibuya distribution. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Kozubowski, Tomasz J., and Krzysztof Podgórski. “A generalized Sibuya distribution.” Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:75" role="doc-endnote">
-      <p>Agarwal, A., Pandey, H., “Himanshu distribution and its applications”, Bulletin of Mathematics and Statistics Research 10(4), 2022. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>If <em>ν</em> = 0, this is the ordinary Sibuya distribution. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:76" role="doc-endnote">
-      <p>Hahn, E.D., López Martín, M.d.M., “Robust project management with the tilted beta distribution”, 2015. <a href="#fnref:76" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Agarwal, A., Pandey, H., “Himanshu distribution and its applications”, Bulletin of Mathematics and Statistics Research 10(4), 2022. <a href="#fnref:76" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:77" role="doc-endnote">
-      <p>Devroye, L., Gravel, C., “<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>”, arXiv:1502.02539v6  [cs.IT], 2020. <a href="#fnref:77" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:77:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:77:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:77:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a></p>
+      <p>Hahn, E.D., López Martín, M.d.M., “Robust project management with the tilted beta distribution”, 2015. <a href="#fnref:77" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:78" role="doc-endnote">
-      <p>A Lipschitz continuous function, with Lipschitz constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>ε</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>ε</em> apart.  Roughly speaking, the function’s slope is no “steeper” than that of <em>L</em>*<em>x</em>. <a href="#fnref:78" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:78:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Devroye, L., Gravel, C., “<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>”, arXiv:1502.02539v6  [cs.IT], 2020. <a href="#fnref:78" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:78:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:78:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:78:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a></p>
     </li>
     <li id="fn:79" role="doc-endnote">
-      <p>Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, “Computational complexity of roots of real functions.” In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989. <a href="#fnref:79" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A Lipschitz continuous function, with Lipschitz constant <em>L</em>, is a continuous function such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>L</em>*<em>ε</em> apart whenever <em>x</em> and <em>y</em> are points in the domain that are no more than <em>ε</em> apart.  Roughly speaking, the function’s slope is no “steeper” than that of <em>L</em>*<em>x</em>. <a href="#fnref:79" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:79:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:80" role="doc-endnote">
-      <p>Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it’s uniformly continuous there.  That’s why there is a positive function <em>ω</em><sup>−1</sup>(<em>ε</em>) such that <em>Q</em>(<em>x</em>) is less than <em>ε</em>-away from <em>Q</em>(<em>y</em>), for every <em>ε</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>ω</em><sup>−1</sup>(<em>ε</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(−ln(<em>z</em>)/ln(<em>β</em>))) is an upper bound on the number of base-_β_ fractional digits needed to store 1/<em>z</em> with an error of at most <em>ε</em>. <a href="#fnref:80" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, “Computational complexity of roots of real functions.” In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989. <a href="#fnref:80" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:81" role="doc-endnote">
-      <p>A <a href="https://en.wikipedia.org/wiki/Hölder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>α</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>δ</em><sup><em>α</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function’s domain and no more than <em>δ</em> apart.<br />Here, <em>α</em> satisfies 0 &lt; <em>α</em> ≤ 1.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>M</em>*<em>x</em><sup><em>α</em></sup>. <a href="#fnref:81" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it’s uniformly continuous there.  That’s why there is a positive function <em>ω</em><sup>−1</sup>(<em>ε</em>) such that <em>Q</em>(<em>x</em>) is less than <em>ε</em>-away from <em>Q</em>(<em>y</em>), for every <em>ε</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>ω</em><sup>−1</sup>(<em>ε</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(−ln(<em>z</em>)/ln(<em>β</em>))) is an upper bound on the number of base-_β_ fractional digits needed to store 1/<em>z</em> with an error of at most <em>ε</em>. <a href="#fnref:81" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:82" role="doc-endnote">
-      <p>Knuth, Donald E. and Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976. <a href="#fnref:82" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A <a href="https://en.wikipedia.org/wiki/Hölder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>α</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>δ</em><sup><em>α</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function’s domain and no more than <em>δ</em> apart.<br />Here, <em>α</em> satisfies 0 &lt; <em>α</em> ≤ 1.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>M</em>*<em>x</em><sup><em>α</em></sup>. <a href="#fnref:82" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:83" role="doc-endnote">
-      <p>Jacob, P.E., Thiery, A.H., “On nonnegative unbiased estimators”, Ann. Statist., Volume 43, Number 2 (2015), 769-784. <a href="#fnref:83" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:83:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:83:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>Knuth, Donald E. and Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976. <a href="#fnref:83" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:84" role="doc-endnote">
-      <p>Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). <a href="#fnref:84" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:84:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:84:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>Jacob, P.E., Thiery, A.H., “On nonnegative unbiased estimators”, Ann. Statist., Volume 43, Number 2 (2015), 769-784. <a href="#fnref:84" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:84:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:84:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:85" role="doc-endnote">
-      <p>There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won’t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3). <a href="#fnref:85" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). <a href="#fnref:85" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:85:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:85:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:86" role="doc-endnote">
-      <p>Keane,  M.  S.,  and  O’Brien,  G.  L., “A Bernoulli factory”, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994. <a href="#fnref:86" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won’t use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs <em>arbitrary</em> but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3). <a href="#fnref:86" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:87" role="doc-endnote">
-      <p>Lee, A., Doucet, A. and Łatuszyński, K., 2014. “<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>”, arXiv:1407.5770v1  [stat.CO]. <a href="#fnref:87" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:87:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:87:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>Keane,  M.  S.,  and  O’Brien,  G.  L., “A Bernoulli factory”, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994. <a href="#fnref:87" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:88" role="doc-endnote">
-      <p>Akahira, M., &amp; Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2). <a href="#fnref:88" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Lee, A., Doucet, A. and Łatuszyński, K., 2014. “<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>”, arXiv:1407.5770v1  [stat.CO]. <a href="#fnref:88" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:88:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:88:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:89" role="doc-endnote">
-      <p>AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. “Unbiased estimation in sequential binomial sampling”,  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992. <a href="#fnref:89" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:89:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Akahira, M., &amp; Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2). <a href="#fnref:89" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:90" role="doc-endnote">
-      <p>Singh (1964, “Existence of unbiased estimates”, Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, “Existence of unbiased estimates in sequential binomial experiments”, Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven’t seen (Sankhyā A 55, 1993). <a href="#fnref:90" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. “Unbiased estimation in sequential binomial sampling”,  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992. <a href="#fnref:90" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:90:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:91" role="doc-endnote">
+      <p>Singh (1964, “Existence of unbiased estimates”, Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, “Existence of unbiased estimates in sequential binomial experiments”, Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven’t seen (Sankhyā A 55, 1993). <a href="#fnref:91" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
