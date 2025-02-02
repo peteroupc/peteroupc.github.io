@@ -1089,7 +1089,7 @@ A condition such as "0 is not in the domain of $f$, or there is a number $\epsil
 
 ### Multiple-Output Bernoulli Factory
 
-A related topic is a Bernoulli factory that takes a coin with unknown probability of heads _&lambda;_ and produces one or more samples of the probability _f_(_&lambda;_).  This section calls it a _multiple-output Bernoulli factory_.
+A related topic is a Bernoulli factory that takes a coin with unknown probability of heads _&lambda;_ and produces one or more independent samples of the probability _f_(_&lambda;_).  This section calls it a _multiple-output Bernoulli factory_.
 
 Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times.  But for some functions _f_, it may be that producing multiple outputs at a time may use fewer input coin flips than producing one output multiple times.
 
