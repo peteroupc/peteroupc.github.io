@@ -7,7 +7,7 @@
 <h1 id="maillib">MailLib</h1>
 
 <p><a href="https://www.nuget.org/packages/PeterO.MailLib"><img src="http://img.shields.io/nuget/v/PeterO.MailLib.svg?style=flat" alt="NuGet Status" /></a>
-<a href="https://search.maven.org/#search|ga|1|g%3A%22com.upokecenter%22%20AND%20a%3A%22maillib%22"><img src="https://img.shields.io/maven-central/v/com.upokecenter/maillib.svg?style=plastic" alt="Maven Central" /></a></p>
+<a href="https://search.maven.org/#search|ga|1|g%3A%22com.github.peteroupc%22%20AND%20a%3A%22maillib%22"><img src="https://img.shields.io/maven-central/v/com.github.peteroupc/maillib.svg?style=plastic" alt="Maven Central" /></a></p>
 
 <p><strong>Download source code: <a href="https://github.com/peteroupc/MailLib/archive/master.zip">ZIP file</a></strong></p>
 
@@ -31,18 +31,20 @@ this library as a NuGet package, enter <code>Install-Package PeterO.MailLib</cod
 NuGet Package Manager Console.</p>
 
 <p>Starting with version 0.6.1, the Java implementation is available
-as an <a href="https://search.maven.org/#search|ga|1|g%3A%22com.upokecenter%22%20AND%20a%3A%22maillib%22">artifact</a> in the Central Repository. To add this library to a Maven
+as an <a href="https://search.maven.org/#search|ga|1|g%3A%22com.github.peteroupc%22%20AND%20a%3A%22maillib%22">artifact</a> in the Central Repository. To add this library to a Maven
 project, add the following to the <code>dependencies</code> section in your <code>pom.xml</code> file:</p>
 
 <pre>&lt;dependency&gt;
-  &lt;groupId&gt;com.upokecenter&lt;/groupId&gt;
+  &lt;groupId&gt;com.github.peteroupc&lt;/groupId&gt;
   &lt;artifactId&gt;maillib&lt;/artifactId&gt;
-  &lt;version&gt;0.15.0&lt;/version&gt;
+  &lt;version&gt;0.16.0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
 <p>In other Java-based environments, the library can be referred to by its
-group ID (<code>com.upokecenter</code>), artifact ID (<code>maillib</code>), and version, as given earlier.</p>
+group ID (<code>com.github.peteroupc</code>), artifact ID (<code>maillib</code>), and version, as given earlier.</p>
+
+<p>Note that versions before 0.15.0 were released under the group ID <code>com.upokecenter</code>, which is being phased out.</p>
 
 <h2 id="source-code">Source Code</h2>
 <p>Source code is available in the <a href="https://github.com/peteroupc/MailLib">project page</a>.</p>
@@ -80,6 +82,8 @@ using(var file = new System.IO.FileStream("email.eml",System.IO.FileMode.Read)){
   <li>GetAttachments method added to Message class</li>
   <li>NamedAddress received new string preparation methods</li>
   <li>Update media types</li>
+  <li>DispositionBuilder becomes ContentDisposition.Builder</li>
+  <li>MediaTypeBuilder becomes MediaType.Builder</li>
 </ul>
 
 <p>Version 0.14.0:</p>
