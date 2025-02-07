@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2025/01/27"><meta name="citation_online_date" content="2025/01/27"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2025/02/07"><meta name="citation_online_date" content="2025/02/07"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -105,7 +105,7 @@
       <li><a href="#A_Note_on_Sorting_Random_Variates"><strong>A Note on Sorting Random Variates</strong></a></li>
     </ul>
   </li>
-  <li><a href="#General_Non_Uniform_Distributions"><strong>General Non-Uniform Distributions</strong></a>
+  <li><a href="#General_Nonuniform_Distributions"><strong>General Nonuniform Distributions</strong></a>
     <ul>
       <li><a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>
         <ul>
@@ -118,7 +118,7 @@
       <li><a href="#Transformations_of_Random_Variates"><strong>Transformations of Random Variates</strong></a></li>
     </ul>
   </li>
-  <li><a href="#Specific_Non_Uniform_Distributions"><strong>Specific Non-Uniform Distributions</strong></a>
+  <li><a href="#Specific_Nonuniform_Distributions"><strong>Specific Nonuniform Distributions</strong></a>
     <ul>
       <li><a href="#Dice"><strong>Dice</strong></a></li>
       <li><a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a></li>
@@ -160,7 +160,7 @@
       </li>
       <li><a href="#Piecewise_Linear_Distribution"><strong>Piecewise Linear Distribution</strong></a></li>
       <li><a href="#Specific_Distributions"><strong>Specific Distributions</strong></a></li>
-      <li><a href="#Index_of_Non_Uniform_Distributions"><strong>Index of Non-Uniform Distributions</strong></a></li>
+      <li><a href="#Index_of_Nonuniform_Distributions"><strong>Index of Nonuniform Distributions</strong></a></li>
       <li><a href="#Geometric_Sampling"><strong>Geometric Sampling</strong></a>
         <ul>
           <li><a href="#Random_Points_Inside_a_Simplex"><strong>Random Points Inside a Simplex</strong></a></li>
@@ -1011,9 +1011,9 @@ END METHOD
 
 <p>In general, sorting random variates is no different from sorting any other data. (Sorting algorithms are outside this document’s scope.)<sup id="fnref:31" role="doc-noteref"><a href="#fn:31" class="footnote" rel="footnote">31</a></sup></p>
 
-<p><a id="General_Non_Uniform_Distributions"></a></p>
+<p><a id="General_Nonuniform_Distributions"></a></p>
 
-<h2 id="general-nonuniform-distributions">General Non-Uniform Distributions</h2>
+<h2 id="general-nonuniform-distributions">General Nonuniform Distributions</h2>
 
 <p>Some applications need to choose random values such that some of them have a greater chance to be chosen than others (a <em>nonuniform</em> distribution). Most of the techniques in this section show how to use the <a href="#Uniform_Random_Integers"><strong>uniform random integer methods</strong></a> to generate such random values.</p>
 
@@ -1323,9 +1323,9 @@ END METHOD
   </ol>
 </blockquote>
 
-<p><a id="Specific_Non_Uniform_Distributions"></a></p>
+<p><a id="Specific_Nonuniform_Distributions"></a></p>
 
-<h2 id="specific-nonuniform-distributions">Specific Non-Uniform Distributions</h2>
+<h2 id="specific-nonuniform-distributions">Specific Nonuniform Distributions</h2>
 
 <p>This section contains information on some of the most common nonuniform probability distributions.</p>
 
@@ -2268,9 +2268,9 @@ above for returning more than one random variate in one call.</p>
 
 <p>Methods to sample additional distributions are given in a <a href="https://peteroupc.github.io/randomnotes.html"><strong>separate page</strong></a>. They cover the normal, gamma, beta, von Mises, stable, and multivariate normal distributions as well as copulas.</p>
 
-<p><a id="Index_of_Non_Uniform_Distributions"></a></p>
+<p><a id="Index_of_Nonuniform_Distributions"></a></p>
 
-<h3 id="index-of-nonuniform-distributions">Index of Non-Uniform Distributions</h3>
+<h3 id="index-of-nonuniform-distributions">Index of Nonuniform Distributions</h3>
 
 <p><strong>Many distributions here require random real numbers.</strong></p>
 
