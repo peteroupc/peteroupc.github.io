@@ -28,7 +28,7 @@ These are suggestions to improve core and supplemental instructional materials, 
 
     - Should teach synonyms for new words to be learned and for other words and phrases prone to overuse.
     - In sixth grade and up, should include copious lessons on grammatical analysis and knowledge of English syntax, as well as concrete guidance to help students avoid, in their writing, overused or imprecise words and phrases, both within and across writings [^5]; redundant or unnecessary language not serving an expressive purpose; and ambiguous language.
-    - Should feature, as works that the whole class reads in their entirety, prose novels with high literary and lexical complexity for the grade level (such as the complexity seen in the Harry Potter series) and knowledge-building informational prose books with the same complexity.
+    - Should feature, as works that the whole class reads in their entirety, [**prose novels**](https://www.educationnext.org/why-are-books-disappearing-from-english-and-reading-classrooms/) with high literary and lexical complexity for the grade level (such as the complexity seen in the Harry Potter series) and knowledge-building informational prose books with the same complexity.
 
 Suggestion number 5, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, for example, Emilio Bernal's "Good usage prevents abusage"). [^5]
 
