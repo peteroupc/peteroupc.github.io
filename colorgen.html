@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2025/01/23"><meta name="citation_online_date" content="2025/01/23"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2025/02/15"><meta name="citation_online_date" content="2025/02/15"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -248,7 +248,7 @@
     <p><strong>Red, green, blue, and white points.</strong> These are what a given RGB color space considers “red”, “green”, “blue”, and “white”, that is, what that space associates with the RGB colors (1, 0, 0), (0, 1, 0), (0, 0, 1), and (1, 1, 1), respectively. (The first three points are commonly called “primaries”.)  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of “primaries” are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.</p>
   </li>
   <li>
-    <p><strong>“Transfer function”.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R′G′B′</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>γ</em></sup>, where <em>c</em> is the red, green, or blue component and <em>γ</em> is a positive number; and the PQ and HLG functions.</p>
+    <p><strong>“Transfer function”.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R′G′B′</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>power-law</em> or <em>gamma</em> functions such as <em>c</em><sup>1/<em>γ</em></sup>, where <em>c</em> is the red, green, or blue component and <em>γ</em> is a positive number; and the PQ and HLG functions.</p>
   </li>
 </ul>
 
@@ -273,7 +273,7 @@
 <ul>
   <li>the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard <a href="https://en.wikipedia.org/wiki/Rec._709"><strong>Rec. 709</strong></a>),</li>
   <li>the white point was chosen as the D65/2 white point, and</li>
-  <li>the color component transfer function (implemented as <code>SRGBFromLinear</code> below) was based on the gamma encoding used for cathode-ray-tube monitors.</li>
+  <li>the color component transfer function (implemented as <code>SRGBFromLinear</code> below) was based on the power-law (gamma) encoding used for cathode-ray-tube monitors.</li>
 </ul>
 
 <p>For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB"><strong>sRGB proposal</strong></a>, which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
@@ -311,6 +311,10 @@ METHOD SRGBFromLinear3(c)
    return [SRGBFromLinear(c[0]), SRGBFromLinear(c[1]), SRGBFromLinear(c[2])]
 END METHOD
 </pre>
+
+<blockquote>
+  <p><strong>Note:</strong> IEC 61966-2-1 defines a reference display where, among other things, encoded sRGB colors’ components (<em>c</em>) are decoded using a power law of 2.2, that is, the decoding is <em>c</em><sup>2.2<sup>.  Indeed, this power law, and not an inverse of the sRGB color component transfer function, is what is <a href="https://github.com/dylanraga/win11hdr-srgb-to-gamma2.2-icm"><strong>employed in practice</strong></a> by most computer displays today that can show, more or less, the range of colors supported by sRGB.</sup></sup></p>
+</blockquote>
 
 <p><a id="Representing_RGB_Colors"></a></p>
 

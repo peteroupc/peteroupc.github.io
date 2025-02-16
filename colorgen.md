@@ -182,7 +182,7 @@ There are many **RGB color spaces**, not just one, and they generally differ in 
 
 - **Red, green, blue, and white points.** These are what a given RGB color space considers "red", "green", "blue", and "white", that is, what that space associates with the RGB colors (1, 0, 0), (0, 1, 0), (0, 0, 1), and (1, 1, 1), respectively. (The first three points are commonly called "primaries".)  Each of these points need not be an actual color (this is illustrated by the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), for example).  Examples of "primaries" are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.
 
-- **"Transfer function".** This is a function used to convert, component by component, a so-called **_linear RGB_** color to an **_encoded RGB_ (_R&prime;G&prime;B&prime;_)** color in the same color space.  Examples include the sRGB transfer function given [**later**](#sRGB); _gamma_ functions such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number; and the PQ and HLG functions.
+- **"Transfer function".** This is a function used to convert, component by component, a so-called **_linear RGB_** color to an **_encoded RGB_ (_R&prime;G&prime;B&prime;_)** color in the same color space.  Examples include the sRGB transfer function given [**later**](#sRGB); _power-law_ or _gamma_ functions such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number; and the PQ and HLG functions.
 
 In general, the same three numbers, such as (1, 0.5, 0.3), identify a different-appearing RGB color in different RGB color spaces.  In this document, the only RGB color space described in detail is [**sRGB**](#sRGB).  (Lindbloom\)[^8] contains further information on many RGB color spaces.
 
@@ -200,7 +200,7 @@ Among RGB color spaces, one of the most popular is the _sRGB color space_.  In s
 
 - the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard [**Rec. 709**](https://en.wikipedia.org/wiki/Rec._709)),
 - the white point was chosen as the D65/2 white point, and
-- the color component transfer function (implemented as `SRGBFromLinear` below) was based on the gamma encoding used for cathode-ray-tube monitors.
+- the color component transfer function (implemented as `SRGBFromLinear` below) was based on the power-law (gamma) encoding used for cathode-ray-tube monitors.
 
 For background, see the [**sRGB proposal**](https://www.w3.org/Graphics/Color/sRGB), which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
 
@@ -236,6 +236,8 @@ The following methods convert colors between linear and encoded sRGB. (Note that
     METHOD SRGBFromLinear3(c)
        return [SRGBFromLinear(c[0]), SRGBFromLinear(c[1]), SRGBFromLinear(c[2])]
     END METHOD
+
+> **Note:** IEC 61966-2-1 defines a reference display where, among other things, encoded sRGB colors' components (_c_) are decoded using a power law of 2.2, that is, the decoding is _c_<sup>2.2<sup>.  Indeed, this power law, and not an inverse of the sRGB color component transfer function, is what is [**employed in practice**](https://github.com/dylanraga/win11hdr-srgb-to-gamma2.2-icm) by most computer displays today that can show, more or less, the range of colors supported by sRGB.
 
 <a id=Representing_RGB_Colors></a>
 
