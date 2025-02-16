@@ -568,23 +568,23 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 
     where&mdash;
 
-    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$
+    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m\mu, \frac{m(m-1)\mu^m}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right) - m\right),$$
 
     and where:
 
     - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
+    - $b_{\max} = \max(-\min(0, \beta_0{m\choose 0}),  ..., -\min(0, \beta_m{m\choose m})$.
     - $a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i>0$.
+    - $\mu = m+L\b_{\max}/a_{\min}$ where $L$ is the number of values of $\beta_i$ that satisfy $\beta_i<0$.
     - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.
     - $FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
-    - $FN(\lambda) = \sum_{k=0}^m \text{abs}(\min(0,\beta_k)){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
+    - $FN(\lambda) = \sum_{k=0}^m -\min(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
 
     (Mok and To 2008; Theorem 2 and remark 1.5(v))[^20].
 
 > **Examples:**
 >
-> 1. Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)[^20].  In this case, after some calculations, the coin-flipping degree is bounded above by&mdash;
->
->     $$\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.$$
+> 1. Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$'s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)[^17].
 > 2. An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose "power" coefficients are integers.
 > 3. The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.
 >

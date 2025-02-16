@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2025/01/27"><meta name="citation_online_date" content="2025/01/27"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2025/02/17"><meta name="citation_online_date" content="2025/02/17"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -113,13 +113,13 @@
       <td>Bernstein polynomial.</td>
       <td>$B_n(f)$.</td>
       <td>$f(j/n)$, where $0\le j\le n$.</td>
-      <td>Originated with S.N. Bernstein (1912).  Evaluates $f$ at $n+1$ evenly-spaced points.</td>
+      <td>Originated with S.N. Bernstein (1912).  Evaluates $f$ at $n+1$ evenly spaced points.</td>
     </tr>
     <tr>
       <td>Order-2 iterated Boolean sum.</td>
       <td>$U_{n,2} = B_n(W_{n,2})$.</td>
       <td>$W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$.</td>
-      <td>Micchelli (1973)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, Guan (2009)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>, Güntürk and Li (2021, sec. 3.3)<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.  Evaluates $f$ at $n+1$ evenly-spaced points.</td>
+      <td>Micchelli (1973)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, Guan (2009)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>, Güntürk and Li (2021, sec. 3.3)<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.  Evaluates $f$ at $n+1$ evenly spaced points.</td>
     </tr>
     <tr>
       <td>Order-3 iterated Boolean sum.</td>
@@ -131,19 +131,19 @@
       <td>Butzer’s linear combination (order 2).</td>
       <td>$L_{2,n/2} = 2 B_{n}(f(\lambda))$ − $B_{n/2}(f(\lambda))$.</td>
       <td>(First, define the following operation: <strong>Get coefficients for $n$ given $m$</strong>: Treat the coefficients [$f(0/m)$, $f(1/m)$, …, $f(m/m)$] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see “<a href="#Computational_Issues"><strong>Computational Issues</strong></a>”), then return those coefficients.)<br /><strong>Get coefficients for $n$ given $n/2$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$.</td>
-      <td>Tachev (2022)<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, Butzer (1955)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>.  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly-spaced points.</td>
+      <td>Tachev (2022)<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, Butzer (1955)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>.  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly spaced points.</td>
     </tr>
     <tr>
       <td>Butzer’s linear combination (order 3).</td>
       <td>$L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ − $2 B_{n/2}(f)$</td>
       <td><strong>Get coefficients for $n$ given $n/4$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>], then <strong>get coefficients for $n$ given $n/2$</strong>, call them <em>b</em>[0], …, <em>b</em>[<em>n</em>], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$.</td>
-      <td>Butzer (1955)<sup id="fnref:6:1" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly-spaced points.</td>
+      <td>Butzer (1955)<sup id="fnref:6:1" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly spaced points.</td>
     </tr>
     <tr>
       <td>Lorentz operator (order 2).</td>
       <td>$Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f’’)/(2(n-2))$.</td>
       <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f’’((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], …, <em>a</em>[<em>n</em>].</td>
-      <td>Holtz et al. (2011)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>; Bernstein (1932)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>; Lorentz (1966)<sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>. $n\ge 4$; $f’’$ is the second derivative of $f$. Evaluates $f$ and $f’’$ at $n-1$ evenly-spaced points.</td>
+      <td>Holtz et al. (2011)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>; Bernstein (1932)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>; Lorentz (1966)<sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>. $n\ge 4$; $f’’$ is the second derivative of $f$. Evaluates $f$ and $f’’$ at $n-1$ evenly spaced points.</td>
     </tr>
   </tbody>
 </table>
@@ -440,7 +440,7 @@
 <p>If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it’s possible to approximate $f$’s $r$-th derivative as follows:</p>
 
 <ol>
-  <li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$ with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the following table.</li>
+  <li>Build a polynomial in Bernstein form of a degree $n$ that is high enough such that the $r$-th derivative is close to $f$’s $r$-th derivative with an error no more than $\epsilon$ (where $\epsilon$ is the user-defined error tolerance.  See the following table.</li>
   <li>
     <p>Let $a[0], …, a[n]$ be the polynomial’s Bernstein coefficients. Now, to compute the polynomial’s $r$-th derivative, do the following $r$ times or until the process stops, whichever happens first (Tsai and Farouki 2001, section 3.4)<sup id="fnref:20:1" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.</p>
 
@@ -466,7 +466,7 @@
     <tr>
       <th>If <em>f</em>(<em>λ</em>):</th>
       <th>Then the following polynomial:</th>
-      <th>Is close to <em>f</em> with the following error bound:</th>
+      <th>Has an <em>r</em>-th derivative that is close to <em>f</em> with the following error bound:</th>
       <th>And a value of <em>n</em> that achieves the bound is:</th>
       <th>Notes</th>
     </tr>
@@ -756,7 +756,7 @@
 
 <p>Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.</p>
 
-<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less, so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup>, Butzer (1955)<sup id="fnref:6:2" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>, May (1976)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>.  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.</p>
+<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, linear, and constant functions), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup>, Butzer (1955)<sup id="fnref:6:2" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>, May (1976)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>.  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.</p>
 
 <p>Therefore—</p>
 
@@ -778,7 +778,7 @@
 
 <p><strong>Proposition B10A:</strong> Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f’’)(x)$ be the <em>Lorentz operator</em> of order 2 (Holtz et al. 2011)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, (Lorentz 1966)<sup id="fnref:9:2" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>, which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative’s Lipschitz constant or greater.</p>
 
-<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (Holtz et al. 2011, Lemma 14)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f’’$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as—</p>
+<p><em>Proof</em>: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f’’$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as—</p>
 
 \[\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))\]
 

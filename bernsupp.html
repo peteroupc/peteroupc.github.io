@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/02/01"><meta name="citation_online_date" content="2025/02/01"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/02/17"><meta name="citation_online_date" content="2025/02/17"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -789,16 +789,18 @@
 
     <p>where—</p>
 
-\[M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m, \frac{m(m-1)}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),\]
+\[M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m\mu, \frac{m(m-1)\mu^m}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right) - m\right),\]
 
     <p>and where:</p>
 
     <ul>
       <li>$a_{\max} = \max(\max(0,\beta_0),  …, \max(0, \beta_m))$.</li>
+      <li>$b_{\max} = \max(-\min(0, \beta_0{m\choose 0}),  …, -\min(0, \beta_m{m\choose m})$.</li>
       <li>$a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i&gt;0$.</li>
+      <li>$\mu = m+L\b_{\max}/a_{\min}$ where $L$ is the number of values of $\beta_i$ that satisfy $\beta_i&lt;0$.</li>
       <li>$c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.</li>
       <li>$FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.</li>
-      <li>$FN(\lambda) = \sum_{k=0}^m \text{abs}(\min(0,\beta_k)){m\choose k}\lambda^k(1-\lambda)^{m-k}$.</li>
+      <li>$FN(\lambda) = \sum_{k=0}^m -\min(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.</li>
     </ul>
 
     <p>(Mok and To 2008; Theorem 2 and remark 1.5(v))<sup id="fnref:20:1" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.</p>
@@ -809,11 +811,7 @@
   <p><strong>Examples:</strong></p>
 
   <ol>
-    <li>
-      <p>Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$’s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)<sup id="fnref:17:1" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.  $p$ meets the conditions to use the coin-flipping degree derived from Mok and To (2008)<sup id="fnref:20:2" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>.  In this case, after some calculations, the coin-flipping degree is bounded above by—</p>
-
-\[\text{ceil}\left(\max\left(\max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.94492)}\frac{7/3}{1}\right), \max\left(2\cdot 3, \frac{3(3-1)}{2(1-0.70711)}\frac{8/3}{1}\right)\right)\right)\le 128.\]
-    </li>
+    <li>Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$’s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)<sup id="fnref:17:1" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.</li>
     <li>An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose “power” coefficients are integers.</li>
     <li>The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.</li>
   </ol>
@@ -1980,7 +1978,7 @@ for i in range(20):
       <p>Powers, V., Reznick, B., “<a href="https://www.sciencedirect.com/science/article/pii/S0022404900001559"><strong>A new bound for Pólya’s Theorem with applications to polynomials positive on polyhedra</strong></a>”, <em>Journal of Pure and Applied Algebra</em> 164 (24 October 2001). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:19:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:20" role="doc-endnote">
-      <p>Mok, H-N., To, W-K., “<a href="https://doi.org/10.1016/j.jco.2008.01.003"><strong>Effective Pólya semi-positivity for nonnegative polynomials on the simplex</strong></a>”, <em>Journal of Complexity</em> 24 (2008). <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:20:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>Mok, H-N., To, W-K., “<a href="https://doi.org/10.1016/j.jco.2008.01.003"><strong>Effective Pólya semi-positivity for nonnegative polynomials on the simplex</strong></a>”, <em>Journal of Complexity</em> 24 (2008). <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:21" role="doc-endnote">
       <p>S. Ray, P.S.V. Nataraj, “<a href="https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf"><strong>A Matrix Method for Efficient Computation of Bernstein Coefficients</strong></a>”, Reliable Computing 17(1), 2012. <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
