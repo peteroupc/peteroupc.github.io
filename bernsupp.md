@@ -568,14 +568,14 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 
     where&mdash;
 
-    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m\mu, \frac{m(m-1)\mu^m}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right) - m\right),$$
+    $$M(\beta_0, ..., \beta_m) = \text{ceil}\left(\max\left(2m\mu, \frac{m(m-1)\mu^m}{2(1-c)}\frac{a_{\max}}{a_{\min}}\right)\right),$$
 
     and where:
 
     - $a_{\max} = \max(\max(0,\beta_0),  ..., \max(0, \beta_m))$.
     - $b_{\max} = \max(-\min(0, \beta_0{m\choose 0}),  ..., -\min(0, \beta_m{m\choose m})$.
     - $a_{\min}$ is the minimum of $(\beta_i{m\choose i})$ over all values of $i$ such that $\beta_i>0$.
-    - $\mu = m+L\b_{\max}/a_{\min}$ where $L$ is the number of values of $\beta_i$ that satisfy $\beta_i<0$.
+    - $\mu = m+Lb_{\max}/a_{\min}$ where $L$ is the number of values of $\beta_i$ that satisfy $\beta_i<0$.
     - $c$ is the smallest number $r$ that satisfies $FN(\lambda)/FP(\lambda)\le r$ where $0\lt\lambda\lt 1$.  $c$ can also be a greater number but less than 1.
     - $FP(\lambda) = \sum_{k=0}^m \max(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
     - $FN(\lambda) = \sum_{k=0}^m -\min(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
