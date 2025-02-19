@@ -368,8 +368,11 @@ The algorithm follows.
 > **Example**: Take the function _f_(_&lambda;_) = 1/(_&lambda;_&minus;2)<sup>2</sup>.  This is a rational function, in this case a ratio of two polynomials that are both nonnegative on the closed unit interval.  One algorithm to simulate this function follows.<br>(1) Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.<br>(2) Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; \[3, 1, 0], _heads_=1 &rarr; \[1, 1, 2], _heads_=2 &rarr; \[0, 1, 3]; if 0 or 1 is chosen this way, return it; otherwise, go to step 1.<br>Here is how _f_ was prepared to derive this algorithm:<br>(1) Take the numerator 1, and the denominator (_&lambda;_&minus;2)<sup>2</sup>.  Rewrite the denominator as 1\*_&lambda;_<sup>2</sup> &minus; 4\*_&lambda;_ + 4.<br>(2) Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree) of degree 2; see the "homogenizing" section in "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  The result has homogeneous coefficients (1, 2, 1) and (4, 4, 1) respectively.<br>(3) Divide both polynomials (actually their homogeneous coefficients) by the same value so that both polynomials are 1 or less.  An easy (but not always best) choice is to divide them by their maximum homogeneous coefficient, which is 4 in this case.  The result is _d_ = (1/4, 1/2, 1/4), _e_ = (1, 1, 1/4).<br>(4) Prepare the weights as given in step 2 of the original algorithm.  The result is [3/4, 1/4, 0], [1/2, 1/2, 1], and [0, 1/4, 3/4], for different counts of heads.  Because the weights in this case are multiples of 1/4, they can be simplified to integers without affecting the algorithm: [3, 1, 0], [1, 1, 2], [0, 1, 3], respectively.
 
 **"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of Morina et al. (2022\)[^19].  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads and _m_ is 2 or greater.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_k_</sub>(_&lambda;_) are in the form of polynomials as follows:
+
 - The polynomials are _homogeneous_, that is, they are written as $\sum_{i=0}^n$ _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a _homogeneous coefficient_.
+
 - The polynomials have the same degree (namely _n_) and all its homogeneous coefficients are 0 or greater.
+
 - The sum of _j_<sup>th</sup> homogeneous coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin with zeros, end with zeros, or both.  Call this list _R_.  For example, this condition holds true if _R_ is (2, 4, 4, 2) or (0, 2, 4, 0), but not if _R_ is (2, 0, 4, 3).
 
 Any rational function that admits a Bernoulli factory can be brought into the form just described, as detailed in the appendix under "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> homogeneous coefficients of the polynomials (with _j_ starting at 0).  First, define the following operation:
@@ -497,6 +500,7 @@ If $g(\lambda) = \lambda$, this kind of function&mdash;
 In addition, suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where&mdash;
 
 $$f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,$$
+
 where each sum is taken over all nonnegative values of $n$ where $a_n > 0$. (For notation details, see "[**Implementation Notes**](#Implementation_Notes)".)
 
 Then the key to simulating $f(\lambda)$ is to "tuck" the values $a_n$ under a function $w(n)$ such that&mdash;
@@ -2717,9 +2721,13 @@ The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) g
 
 This can be seen as running **Algorithm CC** with an input coin for a randomly generated probability (a uniform random variate between 0 and 1).  Given that step 1 generates $U$, the probability this algorithm returns 1 is&mdash;
 
-$$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$ and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash;
+$$\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,$$
 
-$$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$ which, in the case of the MGL generator (where $S$ is the set of nonnegative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
+and the overall algorithm uses the "[**integral method**](#Integrals)", so that the overall algorithm returns 1 with probability&mdash;
+
+$$\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,$$
+
+which, in the case of the MGL generator (where $S$ is the set of nonnegative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.
 
 The derivation below relies on the following fact: The probability satisfies&mdash;
 
@@ -2727,7 +2735,9 @@ $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\
 
 Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely&mdash;
 
-$$C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.$$  Then the MGL series for $\pi/4$ is formed by&mdash;
+$$C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.$$
+
+Then the MGL series for $\pi/4$ is formed by&mdash;
 
 $$\pi/4 = (1/1-1/3)+(1/5-1/7)+...=2/3+2/35+2/99+...$$
 
@@ -2735,7 +2745,7 @@ $$=(C(0)+C(1))+(C(4)+C(5))+(C(8)+C(9))+...$$
 
 $$=\sum_{k\ge 0} C(4k)+C(4k+1),$$
 
-where the last sum takes $C(k)$ for each $k$ in the set $S$ given for the MGL generator.
+where the last sum takes $C(i)$ for each $i$ in the set $S$ given for the MGL generator.
 
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 

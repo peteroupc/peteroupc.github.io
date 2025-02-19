@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2025/01/27"><meta name="citation_online_date" content="2025/01/27"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2025/02/18"><meta name="citation_online_date" content="2025/02/18"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -545,10 +545,19 @@
   <p><strong>Example</strong>: Take the function <em>f</em>(<em>λ</em>) = 1/(<em>λ</em>−2)<sup>2</sup>.  This is a rational function, in this case a ratio of two polynomials that are both nonnegative on the closed unit interval.  One algorithm to simulate this function follows.<br />(1) Flip the input coin twice, and let <em>heads</em> be the number of times the coin returned 1 this way.<br />(2) Depending on <em>heads</em>, choose 0, 1, or 2 with probability proportional to the following weights: <em>heads</em>=0 → [3, 1, 0], <em>heads</em>=1 → [1, 1, 2], <em>heads</em>=2 → [0, 1, 3]; if 0 or 1 is chosen this way, return it; otherwise, go to step 1.<br />Here is how <em>f</em> was prepared to derive this algorithm:<br />(1) Take the numerator 1, and the denominator (<em>λ</em>−2)<sup>2</sup>.  Rewrite the denominator as 1*<em>λ</em><sup>2</sup> − 4*<em>λ</em> + 4.<br />(2) Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree) of degree 2; see the “homogenizing” section in “<a href="#Preparing_Rational_Functions"><strong>Preparing Rational Functions</strong></a>”.  The result has homogeneous coefficients (1, 2, 1) and (4, 4, 1) respectively.<br />(3) Divide both polynomials (actually their homogeneous coefficients) by the same value so that both polynomials are 1 or less.  An easy (but not always best) choice is to divide them by their maximum homogeneous coefficient, which is 4 in this case.  The result is <em>d</em> = (1/4, 1/2, 1/4), <em>e</em> = (1, 1, 1/4).<br />(4) Prepare the weights as given in step 2 of the original algorithm.  The result is [3/4, 1/4, 0], [1/2, 1/2, 1], and [0, 1/4, 3/4], for different counts of heads.  Because the weights in this case are multiples of 1/4, they can be simplified to integers without affecting the algorithm: [3, 1, 0], [1, 1, 2], [0, 1, 3], respectively.</p>
 </blockquote>
 
-<p><strong>“Dice Enterprise” special case.</strong> The following algorithm implements a special case of the “Dice Enterprise” method of Morina et al. (2022)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>λ</em>) / (<em>P</em><sub>0</sub>(<em>λ</em>) + <em>P</em><sub>1</sub>(<em>λ</em>) + … + <em>P</em><sub><em>m</em>−1</sub>(<em>λ</em>)), where <em>λ</em> is the input coin’s probability of heads and <em>m</em> is 2 or greater.  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub><em>k</em></sub>(<em>λ</em>) are in the form of polynomials as follows:
-- The polynomials are <em>homogeneous</em>, that is, they are written as $\sum_{i=0}^n$ <em>λ</em><sup><em>i</em></sup> * (1 − <em>λ</em>)<sup><em>n</em> − <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial’s degree and <em>a</em>[<em>i</em>] is a <em>homogeneous coefficient</em>.
-- The polynomials have the same degree (namely <em>n</em>) and all its homogeneous coefficients are 0 or greater.
-- The sum of <em>j</em><sup>th</sup> homogeneous coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin with zeros, end with zeros, or both.  Call this list <em>R</em>.  For example, this condition holds true if <em>R</em> is (2, 4, 4, 2) or (0, 2, 4, 0), but not if <em>R</em> is (2, 0, 4, 3).</p>
+<p><strong>“Dice Enterprise” special case.</strong> The following algorithm implements a special case of the “Dice Enterprise” method of Morina et al. (2022)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>λ</em>) / (<em>P</em><sub>0</sub>(<em>λ</em>) + <em>P</em><sub>1</sub>(<em>λ</em>) + … + <em>P</em><sub><em>m</em>−1</sub>(<em>λ</em>)), where <em>λ</em> is the input coin’s probability of heads and <em>m</em> is 2 or greater.  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub><em>k</em></sub>(<em>λ</em>) are in the form of polynomials as follows:</p>
+
+<ul>
+  <li>
+    <p>The polynomials are <em>homogeneous</em>, that is, they are written as $\sum_{i=0}^n$ <em>λ</em><sup><em>i</em></sup> * (1 − <em>λ</em>)<sup><em>n</em> − <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial’s degree and <em>a</em>[<em>i</em>] is a <em>homogeneous coefficient</em>.</p>
+  </li>
+  <li>
+    <p>The polynomials have the same degree (namely <em>n</em>) and all its homogeneous coefficients are 0 or greater.</p>
+  </li>
+  <li>
+    <p>The sum of <em>j</em><sup>th</sup> homogeneous coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin with zeros, end with zeros, or both.  Call this list <em>R</em>.  For example, this condition holds true if <em>R</em> is (2, 4, 4, 2) or (0, 2, 4, 0), but not if <em>R</em> is (2, 0, 4, 3).</p>
+  </li>
+</ul>
 
 <p>Any rational function that admits a Bernoulli factory can be brought into the form just described, as detailed in the appendix under “<a href="#Preparing_Rational_Functions"><strong>Preparing Rational Functions</strong></a>”.  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of <em>j</em><sup>th</sup> homogeneous coefficients of the polynomials (with <em>j</em> starting at 0).  First, define the following operation:</p>
 
@@ -723,8 +732,9 @@ where—</p>
 
 <p>In addition, suppose $f$ can be written as $f(\lambda)= f_0(g(\lambda))$, where—</p>
 
-<p>\(f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,\)
-where each sum is taken over all nonnegative values of $n$ where $a_n &gt; 0$. (For notation details, see “<a href="#Implementation_Notes"><strong>Implementation Notes</strong></a>”.)</p>
+\[f_0(\lambda) = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n}{w(n)}\lambda^n,\]
+
+<p>where each sum is taken over all nonnegative values of $n$ where $a_n &gt; 0$. (For notation details, see “<a href="#Implementation_Notes"><strong>Implementation Notes</strong></a>”.)</p>
 
 <p>Then the key to simulating $f(\lambda)$ is to “tuck” the values $a_n$ under a function $w(n)$ such that—</p>
 
@@ -3846,9 +3856,13 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
 
 <p>This can be seen as running <strong>Algorithm CC</strong> with an input coin for a randomly generated probability (a uniform random variate between 0 and 1).  Given that step 1 generates $U$, the probability this algorithm returns 1 is—</p>
 
-<p>\(\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,\) and the overall algorithm uses the “<a href="#Integrals"><strong>integral method</strong></a>”, so that the overall algorithm returns 1 with probability—</p>
+\[\sum_{k\text{ in }S} g(k,U) = \sum_{k\text{ in }S} (1-U) U^k,\]
 
-<p>\(\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,\) which, in the case of the MGL generator (where $S$ is the set of nonnegative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
+<p>and the overall algorithm uses the “<a href="#Integrals"><strong>integral method</strong></a>”, so that the overall algorithm returns 1 with probability—</p>
+
+\[\int_0^1\sum_{k\text{ in }S} (1-U) U^k\,dU,\]
+
+<p>which, in the case of the MGL generator (where $S$ is the set of nonnegative integers with a remainder of 0 or 1 after division by 4), equals $\int_0^1 \frac{1}{U^2+1}\,dU = \pi/4$.</p>
 
 <p>The derivation below relies on the following fact: The probability satisfies—</p>
 
@@ -3856,7 +3870,9 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
 
 <p>Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm’s step 2 generates a number $k$, namely—</p>
 
-<p>\(C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.\)  Then the MGL series for $\pi/4$ is formed by—</p>
+\[C(k)=\int_0^1 g(k,U)\,dU = \int_0^1 (1-U) U^k\,dU = \frac{1}{k^2+3k+2}.\]
+
+<p>Then the MGL series for $\pi/4$ is formed by—</p>
 
 \[\pi/4 = (1/1-1/3)+(1/5-1/7)+...=2/3+2/35+2/99+...\]
 
@@ -3864,7 +3880,7 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
 
 \[=\sum_{k\ge 0} C(4k)+C(4k+1),\]
 
-<p>where the last sum takes $C(k)$ for each $k$ in the set $S$ given for the MGL generator.</p>
+<p>where the last sum takes $C(i)$ for each $i$ in the set $S$ given for the MGL generator.</p>
 
 <p><a id="Sketch_of_Derivation_of_the_Algorithm_for_1___pi"></a></p>
 
