@@ -469,6 +469,7 @@ In addition, the algorithm will be simpler if each power coefficient $a_i$ is a 
 Then rewrite the function as&mdash;
 
 $$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$
+
 where&mdash;
 
 - $A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
@@ -580,9 +581,12 @@ Examples 1 to 4 show how **Algorithm 1** leads to algorithms for simulating cert
 - Thus, $f$ can be written as&mdash;
 
 $$f(\lambda) = A(\lambda) + \lambda^m \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),$$
+
 where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.
+
 - $A$ has power coefficients $a_0, ..., a_{m-1}$.  Those power coefficients are transformed to the following _Bernstein coefficients_, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
 - Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
+
     - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
     - The values $b_0, ..., b_{m-1}$, in order, are $A$'s Bernstein coefficients.
     - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the **general martingale algorithm** with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.
@@ -629,7 +633,10 @@ To simulate a function in the table, run the **general martingale algorithm** wi
 
 Examples 7 to 9 use **Algorithm 2** to simulate generalized power series where the power coefficients $a_0$ are nonnegative.
 
-**Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows: $$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$
+**Example 7:** The hyperbolic cosine minus 1, denoted as cosh(_&lambda;_)&minus;1, can be written as follows:
+
+$$f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},$$
+
 where:
 
 - Each sum given earlier is taken over all values of _n_ that can occur after step 1 is complete (in this case, all values of _n_ that are even and greater than 0).
@@ -1800,7 +1807,7 @@ The algorithm follows.
 
 In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when _x_/_y_ > 1.  This makes the function relatively nontrivial to simulate in this case.
 
-Huber has suggested several algorithms for this function over the years.
+Huber has suggested several algorithms for this function over the years.  In these algorithms, _&lambda;_ (the probability of heads of the input coin) can be 0.
 
 The first algorithm in this document comes from Huber (2014\)[^5].  It uses three parameters:
 
@@ -1891,7 +1898,7 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 2. If _G_ is **odd**, return 0.
 3. Generate _u_, a uniform random variate between 0 and 1, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform random variate between 0 and 1 _V_.
+    1. Generate a uniform random variate between 0 and 1, _V_.
     2. If _i_ is odd[^25] and _V_ is less than _U_, return 0.
     3. If _i_ is even[^27] and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -2514,7 +2521,7 @@ estimation, IEEE Transactions on Information Theory 36 (1990)
 
 [^57]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors", _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]).
 
-[^58]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** (see "More Algorithms for Arbitrary-Precision Sampling") with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
+[^58]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
 [^59]: Banerjee, P. K., & Sinha, B. K. (1979). Generating an Event with Probability $p^\alpha$, $\alpha\gt 0$. Sankhyā: The Indian Journal of Statistics, Series B, 282-285.
 
@@ -2661,12 +2668,22 @@ The following algorithm returns 1 with probability sin(_&lambda;_\*_&pi;_/2) and
 > **Notes:**
 >
 >  1.  The following is a derivation of this algorithm.  Write&mdash;
-
-$$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$
-where&mdash;
-
-$$g(\mu) = 1-\sin((1-\mu) \pi/2)$$ $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$  This is a [**convex combination**](#Convex_Combinations) of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer _n_ is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is "inverted" ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the "inverted" coin, and 1 minus the simulation result is returned.<br><br>As given earlier, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial that has the following Bernstein coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$
-where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the Bernstein coefficients used in steps 4 through 7 of the algorithm above.
+>
+> $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$
+>
+> where&mdash;
+>
+> $$g(\mu) = 1-\sin((1-\mu) \pi/2)$$
+>
+> $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$
+>
+> $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$
+>
+> This is a [**convex combination**](#Convex_Combinations) of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer _n_ is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is "inverted" ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the "inverted" coin, and 1 minus the simulation result is returned.<br><br>As given earlier, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial that has the following Bernstein coefficients:
+>
+> $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$
+>
+> where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the Bernstein coefficients used in steps 4 through 7 of the algorithm above.
 >
 > 2. sin(_&lambda;_\*_&pi;_/2) = cos((1&minus;_&lambda;_)\*_&pi;_/2).
 >
@@ -2731,7 +2748,9 @@ which, in the case of the MGL generator (where $S$ is the set of nonnegative int
 
 The derivation below relies on the following fact: The probability satisfies&mdash;
 
-$$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$ Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.
+$$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$
+
+Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.
 
 Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely&mdash;
 

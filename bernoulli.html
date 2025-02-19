@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2025/02/18"><meta name="citation_online_date" content="2025/02/18"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2025/02/19"><meta name="citation_online_date" content="2025/02/19"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -690,8 +690,9 @@
 
 <p>Then rewrite the function as—</p>
 
-<p>\(f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),\)
-where—</p>
+\[f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),\]
+
+<p>where—</p>
 
 <ul>
   <li>$A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and</li>
@@ -861,13 +862,22 @@ where—</p>
   <li>Thus, $f$ can be written as—</li>
 </ul>
 
-<p>\(f(\lambda) = A(\lambda) + \lambda^m \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),\)
-where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.
-- $A$ has power coefficients $a_0, …, a_{m-1}$.  Those power coefficients are transformed to the following <em>Bernstein coefficients</em>, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
-- Now, <strong>Algorithm 1</strong> can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
-    - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
-    - The values $b_0, …, b_{m-1}$, in order, are $A$’s Bernstein coefficients.
-    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.</p>
+\[f(\lambda) = A(\lambda) + \lambda^m \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),\]
+
+<p>where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.</p>
+
+<ul>
+  <li>$A$ has power coefficients $a_0, …, a_{m-1}$.  Those power coefficients are transformed to the following <em>Bernstein coefficients</em>, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].</li>
+  <li>
+    <p>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:</p>
+
+    <ul>
+      <li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
+      <li>The values $b_0, …, b_{m-1}$, in order, are $A$’s Bernstein coefficients.</li>
+      <li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.</li>
+    </ul>
+  </li>
+</ul>
 
 <p><strong>Example 2:</strong> Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, rewritable as another power series.  This is as in Example 1, except:</p>
 
@@ -949,8 +959,11 @@ where $m=8$, and where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is o
 
 <p>Examples 7 to 9 use <strong>Algorithm 2</strong> to simulate generalized power series where the power coefficients $a_0$ are nonnegative.</p>
 
-<p><strong>Example 7:</strong> The hyperbolic cosine minus 1, denoted as cosh(<em>λ</em>)−1, can be written as follows: \(f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},\)
-where:</p>
+<p><strong>Example 7:</strong> The hyperbolic cosine minus 1, denoted as cosh(<em>λ</em>)−1, can be written as follows:</p>
+
+\[f(\lambda)=\cosh(\lambda)-1 = \sum_{n} a_n \lambda^n = \sum_{n} w(n) \frac{a_n \lambda^n}{w(n)},\]
+
+<p>where:</p>
 
 <ul>
   <li>Each sum given earlier is taken over all values of <em>n</em> that can occur after step 1 is complete (in this case, all values of <em>n</em> that are even and greater than 0).</li>
@@ -2698,7 +2711,7 @@ where $0\le a\lt b\le 1$, using the following algorithm:</p>
 
 <p>In general, this function will touch 0 or 1 at some point greater than 0 and less than 1, when <em>x</em>/<em>y</em> &gt; 1.  This makes the function relatively nontrivial to simulate in this case.</p>
 
-<p>Huber has suggested several algorithms for this function over the years.</p>
+<p>Huber has suggested several algorithms for this function over the years.  In these algorithms, <em>λ</em> (the probability of heads of the input coin) can be 0.</p>
 
 <p>The first algorithm in this document comes from Huber (2014)<sup id="fnref:5:1" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>.  It uses three parameters:</p>
 
@@ -2824,7 +2837,7 @@ where $0\le a\lt b\le 1$, using the following algorithm:</p>
   <li>Generate <em>u</em>, a uniform random variate between 0 and 1, then set <em>i</em> to 1.</li>
   <li>While <em>i</em> is less than <em>G</em>:
     <ol>
-      <li>Generate a uniform random variate between 0 and 1 <em>V</em>.</li>
+      <li>Generate a uniform random variate between 0 and 1, <em>V</em>.</li>
       <li>If <em>i</em> is odd<sup id="fnref:25:6" role="doc-noteref"><a href="#fn:25" class="footnote" rel="footnote">25</a></sup> and <em>V</em> is less than <em>U</em>, return 0.</li>
       <li>If <em>i</em> is even<sup id="fnref:27:6" role="doc-noteref"><a href="#fn:27" class="footnote" rel="footnote">27</a></sup> and <em>U</em> is less than <em>V</em>, return 0.</li>
       <li>Add 1 to <em>i</em>, then set <em>U</em> to <em>V</em>.</li>
@@ -3717,17 +3730,32 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
   <ol>
     <li>The following is a derivation of this algorithm.  Write—</li>
   </ol>
+
+\[f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),\]
+
+  <p>where—</p>
+
+\[g(\mu) = 1-\sin((1-\mu) \pi/2)\]
+
+\[= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}\]
+
+\[= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.\]
+
+  <p>This is a <a href="#Convex_Combinations"><strong>convex combination</strong></a> of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ — to simulate $g(\mu)$, first an integer <em>n</em> is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is “inverted” ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the “inverted” coin, and 1 minus the simulation result is returned.<br /><br />As given earlier, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial that has the following Bernstein coefficients:</p>
+
+\[(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),\]
+
+  <p>where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the Bernstein coefficients used in steps 4 through 7 of the algorithm above.</p>
+
+  <ol>
+    <li>
+      <p>sin(<em>λ</em>*<em>π</em>/2) = cos((1−<em>λ</em>)*<em>π</em>/2).</p>
+    </li>
+    <li>
+      <p>The problem of simulating sin(<em>λ</em>*<em>π</em>/2), it seems, was first raised by Basu (1975, p. 12)<sup id="fnref:3:1" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>.</p>
+    </li>
+  </ol>
 </blockquote>
-
-<p>\(f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),\)
-where—</p>
-
-<p>\(g(\mu) = 1-\sin((1-\mu) \pi/2)\) \(= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}\) \(= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.\)  This is a <a href="#Convex_Combinations"><strong>convex combination</strong></a> of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ — to simulate $g(\mu)$, first an integer <em>n</em> is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is “inverted” ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the “inverted” coin, and 1 minus the simulation result is returned.<br /><br />As given earlier, each term $w_n(\mu)$ is a polynomial in $\mu$, and is strictly increasing and equals 1 or less everywhere on the closed unit interval, and $w_n(1)$ is a constant so that $\frac{w_n(\mu)}{w_n(1)}$ remains a polynomial.  Each polynomial $\frac{w_n(\mu)}{w_n(1)}$ can be transformed into a polynomial that has the following Bernstein coefficients: \((0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),\)
-where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}} = 16 (n+1) (4n+3)$.  These are the Bernstein coefficients used in steps 4 through 7 of the algorithm above.
-&gt;
-&gt; 2. sin(<em>λ</em>*<em>π</em>/2) = cos((1−<em>λ</em>)*<em>π</em>/2).
-&gt;
-&gt; 3. The problem of simulating sin(<em>λ</em>*<em>π</em>/2), it seems, was first raised by Basu (1975, p. 12)<sup id="fnref:3:1" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>.</p>
 
 <p><a id="Probabilities_Arising_from_Certain_Permutations"></a></p>
 
@@ -3866,7 +3894,9 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
 
 <p>The derivation below relies on the following fact: The probability satisfies—</p>
 
-<p>\(\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.\) Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli’s theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.</p>
+\[\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.\]
+
+<p>Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli’s theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.</p>
 
 <p>Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm’s step 2 generates a number $k$, namely—</p>
 
@@ -4190,7 +4220,7 @@ where the polynomial is of degree $4n+4$ and so has $4n+5$ Bernstein coefficient
       <p>Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., “Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors”, <em>Biometrika</em> 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:57:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:58" role="doc-endnote">
-      <p>There are two other algorithms for this function, but they both converge very slowly when <em>λ</em> is very close to 1.  One is the <strong>general martingale algorithm</strong> (see “More Algorithms for Arbitrary-Precision Sampling”) with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called “even-parity” construction from Flajolet et al. 2010: “(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.” <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>There are two other algorithms for this function, but they both converge very slowly when <em>λ</em> is very close to 1.  One is the <strong>general martingale algorithm</strong> with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called “even-parity” construction from Flajolet et al. 2010: “(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.” <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:59" role="doc-endnote">
       <p>Banerjee, P. K., &amp; Sinha, B. K. (1979). Generating an Event with Probability $p^\alpha$, $\alpha\gt 0$. Sankhyā: The Indian Journal of Statistics, Series B, 282-285. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
