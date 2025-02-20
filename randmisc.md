@@ -704,7 +704,11 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 3. If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n[k]-k\cdot g_{n-1}[k-1]/n - (n-k) g_{n-1}[k]/n)/p_n$ (letting $g_0[k]=0$ letting $g_m[j]=0$ whenever $j\lt 0$ or $j\gt m$).  (**Note:** This implies that if $g_n = g_{n-1}$, then $E(n,k)$ is 0.)
 4. Return $E(n, k)$.
 
-The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash; $$p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},$$ over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^90].  It can be shown that this condition is the same as: $g_1(\lambda) + |g_2(\lambda) - g_1(\lambda)| + |g_3(\lambda) - g_2(\lambda)| + ...$ is finite whenever $0\lt\lambda\lt 1$. [^91]
+The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash;
+
+$$p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},$$
+
+over all integers $n\ge 0$, is finite whenever $0\lt\lambda\lt 1$ (Akahira et al. 1992)[^90].  It can be shown that this condition is the same as: $g_1(\lambda) + \text{abs}(g_2(\lambda) - g_1(\lambda)) + \text{abs}(g_3(\lambda) - g_2(\lambda)) + ...$ is finite whenever $0\lt\lambda\lt 1$. [^91]
 
 > **Note:** It can be shown that **Algorithm 5** works even if $\lambda$ is 0 or 1 (that is, if the coin shows tails every time or heads every time, respectively).
 
