@@ -61,8 +61,8 @@ The following are examples of results for this problem.   The estimators are all
     - Not aware of conditions for more general fixed-size unbiased estimators.
     - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` takes on numbers from a finite set; $\lambda$ is the expected value of `InDist`; and `OutDist` has an expected value of $f(\lambda)$.
-    - A fixed-size nonrandomized unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less [^23], where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^10], Paninski (2003, proof of Proposition 8, more generally)[^11]).
-    - The existence of randomized sequential unbiased estimators is claimed by Singh (1964)[^12].  But see Akahira et al. (1992)[^4].
+    - A fixed-size nonrandomized unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less [^10], where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)[^11], Paninski (2003, proof of Proposition 8, more generally)[^12]).
+    - The existence of randomized sequential unbiased estimators is claimed by Singh (1964)[^13].  But see Akahira et al. (1992)[^4].
     - Not aware of conditions for sequential nonrandomized unbiased estimators.
     - Not aware of conditions for fixed-size randomized unbiased estimators.
     - Not aware of conditions for asymptotically unbiased estimators.
@@ -70,7 +70,7 @@ The following are examples of results for this problem.   The estimators are all
     - There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)[^1].
     - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
-    - A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].[^13]
+    - A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)[^1].[^14]
     - Not aware of conditions for fixed-size unbiased estimators.
     - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` has a finite mean and is supported on $(-\infty, a]$, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
@@ -79,14 +79,14 @@ The following are examples of results for this problem.   The estimators are all
     - Not aware of conditions for asymptotically unbiased estimators.
 - Suppose `InDist` is Bernoulli (a "biased coin"), $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
     - Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.
-    - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^14].
-        - The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O'Brien 1994)[^14].  See [**this section**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).
-    - A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^15].
-    - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^12]).
+    - A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O'Brien 1994)[^15].
+        - The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O'Brien 1994)[^15].  See [**this section**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).
+    - A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)[^16].
+    - Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, ...$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials' Bernstein coefficients lie in the closed unit interval (see also Singh (1964)[^13]).
 
-There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^16], Hirano and Porter (2012)[^17], Bickel and Lehmann (1969)[^18].  Other results include Gajek (1995)[^19] \(which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^20], Duncan (2004)[^21].
+There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)[^17], Hirano and Porter (2012)[^18], Bickel and Lehmann (1969)[^19].  Other results include Gajek (1995)[^20] \(which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)[^21], Duncan (2004)[^22].
 
-In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^22].
+In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers [^23].
 
 <a id=Question></a>
 
@@ -116,33 +116,33 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^9]: Christman and Nayak (1994) did not study the case when the estimator can use outside randomness or the case when $n$ is known to have a _minimum_ of 2 or greater.  Duvignau (2015) studied a closely related problem.
 
-[^10]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
+[^10]: That is, the polynomial is writable as $f(\lambda)=a_0\lambda^0(1-\lambda)^{n-0}$ + $a_1\lambda^1(1-\lambda)^{n-1}$ +...+ $a_n\lambda^n(1-\lambda)^{n-n}$, where $n$ is 1 or less and where $a_0,...,a_n$ are real numbers.
 
-[^11]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
+[^11]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
-[^12]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964.
+[^12]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
 
-[^13]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken.
+[^13]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964.
 
-[^14]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^14]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken.
 
-[^15]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^15]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^16]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
+[^16]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^17]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
+[^17]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
 
-[^18]: P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [**https://doi.org/10.1214/aoms/1177697370**](https://doi.org/10.1214/aoms/1177697370)
+[^18]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
 
-[^19]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
+[^19]: P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [**https://doi.org/10.1214/aoms/1177697370**](https://doi.org/10.1214/aoms/1177697370)
 
-[^20]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
+[^20]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
 
-[^21]: Duncan, G. M. (2004). Unbiased Simulators for Analytic Functions and Maximum Unbiased Simulated Likelihood Estimation. Available at SSRN 692921
+[^21]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
 
-[^22]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+[^22]: Duncan, G. M. (2004). Unbiased Simulators for Analytic Functions and Maximum Unbiased Simulated Likelihood Estimation. Available at SSRN 692921
 
-[^23]: That is, the polynomial is writable as $f(\lambda)=a_0\lambda^0(1-\lambda)^{n-0}+a_1\lambda^1(1-\lambda)^{n-1}+...+a_0\lambda^n(1-\lambda)^{n-n}$, where $n$ is 1 or less and where $a_0,...,a_n$ are real numbers.
+[^23]: Henderson, S.G., Glynn, P.W., "[**Nonexistence of a class of variate generation schemes**](https://www.sciencedirect.com/science/article/pii/S0167637702002171)", _Operations Research Letters_ 31 (2003).  It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
 
 <a id=License></a>
 
