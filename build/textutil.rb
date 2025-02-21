@@ -315,7 +315,9 @@ Dir.glob("*.md").sort.each{|fn|
     cmd="pandoc -V papersize=letter --number-sections --number-offset=0 --top-level-division=" + (outputengine=="html5" ? "chapter" : "section")
     cmd+=" -t #{outputengine}"
     cmd+=" --from=markdown"
-    cmd+=" #{output} --metadata pagetitle=\"#{title}\""
+    cmd+=" #{output} --metadata=pagetitle:\"#{title}\""
+    cmd+=" --metadata=title:\"#{title}\""
+    cmd+=" --metadata=author:\"Peter Occil\""
     if outputengine!="html5"
       cmd+=" --pdf-engine=xelatex"
       cmd+=" --variable=title:\"#{title}\""
