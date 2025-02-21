@@ -871,7 +871,9 @@ Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th de
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
-$$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$ whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
+$$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
+
+whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
 Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:
 
