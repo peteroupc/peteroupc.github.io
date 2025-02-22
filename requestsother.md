@@ -201,6 +201,7 @@ The algorithm produces a discrete random variate based on a permutation class. L
 If $D$ and $E$ are both uniform(0, 1), this algorithm returns the number _n_ with the following probability:
 
 $$G(n)= (1-\frac{V(n+1)}{V(n) (n+1)})  (1-\sum_{j=0}^{n-1} G(j))$$
+
 $$= \frac{V(n) (n+1)-V(n+1)}{V(0) (n+1)!},$$
 
 where $V(n) \in (0, n!]$ is the number of permutations of size _n_ that meet the permutation class's requirements. $V(n)$ can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm. (Examples of permutation classes include permutations whose numbers are sorted in descending order, or permutations whose first number is highest.) For example, if we use the class of permutations sorted in descending order, the EGF is $\exp(\lambda)$, so that $V(n)$ = 1.
@@ -258,9 +259,17 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
     Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  My article on [**estimation algorithms**](https://peteroupc.github.io/estimation.html) already gives a relative-error algorithm for the geometric distribution in a note.
 
-2. Let $M_k$ be an upper bound on the $k$th central absolute moment of $X$, for $k>1$.  [**Based on the Chebyshev inequality**](https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality) (as well as Hickernell et al. 2013; Kunsch et al. 2018), is the mean $\mathbb{E}[X]$ within $\epsilon$ of the mean of $n$ i.i.d. samples, where&mdash; $$n=\left\lceil\frac{M_k}{\delta\epsilon^k}\right\rceil,$$ with probability at least $1-\delta$?
+2. Let $M_k$ be an upper bound on the $k$th central absolute moment of $X$, for $k>1$.  [**Based on the Chebyshev inequality**](https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality) (as well as Hickernell et al. 2013; Kunsch et al. 2018), is the mean $\mathbb{E}[X]$ within $\epsilon$ of the mean of $n$ i.i.d. samples, where&mdash;
 
-    If so: Let $f(x)$ be uniformly continuous on the real line. Let $m(\epsilon)$ be an inverse modulus of continuity of $f$, that is, a function that satisfies $\text{abs}(f(y)-f(z))<\epsilon$ whenever $\text{abs}(y-z)<m(\epsilon)$. Then is $f(\mathbb{E}[X])$ within $\epsilon$ of the mean of $f$ on $n$ i.i.d. samples, where&mdash;  $$n=\left\lceil\frac{M_k}{\delta(m(\epsilon))^k}\right\rceil,$$  with probability at least $1-\delta$?  In both questions, $\epsilon$ and $\delta$ are user-specified values.
+$$n=\left\lceil\frac{M_k}{\delta\epsilon^k}\right\rceil,$$
+
+with probability at least $1-\delta$?
+
+    If so: Let $f(x)$ be uniformly continuous on the real line. Let $m(\epsilon)$ be an inverse modulus of continuity of $f$, that is, a function that satisfies $\text{abs}(f(y)-f(z))<\epsilon$ whenever $\text{abs}(y-z)<m(\epsilon)$. Then is $f(\mathbb{E}[X])$ within $\epsilon$ of the mean of $f$ on $n$ i.i.d. samples, where&mdash;
+
+$$n=\left\lceil\frac{M_k}{\delta(m(\epsilon))^k}\right\rceil,$$
+
+with probability at least $1-\delta$?  In both questions, $\epsilon$ and $\delta$ are user-specified values.
 
 3. Let $g$ be a known piecewise continuous function on [0, 1], and suppose $X$ lies on the interval [0, 1].  How can [**a Stack Exchange answer**](https://stats.stackexchange.com/a/523355/296678) be adapted to $g$, so that the algorithm estimates $g(\mathbb{E}[X])$ with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around $g$'s discontinuities? Is it enough to replace $g$ with a continuous function $f$ that equals $g$ everywhere except at that "negligible" area? Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified. Perhaps the tolerance could be defined as the integral of absolute differences between $f$ and $g$ instead of "negligible area"; in that case, how should the continuous $f$ be built?
 

@@ -926,7 +926,9 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >
 >     Then by **generating _X_ and giving out 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, the probability _f_(_&lambda;_) can be simulated as the convex combination&mdash;
 >
->     $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$ letting 0/0 = 0.  See also Mendo (2019\)[^24].
+>     $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$
+
+letting 0/0 = 0.  See also Mendo (2019\)[^24].
 >
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash;
 >
@@ -1065,7 +1067,9 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 >
 >     Then step 2 of the algorithm can be done as follows: "2. Run a Bernoulli factory algorithm for `Coin`(_&lambda;_), _X_ * _&alpha;_ times, and set _y_ to the number of runs that return 1 this way, then return 1 if _y_ equals _X_, or 0 otherwise."  If _&alpha;_ = 2 and _&beta;_ = 2 (or `Coin`(_&lambda;_) = 1/2), then this expresses the _square-root construction_ sqrt(1 &minus; _&lambda;_), mentioned in the Flajolet et al. paper.  If _&alpha;_ is 1, the modified algorithm simulates the following probability: (_&lambda;_&minus;1)/(_&lambda;_\*`Coin`(_&lambda;_)&minus;1).  If _&alpha;_=2, the probability is $(1-\lambda)/\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}$.<br>Interestingly, I have found that if _&alpha;_ is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, if `Coin`(_&lambda;_) = 1/_&beta;_, the probability becomes&mdash;
 >
->     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),$$ if _&beta;_ = 2, or more generally&mdash;
+>     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),$$
+
+if _&beta;_ = 2, or more generally&mdash;
 >     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).$$
 >     The ordinary generating function for this modified algorithm is thus&mdash;
 >     $$OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).$$
