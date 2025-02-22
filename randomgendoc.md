@@ -1,21 +1,31 @@
-## Documentation
+## Documentation$$
 
+$$
+$$
 ```
-Help on module randomgen:
+Help on module randomgen:$$
 
+$$
+$$
 NAME
-    randomgen
+    randomgen$$
 
+$$
+$$
 DESCRIPTION
     Sample code for the article "Randomization and Sampling Methods"
-    www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods
+    www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods$$
 
+$$
+$$
     Written by Peter O.
     Any copyright to this work is released to the Public Domain.
     In case this is not possible, this work is also
     licensed under Creative Commons Zero (CC0):
-    creativecommons.org/publicdomain/zero/1.0/
+    creativecommons.org/publicdomain/zero/1.0/$$
 
+$$
+$$
 CLASSES
     builtins.object
         AlmostRandom
@@ -31,8 +41,10 @@ CLASSES
         RandomGen
         RatioOfUniformsTiling
         SortedAliasMethod
-        VoseAlias
+        VoseAlias$$
 
+$$
+$$
     class AlmostRandom(builtins.object)
      |  AlmostRandom(randgen, list)
      |
@@ -50,8 +62,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class BinaryExpansion(builtins.object)
      |  BinaryExpansion(arr, zerosAtEnd=False)
      |
@@ -110,8 +124,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class BringmannLarsen(builtins.object)
      |  BringmannLarsen(weights)
      |
@@ -140,8 +156,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class ConvexPolygonSampler(builtins.object)
      |  ConvexPolygonSampler(randgen, points)
      |
@@ -170,8 +188,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class DensityInversionSampler(builtins.object)
      |  DensityInversionSampler(pdf, bl, br, ures=1e-08)
      |
@@ -245,8 +265,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class DensityTiling(builtins.object)
      |  DensityTiling(pdf, bl, br, cycles=8)
      |
@@ -316,8 +338,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class FastLoadedDiceRoller(builtins.object)
      |  FastLoadedDiceRoller(weights)
      |
@@ -354,8 +378,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class OptimalSampler(builtins.object)
      |  OptimalSampler(m)
      |
@@ -393,8 +419,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class PascalTriangle(builtins.object)
      |  Generates the rows of Pascal's triangle, or the
      |  weight table for a binomial(n,1/2) distribution.
@@ -430,8 +458,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class PrefixDistributionSampler(builtins.object)
      |  PrefixDistributionSampler(pdf)
      |
@@ -463,8 +493,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RandomGen(builtins.object)
      |  RandomGen(rng=None)
      |
@@ -1309,8 +1341,10 @@ CLASSES
      |
      |  FPRADIX = 2
      |
-     |  MINEXPONENT = -1074
+     |  MINEXPONENT = -1074$$
 
+$$
+$$
     class RatioOfUniformsTiling(builtins.object)
      |  RatioOfUniformsTiling(pdf, mode=0, y0=-10, y1=10, cycles=8)
      |
@@ -1381,8 +1415,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class SortedAliasMethod(builtins.object)
      |  SortedAliasMethod(p)
      |
@@ -1413,8 +1449,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class VoseAlias(builtins.object)
      |  VoseAlias(weights)
      |
@@ -1441,11 +1479,15 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
 FUNCTIONS
-    numericalTable(func, x, y, n=100)
+    numericalTable(func, x, y, n=100)$$
 
+$$
+$$
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
     CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
@@ -1458,23 +1500,35 @@ DATA
     LNPOLY3 = [(-13476514299119388...8263005361644498323, 5000000000000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
-    REAL_858_1000 = RealFraction(429/500)
+    REAL_858_1000 = RealFraction(429/500)$$
 
+$$
+$$
 FILE
-    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py$$
 
+$$
+$$
+```$$
+
+$$
+$$
 ```
+Help on module fixed:$$
 
-```
-Help on module fixed:
-
+$$
+$$
 NAME
-    fixed
+    fixed$$
 
+$$
+$$
 CLASSES
     builtins.object
-        Fixed
+        Fixed$$
 
+$$
+$$
     class Fixed(builtins.object)
      |  Fixed(i)
      |
@@ -1676,24 +1730,36 @@ CLASSES
      |
      |  TwoTimesPiHighRes = 521986613312972044853359557207944718
      |
-     |  __hash__ = None
+     |  __hash__ = None$$
 
+$$
+$$
 FILE
-    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/fixed.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/fixed.py$$
 
+$$
+$$
+```$$
+
+$$
+$$
 ```
+Help on module bernoulli:$$
 
-```
-Help on module bernoulli:
-
+$$
+$$
 NAME
-    bernoulli
+    bernoulli$$
 
+$$
+$$
 CLASSES
     builtins.object
         Bernoulli
-        DiceEnterprise
+        DiceEnterprise$$
 
+$$
+$$
     class Bernoulli(builtins.object)
      |  This class contains methods that generate Bernoulli random numbers,
      |     (either 1 or heads with a given probability, or 0 or tails otherwise).
@@ -2020,8 +2086,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class DiceEnterprise(builtins.object)
      |  Implements the Dice Enterprise algorithm for
      |  turning loaded dice with unknown probability of heads into loaded dice
@@ -2123,19 +2191,29 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
 FILE
-    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py$$
 
+$$
+$$
+```$$
+
+$$
+$$
 ```
+Help on module interval:$$
 
-```
-Help on module interval:
-
+$$
+$$
 NAME
-    interval
+    interval$$
 
+$$
+$$
 DESCRIPTION
     #  Implements interval numbers and interval arithmetic, backed
     #  by Fractions.
@@ -2143,12 +2221,16 @@ DESCRIPTION
     #  Written by Peter O. Any copyright to this file is released to the Public Domain.
     #  In case this is not possible, this file is also licensed under Creative Commons Zero
     #  (https://creativecommons.org/publicdomain/zero/1.0/).
-    #
+    #$$
 
+$$
+$$
 CLASSES
     builtins.object
-        FInterval
+        FInterval$$
 
+$$
+$$
     class FInterval(builtins.object)
      |  FInterval(v, sup=None, prec=None)
      |
@@ -2253,8 +2335,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
     CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
@@ -2267,31 +2351,45 @@ DATA
     LNPOLY3 = [(-13476514299119388...8263005361644498323, 5000000000000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
-    REAL_858_1000 = RealFraction(429/500)
+    REAL_858_1000 = RealFraction(429/500)$$
 
+$$
+$$
 FILE
-    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py$$
 
+$$
+$$
+```$$
+
+$$
+$$
 ```
+Help on module moore:$$
 
-```
-Help on module moore:
-
+$$
+$$
 NAME
-    moore
+    moore$$
 
+$$
+$$
 DESCRIPTION
     #  Implements the Moore Rejection Sampler.
     #
     #  Written by Peter O. Any copyright to this file is released to the Public Domain.
     #  In case this is not possible, this file is also licensed under Creative Commons Zero
     #  (https://creativecommons.org/publicdomain/zero/1.0/).
-    #
+    #$$
 
+$$
+$$
 CLASSES
     builtins.object
-        MooreSampler
+        MooreSampler$$
 
+$$
+$$
     class MooreSampler(builtins.object)
      |  MooreSampler(pdf, mn, mx, numLabels=1, bitAccuracy=53)
      |
@@ -2366,25 +2464,37 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
 FILE
-    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py$$
 
+$$
+$$
+```$$
+
+$$
+$$
 ```
+Help on module betadist:$$
 
-```
-Help on module betadist:
-
+$$
+$$
 NAME
-    betadist
+    betadist$$
 
+$$
+$$
 DESCRIPTION
     #  Written by Peter O. Any copyright to this file is released to the Public Domain.
     #  In case this is not possible, this file is also licensed under Creative Commons Zero
     #  (https://creativecommons.org/publicdomain/zero/1.0/).
-    #
+    #$$
 
+$$
+$$
 CLASSES
     builtins.object
         BernsteinPoly
@@ -2416,8 +2526,10 @@ CLASSES
             RealTan
         ShapeSampler
         ShapeSampler2
-        SinFunction
+        SinFunction$$
 
+$$
+$$
     class BernsteinPoly(builtins.object)
      |  BernsteinPoly(coeffs)
      |
@@ -2443,8 +2555,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class FPInterval(builtins.object)
      |  FPInterval(n, d, prec)
      |
@@ -2475,8 +2589,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class PhaseType(builtins.object)
      |  PhaseType(alpha, s)
      |
@@ -2494,8 +2610,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class PiecewiseBernstein(builtins.object)
      |  Methods defined here:
      |
@@ -2525,8 +2643,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RandPSRN(Real)
      |  RandPSRN(a)
      |
@@ -2597,8 +2717,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RandUniform(Real)
      |  Method resolution order:
      |      RandUniform
@@ -2667,8 +2789,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RandUniformIntFrac(Real)
      |  RandUniformIntFrac(i, f)
      |
@@ -2739,8 +2863,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RandUniformNegIntFrac(Real)
      |  RandUniformNegIntFrac(i, f)
      |
@@ -2811,8 +2937,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class Real(builtins.object)
      |  Methods defined here:
      |
@@ -2870,8 +2998,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealAdd(Real)
      |  RealAdd(a, b)
      |
@@ -2942,8 +3072,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealArcTan(Real)
      |  RealArcTan(a)
      |
@@ -3014,8 +3146,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealArcTan2(Real)
      |  RealArcTan2(y, x)
      |
@@ -3086,8 +3220,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealCos(Real)
      |  RealCos(a)
      |
@@ -3158,8 +3294,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealDivide(Real)
      |  RealDivide(a, b)
      |
@@ -3230,8 +3368,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealErf(Real)
      |  RealErf(a)
      |
@@ -3302,8 +3442,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealExp(Real)
      |  RealExp(a)
      |
@@ -3374,8 +3516,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealFraction(Real)
      |  RealFraction(a, b=None)
      |
@@ -3450,8 +3594,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealLn(Real)
      |  RealLn(a)
      |
@@ -3524,8 +3670,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealLogGammaInt(Real)
      |  RealLogGammaInt(a)
      |
@@ -3596,8 +3744,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealMultiply(Real)
      |  RealMultiply(a, b)
      |
@@ -3672,8 +3822,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealNegate(Real)
      |  RealNegate(a)
      |
@@ -3744,8 +3896,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealPi(Real)
      |  RealPi(fraction=1, consistent=False)
      |
@@ -3816,8 +3970,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealPow(Real)
      |  RealPow(a, b)
      |
@@ -3888,8 +4044,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealSin(Real)
      |  RealSin(a)
      |
@@ -3962,8 +4120,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealSqrt(Real)
      |  RealSqrt(a)
      |
@@ -4034,8 +4194,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealSubtract(Real)
      |  RealSubtract(a, b)
      |
@@ -4106,8 +4268,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class RealTan(Real)
      |  RealTan(a)
      |
@@ -4178,8 +4342,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class ShapeSampler(builtins.object)
      |  ShapeSampler(inshape, dx=1, dy=1)
      |
@@ -4202,8 +4368,10 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
     class ShapeSampler2(builtins.object)
      |  ShapeSampler2(inshape, dx=1, dy=1)
      |
@@ -4235,8 +4403,10 @@ CLASSES
      |
      |  NO = -1
      |
-     |  YES = 1
+     |  YES = 1$$
 
+$$
+$$
     class SinFunction(builtins.object)
      |  Methods defined here:
      |
@@ -4249,19 +4419,31 @@ CLASSES
      |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object
+     |      list of weak references to the object$$
 
+$$
+$$
 FUNCTIONS
-    addto1(rg)
+    addto1(rg)$$
 
-    bernoullinum(n)
+$$
+$$
+    bernoullinum(n)$$
 
-    bernsteinDiff(coeffs, diff)
+$$
+$$
+    bernsteinDiff(coeffs, diff)$$
 
-    betabin(k, psi, rho, cpsi, m=5)
+$$
+$$
+    betabin(k, psi, rho, cpsi, m=5)$$
 
-    betadist(b, ax=1, ay=1, bx=1, by=1, precision=53)
+$$
+$$
+    betadist(b, ax=1, ay=1, bx=1, by=1, precision=53)$$
 
+$$
+$$
     betadist_geobag(b, ax=1, ay=1, bx=1, by=1)
         Generates a beta-distributed random number with arbitrary
          (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
@@ -4270,50 +4452,88 @@ FUNCTIONS
         - b: Bernoulli object (from the "bernoulli" module).
         - ax, ay: Numerator and denominator of first shape parameter.
         - bx, by: Numerator and denominator of second shape parameter.
-        - precision: Number of bits after the point that the result will contain.
+        - precision: Number of bits after the point that the result will contain.$$
 
-    c2a(r=None)
+$$
+$$
+    c2a(r=None)$$
 
-    c4example()
+$$
+$$
+    c4example()$$
 
-    crudelog(av)
+$$
+$$
+    crudelog(av)$$
 
-    exchangeable_bernoulli(p, d, lamda=None)
+$$
+$$
+    exchangeable_bernoulli(p, d, lamda=None)$$
 
+$$
+$$
     exp_minus_x2y(rg, f, y, pwr=2)
-        B(x) -> B(exp(-x*x*y))
+        B(x) -> B(exp(-x*x*y))$$
 
+$$
+$$
     exp_minus_xy(rg, f, y)
-        B(x) -> B(exp(-x*y))
+        B(x) -> B(exp(-x*y))$$
 
-    forsythe_prob(rg, m, n)
+$$
+$$
+    forsythe_prob(rg, m, n)$$
 
-    forsythe_prob2(rg, x)
+$$
+$$
+    forsythe_prob2(rg, x)$$
 
-    forsythe_prob3(rg, x)
+$$
+$$
+    forsythe_prob3(rg, x)$$
 
-    fpNormalROU(mu=0, sigma=1)
+$$
+$$
+    fpNormalROU(mu=0, sigma=1)$$
 
-    fracAreClose(a, b, n)
+$$
+$$
+    fracAreClose(a, b, n)$$
 
-    fracAreCloseND(an, ad, bn, bd, n)
+$$
+$$
+    fracAreCloseND(an, ad, bn, bd, n)$$
 
-    fracEV(sn, sd, n)
+$$
+$$
+    fracEV(sn, sd, n)$$
 
-    gammaDist2()
+$$
+$$
+    gammaDist2()$$
 
-    gen_to_transition(s)
+$$
+$$
+    gen_to_transition(s)$$
 
-    genscore(psi, rho, m=5)
+$$
+$$
+    genscore(psi, rho, m=5)$$
 
-    genscore_mean_var(mean, vari, m=5)
+$$
+$$
+    genscore_mean_var(mean, vari, m=5)$$
 
+$$
+$$
     genshape(rg, inshape)
         Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
         inshape is a function that takes three parameters (x, y, s) and
         returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
-        -1 if not; and 0 if partially.
+        -1 if not; and 0 if partially.$$
 
+$$
+$$
     geobagcompare(bag, f)
         Returns 1 with probability f(U), where U is the value that
           the specified geometric bag turns out to hold, or 0 otherwise.
@@ -4331,44 +4551,78 @@ FUNCTIONS
           or would pass the desired level of accuracy to the function given
           here, and would probably have the function use arbitrary-precision
           rational or floating-point numbers rather than the fixed-precision
-          'float' type of Python, which usually has 53 bits of precision.
+          'float' type of Python, which usually has 53 bits of precision.$$
 
-    iteratedPoly2(func, n)
+$$
+$$
+    iteratedPoly2(func, n)$$
 
-    iteratedPoly3(func, n)
+$$
+$$
+    iteratedPoly3(func, n)$$
 
-    iteratedPolyExample()
+$$
+$$
+    iteratedPolyExample()$$
 
-    lah(n, k)
+$$
+$$
+    lah(n, k)$$
 
-    logbinco(n, k)
+$$
+$$
+    logbinco(n, k)$$
 
-    logbinprob(n, k)
+$$
+$$
+    logbinprob(n, k)$$
 
-    logconcave(f, c)
+$$
+$$
+    logconcave(f, c)$$
 
-    loggammahelper(n, precision)
+$$
+$$
+    loggammahelper(n, precision)$$
 
-    logpoisson(lamda, n)
+$$
+$$
+    logpoisson(lamda, n)$$
 
-    logsmall(av, n)
+$$
+$$
+    logsmall(av, n)$$
 
-    minDegree(maxValue, maxDeriv, epsilon, deriv=4)
+$$
+$$
+    minDegree(maxValue, maxDeriv, epsilon, deriv=4)$$
 
-    monoSecondMoment(secondMoment, pdf)
+$$
+$$
+    monoSecondMoment(secondMoment, pdf)$$
 
-    muth(mu)
+$$
+$$
+    muth(mu)$$
 
+$$
+$$
     powerOfUniform(b, px, py, precision=53)
         Generates a power of a uniform random number.
         - px, py - Numerator and denominator of desired exponent for the uniform
           random number.
-        - precision: Number of bits after the point that the result will contain.
+        - precision: Number of bits after the point that the result will contain.$$
 
-    proddist(x, a, b, c, d)
+$$
+$$
+    proddist(x, a, b, c, d)$$
 
-    proddist2(x, a, b, c, d)
+$$
+$$
+    proddist2(x, a, b, c, d)$$
 
+$$
+$$
     psrn_add(rg, psrn1, psrn2, digits=2)
         Adds two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -4376,22 +4630,38 @@ FUNCTIONS
             after the point, starting with the first.
         psrn2: List containing the sign, integer part, and fractional part
             of the second PSRN.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary.$$
 
-    psrn_add_fraction(rg, psrn, fraction, digits=2)
+$$
+$$
+    psrn_add_fraction(rg, psrn, fraction, digits=2)$$
 
-    psrn_complement(x)
+$$
+$$
+    psrn_complement(x)$$
 
-    psrn_fill(rg, psrn, precision=53, digits=2)
+$$
+$$
+    psrn_fill(rg, psrn, precision=53, digits=2)$$
 
-    psrn_in_range(rg, bmin, bmax, digits=2)
+$$
+$$
+    psrn_in_range(rg, bmin, bmax, digits=2)$$
 
-    psrn_in_range_positive(rg, bmin, bmax, digits=2)
+$$
+$$
+    psrn_in_range_positive(rg, bmin, bmax, digits=2)$$
 
-    psrn_less(rg, psrn1, psrn2, digits=2)
+$$
+$$
+    psrn_less(rg, psrn1, psrn2, digits=2)$$
 
-    psrn_less_than_fraction(rg, psrn, rat, digits=2)
+$$
+$$
+    psrn_less_than_fraction(rg, psrn, rat, digits=2)$$
 
+$$
+$$
     psrn_multiply(rg, psrn1, psrn2, digits=2)
         Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -4399,78 +4669,134 @@ FUNCTIONS
             after the point, starting with the first.
         psrn2: List containing the sign, integer part, and fractional part
             of the second PSRN.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary.$$
 
-    psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False)
+$$
+$$
+    psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False)$$
 
+$$
+$$
     psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2)
         Multiplies a partially-sampled random number by a fraction.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits
             after the point, starting with the first.
         fraction: Fraction to multiply by.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary.$$
 
-    psrn_new_01()
+$$
+$$
+    psrn_new_01()$$
 
+$$
+$$
     psrn_reciprocal(rg, psrn1, digits=2)
         Generates the reciprocal of a partially-sampled random number.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits
             after the point, starting with the first.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary.$$
 
-    psrn_sample(rg, psrn, digits=2)
+$$
+$$
+    psrn_sample(rg, psrn, digits=2)$$
 
-    psrnexpo(rg)
+$$
+$$
+    psrnexpo(rg)$$
 
-    randBernoulli(f)
+$$
+$$
+    randBernoulli(f)$$
 
-    randLnUniform()
+$$
+$$
+    randLnUniform()$$
 
-    randMax(n=2)
+$$
+$$
+    randMax(n=2)$$
 
-    randMin(n=2)
+$$
+$$
+    randMin(n=2)$$
 
-    randUniformLessThan(val)
+$$
+$$
+    randUniformLessThan(val)$$
 
-    randUniformPower(pwr)
+$$
+$$
+    randUniformPower(pwr)$$
 
-    rayleighpsrn(rg, s=1)
+$$
+$$
+    rayleighpsrn(rg, s=1)$$
 
-    realCeiling(a)
+$$
+$$
+    realCeiling(a)$$
 
-    realFloor(a)
+$$
+$$
+    realFloor(a)$$
 
-    realGamma(ml)
+$$
+$$
+    realGamma(ml)$$
 
-    realIsGreater(a, b)
+$$
+$$
+    realIsGreater(a, b)$$
 
-    realIsLess(a, b)
+$$
+$$
+    realIsLess(a, b)$$
 
-    realIsLessOrEqual(a, b)
+$$
+$$
+    realIsLessOrEqual(a, b)$$
 
-    realIsNegative(a)
+$$
+$$
+    realIsNegative(a)$$
 
-    realNormalROU(mu=0, sigma=1)
+$$
+$$
+    realNormalROU(mu=0, sigma=1)$$
 
-    recordcount(n)
+$$
+$$
+    recordcount(n)$$
 
+$$
+$$
     sampleIntPlusBag(rg, psrn, k)
         Return 1 with probability (x+k)/2^bitlength(k).
-        Ignores PSRN's integer part and sign.
+        Ignores PSRN's integer part and sign.$$
 
+$$
+$$
     size_biased_poisson_ailamujia(rg, eta=1)
         Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
-        Pak. J. Statistics 37(1), 19-38, 2021.
+        Pak. J. Statistics 37(1), 19-38, 2021.$$
 
-    stirling1(n, k)
+$$
+$$
+    stirling1(n, k)$$
 
+$$
+$$
     truncated_gamma(rg, bern, ax, ay, precision=53)
-        #####################
+        #####################$$
 
-    tulap(m, b, q)
+$$
+$$
+    tulap(m, b, q)$$
 
+$$
+$$
 DATA
     ArcTanHTable = [0, 294906490, 137123709, 67461703, 33598225, 16782680,...
     CRUDELOG = [0, -726816, -681390, -654818, -635964, -621340, -609392, -...
@@ -4483,9 +4809,16 @@ DATA
     LNPOLY3 = [(-13476514299119388...8263005361644498323, 5000000000000000...
     REALHALFPI = RealPi(1/2)
     REALPI = RealPi(1)
-    REAL_858_1000 = RealFraction(429/500)
+    REAL_858_1000 = RealFraction(429/500)$$
 
+$$
+$$
 FILE
-    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py$$
 
-```
+$$
+$$
+```$$
+
+$$
+$$
