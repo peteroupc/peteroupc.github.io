@@ -464,6 +464,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^50]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^51]: Leroy, Richard. "Certificats de positivité et minimisation polynomiale dans la base de Bernstein multivariée." PhD diss., Université Rennes 1, 2008
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -581,6 +583,8 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
     - $FN(\lambda) = \sum_{k=0}^m -\min(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.
 
     (Mok and To 2008; Theorem 2 and remark 1.5(v))[^20].
+
+    Additional results are found in Leroy (2008)[^51].
 
 > **Examples:**
 >

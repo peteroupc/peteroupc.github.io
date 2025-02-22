@@ -115,7 +115,9 @@ The following are some strategies for answering these questions:
 - Find other polynomial operators meeting the requirements of the main question (see "Main Question", earlier) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions.
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
-    $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
+    $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)$$
+
+    $$=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
 
     whenever $0\le k\le 2n$, where $M = \max(L, \max\text{abs}(f^{(0)}), ...,\max\text{abs}(f^{(r-1)}))$, $L$ is $\max\text{abs}(f^{(r)})$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in** "[**End Notes**](#End_Notes)" **as well as** "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)".)
 
