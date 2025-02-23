@@ -37,6 +37,7 @@ The goal of these approximations is to avoid introducing transcendental and trig
 - [**Appendix**](#Appendix)
     - [**Results Used in Approximations by Polynomials**](#Results_Used_in_Approximations_by_Polynomials)
     - [**Chebyshev Interpolants**](#Chebyshev_Interpolants)
+    - [**Results on Derivative Bounds**](#Results_on_Derivative_Bounds)
 - [**License**](#License)
 
 <a id=About_This_Document></a>
@@ -214,7 +215,7 @@ The result will be in the form of Bernstein coefficients for the interval $[a, b
 > - If the $r$-th derivative of $g$ is continuous and has a maximum absolute value of $M$ on the interval, where $r\ge 1$, then the $r$-th derivative of $f(x)$ has a maximum absolute value of $M(b-a)^r$ on the interval $[0, 1]$.
 > - If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$ on the interval, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.
 >
-> **Example:** Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with "Has Lipschitz continuous derivative" in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.
+> **Example:** Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz-continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz-continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with "Has Lipschitz continuous derivative" in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.
 
 <a id=Approximating_an_Integral></a>
 
@@ -424,6 +425,12 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 
 [^51]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
 
+[^52]: Niculescu, Constantin P., and Constantin Buşe. "The Hardy-Landau-Littlewood inequalities with less smoothness." J. Inequal. in Pure and Appl. Math 4 (2003).
+
+[^53]: B-O. Eriksson, "Some best constants in the Landau Inequality on a Finite Interval", Journal of Approximation Theory 94 (1998).
+
+[^54]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -476,7 +483,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^32], showi
 
 > **Note:** A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$'s domain.
 
-**Proposition B3**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
+**Proposition B3**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^10] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
@@ -514,7 +521,7 @@ By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=19667
 - for every integer $n\ge 1$, $\text{abs}(T_{n,r}(p))\le \sigma(r,6)n^{r/2}$ and $\text{abs}(S_{n,r}(p)) \le \sigma(r,6)/n^{r/2}$, and
 - for every integer $n\ge 1$, $\text{abs}(T_{n,r}(1/2))\le \sigma(r,8)n^{r/2}$ and $\text{abs}(S_{n,r}(1/2)) \le \sigma(r,8)/n^{r/2}$.
 
-**Lemma B9**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), where $r\ge 0$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative's Lipschitz constant.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then, for every $0\le x_0 \le 1$:
+**Lemma B9**: Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), where $r\ge 0$ is an integer, and let $M$ be equal to or greater than the $r$-th derivative's Lipschitz constant.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then, for every $0\le x_0 \le 1$:
 
 1. $f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.
 2. If $r$ is odd, $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le M/((((r+1)/2)!)(\beta n)^{(r+1)/2})$ for every integer $n\ge 1$, where $\beta$ is 8 if $r\le 43$ and 6 otherwise.
@@ -560,7 +567,7 @@ $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/
 > 1. If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor's theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$'s domain) (DLMF [^41] [**equation 1.4.36**](https://dlmf.nist.gov/1.4.E36)).  Thus, by this estimate, $\text{abs}(R_{f,r}(\lambda, x_0)) \le \frac{M}{r!} (\lambda-x_0)^r.$
 > 2. It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)[^9].
 
-**Corollary B9A**: Let $f(\lambda)$ have a Lipschitz continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Let $R_{f,r}(\lambda, x_0)$ be as in Lemma B9.  Then, for every $0\le x_0 \le 1$:
+**Corollary B9A**: Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Let $R_{f,r}(\lambda, x_0)$ be as in Lemma B9.  Then, for every $0\le x_0 \le 1$:
 
 | If $r$ is: | Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ ... |
  --- | --- |
@@ -572,11 +579,11 @@ $$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le \frac{M}{(r+1)!\cdot n^{(r+1)/
 | 4. | $\sqrt{5}M/(1280 n^{5/2}) < 0.001747 M/n^{5/2}$ for every integer $n\ge 2$. |
 | 5. | $M/(3072 n^3)$ for every integer $n\ge 1$. |
 
-**Proposition B10**: Let $f(\lambda)$ have a Lipschitz continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\Lambda_3/(8 n^2)$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
+**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\ge 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\Lambda_3/(8 n^2)$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
 
 _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^5].
 
-Because $f$ has a Lipschitz continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.
+Because $f$ has a Lipschitz-continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.
 
 It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, linear, and constant functions), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^42], Butzer (1955)[^6], May (1976)[^43].  Because of this, it can be assumed without loss of generality that $f(x_0)=0$.
 
@@ -596,11 +603,11 @@ The proof of Proposition B10 shows how to prove an upper bound on the approximat
 
 $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)$$
 
-(where $\alpha_i$ are real numbers and $n(i)\ge 1$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^44].
+(where $\alpha_i$ are real numbers and $n(i)\ge 1$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^44].
 
-**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^7], (Lorentz 1966)[^9], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.
+**Proposition B10A:** Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^7], (Lorentz 1966)[^9], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.
 
-_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^7] and since $f$ has a Lipschitz continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;
+_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^7] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;
 
 $$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))$$
 
@@ -614,7 +621,7 @@ _Proof_: Follows from Lorentz (1963)[^10] and the well-known fact that $M_2$ is 
 
 In the following propositions, $f^{(r)}$ means the $r$-th derivative of the function $f$ and $\max(\text{abs}(f))$ means the maximum of the absolute value of the function $f$.
 
-**Proposition B10C:** Let $f(\lambda)$ have a Hölder continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
+**Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2},$$
 
@@ -640,7 +647,7 @@ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{3
 
 > **Note**: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be nonnegative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda <1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.
 
-**Proposition B10D:** Let $f(\lambda)$ have a Hölder continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
+**Proposition B10D:** Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{\max(\text{abs}(f^{(2)}))+\max(\text{abs}(f^{(3)}))}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
 
@@ -660,7 +667,7 @@ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2
 
 &#x25a1;
 
-In a similar way, it's possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder continuous fourth or fifth derivative, by expressing the error bound as $\text{abs}((B_n(f)-f)((B_n(f)-f)(B_n(f)-f)))$ and replacing the values for $M_2$, $M_3$, and $H_3$ in the bound proved at the end of Proposition B10D with upper bounds for $\text{abs}((B_n(f))^{(2)}-f^{(2)})$, $\text{abs}((B_n(f))^{(3)}-f^{(3)})$, and $\text{abs}((B_n(f))^{(4)}-f^{(4)})$, respectively.
+In a similar way, it's possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder-continuous fourth or fifth derivative, by expressing the error bound as $\text{abs}((B_n(f)-f)((B_n(f)-f)(B_n(f)-f)))$ and replacing the values for $M_2$, $M_3$, and $H_3$ in the bound proved at the end of Proposition B10D with upper bounds for $\text{abs}((B_n(f))^{(2)}-f^{(2)})$, $\text{abs}((B_n(f))^{(3)}-f^{(3)})$, and $\text{abs}((B_n(f))^{(4)}-f^{(4)})$, respectively.
 
 <a id=Chebyshev_Interpolants></a>
 
@@ -679,7 +686,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
     - $\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,
     - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
     - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
-- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^49] as well as a statement in note 1 at the end of this section.
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^49] as well as a statement in note 1 at the end of this section.
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
     - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^50].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.
@@ -696,7 +703,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 
 > **Notes:**
 >
-> 1. The following statement can be shown.  Let $f(x)$ have a Lipschitz continuous $(r-1)$-th derivative on the interval $[a, b]$, where $r\ge 1$.  If the $r$-th derivative of $f$ has total variation $V$, then the $r$-th derivative of $g(x)$, where $g(x) = f(a+(b-a) (x+1)/2)$, has total variation $V\left(\frac{b-a}{2}\right)^r$ on the interval $[-1, 1]$.
+> 1. The following statement can be shown.  Let $f(x)$ have a Lipschitz-continuous $(r-1)$-th derivative on the interval $[a, b]$, where $r\ge 1$.  If the $r$-th derivative of $f$ has total variation $V$, then the $r$-th derivative of $g(x)$, where $g(x) = f(a+(b-a) (x+1)/2)$, has total variation $V\left(\frac{b-a}{2}\right)^r$ on the interval $[-1, 1]$.
 > 2. The method in this section doesn't require $f(\lambda)$ to have a particular minimum or maximum.  If $f$ must map the closed unit interval to itself and the Bernstein coefficients must lie on that interval, the following changes to the method are needed:
 >     - $f(\lambda)$ must be continuous on the closed unit interval ($a=0$, $b=1$) and take on only values in that interval.
 >     - If any Bernstein coefficient returned by the method is less than 0 or greater than 1, double the value of $n$ and repeat the method starting at step 2 until that condition is no longer true.
@@ -706,6 +713,52 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 >     $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
 >
 >     for every point $\lambda$ satisfying $\text{abs}(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
+
+<a id=Results_on_Derivative_Bounds></a>
+
+### Results on Derivative Bounds
+
+These results relate to bounds on a function's derivatives. Though not yet used in this article, the results may be of interest to readers.
+
+**Proposition X1**: Let $f(\lambda)$ map the closed unit interval to itself, have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$. Then the derivative's absolute value is no more than&mdash;
+
+$$\max(4m+M/4, 2\sqrt(mM)) \le \max(4+M, 2\sqrt(M)).$$
+
+_Proof:_ This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)[^52].
+
+**Proposition X2**: Let $f(\lambda)$ map the closed unit interval to itself., have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$ (see "Definitions"). Then the derivative's absolute value is no more than $4m+M/4$ if $m/M\ge 1/16$, or $2\sqrt(mM)$ otherwise.
+
+_Proof:_ This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)[^52].
+
+In the following results, denote the maximum absolute value of $f$'s $r$-th derivative as $MX(f, r)$.
+
+**Proposition X3**: Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed interval [-1, 1], let $M_k$ be the maximum of the absolute value of $f$'s $k$-th derivative, and let $L_r$ be $f$'s $r$-th derivative's Lipschitz constant or greater.  Then:
+
+- $M_1 \le 2 M_0 + (1/2) L_1$.
+- $M_1 \le 6 M_0 + (1/8) L_2$.
+- $M_2 \le 8 M_0 + (2/3) L_2$.
+- $M_1 \le 12 M_0 + (1/48) L_3$.
+- $M_2 \le 40 M_0 + (5/24) L_3$.
+- $M_3 \le 48 M_0 + (3/4) L_3$.
+- $M_1 \le 20 M_0 + (1/384) L_4$.
+- $M_2 \le 120 M_0 + (1/24) L_4$.
+- $M_3 \le 336 M_0 + (21/80) L_4$.
+- $M_4 \le 384 M_0 + (4/5) L_4$.
+- $M_1 \le 30 M_0 + (1/3840) L_5$.
+- $M_2 \le 280 M_0 + (7/1152) L_5$.
+- $M_3 \le 1344 M_0 + (7/120) L_5$.
+- $M_4 \le 3456 M_0 + (3/10) L_5$.
+- $M_5 \le 3840 M_0 + (5/6) L_5$.
+
+Uses a result from Eriksson (1998)[^53] with $c_n = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with Lipschitz-continuous $(n-1)$-th derivative.
+
+**Proposition X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous $r$-th derivative for some $r\ge 4$.  Then $MX(f,r-1) \le 4^{r-1} (r!) MX(f,0) + MX(f,r+1)/2.$
+
+_Proof:_ See Babenko et al. (1995)[^54].
+
+**Corollary X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fourth derivative.  Then $MX(f,3) \le 1536 MX(f,0) + MX(f,5)/2.
+
+**Corollary X5**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fifth derivative.  Then $MX(f,4) \le 30720 MX(f,0) + MX(f,6)/2.
 
 <a id=License></a>
 

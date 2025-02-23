@@ -760,10 +760,11 @@ class Bernoulli:
         while True:
             if w != 0:
                 w *= coin()
-            if n % 2 == 0:
-                u = l + w * coeff(n)
+            coef = coeff(n)
+            if coef > 0:
+                u = l + w * coef
             else:
-                l = u - w * coeff(n)
+                l = u - w * abs(coef)
             if self._uniform_less(bag, l) == 1:
                 return 1
             if self._uniform_less(bag, u) == 0:

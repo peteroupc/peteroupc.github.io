@@ -281,8 +281,8 @@ Then the following table shows how the necessary sample size _n_ can be determin
 >
 > **Examples:**
 >
-> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if a coin produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
-> 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
+> 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz-continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if a coin produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or the bounded case of _Algorithm E_ with _q_ = 4, _p_ = 2, and $\kappa$ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
+> 2. Take _f_(_x_) = _x_.  This is a Lipschitz-continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
 > 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), per the second case of _Algorithm E_.
 
 <a id=Randomized_Integration></a>

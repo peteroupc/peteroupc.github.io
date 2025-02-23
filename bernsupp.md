@@ -126,9 +126,9 @@ For every integer _n_ that's a power of 2:
 > 1. If _&alpha;_ is 1, _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.  If _&alpha;_ is 1/2, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
 > 2. The function $f(x)=\min(\lambda t, 1-\epsilon)$, where $\epsilon\ge 0$ and $t\ge 1$, is Lipschitz continuous with Lipschitz constant _t_.  Because $f$ is linear between 0 and 1/_t_, ways to build polynomials that converge to this kind of function were discussed by Thomas and Blanchet (2012)[^2] [^3] and Nacu & Peres (2005)[^1] [^4].
 
-**Functions with a Lipschitz continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
+**Functions with a Lipschitz-continuous derivative.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- has a Lipschitz continuous derivative (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", in the appendix), and
+- has a Lipschitz-continuous derivative (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", in the appendix), and
 - in the closed unit interval&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -231,7 +231,7 @@ In effect, the algorithm writes $f$ as an infinite sum of polynomials, whose max
 
 - In the algorithm, denote:
     - $\epsilon(f, n)$ as an upper bound on the absolute value of the difference between $f$ and the degree-$n$ polynomial $L_{n}(f)$. $\epsilon(f, n)$ must increase nowhere as $n$ increases, and must converge to 0.
-        - For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), later.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz continuous $(2r-1)$-th derivative (see "[**Achievable Simulation Rates**](#Achievable_Simulation_Rates)", later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz continuous third derivative.)
+        - For best results, this should be written as $\epsilon(f, n) = C/n^r$, where $C$ is a constant and $r>0$ is a multiple of 1/2, since then it's easy to find the value of ErrShift(f, n), later.  In this case, the algorithm should be limited to functions with a continuous $(2r)$-th derivative or a Lipschitz-continuous $(2r-1)$-th derivative (see "[**Achievable Simulation Rates**](#Achievable_Simulation_Rates)", later).  (For example, if the error bound is $C/n^2$, the function $f$ should have a continuous fourth derivative or a Lipschitz-continuous third derivative.)
         - For examples of error bounds, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
     - ErrShift($f, m$) as 1.01 $\cdot\sum_{i\ge m} \epsilon(f, 2^i)$.  The factor 1.01 is needed to ensure each difference polynomial is strictly between 0 and 1.
         - **Example:** If $\epsilon(f, n) = C/n^r$, then ErrShift($f, m)$ = $1.01\cdot C\cdot 2^r/(((2^r)-1)\cdot 2^{rm})$.
@@ -515,7 +515,7 @@ Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\t
 
 The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))`.
 
-**Functions with a Hölder continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the following table, if $f$ has a bounded and continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
+**Functions with a Hölder-continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the following table, if $f$ has a bounded and continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
 
 | Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
  ---- | ---- | ---- |
@@ -639,7 +639,7 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions 
     - _M\*(1/(2\*n))$\alpha/2$,_
     - _M\*(1/(7\*n))$\alpha/2$ if n&ge;4, and_
     - _M\*(1/(8\*n&minus;4))$\alpha/2$._
-3. _If f has a Lipschitz continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;_
+3. _If f has a Lipschitz-continuous derivative with Lipschitz constant M, then the expression (1) is less than or equal to&mdash;_
     - _(M/2)\*(1/(7\*n)) if n&ge;4, and_
     - _(M/2)\*(1/(8\*n&minus;4))._
 
@@ -804,14 +804,14 @@ _Proof._ Because Lipschitz continuous functions are Hölder continuous with Höl
 
 > **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
 
-**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If that function has a Lipschitz continuous derivative with Lipschitz constant L, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
+**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If that function has a Lipschitz-continuous derivative with Lipschitz constant L, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; L/(7\*n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + L/(7\*n)._
 
 _Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;
 
-> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant \(a slightly stronger condition than having a Lipschitz continuous derivative on that domain).
+> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant \(a slightly stronger condition than having a Lipschitz-continuous derivative on that domain).
 
 **Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
@@ -891,7 +891,7 @@ $$\left(\text{abs}(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}
 
 whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
-It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
+It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
 > **Notes:**
 >
@@ -1089,7 +1089,7 @@ _Proof of Proposition 3:_ In the proof of proposition 2, replace Lemma 1 and Lem
 
 **Conjecture 1**. _The conditions of Proposition 2 are necessary for $f(\lambda)$ to be strongly simulable._
 
-A condition such as "0 is not in the domain of $f$, or there is a number $\epsilon>0$ and a Lipschitz continuous function $g(x)$ on the interval $0\le x \lt \epsilon$ such that $g(x)=f(x)$ whenever $x$ is in both $g$'s and $f$'s domains" does not work.  An example that shows this is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ (and $f(0)=0$), which is strongly simulable at 0 even though the condition just quoted is not satisfied for $f$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
+A condition such as "0 is not in the domain of $f$, or there is a number $\epsilon>0$ and a Lipschitz-continuous function $g(x)$ on the interval $0\le x \lt \epsilon$ such that $g(x)=f(x)$ whenever $x$ is in both $g$'s and $f$'s domains" does not work.  An example that shows this is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ (and $f(0)=0$), which is strongly simulable at 0 even though the condition just quoted is not satisfied for $f$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)
 
 <a id=Multiple_Output_Bernoulli_Factory></a>
 

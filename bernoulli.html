@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2025/02/19"><meta name="citation_online_date" content="2025/02/19"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2025/02/22"><meta name="citation_online_date" content="2025/02/22"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1442,51 +1442,44 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 
       <p>Then by <strong>generating <em>X</em> and giving out 0 if <em>X</em> is 0, and otherwise flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>λ</em>)/<em>g</em>(<em>X</em>)</strong>, the probability <em>f</em>(<em>λ</em>) can be simulated as the convex combination—</p>
 
-      <p>\(f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,\) letting 0/0 = 0.  See also Mendo (2019)<sup id="fnref:24:1" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup>.</p>
+\[f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,\]
     </li>
-    <li>
-      <p><strong>Constants writable as a sum of nonnegative numbers.</strong> A special case of note 1.  Let <em>g</em> be as in note 1 (except <em>T</em> must equal 1), and let $c$ be a constant written as—</p>
-
-\[c=a_1+a_2+a_3+...,\]
-
-      <p>where—</p>
-
-      <ul>
-        <li>$a_n$ are each 0 or greater and sum to 1 or less, and</li>
-        <li>$1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.</li>
-      </ul>
-
-      <p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em>−1</sub>/<em>g</em>(<em>X</em>)</strong>, the probability  <em>c</em> can be simulated as the convex combination—</p>
-
-\[f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,\]
-
-      <p>letting 0/0 = 0.</p>
-    </li>
-  </ol>
-
-  <p><strong>Examples:</strong></p>
-
-  <ol>
-    <li>Generate <em>X</em>, a Poisson random variate with mean <em>μ</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and the coin for <em>h</em><sub><em>i</em></sub> returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>μ</em>)−1)/(exp(<em>μ</em>)*<em>μ</em>).</li>
-    <li>(Wästlund 1999)<sup id="fnref:9:2" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>: Generate a Poisson random variate <em>X</em> with mean 1, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(−<em>λ</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1−<em>λ</em>)<sup><em>i</em></sup>.</li>
-    <li>Generate <em>X</em>, a Poisson random variate with mean <em>μ</em>, run the <strong>ExpMinus</strong> algorithm with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(−<em>X</em>)], or exp(<em>μ</em>*exp(−1)−<em>μ</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()</code>.</li>
-    <li>A multivariate Bernoulli factory (Huber 2016)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup> of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>λ</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>λ</em><sub>1</sub> + … + <em>C</em><sub><em>m</em>−1</sub>*<em>λ</em><sub><em>m</em>−1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0,  <em>ϵ</em> &gt; 0, and <em>R</em> ≤ 1 − <em>ϵ</em>: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>λ</em><sub><em>i</em></sub>.  This differs from Huber’s suggestion of “thinning” a random process driven by multiple input coins.</li>
-    <li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2021)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>. Generates heads with probability <strong>E</strong>[<em>λ</em><sup><em>X</em></sup>], that is, the expected value (“long-run average”) of <em>λ</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>λ</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
-    <li>Assume <em>X</em> is the number of fair coin flips that show 0 (tails) before the first 1 (heads) is generated.  Then <em>g</em>(<em>n</em>) = $1/(2^{n+1})$.</li>
-    <li>
-      <p><strong>Poisson to Bernoulli.</strong> Suppose there is a stream of independent Poisson random variates with unknown mean $p$.  Also suppose there is a continuous function $f(p)$ satisfying $0\le f(p)\le 1$ whenever $p\ge 0$.  Then consider the following simple algorithm, which takes an integer $n\gt 0$:</p>
-
-      <ol>
-        <li>Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)</li>
-        <li>With probability $f(X/n)$, return 1.  Otherwise, return 0.</li>
-      </ol>
-
-      <p>Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or <em>Szász–Mirakyan operator</em>) of $f$ of degree $n$ (for example, Szász (1950)<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.</p>
-    </li>
-    <li><strong>The original Bernoulli factories.</strong>  Keane and O’Brien’s (1994)<sup id="fnref:2:3" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> paper introducing Bernoulli factories showed that any Bernoulli factory function $f(\lambda)$ can be written as a convex combination of polynomials.  In their proof, $g(i) = (1/4)\cdot(3/4)^{i-1}$ (and $g(0)=0$), and each $h_i(\lambda)$ is a polynomial, not necessarily of degree <em>i</em>, whose Bernstein coefficients are each either 0 or 1 (see “<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>”).</li>
-    <li><strong>Polynomials to zero-and-one polynomials.</strong> Suppose $f(\lambda)$ is a polynomial of degree $n$  and each of its Bernstein coefficients $(a[0], a[1], …, a[n])$ (see “<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>”) is 0 or greater and 1 or less. Then $f$ can be written as a convex combination of polynomials with only 0 and 1 as Bernstein coefficients.<br />Specifically, $g(i)=(1/2)^i$ and $g(0)=0$, and $h_i(\lambda)$ is a polynomial whose Bernstein coefficients are $(b[i][0], b[i][1], …, b[i][n])$, where $b[i][j]$ is 1 if $a[j]$ is 1 or if floor($a[j]\cdot 2^i$) (or the $i$-th binary digit after the point in $a[j]$’s binary expansion) is odd<sup id="fnref:25:2" role="doc-noteref"><a href="#fn:25" class="footnote" rel="footnote">25</a></sup>, or 0 otherwise.</li>
   </ol>
 </blockquote>
+
+<p>letting 0/0 = 0.  See also Mendo (2019)<sup id="fnref:24:1" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup>.
+&gt;
+&gt; 2. <strong>Constants writable as a sum of nonnegative numbers.</strong> A special case of note 1.  Let <em>g</em> be as in note 1 (except <em>T</em> must equal 1), and let $c$ be a constant written as—
+&gt;
+&gt;     \(c=a_1+a_2+a_3+...,\)
+&gt;
+&gt;     where—
+&gt;
+&gt;     - $a_n$ are each 0 or greater and sum to 1 or less, and
+&gt;     - $1 \ge g(n) \ge a_n \ge 0$ for each integer $n\ge 1$.
+&gt;
+&gt;     Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em>−1</sub>/<em>g</em>(<em>X</em>)</strong>, the probability  <em>c</em> can be simulated as the convex combination—
+&gt;
+&gt;     \(f(\lambda)=g(1) \frac{a_1}{g(1)} + g(2) \frac{a_2}{g(2)} + ...,\)
+&gt;
+&gt;    letting 0/0 = 0.
+&gt;
+&gt; <strong>Examples:</strong>
+&gt;
+&gt; 1. Generate <em>X</em>, a Poisson random variate with mean <em>μ</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and the coin for <em>h</em><sub><em>i</em></sub> returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>μ</em>)−1)/(exp(<em>μ</em>)*<em>μ</em>).
+&gt; 2. (Wästlund 1999)<sup id="fnref:9:2" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>: Generate a Poisson random variate <em>X</em> with mean 1, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(−<em>λ</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1−<em>λ</em>)<sup><em>i</em></sup>.
+&gt; 3. Generate <em>X</em>, a Poisson random variate with mean <em>μ</em>, run the <strong>ExpMinus</strong> algorithm with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(−<em>X</em>)], or exp(<em>μ</em>*exp(−1)−<em>μ</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()</code>.
+&gt; 4. A multivariate Bernoulli factory (Huber 2016)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup> of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>λ</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>λ</em><sub>1</sub> + … + <em>C</em><sub><em>m</em>−1</sub>*<em>λ</em><sub><em>m</em>−1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0,  <em>ϵ</em> &gt; 0, and <em>R</em> ≤ 1 − <em>ϵ</em>: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>λ</em><sub><em>i</em></sub>.  This differs from Huber’s suggestion of “thinning” a random process driven by multiple input coins.
+&gt; 5. <strong>Probability generating function</strong> (PGF) (Dughmi et al. 2021)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>. Generates heads with probability <strong>E</strong>[<em>λ</em><sup><em>X</em></sup>], that is, the expected value (“long-run average”) of <em>λ</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>λ</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.
+&gt; 6. Assume <em>X</em> is the number of fair coin flips that show 0 (tails) before the first 1 (heads) is generated.  Then <em>g</em>(<em>n</em>) = $1/(2^{n+1})$.
+&gt; 7. <strong>Poisson to Bernoulli.</strong> Suppose there is a stream of independent Poisson random variates with unknown mean $p$.  Also suppose there is a continuous function $f(p)$ satisfying $0\le f(p)\le 1$ whenever $p\ge 0$.  Then consider the following simple algorithm, which takes an integer $n\gt 0$:
+&gt;
+&gt;     1. Take $n$ variates from the stream and sum them.  Call the sum $X$.  (The result is then a Poisson random variate with mean $n\cdot p$.)
+&gt;     2. With probability $f(X/n)$, return 1.  Otherwise, return 0.
+&gt;
+&gt;     Then this algorithm outputs 1 with probability equal to $\phi(p)$, where $\phi(p)$ is the <em>Szász operator</em> (or <em>Szász–Mirakyan operator</em>) of $f$ of degree $n$ (for example, Szász (1950)<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup>).  Indeed, the Szász operator can be written as a convex combination with $g(i)$ equal to the probability of getting $i$ in step 1 and with $h_X$ equal to $f(X/n)$. The algorithm is the same as in Goyal and Sigman (2012)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, except coin flips with heads probability $\lambda$ are replaced with Poisson variates of mean $p$.
+&gt; 8. <strong>The original Bernoulli factories.</strong>  Keane and O’Brien’s (1994)<sup id="fnref:2:3" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> paper introducing Bernoulli factories showed that any Bernoulli factory function $f(\lambda)$ can be written as a convex combination of polynomials.  In their proof, $g(i) = (1/4)\cdot(3/4)^{i-1}$ (and $g(0)=0$), and each $h_i(\lambda)$ is a polynomial, not necessarily of degree <em>i</em>, whose Bernstein coefficients are each either 0 or 1 (see “<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>”).
+&gt; 9. <strong>Polynomials to zero-and-one polynomials.</strong> Suppose $f(\lambda)$ is a polynomial of degree $n$  and each of its Bernstein coefficients $(a[0], a[1], …, a[n])$ (see “<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>”) is 0 or greater and 1 or less. Then $f$ can be written as a convex combination of polynomials with only 0 and 1 as Bernstein coefficients.<br />Specifically, $g(i)=(1/2)^i$ and $g(0)=0$, and $h_i(\lambda)$ is a polynomial whose Bernstein coefficients are $(b[i][0], b[i][1], …, b[i][n])$, where $b[i][j]$ is 1 if $a[j]$ is 1 or if floor($a[j]\cdot 2^i$) (or the $i$-th binary digit after the point in $a[j]$’s binary expansion) is odd<sup id="fnref:25:2" role="doc-noteref"><a href="#fn:25" class="footnote" rel="footnote">25</a></sup>, or 0 otherwise.</p>
 
 <p>The previous algorithm can be generalized further, so that an input coin that simulates the probability <em>λ</em> helps generate the random integer in step 1.  Now, the overall algorithm returns 1 with probability—</p>
 
@@ -1575,13 +1568,17 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 
 <p>Flajolet et al. (2010)<sup id="fnref:1:4" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> described two schemes for probability simulation, inspired by restricted models of computing.</p>
 
-<p><strong>Certain algebraic functions.</strong> Flajolet et al. (2010)<sup id="fnref:1:5" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> showed a sampling method modeled on <em>pushdown automata</em> (state machines with a stack) that are given flips of a coin with unknown heads probability <em>λ</em>.<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">48</a></sup> These flips form a <em>bitstring</em>, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two “letters”.  If a pushdown automaton terminates, it accepts a bitstring with probability <em>f</em>(<em>λ</em>), where <em>f</em> must be an <em>algebraic function over rationals</em> (a function that can be a solution of a nonzero polynomial equation whose power coefficients are rational numbers) (Mossel and Peres 2005)<sup id="fnref:16:1" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.</p>
+<p><strong>Certain algebraic functions.</strong> Flajolet et al. (2010)<sup id="fnref:1:5" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> showed a sampling method modeled on <em>pushdown automata</em> (state machines with a stack) that are given flips of a coin with unknown heads probability <em>λ</em>.<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">48</a></sup> These flips form a <em>bitstring</em>, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two “letters”.  If a pushdown automaton is able to terminate, it accepts a bitstring with probability <em>f</em>(<em>λ</em>), where <em>f</em> must be an <em>algebraic function over rationals</em> (a function that can be a solution of a nonzero polynomial equation whose power coefficients are rational numbers) (Mossel and Peres 2005)<sup id="fnref:16:1" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.</p>
 
-<p>Specifically, the method simulates the following function (not necessarily algebraic): \(f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),\)
-where the paper uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, so that—</p>
+<p>Specifically, the method simulates the following function (not necessarily algebraic):</p>
 
-<p>\(f(\lambda) = (1-\lambda) OGF(\lambda/\beta),\)
-where:</p>
+\[f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),\]
+
+<p>where the paper uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, so that—</p>
+
+\[f(\lambda) = (1-\lambda) OGF(\lambda/\beta),\]
+
+<p>where:</p>
 
 <ul>
   <li>$W(k)$ returns a number in the interval [0, $\beta^k$].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.</li>
@@ -1620,12 +1617,25 @@ where:</p>
 
       <p>Then step 2 of the algorithm can be done as follows: “2. Run a Bernoulli factory algorithm for <code>Coin</code>(<em>λ</em>), <em>X</em> * <em>α</em> times, and set <em>y</em> to the number of runs that return 1 this way, then return 1 if <em>y</em> equals <em>X</em>, or 0 otherwise.”  If <em>α</em> = 2 and <em>β</em> = 2 (or <code>Coin</code>(<em>λ</em>) = 1/2), then this expresses the <em>square-root construction</em> sqrt(1 − <em>λ</em>), mentioned in the Flajolet et al. paper.  If <em>α</em> is 1, the modified algorithm simulates the following probability: (<em>λ</em>−1)/(<em>λ</em>*<code>Coin</code>(<em>λ</em>)−1).  If <em>α</em>=2, the probability is $(1-\lambda)/\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}$.<br />Interestingly, I have found that if <em>α</em> is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, if <code>Coin</code>(<em>λ</em>) = 1/<em>β</em>, the probability becomes—</p>
 
-      <p>\(f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),\) if <em>β</em> = 2, or more generally—
- \(f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).\)
- The ordinary generating function for this modified algorithm is thus—
- \(OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).\)</p>
+\[f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),\]
     </li>
-    <li>The probability involved in example 2 likewise involves hypergeometric functions: \(f(\lambda)=(1-\lambda)\times_{t-1} F_{t-2}\left(\frac{1}{t},\frac{2}{t},...,\frac{t-1}{t}; \frac{1}{t-1},\frac{2}{t-1},...,\frac{t-2}{t-1}; \lambda^t \frac{t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).\)</li>
+  </ol>
+
+  <p>if <em>β</em> = 2, or more generally—</p>
+
+  <pre>$$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).$$
+
+The ordinary generating function for this modified algorithm is thus&amp;mdash;
+
+$$OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).$$
+</pre>
+
+  <ol>
+    <li>
+      <p>The probability involved in example 2 likewise involves hypergeometric functions:</p>
+
+\[f(\lambda)=(1-\lambda)\times_{t-1} F_{t-2}\left(\frac{1}{t},\frac{2}{t},...,\frac{t-1}{t}; \frac{1}{t-1},\frac{2}{t-1},...,\frac{t-2}{t-1}; \lambda^t \frac{t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).\]
+    </li>
     <li>
       <p>If $W(X)$ is <strong>the number of $X$-letter words with a two-letter alphabet that meet some condition</strong>, where the chance of the letter “heads” is <code>Coin</code>(<em>λ</em>), and <code>Coin</code>(<em>λ</em>) is a Bernoulli factory function (as in example 2), then $h_X(\lambda)$ can be written as—</p>
 
@@ -1646,11 +1656,13 @@ where:</p>
 
 <p>Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 0$, with probability equal to—</p>
 
-<p>\(w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},\)
-where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that—</p>
+\[w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},\]
 
-<p>\(w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},\)
-where:</p>
+<p>where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that—</p>
+
+\[w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},\]
+
+<p>where:</p>
 
 <ul>
   <li>$V(n)$ returns a number in the interval [0, <em>n</em>!].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.</li>

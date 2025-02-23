@@ -1029,12 +1029,16 @@ In addition, the set of integers to choose from can be infinite.  This algorithm
 
 Flajolet et al. (2010\)[^1] described two schemes for probability simulation, inspired by restricted models of computing.
 
-**Certain algebraic functions.** Flajolet et al. (2010\)[^1] showed a sampling method modeled on _pushdown automata_ (state machines with a stack) that are given flips of a coin with unknown heads probability _&lambda;_.[^48] These flips form a _bitstring_, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".  If a pushdown automaton terminates, it accepts a bitstring with probability _f_(_&lambda;_), where _f_ must be an _algebraic function over rationals_ (a function that can be a solution of a nonzero polynomial equation whose power coefficients are rational numbers) (Mossel and Peres 2005\)[^16].
+**Certain algebraic functions.** Flajolet et al. (2010\)[^1] showed a sampling method modeled on _pushdown automata_ (state machines with a stack) that are given flips of a coin with unknown heads probability _&lambda;_.[^48] These flips form a _bitstring_, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".  If a pushdown automaton is able to terminate, it accepts a bitstring with probability _f_(_&lambda;_), where _f_ must be an _algebraic function over rationals_ (a function that can be a solution of a nonzero polynomial equation whose power coefficients are rational numbers) (Mossel and Peres 2005\)[^16].
 
-Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),$$
+Specifically, the method simulates the following function (not necessarily algebraic):
+
+$$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),$$
+
 where the paper uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, so that&mdash;
 
 $$f(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$
+
 where:
 
 - $W(k)$ returns a number in the interval \[0, $\beta^k$\].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.
@@ -1068,12 +1072,19 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 >     Then step 2 of the algorithm can be done as follows: "2. Run a Bernoulli factory algorithm for `Coin`(_&lambda;_), _X_ * _&alpha;_ times, and set _y_ to the number of runs that return 1 this way, then return 1 if _y_ equals _X_, or 0 otherwise."  If _&alpha;_ = 2 and _&beta;_ = 2 (or `Coin`(_&lambda;_) = 1/2), then this expresses the _square-root construction_ sqrt(1 &minus; _&lambda;_), mentioned in the Flajolet et al. paper.  If _&alpha;_ is 1, the modified algorithm simulates the following probability: (_&lambda;_&minus;1)/(_&lambda;_\*`Coin`(_&lambda;_)&minus;1).  If _&alpha;_=2, the probability is $(1-\lambda)/\sqrt{1+4\lambda\mathtt{Coin}(\lambda)(\mathtt{Coin}(\lambda)-1)}$.<br>Interestingly, I have found that if _&alpha;_ is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, if `Coin`(_&lambda;_) = 1/_&beta;_, the probability becomes&mdash;
 >
 >     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),$$
-
-if _&beta;_ = 2, or more generally&mdash;
+>
+> if _&beta;_ = 2, or more generally&mdash;
+>
 >     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).$$
+>
 >     The ordinary generating function for this modified algorithm is thus&mdash;
+>
 >     $$OGF(z) = 1\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; z\frac{\alpha^\alpha (\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha-1}}\right).$$
-> 4.  The probability involved in example 2 likewise involves hypergeometric functions: $$f(\lambda)=(1-\lambda)\times_{t-1} F_{t-2}\left(\frac{1}{t},\frac{2}{t},...,\frac{t-1}{t}; \frac{1}{t-1},\frac{2}{t-1},...,\frac{t-2}{t-1}; \lambda^t \frac{t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).$$
+>
+> 4.  The probability involved in example 2 likewise involves hypergeometric functions:
+>
+>     $$f(\lambda)=(1-\lambda)\times_{t-1} F_{t-2}\left(\frac{1}{t},\frac{2}{t},...,\frac{t-1}{t}; \frac{1}{t-1},\frac{2}{t-1},...,\frac{t-2}{t-1}; \lambda^t \frac{t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).$$
+>
 > 5. If $W(X)$ is **the number of $X$-letter words with a two-letter alphabet that meet some condition**, where the chance of the letter "heads" is `Coin`(_&lambda;_), and `Coin`(_&lambda;_) is a Bernoulli factory function (as in example 2), then $h_X(\lambda)$ can be written as&mdash;
 >
 >     $$\sum_{m=0}^X V(X,m) (\mathtt{Coin}(\lambda))^m (1-\mathtt{Coin}(\lambda))^{X-m},$$
@@ -1089,9 +1100,11 @@ if _&beta;_ = 2, or more generally&mdash;
 Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 0$, with probability equal to&mdash;
 
 $$w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},$$
+
 where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that&mdash;
 
 $$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$
+
 where:
 
 - $V(n)$ returns a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
