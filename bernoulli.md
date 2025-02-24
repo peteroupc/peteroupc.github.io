@@ -927,8 +927,8 @@ Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that retur
 >     Then by **generating _X_ and giving out 0 if _X_ is 0, and otherwise flipping a coin with probability of heads of _w_<sub>_X_</sub>(_&lambda;_)/_g_(_X_)**, the probability _f_(_&lambda;_) can be simulated as the convex combination&mdash;
 >
 >     $$f(\lambda)=(1-T) \frac{0}{1-T} + g(1) \frac{w_1(\lambda)}{g(1)} + g(2) \frac{w_2(\lambda)}{g(2)} + ...,$$
-
-letting 0/0 = 0.  See also Mendo (2019\)[^24].
+>
+> letting 0/0 = 0.  See also Mendo (2019\)[^24].
 >
 > 2. **Constants writable as a sum of nonnegative numbers.** A special case of note 1.  Let _g_ be as in note 1 (except _T_ must equal 1), and let $c$ be a constant written as&mdash;
 >
@@ -1073,7 +1073,7 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 >
 >     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha}{(\alpha-1)^{\alpha-1}2^{\alpha}}\right),$$
 >
-> if _&beta;_ = 2, or more generally&mdash;
+>     if _&beta;_ = 2, or more generally&mdash;
 >
 >     $$f(\lambda)=(1-\lambda)\times_{\alpha-1} F_{\alpha-2} \left(\frac{1}{\alpha},\frac{2}{\alpha},...,\frac{\alpha-1}{\alpha}; \frac{1}{\alpha-1},\frac{2}{\alpha-1},...,\frac{\alpha-2}{\alpha-1}; \lambda\frac{\alpha^\alpha(\beta-1)^{\alpha-1}}{(\alpha-1)^{\alpha-1}\beta^{\alpha}}\right).$$
 >
