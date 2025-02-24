@@ -194,7 +194,11 @@ Now, let $g(\lambda)$ be continuous on the closed interval $[a, b]$.  This secti
 
 Any polynomial $p(\lambda)$ can be written in _Bernstein form on the interval $[a,b]$_ as&mdash;
 
-$$p(\lambda) = \frac{1}{(b-a)^n}\left({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] + {n\choose 1}(\lambda-a)^1 (b-\lambda)^{n-1} a[1] + ... + {n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]\right),$$
+$$p(\lambda) = \frac{1}{(b-a)^n}\left({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] +$$
+
+$${n\choose 1}(\lambda-a)^1 (b-\lambda)^{n-1} a[1] + ... +$$
+
+$${n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]\right),$$
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients for the interval $[a,b]$_ (Bărbosu 2020)[^19].
 
