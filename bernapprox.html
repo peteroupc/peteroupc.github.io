@@ -225,14 +225,14 @@
       <td>$n\ge 4$ must be divisible by 4. See Proposition B10 in appendix.</td>
     </tr>
     <tr>
-      <td>Has Lipschitz continuous derivative.</td>
+      <td>Has Lipschitz-continuous derivative.</td>
       <td>$B_n(f)$.</td>
       <td><em>ε</em> = <em>L</em><sub>1</sub>/(8*<em>n</em>).</td>
       <td><em>n</em> = ceil(<em>L</em><sub>1</sub>/(8*<em>ε</em>)).</td>
       <td>Lorentz (1963)<sup id="fnref:10" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>.<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup></td>
     </tr>
     <tr>
-      <td>Has Hölder continuous derivative.</td>
+      <td>Has Hölder-continuous derivative.</td>
       <td>$B_n(f)$.</td>
       <td><em>ε</em> = <em>H</em><sub>1</sub>/(4*<em>n</em><sup>(1+<em>α</em>)/2</sup>).</td>
       <td><em>n</em> = ceil((<em>H</em><sub>1</sub>/(4*<em>ε</em>))<sup>2/(1+<em>α</em>)</sup>).</td>
@@ -398,7 +398,7 @@
     <li>If the $r$-th derivative of $g$ is Lipschitz continuous with Lipschitz constant $L$ on the interval, where $r\ge 0$, then the $r$-th derivative of $f(x)$ is Lipschitz continuous with Lipschitz constant $L(b-a)^{r+1}$ on the interval $[0, 1]$.</li>
   </ul>
 
-  <p><strong>Example:</strong> Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz-continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz-continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with “Has Lipschitz continuous derivative” in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.</p>
+  <p><strong>Example:</strong> Suppose $g(x)$ is defined on the interval $[1,3]$ and has a Lipschitz-continuous derivative with Lipschitz constant $L$.  Let $f(x)=g(1+(3-1) x)$.  Then $f(x)$ has a Lipschitz-continuous derivative with Lipschitz constant $L(3-1)^{r+1} = L(3-1)^2 = 4L$ (where $r$ is 1 in this case).  Further, the Bernstein polynomial $B_n(f)$ admits the following error bound $\epsilon$ and a degree $n$ that achieves the error tolerance $\epsilon$: $\epsilon=(4L)\cdot 1/(8n)$ and $n=\text{ceil}((4L)\cdot 1/(8\epsilon))$.  (Compare with the row starting with “Has Lipschitz-continuous derivative” in the previous section.)  The error bound carries over to $g(x)$ on the interval $[1, 3]$.</p>
 </blockquote>
 
 <p><a id="Approximating_an_Integral"></a></p>
@@ -916,11 +916,11 @@
 
 <p><strong>Proposition X1</strong>: Let $f(\lambda)$ map the closed unit interval to itself, have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$. Then the derivative’s absolute value is no more than—</p>
 
-\[\max(4m+M/4, 2\sqrt(mM)) \le \max(4+M, 2\sqrt(M)).\]
+\[\max(4m+M/4, 2\sqrt{mM}) \le \max(4+M, 2\sqrt{M}).\]
 
 <p><em>Proof:</em> This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)<sup id="fnref:52" role="doc-noteref"><a href="#fn:52" class="footnote" rel="footnote">52</a></sup>.</p>
 
-<p><strong>Proposition X2</strong>: Let $f(\lambda)$ map the closed unit interval to itself., have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$ (see “Definitions”). Then the derivative’s absolute value is no more than $4m+M/4$ if $m/M\ge 1/16$, or $2\sqrt(mM)$ otherwise.</p>
+<p><strong>Proposition X2</strong>: Let $f(\lambda)$ map the closed unit interval to itself, have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$ (see “Definitions”). Then the derivative’s absolute value is no more than $4m+M/4$ if $m/M\ge 1/16$, or $2\sqrt{mM}$ otherwise.</p>
 
 <p><em>Proof:</em> This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)<sup id="fnref:52:1" role="doc-noteref"><a href="#fn:52" class="footnote" rel="footnote">52</a></sup>.</p>
 
@@ -946,15 +946,15 @@
   <li>$M_5 \le 3840 M_0 + (5/6) L_5$.</li>
 </ul>
 
-<p>Uses a result from Eriksson (1998)<sup id="fnref:53" role="doc-noteref"><a href="#fn:53" class="footnote" rel="footnote">53</a></sup> with $c_n = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with Lipschitz-continuous $(n-1)$-th derivative.</p>
+<p>Uses a result from Eriksson (1998)<sup id="fnref:53" role="doc-noteref"><a href="#fn:53" class="footnote" rel="footnote">53</a></sup> with $c = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with Lipschitz-continuous $(n-1)$-th derivative.</p>
 
 <p><strong>Proposition X4</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous $r$-th derivative for some $r\ge 4$.  Then $MX(f,r-1) \le 4^{r-1} (r!) MX(f,0) + MX(f,r+1)/2.$</p>
 
 <p><em>Proof:</em> See Babenko et al. (1995)<sup id="fnref:54" role="doc-noteref"><a href="#fn:54" class="footnote" rel="footnote">54</a></sup>.</p>
 
-<p><strong>Corollary X4</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fourth derivative.  Then $MX(f,3) \le 1536 MX(f,0) + MX(f,5)/2.</p>
+<p><strong>Corollary X4</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fourth derivative.  Then $MX(f,3) \le 1536 MX(f,0) + MX(f,5)/2$.</p>
 
-<p><strong>Corollary X5</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fifth derivative.  Then $MX(f,4) \le 30720 MX(f,0) + MX(f,6)/2.</p>
+<p><strong>Corollary X5</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fifth derivative.  Then $MX(f,4) \le 30720 MX(f,0) + MX(f,6)/2$.</p>
 
 <p><a id="License"></a></p>
 
@@ -1075,7 +1075,7 @@
       <p>Gonska, H.H., Piţul, P., Raşa, I., “On Peano’s form of the Taylor remainder, Voronovskaja’s theorem and the commutator of positive linear operators”, In Numerical Analysis and Approximation Theory, 2006. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:38" role="doc-endnote">
-      <p>The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz continuous functions, but this feature is not used in this proof. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The result from Gonska et al. actually applies if the $r$-th derivative belongs to a broader class of continuous functions than Lipschitz-continuous functions, but this feature is not used in this proof. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:39" role="doc-endnote">
       <p>Cheng, F., “On the rate of convergence of Bernstein polynomials of functions of bounded variation”, Journal of Approximation Theory 39 (1983). <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

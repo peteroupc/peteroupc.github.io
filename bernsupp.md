@@ -107,7 +107,7 @@ The rest of this section assumes _f_(_&lambda;_) is not a constant.  For example
 
 **Convex functions.** If _f_ is convex, then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 
-**Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
+**Hölder and Lipschitz-continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
 - is [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on the closed unit interval, with Hölder constant _m_ or less and Hölder exponent _&alpha;_ (see "[**Definitions**](#Definitions)" as well as "[**Examples of Well-Behaved Functions**](#Examples_of_Well_Behaved_Functions)", in the appendix), and
 - on the closed unit interval&mdash;
@@ -358,7 +358,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 >      $$f(\lambda)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
 >
 >      for every point $\lambda$ satisfying abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.
-> - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz continuous functions (see "Definitions") and functions with a continuous derivative.
+> - In the _Zygmund class_ if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon>0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two "smaller" classes of Lipschitz-continuous functions (see "Definitions") and functions with a continuous derivative.
 
 <a id=Notes></a>
 
@@ -478,7 +478,7 @@ In the examples given in this section, _f_(_&lambda;_) is a function defined on 
 
 Generally, how well-behaved a function is depends on how many continuous derivatives it has, and whether those derivatives are Lipschitz continuous or Hölder continuous, among other things.  The following lists several classes of functions, from worst to best behaved and from "largest" to "smallest":
 
-Functions continuous except possibly at one point &rarr; Continuous functions &rarr; Hölder continuous functions &rarr; Lipschitz continuous functions &rarr; With continuous first derivative &rarr; With Hölder continuous first derivative &rarr;  With Lipschitz continuous first derivative &rarr; With continuous second derivative &rarr; With infinitely many derivatives &rarr; Analytic functions.
+Functions continuous except possibly at one point &rarr; Continuous functions &rarr; Hölder-continuous functions &rarr; Lipschitz-continuous functions &rarr; With continuous first derivative &rarr; With Hölder continuous first derivative &rarr;  With Lipschitz continuous first derivative &rarr; With continuous second derivative &rarr; With infinitely many derivatives &rarr; Analytic functions.
 
 **Concave and convex functions.**  The following table shows examples of functions that are convex, concave, or neither.  All these functions are continuous.  Also, review the [**definitions**](#Definitions).
 
@@ -491,7 +491,7 @@ Functions continuous except possibly at one point &rarr; Continuous functions &r
 | _&lambda;_<sup>_z_</sup>, where _z_&ge; 1. | Convex. ||
 | exp(&minus;_&lambda;_/4). | Concave. | |
 
-**Hölder and Lipschitz continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
+**Hölder and Lipschitz-continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
 
 | Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_H_)\: | Notes |
  --- | --- | --- |
@@ -505,9 +505,9 @@ Functions continuous except possibly at one point &rarr; Continuous functions &r
 | min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). | _&alpha;_=1.<br>_L_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1&minus;_&epsilon;_ at (1&minus;_&epsilon;_)/_mult_, and 1&minus;_&epsilon;_ at 1.<br>_L_=max(_mult_, 0).<br>Concave. |
 | 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
 
-> **Note:** A Hölder continuous function with Hölder exponent _&alpha;_ and Hölder constant _L_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _L_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
+> **Note:** A Hölder-continuous function with Hölder exponent _&alpha;_ and Hölder constant _L_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _L_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
 
-**Finding parameters _&alpha;_ and _L_ for Hölder continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_L_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
+**Finding parameters _&alpha;_ and _L_ for Hölder-continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_L_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
 
 First, if $f$ has a bounded and continuous first derivative on its domain, then _&alpha;_ is 1 ($f$ is **Lipschitz continuous**) and _L_ is the maximum of the absolute value of that derivative.
 
@@ -515,7 +515,7 @@ Otherwise, consider the function $h(\lambda, c)=\text{abs}(f(\lambda)-f(c))/((\t
 
 The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: `lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))`.
 
-**Functions with a Hölder-continuous or Lipschitz continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the following table, if $f$ has a bounded and continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
+**Functions with a Hölder-continuous or Lipschitz-continuous derivative.** The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function's derivative can be found using the `diff` method.) In the following table, if $f$ has a bounded and continuous _second_ derivative on its domain, then _&alpha;_ is 1 (the first derivative is Lipschitz continuous) and _L_ is the maximum of the absolute value of that _second_ derivative.
 
 | Function $f(\lambda)$ | Derivative's Hölder exponent (_&alpha;_) and an upper bound of the derivative's Hölder constant (_L_): | Notes |
  ---- | ---- | ---- |
@@ -524,9 +524,9 @@ The following example, which uses the SymPy computer algebra library, plots $\ma
 | cosh(_&lambda;_) &minus; 3/4. | _&alpha;_=1 (derivative is Lipschitz continuous).<br>_L_ = cosh(1). | Continuous second derivative, namely cosh(_&lambda;_).  Convex. `cosh` is the hyperbolic cosine function. |
 | $\lambda\cdot\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_L_ = $z(2+z\lambda)/4$. | Continuous second derivative. _L_ is an upper bound of its absolute value. $z>0$. |
 | $\sin(z\lambda)/4+1/2$. | _&alpha;_=1.<br>_L_ = $(z^2)/4$. | Continuous second derivative; _L_ is an upper bound of its absolute value, namely abs($-\sin(z\lambda)\cdot z^2/4$). $z>0$. |
-| _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1. |
-| exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_L_ = 1. | Lipschitz continuous derivative, with Lipschitz constant 1.[^16] |
-| _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_L_=1.| Concave. Lipschitz continuous derivative with Lipschitz constant 2. |
+| _&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise. | _&alpha;_=1.<br>_L_ = 1. | Lipschitz-continuous derivative, with Lipschitz constant 1. |
+| exp(&minus;_&lambda;_). | _&alpha;_=1.<br>_L_ = 1. | Lipschitz-continuous derivative, with Lipschitz constant 1.[^16] |
+| _&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise. |_&alpha;_=1.<br>_L_=1.| Concave. Lipschitz-continuous derivative with Lipschitz constant 2. |
 
 <a id=Results_Used_in_Approximate_Bernoulli_Factories></a>
 
@@ -594,9 +594,9 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 >
 > **Note:** If a polynomial's "power" coefficients can be rational numbers (ratios of two integers), even a degree-2 polynomial can have an arbitrarily high coin-flipping degree.  An example is the family of degree-2 polynomials $r\lambda-r\lambda^2$, where $r$ is a rational number greater than 0 and less than 4.
 
-**Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
+**Lemma:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then $0\le a_0 \le 1$, and the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
 
-_Proof_:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
+_Proof_:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$ and $p(0) = a_0$.  If $p(1)$ or $p(0)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
 
 In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.
 
@@ -626,7 +626,7 @@ In the following results:
 
 **Lemma 1.** Omitted.
 
-Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of _Hölder continuous_ functions (see "[**Definitions**](#Definitions)").
+Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder continuous_ functions (see "[**Definitions**](#Definitions)").
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2\*n, k, n) random variable, and let $n\ge 1$ be an integer._
 
@@ -646,7 +646,7 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions 
 _Proof._
 
 1. _&omega;_ is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2 \* _n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2 \* _n_))] (by the definition of _&omega;_) &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2 \* _n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2 \* _n_&minus;_k_)/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for every integer _n_&ge;4, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).  To prove the fourth bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2 \* _n_))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2 \* _n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt( (_k_/(2\*_n_)) \* (1&minus;_k_/(2\*_n_)) / (2\*_n_&minus;1) )).
-2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
+2. By the definition of Hölder-continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is a concave modulus of continuity on the closed unit interval, the result follows from part 1.
 3. (Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)[^1].) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f'(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f'(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)[^24], so&mdash;
 
      $$E[\text{abs}(f(X/n)-f(k/(2n)))]=\text{abs}(E[f(X/n)-f(k/(2n))-f'(k/(2n))(X/n-k/(2n))])$$
@@ -788,7 +788,7 @@ In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.
 
 The result then follows from Theorem 1. &#x25a1;
 
-> **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+> **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder-continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
 **Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
@@ -800,7 +800,7 @@ _Or:_
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M\*sqrt(2/7)/((sqrt(2)&minus;1)\*sqrt(n))._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M\*sqrt(2/7)/((sqrt(2)&minus;1)\*sqrt(n))._
 
-_Proof._ Because Lipschitz continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, the result follows from Corollary 1. &#x25a1;
+_Proof._ Because Lipschitz-continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, the result follows from Corollary 1. &#x25a1;
 
 > **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
 

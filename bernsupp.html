@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/02/22"><meta name="citation_online_date" content="2025/02/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/02/23"><meta name="citation_online_date" content="2025/02/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -142,7 +142,7 @@
 
 <p><strong>Convex functions.</strong> If <em>f</em> is convex, then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen’s inequality.</p>
 
-<p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>λ</em>)—</p>
+<p><strong>Hölder and Lipschitz-continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>λ</em>)—</p>
 
 <ul>
   <li>is <a href="https://en.wikipedia.org/wiki/Hölder_condition"><strong><em>Hölder continuous</em></strong></a> on the closed unit interval, with Hölder constant <em>m</em> or less and Hölder exponent <em>α</em> (see “<a href="#Definitions"><strong>Definitions</strong></a>” as well as “<a href="#Examples_of_Well_Behaved_Functions"><strong>Examples of Well-Behaved Functions</strong></a>”, in the appendix), and</li>
@@ -547,7 +547,7 @@
       <p>for every point $\lambda$ satisfying abs($\lambda-z$) &lt; $r$, where $f^{(i)}$ is the $i$-th derivative of $f$.</p>
     </li>
     <li>
-      <p>In the <em>Zygmund class</em> if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon&gt;0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two “smaller” classes of Lipschitz continuous functions (see “Definitions”) and functions with a continuous derivative.</p>
+      <p>In the <em>Zygmund class</em> if it is continuous and there is a positive number $D$ with the following property: For each step size $\epsilon&gt;0$, abs($f(x-h) + f(x+h) - 2f(x)$) $\le D\times\epsilon$ wherever the left-hand side is defined and $0\lt h\le\epsilon$. The Zygmund class includes the two “smaller” classes of Lipschitz-continuous functions (see “Definitions”) and functions with a continuous derivative.</p>
     </li>
   </ul>
 </blockquote>
@@ -568,7 +568,7 @@
 
 <p>Generally, how well-behaved a function is depends on how many continuous derivatives it has, and whether those derivatives are Lipschitz continuous or Hölder continuous, among other things.  The following lists several classes of functions, from worst to best behaved and from “largest” to “smallest”:</p>
 
-<p>Functions continuous except possibly at one point → Continuous functions → Hölder continuous functions → Lipschitz continuous functions → With continuous first derivative → With Hölder continuous first derivative →  With Lipschitz continuous first derivative → With continuous second derivative → With infinitely many derivatives → Analytic functions.</p>
+<p>Functions continuous except possibly at one point → Continuous functions → Hölder-continuous functions → Lipschitz-continuous functions → With continuous first derivative → With Hölder continuous first derivative →  With Lipschitz continuous first derivative → With continuous second derivative → With infinitely many derivatives → Analytic functions.</p>
 
 <p><strong>Concave and convex functions.</strong>  The following table shows examples of functions that are convex, concave, or neither.  All these functions are continuous.  Also, review the <a href="#Definitions"><strong>definitions</strong></a>.</p>
 
@@ -614,7 +614,7 @@
   </tbody>
 </table>
 
-<p><strong>Hölder and Lipschitz continuous functions.</strong> The following table shows some functions that are Hölder continuous and some that are not.  Also, review the <a href="#Definitions"><strong>definitions</strong></a>.</p>
+<p><strong>Hölder and Lipschitz-continuous functions.</strong> The following table shows some functions that are Hölder continuous and some that are not.  Also, review the <a href="#Definitions"><strong>definitions</strong></a>.</p>
 
 <table>
   <thead>
@@ -674,10 +674,10 @@
 </table>
 
 <blockquote>
-  <p><strong>Note:</strong> A Hölder continuous function with Hölder exponent <em>α</em> and Hölder constant <em>L</em> is also Hölder continuous with Hölder exponent <em>β</em> and Hölder constant bounded above by <em>L</em>, where 0 &lt; <em>β</em> &lt; <em>α</em>.</p>
+  <p><strong>Note:</strong> A Hölder-continuous function with Hölder exponent <em>α</em> and Hölder constant <em>L</em> is also Hölder continuous with Hölder exponent <em>β</em> and Hölder constant bounded above by <em>L</em>, where 0 &lt; <em>β</em> &lt; <em>α</em>.</p>
 </blockquote>
 
-<p><strong>Finding parameters <em>α</em> and <em>L</em> for Hölder continuous functions.</strong> If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (<em>α</em>) and Hölder constant (<em>L</em>) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.</p>
+<p><strong>Finding parameters <em>α</em> and <em>L</em> for Hölder-continuous functions.</strong> If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (<em>α</em>) and Hölder constant (<em>L</em>) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.</p>
 
 <p>First, if $f$ has a bounded and continuous first derivative on its domain, then <em>α</em> is 1 ($f$ is <strong>Lipschitz continuous</strong>) and <em>L</em> is the maximum of the absolute value of that derivative.</p>
 
@@ -685,7 +685,7 @@
 
 <p>The following example, which uses the SymPy computer algebra library, plots $\max(h(\lambda,0),h(\lambda,1))$ when $f=\sqrt{\lambda(1-\lambda)}$ and $\alpha=1/2$: <code>lamda,c=symbols('lamda c'); func=sqrt(lamda*(1-lamda)); alpha=S(1)/2; h=Abs(func-func.subs(lamda,c))/Abs(lamda-c)**alpha; plot(Max(h.subs(c, 0), h.subs(c,1)), (lamda, 0, 1))</code>.</p>
 
-<p><strong>Functions with a Hölder-continuous or Lipschitz continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function’s derivative can be found using the <code>diff</code> method.) In the following table, if $f$ has a bounded and continuous <em>second</em> derivative on its domain, then <em>α</em> is 1 (the first derivative is Lipschitz continuous) and <em>L</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
+<p><strong>Functions with a Hölder-continuous or Lipschitz-continuous derivative.</strong> The following table shows some functions whose derivatives are Hölder continuous, and others where that is not the case. (In the SymPy library, a function’s derivative can be found using the <code>diff</code> method.) In the following table, if $f$ has a bounded and continuous <em>second</em> derivative on its domain, then <em>α</em> is 1 (the first derivative is Lipschitz continuous) and <em>L</em> is the maximum of the absolute value of that <em>second</em> derivative.</p>
 
 <table>
   <thead>
@@ -724,17 +724,17 @@
     <tr>
       <td><em>λ</em><sup>2</sup>/2 + 1/10 if <em>λ</em> ≤ 1/2; <em>λ</em>/2 − 1/40 otherwise.</td>
       <td><em>α</em>=1.<br /><em>L</em> = 1.</td>
-      <td>Lipschitz continuous derivative, with Lipschitz constant 1.</td>
+      <td>Lipschitz-continuous derivative, with Lipschitz constant 1.</td>
     </tr>
     <tr>
       <td>exp(−<em>λ</em>).</td>
       <td><em>α</em>=1.<br /><em>L</em> = 1.</td>
-      <td>Lipschitz continuous derivative, with Lipschitz constant 1.<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup></td>
+      <td>Lipschitz-continuous derivative, with Lipschitz constant 1.<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup></td>
     </tr>
     <tr>
       <td><em>λ</em>/2 if <em>λ</em> ≤ 1/2; (4*<em>λ</em> − 1)/(8*<em>λ</em>) otherwise.</td>
       <td><em>α</em>=1.<br /><em>L</em>=1.</td>
-      <td>Concave. Lipschitz continuous derivative with Lipschitz constant 2.</td>
+      <td>Concave. Lipschitz-continuous derivative with Lipschitz constant 2.</td>
     </tr>
   </tbody>
 </table>
@@ -821,9 +821,9 @@
   <p><strong>Note:</strong> If a polynomial’s “power” coefficients can be rational numbers (ratios of two integers), even a degree-2 polynomial can have an arbitrarily high coin-flipping degree.  An example is the family of degree-2 polynomials $r\lambda-r\lambda^2$, where $r$ is a rational number greater than 0 and less than 4.</p>
 </blockquote>
 
-<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + … + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then the values $a_0, …, a_n$ must sum to a value that is 0 or greater and 1 or less.</p>
+<p><strong>Lemma:</strong> Let $p(\lambda)=a_0 \lambda^0 + … + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then $0\le a_0 \le 1$, and the values $a_0, …, a_n$ must sum to a value that is 0 or greater and 1 or less.</p>
 
-<p><em>Proof</em>:  This can be seen by evaluating $p(1) = a_0 + … + a_n$.  If $p(1)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. □</p>
+<p><em>Proof</em>:  This can be seen by evaluating $p(1) = a_0 + … + a_n$ and $p(0) = a_0$.  If $p(1)$ or $p(0)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. □</p>
 
 <p>In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + … + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
 
@@ -855,7 +855,7 @@
 
 <p><strong>Lemma 1.</strong> Omitted.</p>
 
-<p>Lemma 6(i) of Nacu and Peres (2005)<sup id="fnref:1:7" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see “<a href="#Definitions"><strong>Definitions</strong></a>”).</p>
+<p>Lemma 6(i) of Nacu and Peres (2005)<sup id="fnref:1:7" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see “<a href="#Definitions"><strong>Definitions</strong></a>”).</p>
 
 <p><strong>Lemma 2.</strong> <em>Let f(λ) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2*n, k, n) random variable, and let $n\ge 1$ be an integer.</em></p>
 
@@ -887,7 +887,7 @@
 
 <ol>
   <li><em>ω</em> is assumed to be nonnegative because absolute values are nonnegative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) − <em>f</em>(<em>k</em>/(2 * <em>n</em>))] ≤ <strong>E</strong>[<em>ω</em>(abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))] (by the definition of <em>ω</em>) ≤ <em>ω</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))]) (by Jensen’s inequality and because <em>ω</em> is concave) ≤ <em>ω</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> − <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>ω</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>ω</em>(sqrt((<em>k</em>*(2 * <em>n</em>−<em>k</em>)/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) ≤ <em>ω</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) = <em>ω</em>(sqrt((1/(8*<em>n</em>−4)))) = <em>ρ</em>, and for every integer <em>n</em>≥4, <em>ρ</em> ≤ <em>ω</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <em>ω</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) ≤ <em>ω</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] − <em>f</em>(<em>k</em>/(2 * <em>n</em>))) ≤ <em>ω</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>−1)*<em>n</em><sup>2</sup>)))) = <em>ω</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1−<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>−1) )).</li>
-  <li>By the definition of Hölder continuous functions, take <em>ω</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>α</em></sup>.  Because <em>ω</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
+  <li>By the definition of Hölder-continuous functions, take <em>ω</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>α</em></sup>.  Because <em>ω</em> is a concave modulus of continuity on the closed unit interval, the result follows from part 1.</li>
   <li>
     <p>(Much of this proof builds on Nacu and Peres 2005, Proposition 6(ii)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.) The expected value (see note 1) of $X$ is $E[X/n]=k/(2n)$. Since $E[X/n-k/(2n)] = 0$, it follows that $f’(X/n) E(X/n-k/(2n)) = 0$.  Moreover, $\text{abs}(f(x)-f(s)-f’(x)(x-s))\le (M/2)(x-s)^2$ (see Micchelli 1973, Theorem 3.2)<sup id="fnref:24" role="doc-noteref"><a href="#fn:24" class="footnote" rel="footnote">24</a></sup>, so—</p>
 
@@ -1064,7 +1064,7 @@
 <p>The result then follows from Theorem 1. □</p>
 
 <blockquote>
-  <p><strong>Note:</strong> For specific values of <em>α</em>, the equation <em>D</em>(<em>n</em>) = <em>D</em>(2 * <em>n</em>) + <em>φ</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>α</em> = 1/2 is the following code in Python that uses the SymPy computer algebra library: <code>alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>α</em> suggested the following formula for Hölder continuous functions with <em>α</em> of 1/<em>j</em> or greater: (<em>M</em>* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>−1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
+  <p><strong>Note:</strong> For specific values of <em>α</em>, the equation <em>D</em>(<em>n</em>) = <em>D</em>(2 * <em>n</em>) + <em>φ</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>α</em> = 1/2 is the following code in Python that uses the SymPy computer algebra library: <code>alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>α</em> suggested the following formula for Hölder-continuous functions with <em>α</em> of 1/<em>j</em> or greater: (<em>M</em>* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>−1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
 </blockquote>
 
 <p><strong>Corollary 2.</strong> <em>Let f(λ) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1:</em></p>
@@ -1081,7 +1081,7 @@
   <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), …, <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + M*sqrt(2/7)/((sqrt(2)−1)*sqrt(n)).</em></li>
 </ul>
 
-<p><em>Proof.</em> Because Lipschitz continuous functions are Hölder continuous with Hölder constant <em>M</em> and exponent 1, the result follows from Corollary 1. □</p>
+<p><em>Proof.</em> Because Lipschitz-continuous functions are Hölder continuous with Hölder constant <em>M</em> and exponent 1, the result follows from Corollary 1. □</p>
 
 <blockquote>
   <p><strong>Note:</strong> The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005)<sup id="fnref:1:16" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
