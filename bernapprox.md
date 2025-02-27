@@ -13,9 +13,9 @@ The goal of these approximations is to avoid introducing transcendental and trig
 >
 >     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or...
 >     2. $f$ may be given as a "black box", but it's possible to find the exact value of $f(\lambda)$ for any $\lambda$ (or at least any rational $\lambda$) in $f$'s domain.  Or...
->     3. Only the values of $f$ at equally spaced points may be known.
+>     3. Only the values of $f$ at a finite number of points (such as equally spaced points) may be known.
 >
->     In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$'s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see "Definitions").  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.
+>     In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$'s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see "Definitions").  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.[^55]
 
 <a id=Contents></a>
 
@@ -434,6 +434,8 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 [^53]: B-O. Eriksson, "Some best constants in the Landau Inequality on a Finite Interval", Journal of Approximation Theory 94 (1998).
 
 [^54]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
+
+[^55]: In case 3 in general, if $f$ is analytic at every point on an interval, the "most stable" approximation occurs when the sample points are clustered at a quadratic rate toward the endpoints. Adcock, B., Platte, R.B., Shadrin, A., "[**Optimal sampling rates for approximating analytic functions from pointwise samples**](https://doi.org/10.1093/imanum/dry024), _IMA Journal of Numerical Analysis_ 39(3), July 2019.
 
 <a id=Appendix></a>
 

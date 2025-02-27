@@ -2436,8 +2436,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^7]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^8]: Weikang Qian, Marc D. Riedel, Ivo Rosenberg, "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_ 32(3), 2011,
-[**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004) [**http://www.sciencedirect.com/science/article/pii/S0195669810001666**](http://www.sciencedirect.com/science/article/pii/S0195669810001666)
+[^8]: Weikang Qian, Marc D. Riedel, Ivo Rosenberg, "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_ 32(3), 2011, [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004) [**http://www.sciencedirect.com/science/article/pii/S0195669810001666**](http://www.sciencedirect.com/science/article/pii/S0195669810001666)
 
 [^9]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
 
@@ -2531,8 +2530,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^54]: Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.
 
-[^55]: Sadowsky, Bucklew, On large deviations theory and asymptotically efficient Monte Carlo
-estimation, IEEE Transactions on Information Theory 36 (1990)
+[^55]: Sadowsky, Bucklew, On large deviations theory and asymptotically efficient Monte Carlo estimation, IEEE Transactions on Information Theory 36 (1990)
 
 [^56]: Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.
 
