@@ -1201,13 +1201,24 @@ namely the following algorithm:
 **Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash;
 
 $$\int_a^b f(\lambda u)\,du,$$
+
 where $0\le a\lt b\le 1$, using the following algorithm:
 
 1. Generate _u_, a uniform random variate between 0 and 1.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1 _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
 
-> **Note**: If _a_ is 0 and _b_ is 1, the function $f(\lambda)$ that can be simulated by this algorithm will be strictly increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
+> **Note**: If _a_ is 0 and _b_ is 1, the function $f(\lambda)$ that can be simulated by algorithm 3 will be strictly increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
+
+**Algorithm 4.** I have also found that it's possible to simulate the following integral, namely&mdash;
+
+$$\int_0^1 f(\lambda u) \text{PDF}(u)\,du,$$
+
+where $\text{PDF}(u)$ is the relative probability that a random variate on the closed unit interval is "close" to _u_ [^76], using the following algorithm:
+
+1. Generate _u_, a uniform PSRN on the closed unit interval, that follows the specified probability distribution. (For example, if $\text{PDF}(u) = 1$, _u_ must be a uniform random variate on the closed unit interval, and if $\text{PDF}(u) = 2-2u$, _u_ must be the smaller of two uniform random variates on that interval.)
+2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
 <a id=Algorithms_for_Specific_Functions_of___lambda></a>
 
@@ -2160,7 +2171,7 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
 2. Do the following process repeatedly, until the algorithm returns a value:
     1. Set _c1_ to 2\*_c1_ plus either 1 or 0 with equal probability.  Then, set _c2_ to 2\*_c2_ plus either 1 or 0 with equal probability.
-    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, do the following.  (Point is inside the quarter disk, whose area is _&pi;_/4.  Now _c1_, the point's x-, is treated as a uniform random variate between _c1_/_S_ and (_c1_+1)/_S_, and the following substeps return 1 with probability equal to that variate.)
+    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, do the following.  (Point is inside the quarter disk, whose area is _&pi;_/4.  Now _c1_, the point's x-coordinate, is treated as a uniform random variate between _c1_/_S_ and (_c1_+1)/_S_, and the following substeps return 1 with probability equal to that variate.)
         1. Generate _z_, a uniform random integer in the interval [0, _S_).  If _z_ is less than _c1_, return 1.  If _z_ is greater than _c1_, return 0.
         2. Generate two numbers that are each 1 or 0 with equal probability.  If the two numbers are different, return the first number.  Otherwise, repeat this substep.
     3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, abort these substeps and go to step 1 ("Set _S_...").  (Point is outside the quarter disk.)
@@ -2571,6 +2582,8 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^74]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.
 
 [^75]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+
+[^76]: Also known as the _probability density function_ for a continuous random variate on the closed unit interval.
 
 <a id=Appendix></a>
 
