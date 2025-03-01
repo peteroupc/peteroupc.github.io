@@ -398,7 +398,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^17]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
 
-[^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative.
+[^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative.  See, for example, Erdélyi, T., and J. Szabados. "On polynomials with positive coefficients." Journal of Approximation Theory 54.1 (1988): 107-122.
 
 [^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001).
 
@@ -465,6 +465,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^50]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^51]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^52]: Beitrag zur Verallgemeinerung des Verzerrungssatzes auf mehrfach zusammenhängende Gebiete I. 1928.
+
+[^53]: Lubinsky, D. S., and Z. Ziegler. "Coefficient bounds in the Lorentz representation of a polynomial." Canadian Mathematical Bulletin 33.2 (1990): 197-206.
 
 <a id=Appendix></a>
 
@@ -604,15 +608,19 @@ In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be
 
 _Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^22].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
 
+**Lemma** (Pólya 1928)[^52]: $\text{abs}(a_n)\le (4^n/2)\cdot\max_\lambda\text{abs}(p(\lambda)).$
+
 **Lemma:**  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial:
 
-$$q(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,$$
+$$q_n(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(2\lambda-1)+1)/2,$$
 
 and where $T_n(x)$ is the [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) of degree $n$.
 
-See _MathOverflow_ for a [**proof of this lemma**](https://mathoverflow.net/questions/449135) by Fedor Petrov.
+This lemma was slightly modified from a statement with a proof by Fedor Petrov [**on _MathOverflow_**](https://mathoverflow.net/questions/449135).
 
-Let $q_n(\lambda)$ be a polynomial described in the previous lemma.  When $q_n$ is rewritten to Bernstein form of degree $n$, define the _offshoot_ as how far away $q_n$'s Bernstein coefficients can be from the closed unit interval; this is believed to be the highest offshoot possible that a degree-$n$ $p(\lambda)$ can be.  The offshoot is $\max(\max(-b_0, b_0-1,0), ..., \max(-b_n, b_n-1,0))$.  (For example, $q_3$ has Bernstein coefficients $[1, -2, 3, 0]$ and an offshoot of 2, because the coefficient 3 is 2 away from the closed unit interval.) The following list shows the offshoot for degrees from 2 through 12:
+**Lemma:** When $p_n$ is written in Bernstein form with coefficients $\beta_1, \beta_2, ..., \beta_n$, then $\text{abs}(2\beta_i-1)\le \text{abs}(d_i)$, where $d_i$ is the corresponding Bernstein coefficient of the polynomial $T_n(2\lambda-1)$.
+
+The proof follows from Theorem 3 of Lubinsky and Ziegler (1990)[^53].  As a result, the polynomials $q_n(\lambda)$ exhibit the highest _offshoot_ possible that a degree-$n$ polynomial can have.  The _offshoot_ is the farthest away a polynomial's Bernstein coefficients ($\beta_0, ..., beta_n$) are from the closed unit interval, calculated as $\max(\max(-\beta_0, \beta_0-1,0), ..., \max(-\beta_n, \beta_n-1,0))$.  (For example, $q_3$ has Bernstein coefficients $[1, -2, 3, 0]$ and an offshoot of 2, because the coefficient 3 is 2 away from the closed unit interval.) The following table shows the offshoot for degrees from 2 through 12:
 
 | Degree | Offshoot |
   - | ---- |
@@ -628,7 +636,7 @@ Let $q_n(\lambda)$ be a polynomial described in the previous lemma.  When $q_n$ 
 | 11 | 2098/3 < 699.334 |
 | 12 | 48272/33 < 1462.788 |
 
-It seems that this offshoot approaches $c\cdot 2^n$ as $n$ increases, where $c$ is a number that approaches about $0.353$.  Stated differently, the offshoot seems to grow like $O(2^n)$, at an exponential rate in the degree of the polynomial.
+It seems that this offshoot approaches $c\cdot 2^n$ as $n$ increases, where $c$ is a number that approaches about 0.353.  Stated differently, the offshoot seems to grow like $O(2^n)$, at an exponential rate in the degree of the polynomial.
 
 <a id=Proofs_for_Polynomial_Building_Schemes></a>
 
