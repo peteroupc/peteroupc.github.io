@@ -879,7 +879,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^78]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
-[^79]: A Lipschitz continuous function, with Lipschitz constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function's slope is no "steeper" than that of _L_\*_x_.
+[^79]: A Lipschitz-continuous function, with Lipschitz constant _L_, is a continuous function such that _f_(_x_) and _f_(_y_) are no more than _L_\*_&epsilon;_ apart whenever _x_ and _y_ are points in the domain that are no more than _&epsilon;_ apart.  Roughly speaking, the function's slope is no "steeper" than that of _L_\*_x_.
 
 [^80]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 

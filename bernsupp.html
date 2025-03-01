@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/02/23"><meta name="citation_online_date" content="2025/02/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/01"><meta name="citation_online_date" content="2025/03/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -838,6 +838,65 @@
 <p>and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.</p>
 
 <p>See <em>MathOverflow</em> for a <a href="https://mathoverflow.net/questions/449135"><strong>proof of this lemma</strong></a> by Fedor Petrov.</p>
+
+<p>Let $q_n(\lambda)$ be a polynomial described in the previous lemma.  When $q_n$ is rewritten to Bernstein form of degree $n$, define the <em>offshoot</em> as how far away $q_n$’s Bernstein coefficients can be from the closed unit interval; this is believed to be the highest offshoot possible that a degree-$n$ $p(\lambda)$ can be.  The offshoot is $\max(\max(-b_0, b_0-1,0), …, \max(-b_n, b_n-1,0))$.  (For example, $q_3$ has Bernstein coefficients $[1, -2, 3, 0]$ and an offshoot of 2, because the coefficient 3 is 2 away from the closed unit interval.) The following list shows the offshoot for degrees from 2 through 12:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Degree</th>
+      <th>Offshoot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>16/3 &lt; 5.334</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>113/5 = 22.6</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>212/5 = 42.4</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>640/7 &lt; 94.429</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>1212/7 &lt; 173.143</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>23063/63 &lt; 366.08</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>2098/3 &lt; 699.334</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>48272/33 &lt; 1462.788</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>It seems that this offshoot approaches $c\cdot 2^n$ as $n$ increases, where $c$ is a number that approaches about $0.353$.  Stated differently, the offshoot seems to grow like $O(2^n)$, at an exponential rate in the degree of the polynomial.</p>
 
 <p><a id="Proofs_for_Polynomial_Building_Schemes"></a></p>
 

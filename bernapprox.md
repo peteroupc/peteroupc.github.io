@@ -473,9 +473,9 @@ $$g_n(x)=a_0 x^0 + ... + a_n x^n,$$
 
 and have the same domain as $f$.  Then for every $n\ge 1$, $g_n(x)$ is within $\epsilon$ of $f(x)$, where $\epsilon = f(1) - g_n(1)$.
 
-_Proof:_ $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative values for $a_0, ..., a_n$, so by Lemma A1, it has a maximum at 1.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at 1, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;
+_Proof:_ $g_n$, consisting of the first $n+1$ terms of $f$, is a power series with nonnegative values for $a_0, ..., a_n$, so by Lemma A1, it has a maximum at $x=1$.  The same is true for $f-g_n$, consisting of the remaining terms of $f$.  Since the latter has a maximum at $x=1$, the maximum error is $\epsilon = f(1)-g_n(1)$. &#x25a1;
 
-For a function $f$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$'s error behavior is described at the point 1, so the algorithms given in Carvalho and Moreira (2022)[^19] &mdash; which apply to infinite sums &mdash; can be used to "cut off" $f$ at a certain number of terms and do so with a controlled error.
+For a function $f(x)$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0 + a_1+...$, and $f$'s error behavior is described at $x=1$, so the algorithms given in Carvalho and Moreira (2022)[^19] &mdash; which apply to infinite sums &mdash; can be used to "cut off" $f$ at a certain number of terms and do so with a controlled error.
 
 **Proposition B1**: Let $f(\lambda)$ map the closed unit interval to itself and be continuous and concave.  Then $W_{n,2}$ and $W_{n,3}$ (as defined in "For Certain Functions") are nonnegative on the closed unit interval.
 

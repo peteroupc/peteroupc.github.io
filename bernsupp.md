@@ -612,6 +612,24 @@ and where $T_n(x)$ is the [**Chebyshev polynomial of the first kind**](https://m
 
 See _MathOverflow_ for a [**proof of this lemma**](https://mathoverflow.net/questions/449135) by Fedor Petrov.
 
+Let $q_n(\lambda)$ be a polynomial described in the previous lemma.  When $q_n$ is rewritten to Bernstein form of degree $n$, define the _offshoot_ as how far away $q_n$'s Bernstein coefficients can be from the closed unit interval; this is believed to be the highest offshoot possible that a degree-$n$ $p(\lambda)$ can be.  The offshoot is $\max(\max(-b_0, b_0-1,0), ..., \max(-b_n, b_n-1,0))$.  (For example, $q_3$ has Bernstein coefficients $[1, -2, 3, 0]$ and an offshoot of 2, because the coefficient 3 is 2 away from the closed unit interval.) The following list shows the offshoot for degrees from 2 through 12:
+
+| Degree | Offshoot |
+  - | ---- |
+| 2 | 1 |
+| 3 | 2 |
+| 4 | 16/3 < 5.334 |
+| 5 | 10 |
+| 6 | 113/5 = 22.6 |
+| 7 | 212/5 = 42.4 |
+| 8 | 640/7 < 94.429 |
+| 9 | 1212/7 < 173.143 |
+| 10 | 23063/63 < 366.08 |
+| 11 | 2098/3 < 699.334 |
+| 12 | 48272/33 < 1462.788 |
+
+It seems that this offshoot approaches $c\cdot 2^n$ as $n$ increases, where $c$ is a number that approaches about $0.353$.  Stated differently, the offshoot seems to grow like $O(2^n)$, at an exponential rate in the degree of the polynomial.
+
 <a id=Proofs_for_Polynomial_Building_Schemes></a>
 
 ### Proofs for Polynomial-Building Schemes
