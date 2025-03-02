@@ -301,7 +301,7 @@ Consider the class of rational functions $p(\lambda)/q(\lambda)$ that map the cl
 In addition, rational functions are not much better than polynomials in approximating $f(\lambda)$ when&mdash;
 
 - $f$ has only a finite number of continuous derivatives on the half-open interval (0, 1], _and_
-- the rational function has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^30].
+- the rational function's denominator has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^30].
 
 <a id=Request_for_Additional_Methods></a>
 
