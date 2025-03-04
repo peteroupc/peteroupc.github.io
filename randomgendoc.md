@@ -1693,6 +1693,7 @@ CLASSES
     builtins.object
         Bernoulli
         DiceEnterprise
+        PolynomialSim
 
     class Bernoulli(builtins.object)
      |  This class contains methods that generate Bernoulli random numbers,
@@ -2124,6 +2125,50 @@ CLASSES
      |
      |  __weakref__
      |      list of weak references to the object
+
+    class PolynomialSim(builtins.object)
+     |  PolynomialSim(bern, powerCoeffs, coin1)
+     |
+     |  Bernoulli factory for a polynomial expressed in power coefficients.
+     |  powerCoeffs[0] is the coefficient of order 0; powerCoeffs[1], of order 1, etc.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, bern, powerCoeffs, coin1)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  simulate(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+
+FUNCTIONS
+    berncofrompower(coeffs)
+
+    berncomatrix(deg)
+
+    bernsteinDiff(coeffs, diff=1)
+
+    bernsubdivide(coeffs, t)
+
+    chebyshevtcoeffs(n)
+
+    findLowerBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024))
+
+    findRoots(bvalcoeffs, bdiffcoeffs, a, b, tol=Fraction(1, 1024), depth=0)
+
+    findUpperBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024), depth=0)
+
+    matmult(mat, vec)
+
+DATA
+    BERNCOMATRIX = {}
 
 FILE
     /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py

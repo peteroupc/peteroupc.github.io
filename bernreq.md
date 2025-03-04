@@ -100,7 +100,9 @@ whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\g
 
 Equivalently (see also Nacu and Peres (2005)[^4]), there is $C_1>0$ such that the inequality $(PB)$ (see later) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", later).
 
-My goal is to see not just whether this conjecture is true, but also which value of $C_0$ (or $C_1$) suffices for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", earlier.
+$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$.
+
+My goal is to see not just whether this conjecture is true, but also which values of $C_0$ (or $C_1$) suffice for the conjecture, especially for any combination of the special cases mentioned at the end of "[**Main Question**](#Main_Question)", earlier.
 
 <a id=Strategies></a>
 

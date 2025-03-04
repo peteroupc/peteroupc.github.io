@@ -1331,6 +1331,237 @@ class _FastLoadedDiceRoller:
                 x -= leaves
                 y += 1
 
+BERNCOMATRIX = {}
+
+def berncomatrix(deg):
+    if deg in BERNCOMATRIX:
+        return BERNCOMATRIX[deg]
+    n = deg + 1
+    if n < 0:
+        raise ValueError
+    # Build power-to-Bernstein basis matrix
+    mat = [[0 for _ in range(n)] for _ in range(n)]
+    factorials = [math.factorial(i) for i in range(n)]
+    for j in range(n):
+        for k in range(n):
+            if k == 0 or j == n - 1:
+                mat[j][k] = Fraction(1)
+            elif k <= j:
+                binnum = Fraction(factorials[j], factorials[j - k] * factorials[k])
+                binden = Fraction(
+                    factorials[n - 1], factorials[k] * factorials[n - 1 - k]
+                )
+                mat[j][k] = Fraction(binnum, binden)
+            else:
+                mat[j][k] = Fraction(0)
+    BERNCOMATRIX[deg] = mat
+    return mat
+
+def bernsteinDiff(coeffs, diff=1):
+    # Gets the Bernstein coefficients of the 'diff'-th derivative of
+    # a polynomial given its Bernstein coefficients.
+    # The coefficients are ordered 0th order, 1st order, and
+    # so on.
+    if len(coeffs) == 0:
+        raise ValueError("no coeffs")
+    if diff < 0:
+        raise ValueError("invalid value for diff (diff<0)")
+    if diff == 0:
+        return coeffs
+    n = len(coeffs) - 1
+    if diff > n:
+        return [0]
+    for i in range(diff):
+        coeffs = [(coeffs[i + 1] - coeffs[i]) * n for i in range(n)]
+        n -= 1
+    return coeffs
+
+def matmult(mat, vec):
+    # Multiply a matrix by a column vector
+    return [sum(r[i] * vec[i] for i in range(len(vec))) for r in mat]
+
+def bernsubdivide(coeffs, t):
+    t = Fraction(t)
+    co = [x for x in coeffs]
+    left = [0 for x in coeffs]
+    right = [0 for x in coeffs]
+    clen = len(co)
+    left[0] = co[0]
+    right[clen - 1] = co[clen - 1]
+    for i in range(1, clen):
+        for j in range(0, clen - i):
+            co[j] = co[j + 1] * t + co[j] * (1 - t)
+        left[i] = co[0]
+        right[clen - i - 1] = co[clen - i - 1]
+    return (left, right)
+
+def berncofrompower(coeffs):
+    if len(coeffs) == 0:
+        return [0]
+    if max(coeffs) == 0 and min(coeffs) == 0:
+        return [0] * len(coeffs)
+    degree = max(i for i in range(len(coeffs)) if coeffs[i] != 0)
+    n = degree + 1
+    # Build coefficient vector
+    coeffs = [Fraction(v) for v in coeffs[0:n]]
+    mat = berncomatrix(n - 1)
+    # Get the Bernstein control points
+    return matmult(mat, coeffs)
+
+def chebyshevtcoeffs(n):
+    # Recurrence relation found in Rivlin, 1995, "Chebyshev Polynomials".
+    if n < 0:
+        raise ValueError
+    if n == 0:
+        return [1]
+    if n == 1:
+        return [0, 1]
+    if n == 2:
+        return [-1, 0, 2]
+    if n == 3:
+        return [0, -3, 0, 4]
+    n1 = chebyshevtcoeffs(n - 1)
+    n2 = chebyshevtcoeffs(n - 2)
+    ret = [
+        (0 if i == 0 else 2 * n1[i - 1]) - (0 if i > n - 2 else n2[i])
+        for i in range(n + 1)
+    ]
+    return ret
+
+def findRoots(bvalcoeffs, bdiffcoeffs, a, b, tol=Fraction(1, 1024), depth=0):
+    mn = min(bdiffcoeffs)
+    mx = max(bdiffcoeffs)
+    vmn = min(bvalcoeffs)
+    vmx = max(bvalcoeffs)
+    lastNonzero = 0
+    signChanges = 0
+    roots = []
+    if mx < 0 or mn > 0:
+        return roots
+    # Exact roots
+    if bdiffcoeffs[0] == 0:
+        roots.append([a, a, bvalcoeffs[0]])
+    if bdiffcoeffs[len(bdiffcoeffs) - 1] == 0:
+        roots.append([b, b, bvalcoeffs[len(bvalcoeffs) - 1]])
+    for bc in bdiffcoeffs:
+        if bc != 0:  # Disregard zeros among coefficients
+            if lastNonzero != 0 and (lastNonzero < 0) != (bc < 0):
+                signChanges += 1
+                if signChanges > 1:
+                    break
+            lastNonzero = bc
+    if signChanges == 0:
+        # No sign changes
+        return roots
+    elif signChanges == 1 and len(roots) == 0:
+        # Potential root found
+        if vmx - vmn < tol:
+            return [[a, b, [x for x in bvalcoeffs]]]
+    mid = Fraction(a + b) / 2
+    valsubd = bernsubdivide(bvalcoeffs, Fraction(1, 2))
+    diffsubd = bernsubdivide(bdiffcoeffs, Fraction(1, 2))
+    return (
+        roots
+        + findRoots(valsubd[0], diffsubd[0], a, mid)
+        + findRoots(valsubd[1], diffsubd[1], mid, b)
+    )
+
+def findLowerBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024)):
+    ub = findUpperBound([Fraction(1) - x for x in berncoeffs], a=a, b=b, tol=tol)
+    return 1 - ub
+
+def findUpperBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024), depth=0):
+    mn = min(berncoeffs)
+    mx = max(berncoeffs)
+    if mn == mx:
+        # Constant
+        return mx
+    if mn > 0 and mx < 1:
+        return mx
+    bdiff = bernsteinDiff(berncoeffs)
+    roots = findRoots(berncoeffs, bdiff, a, b, tol=tol)
+    if len(roots) == 0:
+        return mx
+    # Add endpoints
+    best = max(berncoeffs[0], berncoeffs[len(berncoeffs) - 1])
+    for r in roots:
+        if r[0] == r[1]:
+            # Exact root
+            best = max(best, r[2])
+        else:
+            # Inexact root
+            mx = max(r[2])
+            mn = min(r[2])
+            if mn < 1 and mx > 1 and best <= 1 and depth < 10:
+                # Increase tolerance to determine whether upper bound
+                # is less than 1 or greater than 1, or give up if depth is
+                # 10 or greater
+                mx = findUpperBound(
+                    r[2], r[0], r[1], tol=Fraction(tol) / 16, depth=depth + 1
+                )
+            best = max(best, mx)
+    return best
+
+class PolynomialSim:
+    """
+    Bernoulli factory for a polynomial expressed in power coefficients.
+    powerCoeffs[0] is the coefficient of order 0; powerCoeffs[1], of order 1, etc.
+    """
+
+    def __init__(self, bern, powerCoeffs, coin1):
+        self.bern = bern
+        self.coin1 = coin1
+        if len(powerCoeffs) == 0:
+            raise ValueError
+        coeffs = powerCoeffs
+        if sum(coeffs) < 0 or sum(coeffs) > 1 or coeffs[0] < 0 or coeffs[0] > 1:
+            # Polynomial at 1 is greater than 0 or less than 1,
+            # or order-0 coefficient is so
+            raise ValueError
+        # Convert to Bernstein coefficients
+        bco = berncofrompower(coeffs)
+        zeroOne = (bco[0] == 1 and bco[len(bco) - 1] == 0) or (
+            bco[0] == 0 and bco[len(bco) - 1] == 1
+        )
+        if findLowerBound(bco, 0, 1) < 0:
+            raise ValueError
+        ubound = findUpperBound(bco, 0, 1)
+        if zeroOne and ubound > 1:
+            raise ValueError
+        # Ensure all coefficients are nonnegative
+        while min(bco) < 0 and ((not zeroOne) or max(bco) > 0):
+            bco = elevate1(bco)
+        bco = [Fraction(c.p, c.q) for c in bco]
+        bcomax = max(bco)
+        self.bcomax = bcomax
+        self.bco = bco
+        # Build coin
+        if bcomax > 1:
+            # Ensure all coefficients are no more than 1
+            eps = Fraction(1) - ubound
+            if eps <= 0:
+                # maximum is 1 or greater
+                raise ValueError
+            self.bco = [c / bcomax for c in bco]
+            self.newcoin = lambda: self.bern._uniform_less(
+                [], self.bco[sum(self.coin1() for i in range(len(self.bco) - 1))]
+            )
+            self.eps = eps
+
+    def simulate(self):
+        if self.bcomax > 1:
+            # Run linear Bernoulli factory
+            return self.bern.old_linear(
+                self.newcoin,
+                self.bcomax.numerator,
+                self.bcomax.denominator,
+                eps=self.eps,
+            )
+        else:
+            return self.bern._uniform_less(
+                [], self.bco[sum(self.coin1() for i in range(len(self.bco) - 1))]
+            )
+
 class DiceEnterprise:
     """
     Implements the Dice Enterprise algorithm for
