@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/03"><meta name="citation_online_date" content="2025/03/03"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/05"><meta name="citation_online_date" content="2025/03/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1218,6 +1218,30 @@
 <p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, $g_{2n}$’s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have nonnegative Bernstein coefficients as required by the property.</p>
 
 <p>It is also true that $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property for every $x\ge 0$, and $g_{2n}+y$ and $g_n+y$ do so for every real number $y$, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, $g_n+x=g_n$, and $g_{2n}+x=g_{2n}$, so that the property is trivially satisfied.)</p>
+
+<p><strong>Proposition:</strong> The sequence $c/2^n$ is bounded from above by the sequence $p(1-p)^n$ (where $n\ge 0$ is an integer) when $c$ is 0.4 and $p$ is 0.49.</p>
+
+<blockquote>
+  <p><strong>Note:</strong> The two sequences are examples of <em>geometric sequences</em>.</p>
+</blockquote>
+
+<p><em>Proof:</em> This proof relies on finding the values of $p$ that satisfy the following inequality:</p>
+
+\[C/2^{(n+b)r}\le p(1-p)^n, \tag{ineq}\]
+
+<p>where $n&gt;0$ and $b&gt;0$ are integers, and $c&gt;0$ and $r&gt;0$ are real numbers. Taking the logarithm of both sides, rewrite them to:</p>
+
+\[\ln{c}+\ln{1/2}((n+b)r)\le\ln{p}+\ln{1-p}n.\]
+
+<p>Now observe that both functions are linear in $n$.  Now consider—</p>
+
+\[g(n,p) = \ln{c}+\ln{1/2}((n+b)r)-\ln{p}-\ln{1-p}n.\]
+
+<p>Proving the statement thus boils down to finding out the areas where $h(p)$, the function that solves the equation $g(n,p)=0$ for $n$, is 0 or less.  $h(p)$ is:</p>
+
+\[h(p)=\frac{-b r \ln{2} + \ln{c} - \ln{p}}{r\ln{2} + \ln{1-p}}.\]
+
+<p>All values of $p$ for which $-\infty\lt h(p)\le 0$ will satisfy (ineq).  Given $b=0$, $r=1$, $c=0.4$, and $p=0.49$, $h(p)$ is less than 0, which completes the proof.</p>
 
 <p><a id="A_Conjecture_on_Polynomial_Approximation"></a></p>
 

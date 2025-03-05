@@ -891,6 +891,28 @@ The proof follows from two well-known properties of polynomials in Bernstein for
 
 It is also true that $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property for every $x\ge 0$, and $g_{2n}+y$ and $g_n+y$ do so for every real number $y$, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, $g_n+x=g_n$, and $g_{2n}+x=g_{2n}$, so that the property is trivially satisfied.)
 
+**Proposition:** The sequence $c/2^n$ is bounded from above by the sequence $p(1-p)^n$ (where $n\ge 0$ is an integer) when $c$ is 0.4 and $p$ is 0.49.
+
+> **Note:** The two sequences are examples of _geometric sequences_.
+
+_Proof:_ This proof relies on finding the values of $p$ that satisfy the following inequality:
+
+$$C/2^{(n+b)r}\le p(1-p)^n, \tag{ineq}$$
+
+where $n>0$ and $b>0$ are integers, and $c>0$ and $r>0$ are real numbers. Taking the logarithm of both sides, rewrite them to:
+
+$$\ln{c}+\ln{1/2}((n+b)r)\le\ln{p}+\ln{1-p}n.$$
+
+Now observe that both functions are linear in $n$.  Now consider&mdash;
+
+$$g(n,p) = \ln{c}+\ln{1/2}((n+b)r)-\ln{p}-\ln{1-p}n.$$
+
+Proving the statement thus boils down to finding out the areas where $h(p)$, the function that solves the equation $g(n,p)=0$ for $n$, is 0 or less.  $h(p)$ is:
+
+$$h(p)=\frac{-b r \ln{2} + \ln{c} - \ln{p}}{r\ln{2} + \ln{1-p}}.$$
+
+All values of $p$ for which $-\infty\lt h(p)\le 0$ will satisfy (ineq).  Given $b=0$, $r=1$, $c=0.4$, and $p=0.49$, $h(p)$ is less than 0, which completes the proof.
+
 <a id=A_Conjecture_on_Polynomial_Approximation></a>
 
 #### A Conjecture on Polynomial Approximation
