@@ -437,6 +437,8 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 
 [^55]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
 
+[^56]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -625,13 +627,15 @@ $$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \fra
 
 _Proof_: Follows from Lorentz (1963)[^11] and the well-known fact that $M_2$ is an upper bound of $f$'s first derivative's (minimal) Lipschitz constant. &#x25a1;
 
-In the following propositions, $f^{(r)}$ means the $r$-th derivative of the function $f$ and $\max(\text{abs}(f))$ means the maximum of the absolute value of the function $f$.
+In the following propositions:
 
-**Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_2$ or less.  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
+- $f^{(r)}$ means the $r$-th derivative of the function $f$
+- $M_k = \max(\text{abs}(f))$ means a value equal to or greater than the maximum of the absolute value of the function $f$.
+- $H_k$ means a value equal to or greater than the Hölder constant of the $k$-th derivative of the function $f$.
 
-$$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2},$$
+**Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
-where $M_2$ is the maximum of that second derivative's absolute value or greater.
+$$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.$$
 
 _Proof_: This proof is inspired by a result in Draganov (2014, Theorem 4.1)[^46].
 
@@ -655,9 +659,9 @@ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{3
 
 **Proposition B10D:** Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
-$$\text{abs}(f-U_{n,2}(f))\le \frac{\max(\text{abs}(f^{(2)}))+\max(\text{abs}(f^{(3)}))}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
+$$\text{abs}(f-U_{n,2}(f))\le \frac{M_2+M_3}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
 
-$$\le \frac{9H_3+8\max(\text{abs}(f^{(2)}))+8\max(\text{abs}(f^{(3)}))}{64n^{(3+\alpha)/2}}.$$
+$$\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$
 
 _Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^47], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:
 
@@ -665,7 +669,7 @@ $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+
 
 $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
 
-where $r=2$, $M_2 = \max(\text{abs}(f^{(2)}))$, and $M_3=\max(\text{abs}(f^{(3)}))$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^48].  Therefore&mdash;
+where $r=2$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^48].  Therefore&mdash;
 
 $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right)$$
 
@@ -673,7 +677,16 @@ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2
 
 &#x25a1;
 
-In a similar way, it's possible to prove an error bound for $U_{n,3}$ that applies to functions with a Hölder-continuous fourth or fifth derivative, by expressing the error bound as $\text{abs}((B_n(f)-f)((B_n(f)-f)(B_n(f)-f)))$ and replacing the values for $M_2$, $M_3$, and $H_3$ in the bound proved at the end of Proposition B10D with upper bounds for $\text{abs}((B_n(f))^{(2)}-f^{(2)})$, $\text{abs}((B_n(f))^{(3)}-f^{(3)})$, and $\text{abs}((B_n(f))^{(4)}-f^{(4)})$, respectively.
+The following error bounds follow from results of Sevy (1991)[^56], especially theorems 3.1 and 3.7 there:
+
+| If _f_(_&lambda;_): |  Then the following polynomial: |  Is close to _f_ with the following error bound: |
+ --- | - | --- |
+| Has continuous second derivative. | $U_{n,2}.$ | $\frac{25M_2}{16n}$. |
+| Has continuous second derivative. | $U_{n,2}.$ | $\frac{5M_2}{4\cdot n}$. |
+| Has continuous third derivative. | $U_{n,3}.$ | $\frac{25M_2}{16\cdot n^2}$ + $\frac{125M_3}{64n^{3/2}}$. |
+| Has continuous third derivative. | $U_{n,3}.$ | $\frac{5M_2}{4\cdot n^{3/2}}$ + $\frac{25M_3}{16n^{2}}$. |
+| Has continuous fourth derivative. | $U_{n,2}.$ | $\frac{195 m_{2}}{32 n^{2}}$ + $ \frac{45 m_{2}}{8 n^{\frac{5}{2}}}$ + $\frac{377 m_{4}}{128 n^{2}}$ + $\frac{9 m_{4}}{8 n^{3}}$ + $\frac{63 m_{4}}{16 n^{\frac{5}{2}}}$. |
+| Has continuous sixth derivative. | $U_{n,3}.$ | $\frac{8775 m_{2}}{32 n^{3}}$ + $\frac{2025 m_{2}}{8 n^{\frac{7}{2}}}$ + $\frac{21489 m_{4}}{128 n^{3}}$ + $\frac{513 m_{4}}{8 n^{4}}$ + $\frac{3591 m_{4}}{16 n^{\frac{7}{2}}}$ + $\frac{16965 m_{6}}{512 n^{3}}$ + $\frac{783 m_{6}}{32 n^{4}}$ + $\frac{6801 m_{6}}{128 n^{\frac{7}{2}}}$ + $\frac{27 m_{6}}{8 n^{\frac{9}{2}}}$. |
 
 <a id=Chebyshev_Interpolants></a>
 

@@ -897,21 +897,21 @@ It is also true that $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property 
 
 _Proof:_ This proof relies on finding the values of $p$ that satisfy the following inequality:
 
-$$C/2^{(n+b)r}\le p(1-p)^n, \tag{ineq}$$
+$$c/2^{(n+b)r}\le p(1-p)^n, \tag{ineq}$$
 
-where $n>0$ and $b>0$ are integers, and $c>0$ and $r>0$ are real numbers. Taking the logarithm of both sides, rewrite them to:
+where $n>0$ and $b>0$ are integers, and $c>0$ and $r>0$ are real numbers. Taking the logarithm of both sides, rewrite them to&mdash;
 
-$$\ln{c}+\ln{1/2}((n+b)r)\le\ln{p}+\ln{1-p}n.$$
+$$\ln{c}+\ln(\frac{1}{2})((n+b)r)\le\ln{p}+\ln(1-p)n.$$
 
 Now observe that both functions are linear in $n$.  Now consider&mdash;
 
-$$g(n,p) = \ln{c}+\ln{1/2}((n+b)r)-\ln{p}-\ln{1-p}n.$$
+$$g(n,p) = \ln{c}+\ln(\frac{1}{2})((n+b)r)-\ln{p}-\ln(1-p)n.$$
 
-Proving the statement thus boils down to finding out the areas where $h(p)$, the function that solves the equation $g(n,p)=0$ for $n$, is 0 or less.  $h(p)$ is:
+Proving the statement thus boils down to finding out the areas where $h(p)$, the function that solves the equation $g(n,p)=0$ for $n$, is 0 or less.  $h(p)$ is&mdash;
 
-$$h(p)=\frac{-b r \ln{2} + \ln{c} - \ln{p}}{r\ln{2} + \ln{1-p}}.$$
+$$h(p)=\frac{-b r \ln{2} + \ln{c} - \ln{p}}{r\ln{2} + \ln(1-p)}.$$
 
-All values of $p$ for which $-\infty\lt h(p)\le 0$ will satisfy (ineq).  Given $b=0$, $r=1$, $c=0.4$, and $p=0.49$, $h(p)$ is less than 0, which completes the proof.
+All values of $p$ for which $h(p)$ is 0 or less and is not infinite will satisfy (ineq).  Given $b=0$, $r=1$, $c=0.4$, and $p=0.49$, $h(p)$ is less than 0, which completes the proof.
 
 <a id=A_Conjecture_on_Polynomial_Approximation></a>
 
@@ -937,7 +937,7 @@ Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
-$$\left(\text{abs}\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
+$$\text{abs}\left\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
 
 whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
@@ -948,7 +948,7 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
 > 2. If $W_n$ is a "linear operator", the left-hand side of (PB) is not greater than $\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$ + $\text{abs}(W_n(k/(2n))-f(k/(2n)))$  + $\text{abs}(W_{2n}(k/(2n))-f(k/(2n)))$.
 > 3. If $W_n$ is a "linear operator" and satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$, then the left-hand side of (PB) is not greater than $\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$ + $\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}$.
-> 3. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
+> 4. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 above correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
 
 ---------------------
 
