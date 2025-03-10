@@ -43,7 +43,7 @@ Each algorithm takes a stream of independent random variates (numbers).  These v
 - The _expectation_, _expected value_, or _mean_ is the "long-run average" value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If **E**\[_X_\] exists, then with probability 1, the average of the first _n_ sampled items taken from the stream approaches the expected value as _n_ gets large (as a result of the _law of large numbers_).
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.
 - An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
-- An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
+- An _n<sup>th</sup> absolute central moment_ is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
 
 Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for every integer _k_ greater than 0 and less than _n_.
 
@@ -142,26 +142,26 @@ The standard deviation subalgorithm follows.
 
 The following algorithm comes from Kunsch et al. (2019\)[^7].  It estimates the mean of a stream of random variates with the following properties:
 
-- The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m.
-- The exact _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. need not be known in advance.
-- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater. (The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean absolute deviation_ if _q_ = 1; similarly for _p_.)
+- The distribution of numbers in the stream has a finite _q_<sup>th</sup> absolute central moment and _p_<sup>th</sup> absolute central moment
+- The exact _q_<sup>th</sup> absolute central moment and _p_<sup>th</sup> absolute central moment need not be known in advance.
+- The _q_<sup>th</sup> absolute central moment's _q_<sup>th</sup> root divided by the _p_<sup>th</sup> absolute central moment's _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater. (The _q_<sup>th</sup> absolute central moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean absolute deviation_ if _q_ = 1; similarly for _p_.)
 
-The algorithm works by first estimating the _p_<sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
+The algorithm works by first estimating the _p_<sup>th</sup> absolute central moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
 
 This algorithm is not guaranteed to produce unbiased estimates.
 
 The algorithm has the following parameters:
 
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the ideal expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
-- _p_: The degree of the _p_<sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.
-- _q_: The degree of the _q_<sup>th</sup> c.a.m.  _q_ must be greater than _p_.
-- $\kappa$: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^8] [^9].) $\kappa$ may not be less than 1.
+- _p_: The degree of the _p_<sup>th</sup> absolute central moment that the algorithm will estimate to determine the mean.
+- _q_: The degree of the _q_<sup>th</sup> absolute central moment  _q_ must be greater than _p_.
+- $\kappa$: Maximum value allowed for the following value: the _q_<sup>th</sup> absolute central moment's  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> absolute central moment's _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012\)[^8] [^9].) $\kappa$ may not be less than 1.
 
 Both _p_ and _q_ must be 1 or greater and are usually integers.
 
 For example:
 
-- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th absolute central moment's 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.
 - With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, $\kappa$ = 2, the algorithm assumes the stream's numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the ideal mean with probability at least (1 &minus; 1/16) or 15/16.
 
 The algorithm, called **Algorithm C** in this document, follows.
@@ -176,11 +176,11 @@ The algorithm, called **Algorithm C** in this document, follows.
     - Set _m_ to ceil(3\*$\kappa$\*48<sup>1/(_q_&minus;1)</sup>) (or an integer greater than this); set _s_ to 1+1/(_q_&minus;1); set _h_ to 16<sup>1/(_q_&minus;1)</sup>\*$\kappa$/_&epsilon;_<sup>_s_</sup>.
 6. If _q_ is greater than 2:
     - Set _m_ to ceil(144\*$\kappa$); set _s_ to 2; set _h_ to 16\*$\kappa$/_&epsilon;_<sup>_s_</sup>.
-7. (Stage 1: Estimate _p_<sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
+7. (Stage 1: Estimate _p_<sup>th</sup> absolute central moment to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
     1. Get _m_ samples from the stream.
     2. Add the samples and divide by _m_ to get this block's sample mean, _mean_.
-    3. Calculate the estimate of the _p_<sup>th</sup> c.a.m. for this block, which is: ((_block_\[0\] &minus; _mean_)<sup>_p_</sup> + _block_\[1\] &minus; _mean_)<sup>_p_</sup> + ... + _block_\[_k_&minus;1\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
-8. (Find the median of the _p_<sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
+    3. Calculate the estimate of the _p_<sup>th</sup> absolute central moment for this block, which is: ((_block_\[0\] &minus; _mean_)<sup>_p_</sup> + _block_\[1\] &minus; _mean_)<sup>_p_</sup> + ... + _block_\[_k_&minus;1\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
+8. (Find the median of the _p_<sup>th</sup> absolute central moment estimates.)  Sort the estimates calculated by step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
 9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_h_ \* _median_<sup>_s_</sup>)), or an integer greater than this.
 10. (Stage 2: Estimate of the sample mean.) Create _kp_ many blocks.  For each block:
     1. Get _mp_ samples from the stream.
@@ -238,7 +238,7 @@ The algorithm works only if:
 
 - Each number produced by the stream **z** satisfies 0 &le; **z** &le; 1.
 - _f_(_x_) maps the closed unit interval to itself.
-- Like _Algorithm C_, the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
+- Like _Algorithm C_, the _q_<sup>th</sup> absolute central moment's _q_<sup>th</sup> root divided by the _p_<sup>th</sup> absolute central moment's _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
 
 The algorithm, called **Algorithm D** in this document, follows.
 
@@ -300,8 +300,8 @@ Suppose the goal is to estimate an integral of a function _h_(**z**), where **z*
 
 Then _Algorithm C_ will take the new stream and generate an estimate that comes within _&epsilon;_ of the ideal integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
 
-- The _q_<sup>th</sup> c.a.m. for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
-- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
+- The _q_<sup>th</sup> absolute central moment for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
+- The _q_<sup>th</sup> absolute central moment's _q_<sup>th</sup> root divided by the _p_<sup>th</sup> absolute central moment's _p_<sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.
 
 > **Note:** Unfortunately, these conditions may be hard to verify in practice, especially when the distribution of _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral to be estimated.)
 
@@ -392,7 +392,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
 
-[^9]: As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.
+[^9]: As used here, kurtosis is the 4th absolute central moment divided by the square of the 2nd absolute central moment
 
 [^10]: "_k_ is even" means that _k_ is divisible by 2.  This is true if _k_ &minus; 2\*floor(_k_/2) equals 0, or if the least significant bit of abs(_x_) is 0.
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2025/02/22"><meta name="citation_online_date" content="2025/02/22"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2025/03/10"><meta name="citation_online_date" content="2025/03/10"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -54,7 +54,7 @@
   <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the “long-run average” value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If <strong>E</strong>[<em>X</em>] exists, then with probability 1, the average of the first <em>n</em> sampled items taken from the stream approaches the expected value as <em>n</em> gets large (as a result of the <em>law of large numbers</em>).</li>
   <li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.</li>
   <li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  The 2nd central moment is called <em>variance</em>.</li>
-  <li>An <em>n<sup>th</sup> central absolute moment</em> (c.a.m.) is the expected value of abs(<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  This is the same as the central moment when <em>n</em> is even.</li>
+  <li>An <em>n<sup>th</sup> absolute central moment</em> is the expected value of abs(<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  This is the same as the central moment when <em>n</em> is even.</li>
 </ul>
 
 <p>Some distributions don’t have an <em>n</em><sup>th</sup> moment for a particular <em>n</em>.  This usually means the <em>n</em><sup>th</sup> power of the stream’s numbers varies so wildly that it can’t be estimated accurately.  If a distribution has an <em>n</em><sup>th</sup> moment, it also has a <em>k</em><sup>th</sup> moment for every integer <em>k</em> greater than 0 and less than <em>n</em>.</p>
@@ -187,12 +187,12 @@
 <p>The following algorithm comes from Kunsch et al. (2019)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>.  It estimates the mean of a stream of random variates with the following properties:</p>
 
 <ul>
-  <li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m.</li>
-  <li>The exact <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. need not be known in advance.</li>
-  <li>The <em>q</em><sup>th</sup> c.a.m.’s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.’s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater. (The <em>q</em><sup>th</sup> c.a.m.’s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean absolute deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
+  <li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> absolute central moment and <em>p</em><sup>th</sup> absolute central moment</li>
+  <li>The exact <em>q</em><sup>th</sup> absolute central moment and <em>p</em><sup>th</sup> absolute central moment need not be known in advance.</li>
+  <li>The <em>q</em><sup>th</sup> absolute central moment’s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> absolute central moment’s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater. (The <em>q</em><sup>th</sup> absolute central moment’s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean absolute deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
 
-<p>The algorithm works by first estimating the <em>p</em><sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream’s mean.</p>
+<p>The algorithm works by first estimating the <em>p</em><sup>th</sup> absolute central moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream’s mean.</p>
 
 <p>This algorithm is not guaranteed to produce unbiased estimates.</p>
 
@@ -200,9 +200,9 @@
 
 <ul>
   <li><em>ε</em>, <em>δ</em>: Both parameters must be greater than 0, and <em>δ</em> must be less than 1.  The algorithm will return an estimate within <em>ε</em> of the ideal expected value with probability 1 − <em>δ</em> or greater, and the estimate will not go beyond the bounds of the stream’s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
-  <li><em>p</em>: The degree of the <em>p</em><sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.</li>
-  <li><em>q</em>: The degree of the <em>q</em><sup>th</sup> c.a.m.  <em>q</em> must be greater than <em>p</em>.</li>
-  <li>$\kappa$: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.’s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.’s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis’s 4th root (Hickernell et al. 2012)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup> <sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>.) $\kappa$ may not be less than 1.</li>
+  <li><em>p</em>: The degree of the <em>p</em><sup>th</sup> absolute central moment that the algorithm will estimate to determine the mean.</li>
+  <li><em>q</em>: The degree of the <em>q</em><sup>th</sup> absolute central moment  <em>q</em> must be greater than <em>p</em>.</li>
+  <li>$\kappa$: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> absolute central moment’s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> absolute central moment’s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis’s 4th root (Hickernell et al. 2012)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup> <sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>.) $\kappa$ may not be less than 1.</li>
 </ul>
 
 <p>Both <em>p</em> and <em>q</em> must be 1 or greater and are usually integers.</p>
@@ -210,7 +210,7 @@
 <p>For example:</p>
 
 <ul>
-  <li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>ε</em> = 1/10, <em>δ</em> = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream’s numbers are distributed so that the kurtosis’s 4th root, that is, the 4th c.a.m.’s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that’s within 1/10 of the ideal mean with probability at least (1 − 1/16) or 15/16.</li>
+  <li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>ε</em> = 1/10, <em>δ</em> = 1/16, $\kappa$ = 1.1, the algorithm assumes the stream’s numbers are distributed so that the kurtosis’s 4th root, that is, the 4th absolute central moment’s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that’s within 1/10 of the ideal mean with probability at least (1 − 1/16) or 15/16.</li>
   <li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>ε</em> = 1/10, <em>δ</em> = 1/16, $\kappa$ = 2, the algorithm assumes the stream’s numbers are distributed so that the standard deviation (<em>q</em>=2) divided by the mean deviation (<em>p</em>=1) is no more than 2, and will return an estimate that’s within 1/10 of the ideal mean with probability at least (1 − 1/16) or 15/16.</li>
 </ul>
 
@@ -236,14 +236,14 @@
       <li>Set <em>m</em> to ceil(144*$\kappa$); set <em>s</em> to 2; set <em>h</em> to 16*$\kappa$/<em>ε</em><sup><em>s</em></sup>.</li>
     </ul>
   </li>
-  <li>(Stage 1: Estimate <em>p</em><sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create <em>k</em> many blocks.  For each block:
+  <li>(Stage 1: Estimate <em>p</em><sup>th</sup> absolute central moment to determine number of samples for stage 2.)  Create <em>k</em> many blocks.  For each block:
     <ol>
       <li>Get <em>m</em> samples from the stream.</li>
       <li>Add the samples and divide by <em>m</em> to get this block’s sample mean, <em>mean</em>.</li>
-      <li>Calculate the estimate of the <em>p</em><sup>th</sup> c.a.m. for this block, which is: ((<em>block</em>[0] − <em>mean</em>)<sup><em>p</em></sup> + <em>block</em>[1] − <em>mean</em>)<sup><em>p</em></sup> + … + <em>block</em>[<em>k</em>−1] − <em>mean</em>)<sup><em>p</em></sup>)/<em>m</em>, where <em>block</em>[<em>i</em>] is the sample at position <em>i</em> of the block (positions start at 0).</li>
+      <li>Calculate the estimate of the <em>p</em><sup>th</sup> absolute central moment for this block, which is: ((<em>block</em>[0] − <em>mean</em>)<sup><em>p</em></sup> + <em>block</em>[1] − <em>mean</em>)<sup><em>p</em></sup> + … + <em>block</em>[<em>k</em>−1] − <em>mean</em>)<sup><em>p</em></sup>)/<em>m</em>, where <em>block</em>[<em>i</em>] is the sample at position <em>i</em> of the block (positions start at 0).</li>
     </ol>
   </li>
-  <li>(Find the median of the <em>p</em><sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set <em>median</em> to the value in the middle of the sorted list (at position floor(<em>k</em>/2) with positions starting at 0); this works because <em>k</em> is odd.</li>
+  <li>(Find the median of the <em>p</em><sup>th</sup> absolute central moment estimates.)  Sort the estimates calculated by step 7 in ascending order, and set <em>median</em> to the value in the middle of the sorted list (at position floor(<em>k</em>/2) with positions starting at 0); this works because <em>k</em> is odd.</li>
   <li>(Calculate sample size for the next stage.)  Set <em>mp</em> to max(1, ceil(<em>h</em> * <em>median</em><sup><em>s</em></sup>)), or an integer greater than this.</li>
   <li>(Stage 2: Estimate of the sample mean.) Create <em>kp</em> many blocks.  For each block:
     <ol>
@@ -322,7 +322,7 @@
 <ul>
   <li>Each number produced by the stream <strong>z</strong> satisfies 0 ≤ <strong>z</strong> ≤ 1.</li>
   <li><em>f</em>(<em>x</em>) maps the closed unit interval to itself.</li>
-  <li>Like <em>Algorithm C</em>, the <em>q</em><sup>th</sup> c.a.m.’s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.’s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.</li>
+  <li>Like <em>Algorithm C</em>, the <em>q</em><sup>th</sup> absolute central moment’s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> absolute central moment’s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.</li>
 </ul>
 
 <p>The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
@@ -431,8 +431,8 @@
 <p>Then <em>Algorithm C</em> will take the new stream and generate an estimate that comes within <em>ε</em> of the ideal integral with probability 1 − <em>δ</em> or greater, as long as the following conditions are met:</p>
 
 <ul>
-  <li>The <em>q</em><sup>th</sup> c.a.m. for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)−<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>
-  <li>The <em>q</em><sup>th</sup> c.a.m.’s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.’s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.</li>
+  <li>The <em>q</em><sup>th</sup> absolute central moment for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)−<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>
+  <li>The <em>q</em><sup>th</sup> absolute central moment’s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> absolute central moment’s <em>p</em><sup>th</sup> root is no more than $\kappa$, where $\kappa$ is 1 or greater.</li>
 </ul>
 
 <blockquote>
@@ -562,7 +562,7 @@ pprint(Max(1,kappa))
       <p>Hickernell, F.J., Jiang, L., et al., “<a href="https://arxiv.org/abs/1208.4318v3"><strong>Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling</strong></a>”, arXiv:1208.4318v3 [math.ST], 2012/2013. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:9" role="doc-endnote">
-      <p>As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>As used here, kurtosis is the 4th absolute central moment divided by the square of the 2nd absolute central moment <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:10" role="doc-endnote">
       <p>“<em>k</em> is even” means that <em>k</em> is divisible by 2.  This is true if <em>k</em> − 2*floor(<em>k</em>/2) equals 0, or if the least significant bit of abs(<em>x</em>) is 0. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
