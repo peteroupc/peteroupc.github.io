@@ -478,7 +478,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^57]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
-[^58]: Egozcue, M., Fuentes García, L., et al., "The smallest upper bound for the pth absolute central moment of a class of random variables", _Mathematical Scientist_ 37 (2012).
+[^58]: Cichoń, Jacek, et al. "On delta-method of moments and probabilistic sums." 2013 Proceedings of the Tenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO). Society for Industrial and Applied Mathematics, 2013.
 
 <a id=Appendix></a>
 
@@ -990,10 +990,10 @@ where&mdash;
 
 - $\mathbb{E}[X/n]$ is the expected ("long-range") value of $X/n$,
 - $M_3$ is the maximum absolute value of $f$'s third derivative,
-- $\mu_s(X/n)$ is the $s$-th absolute moment of $X/n$ (that is, the expected ["long-range"] value of $\text{abs}(X/n - \mu(X/n))^s$), and
+- $\mu_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected ["long-range"] value of $\text{abs}(X/n - \mu(X/n))^s$), and
 - $X$ is a hypergeometric($2n$,$k$,$n$) random variable.
 
-Therefore&mdash;
+(See also Cichoń et al. (2013)[^58].) Therefore&mdash;
 
 $$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$$
 
@@ -1005,17 +1005,23 @@ Because $W_n$ preserves polynomials of degree 3 or less, it can be assumed witho
 
 $$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))) \le\frac{\mu_3(X/n) M_3}{6}.$$
 
-It remains to estimate the third absolute moment of $X/n$.
+It remains to estimate the third central absolute moment of $X/n$.
 
-Egozcue et al. (2012)[^58] found upper bounds on a random variable's absolute moments. $X$ is symmetric about its mean (Mattner and Schulz 2018)[^37] and can take on a value $k$ in the closed interval $[0, n]$, since there are at most $n$ "good" balls, so by their Theorem 1:
+$X$ is symmetric about its mean (Mattner and Schulz 2018)[^37] and can take on values in the closed interval $[0, n]$, since there are at most $n$ "good" balls.
 
-$$\mu_3(X/n)\le 1/2^3 = 0.125.$$
+Because 4 is even, the fourth central absolute moment of $X/n$ equals the fourth central moment of $X/n$ (the expected value of $(X/n-\mathbb{E}[X/n])^4$).  [It is conjectured that] this moment reaches its maximum when $k=n$.  So, when $k=n$:
 
-Therefore, $\mu_3(X)\le 0.125 n^3.$
+$$\mu_4(X/n)=\mu_4(X)/n^4=\frac{3 n^{2} - 4n}{64 n^{4} - 128 n^{3} + 48 n^{2}} = g(n).$$
 
-By a [conjectured] result&mdash;
+$g(n)$ converges to 0 because the numerator polynomial is of lesser degree than the denominator.
 
-$$\mu_3(X/n)\le \frac{0.125}{n^{3/2}}.$$
+Using the well-known fact that $\mu_3(Y)\le (\mu_4(Y))^{3/4}$ whenever the random variable $Y$ has a fourth moment, take the power of $3/4$ to get:
+
+$$\mu_3(X/n)\le (g(n))^{3/4}.$$
+
+Now take $(g(n))^{3/4} n^{3/2}$, which equals $0.125$ when $n=1$, and it [is conjectured to be] decreasing and to converge to a positive number.  Therefore:
+
+$$\mu_3(X/n)\le (g(n))^{3/4}\le 0.125/n^{3/2}.$$
 
 It thus follows that&mdash;
 

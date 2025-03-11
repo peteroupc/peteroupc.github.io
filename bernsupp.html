@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/10"><meta name="citation_online_date" content="2025/03/10"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/11"><meta name="citation_online_date" content="2025/03/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1325,11 +1325,11 @@
 <ul>
   <li>$\mathbb{E}[X/n]$ is the expected (“long-range”) value of $X/n$,</li>
   <li>$M_3$ is the maximum absolute value of $f$’s third derivative,</li>
-  <li>$\mu_s(X/n)$ is the $s$-th absolute moment of $X/n$ (that is, the expected [“long-range”] value of $\text{abs}(X/n - \mu(X/n))^s$), and</li>
+  <li>$\mu_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected [“long-range”] value of $\text{abs}(X/n - \mu(X/n))^s$), and</li>
   <li>$X$ is a hypergeometric($2n$,$k$,$n$) random variable.</li>
 </ul>
 
-<p>Therefore—</p>
+<p>(See also Cichoń et al. (2013)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">38</a></sup>.) Therefore—</p>
 
 \[\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))\]
 
@@ -1341,17 +1341,23 @@
 
 \[\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))) \le\frac{\mu_3(X/n) M_3}{6}.\]
 
-<p>It remains to estimate the third absolute moment of $X/n$.</p>
+<p>It remains to estimate the third central absolute moment of $X/n$.</p>
 
-<p>Egozcue et al. (2012)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">38</a></sup> found upper bounds on a random variable’s absolute moments. $X$ is symmetric about its mean (Mattner and Schulz 2018)<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">39</a></sup> and can take on a value $k$ in the closed interval $[0, n]$, since there are at most $n$ “good” balls, so by their Theorem 1:</p>
+<p>$X$ is symmetric about its mean (Mattner and Schulz 2018)<sup id="fnref:37" role="doc-noteref"><a href="#fn:37" class="footnote" rel="footnote">39</a></sup> and can take on values in the closed interval $[0, n]$, since there are at most $n$ “good” balls.</p>
 
-\[\mu_3(X/n)\le 1/2^3 = 0.125.\]
+<p>Because 4 is even, the fourth central absolute moment of $X/n$ equals the fourth central moment of $X/n$ (the expected value of $(X/n-\mathbb{E}[X/n])^4$).  [It is conjectured that] this moment reaches its maximum when $k=n$.  So, when $k=n$:</p>
 
-<p>Therefore, $\mu_3(X)\le 0.125 n^3.$</p>
+\[\mu_4(X/n)=\mu_4(X)/n^4=\frac{3 n^{2} - 4n}{64 n^{4} - 128 n^{3} + 48 n^{2}} = g(n).\]
 
-<p>By a [conjectured] result—</p>
+<p>$g(n)$ converges to 0 because the numerator polynomial is of lesser degree than the denominator.</p>
 
-\[\mu_3(X/n)\le \frac{0.125}{n^{3/2}}.\]
+<p>Using the well-known fact that $\mu_3(Y)\le (\mu_4(Y))^{3/4}$ whenever the random variable $Y$ has a fourth moment, take the power of $3/4$ to get:</p>
+
+\[\mu_3(X/n)\le (g(n))^{3/4}.\]
+
+<p>Now take $(g(n))^{3/4} n^{3/2}$, which equals $0.125$ when $n=1$, and it [is conjectured to be] decreasing and to converge to a positive number.  Therefore:</p>
+
+\[\mu_3(X/n)\le (g(n))^{3/4}\le 0.125/n^{3/2}.\]
 
 <p>It thus follows that—</p>
 
@@ -2196,7 +2202,7 @@ for i in range(20):
       <p>Kantorovich, L.V., “Some remarks on the approximation of functions by means of polynomials with integer coefficients”, 1931. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:58" role="doc-endnote">
-      <p>Egozcue, M., Fuentes García, L., et al., “The smallest upper bound for the pth absolute central moment of a class of random variables”, <em>Mathematical Scientist</em> 37 (2012). <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Cichoń, Jacek, et al. “On delta-method of moments and probabilistic sums.” 2013 Proceedings of the Tenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO). Society for Industrial and Applied Mathematics, 2013. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:37" role="doc-endnote">
       <p>Mattner, Lutz, and Jona Schulz. “On normal approximations to symmetric hypergeometric laws.” Transactions of the American Mathematical Society 370.1 (2018): 727-748. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
