@@ -1019,7 +1019,7 @@ Using the well-known fact that $\mu_3(Y)\le (\mu_4(Y))^{3/4}$ whenever the rando
 
 $$\mu_3(X/n)\le (g(n))^{3/4}.$$
 
-Now take $(g(n))^{3/4} n^{3/2}$, which equals $0.125$ when $n=1$, and it [is conjectured to be] decreasing and to converge to a positive number.  Therefore:
+Now take $(g(n))^{3/4} n^{3/2}$, which equals $0.125$ when $n=1$, and converges to a positive number, namely 3/16, because the numerator is now of greater degree (degree 5) than the denominator (degree 4), and it [is conjectured to be] decreasing.  Therefore:
 
 $$\mu_3(X/n)\le (g(n))^{3/4}\le 0.125/n^{3/2}.$$
 

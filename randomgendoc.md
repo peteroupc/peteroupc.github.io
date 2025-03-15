@@ -2155,16 +2155,6 @@ FUNCTIONS
 
     bernsteinDiff(coeffs, diff=1)
 
-    bernsubdivide(coeffs, t)
-
-    chebyshevtcoeffs(n)
-
-    findLowerBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024))
-
-    findRoots(bvalcoeffs, bdiffcoeffs, a, b, tol=Fraction(1, 1024), depth=0)
-
-    findUpperBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024), depth=0)
-
     matmult(mat, vec)
 
 DATA
@@ -2464,16 +2454,22 @@ CLASSES
         SinFunction
 
     class BernsteinPoly(builtins.object)
-     |  BernsteinPoly(coeffs)
+     |  BernsteinPoly(coeffs, a=0, b=1)
      |
      |  Methods defined here:
      |
-     |  __init__(self, coeffs)
+     |  __init__(self, coeffs, a=0, b=1)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  apoint(self)
+     |
+     |  bpoint(self)
      |
      |  deriv(self, d=1)
      |
      |  diff(self, pt, d=1)
+     |
+     |  elevate(self, r)
      |
      |  fromFunc(func, n)
      |
@@ -2547,21 +2543,17 @@ CLASSES
      |  __init__(self)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
-     |  deriv(self, d=1)
+     |  diff(self, point, d=1)
      |
-     |  diff(self, x, d=1)
+     |  findBounds(self, tol=Fraction(1, 1024))
      |
-     |  fromcoeffs(coeffs)
-     |      Creates a PiecewiseBernstein given a
-     |      polynomial's Bernstein coefficients.
-     |
-     |  get_coeffs(self)
+     |  getDiffUpperBound(self, pwp)
      |
      |  lipschitz(self)
      |
-     |  piece(self, coeffs, mn, mx)
+     |  piece(self, coeffs, a=0, b=1)
      |
-     |  value(self, x)
+     |  value(self, point)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
@@ -4300,8 +4292,6 @@ FUNCTIONS
     addto1(rg)
 
     bernoullinum(n)
-
-    bernsteinDiff(coeffs, diff)
 
     betabin(k, psi, rho, cpsi, m=5)
 

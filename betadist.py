@@ -4320,75 +4320,6 @@ class SinFunction:
             else RealSin(pt)
         )
 
-def bernsteinDiff(coeffs, diff):
-    # Gets the Bernstein coefficients of the 'diff'-th derivative of
-    # a polynomial given its Bernstein coefficients.
-    # The coefficients are ordered 0th order, 1st order, and
-    # so on.
-    if len(coeffs) == 0:
-        raise ValueError("no coeffs")
-    if diff < 0:
-        raise ValueError("invalid value for diff (diff<0)")
-    if diff == 0:
-        return coeffs
-    n = len(coeffs) - 1
-    if diff > n:
-        return [RealFraction(0)]
-    for i in range(diff):
-        coeffs = [(coeffs[i + 1] - coeffs[i]) * n for i in range(n)]
-        n -= 1
-    return coeffs
-
-class BernsteinPoly:
-    def __init__(self, coeffs):
-        # Polynomial in Bernstein form defined on the closed unit interval.
-        # 'coeffs' is a list of the Bernstein coefficients.
-        self.coeffs = [c if isinstance(c, Real) else RealFraction(c, 1) for c in coeffs]
-        self.d = len(coeffs) - 1
-        if self.d < 0:
-            raise ValueError("d=%d" % (self.d))
-        self.bincos = [math.comb(self.d, k) for k in range(0, (self.d // 2) + 1)]
-        self.diffs = {}
-
-    def fromFunc(func, n):
-        if n <= 0:
-            raise ValueError
-        return BernsteinPoly([func.value(RealFraction(i, n)) for i in range(n + 1)])
-
-    def lipschitz(self):
-        # Calculates an upper bound of this polynomial's Lipschitz constant
-        ret = RealFraction(0)
-        for i in range(self.d):
-            ret = max(ret, abs((self.coeffs[i + 1] - self.coeffs[i]) * self.d))
-        return ret
-
-    def deriv(self, d=1):
-        # Gets the d-th derivative of this polynomial
-        if d < 0:
-            raise ValueError
-        if d == 0:
-            return self
-        if not d in self.diffs:
-            bd = bernsteinDiff(self.coeffs, d)
-            self.diffs[d] = BernsteinPoly(bd)
-        return self.diffs[d]
-
-    def value(self, pt):
-        if self.d == 0:
-            return self.coeffs[0]
-        ret = None
-        for i in range(0, self.d + 1):
-            bc = self.bincos[self.d - i] if i >= len(self.bincos) else self.bincos[i]
-            r = self.coeffs[i] * (bc * pt**i * (1 - pt) ** (self.d - i))
-            if ret == None:
-                ret = r
-            else:
-                ret += r
-        return ret
-
-    def diff(self, pt, d=1):
-        return self.deriv(d).value(pt)
-
 def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
     # Minimum degree for iteratedPoly2 (for deriv=4) or
     # iteratedPoly3 (for deriv=5 or 6) needed to achieve
@@ -4404,15 +4335,15 @@ def minDegree(maxValue, maxDeriv, epsilon, deriv=4):
     if realIsLess(maxValue, maxDeriv):
         maxValue = maxDeriv
     if deriv == 4:
-        # NOTE: Conjectured
+        # WARNING: Conjectured value
         return realCeiling(Fraction(52441, 100000) * RealSqrt(maxValue / epsilon))
     if deriv == 5:
-        # NOTE: Conjectured
+        # WARNING: Conjectured value
         return realCeiling(
             Fraction(88095, 100000) * RealPow(maxValue / epsilon, Fraction(2, 5))
         )
     if deriv == 6:
-        # NOTE: Conjectured
+        # WARNING: Conjectured value
         return realCeiling(
             Fraction(89976, 100000) * RealPow(maxValue / epsilon, Fraction(1, 3))
         )
@@ -4424,7 +4355,7 @@ def iteratedPoly2(func, n):
     ret = []
     bp = BernsteinPoly.fromFunc(func, n)
     for i in range(0, n + 1):
-        rf = RealFraction(i, n)
+        rf = Fraction(i, n)
         ret.append(func.value(rf) * 2 - bp.value(rf))
     return ret
 
@@ -4435,72 +4366,426 @@ def iteratedPoly3(func, n):
     bp = BernsteinPoly.fromFunc(func, n)
     bprec = BernsteinPoly.fromFunc(bp, n)
     for i in range(0, n + 1):
-        rf = RealFraction(i, n)
+        rf = Fraction(i, n)
         ret.append(bprec.value(rf) + 3 * (func.value(rf) - bp.value(rf)))
     return ret
 
-class PiecewiseBernstein:
-    def __init__(self):
-        self.pieces = []
-        self.valueAtime = 0
-        self.valueBtime = 0
-        self.pieces2 = []
+class BernsteinPoly:
+    def __init__(self, coeffs, a=0, b=1):
+        # Polynomial in Bernstein form, defined by
+        # default on the closed unit interval.
+        # 'coeffs' is a list of the Bernstein coefficients.
+        # The coefficients are ordered 0th order, 1st order, and
+        # so on.
+        self.a = a
+        self.b = b
+        if self.b < self.a:
+            raise ValueError
+        if self.b == self.a:
+            raise ValueError
+        self.coeffs = [Fraction(c, 1) for c in coeffs]
+        self.d = len(coeffs) - 1
+        if self.d < 0:
+            raise ValueError("d=%d" % (self.d))
+        self.bincos = [math.comb(self.d, k) for k in range(0, (self.d // 2) + 1)]
+        self.diffs = {}
 
-    def fromcoeffs(coeffs):
-        """Creates a PiecewiseBernstein given a
-        polynomial's Bernstein coefficients."""
-        return PiecewiseBernstein().piece(coeffs, 0, 1)
+    def apoint(self):
+        return self.a
+
+    def bpoint(self):
+        return self.b
+
+    def fromFunc(func, n):
+        if n <= 0:
+            raise ValueError
+        return BernsteinPoly([func.value(Fraction(i, n)) for i in range(n + 1)])
+
+    def elevate(self, r):
+        # Elevate polynomial in Bernstein form by r degrees
+        if r < 0:
+            raise ValueError
+        if r == 0:
+            return self
+        # Multiply coefficients by the degree-r Bernstein
+        # polynomial of the constant 1.  This is the
+        # convolution method from Sánchez-Reyes (2003)
+        n = self.d
+        coeffs = [
+            self.coeffs[i]
+            * (self.bincos[n - i] if i >= len(self.bincos) else self.bincos[i])
+            for i in range(n + 1)
+        ]
+        ret = [0 for i in range(n + r + 1)]
+        for j in range(0, r + 1):
+            # Correction from paper ((~b)_k should read (~b)_j)
+            # in the paper's convolution pseudocode
+            binrj = math.comb(r, j)
+            for k in range(j, n + j + 1):
+                ret[k] += coeffs[k - j] * binrj
+        return BernsteinPoly(
+            [ret[i] / math.comb(n + r, i) for i in range(n + r + 1)], self.a, self.b
+        )
 
     def lipschitz(self):
-        # Calculates an upper bound of this
-        # piecewise polynomial's Lipschitz constant
-        return max(p[1].lipschitz() for p in self.pieces)
-
-    def piece(self, coeffs, mn, mx):
-        if len(coeffs) == 0:
-            raise ValueError
-        # Bernstein coefficients
-        coeffs = [c for c in coeffs]
-        self.pieces.append(
-            [
-                coeffs,
-                BernsteinPoly(coeffs),
-                mn if isinstance(mn, Real) else RealFraction(mn),
-                mx if isinstance(mx, Real) else RealFraction(mx),
-            ]
-        )
-        return self
-
-    def value(self, x):  # Value of piecewise polynomial
-        for _, poly, mn, mx in self.pieces:
-            if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
-                return poly.value(x)
-        return RealFraction(0)
-
-    def diff(self, x, d=1):  # Derivative of piecewise polynomial
-        if d < 0:
-            raise ValueError
-        if d == 0:
-            return self.value(x)
-        for _, poly, mn, mx in self.pieces:
-            if realIsLessOrEqual(mn, x) and realIsLessOrEqual(x, mx):
-                return poly.diff(x, d=d)
-        return RealFraction(0)
+        # Calculates an upper bound of this polynomial's Lipschitz constant
+        ret = Fraction(0)
+        for i in range(self.d):
+            ret = max(ret, abs((self.coeffs[i + 1] - self.coeffs[i]) * self.d))
+        return ret / (self.b - self.a)
 
     def deriv(self, d=1):
+        # Gets the d-th derivative of this polynomial
         if d < 0:
             raise ValueError
         if d == 0:
             return self
-        ret = PiecewiseBernstein()
-        for _, poly, mn, mx in self.pieces:
-            ret.piece(poly.deriv(d).coeffs, mn, mx)
+        if not d in self.diffs:
+            n = len(self.coeffs) - 1
+            if d > n:
+                bd = [0]
+            else:
+                bd = self.coeffs
+                for i in range(d):
+                    bd = [(bd[i + 1] - bd[i]) * n for i in range(n)]
+                    n -= 1
+            self.diffs[d] = BernsteinPoly(bd, self.a, self.b)
+        return self.diffs[d]
+
+    def _coefficients(self):
+        return self.coeffs
+
+    def _findRoots(self, tol=Fraction(1, 1024)):
+        bdiffcoeffs = self.deriv(1).coeffs
+        mn = min(bdiffcoeffs)
+        mx = max(bdiffcoeffs)
+        vmn = min(self.coeffs)
+        vmx = max(self.coeffs)
+        a = self.apoint()
+        b = self.bpoint()
+        lastNonzero = 0
+        signChanges = 0
+        roots = []
+        if mx < 0 or mn > 0:
+            # No roots
+            return roots
+        # Exact roots
+        if bdiffcoeffs[0] == 0:
+            roots.append([a, a, self.coeffs[0]])
+        if bdiffcoeffs[len(bdiffcoeffs) - 1] == 0:
+            roots.append([b, b, self.coeffs[len(self.coeffs) - 1]])
+        for bc in bdiffcoeffs:
+            if bc != 0:  # Disregard zeros among coefficients
+                if lastNonzero != 0 and (lastNonzero < 0) != (bc < 0):
+                    signChanges += 1
+                    if signChanges > 1:
+                        break
+                lastNonzero = bc
+        if signChanges == 0:
+            # No sign changes
+            return roots
+        elif signChanges == 1 and len(roots) == 0:
+            # Potential root found
+            if vmx - vmn < tol:
+                return [[a, b, [x for x in self.coeffs]]]
+        # Need to split polynomial
+        return None
+
+    def value(self, pt):
+        if self.d == 0:
+            return self.coeffs[0]
+        if pt < self.a or pt > self.b:
+            raise ValueError
+        pt = (pt - self.a) / (self.b - self.a)
+        ret = None
+        for i in range(0, self.d + 1):
+            bc = self.bincos[self.d - i] if i >= len(self.bincos) else self.bincos[i]
+            r = self.coeffs[i] * (bc * pt**i * (1 - pt) ** (self.d - i))
+            if ret == None:
+                ret = r
+            else:
+                ret += r
         return ret
 
-    def get_coeffs(self):
-        if len(self.pieces) != 1:
-            raise ValueError("likely not a polynomial")
-        return [v for v in self.pieces[0][0]]
+    def diff(self, pt, d=1):
+        return self.deriv(d).value(pt)
+
+class PiecewiseBernstein:
+    # Piecewise polynomial in Bernstein form
+    def __init__(self):
+        self.points = []
+
+    def piece(self, coeffs, a=0, b=1):
+        # NOTE: 'coeffs' is an array of Bernstein coeffients for
+        # the polynomial on [a, b]; they are not taken as coeffients
+        # of a polynomial on [0, 1], then restricted to the interval
+        # [a, b].  Indeed, 'a' can be less than 0 and 'b' can be greater
+        # than 1 in this class.
+        if a >= b:
+            raise ValueError
+        a = Fraction(a)
+        b = Fraction(b)
+        if len(self.points) == 0:
+            # A polynomial follows 'a'
+            self.points.append([a, BernsteinPoly(coeffs, a, b)])
+            # No polynomial follows 'b'
+            self.points.append([b, None])
+        else:
+            cp = self._findClosestPiece(a)
+            if cp < 0:
+                if b > self.points[0][0]:
+                    raise ValueError("overlap detected")
+                self.points = (
+                    [[a, BernsteinPoly(coeffs, a, b)]]
+                    + ([[b, None]] if b < self.points[0][0] else [])
+                    + self.points
+                )
+            elif cp == len(self.points) - 1:
+                if self.points[cp][0] != a:
+                    self.points.append([a, BernsteinPoly(coeffs, a, b)])
+                else:
+                    self.points[cp][1] = BernsteinPoly(coeffs, a, b)
+                self.points.append([b, None])
+            else:
+                nextpt = self.points[cp + 1][0]
+                if nextpt < b:
+                    raise ValueError("overlap detected")
+                if self.points[cp][0] < a:
+                    self.points = self.points[:cp] + [[a, None]] + self.points[cp:]
+                    cp += 1
+                if self.points[cp][1]:
+                    raise ValueError("overlap detected")
+                self.points[cp][1] = BernsteinPoly(coeffs, a, b)
+                if nextpt > b:
+                    self.points = (
+                        self.points[: cp + 1] + [[b, None]] + self.points[cp + 1 :]
+                    )
+        return self
+
+    def _findClosestPiece(self, pt):
+        if (
+            len(self.points) == 0
+            or self.points[0][0] > pt
+            or self.points[len(self.points) - 1][0] < pt
+        ):
+            return -1
+        st = 0
+        en = len(self.points)
+        while True:
+            if st == en:
+                raise ValueError
+            mid = (st + en) // 2
+            if self.points[mid][0] == pt:
+                return mid
+            if self.points[mid][0] > pt:
+                en = mid
+            else:
+                if mid == len(self.points) - 1:
+                    return mid
+                if self.points[mid + 1][0] <= pt:
+                    st = mid + 1
+                else:
+                    return mid
+
+    def _splitAtPiecewisePoints(self, pwp):
+        for pt in pwp.points:
+            self._splitAt(pt[0])
+        for pt in self.points:
+            pwp._splitAt(pt[0])
+
+    def findBounds(self, tol=Fraction(1, 1024)):
+        # Finds a lower bound on the minimum and an upper bound
+        # on the maximum of this piecewise polynomial.  This method
+        # may mutate this object.
+        criticalPoints = []
+        self._gatherCriticalPoints(criticalPoints, tol=tol)
+        # There should be at least one critical point
+        if len(criticalPoints) == 0:
+            raise ValueError
+        bestMin = 0
+        bestMax = 0
+        first = True
+        for r in criticalPoints:
+            if r[0] == r[1]:
+                # Exact critical point
+                bestMax = r[2] if first else max(bestMax, r[2])
+                bestMin = r[2] if first else min(bestMin, r[2])
+            else:
+                # Inexact critical point
+                mx = max(r[2])
+                mn = min(r[2])
+                bestMax = mx if first else max(bestMax, mx)
+                bestMin = mx if first else min(bestMin, mn)
+            first = False
+        return (bestMin, bestMax)
+
+    def _gatherCriticalPoints(self, critical, tol):
+        startIsCritical = True
+        for i in range(len(self.points)):
+            poly = self.points[i][1]
+            polyco = poly._coefficients() if poly else None
+            if poly and startIsCritical:
+                # Add start point as critical point
+                critical.append([poly.apoint(), poly.apoint(), polyco[0]])
+            if poly:
+                self._gatherRoots(poly, critical, tol)
+                endPoint = polyco[len(polyco) - 1]
+                if i + 1 < len(self.points) and (
+                    (not self.points[i + 1][1])
+                    or self.points[i + 1][1]._coefficients()[0] != polyco[0]
+                ):
+                    # Add end point as critical point
+                    startIsCritical = True
+                    critical.append([poly.bpoint(), poly.bpoint(), endPoint])
+                else:
+                    # End point is not a critical point
+                    startIsCritical = False
+
+    def _gatherRoots(self, poly, roots, tol, depth=0):
+        r = poly._findRoots(tol)
+        if r:
+            for root in r:
+                roots.append(root)
+        elif depth > 5:
+            roots.append([poly.apoint(), poly.bpoint(), poly._coefficients()])
+        else:
+            # Must split
+            t = (poly.apoint() + poly.bpoint()) / 2
+            newpolys = self._splitAt(t)
+            self._gatherRoots(newpolys[0], roots, tol, depth + 1)
+            self._gatherRoots(newpolys[1], roots, tol, depth + 1)
+
+    def getDiffUpperBound(self, pwp):
+        # Finds an upper bound on the maximum difference between the
+        # two piecewise polynomials, wherever both functions are defined.
+        # This method may mutate either or both of the piecewise
+        # polynomial objects.
+        self._splitAtPiecewisePoints(pwp)
+        iSelf = 0
+        iOther = 0
+        maxdiff = 0
+        while iSelf < len(self.points):
+            if self.points[iSelf][1] != None:
+                ptA = self.points[iSelf][0]
+                ptB = self.points[iSelf + 1][0]
+                otherA = 0
+                otherB = 0
+                otherPoly = -1
+                for io in range(iOther, len(pwp.points)):
+                    if pwp.points[io][0] > ptA:
+                        # not found
+                        iOther = io + 1
+                        break
+                    if pwp.points[io][1] != None:
+                        otherA = pwp.points[io][0]
+                        otherB = pwp.points[io + 1][0]
+                        if otherA == ptA and otherB == ptB:
+                            # found
+                            otherPoly = io
+                            iOther = io + 1
+                            break
+                        elif ptA >= otherA and ptB <= otherB:
+                            raise NotImplementedError
+                        elif ptB < otherB:
+                            iOther = io + 1
+                if otherPoly > -1:
+                    polyX = self.points[iSelf][1]
+                    polyY = pwp.points[otherPoly][1]
+                    coeffsX = polyX._coefficients()
+                    coeffsY = polyY._coefficients()
+                    if len(coeffsX) < len(coeffsY):
+                        self.points[iSelf][1] = polyX = polyX.elevate(
+                            len(coeffsY) - len(coeffsX)
+                        )
+                    elif len(coeffsX) > len(coeffsY):
+                        self.points[otherPoly][1] = polyY = polyY.elevate(
+                            len(coeffsX) - len(coeffsY)
+                        )
+                    coeffsX = polyX._coefficients()
+                    coeffsY = polyY._coefficients()
+                    # Accumulate maximum difference between Bernstein
+                    # coefficients, as upper bound of the difference between
+                    # the piecewise polynomials
+                    for i in range(len(coeffsX)):
+                        maxdiff = max(maxdiff, abs(coeffsX[i] - coeffsY[i]))
+            iSelf += 1
+        return maxdiff
+
+    def _bernsubdivide(self, coeffs, t):
+        t = Fraction(t)
+        if t < 0 or t > 1:
+            raise ValueError
+        co = [x for x in coeffs]
+        left = [0 for x in coeffs]
+        right = [0 for x in coeffs]
+        clen = len(co)
+        left[0] = co[0]
+        right[clen - 1] = co[clen - 1]
+        for i in range(1, clen):
+            for j in range(0, clen - i):
+                co[j] = co[j + 1] * t + co[j] * (1 - t)
+            left[i] = co[0]
+            right[clen - i - 1] = co[clen - i - 1]
+        return (left, right)
+
+    def _splitAt(self, point):
+        point = Fraction(point)
+        polyIndex = self._findPolyIndex(point)
+        if polyIndex < 0:
+            # No splitting needed
+            return None
+        poly = self.points[polyIndex][1]
+        if poly.apoint() == point or poly.bpoint() == point:
+            # No splitting needed
+            return None
+        t = (point - poly.apoint()) / (poly.bpoint() - poly.apoint())
+        valsubd = self._bernsubdivide(poly._coefficients(), t)
+        left = BernsteinPoly(valsubd[0], poly.apoint(), point)
+        right = BernsteinPoly(valsubd[1], point, poly.bpoint())
+        self.points = (
+            self.points[:polyIndex]
+            + [
+                [poly.apoint(), left],
+                [point, right],
+            ]
+            + self.points[polyIndex + 1 :]
+        )
+        return (left, right)
+
+    def value(self, point):
+        return self.diff(point, d=0)
+
+    def _findPoly(self, point):
+        cp = self._findPolyIndex(point)
+        if cp < 0:
+            return None
+        return self.points[cp][1]
+
+    def _findPolyIndex(self, point):
+        cp = self._findClosestPiece(point)
+        if cp < 0 or not self.points[cp][1]:
+            if cp > 0 and self.points[cp][0] == point and self.points[cp - 1][1]:
+                return cp - 1
+            return -1
+        if self.points[cp][0] == point and not self.points[cp - 1][1]:
+            # No polynomial at start; check end of previous piece
+            if cp > 0 and self.points[cp - 1][1]:
+                return cp - 1
+        return cp
+
+    def lipschitz(self):
+        ret = 0
+        for pt in self.points:
+            if pt[1]:
+                ret = max(ret, pt[1].lipschitz())
+        return ret
+
+    def diff(self, point, d=1):
+        point = Fraction(point)
+        poly = self._findPoly(point)
+        if not poly:
+            raise ValueError
+        return poly.diff(point, d=d)
 
 def c4example():
     # Example function: A C4 continuous piecewise polynomial
@@ -4508,26 +4793,26 @@ def c4example():
         PiecewiseBernstein()
         .piece(
             [
-                Fraction(1, 384) + Fraction(1, 10),
-                Fraction(953, 9600) + Fraction(1, 10),
-                Fraction(2681, 9600) + Fraction(1, 10),
-                Fraction(4409, 9600) + Fraction(1, 10),
-                Fraction(6137, 9600) + Fraction(1, 10),
-                Fraction(1573, 1920) + Fraction(1, 10),
+                Fraction(197, 1920),
+                Fraction(483, 3200),
+                Fraction(2113, 9600),
+                Fraction(959, 3200),
+                Fraction(3691, 9600),
+                Fraction(151, 320),
             ],
-            Fraction(1, 2),
-            1,
+            0,
+            0.5,
         )
         .piece(
             [
-                Fraction(0, 1) + Fraction(1, 10),
-                Fraction(163, 1280) + Fraction(1, 10),
-                Fraction(2167, 5760) + Fraction(1, 10),
-                Fraction(2267, 3840) + Fraction(1, 10),
-                Fraction(263, 320) + Fraction(1, 10),
+                Fraction(151, 320),
+                Fraction(4463, 7680),
+                Fraction(8003, 11520),
+                Fraction(6191, 7680),
+                Fraction(59, 64),
             ],
-            0,
-            Fraction(1, 2),
+            0.5,
+            1,
         )
     )
 

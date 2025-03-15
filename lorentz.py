@@ -4,49 +4,6 @@ import time
 import math
 import random
 
-BINCOMBS = {}
-SPLITBINCOMBS = {}
-
-def ccomb(n, k):
-    if k < 10:
-        return math.comb(n, k)
-    if (n, k) in BINCOMBS:
-        return BINCOMBS[(n, k)]
-    v = math.comb(n, k)
-    BINCOMBS[(n, k)] = v
-    return v
-
-def binco2(v, n, k):
-    if k < 100 or k > n - 100:
-        return v * ccomb(n, k)
-    if (n, k) in SPLITBINCOMBS:
-        s = SPLITBINCOMBS[(n, k)]
-        v0 = (v * s[0]) * s[1]
-        return v0
-    if k == 0 or k == n:
-        return v
-    if k < 0 or k > n:
-        return 0
-    num = 1
-    den = 1
-    split = n - (k + 1) // 2
-    for i in range(n - k + 1, split):
-        num *= i
-        den *= n - i + 1
-    s = [FRAC_ZERO, FRAC_ZERO]
-    s[0] = Fraction(num, den).reduce()
-    oldv = v
-    v *= s[0]
-    num = 1
-    den = 1
-    for i in range(split, n + 1):
-        num *= i
-        den *= n - i + 1
-    s[1] = Fraction(num, den).reduce()
-    SPLITBINCOMBS[(n, k)] = s
-    v0 = v * s[1]
-    return v0
-
 def polyshift(nrcoeffs, theta, d, alpha=2):
     # Upward and downward shift of polynomial according to step 5
     # in Holtz et al. 2011, for even integer r>=2 or r=1 (r times
@@ -75,33 +32,6 @@ def polyshift(nrcoeffs, theta, d, alpha=2):
     upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
     lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
     return upper, lower
-
-def example1():
-    # Example function: A concave piecewise
-    # polynomial with three continuous derivatives
-    pwp2 = PiecewiseBernstein()
-    pwp2.piece(
-        [
-            Fraction(29) / 60,
-            Fraction(9, 10),
-            Fraction(9, 10),
-            Fraction(9, 10),
-            Fraction(9, 10),
-        ],
-        Fraction(1, 2),
-        1,
-    )
-    pwp2.piece(
-        [
-            Fraction(163, 320),
-            Fraction(2867, 2880),
-            Fraction(2467, 2880),
-            Fraction(889, 960),
-        ],
-        0,
-        Fraction(1, 2),
-    )
-    return pwp2
 
 REALONE = RealFraction(1)
 REALZERO = RealFraction(0)
@@ -619,15 +549,6 @@ def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
         lastdegree = degree
         degree = nextdegree(degree) if nextdegree != None else degree * 2
 
-def cc():
-    # ce = c4example()
-    # f = C4Function(ce, 5, lorentz=False,contderivs=4)
-    ce = example1()
-    f = C4Function(ce, 5, lorentz=False, concave=True, contderivs=3)
-    coin = lambda: 1 if random.random() < 0.9 else 0
-    print(ce.value(0.9))
-    print(sum(f.simulate(coin) for i in range(50000)) / 50000)
-
 from sympy import Min, Max, ceiling, S
 from sympy import Matrix, binomial, chebyshevt, pi, Piecewise, Eq, floor, ceiling
 
@@ -941,7 +862,8 @@ def chebpoly2(coeffs, x):
     # If func^{nu} has bounded variation V, nu>=1,
     # the error bound is 4V/(pi*nu*(n-nu)^nu).  If V has a derivative on its domain,
     # V is the integral of abs(func^{nu}).
-    # Theorem 7.2, Trefethen, Lloyd N., Approximation theory and approximation practice, 2013.  G. Mastroianni and J. Szabados, "Jackson order of approximation by Lagrange interpolation", Acta Mathematica Hungarica, 69 (1995), 73-82.
+    # Theorem 7.2, Trefethen, Lloyd N., Approximation theory and approximation practice, 2013.
+    # G. Mastroianni and J. Szabados, "Jackson order of approximation by Lagrange interpolation", Acta Mathematica Hungarica, 69 (1995), 73-82.
     return chebpoly(coeffs, x, a=-1, b=1)
 
 def chebdegree(eps, totvar, nu):

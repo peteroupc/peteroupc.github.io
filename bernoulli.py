@@ -1380,21 +1380,6 @@ def matmult(mat, vec):
     # Multiply a matrix by a column vector
     return [sum(r[i] * vec[i] for i in range(len(vec))) for r in mat]
 
-def bernsubdivide(coeffs, t):
-    t = Fraction(t)
-    co = [x for x in coeffs]
-    left = [0 for x in coeffs]
-    right = [0 for x in coeffs]
-    clen = len(co)
-    left[0] = co[0]
-    right[clen - 1] = co[clen - 1]
-    for i in range(1, clen):
-        for j in range(0, clen - i):
-            co[j] = co[j + 1] * t + co[j] * (1 - t)
-        left[i] = co[0]
-        right[clen - i - 1] = co[clen - i - 1]
-    return (left, right)
-
 def berncofrompower(coeffs):
     if len(coeffs) == 0:
         return [0]
@@ -1408,99 +1393,7 @@ def berncofrompower(coeffs):
     # Get the Bernstein control points
     return matmult(mat, coeffs)
 
-def chebyshevtcoeffs(n):
-    # Recurrence relation found in Rivlin, 1995, "Chebyshev Polynomials".
-    if n < 0:
-        raise ValueError
-    if n == 0:
-        return [1]
-    if n == 1:
-        return [0, 1]
-    if n == 2:
-        return [-1, 0, 2]
-    if n == 3:
-        return [0, -3, 0, 4]
-    n1 = chebyshevtcoeffs(n - 1)
-    n2 = chebyshevtcoeffs(n - 2)
-    ret = [
-        (0 if i == 0 else 2 * n1[i - 1]) - (0 if i > n - 2 else n2[i])
-        for i in range(n + 1)
-    ]
-    return ret
-
-def findRoots(bvalcoeffs, bdiffcoeffs, a, b, tol=Fraction(1, 1024), depth=0):
-    mn = min(bdiffcoeffs)
-    mx = max(bdiffcoeffs)
-    vmn = min(bvalcoeffs)
-    vmx = max(bvalcoeffs)
-    lastNonzero = 0
-    signChanges = 0
-    roots = []
-    if mx < 0 or mn > 0:
-        return roots
-    # Exact roots
-    if bdiffcoeffs[0] == 0:
-        roots.append([a, a, bvalcoeffs[0]])
-    if bdiffcoeffs[len(bdiffcoeffs) - 1] == 0:
-        roots.append([b, b, bvalcoeffs[len(bvalcoeffs) - 1]])
-    for bc in bdiffcoeffs:
-        if bc != 0:  # Disregard zeros among coefficients
-            if lastNonzero != 0 and (lastNonzero < 0) != (bc < 0):
-                signChanges += 1
-                if signChanges > 1:
-                    break
-            lastNonzero = bc
-    if signChanges == 0:
-        # No sign changes
-        return roots
-    elif signChanges == 1 and len(roots) == 0:
-        # Potential root found
-        if vmx - vmn < tol:
-            return [[a, b, [x for x in bvalcoeffs]]]
-    mid = Fraction(a + b) / 2
-    valsubd = bernsubdivide(bvalcoeffs, Fraction(1, 2))
-    diffsubd = bernsubdivide(bdiffcoeffs, Fraction(1, 2))
-    return (
-        roots
-        + findRoots(valsubd[0], diffsubd[0], a, mid)
-        + findRoots(valsubd[1], diffsubd[1], mid, b)
-    )
-
-def findLowerBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024)):
-    ub = findUpperBound([Fraction(1) - x for x in berncoeffs], a=a, b=b, tol=tol)
-    return 1 - ub
-
-def findUpperBound(berncoeffs, a=0, b=1, tol=Fraction(1, 1024), depth=0):
-    mn = min(berncoeffs)
-    mx = max(berncoeffs)
-    if mn == mx:
-        # Constant
-        return mx
-    if mn > 0 and mx < 1:
-        return mx
-    bdiff = bernsteinDiff(berncoeffs)
-    roots = findRoots(berncoeffs, bdiff, a, b, tol=tol)
-    if len(roots) == 0:
-        return mx
-    # Add endpoints
-    best = max(berncoeffs[0], berncoeffs[len(berncoeffs) - 1])
-    for r in roots:
-        if r[0] == r[1]:
-            # Exact root
-            best = max(best, r[2])
-        else:
-            # Inexact root
-            mx = max(r[2])
-            mn = min(r[2])
-            if mn < 1 and mx > 1 and best <= 1 and depth < 10:
-                # Increase tolerance to determine whether upper bound
-                # is less than 1 or greater than 1, or give up if depth is
-                # 10 or greater
-                mx = findUpperBound(
-                    r[2], r[0], r[1], tol=Fraction(tol) / 16, depth=depth + 1
-                )
-            best = max(best, mx)
-    return best
+from betadist import PiecewiseBernstein
 
 class PolynomialSim:
     """
@@ -1523,9 +1416,14 @@ class PolynomialSim:
         zeroOne = (bco[0] == 1 and bco[len(bco) - 1] == 0) or (
             bco[0] == 0 and bco[len(bco) - 1] == 1
         )
-        if findLowerBound(bco, 0, 1) < 0:
+        mn = min(berncoeffs)
+        mx = max(berncoeffs)
+        ubound = mx
+        if mn < 0 or mx > 1:
+            pwb = PiecewiseBernstein().piece(berncoeffs, 0, 1)
+            mn, ubound = pwb.findBounds()
+        if mn < 0:
             raise ValueError
-        ubound = findUpperBound(bco, 0, 1)
         if zeroOne and ubound > 1:
             raise ValueError
         # Ensure all coefficients are nonnegative
