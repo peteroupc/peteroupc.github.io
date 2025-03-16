@@ -480,6 +480,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^58]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^59]: Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant." Calcolo 59.1 (2022): 10.
+
+[^60]: An interesting question is finding the conditions that allow a continuous function's Lagrange polynomials to converge, but this question is outside the scope of this article.  But see G. Kvernadze, "Uniform convergence of Lagrange interpolation based on the Jacobi nodes," _Journal of Approximation Theory_ 87(2), 1996, and papers citing it.
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -925,7 +929,7 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be polynomials of any degree (see note 4) on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be rational functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
@@ -951,7 +955,7 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 >
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
 > 2. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
-> 3. It is without loss of generality that $W_n$ is a sequence of _polynomials_ rather than arbitrary functions.   Indeed, $W_n$ and a _Lagrange interpolating polynomial_ of degree $m\ge n$ that equals $W_n$ at the points $0, 1/n, ..., n/n$ have the same Bernstein polynomial.
+> 3. It is without loss of generality that $W_n$ is a sequence of _rational functions_ rather than arbitrary functions.   Indeed, if $W_n$ is continuous there is a rational function of degree $n$ that equals $W_n$ at the points $0, 1/n, ..., n/n$, such that $W_n$ and the polynomial have the same Bernstein polynomial (the Lagrange interpolating polynomial doesn't converge uniformly for all continuous functions, but there are rational functions that do (Zhang and Liu 2022)[^59]).[^60]
 
 ---------------------
 

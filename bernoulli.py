@@ -1393,7 +1393,18 @@ def berncofrompower(coeffs):
     # Get the Bernstein control points
     return matmult(mat, coeffs)
 
-from betadist import PiecewiseBernstein
+try:
+    from betadist import PiecewiseBernstein
+except:
+    pass
+
+def _elevate1(coeffs):  # Elevate polynomial in Bernstein form by 1 degree
+    n = len(coeffs) - 1
+    return [
+        coeffs[max(0, k - 1)] * Fraction(k) / (n + 1)
+        + coeffs[min(n, k)] * Fraction((n + 1) - k) / (n + 1)
+        for k in range(n + 2)
+    ]
 
 class PolynomialSim:
     """
@@ -1428,7 +1439,7 @@ class PolynomialSim:
             raise ValueError
         # Ensure all coefficients are nonnegative
         while min(bco) < 0 and ((not zeroOne) or max(bco) > 0):
-            bco = elevate1(bco)
+            bco = _elevate1(bco)
         bco = [Fraction(c.p, c.q) for c in bco]
         bcomax = max(bco)
         self.bcomax = bcomax

@@ -4383,12 +4383,30 @@ class BernsteinPoly:
             raise ValueError
         if self.b == self.a:
             raise ValueError
-        self.coeffs = [Fraction(c, 1) for c in coeffs]
+        self.coeffs = [Fraction(c) for c in coeffs]
         self.d = len(coeffs) - 1
         if self.d < 0:
             raise ValueError("d=%d" % (self.d))
         self.bincos = [math.comb(self.d, k) for k in range(0, (self.d // 2) + 1)]
         self.diffs = {}
+
+    def _bernsubdivide(coeffs, t):
+        t = Fraction(t)
+        if t < 0 or t > 1:
+            raise ValueError
+        invt = 1 - t
+        co = [x for x in coeffs]
+        left = [0 for x in coeffs]
+        right = [0 for x in coeffs]
+        clen = len(co)
+        left[0] = co[0]
+        right[clen - 1] = co[clen - 1]
+        for i in range(1, clen):
+            for j in range(0, clen - i):
+                co[j] = co[j + 1] * t + co[j] * invt
+            left[i] = co[0]
+            right[clen - i - 1] = co[clen - i - 1]
+        return (left, right)
 
     def apoint(self):
         return self.a
@@ -4497,10 +4515,13 @@ class BernsteinPoly:
         if pt < self.a or pt > self.b:
             raise ValueError
         pt = (pt - self.a) / (self.b - self.a)
+        invpt = 1 - pt
+        #_, right = BernsteinPoly._bernsubdivide(self.coeffs, pt)
+        #return right[0]
         ret = None
         for i in range(0, self.d + 1):
             bc = self.bincos[self.d - i] if i >= len(self.bincos) else self.bincos[i]
-            r = self.coeffs[i] * (bc * pt**i * (1 - pt) ** (self.d - i))
+            r = self.coeffs[i] * (bc * pt**i * invpt ** (self.d - i))
             if ret == None:
                 ret = r
             else:
@@ -4711,23 +4732,6 @@ class PiecewiseBernstein:
             iSelf += 1
         return maxdiff
 
-    def _bernsubdivide(self, coeffs, t):
-        t = Fraction(t)
-        if t < 0 or t > 1:
-            raise ValueError
-        co = [x for x in coeffs]
-        left = [0 for x in coeffs]
-        right = [0 for x in coeffs]
-        clen = len(co)
-        left[0] = co[0]
-        right[clen - 1] = co[clen - 1]
-        for i in range(1, clen):
-            for j in range(0, clen - i):
-                co[j] = co[j + 1] * t + co[j] * (1 - t)
-            left[i] = co[0]
-            right[clen - i - 1] = co[clen - i - 1]
-        return (left, right)
-
     def _splitAt(self, point):
         point = Fraction(point)
         polyIndex = self._findPolyIndex(point)
@@ -4739,7 +4743,7 @@ class PiecewiseBernstein:
             # No splitting needed
             return None
         t = (point - poly.apoint()) / (poly.bpoint() - poly.apoint())
-        valsubd = self._bernsubdivide(poly._coefficients(), t)
+        valsubd = BernsteinPoly._bernsubdivide(poly._coefficients(), t)
         left = BernsteinPoly(valsubd[0], poly.apoint(), point)
         right = BernsteinPoly(valsubd[1], point, poly.bpoint())
         self.points = (
@@ -4787,6 +4791,24 @@ class PiecewiseBernstein:
             raise ValueError
         return poly.diff(point, d=d)
 
+def approxCoefficients(pwp, tol=Fraction(1,1024):
+  # Compute approximate Bernstein coefficients
+  # for a piecewise polynomial, with the specified
+  # error tolerance.  The piecewise polynomial must
+  # map [0, 1] to [0, 1] and satisfy 0<f(x)<1 whenever
+  # 0<x<1.
+  degree=6
+  ex2=None
+  while True:
+   co=iteratedPoly3(ex, degree)
+   if min(co)>=0 and max(co)<=1:
+    ex2 = PiecewiseBernstein().piece(co)
+    bound=ex.getDiffUpperBound(ex2, tol=tol)
+    print([degree,float(bound)])
+    if bound<Fraction(1,1024):
+      return co
+   degree*=2
+
 def c4example():
     # Example function: A C4 continuous piecewise polynomial
     return (
@@ -4822,9 +4844,7 @@ def iteratedPolyExample():
     # with a given error tolerance.
     sinf = c4example()
     epsilon = Fraction(1, 1000)  # Max. error tolerance
-    deg = minDegree(1, 5, epsilon)
-    print(deg)  # Polynomial degree for this example
-    ip = iteratedPoly2(sinf, deg)
+    ip = approxCoefficients(sinf, epsilon)
     coin = lambda: 1 if random.random() < 0.3 else 0
     r = 0
     for i in range(10000):
