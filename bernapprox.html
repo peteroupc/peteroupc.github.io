@@ -191,13 +191,6 @@
       <td>$n\ge 3$.  Special case of previous entry.</td>
     </tr>
     <tr>
-      <td>Has Lipschitz continuous second derivative.</td>
-      <td>$Q_{n-2,2}(f)$.</td>
-      <td><em>ε</em> = 0.098585 <em>L</em><sub>2</sub>/((<em>n</em>−2)<sup>3/2</sup>).</td>
-      <td><em>n</em>=max(4, ceil($((0.098585 L_2)$ / $(\epsilon))^{2/3}+2$)).</td>
-      <td>$n\ge 4$. See Proposition B10A in appendix.</td>
-    </tr>
-    <tr>
       <td>Has continuous third derivative.</td>
       <td>$L_{2, n/2}(f)$.</td>
       <td><em>ε</em> = (3*sqrt(3−4/<em>n</em>)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; (3*sqrt(3)/4)*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> &lt; 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>2</sup> ≤ 1.29904*<em>M</em><sub>3</sub>/<em>n</em><sup>3/2</sup>.</td>
@@ -262,15 +255,6 @@
     </tr>
   </tbody>
 </table>
-
-<blockquote>
-  <p><strong>Note:</strong> In addition, by analyzing the proof of Theorem 2.4 of Güntürk and Li (2021, sec. 3.3)<sup id="fnref:5:1" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, the following error bounds for $U_{n, 3}$ <em>appear</em> to be true:</p>
-
-  <ul>
-    <li>If $f(\lambda)$ has continuous fifth derivative: <em>ε</em> = 4.0421*max(<em>M</em><sub>0</sub>,…,<em>M</em><sub>5</sub>)/<em>n</em><sup>5/2</sup>.</li>
-    <li>If $f(\lambda)$ has continuous sixth derivative: <em>ε</em> = 4.8457*max(<em>M</em><sub>0</sub>,…,<em>M</em><sub>6</sub>)/<em>n</em><sup>3</sup>.</li>
-  </ul>
-</blockquote>
 
 <p>Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that they approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.</p>
 
@@ -709,21 +693,21 @@
 
 <ol>
   <li>$f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-  <li>If $r$ is 2, $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le 0.5025 \frac{1}{4n}M \frac{\sqrt{2}}{n^{1/2}}\lt 0.1777 M/n^{3/2}$ for every integer $n\ge 1$.</li>
+  <li>If $r$ is 2, $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le 0.5025 \frac{1}{4n}M\sqrt{2}/n^{1/2}\lt 0.1777 M/n^{3/2}$ for every integer $n\ge 1$.</li>
   <li>$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le ((r+1)\mu_{r}+\mu_{r+1})M/(((r+1)!)n^{(r+1)/2})$ for every integer $n\ge 2$, where $\mu_r$ is as defined in Lemma B7.</li>
 </ol>
 
 <p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Lagrange remainder</em>,  $R_{f,r}(\lambda, x_0)$.  The other two parts give upper bounds on this remainder’s Bernstein polynomial.</p>
 
-<p>The result in part 2 follows from a so-called Videnskiĭ-type inequality, where the constant 0.5025 is slightly greater than the constant proved in Păltănea and Smuc (2019)<sup id="fnref:45" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">45</a></sup> and confirmed by Adell and Cárdenas-Morales (2019)<sup id="fnref:60" role="doc-noteref"><a href="#fn:60" class="footnote" rel="footnote">46</a></sup>.</p>
+<p>The result in part 2 follows from a so-called Videnskiĭ-type inequality, where the constant 0.5025 is slightly greater than the constant proved in Păltănea and Smuc (2019)<sup id="fnref:45" role="doc-noteref"><a href="#fn:45" class="footnote" rel="footnote">45</a></sup> and confirmed by Adell and Cárdenas-Morales (2019)<sup id="fnref:46" role="doc-noteref"><a href="#fn:46" class="footnote" rel="footnote">46</a></sup>.</p>
 
-<p>The result in part 3 follows from Theorem 1 of the same paper by Păltănea and Smuc, with $s=1$, $k=r$, $h=1/n^{1/2}$, and $M_k(x) = \mu_{k}/n^{k/2}$ (where $\mu_{r}$ is as given in Lemma B7), and given that the Bernstein polynomial is a linear positive operator, and replacing $\omega_1(f^{(k)}, h)$ with $M\cdot h = M\sqrt{2/n}$ (an upper bound) given that $f$’s $r$-th derivative is Lipschitz continuous. □</p>
+<p>The result in part 3 follows from Theorem 1 of the same paper by Păltănea and Smuc, with $s=1$, $k=r$, $h=1/n^{1/2}$, and $M_k(x) = \mu_{k}/n^{k/2}$ (where $\mu_{r}$ is as given in Lemma B7), and given that the Bernstein polynomial is a linear positive operator, and replacing $\omega_1(f^{(k)}, h)$ with $M\cdot h = M/n^{1/2}$ (an upper bound) given that $f$’s $r$-th derivative is Lipschitz continuous. □</p>
 
 <blockquote>
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor’s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$’s domain) (DLMF <sup id="fnref:46" role="doc-noteref"><a href="#fn:46" class="footnote" rel="footnote">47</a></sup> <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $\text{abs}(R_{f,r}(\lambda, x_0)) \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
+    <li>If a function $f(\lambda)$ has a continuous $r$-th derivative on its domain (where $r\ge 0$ is an integer), then by Taylor’s theorem for real variables, $R_{f,r}(\lambda, x_0)$, is writable as $f^{(r)}(c)\cdot (\lambda-x_0)^r /(r!),$ for some $c$ between $\lambda$ and $x_0$ (and thus on $f$’s domain) (DLMF <sup id="fnref:47" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup> <a href="https://dlmf.nist.gov/1.4.E36"><strong>equation 1.4.36</strong></a>).  Thus, by this estimate, $\text{abs}(R_{f,r}(\lambda, x_0)) \le \frac{M}{r!} (\lambda-x_0)^r.$</li>
     <li>It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)<sup id="fnref:10:1" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>.</li>
   </ol>
 </blockquote>
@@ -775,7 +759,7 @@
 
 <p>Because $f$ has a Lipschitz-continuous third derivative, $f$ has the Lagrange remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.</p>
 
-<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, linear, and constant functions), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:47" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">48</a></sup>, Butzer (1955)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, May (1976)<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">49</a></sup>.  Because of this, it can be assumed without loss of generality that $f$ and the first, second, and third derivatives of $f$ equal zero at $x_0$.</p>
+<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, linear, and constant functions), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:48" role="doc-noteref"><a href="#fn:48" class="footnote" rel="footnote">48</a></sup>, Butzer (1955)<sup id="fnref:7:2" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, May (1976)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">49</a></sup>.  Because of this, it can be assumed without loss of generality that $f$ and the first, second, and third derivatives of $f$ equal zero at $x_0$.</p>
 
 <p>Therefore—</p>
 
@@ -821,7 +805,7 @@
 
 \[\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.\]
 
-<p><em>Proof</em>: This proof is inspired by a result in Draganov (2014, Theorem 4.1)<sup id="fnref:49" role="doc-noteref"><a href="#fn:49" class="footnote" rel="footnote">50</a></sup>.</p>
+<p><em>Proof</em>: This proof is inspired by a result in Draganov (2014, Theorem 4.1)<sup id="fnref:50" role="doc-noteref"><a href="#fn:50" class="footnote" rel="footnote">50</a></sup>.</p>
 
 <p>The error to be bounded can be expressed as $\text{abs}((B_n(f)-f)( B_n(f)-f ))$.  Following Corollary B10B:</p>
 
@@ -849,13 +833,13 @@
 
 \[\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.\]
 
-<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)<sup id="fnref:50" role="doc-noteref"><a href="#fn:50" class="footnote" rel="footnote">51</a></sup>, which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:</p>
+<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)<sup id="fnref:51" role="doc-noteref"><a href="#fn:51" class="footnote" rel="footnote">51</a></sup>, which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:</p>
 
 \[\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})\]
 
 \[\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},\]
 
-<p>where $r=2$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)<sup id="fnref:51" role="doc-noteref"><a href="#fn:51" class="footnote" rel="footnote">52</a></sup>.  Therefore—</p>
+<p>where $r=2$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)<sup id="fnref:52" role="doc-noteref"><a href="#fn:52" class="footnote" rel="footnote">52</a></sup>.  Therefore—</p>
 
 \[\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right)\]
 
@@ -863,7 +847,7 @@
 
 <p>□</p>
 
-<p>The following error bounds follow from results of Sevy (1991)<sup id="fnref:52" role="doc-noteref"><a href="#fn:52" class="footnote" rel="footnote">53</a></sup>, especially theorems 3.1 and 3.7 there:</p>
+<p>The following error bounds follow from results of Sevy (1991)<sup id="fnref:53" role="doc-noteref"><a href="#fn:53" class="footnote" rel="footnote">53</a></sup>, especially theorems 3.1 and 3.7 there:</p>
 
 <table>
   <thead>
@@ -916,7 +900,7 @@
 <ul>
   <li>$f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of <em>bounded variation</em>, as described later.</li>
   <li>
-    <p>Suppose $f$’s domain is the interval $[a, b]$.  Then the <em>Chebyshev interpolant</em> of degree $n$ of $f$ (Wang 2023)<sup id="fnref:53" role="doc-noteref"><a href="#fn:53" class="footnote" rel="footnote">54</a></sup>, (Trefethen 2013)<sup id="fnref:54" role="doc-noteref"><a href="#fn:54" class="footnote" rel="footnote">55</a></sup> is—</p>
+    <p>Suppose $f$’s domain is the interval $[a, b]$.  Then the <em>Chebyshev interpolant</em> of degree $n$ of $f$ (Wang 2023)<sup id="fnref:54" role="doc-noteref"><a href="#fn:54" class="footnote" rel="footnote">54</a></sup>, (Trefethen 2013)<sup id="fnref:55" role="doc-noteref"><a href="#fn:55" class="footnote" rel="footnote">55</a></sup> is—</p>
 
 \[p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),\]
 
@@ -929,14 +913,14 @@
       <li>$T_k(x)$ is the $k$-th <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> (<code>chebyshevt(k,x)</code> in the SymPy computer algebra library).</li>
     </ul>
   </li>
-  <li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative’s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)<sup id="fnref:54:1" role="doc-noteref"><a href="#fn:54" class="footnote" rel="footnote">55</a></sup> as well as a statement in note 1 at the end of this section.
+  <li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative’s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)<sup id="fnref:55:1" role="doc-noteref"><a href="#fn:55" class="footnote" rel="footnote">55</a></sup> as well as a statement in note 1 at the end of this section.
     <ul>
       <li>If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).</li>
-      <li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)<sup id="fnref:55" role="doc-noteref"><a href="#fn:55" class="footnote" rel="footnote">56</a></sup>.</li>
+      <li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)<sup id="fnref:56" role="doc-noteref"><a href="#fn:56" class="footnote" rel="footnote">56</a></sup>.</li>
       <li>The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ ≤ $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon&gt;0$ is the desired error tolerance.</li>
     </ul>
   </li>
-  <li>If $f$ is so “smooth” to be <em>analytic</em> (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)<sup id="fnref:54:2" role="doc-noteref"><a href="#fn:54" class="footnote" rel="footnote">55</a></sup>.</li>
+  <li>If $f$ is so “smooth” to be <em>analytic</em> (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)<sup id="fnref:55:2" role="doc-noteref"><a href="#fn:55" class="footnote" rel="footnote">55</a></sup>.</li>
 </ul>
 
 <hr />
@@ -944,7 +928,7 @@
 <ol>
   <li>Compute the required degree $n$ as given earlier, with error tolerance $\epsilon/2$.</li>
   <li>Compute the values $c_k$ as given earlier, which relate to $f$’s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, …, c_n$.</li>
-  <li>Compute the (<em>n</em>+1)×(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)<sup id="fnref:56" role="doc-noteref"><a href="#fn:56" class="footnote" rel="footnote">57</a></sup>.</li>
+  <li>Compute the (<em>n</em>+1)×(<em>n</em>+1) matrix $M$ described in Theorem 1 of Rababah (2003)<sup id="fnref:57" role="doc-noteref"><a href="#fn:57" class="footnote" rel="footnote">57</a></sup>.</li>
   <li>Multiply the matrix by the transposed vector of values $(c_0, …, c_n)$ to get the polynomial’s Bernstein coefficients $b_0, …, b_n$.  (Transposing means turning columns to rows and vice versa.)</li>
   <li>(Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.</li>
   <li>Return the Bernstein coefficients $b_0, …, b_n$.</li>
@@ -982,11 +966,11 @@
 
 \[\max(4m+M/4, 2\sqrt{mM}) \le \max(4+M, 2\sqrt{M}).\]
 
-<p><em>Proof:</em> This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)<sup id="fnref:57" role="doc-noteref"><a href="#fn:57" class="footnote" rel="footnote">58</a></sup>.</p>
+<p><em>Proof:</em> This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">58</a></sup>.</p>
 
 <p><strong>Proposition X2</strong>: Let $f(\lambda)$ map the closed unit interval to itself, have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$ (see “Definitions”). Then the derivative’s absolute value is no more than $4m+M/4$ if $m/M\ge 1/16$, or $2\sqrt{mM}$ otherwise.</p>
 
-<p><em>Proof:</em> This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)<sup id="fnref:57:1" role="doc-noteref"><a href="#fn:57" class="footnote" rel="footnote">58</a></sup>.</p>
+<p><em>Proof:</em> This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)<sup id="fnref:58:1" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">58</a></sup>.</p>
 
 <p>In the following results, denote the maximum absolute value of $f$’s $r$-th derivative as $MX(f, r)$.</p>
 
@@ -1010,11 +994,11 @@
   <li>$M_5 \le 3840 M_0 + (5/6) L_5$.</li>
 </ul>
 
-<p>Uses a result from Eriksson (1998)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">59</a></sup> with $c = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with Lipschitz-continuous $(n-1)$-th derivative.</p>
+<p>Uses a result from Eriksson (1998)<sup id="fnref:59" role="doc-noteref"><a href="#fn:59" class="footnote" rel="footnote">59</a></sup> with $c = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with Lipschitz-continuous $(n-1)$-th derivative.</p>
 
 <p><strong>Proposition X4</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous $r$-th derivative for some $r\ge 4$.  Then $MX(f,r-1) \le 4^{r-1} (r!) MX(f,0) + MX(f,r+1)/2.$</p>
 
-<p><em>Proof:</em> See Babenko et al. (1995)<sup id="fnref:59" role="doc-noteref"><a href="#fn:59" class="footnote" rel="footnote">60</a></sup>.</p>
+<p><em>Proof:</em> See Babenko et al. (1995)<sup id="fnref:60" role="doc-noteref"><a href="#fn:60" class="footnote" rel="footnote">60</a></sup>.</p>
 
 <p><strong>Corollary X4</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fourth derivative.  Then $MX(f,3) \le 1536 MX(f,0) + MX(f,5)/2$.</p>
 
@@ -1040,7 +1024,7 @@
       <p>Guan, Zhong. “<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>”, arXiv:0909.0684 (2009). <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5" role="doc-endnote">
-      <p>Güntürk, C.S., Li, W., “<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>”, arXiv:2112.09181 [cs.LG], 2021. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:5:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Güntürk, C.S., Li, W., “<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>”, arXiv:2112.09181 [cs.LG], 2021. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6" role="doc-endnote">
       <p>Tachev, Gancho. “<a href="https://doi.org/10.3934/mfc.2022061"><strong>Linear combinations of two Bernstein polynomials</strong></a>”, <em>Mathematical Foundations of Computing</em>, 2022. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:6:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:6:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
@@ -1162,50 +1146,50 @@
     <li id="fn:45" role="doc-endnote">
       <p>Păltănea, R., Smuc, M., “Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity”, <em>Results in Mathematics</em> 74 (2019). <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:60" role="doc-endnote">
-      <p>Adell, José A., and Daniel Cárdenas-Morales. “On the 10th central moment of the Bernstein polynomials.” Results in Mathematics 74 (2019): 1-6. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:46" role="doc-endnote">
-      <p><em>NIST Digital Library of Mathematical Functions</em>, <a href="https://dlmf.nist.gov/"><strong>https://dlmf.nist.gov/</strong></a> , Release 1.1.9 of 2023-03-15. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Adell, José A., and Daniel Cárdenas-Morales. “On the 10th central moment of the Bernstein polynomials.” Results in Mathematics 74 (2019): 1-6. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:47" role="doc-endnote">
-      <p>Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><em>NIST Digital Library of Mathematical Functions</em>, <a href="https://dlmf.nist.gov/"><strong>https://dlmf.nist.gov/</strong></a> , Release 1.1.9 of 2023-03-15. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:48" role="doc-endnote">
-      <p>May, C.P., “Saturation and inverse theorems for a class of exponential-type operators”, Canadian Journal of Mathematics 28 (1976). <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987. <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:49" role="doc-endnote">
-      <p>Draganov, Borislav R. “On simultaneous approximation by iterated Boolean sums of Bernstein operators.” Results in Mathematics 66, no. 1 (2014): 21-41. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>May, C.P., “Saturation and inverse theorems for a class of exponential-type operators”, Canadian Journal of Mathematics 28 (1976). <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:50" role="doc-endnote">
-      <p>Kacsó, D.P., “Simultaneous approximation by almost convex operators”, 2002. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Draganov, Borislav R. “On simultaneous approximation by iterated Boolean sums of Bernstein operators.” Results in Mathematics 66, no. 1 (2014): 21-41. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:51" role="doc-endnote">
-      <p>Stancu, D.D., Agratini, O., et al. <em>Analiză Numerică şi Teoria Aproximării</em>, 2001. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Kacsó, D.P., “Simultaneous approximation by almost convex operators”, 2002. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:52" role="doc-endnote">
-      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Stancu, D.D., Agratini, O., et al. <em>Analiză Numerică şi Teoria Aproximării</em>, 2001. <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:53" role="doc-endnote">
-      <p>H. Wang, “<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>”, arXiv:2106.03456v3 [math.NA], 2023. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:54" role="doc-endnote">
-      <p>Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:54:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:54:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>H. Wang, “<a href="https://arxiv.org/abs/2106.03456v3"><strong>Analysis of error localization of Chebyshev spectral approximations</strong></a>”, arXiv:2106.03456v3 [math.NA], 2023. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:55" role="doc-endnote">
-      <p>R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Trefethen, L.N., <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:55:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:55:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:56" role="doc-endnote">
-      <p>Rababah, Abedallah. “<a href="https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html"><strong>Transformation of Chebyshev–Bernstein polynomial basis</strong></a>.” Computational Methods in Applied Mathematics 3.4 (2003): 608-622. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:57" role="doc-endnote">
-      <p>Niculescu, Constantin P., and Constantin Buşe. “The Hardy-Landau-Littlewood inequalities with less smoothness.” J. Inequal. in Pure and Appl. Math 4 (2003). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:57:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Rababah, Abedallah. “<a href="https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html"><strong>Transformation of Chebyshev–Bernstein polynomial basis</strong></a>.” Computational Methods in Applied Mathematics 3.4 (2003): 608-622. <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:58" role="doc-endnote">
-      <p>B-O. Eriksson, “Some best constants in the Landau Inequality on a Finite Interval”, Journal of Approximation Theory 94 (1998). <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Niculescu, Constantin P., and Constantin Buşe. “The Hardy-Landau-Littlewood inequalities with less smoothness.” J. Inequal. in Pure and Appl. Math 4 (2003). <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:58:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:59" role="doc-endnote">
-      <p>Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. “On inequalities for norms of intermediate derivatives on a finite interval”, Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>B-O. Eriksson, “Some best constants in the Landau Inequality on a Finite Interval”, Journal of Approximation Theory 94 (1998). <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:60" role="doc-endnote">
+      <p>Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. “On inequalities for norms of intermediate derivatives on a finite interval”, Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
