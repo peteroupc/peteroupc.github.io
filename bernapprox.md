@@ -370,15 +370,15 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^17]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
 
-[^18]: M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles", 1918.
+[^18]: M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles", 1918.include $U_{n,2}$). G. Mastroianni, M.R. Occorsio, "Una generalizzazione dell'operatore di Bernstein", 1977.
 
-[^19]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
+[^19]: No note text yet.
 
-[^20]: Bărbosu, D., "The Bernstein operators on any finite interval revisited", Creat. Math. Inform. 20 (2020).
+[^20]: No note text yet.
 
-[^21]: Tsai, Y., Farouki, R.T., "Algorithm 812: BPOLY: An Object- Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", ACM Transactions on Mathematical Software, June 2001.
+[^21]: No note text yet.
 
-[^22]: As an example, Mastroianni and Occorsio (1977) approximate an integral this way using iterated Boolean sums of Bernstein polynomials (which include $U_{n,2}$). G. Mastroianni, M.R. Occorsio, "Una generalizzazione dell'operatore di Bernstein", 1977.
+[^22]: No note text yet.
 
 [^23]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
