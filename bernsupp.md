@@ -426,19 +426,19 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^31]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
-[^32]: Pascu, M.N., Pascu, N.R., Tripşa, F., "[**A new Bernstein-type operator based on Pólya's urn model with negative replacement**](https://arxiv.org/abs/1710.08818)", arXiv:1710.08818 [math.CA], 2017.
+[^32]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270. [**https://doi.org/10.1016/0021-9045(85**](https://doi.org/10.1016/0021-9045(85))90049-8
 
-[^33]: Strukov, L.I., Timan, A.F., "Mathematical expectation of continuous functions of random variables. Smoothness and variance", _Siberian Mathematical Journal_ 18 (1977).
+[^33]: Pascu, M.N., Pascu, N.R., Tripşa, F., "[**A new Bernstein-type operator based on Pólya's urn model with negative replacement**](https://arxiv.org/abs/1710.08818)", arXiv:1710.08818 [math.CA], 2017.
 
-[^34]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
+[^34]: Strukov, L.I., Timan, A.F., "Mathematical expectation of continuous functions of random variables. Smoothness and variance", _Siberian Mathematical Journal_ 18 (1977).
 
-[^35]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
+[^35]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 
-[^36]: Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant." Calcolo 59.1 (2022): 10.
+[^36]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
 
-[^37]: An interesting question is finding the conditions that allow a continuous function's Lagrange polynomials to converge, but this question is outside the scope of this article.  But see G. Kvernadze, "Uniform convergence of Lagrange interpolation based on the Jacobi nodes," _Journal of Approximation Theory_ 87(2), 1996, and papers citing it.
+[^37]: Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant." Calcolo 59.1 (2022): 10.
 
-[^38]: Cichoń, Jacek, et al. "On delta-method of moments and probabilistic sums." 2013 Proceedings of the Tenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO). Society for Industrial and Applied Mathematics, 2013.
+[^38]: An interesting question is finding the conditions that allow a continuous function's Lagrange polynomials to converge, but this question is outside the scope of this article.  But see G. Kvernadze, "Uniform convergence of Lagrange interpolation based on the Jacobi nodes," _Journal of Approximation Theory_ 87(2), 1996, and papers citing it.
 
 [^39]: Mattner, Lutz, and Jona Schulz. "On normal approximations to symmetric hypergeometric laws." Transactions of the American Mathematical Society 370.1 (2018): 727-748.
 
@@ -481,8 +481,6 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^58]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^59]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
-
-[^60]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270. [https://doi.org/10.1016/0021-9045(85](https://doi.org/10.1016/0021-9045(85))90049-8
 
 <a id=Appendix></a>
 
@@ -704,9 +702,23 @@ _where $r = (2-2\alpha)/(1+\alpha)$.  If $\alpha$ is 1 (so that $f$ is Lipschitz
 
 $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (M/2) \cdot\text{Var}[Y].$$
 
-_Proof:_ This lemma is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^60], with $m=1$ (since $Y$ takes only values in the interval in question), $r$ as given, and $x_0$ equal to the mean of $Y$. &#x25a1;
+_Proof:_ This lemma is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^32], with $m=1$ (since $Y$ takes only values in the interval in question), $r$ as given, and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance would be 0.  &#x25a1;
 
-Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017, Lemma 5.1)[^32] and in Strukov and Timan (1977)[^33].
+**Lemma 2B**. _For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\sigma_r(Y)$ be the $r$-th central moment of $Y$, and let $\tau_r(Y)$ be $Y$'s $r$-th central absolute moment.  Then&mdash;_
+
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right) + \frac{C M\cdot\tau_{k+1}(Y)}{2},$$
+
+_where $C$ is as given in the following list:_
+
+- _If $k=2$, $C=1/4+\sqrt{3}/6 < 0.53868$._
+- _If $k=3$, $C=19/96$._
+- _If $k=4$, $C=23/480$._
+- _If $k=5$, $C=11/1152$._
+- _If $k\ge 3$ is an integer, $C=(k^2+9k+40)/(16\cdot (k!))$._
+
+_Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^32], with $m=1$, $w\ge M(\tau_{k+1}(Y))^{1/(k+1)}/2$, $r=1/2$ (except, if $k=3$, $r=\sqrt{12}/3$), $n=k$, and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance and higher central moments would be 0. (Note that $i$ starts at 2 because $\sigma_1(Y)$ is always 0.) &#x25a1;
+
+Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017, Lemma 5.1)[^33] and in Strukov and Timan (1977)[^34].
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
@@ -771,7 +783,7 @@ Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The 
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's Bernstein coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their Bernstein coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
-> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^34] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^35]; see also Remark C of Nacu and Peres (2005)[^1].
+> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^35] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^36]; see also Remark C of Nacu and Peres (2005)[^1].
 
 **Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent $\alpha$, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
@@ -798,6 +810,8 @@ The result then follows from Theorem 1. &#x25a1;
 
 > **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder-continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
+Lipschitz-continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, which leads to...
+
 **Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then the following scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
@@ -807,8 +821,6 @@ _Or:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M\*sqrt(2/7)/((sqrt(2)&minus;1)\*sqrt(n))._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M\*sqrt(2/7)/((sqrt(2)&minus;1)\*sqrt(n))._
-
-_Proof._ Because Lipschitz-continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, the result follows from Corollary 1. &#x25a1;
 
 > **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
 
@@ -925,7 +937,7 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 >
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
 > 2. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
-> 3. It is without loss of generality that $W_n$ is a sequence of _rational functions_ rather than arbitrary functions.   Indeed, if $W_n$ is continuous there is a rational function of degree $n$ that equals $W_n$ at the points $0, 1/n, ..., n/n$, such that both functions have the same Bernstein polynomial (the Lagrange interpolating polynomial doesn't converge uniformly for all continuous functions, but there are rational functions that do (Zhang and Liu 2022)[^36]).[^37]
+> 3. It is without loss of generality that $W_n$ is a sequence of _rational functions_ rather than arbitrary functions.   Indeed, if $W_n$ is continuous there is a rational function of degree $n$ that equals $W_n$ at the points $0, 1/n, ..., n/n$, such that both functions have the same Bernstein polynomial (the Lagrange interpolating polynomial doesn't converge uniformly for all continuous functions, but there are rational functions that do (Zhang and Liu 2022)[^37]).[^38]
 
 ---------------------
 
@@ -935,12 +947,10 @@ The following claim is believed to be true.
 
 1. is a linear operator,
 2. satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$ for some $D>0$,
-3. preserves polynomials of degree $r$ or less, so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $r$ or less, and
+3. preserves polynomials of degree $r$ or less, so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-2)$ or less, and
 4. has a continuous $r$-th derivative.
 
-Then the left-hand side of (PB) is not greater than $\frac{12D\sqrt{2}+48D+1}{48}\frac{M}{n^{3/2}}$.
-
-Therefore, a value of $C_0$ that satisfies the conjecture is $4\sqrt{2}D/7 + 9D/7 + \sqrt{2}/168 + 1/42 \lt 2.09384D+0.03223$.
+Then the left-hand side of (PB) is not greater than $\frac{M(100000 \sqrt{2} D + 400000 D + 13467)}{400000 n^{3/2}}$.
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 
@@ -952,32 +962,22 @@ Because $W_n$ also satisfies point 2, the left-hand side of (PB) is not greater 
 
 $$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))+\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}.$$
 
-$W_n$ has a continuous $r$-th derivative, so&mdash;
+$W_n$ has a continuous $r$-th derivative, and so has a Lipschitz-continuous $(r-1)$-th derivative with Lipschitz constant $M$ or less, so by Lemma 2B&mdash;
 
 $$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})$$
 
-$$=W_n(\mathbb{E}[X/n]) + \mu_2(X/n)\frac{W_n^{(2)}(\mathbb{E}[X/n])}{2} + \frac{\mu_3(X/n) M_3}{6},$$
-
-$$\le W_n(k/(2n)) + \mu_2(X/n)\frac{W_n^{(2)}(\frac{k}{2n})}{2} + \frac{\mu_3(X/n) M_3}{6},$$
+$$\le\frac{\max(\text{abs}(W_n^{(2)})) \text{Var}[X/n]}{2} + \frac{0.53868 M\cdot\tau_{k+1}(X/n)}{2},$$
 
 where&mdash;
 
 - $\mathbb{E}[X/n]$ is the expected ("long-range") value of $X/n$,
-- $M_3$ is the maximum absolute value of $f$'s third derivative,
-- $\mu_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected ["long-range"] value of $\text{abs}(X/n - \mu(X/n))^s$), and
+- $\text{Var}[X/n]$ is the variance of $X/n$,
+- $\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected ["long-range"] value of $\text{abs}(X/n - \mu(X/n))^s$), and
 - $X$ is a hypergeometric($2n$,$k$,$n$) random variable.
 
-(See also Cichoń et al. (2013)[^38].) Therefore&mdash;
+Because $W_n$ preserves polynomials of degree 2 or less, it can be assumed without loss of generality that $W_n$ and the first and second derivatives of $f$ equal zero at $k/(2n)$.  Therefore&mdash;
 
-$$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$$
-
-$$\le\mu_2(X/n)\frac{W_n^{(2)}(\frac{k}{2n})}{2} + \frac{\mu_3(X/n) M_3}{6}$$
-
-$$\le\frac{1}{8n-4}\frac{W_n^{(2)}(\frac{k}{2n})}{2} + \frac{\mu_3(X/n) M_3}{6}.$$
-
-Because $W_n$ preserves polynomials of degree 3 or less, it can be assumed without loss of generality that $W_n$ and the first, second, and third derivatives of $f$ equal zero at $k/(2n)$.  Therefore&mdash;
-
-$$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n))) \le\frac{\mu_3(X/n) M_3}{6}.$$
+$$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})\le\frac{0.53868 M\cdot\tau_{k+1}(X/n)}{2},$$
 
 [Can $M$ above really be assumed to be the upper bound of $W_n$'s derivatives?]
 
@@ -987,27 +987,25 @@ $X$ is symmetric about its mean (Mattner and Schulz 2018)[^39] and can take on v
 
 Because 4 is even, the fourth central absolute moment of $X/n$ equals the fourth central moment of $X/n$ (the expected value of $(X/n-\mathbb{E}[X/n])^4$).  [It is conjectured that] this moment reaches its maximum when $k=n$.  So, when $k=n$:
 
-$$\mu_4(X/n)=\mu_4(X)/n^4=\frac{3 n^{2} - 4n}{64 n^{4} - 128 n^{3} + 48 n^{2}} = g(n).$$
+$$\tau_4(X/n)=\tau_4(X)/n^4=\frac{3 n^{2} - 4n}{64 n^{4} - 128 n^{3} + 48 n^{2}} = g(n).$$
 
 $g(n)$ converges to 0 because the numerator polynomial is of lesser degree than the denominator.
 
-Using the well-known fact that $\mu_3(Y)\le (\mu_4(Y))^{3/4}$ whenever the random variable $Y$ has a fourth moment, take the power of $3/4$ to get:
+Using the well-known fact that $\tau_3(Y)\le (\tau_4(Y))^{3/4}$ whenever the random variable $Y$ has a fourth moment, take the power of $3/4$ to get:
 
-$$\mu_3(X/n)\le (g(n))^{3/4}.$$
+$$\tau_3(X/n)\le (g(n))^{3/4}.$$
 
 Now take $(g(n))^{3/4} n^{3/2}$, which equals $0.125$ when $n=1$, and converges to a positive number, namely 3/16, because the numerator is now of greater degree (degree 5) than the denominator (degree 4), and it [is conjectured to be] decreasing.  Therefore:
 
-$$\mu_3(X/n)\le (g(n))^{3/4}\le 0.125/n^{3/2}.$$
+$$\tau_3(X/n)\le (g(n))^{3/4}\le 0.125/n^{3/2}.$$
 
 It thus follows that&mdash;
 
-$$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))$$
-
-$$\le\frac{0.125 M_3}{6 n^{3/2}} = \frac{M_3}{48 n^{3/2}},$$
+$$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))\le\frac{0.53868\cdot M}{2}\frac{0.125}{n^{3/2}} = \frac{13467 M}{400000 n^{3/2}},$$
 
 so the left-hand side of (PB) is not greater than&mdash;
 
-$$\frac{M_3}{48n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le \frac{12D\sqrt{2}+48D+1}{48}\frac{M}{n^{3/2}}.$$
+$$\frac{13467 M}{400000 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{M(100000 \sqrt{2} D + 400000 D + 13467)}{400000 n^{3/2}}.$$
 
 --------------------
 
