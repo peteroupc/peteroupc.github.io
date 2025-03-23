@@ -482,6 +482,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^59]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^60]: Khan, R.A., "Some probabilistic methods in the theory of approximation operators", 1980.
+
+[^61]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -706,17 +710,27 @@ _Proof:_ This lemma is a special case of Theorem 2.19 (in conjunction with Remar
 
 **Lemma 2B**. _For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\sigma_r(Y)$ be the $r$-th central moment of $Y$, and let $\tau_r(Y)$ be $Y$'s $r$-th central absolute moment.  Then&mdash;_
 
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right) + \frac{C M\cdot\tau_{k+1}(Y)}{2},$$
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right) + C M\cdot\tau_{k+1}(Y),$$
 
 _where $C$ is as given in the following list:_
 
-- _If $k=2$, $C=1/4+\sqrt{3}/6 < 0.53868$._
-- _If $k=3$, $C=19/96$._
-- _If $k=4$, $C=23/480$._
-- _If $k=5$, $C=11/1152$._
+- _If $k=2$, $C=1/6$._
+- _If $k=3$, $C=19/192$._
+- _If $k=4$, $C=23/960$._
+- _If $k=5$, $C=11/2304$._
 - _If $k\ge 3$ is an integer, $C=(k^2+9k+40)/(16\cdot (k!))$._
 
-_Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^32], with $m=1$, $w\ge M(\tau_{k+1}(Y))^{1/(k+1)}/2$, $r=1/2$ (except, if $k=3$, $r=\sqrt{12}/3$), $n=k$, and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance and higher central moments would be 0. (Note that $i$ starts at 2 because $\sigma_1(Y)$ is always 0.) &#x25a1;
+_Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^32], with $m=1$; $r=1/2$ (except, if $k=2$, $r$ is a small value arbitrarily close to 0); $w\ge rM(\tau_{k+1}(Y))^{1/(k+1)}$; $n=k$; and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance and higher central moments would be 0. (Note that $i$ starts at 2 because $\sigma_1(Y)$ is always 0.) &#x25a1;
+
+> **Note:** With the estimation just given for $w$, $C$ is believed to equal $1/((k+1)!)$.
+
+**Lemma 2C**.  Let $f(\lambda)$ be Hölder continuous on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $X$ be a random variable taking only values in that interval.  Then for every $h$ that satisfies $0<h\le 1$:
+
+$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot M \cdot (h)^{\alpha}.$$
+>
+>**Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)[^33] and Khan (1980)[^60].
+
+_Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_. Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^61] &#x25a1;
 
 Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017, Lemma 5.1)[^33] and in Strukov and Timan (1977)[^34].
 
@@ -947,10 +961,10 @@ The following claim is believed to be true.
 
 1. is a linear operator,
 2. satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$ for some $D>0$,
-3. preserves polynomials of degree $r$ or less, so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-2)$ or less, and
-4. has a continuous $r$-th derivative.
+3. preserves polynomials of degree $(r-1)$ or less, so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less, and
+4. has a continuous $r$-th derivative that satisfies $\text{abs}(W_n^{(r)}(\lambda))\le EM$ for some $E>0$.
 
-Then the left-hand side of (PB) is not greater than $\frac{M(100000 \sqrt{2} D + 400000 D + 13467)}{400000 n^{3/2}}$.
+Then the left-hand side of (PB) is not greater than $\frac{EM (12 \sqrt{2} D + 48 D + 1)}{48 n^{3/2}}$.
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 
@@ -962,50 +976,48 @@ Because $W_n$ also satisfies point 2, the left-hand side of (PB) is not greater 
 
 $$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))+\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}.$$
 
-$W_n$ has a continuous $r$-th derivative, and so has a Lipschitz-continuous $(r-1)$-th derivative with Lipschitz constant $M$ or less, so by Lemma 2B&mdash;
+Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected ("long-run") value of $X/n$ is $k/(2n)$, so by Lemma 2B&mdash;
 
 $$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})$$
 
-$$\le\frac{\max(\text{abs}(W_n^{(2)})) \text{Var}[X/n]}{2} + \frac{0.53868 M\cdot\tau_{k+1}(X/n)}{2},$$
+$$\le\frac{\max(\text{abs}(W_n^{(2)})) \text{Var}[X/n]}{2} +  \frac{EM\cdot\tau_{3}(X/n)}{6},$$
 
 where&mdash;
 
-- $\mathbb{E}[X/n]$ is the expected ("long-range") value of $X/n$,
-- $\text{Var}[X/n]$ is the variance of $X/n$,
-- $\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected ["long-range"] value of $\text{abs}(X/n - \mu(X/n))^s$), and
-- $X$ is a hypergeometric($2n$,$k$,$n$) random variable.
+- $\text{Var}[X/n]$ is the variance of $X/n$, and
+- $\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected ["long-run"] value of $\text{abs}(X/n - \mu(X/n))^s$).
 
-Because $W_n$ preserves polynomials of degree 2 or less, it can be assumed without loss of generality that $W_n$ and the first and second derivatives of $f$ equal zero at $k/(2n)$.  Therefore&mdash;
+Because $W_n$ is a linear operator that preserves polynomials of degree 2 or less, it can be assumed without loss of generality that $W_n$ and the first and second derivatives of $f$ equal zero at $k/(2n)$ (so that $W_n$'s _Taylor polynomial_ centered at $k/(2n)$ is zero).  Therefore&mdash;
 
-$$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})\le\frac{0.53868 M\cdot\tau_{k+1}(X/n)}{2},$$
-
-[Can $M$ above really be assumed to be the upper bound of $W_n$'s derivatives?]
+$$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})\le\frac{EM\cdot\tau_{3}(X/n)}{6},$$
 
 It remains to estimate the third central absolute moment of $X/n$.
 
+Because $\tau_{s}(X/n) = \tau_{s}(X)/n^s$ for every $s>0$, it's easier to work with just $X$ rather than $X/n$ in what follows.
+
 $X$ is symmetric about its mean (Mattner and Schulz 2018)[^39] and can take on values in the closed interval $[0, n]$, since there are at most $n$ "good" balls.
 
-Because 4 is even, the fourth central absolute moment of $X/n$ equals the fourth central moment of $X/n$ (the expected value of $(X/n-\mathbb{E}[X/n])^4$).  [It is conjectured that] this moment reaches its maximum when $k=n$.  So, when $k=n$:
+Because 4 is even, the fourth central absolute moment of $X$ equals the fourth central moment of $X$ (the expected value of $(X-\mathbb{E}[X])^4$).  [It is conjectured that] this moment reaches its maximum when $k=n$.  So, when $k=n$:
 
-$$\tau_4(X/n)=\tau_4(X)/n^4=\frac{3 n^{2} - 4n}{64 n^{4} - 128 n^{3} + 48 n^{2}} = g(n).$$
+$$\tau_4(X)=\frac{3 n^4 - 4n^3}{64 n^{2} - 128 n + 48} = g(n).$$
 
 $g(n)$ converges to 0 because the numerator polynomial is of lesser degree than the denominator.
 
 Using the well-known fact that $\tau_3(Y)\le (\tau_4(Y))^{3/4}$ whenever the random variable $Y$ has a fourth moment, take the power of $3/4$ to get:
 
-$$\tau_3(X/n)\le (g(n))^{3/4}.$$
+$$\tau_3(X)\le (g(n))^{3/4}.$$
 
 Now take $(g(n))^{3/4} n^{3/2}$, which equals $0.125$ when $n=1$, and converges to a positive number, namely 3/16, because the numerator is now of greater degree (degree 5) than the denominator (degree 4), and it [is conjectured to be] decreasing.  Therefore:
 
-$$\tau_3(X/n)\le (g(n))^{3/4}\le 0.125/n^{3/2}.$$
+$$\tau_3(X)\le (g(n))^{3/4}\le 0.125 n^{3/2}.$$
 
-It thus follows that&mdash;
+It thus follows that $\tau_3(X/n) = \tau_3(X)/n^3 \le 0.125/n^{3/2}$, so&mdash;
 
-$$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))\le\frac{0.53868\cdot M}{2}\frac{0.125}{n^{3/2}} = \frac{13467 M}{400000 n^{3/2}},$$
+$$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))\le\frac{EM}{6}\frac{0.125}{n^{3/2}} = \frac{EM}{48 n^{3/2}},$$
 
 so the left-hand side of (PB) is not greater than&mdash;
 
-$$\frac{13467 M}{400000 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{M(100000 \sqrt{2} D + 400000 D + 13467)}{400000 n^{3/2}}.$$
+$$\frac{EM}{48 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{EM (12 \sqrt{2} D + 48 D + 1)}{48 n^{3/2}}.$$
 
 --------------------
 
