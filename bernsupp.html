@@ -1303,19 +1303,16 @@
 
 <p>where the last inequality uses that $k\le n$.</p>
 
-<p>The result for odd integers follows from a straightforward application of Schwarz’s inequality.</p>
+<p>The result for odd integers follows from a straightforward application of Cauchy’s inequality.</p>
 
 <p>I acknowledge the user “Barbab” on <em>Cross Validated</em> for giving me useful insights. □</p>
 
-<p><strong>Corollary C2.</strong> Let $X$ be a hypergeometric variable as in Lemma C1.  Then, for every integer $0\le k\le 2n$, $\tau_4(X)\le \frac{3}{16}n^2$.</p>
+<p><strong>Corollary C2.</strong> Let $X$ be a hypergeometric variable as in Lemma C1.  Then, for every integer $0\le k\le 2n$—</p>
 
-<p><strong>Lemma C3.</strong> Let $X$ be a hypergeometric variable as in Lemma C1.  Then, for every integer $0\le k\le 2n$, $\tau_3(X)\le 0.125 n^{3/2}$.</p>
-
-<p><em>Proof:</em> By Corollary C2, $\tau_4(X) \le \frac{3}{16}n^2$.  The well-known fact that $\tau_3(Y)\le (\tau_4(Y))^{3/4}$ whenever the random variable $Y$ has a fourth moment gives:</p>
-
-\[\tau_3(X)\le \left(\frac{3}{16}n^2\right)^{3/4}\le 0.125 n^{3/2}.\]
-
-<p>□</p>
+<ul>
+  <li>$\tau_4(X)\le \frac{3}{16}n^2$, and</li>
+  <li>$\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \le 0.2166 n^{3/2}$.</li>
+</ul>
 
 <p>The following claim is believed to be true.</p>
 
@@ -1328,7 +1325,9 @@
   <li>has a continuous $r$-th derivative that satisfies $\text{abs}(W_n^{(r)}(\lambda))\le EM$ for some $E&gt;0$.</li>
 </ol>
 
-<p>Then the left-hand side of (PB) is not greater than $\frac{EM (12 \sqrt{2} D + 48 D + 1)}{48 n^{3/2}}$.</p>
+<p>Then the left-hand side of (PB) is not greater than—</p>
+
+\[\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.\]
 
 <p><em>Provisional proof</em>: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than—</p>
 
@@ -1359,13 +1358,13 @@
 
 <p>It remains to estimate the third central absolute moment of $X/n$.</p>
 
-<p>$\tau_{s}(X/n) = \tau_{s}(X)/n^s$ for every $s\ge 0$, and Lemma C3 gives the result that $\tau_3(X) \le 0.125 n^{3/2}$, so $\tau_3(X/n) = \tau_3(X)/n^3 \le 0.125/n^{3/2}$ and—</p>
+<p>$\tau_{s}(X/n) = \tau_{s}(X)/n^s$ for every $s\ge 0$, and Corollary C2 gives the result that $\tau_3(X) \le (\sqrt{3}/8) n^{3/2}$, so $\tau_3(X/n) = \tau_3(X)/n^3 \le (\sqrt{3}/8)/n^{3/2}$ and—</p>
 
-\[\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))\le\frac{EM}{6}\frac{0.125}{n^{3/2}} = \frac{EM}{48 n^{3/2}},\]
+\[\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))\le\frac{EM}{6}\frac{\sqrt{3}}{8 n^{3/2}},\]
 
 <p>so the left-hand side of (PB) is not greater than—</p>
 
-\[\frac{EM}{48 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{EM (12 \sqrt{2} D + 48 D + 1)}{48 n^{3/2}}.\]
+\[\frac{EM\sqrt{3}}{48 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.\]
 
 <hr />
 
