@@ -519,7 +519,7 @@ Functions continuous except possibly at one point &rarr; Continuous functions &r
 
 **Hölder and Lipschitz-continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
 
-| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_H_)\: | Notes |
+| Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_)\: | Notes |
  --- | --- | --- |
 |$\lambda^z\cdot t$. | _&alpha;_=_z_.<br>_L_=abs(_t_). | $0\lt z\le 1$, $t\ne 0$. |
 |$\lambda^z\cdot t$. | _&alpha;_=1 (Lipschitz continuous).<br>_L_=_z_\*abs(_t_). | $z\ge 1$, $t$ is a real number. |
@@ -698,10 +698,10 @@ _Proof._
 > 1. **E**[.] means expected value ("long-run average"), and **Var**[.] means variance.  A hypergeometric(2 \* _n_, _k_, _n_) random variable is the number of "good" balls out of _k_ balls taken uniformly at random, all at once, from a bag containing 2 \* _n_ balls, _n_ of which are "good".
 > 2. Parts 1 through 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 3. All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
->     1. If _f_ is strictly increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
->     2. If _f_ is strictly decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
->     3. If _f_ is strictly increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
->     4. If _f_ is strictly decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
+>     1. If _f_ is nowhere decreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
+>     2. If _f_ is nowhere increasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
+>     3. If _f_ is nowhere decreasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
+>     4. If _f_ is nowhere increasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^31].
 
 **Lemma 2A**. _Let $f(\lambda)$ have a Hölder-continuous derivative on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\mathbb{E}[Y]$ and $\text{Var}[Y]$ be the mean and variance, respectively, of $Y$.  Then&mdash;_
@@ -734,11 +734,11 @@ _Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^32]
 
 $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot M \cdot (h)^{\alpha}.$$
 >
->**Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)[^33] and Khan (1980)[^34].
+>*Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)[^33] and Khan (1980)[^34].
 
 _Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_. Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^35]. &#x25a1;
 
-Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017, Lemma 5.1)[^33] and in Strukov and Timan (1977)[^36].
+Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017)[^33] and in Strukov and Timan (1977)[^36].
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
@@ -931,7 +931,7 @@ The following conjecture suggests there may be a way to easily adapt other appro
 
 **Conjecture.**
 
-Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be rational functions (ratios of polynomials) on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
+Let $r\ge 1$, and let $f$ be a strictly bounded factory function whose $r$-th derivative is continuous.  Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
@@ -957,7 +957,7 @@ It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when 
 >
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
 > 2. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
-> 3. It is without loss of generality that $W_n$ is a sequence of _rational functions_ rather than arbitrary functions.   Indeed, if $W_n$ is continuous there is a rational function of degree $n$ that equals $W_n$ at the points $0, 1/n, ..., n/n$, such that both functions have the same Bernstein polynomial (the Lagrange interpolating polynomial doesn't converge uniformly for all continuous functions, but there are rational functions that do (Zhang and Liu 2022)[^39]).[^40]
+> 3. The functions $W_n$ can be taken as _rational functions_ without loss of generality.   Indeed, if $W_n$ is continuous there is a rational function of degree $n$ that equals $W_n$ at the points $0, 1/n, ..., n/n$, such that both functions have the same Bernstein polynomial (the Lagrange interpolating polynomial doesn't converge uniformly for all continuous functions, but there are rational functions that do (Zhang and Liu 2022)[^39]).[^40]
 
 ---------------------
 
@@ -975,9 +975,9 @@ _Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random var
 
 It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.
 
-The $s$-th central moment of $X$ is the expected or "long-run" value of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (Vatutin and Mikhaĭlov 1982)[^42], so by Hoeffding (1963)[^43], this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
+The $s$-th central moment of $X$ is the expected or "long-run" value of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^42], so by Hoeffding (1963)[^43], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
 
-In turn, a result of Adell and Cárdenas-Morales (2018)[^44] gives an upper bound of binomial central moments for even $s$.
+In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^44] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
 
 By that result, if $s$ is an even integer then&mdash;
 
