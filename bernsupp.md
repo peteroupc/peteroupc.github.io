@@ -730,7 +730,7 @@ _Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^32]
 
 > **Note:** With the estimation just given for $w$, $C$ is believed to equal $1/((k+1)!)$.
 
-**Lemma 2C**.  Let $f(\lambda)$ be Hölder continuous on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $X$ be a random variable taking only values in that interval.  Then for every $h$ that satisfies $0<h\le 1$:
+**Lemma 2C**.  _Let $f(\lambda)$ be Hölder continuous on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $X$ be a random variable taking only values in that interval.  Then for every $h$ that satisfies $0<h\le 1$:_
 
 $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot M \cdot (h)^{\alpha}.$$
 >
@@ -1046,10 +1046,10 @@ $$\frac{EM\sqrt{3}}{48 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \
 
 The following lower bounds on $C_0$, given certain polynomials, can be shown.  In the table:
 
-- $M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives upolumn, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.h to the $r$-th derivative.
+- $M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.
 - The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.
 
-For a description of the polynomials in the third ctml).
+For a description of the polynomials in the third column, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
 
 | If $r$ is... | And... | With the following polynomial's Bernstein coefficients: | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
  --- | --- | --- | --- | --- | --- |

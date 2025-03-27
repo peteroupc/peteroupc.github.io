@@ -324,9 +324,10 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 
 The following references discuss schemes that&mdash;
 
-- approximate functions with a continuous $r$-th derivative on the closed unit interval,
+- approximate functions with a continuous $r$-th derivative on the closed unit interval, where $r\ge 3$,
 - using polynomials of degree $n$,
-- at a rate no slower than a constant times $1/n^{r/2}$.
+- at a rate no slower than a constant times $1/n^{r/2}$, and
+- without introducing transcendental or trigonometric functions.
 
 Holtz et al. (2011)[^29]; Sevy (1991)[^30] and references there; Waldron (2009)[^31]; Costabile et al. (2005)[^32]; Han (2003)[^33].  Excluded from this list are schemes that employ _splines_ (piecewise polynomials), or sequences of nonpolynomial functions.
 
