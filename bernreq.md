@@ -8,7 +8,7 @@
 
 Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the _Bernoulli factory problem_, and it can be solved only for certain functions $f$. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)
 
-Specifically, a function $f$ can be simulated this way only if it's continuous and only if a piecewise polynomial can come between the x-axis and $f$ and between the x-axis and $1-f$, or if $f=0$ and $f=1$.
+Specifically, a function $f$ can be simulated this way only if it's continuous and only if a piecewise polynomial can come between the x-axis and $f$ and between the x-axis and $1-f$, or if $f=0$ or $f=1$.
 
 This page contains several questions about the [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
@@ -119,7 +119,7 @@ The following are some strategies for answering these questions:
 
     $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)$$
 
-    $$=\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}-W_{2n}\frac{k}{2n}\right)\right)$$
+    $$=\text{abs}\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}-W_{2n}(\frac{k}{2n})\right)\right)$$
 
     $$=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
 
