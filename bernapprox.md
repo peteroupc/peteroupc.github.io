@@ -672,9 +672,7 @@ The following error bounds follow from results of Sevy (1991)[^50], especially t
 | If _f_(_&lambda;_) on the closed unit interval: |  Then the following polynomial: |  Is close to _f_ with the following error bound: |
  --- | - | --- |
 | Has continuous second derivative. | $U_{n,2}.$ | $\frac{25M_2}{16n}$. |
-| Has continuous second derivative. | $U_{n,2}.$ | $\frac{5M_2}{4\cdot n}$. |
 | Has continuous third derivative. | $U_{n,3}.$ | $\frac{25M_2}{16\cdot n^2}$ + $\frac{125M_3}{64n^{3/2}}$. |
-| Has continuous third derivative. | $U_{n,3}.$ | $\frac{5M_2}{4\cdot n^{3/2}}$ + $\frac{25M_3}{16n^{2}}$. |
 | Has continuous fourth derivative. | $U_{n,2}.$ | $\frac{195 M_{2}}{32 n^{2}}$ + $ \frac{45 M_{2}}{8 n^{\frac{5}{2}}}$ + $\frac{377 M_{4}}{128 n^{2}}$ + $\frac{9 M_{4}}{8 n^{3}}$ + $\frac{63 M_{4}}{16 n^{\frac{5}{2}}}$. |
 | Has continuous sixth derivative. | $U_{n,3}.$ | $\frac{8775 M_{2}}{32 n^{3}}$ + $\frac{2025 M_{2}}{8 n^{\frac{7}{2}}}$ + $\frac{21489 M_{4}}{128 n^{3}}$ + $\frac{513 M_{4}}{8 n^{4}}$ + $\frac{3591 M_{4}}{16 n^{\frac{7}{2}}}$ + $\frac{16965 M_{6}}{512 n^{3}}$ + $\frac{783 M_{6}}{32 n^{4}}$ + $\frac{6801 M_{6}}{128 n^{\frac{7}{2}}}$ + $\frac{27 M_{6}}{8 n^{\frac{9}{2}}}$. |
 
