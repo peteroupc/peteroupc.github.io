@@ -298,6 +298,8 @@ In addition, rational functions are not much better than polynomials in approxim
 - $f$ has only a finite number of continuous derivatives on the half-open interval (0, 1], _and_
 - the rational function's denominator has no root that is a complex number whose real part is between 0 and 1 (Borwein 1979, theorem 29)[^27].
 
+Worth discussing are the approximating rational functions studied in Zhang and Liu (2022)[^59] and Themistoclakis and Van Barel (2024)[^60].  In the latter paper, though, it might be a bit difficult to glean error estimates of the kind given in the second table in the section "Approximations on the Closed Unit Interval", earlier in the present article.  I seek help on that.
+
 <a id=Request_for_Additional_Methods></a>
 
 ## Request for Additional Methods
@@ -452,6 +454,10 @@ There may be other useful schemes for polynomials not mentioned in this document
 [^57]: B-O. Eriksson, "Some best constants in the Landau Inequality on a Finite Interval", Journal of Approximation Theory 94 (1998).
 
 [^58]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
+
+[^59]: Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant." Calcolo 59.1 (2022): 10.
+
+[^60]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor (2024). [https://doi.org/10.1007/s11075-024-01933-6](https://doi.org/10.1007/s11075-024-01933-6) .
 
 <a id=Appendix></a>
 

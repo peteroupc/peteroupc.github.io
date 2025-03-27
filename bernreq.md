@@ -60,7 +60,7 @@ The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with
 
 ### Solving the Bernoulli factory problem with polynomials
 
-An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) (Łatuszyński et al. 2009/2011)[^2] simulates a function that admits a Bernoully factory $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
+An [**algorithm**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) (Łatuszyński et al. 2009/2011)[^2] simulates a function that admits a Bernoulli factory $f(\lambda)$ via two sequences of polynomials that converge from above and below to that function. Roughly speaking, the algorithm works as follows:
 
 1. Generate U, a uniform random variate in $[0, 1]$.
 2. Flip the input coin (with a probability of heads of $\lambda$), then build an upper and lower bound for $f(\lambda)$, based on the outcomes of the flips so far. In this case, these bounds come from two degree-$n$ polynomials that approach $f$ as $n$ gets large, where $n$ is the number of coin flips so far in the algorithm.
