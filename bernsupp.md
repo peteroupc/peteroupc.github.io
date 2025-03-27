@@ -670,11 +670,23 @@ In the following results:
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^28].  For examples, see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)".
 - A _modulus of continuity_ of a function _f_ means a nonnegative and nowhere decreasing function _&omega;_ on the closed unit interval, for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) whenever _x_ and _y_ are in _f_'s domain.  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is greater than or equal to _f_'s maximum range in a window of size _&delta;_.
 
+Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
+
+- $\mathbb{E}[Y]$ as the _mean_ (or expected value or "long-run average") of $Y$,
+- $\sigma_r(Y)$ as the $r$-th _central moment_ (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,
+- $\tau_r(Y)$ as the $r$-th _central absolute moment_ of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and
+- $\text{Var}[Y]$ as the _variance_ (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.
+
 Lemma 6(i) of Nacu and Peres (2005\)[^1] can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder continuous_ functions (see "[**Definitions**](#Definitions)").
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2\*n, k, n) random variable, and let $n\ge 1$ be an integer._
 
-1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave, then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is less than or equal to each of the following:_
+1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave, then the expression&mdash;_
+
+    $$\text{abs}\mathbb{E}[f(X/n)-f(k/(2n))],\tag{1}$$
+
+    _is less than or equal to each of the following:_
+
     - _&omega;(sqrt(1/(8\*n&minus;4)))._
     - _&omega;(sqrt(1/(7\*n))) if n&ge;4._
     - _&omega;(sqrt(1/(2\*n)))._
@@ -695,8 +707,8 @@ _Proof._
 
 > **Notes:**
 >
-> 1. **E**[.] means expected value ("long-run average"), and **Var**[.] means variance.  A hypergeometric(2 \* _n_, _k_, _n_) random variable is the number of "good" balls out of _k_ balls taken uniformly at random, all at once, from a bag containing 2 \* _n_ balls, _n_ of which are "good".
-> 2. Parts 1 through 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
+> 1. A hypergeometric(2 \* _n_, _k_, _n_) random variable is the number of "good" balls out of _k_ balls taken uniformly at random, all at once, from a bag containing 2 \* _n_ balls, _n_ of which are "good".
+> 2. Parts 1 through 3 exploit a tighter bound on the variance of $X/n$ than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 3. All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
 >     1. If _f_ is nowhere decreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
 >     2. If _f_ is nowhere increasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
@@ -704,7 +716,7 @@ _Proof._
 >     4. If _f_ is nowhere increasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^31].
 
-**Lemma 2A**. _Let $f(\lambda)$ have a Hölder-continuous derivative on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\mathbb{E}[Y]$ and $\text{Var}[Y]$ be the mean and variance, respectively, of $Y$.  Then&mdash;_
+**Lemma 2A**. _Let $f(\lambda)$ have a Hölder-continuous derivative on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then&mdash;_
 
 $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \frac{r^\alpha(r+2)^2}{8r}\cdot M \cdot (\text{Var}[Y])^{(1+\alpha)/2},$$
 
@@ -714,7 +726,7 @@ $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (M/2) \cdot\text{Var}[Y].$$
 
 _Proof:_ This lemma is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^32], with $m=1$ (since $Y$ takes only values in the interval in question), $r$ as given, and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance would be 0.  &#x25a1;
 
-**Lemma 2B**. _For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\sigma_r(Y)$ be the $r$-th central moment of $Y$, and let $\tau_r(Y)$ be $Y$'s $r$-th central absolute moment.  Then&mdash;_
+**Lemma 2B**. _For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then&mdash;_
 
 $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right) + C M\cdot\tau_{k+1}(Y),$$
 
@@ -736,9 +748,9 @@ $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot
 >
 >*Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)[^33] and Khan (1980)[^34].
 
-_Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_. Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^35]. &#x25a1;
+_Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^35]. &#x25a1;
 
-Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017)[^33] and in Strukov and Timan (1977)[^36].
+Other results on upper bounds akin to Lemmas 2A, 2B, and 2C are found in Pascu et al. (2017)[^33] and in Strukov and Timan (1977)[^36].
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
@@ -748,10 +760,7 @@ _for every integer n&ge;1 that's a power of 2.  If the series &eta;(n) converges
 
 _There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is **fbelow**(n, k) and **fabove**(n, k), respectively (where $0\le k\le n$), where:_
 
-_If $n_0 = 1$:_
-
-- _**fbelow**(n, k) =_ $f(k/n)-\eta(n)$.
-- _**fabove**(n, k) =_ $f(k/n)+\eta(n)$.
+_If $n_0 = 1$: _**fbelow**(n, k) =_ $f(k/n)-\eta(n)$; _**fabove**(n, k) =_ $f(k/n)+\eta(n)$.
 
 _If $n_0 > 1$:_
 

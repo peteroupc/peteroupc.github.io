@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/26"><meta name="citation_online_date" content="2025/03/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/27"><meta name="citation_online_date" content="2025/03/27"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -914,12 +914,27 @@
   <li>A <em>modulus of continuity</em> of a function <em>f</em> means a nonnegative and nowhere decreasing function <em>ω</em> on the closed unit interval, for which <em>ω</em>(0) = 0, and for which abs(f(<em>x</em>) − f(<em>y</em>)) ≤ <em>ω</em>(abs(<em>x</em>−<em>y</em>)) whenever <em>x</em> and <em>y</em> are in <em>f</em>’s domain.  Loosely speaking, a modulus of continuity <em>ω</em>(<em>δ</em>) is greater than or equal to <em>f</em>’s maximum range in a window of size <em>δ</em>.</li>
 </ul>
 
+<p>Some of the results rely on properties of random variables.  For a random variable $Y$, define—</p>
+
+<ul>
+  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “long-run average”) of $Y$,</li>
+  <li>$\sigma_r(Y)$ as the $r$-th <em>central moment</em> (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,</li>
+  <li>$\tau_r(Y)$ as the $r$-th <em>central absolute moment</em> of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and</li>
+  <li>$\text{Var}[Y]$ as the <em>variance</em> (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.</li>
+</ul>
+
 <p>Lemma 6(i) of Nacu and Peres (2005)<sup id="fnref:1:7" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of <em>Hölder continuous</em> functions (see “<a href="#Definitions"><strong>Definitions</strong></a>”).</p>
 
 <p><strong>Lemma 2.</strong> <em>Let f(λ) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2*n, k, n) random variable, and let $n\ge 1$ be an integer.</em></p>
 
 <ol>
-  <li><em>Let ω(x) be a modulus of continuity of f.  If ω is continuous and concave, then the expression—<br />abs(<strong>E</strong>[f(X/n)] − f(k/(2*n))),   (1)<br />is less than or equal to each of the following:</em>
+  <li>
+    <p><em>Let ω(x) be a modulus of continuity of f.  If ω is continuous and concave, then the expression—</em></p>
+
+\[\text{abs}\mathbb{E}[f(X/n)-f(k/(2n))],\tag{1}\]
+
+    <p><em>is less than or equal to each of the following:</em></p>
+
     <ul>
       <li><em>ω(sqrt(1/(8*n−4))).</em></li>
       <li><em>ω(sqrt(1/(7*n))) if n≥4.</em></li>
@@ -954,8 +969,8 @@
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li><strong>E</strong>[.] means expected value (“long-run average”), and <strong>Var</strong>[.] means variance.  A hypergeometric(2 * <em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of “good” balls out of <em>k</em> balls taken uniformly at random, all at once, from a bag containing 2 * <em>n</em> balls, <em>n</em> of which are “good”.</li>
-    <li>Parts 1 through 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
+    <li>A hypergeometric(2 * <em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of “good” balls out of <em>k</em> balls taken uniformly at random, all at once, from a bag containing 2 * <em>n</em> balls, <em>n</em> of which are “good”.</li>
+    <li>Parts 1 through 3 exploit a tighter bound on the variance of $X/n$ than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup id="fnref:1:8" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
     <li>All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>ω</em>(0) &gt; 0, because the bounds proved remain correct even if <em>ω</em> is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
       <ol>
         <li>If <em>f</em> is nowhere decreasing and convex, <em>ω</em>(<em>x</em>) can equal <em>f</em>(1) − <em>f</em>(1−<em>x</em>) (Gal 1990)<sup id="fnref:29" role="doc-noteref"><a href="#fn:29" class="footnote" rel="footnote">29</a></sup>; (Gal 1995)<sup id="fnref:30" role="doc-noteref"><a href="#fn:30" class="footnote" rel="footnote">30</a></sup>.</li>
@@ -968,7 +983,7 @@
   </ol>
 </blockquote>
 
-<p><strong>Lemma 2A</strong>. <em>Let $f(\lambda)$ have a Hölder-continuous derivative on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\mathbb{E}[Y]$ and $\text{Var}[Y]$ be the mean and variance, respectively, of $Y$.  Then—</em></p>
+<p><strong>Lemma 2A</strong>. <em>Let $f(\lambda)$ have a Hölder-continuous derivative on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then—</em></p>
 
 \[\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \frac{r^\alpha(r+2)^2}{8r}\cdot M \cdot (\text{Var}[Y])^{(1+\alpha)/2},\]
 
@@ -978,7 +993,7 @@
 
 <p><em>Proof:</em> This lemma is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)<sup id="fnref:32" role="doc-noteref"><a href="#fn:32" class="footnote" rel="footnote">32</a></sup>, with $m=1$ (since $Y$ takes only values in the interval in question), $r$ as given, and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance would be 0.  □</p>
 
-<p><strong>Lemma 2B</strong>. <em>For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Let $\sigma_r(Y)$ be the $r$-th central moment of $Y$, and let $\tau_r(Y)$ be $Y$’s $r$-th central absolute moment.  Then—</em></p>
+<p><strong>Lemma 2B</strong>. <em>For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then—</em></p>
 
 \[\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right) + C M\cdot\tau_{k+1}(Y),\]
 
@@ -1004,9 +1019,9 @@
 &gt;
 &gt;*Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup> and Khan (1980)<sup id="fnref:34" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup>.</p>
 
-<p><em>Proof:</em> $\mathbb{E}[X]$ is well known to be what is called a <em>positive linear operator</em>. Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup>. □</p>
+<p><em>Proof:</em> $\mathbb{E}[X]$ is well known to be what is called a <em>positive linear operator</em> (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup>. □</p>
 
-<p>Other results on upper bounds for $\text{abs}(\mathbb{E}[f(Y)] - f(\mathbb{E}[Y]))$ are found in Pascu et al. (2017)<sup id="fnref:33:1" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup> and in Strukov and Timan (1977)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup>.</p>
+<p>Other results on upper bounds akin to Lemmas 2A, 2B, and 2C are found in Pascu et al. (2017)<sup id="fnref:33:1" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup> and in Strukov and Timan (1977)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup>.</p>
 
 <p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let—</em></p>
 
@@ -1016,12 +1031,7 @@
 
 <p><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of 2) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively (where $0\le k\le n$), where:</em></p>
 
-<p><em>If $n_0 = 1$:</em></p>
-
-<ul>
-  <li><em><strong>fbelow</strong>(n, k) =</em> $f(k/n)-\eta(n)$.</li>
-  <li><em><strong>fabove</strong>(n, k) =</em> $f(k/n)+\eta(n)$.</li>
-</ul>
+<p><em>If $n_0 = 1$: _<strong>fbelow</strong>(n, k) =</em> $f(k/n)-\eta(n)$; <em><strong>fabove</strong>(n, k) =</em> $f(k/n)+\eta(n)$.</p>
 
 <p><em>If $n_0 &gt; 1$:</em></p>
 
