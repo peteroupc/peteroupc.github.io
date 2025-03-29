@@ -209,7 +209,7 @@ Prove or disprove:
 
 [^9]: Costabile, F., Gualtieri, M.I., Serra, S., “Asymptotic expansion and extrapolation for Bernstein polynomials with applications”, BIT 36 (1996)
 
-[^10]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253.
+[^10]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [https://doi.org/10.1016/j.jat.2003.08.001](https://doi.org/10.1016/j.jat.2003.08.001)
 
 [^11]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 

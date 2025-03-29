@@ -1001,7 +1001,7 @@ I acknowledge the user "Barbab" on _Cross Validated_ for giving me useful insigh
 **Corollary C2.** Let $X$ be a hypergeometric variable as in Lemma C1.  Then, for every integer $0\le k\le 2n$&mdash;
 
 - $\tau_4(X)\le \frac{3}{16}n^2$, and
-- $\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \le 0.2166 n^{3/2}$.
+- $\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \lt 0.2166 n^{3/2}$.
 
 The following claim is believed to be true.
 
