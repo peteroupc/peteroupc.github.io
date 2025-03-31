@@ -627,7 +627,9 @@ The following error bounds, which make use of Corollary B9A and the proof techni
 | Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{478 \Lambda_{4} \left(1 + \sqrt{2} + \sqrt{3}\right)}{3125 n^{\frac{5}{2}}}\lt \frac{0.6343 \Lambda_{4}}{n^{2.5}}$ |
 | Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{13 \Lambda_{5}}{25 n^{3}}= \frac{0.52 \Lambda_{5}}{n^{3}}$ |
 
-**Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  Let $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ be the _Lorentz operator_ of order 2 (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10], which is a polynomial in Bernstein form of degree $n+2$.  Then if $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
+The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10].  This operator is a polynomial in Bernstein form of degree $n+2$.
+
+**Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
 
 <s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
 
@@ -775,25 +777,25 @@ _Proof:_ This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)[
 
 In the following results, denote the maximum absolute value of $f$'s $r$-th derivative as $MX(f, r)$.
 
-**Proposition X3**: Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed interval [-1, 1], let $M_k$ be the maximum of the absolute value of $f$'s $k$-th derivative, and let $L_r$ be $f$'s $r$-th derivative's Lipschitz constant or greater.  Then:
+**Proposition X3**: Let $f(\lambda)$ be continuous on the closed interval [-1, 1], and let $M_k$ be the maximum of the absolute value of $f$'s $k$-th derivative.  Then of the following inequalities, those that involve $M_r$ are true if $f$ has a continuous $r$-th derivative on the interval.
 
-- $M_1 \le 2 M_0 + (1/2) L_1$.
-- $M_1 \le 6 M_0 + (1/8) L_2$.
-- $M_2 \le 8 M_0 + (2/3) L_2$.
-- $M_1 \le 12 M_0 + (1/48) L_3$.
-- $M_2 \le 40 M_0 + (5/24) L_3$.
-- $M_3 \le 48 M_0 + (3/4) L_3$.
-- $M_1 \le 20 M_0 + (1/384) L_4$.
-- $M_2 \le 120 M_0 + (1/24) L_4$.
-- $M_3 \le 336 M_0 + (21/80) L_4$.
-- $M_4 \le 384 M_0 + (4/5) L_4$.
-- $M_1 \le 30 M_0 + (1/3840) L_5$.
-- $M_2 \le 280 M_0 + (7/1152) L_5$.
-- $M_3 \le 1344 M_0 + (7/120) L_5$.
-- $M_4 \le 3456 M_0 + (3/10) L_5$.
-- $M_5 \le 3840 M_0 + (5/6) L_5$.
+- $M_1 \le 2 M_0 + (1/2) M_2$.
+- $M_1 \le 6 M_0 + (1/8) M_3$.
+- $M_2 \le 8 M_0 + (2/3) M_3$.
+- $M_1 \le 12 M_0 + (1/48) M_4$.
+- $M_2 \le 40 M_0 + (5/24) M_4$.
+- $M_3 \le 48 M_0 + (3/4) M_4$.
+- $M_1 \le 20 M_0 + (1/384) M_5$.
+- $M_2 \le 120 M_0 + (1/24) M_5$.
+- $M_3 \le 336 M_0 + (21/80) M_5$.
+- $M_4 \le 384 M_0 + (4/5) M_5$.
+- $M_1 \le 30 M_0 + (1/3840) M_6$.
+- $M_2 \le 280 M_0 + (7/1152) M_6$.
+- $M_3 \le 1344 M_0 + (7/120) M_6$.
+- $M_4 \le 3456 M_0 + (3/10) M_6$.
+- $M_5 \le 3840 M_0 + (5/6) M_6$.
 
-Uses a result from Eriksson (1998)[^62] with $c = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with Lipschitz-continuous $(n-1)$-th derivative.
+Uses a result from Eriksson (1998)[^62] with $c = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with a continuous $n$-th derivative.
 
 **Proposition X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous $r$-th derivative for some $r\ge 4$.  Then $MX(f,r-1) \le 4^{r-1} (r!) MX(f,0) + MX(f,r+1)/2.$
 
