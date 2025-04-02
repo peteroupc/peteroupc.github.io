@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/03/29"><meta name="citation_online_date" content="2025/03/29"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/04/02"><meta name="citation_online_date" content="2025/04/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -917,7 +917,7 @@
 <p>Some of the results rely on properties of random variables.  For a random variable $Y$, define—</p>
 
 <ul>
-  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “long-run average”) of $Y$,</li>
+  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “"long-run average"”) of $Y$,</li>
   <li>$\sigma_r(Y)$ as the $r$-th <em>central moment</em> (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,</li>
   <li>$\tau_r(Y)$ as the $r$-th <em>central absolute moment</em> of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and</li>
   <li>$\text{Var}[Y]$ as the <em>variance</em> (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.</li>
@@ -1015,13 +1015,15 @@
 
 <p><strong>Lemma 2C</strong>.  <em>Let $f(\lambda)$ be Hölder continuous on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $X$ be a random variable taking only values in that interval.  Then for every $h$ that satisfies $0&lt;h\le 1$:</em></p>
 
-<p>\(\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot M \cdot (h)^{\alpha}.\)
-&gt;
-&gt;*Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup> and Khan (1980)<sup id="fnref:34" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup>.</p>
+\[\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot M \cdot (h)^{\alpha}.\]
 
-<p><em>Proof:</em> $\mathbb{E}[X]$ is well known to be what is called a <em>positive linear operator</em> (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup>. □</p>
+<p><em>Proof:</em> $\mathbb{E}[X]$ is well known to be what is called a <em>positive linear operator</em> (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)<sup id="fnref:33" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup>. □</p>
 
-<p>Other results on upper bounds akin to Lemmas 2A, 2B, and 2C are found in Pascu et al. (2017)<sup id="fnref:33:1" role="doc-noteref"><a href="#fn:33" class="footnote" rel="footnote">33</a></sup> and in Strukov and Timan (1977)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup>.</p>
+<blockquote>
+  <p><strong>Note:</strong> A similar result is also found in Pascu et al. (2017, Lemma 5.1)<sup id="fnref:34" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup> and Khan (1980)<sup id="fnref:35" role="doc-noteref"><a href="#fn:35" class="footnote" rel="footnote">35</a></sup>.</p>
+</blockquote>
+
+<p>Other results on upper bounds akin to Lemmas 2A, 2B, and 2C are found in Pascu et al. (2017)<sup id="fnref:34:1" role="doc-noteref"><a href="#fn:34" class="footnote" rel="footnote">34</a></sup> and in Strukov and Timan (1977)<sup id="fnref:36" role="doc-noteref"><a href="#fn:36" class="footnote" rel="footnote">36</a></sup>.</p>
 
 <p><strong>Theorem 1.</strong> <em>Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let—</em></p>
 
@@ -1324,7 +1326,40 @@
   <li>$\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \lt 0.2166 n^{3/2}$.</li>
 </ul>
 
-<p>The following claim is believed to be true.</p>
+<p>The following claims are believed to be true.</p>
+
+<p><strong>Claim:</strong> Let $W_n(f, \lambda) = 2f(\lambda)-B_n(f)(\lambda)$.  Then, if $r=3$ and $n\ge 8$, a value of $C_1$ that suffices for the conjecture is 0.2317.</p>
+
+<p><em>Provisional proof:</em> The proof involves calculating—</p>
+
+\[g(f) = \sum_{i=0}^k \left(W_n\left(f, \frac{i}{n}\right) -W_{2n}\left(f, \frac{k}{2n}\right)\right) \sigma_{n,k,i},\]
+
+<p>where $0\le k\le 2n$, supposing that $f(\lambda)$ is $\lambda^0$, $\lambda^1$, $\lambda^2$, and so on.  Call these <em>moments</em> of order 0, 1, 2, and so on, and call the moment of order 1 the <em>mean</em>.  The moments up to order 3 of $g(f)$ are as follows:</p>
+
+<ul>
+  <li>$g(\lambda^0) = 0$.</li>
+  <li>$g(\lambda^1) = 0$.</li>
+  <li>$g(\lambda^2) = \frac{3 k \left(2 n - k\right)}{8 n^{3} \left(2 n - 1\right)} \le \frac{3}{8 n \left(2 n - 1\right)}\le 0.375/n^{3/2}$ whenever $n\ge 1$.  This is bounded above by $0.0708/n^{3/2}$ whenever $n\ge 8$.</li>
+  <li>$g(\lambda^3) \le 0.2652/n^{3/2}$ whenever $n\ge 2$.</li>
+</ul>
+
+<p>Next, unwind $g(f)$ into its Taylor expansion.  Because $g(\lambda^1)$ is 0, the <em>moments around the mean</em> are the same as the ordinary moments (that is, $g(\lambda^r) = g(\lambda^r - g(\lambda))$). So, for each $x_0$ on the closed unit interval:</p>
+
+\[g(f) = (\sum_{i=0}^r  f^{(i)}(x_0)\frac{g(\lambda^i)}{i!}) + R_r(f, x_0),\]
+
+<p>where the Taylor remainder is bounded as follows:</p>
+
+\[\text{abs}(R_r(f, x_0))\le \max(\text{abs}(f^{(r+1)}))\frac{\text{abs}(g(\lambda^{r+1}))}{(r+1)!}\]
+
+<p>Thus, if $r=2$, $g(f)$ is bounded as follows:</p>
+
+\[\text{abs}(g(f)) \le - \frac{3}{8 n \left(2 n - 1\right)} \frac{\max(\text{abs}(f^{(2)}))}{2} + \frac{0.2652}{n^{3/2}} \frac{\max(\text{abs}(f^{(3)}))}{6}.\]
+
+<p>If $n\ge 8$, $g(f)$ is further bounded as follows:</p>
+
+\[\text{abs}(g(f)) \le - \frac{0.375}{n^{3/2}} \frac{\max(\text{abs}(f^{(2)}))}{2} + \frac{0.2652}{n^{3/2}} \frac{\max(\text{abs}(f^{(2)}))}{3}\]
+
+\[\le \max(\text{abs}(f^{(2)}), \text{abs}(f^{(3)})) \frac{0.2317}{n^{3/2}}.\]
 
 <p><strong>Claim.</strong> Suppose $r$ is 3, suppose $f$ is a function satisfying the conjecture’s hypothesis, suppose $W_n$ is a sequence meeting that hypothesis, and suppose further that $W_n$—</p>
 
@@ -1680,7 +1715,7 @@ for i in range(20):
 
 <p>Let <em>a</em> and <em>b</em> be real numbers satisfying 0 &lt; <em>a</em> &lt; <em>b</em> &lt; 1, such as <em>a</em>=1/100, <em>b</em>=99/100.  Define the <em>entropy bound</em> as <em>h</em>(<em>f</em>(<em>λ</em>))/<em>h</em>(<em>λ</em>) where <em>h</em>(<em>x</em>) = −<em>x</em>*ln(<em>x</em>)−(1−<em>x</em>)*ln(1−<em>x</em>) is related to the Shannon entropy function.  The question is:</p>
 
-<p><em>When the probability λ is such that a ≤ λ ≤ b, is there a multiple-output Bernoulli factory for f(λ) with an expected (“long-run average”) number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an <strong>optimal factory</strong>.</em></p>
+<p><em>When the probability λ is such that a ≤ λ ≤ b, is there a multiple-output Bernoulli factory for f(λ) with an expected (“"long-run average"”) number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an <strong>optimal factory</strong>.</em></p>
 
 <p>(See Nacu and Peres (2005, Question 2)<sup id="fnref:1:21" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.)</p>
 
@@ -2056,7 +2091,7 @@ for i in range(20):
   <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number “close” to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:47:1" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 ≤ <code>z</code> ≤ 1 is irrational (Vatan 2001)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">58</a></sup>, (Kindler and Romik 2004)<sup id="fnref:59" role="doc-noteref"><a href="#fn:59" class="footnote" rel="footnote">59</a></sup>, and it can be shown that the expected value (mean or “long-run average”) of <em>X</em> must be a rational number. <sup id="fnref:60" role="doc-noteref"><a href="#fn:60" class="footnote" rel="footnote">60</a></sup></p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:47:1" role="doc-noteref"><a href="#fn:47" class="footnote" rel="footnote">47</a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 ≤ <code>z</code> ≤ 1 is irrational (Vatan 2001)<sup id="fnref:58" role="doc-noteref"><a href="#fn:58" class="footnote" rel="footnote">58</a></sup>, (Kindler and Romik 2004)<sup id="fnref:59" role="doc-noteref"><a href="#fn:59" class="footnote" rel="footnote">59</a></sup>, and it can be shown that the expected value (mean or “"long-run average"”) of <em>X</em> must be a rational number. <sup id="fnref:60" role="doc-noteref"><a href="#fn:60" class="footnote" rel="footnote">60</a></sup></p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
@@ -2194,13 +2229,13 @@ for i in range(20):
       <p>Anastassiou, George A. “<a href="https://www.sciencedirect.com/science/article/pii/0021904585900498"><strong>A study of positive linear operators by the method of moments, one-dimensional case</strong></a>.” Journal of Approximation Theory 45.3 (1985): 247-270. <a href="https://doi.org/10.1016/0021-9045(85)"><strong>https://doi.org/10.1016/0021-9045(85</strong></a>90049-8 <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:32:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:33" role="doc-endnote">
-      <p>Pascu, M.N., Pascu, N.R., Tripşa, F., “<a href="https://arxiv.org/abs/1710.08818"><strong>A new Bernstein-type operator based on Pólya’s urn model with negative replacement</strong></a>”, arXiv:1710.08818 [math.CA], 2017. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:33:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Shisha, O., Mond. B, “The degree of convergence of linear positive operators”, 1968. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:34" role="doc-endnote">
-      <p>Khan, R.A., “Some probabilistic methods in the theory of approximation operators”, 1980. <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Pascu, M.N., Pascu, N.R., Tripşa, F., “<a href="https://arxiv.org/abs/1710.08818"><strong>A new Bernstein-type operator based on Pólya’s urn model with negative replacement</strong></a>”, arXiv:1710.08818 [math.CA], 2017. <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:34:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:35" role="doc-endnote">
-      <p>Shisha, O., Mond. B, “The degree of convergence of linear positive operators”, 1968. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Khan, R.A., “Some probabilistic methods in the theory of approximation operators”, 1980. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:36" role="doc-endnote">
       <p>Strukov, L.I., Timan, A.F., “Mathematical expectation of continuous functions of random variables. Smoothness and variance”, <em>Siberian Mathematical Journal</em> 18 (1977). <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

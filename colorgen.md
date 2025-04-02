@@ -237,7 +237,7 @@ The following methods convert colors between linear and encoded sRGB. (Note that
        return [SRGBFromLinear(c[0]), SRGBFromLinear(c[1]), SRGBFromLinear(c[2])]
     END METHOD
 
-> **Note:** IEC 61966-2-1 defines a reference display where, among other things, encoded sRGB colors' components (_c_) are decoded using a power law of 2.2, that is, the decoding is _c_<sup>2.2<sup>.  Indeed, this power law, and not an inverse of the sRGB color component transfer function, is what is [**employed in practice**](https://github.com/dylanraga/win11hdr-srgb-to-gamma2.2-icm) by most computer displays today that can show, more or less, the range of colors supported by sRGB.
+> **Note:** IEC 61966-2-1 defines a reference display where, among other things, encoded sRGB colors' components (_c_) are decoded using a power law of 2.2, that is, the decoding is _c_<sup>2.2</sup>.  Indeed, this power law, and not an inverse of the sRGB color component transfer function, is what is [**employed in practice**](https://github.com/dylanraga/win11hdr-srgb-to-gamma2.2-icm) by most computer displays today that can show, more or less, the range of colors supported by sRGB.
 
 <a id=Representing_RGB_Colors></a>
 

@@ -428,11 +428,11 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^32]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270. [**https://doi.org/10.1016/0021-9045(85**](https://doi.org/10.1016/0021-9045(85))90049-8
 
-[^33]: Pascu, M.N., Pascu, N.R., Tripşa, F., "[**A new Bernstein-type operator based on Pólya's urn model with negative replacement**](https://arxiv.org/abs/1710.08818)", arXiv:1710.08818 [math.CA], 2017.
+[^33]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
 
-[^34]: Khan, R.A., "Some probabilistic methods in the theory of approximation operators", 1980.
+[^34]: Pascu, M.N., Pascu, N.R., Tripşa, F., "[**A new Bernstein-type operator based on Pólya's urn model with negative replacement**](https://arxiv.org/abs/1710.08818)", arXiv:1710.08818 [math.CA], 2017.
 
-[^35]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
+[^35]: Khan, R.A., "Some probabilistic methods in the theory of approximation operators", 1980.
 
 [^36]: Strukov, L.I., Timan, A.F., "Mathematical expectation of continuous functions of random variables. Smoothness and variance", _Siberian Mathematical Journal_ 18 (1977).
 
@@ -672,7 +672,7 @@ In the following results:
 
 Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
 
-- $\mathbb{E}[Y]$ as the _mean_ (or expected value or "long-run average") of $Y$,
+- $\mathbb{E}[Y]$ as the _mean_ (or expected value or "long-run average""") of $Y$,
 - $\sigma_r(Y)$ as the $r$-th _central moment_ (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,
 - $\tau_r(Y)$ as the $r$-th _central absolute moment_ of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and
 - $\text{Var}[Y]$ as the _variance_ (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.
@@ -745,12 +745,12 @@ _Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^32]
 **Lemma 2C**.  _Let $f(\lambda)$ be Hölder continuous on a closed interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, and let $X$ be a random variable taking only values in that interval.  Then for every $h$ that satisfies $0<h\le 1$:_
 
 $$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[X]/h^2) \cdot M \cdot (h)^{\alpha}.$$
->
->*Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)[^33] and Khan (1980)[^34].
 
-_Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^35]. &#x25a1;
+_Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The result then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^33]. &#x25a1;
 
-Other results on upper bounds akin to Lemmas 2A, 2B, and 2C are found in Pascu et al. (2017)[^33] and in Strukov and Timan (1977)[^36].
+> **Note:** A similar result is also found in Pascu et al. (2017, Lemma 5.1)[^34] and Khan (1980)[^35].
+
+Other results on upper bounds akin to Lemmas 2A, 2B, and 2C are found in Pascu et al. (2017)[^34] and in Strukov and Timan (1977)[^36].
 
 **Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
@@ -984,7 +984,7 @@ _Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random var
 
 It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.
 
-The $s$-th central moment of $X$ is the expected or "long-run" value of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^42], so by Hoeffding (1963)[^43], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
+The $s$-th central moment of $X$ is the expected value or "long-run average""" of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^42], so by Hoeffding (1963)[^43], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
 
 In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^44] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
 
@@ -1003,7 +1003,38 @@ I acknowledge the user "Barbab" on _Cross Validated_ for giving me useful insigh
 - $\tau_4(X)\le \frac{3}{16}n^2$, and
 - $\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \lt 0.2166 n^{3/2}$.
 
-The following claim is believed to be true.
+The following claims are believed to be true.
+
+**Claim:** Let $W_n(f, \lambda) = 2f(\lambda)-B_n(f)(\lambda)$.  Then, if $r=3$ and $n\ge 8$, a value of $C_1$ that suffices for the conjecture is 0.2317.
+
+_Provisional proof:_ The proof involves calculating&mdash;
+
+$$g(f) = \sum_{i=0}^k \left(W_n\left(f, \frac{i}{n}\right) -W_{2n}\left(f, \frac{k}{2n}\right)\right) \sigma_{n,k,i},$$
+
+where $0\le k\le 2n$, supposing that $f(\lambda)$ is $\lambda^0$, $\lambda^1$, $\lambda^2$, and so on.  Call these _moments_ of order 0, 1, 2, and so on, and call the moment of order 1 the _mean_.  The moments up to order 3 of $g(f)$ are as follows:
+
+- $g(\lambda^0) = 0$.
+- $g(\lambda^1) = 0$.
+- $g(\lambda^2) = \frac{3 k \left(2 n - k\right)}{8 n^{3} \left(2 n - 1\right)} \le \frac{3}{8 n \left(2 n - 1\right)}\le 0.375/n^{3/2}$ whenever $n\ge 1$.  This is bounded above by $0.0708/n^{3/2}$ whenever $n\ge 8$.
+- $g(\lambda^3) \le 0.2652/n^{3/2}$ whenever $n\ge 2$.
+
+Next, unwind $g(f)$ into its Taylor expansion.  Because $g(\lambda^1)$ is 0, the _moments around the mean_ are the same as the ordinary moments (that is, $g(\lambda^r) = g(\lambda^r - g(\lambda))$). So, for each $x_0$ on the closed unit interval:
+
+$$g(f) = (\sum_{i=0}^r  f^{(i)}(x_0)\frac{g(\lambda^i)}{i!}) + R_r(f, x_0),$$
+
+where the Taylor remainder is bounded as follows:
+
+$$\text{abs}(R_r(f, x_0))\le \max(\text{abs}(f^{(r+1)}))\frac{\text{abs}(g(\lambda^{r+1}))}{(r+1)!}$$
+
+Thus, if $r=2$, $g(f)$ is bounded as follows:
+
+$$\text{abs}(g(f)) \le - \frac{3}{8 n \left(2 n - 1\right)} \frac{\max(\text{abs}(f^{(2)}))}{2} + \frac{0.2652}{n^{3/2}} \frac{\max(\text{abs}(f^{(3)}))}{6}.$$
+
+If $n\ge 8$, $g(f)$ is further bounded as follows:
+
+$$\text{abs}(g(f)) \le - \frac{0.375}{n^{3/2}} \frac{\max(\text{abs}(f^{(2)}))}{2} + \frac{0.2652}{n^{3/2}} \frac{\max(\text{abs}(f^{(2)}))}{3}$$
+
+$$\le \max(\text{abs}(f^{(2)}), \text{abs}(f^{(3)})) \frac{0.2317}{n^{3/2}}.$$
 
 **Claim.** Suppose $r$ is 3, suppose $f$ is a function satisfying the conjecture's hypothesis, suppose $W_n$ is a sequence meeting that hypothesis, and suppose further that $W_n$&mdash;
 
