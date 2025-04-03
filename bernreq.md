@@ -90,7 +90,7 @@ These alternative polynomials usually come with results where the error bound is
 
 The following is a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-Let $f(\lambda):[0,1]\to(0,1)$ have $r\ge 1$ continuous derivatives, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
 
 For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
@@ -104,7 +104,7 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$.
 
 My goal is to see not just whether this conjecture is true, but also which values of $C_0$ (or $C_1$) suffice for the conjecture.
 
-**See notes 3 and 4 in** "[**End Notes**](#End_Notes)".
+> **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet achieve the rate $O(n^{-r/2})$ when $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 
 <a id=Strategies></a>
 
