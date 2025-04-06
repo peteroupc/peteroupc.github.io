@@ -672,7 +672,7 @@ In the following results:
 
 Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
 
-- $\mathbb{E}[Y]$ as the _mean_ (or expected value or "long-run average""""""") of $Y$,
+- $\mathbb{E}[Y]$ as the _mean_ (or expected value or "long-run average") of $Y$,
 - $\sigma_r(Y)$ as the $r$-th _central moment_ (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,
 - $\tau_r(Y)$ as the $r$-th _central absolute moment_ of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and
 - $\text{Var}[Y]$ as the _variance_ (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.
@@ -984,7 +984,7 @@ _Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random var
 
 It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.
 
-The $s$-th central moment of $X$ is the expected value or "long-run average""""""" of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^42], so by Hoeffding (1963)[^43], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
+The $s$-th central moment of $X$ is the expected value or "long-run average" of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^42], so by Hoeffding (1963)[^43], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
 
 In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^44] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
 
@@ -1002,6 +1002,21 @@ I acknowledge the user "Barbab" on _Cross Validated_ for giving me useful insigh
 
 - $\tau_4(X)\le \frac{3}{16}n^2$, and
 - $\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \lt 0.2166 n^{3/2}$.
+
+**Remark:** Let $W_n(f, \lambda) = 2f(\lambda)-B_n(f)(\lambda)$.  For proving the conjecture for this sequence $W_n$, it is useful to calculate&mdash;
+
+$$g(f) = -W_{2n}\left(f, \frac{k}{2n}\right) + \sum_{i=0}^k W_n\left(f, \frac{i}{n}\right) \sigma_{n,k,i},$$
+
+where $0\le k\le 2n$, supposing that $f(\lambda)$ is $\lambda^0$, $\lambda^1$, $\lambda^2$, and so on.  Call these _moments_ of order 0, 1, 2, and so on, and call the moment of order 1 the _mean_.  The moments up to order 3 of $g(f)$ are as follows:
+
+- $g(\lambda^0) = 0$.
+- $g(\lambda^1) = 0$.
+- $g(\lambda^2) = \frac{3 k \left(2 n - k\right)}{8 n^{3} \left(2 n - 1\right)} \le \frac{3}{8 n \left(2 n - 1\right)}\le 0.375/n^{3/2}$ whenever $n\ge 1$.  In turn, $g(\lambda^2)\le\frac{3}{15n^2}$ whenever $n\ge 8$.
+- $g(\lambda^3)$ is bounded as follows: $\text{abs}(g(\lambda^3)) \le 0.2652/n^{3/2}$ whenever $n\ge 2$.
+
+Because $g(\lambda^1)$ is 0, the _moments around the mean_ are the same as the ordinary moments; that is, $g(\lambda^r) = g((\lambda - g(\lambda))^r)$.
+
+-----
 
 The following claim is believed to be true.
 
@@ -1026,7 +1041,7 @@ Because $W_n$ also satisfies point 2, the left-hand side of (PB) is not greater 
 
 $$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))+\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}.$$
 
-Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected ("long-run") value of $X/n$ is $k/(2n)$, so by Lemma 2B&mdash;
+Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected value or "long-run average" of $X/n$ is $k/(2n)$, so by Lemma 2B&mdash;
 
 $$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})$$
 
@@ -1035,7 +1050,7 @@ $$\le\frac{\max(\text{abs}(W_n^{(2)})) \text{Var}[X/n]}{2} +  \frac{EM\cdot\tau_
 where&mdash;
 
 - $\text{Var}[X/n]$ is the variance of $X/n$, and
-- $\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected ["long-run"] value of $\text{abs}(X/n - \mu(X/n))^s$).
+- $\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected value of $\text{abs}(X/n - \mu(X/n))^s$).
 
 Because $W_n$ is a linear operator that preserves polynomials of degree 2 or less, it can be assumed without loss of generality that $W_n$ and the first and second derivatives of $f$ equal zero at $k/(2n)$ (so that $W_n$'s _Taylor polynomial_ centered at $k/(2n)$ is zero).  Therefore&mdash;
 

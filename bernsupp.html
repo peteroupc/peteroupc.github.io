@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/04/02"><meta name="citation_online_date" content="2025/04/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/04/06"><meta name="citation_online_date" content="2025/04/06"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -917,7 +917,7 @@
 <p>Some of the results rely on properties of random variables.  For a random variable $Y$, define—</p>
 
 <ul>
-  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “"long-run average"”””””) of $Y$,</li>
+  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “"long-run average"”) of $Y$,</li>
   <li>$\sigma_r(Y)$ as the $r$-th <em>central moment</em> (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,</li>
   <li>$\tau_r(Y)$ as the $r$-th <em>central absolute moment</em> of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and</li>
   <li>$\text{Var}[Y]$ as the <em>variance</em> (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.</li>
@@ -1305,7 +1305,7 @@
 
 <p>It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.</p>
 
-<p>The $s$-th central moment of $X$ is the expected value or “"long-run average"””””” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called <em>Poisson binomial</em> random variables (they are sums of independent coin flip results with possibly different probabilities of “success”, where 1 marks a “success” and 0 marks a “failure”) (Vatutin and Mikhaĭlov 1982)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup>, so by Hoeffding (1963)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>, when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of “successful” samples among $k$ independent samples with “success” probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.</p>
+<p>The $s$-th central moment of $X$ is the expected value or “"long-run average"” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called <em>Poisson binomial</em> random variables (they are sums of independent coin flip results with possibly different probabilities of “success”, where 1 marks a “success” and 0 marks a “failure”) (Vatutin and Mikhaĭlov 1982)<sup id="fnref:42" role="doc-noteref"><a href="#fn:42" class="footnote" rel="footnote">42</a></sup>, so by Hoeffding (1963)<sup id="fnref:43" role="doc-noteref"><a href="#fn:43" class="footnote" rel="footnote">43</a></sup>, when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of “successful” samples among $k$ independent samples with “success” probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.</p>
 
 <p>In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)<sup id="fnref:44" role="doc-noteref"><a href="#fn:44" class="footnote" rel="footnote">44</a></sup> gives an upper bound of binomial central moments for even $s$ when the “success” probability is 1/2.</p>
 
@@ -1325,6 +1325,23 @@
   <li>$\tau_4(X)\le \frac{3}{16}n^2$, and</li>
   <li>$\tau_3(X)\le \frac{\sqrt{3}}{8}n^{3/2} \lt 0.2166 n^{3/2}$.</li>
 </ul>
+
+<p><strong>Remark:</strong> Let $W_n(f, \lambda) = 2f(\lambda)-B_n(f)(\lambda)$.  For proving the conjecture for this sequence $W_n$, it is useful to calculate—</p>
+
+\[g(f) = -W_{2n}\left(f, \frac{k}{2n}\right) + \sum_{i=0}^k W_n\left(f, \frac{i}{n}\right) \sigma_{n,k,i},\]
+
+<p>where $0\le k\le 2n$, supposing that $f(\lambda)$ is $\lambda^0$, $\lambda^1$, $\lambda^2$, and so on.  Call these <em>moments</em> of order 0, 1, 2, and so on, and call the moment of order 1 the <em>mean</em>.  The moments up to order 3 of $g(f)$ are as follows:</p>
+
+<ul>
+  <li>$g(\lambda^0) = 0$.</li>
+  <li>$g(\lambda^1) = 0$.</li>
+  <li>$g(\lambda^2) = \frac{3 k \left(2 n - k\right)}{8 n^{3} \left(2 n - 1\right)} \le \frac{3}{8 n \left(2 n - 1\right)}\le 0.375/n^{3/2}$ whenever $n\ge 1$.  In turn, $g(\lambda^2)\le\frac{3}{15n^2}$ whenever $n\ge 8$.</li>
+  <li>$g(\lambda^3)$ is bounded as follows: $\text{abs}(g(\lambda^3)) \le 0.2652/n^{3/2}$ whenever $n\ge 2$.</li>
+</ul>
+
+<p>Because $g(\lambda^1)$ is 0, the <em>moments around the mean</em> are the same as the ordinary moments; that is, $g(\lambda^r) = g((\lambda - g(\lambda))^r)$.</p>
+
+<hr />
 
 <p>The following claim is believed to be true.</p>
 
@@ -1351,7 +1368,7 @@
 
 \[\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))+\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}.\]
 
-<p>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected (“long-run”) value of $X/n$ is $k/(2n)$, so by Lemma 2B—</p>
+<p>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected value or “"long-run average"” of $X/n$ is $k/(2n)$, so by Lemma 2B—</p>
 
 \[(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})\]
 
@@ -1361,7 +1378,7 @@
 
 <ul>
   <li>$\text{Var}[X/n]$ is the variance of $X/n$, and</li>
-  <li>$\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected [“long-run”] value of $\text{abs}(X/n - \mu(X/n))^s$).</li>
+  <li>$\tau_s(X/n)$ is the $s$-th central absolute moment of $X/n$ (that is, the expected value of $\text{abs}(X/n - \mu(X/n))^s$).</li>
 </ul>
 
 <p>Because $W_n$ is a linear operator that preserves polynomials of degree 2 or less, it can be assumed without loss of generality that $W_n$ and the first and second derivatives of $f$ equal zero at $k/(2n)$ (so that $W_n$’s <em>Taylor polynomial</em> centered at $k/(2n)$ is zero).  Therefore—</p>

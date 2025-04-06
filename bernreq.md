@@ -104,7 +104,7 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$.
 
 My goal is to see not just whether this conjecture is true, but also which values of $C_0$ (or $C_1$) suffice for the conjecture.
 
-> **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet achieve the rate $O(n^{-r/2})$ when $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
+> **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ when $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 
 <a id=Strategies></a>
 
@@ -122,8 +122,6 @@ The following are some strategies for answering these questions:
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
     $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)$$
-
-    $$=\text{abs}\left(\sum_{i=0}^k \left(W_n\left(\frac{i}{n}\right)-W_{2n}(\frac{k}{2n})\right)\sigma_{n,k,i}\right)$$
 
     $$=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
 
