@@ -100,9 +100,7 @@ whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\g
 
 Equivalently (see also Nacu and Peres (2005)[^3]), there is $C_1>0$ such that the inequality $(PB)$ (see later) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", later).
 
-$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$.
-
-My goal is to see not just whether this conjecture is true, but also which values of $C_0$ (or $C_1$) suffice for the conjecture.
+$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
 > **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ when $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 

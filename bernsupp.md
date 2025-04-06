@@ -962,6 +962,8 @@ whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\si
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
+When $C_0$ or $C_1$ exists, find a good upper bound for it.
+
 > **Notes:**
 >
 > 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
