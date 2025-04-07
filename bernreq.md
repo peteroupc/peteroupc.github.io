@@ -113,10 +113,12 @@ The following are some strategies for answering these questions:
 - Verify my proofs for the results on error bounds for certain polynomials in "[**Results Used in Approximations By Polynomials**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials)", including:
     - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$; see Note 4 in "End Notes" later in this page): Propositions B10C and B10D.
     - Linear combinations of Bernstein polynomials (see Costabile et al. (2005)[^9]): Proposition B10.
-    - The Lorentz operator, described next.
-- For the "[**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)" (Holtz et al. 2011)[^4], find explicit bounds, with no hidden constants, on the approximation error for the operator $Q_{n,r}(f)$ and for the polynomials $(f_n)$ and $(g_n)$ formed with it, and find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in the paper.
-- Let $f:[-1,1]\to [0,1]$ be continuous.  Find explicit bounds, with no hidden constants, on the error in approximating $f$ with polynomials built from samples at _rational_ values of $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^16] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points). The error bounds must be close to those of Chebyshev interpolants (see, for example, chapters 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013).
-- Find other polynomial operators meeting the requirements of the main question (see "Main Question", earlier) and having explicit error bounds, with no hidden constants, especially operators that preserve polynomials of a higher degree than linear functions or produce a degree-$n$ polynomial from $O(n^2)$ sample points (Adcock et al. 2019)[^16].
+    - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)" (Holtz et al. 2011)[^4].
+- Find polynomials of the following kinds and find explicit bounds, with no hidden constants, on the approximation error for those polynomials:
+    - Polynomial operators that preserve polynomials at a higher degree than linear functions.
+    - Operators that produce a degree-$n$ polynomial from $O(n^2)$ sample points.
+    - Polynomials built from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^16] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
+- Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^4].
 - Find a sequence of functions $(W_n(f))$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
     $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)$$
