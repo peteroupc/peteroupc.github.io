@@ -646,8 +646,8 @@ _Proof_: Follows from Lorentz (1963)[^11] and the well-known fact that $M_2$ is 
 In the following propositions:
 
 - $f^{(r)}$ means the $r$-th derivative of the function $f$.
-- $M_k = \max(\text{abs}(f))$ means a value equal to or greater than the maximum of the absolute value of the function $f$.
-- $H_k$ means a value equal to or greater than the Hölder constant of the $k$-th derivative of the function $f$.
+- $M_r = \max(\text{abs}(f^{(r)}))$ means a value equal to or greater than the maximum of the absolute value of $f^{(r)}$.
+- $H_r$ means a value equal to or greater than the Hölder constant of $f^{(r)}$.
 
 **Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
