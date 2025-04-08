@@ -189,11 +189,11 @@ Now, let $g(\lambda)$ be continuous on the closed interval $[a, b]$.  This secti
 
 Any polynomial $p(\lambda)$ can be written in _Bernstein form on the interval $[a,b]$_ as&mdash;
 
-$$p(\lambda) = \frac{1}{(b-a)^n}\left({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] +$$
+$$p(\lambda) = \frac{1}{(b-a)^n}({n\choose 0}(\lambda-a)^0 (b-\lambda)^{n-0} a[0] +$$
 
 $${n\choose 1}(\lambda-a)^1 (b-\lambda)^{n-1} a[1] + ... +$$
 
-$${n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]\right),$$
+$${n\choose n}(\lambda-a)^n (b-\lambda)^{n-n} a[n]),$$
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients for the interval $[a,b]$_ (Bărbosu 2020)[^19].
 
@@ -699,7 +699,7 @@ The following error bounds follow from results of Sevy (1991)[^54], especially t
  --- | - | --- |
 | Has continuous second derivative. | $U_{n,2}.$ | $\frac{25M_2}{16n}$. |
 | Has continuous third derivative. | $U_{n,3}.$ | $\frac{25M_2}{16\cdot n^2}$ + $\frac{125M_3}{64n^{3/2}}$. |
-| Has continuous fourth derivative. | $U_{n,2}.$ | $\frac{195 M_{2}}{32 n^{2}}$ + $ \frac{45 M_{2}}{8 n^{\frac{5}{2}}}$ + $\frac{377 M_{4}}{128 n^{2}}$ + $\frac{9 M_{4}}{8 n^{3}}$ + $\frac{63 M_{4}}{16 n^{\frac{5}{2}}}$. |
+| Has continuous fourth derivative. | $U_{n,2}.$ | $\frac{195 M_{2}}{32 n^{2}}$ + $\frac{45 M_{2}}{8 n^{\frac{5}{2}}}$ + $\frac{377 M_{4}}{128 n^{2}}$ + $\frac{9 M_{4}}{8 n^{3}}$ + $\frac{63 M_{4}}{16 n^{\frac{5}{2}}}$. |
 | Has continuous sixth derivative. | $U_{n,3}.$ | $\frac{8775 M_{2}}{32 n^{3}}$ + $\frac{2025 M_{2}}{8 n^{\frac{7}{2}}}$ + $\frac{21489 M_{4}}{128 n^{3}}$ + $\frac{513 M_{4}}{8 n^{4}}$ + $\frac{3591 M_{4}}{16 n^{\frac{7}{2}}}$ + $\frac{16965 M_{6}}{512 n^{3}}$ + $\frac{783 M_{6}}{32 n^{4}}$ + $\frac{6801 M_{6}}{128 n^{\frac{7}{2}}}$ + $\frac{27 M_{6}}{8 n^{\frac{9}{2}}}$. |
 
 **Lemma B11**: Let $f(\lambda)$ have a continuous $k$-th derivative on the closed unit interval, where $k$ is a positive whole number or zero.  Let $W_n(f) = 2 f - B_n(f)$.  Then, for every integer $n\ge 1$:

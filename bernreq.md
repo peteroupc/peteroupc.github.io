@@ -113,7 +113,7 @@ The following are some strategies for answering these questions:
 - Verify my proofs for the results on error bounds for certain polynomials in "[**Results Used in Approximations By Polynomials**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials)", including:
     - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$; see Note 4 in "End Notes" later in this page): Propositions B10C and B10D.
     - Linear combinations of Bernstein polynomials (see Costabile et al. (2005)[^9]): Proposition B10.
-    - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5)" (Holtz et al. 2011)[^4].
+    - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5) (Holtz et al. 2011)[^4].
 - Find polynomials of the following kinds and find explicit bounds, with no hidden constants, on the approximation error for those polynomials:
     - Polynomial operators that preserve polynomials at a higher degree than linear functions.
     - Operators that produce a degree-$n$ polynomial from $O(n^2)$ sample points.
@@ -125,13 +125,13 @@ The following are some strategies for answering these questions:
 
     $$=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
 
-    whenever $0\le k\le 2n$, where $M = \max(L, \max\text{abs}(f^{(0)}), ...,\max\text{abs}(f^{(r-1)}))$, $L$ is $\max\text{abs}(f^{(r)})$ or the Lipschitz constant of $f^{(r-1)}$, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in** "[**End Notes**](#End_Notes)" **as well as** "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)".)
+    whenever $0\le k\le 2n$, where $M$ is the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in** "[**End Notes**](#End_Notes)" **as well as** "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)".)
 
 <a id=Other_Questions></a>
 
 ## Other Questions
 
-- Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.  As a special case, given $r>0$ and $C>0$, find values of $p$ ($0<p<1$) such that $C/2^{(n+b)r}\le p(1-p)^n$ for every integer $n\ge 1$, where $b\ge 0$ is the smallest integer that satisfies $C/2^{(n+b)r}\le p$ for every $n$.
+- Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
 - For each $r>0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, is finite.
 - [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let** $f(\lambda):[a, b] \to (0, 1)$ **be continuous, where** $0\lt a$, $a\lt b$, $b\lt 1$.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^17].
 
@@ -157,11 +157,11 @@ The following are some strategies for answering these questions:
     - Functions whose integral is an irrational number.
     - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/bernoulli.html#pi___4)
     - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/bernsupp.html#4_3___pi).
-- Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash;
+- Given integer _m_&ge;0, rational number 0&lt;_k_&le;exp(1) (and especially $k=1$ or $k=2$), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash;
 
     $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$
 
-    that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  A solution is sought especially when _k_ is 1 or 2.   Note that the right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.  (Calculating exp(.) with floating-point operations is not acceptable for this question.)
+    that, as much as possible, avoids calculating $h(\lambda) = \exp(m+\lambda)-k(m+\lambda)$, and especially avoids floating-point operations; in this sense, the more implicitly the Bernoulli factory works with irrational or transcendental functions, the better.  The right-hand side of (PD) can be implemented by [**ExpMinus**](https://peteroupc.github.io/bernoulli.html#ExpMinus_exp_minus__z) and division Bernoulli factories, but is inefficient and heavyweight due to the need to calculate $\epsilon$ for the division factory.  In addition there is a Bernoulli factory that first calculates $h(\lambda)$ and $floor(h(\lambda))$ using constructive reals and then runs **ExpMinus**, but this is likewise far from lightweight.
 
 Prove or disprove:
 
