@@ -615,7 +615,7 @@ $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B
 
 (where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^35], citing Stoer and Bulirsch (1970)[^50].
 
-The following error bounds, which make use of Corollary B9A and the proof technique in Proposition B10, can be shown.  In the following table, $\Lambda_r$ is the maximum of $f$'s $r$-th derivative's Lipschitz constant or greater, and each result is valid only for values of $n$ where all the numbers in the third column are integers greater than 1.
+The following error bounds, which make use of Corollary B9A and the proof technique in Proposition B10, can be shown.  In the following table, $\Lambda_r$ is the maximum of $f$'s $r$-th derivative's Lipschitz constant or greater, and each result applies only to values of $n$ where all the numbers in the third column are integers greater than 1.
 
 | Property of $f$ on the closed unit interval | $\alpha_0$, $\alpha_1$, ... | $n(0)$, $n(1)$, ... | Upper bound of error |
   --- | -- | -- | ----- |
