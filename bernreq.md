@@ -78,7 +78,7 @@ However, ordinary Bernstein polynomials converge to a function at the rate $\Ome
 
 But Lorentz (1966)[^6] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
-Thus, researchers have studied alternatives to Bernstein polynomials that improve the convergence rate for "smoother" functions.  See Holtz et al. (2011)[^4], Sevy (1991)[^7], Waldron (2009)[^8], Costabile et al. (2005)[^9], Han (2003)[^10], and references therein; see also Micchelli (1973)[^11], Güntürk and Li (2021a)[^12], (2021b)[^13], Draganov (2024)[^14], and Tachev (2022)[^15].
+Thus, researchers have studied alternatives to Bernstein polynomials that improve the convergence rate for "smoother" functions.  See Holtz et al. (2011)[^4], Sevy (1991)[^7], Waldron (2009)[^8], Costabile et al. (2005)[^9], Han (2003)[^10], Khosravian-Arab et al. (2018)[^22], and references therein; see also Micchelli (1973)[^11], Güntürk and Li (2021a)[^12], (2021b)[^13], Draganov (2024)[^14], and Tachev (2022)[^15].
 
 These alternative polynomials usually come with results where the error bound is the desired $O(1/n^{k/2})$, but most of those results (with the notable exception of Sevy) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
 
@@ -88,7 +88,7 @@ These alternative polynomials usually come with results where the error bound is
 
 The following is a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of functions on [0, 1] that converge uniformly to $f$.
+Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of bounded functions on [0, 1] that converge uniformly to $f$.
 
 For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
@@ -101,6 +101,14 @@ Equivalently (see also Nacu and Peres (2005)[^3]), there is $C_1>0$ such that th
 $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
 > **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ when $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
+>
+> **Note:** I believe there is a counterexample to this conjecture, namely the sequence&mdash;
+>
+> $$B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2,$$
+>
+> where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded continuous functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
+>
+> If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{r/4})$.
 
 <a id=Strategies></a>
 
@@ -230,3 +238,5 @@ Prove or disprove:
 [^20]: Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
 
 [^21]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
+
+[^22]: Khosravian-Arab, Hassan, Mehdi Dehghan, and M. R. Eslahchi. "A new approach to improve the order of approximation of the Bernstein operators: theory and applications." Numerical Algorithms 77 (2018): 111-150.

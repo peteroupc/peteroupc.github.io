@@ -927,7 +927,7 @@ Let $r\ge 1$, and let $f(\lambda)$ be a function that&mdash;
 - has a minimum of greater than 0 and a maximum of less than 1, and
 - has a continuous $r$-th derivative.
 
-Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
+Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be bounded functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
 For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
@@ -935,11 +935,7 @@ $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
 whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
-Then there is $C_0\ge D$ such that for every $C\ge C_0$, there are polynomials $g_n$ (for each $n\ge 1$) as follows:
-
-1. $g_n$ has Bernstein coefficients $W_n(k/n) - CM/n^{r/2}$ ($0\le k\le n$), if $n$ is a power of 2, and $g_n=g_{n-1}$ otherwise.
-2. $g_n$ converges to $f$ as $n$ gets large.
-3. $(g_{n+1}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $n+1$.
+Then there is a number $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - CM/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. there are polynomials $g_n$ (for each $n\ge 1$) as follows.
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
@@ -959,6 +955,12 @@ When $C_0$ or $C_1$ exists, find a good upper bound for it.
 >
 >     - $W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or
 >     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^39]
+>
+> 4. I believe there is a counterexample to the full conjecture, namely the sequence&mdash;
+>
+> $$B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2,$$
+>
+> where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
 
 ---------------------
 
