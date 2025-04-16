@@ -12,14 +12,14 @@
 
 <h2 id="introduction">Introduction</h2>
 
-<p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value (“long-run average”) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (the average of multiple estimates tends to the ideal mean value as more estimates are averaged), or they come close to the ideal value with a user-specified error tolerance.</p>
+<p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value ("long-run average"”) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (the average of multiple estimates tends to the ideal mean value as more estimates are averaged), or they come close to the ideal value with a user-specified error tolerance.</p>
 
 <p>The algorithms are described to make them easy to implement by programmers.</p>
 
 <p>Not yet covered are the following algorithms:</p>
 
 <ul>
-  <li>Unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (for example, estimators that average an increasing number of sample points).  See, for example, Vihola (2018)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
+  <li>Unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (for example, estimators that average an increasing number of sample points).  See, for example, Vihola (2018)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
 </ul>
 
 <p><a id="About_This_Document"></a></p>
@@ -51,7 +51,7 @@
 <p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.</p>
 
 <ul>
-  <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the “long-run average” value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If <strong>E</strong>[<em>X</em>] exists, then with probability 1, the average of the first <em>n</em> sampled items taken from the stream approaches the expected value as <em>n</em> gets large (as a result of the <em>law of large numbers</em>).</li>
+  <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the "long-run average"” value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If <strong>E</strong>[<em>X</em>] exists, then with probability 1, the average of the first <em>n</em> sampled items taken from the stream approaches the expected value as <em>n</em> gets large (as a result of the <em>law of large numbers</em>).</li>
   <li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.</li>
   <li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  The 2nd central moment is called <em>variance</em>.</li>
   <li>An <em>n<sup>th</sup> absolute central moment</em> is the expected value of abs(<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  This is the same as the central moment when <em>n</em> is even.</li>
@@ -65,7 +65,7 @@
 
 <h2 id="a-relative-error-algorithm-for-a-bernoulli-stream">A Relative-Error Algorithm for a Bernoulli Stream</h2>
 
-<p>The following algorithm from Huber (2017)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm’s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
+<p>The following algorithm from Huber (2017)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm’s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
 
 <ul>
   <li>The stream produces only zeros and ones (that is, the stream follows the <strong>Bernoulli distribution</strong>).</li>
@@ -103,9 +103,9 @@
 
       <p>and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.</p>
     </li>
-    <li>As can be seen in Feng et al. (2016)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>, the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: “Let G be 0. Do this <em>k</em> times: ‘Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.’ The estimated probability of heads is then (<em>k</em>−1)/G.”, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) “geometric” distribution with unknown mean: “Let G be 0. Do this <em>k</em> times: ‘Take a sample from the stream, call it <em>r</em>, generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.’ The estimated mean is then (<em>k</em>−1)/G.” (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
+    <li>As can be seen in Feng et al. (2016)<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>, the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: “Let G be 0. Do this <em>k</em> times: ‘Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.’ The estimated probability of heads is then (<em>k</em>−1)/G.”, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) “geometric” distribution with unknown mean: “Let G be 0. Do this <em>k</em> times: ‘Take a sample from the stream, call it <em>r</em>, generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.’ The estimated mean is then (<em>k</em>−1)/G.” (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
     <li>The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.</li>
-    <li>Huber proposes another algorithm that claims to be faster when the mean is bounded away from zero; see (Huber 2022)<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.</li>
+    <li>Huber proposes another algorithm that claims to be faster when the mean is bounded away from zero; see (Huber 2022)<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
   </ol>
 </blockquote>
 
@@ -113,7 +113,7 @@
 
 <h2 id="a-relative-error-algorithm-for-a-bounded-stream">A Relative-Error Algorithm for a Bounded Stream</h2>
 
-<p>The following algorithm comes from Huber and Jones (2019)<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>; see also Huber (2017)<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>.  It estimates the expected value of a stream of random variates with the following properties:</p>
+<p>The following algorithm comes from Huber and Jones (2019)<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>; see also Huber (2017)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>.  It estimates the expected value of a stream of random variates with the following properties:</p>
 
 <ul>
   <li>The numbers in the stream lie in the closed unit interval.</li>
@@ -184,7 +184,7 @@
 
 <h2 id="an-absolute-error-adaptive-algorithm">An Absolute-Error Adaptive Algorithm</h2>
 
-<p>The following algorithm comes from Kunsch et al. (2019)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>.  It estimates the mean of a stream of random variates with the following properties:</p>
+<p>The following algorithm comes from Kunsch et al. (2019)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>.  It estimates the mean of a stream of random variates with the following properties:</p>
 
 <ul>
   <li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> absolute central moment and <em>p</em><sup>th</sup> absolute central moment</li>
@@ -202,7 +202,7 @@
   <li><em>ε</em>, <em>δ</em>: Both parameters must be greater than 0, and <em>δ</em> must be less than 1.  The algorithm will return an estimate within <em>ε</em> of the ideal expected value with probability 1 − <em>δ</em> or greater, and the estimate will not go beyond the bounds of the stream’s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
   <li><em>p</em>: The degree of the <em>p</em><sup>th</sup> absolute central moment that the algorithm will estimate to determine the mean.</li>
   <li><em>q</em>: The degree of the <em>q</em><sup>th</sup> absolute central moment  <em>q</em> must be greater than <em>p</em>.</li>
-  <li>$\kappa$: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> absolute central moment’s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> absolute central moment’s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis’s 4th root (Hickernell et al. 2012)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup> <sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>.) $\kappa$ may not be less than 1.</li>
+  <li>$\kappa$: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> absolute central moment’s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> absolute central moment’s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis’s 4th root (Hickernell et al. 2012)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>.) $\kappa$ may not be less than 1.</li>
 </ul>
 
 <p>Both <em>p</em> and <em>q</em> must be 1 or greater and are usually integers.</p>
@@ -223,7 +223,7 @@
       <li>Get <em>n</em> samples from the stream and return (<em>mn</em> + <em>mx</em>)/2, where <em>mx</em> is the highest sample and <em>mn</em> is the lowest.</li>
     </ol>
   </li>
-  <li>Set <em>k</em> to ceil((2*ln(1/<em>δ</em>))/ln(4/3)).  If <em>k</em> is even<sup id="fnref:10" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>, add 1 to <em>k</em>.</li>
+  <li>Set <em>k</em> to ceil((2*ln(1/<em>δ</em>))/ln(4/3)).  If <em>k</em> is even<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>, add 1 to <em>k</em>.</li>
   <li>Set <em>kp</em> to <em>k</em>.</li>
   <li>Set $\kappa$ to $\kappa$<sup>(<em>p</em>*<em>q</em>/(<em>q</em>−<em>p</em>))</sup>.</li>
   <li>If <em>q</em> is 2 or less:
@@ -260,13 +260,13 @@
   <ol>
     <li>The interval $[\hat{\mu} - \epsilon, \hat{\mu} + \epsilon]$ is also known as a <em>confidence interval</em> for the mean, with <em>confidence level</em> at least 1 − <em>δ</em> (where $\hat{\mu}$ is an estimate of the mean returned by <em>Algorithm C</em>).</li>
     <li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and $\kappa$, then it still meets that condition when those variates are multiplied by a constant, when a constant is added to them, or both.</li>
-    <li>Theorem 3.4 of Kunsch et al. (2019)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> shows that there is no mean estimation algorithm that—
+    <li>Theorem 3.4 of Kunsch et al. (2019)<sup id="fnref:7:1"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> shows that there is no mean estimation algorithm that—
       <ul>
         <li>produces an estimate within a user-specified error tolerance with probability greater than a user-specified value, and</li>
         <li>works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).</li>
       </ul>
     </li>
-    <li>There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup>, but this algorithm is impractical — it requires millions of samples at best.</li>
+    <li>There is also a mean estimation algorithm for very high dimensions, which works if the stream of multidimensional variates has a finite variance (Lee and Valiant 2022)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>, but this algorithm is impractical — it requires millions of samples at best.</li>
   </ol>
 
   <p><strong>Examples:</strong></p>
@@ -282,7 +282,7 @@
 
 <h2 id="estimating-the-mode">Estimating the Mode</h2>
 
-<p>Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the <em>mode</em>.(Dutta and Goswami 2010)<sup id="fnref:12" role="doc-noteref"><a href="#fn:12" class="footnote" rel="footnote">12</a></sup>  This assumes the following are known:</p>
+<p>Suppose there is an endless stream of items, each generated at random and independently from each other, and we can sample as many items from the stream as we want.  Then the following algorithm estimates the most frequently occurring item, called the <em>mode</em>.(Dutta and Goswami 2010)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup>  This assumes the following are known:</p>
 
 <ul>
   <li>Exactly one item has a greater probability of occurring than the others.</li>
@@ -331,7 +331,7 @@
   <li>Calculate <em>γ</em> as a number equal to or less than <em>ψ</em>(<em>ε</em>), or the <em>inverse modulus of continuity</em>, which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>ω</em>(<em>h</em>), and solving the equation <em>ω</em>(<em>h</em>) = <em>ε</em> for <em>h</em>.
     <ul>
       <li>Loosely speaking, a modulus of continuity <em>ω</em>(<em>h</em>) gives the maximum range of <em>f</em> in a window of size <em>h</em>.</li>
-      <li>For example, if <em>f</em> is <em>Lipschitz continuous</em> with Lipschitz constant <em>M</em> or less<sup id="fnref:13" role="doc-noteref"><a href="#fn:13" class="footnote" rel="footnote">13</a></sup>, its modulus of continuity is <em>ω</em>(<em>h</em>) = <em>M</em>*<em>h</em>. The solution for <em>ψ</em> is then <em>ψ</em>(<em>ε</em>) = <em>ε</em>/<em>M</em>.</li>
+      <li>For example, if <em>f</em> is <em>Lipschitz continuous</em> with Lipschitz constant <em>M</em> or less<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>, its modulus of continuity is <em>ω</em>(<em>h</em>) = <em>M</em>*<em>h</em>. The solution for <em>ψ</em> is then <em>ψ</em>(<em>ε</em>) = <em>ε</em>/<em>M</em>.</li>
       <li>Because <em>f</em> is continuous on a closed interval, it’s guaranteed to have a modulus of continuity (by the Heine–Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
     </ul>
   </li>
@@ -359,22 +359,22 @@
   </thead>
   <tbody>
     <tr>
-      <td>Bounded; lies in the closed unit interval.<sup id="fnref:14" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup></td>
+      <td>Bounded; lies in the closed unit interval.<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></td>
       <td>Continuous; maps the closed unit interval to itself.</td>
       <td><em>n</em> = ceil(ln(2/<em>δ</em>)/(2*<em>γ</em><sup>2</sup>)).</td>
     </tr>
     <tr>
       <td>Bernoulli (that is, 1 or 0 with unknown probability).</td>
       <td>Continuous; maps the closed unit interval to itself.</td>
-      <td><em>n</em> can be computed by a method given in Chen (2011)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>, letting the <em>ε</em> in that paper equal <em>γ</em>.  See also Table 1 in that paper.  For example, <em>n</em>=101 if <em>γ</em>=1/10 and <em>δ</em>=1/20.</td>
+      <td><em>n</em> can be computed by a method given in Chen (2011)<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>, letting the <em>ε</em> in that paper equal <em>γ</em>.  See also Table 1 in that paper.  For example, <em>n</em>=101 if <em>γ</em>=1/10 and <em>δ</em>=1/20.</td>
     </tr>
     <tr>
-      <td>Unbounded (can take on any real number) and has a known upper bound on the standard deviation <em>σ</em> (or the variance <em>σ</em><sup>2</sup>).<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup></td>
+      <td>Unbounded (can take on any real number) and has a known upper bound on the standard deviation <em>σ</em> (or the variance <em>σ</em><sup>2</sup>).<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup></td>
       <td>Bounded and continuous on every closed interval of the real line.</td>
       <td><em>n</em> = ceil(<em>σ</em><sup>2</sup>/(<em>δ</em>*<em>γ</em><sup>2</sup>)).</td>
     </tr>
     <tr>
-      <td>Unbounded and subgaussian<sup id="fnref:17" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>; known upper bound on standard deviation <em>σ</em> (Wainwright 2019)<sup id="fnref:18" role="doc-noteref"><a href="#fn:18" class="footnote" rel="footnote">18</a></sup></td>
+      <td>Unbounded and subgaussian<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>; known upper bound on standard deviation <em>σ</em> (Wainwright 2019)<sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup></td>
       <td><em>f</em>(<em>x</em>) = <em>x</em>.</td>
       <td><em>n</em> = $(2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)})/(\epsilon^{2})$.</td>
     </tr>
@@ -399,7 +399,7 @@
       <p><em>Algorithm E</em> is not an unbiased estimator in general.  However, when <em>f</em>(<em>x</em>) = <em>x</em>, the sample mean used by the algorithm is an unbiased estimator of the mean as long as the sample size <em>n</em> is unchanged.</p>
     </li>
     <li>
-      <p>In <em>Algorithm E</em>, for an estimate in terms of relative error, rather than absolute error, multiply <em>γ</em> by <em>M</em> after step 1 is complete, where <em>M</em> is the smallest absolute value of the mean that the stream’s distribution is allowed to have (Wainwright 2019)<sup id="fnref:18:1" role="doc-noteref"><a href="#fn:18" class="footnote" rel="footnote">18</a></sup>.</p>
+      <p>In <em>Algorithm E</em>, for an estimate in terms of relative error, rather than absolute error, multiply <em>γ</em> by <em>M</em> after step 1 is complete, where <em>M</em> is the smallest absolute value of the mean that the stream’s distribution is allowed to have (Wainwright 2019)<sup id="fnref:18:1"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>.</p>
     </li>
     <li>Finding the sample size needed to produce an estimate that is close to the ideal value with a user-specified error bound and a user-specified probability, as with <em>Algorithm E</em>, is also known as <em>offline learning</em>, <em>statistical learning</em>, or <em>provably approximately correct (PAC) learning</em>.</li>
   </ol>
@@ -417,7 +417,7 @@
 
 <h2 id="randomized-integration">Randomized Integration</h2>
 
-<p>Monte Carlo integration is a randomized way to estimate the integral (“area under the graph”) of a function.<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup></p>
+<p>Monte Carlo integration is a randomized way to estimate the integral (“area under the graph”) of a function.<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup></p>
 
 <p>This time, suppose there is an endless stream of <em>vectors</em> (<em>d</em>-dimensional points), each generated at random and independently from each other, and as many vectors can be sampled from the stream as wanted.</p>
 
@@ -471,10 +471,10 @@ pprint(Max(1,kappa))
 
   <ol>
     <li>
-      <p>If <em>h</em>(<strong>z</strong>) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for <em>Algorithm E</em> can be <em>n</em> = ceil(23.42938/<em>ε</em><sup>2</sup>).  (<em>n</em> is an upper bound calculated using Theorem 15.1 of Tropp (2021)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup>, one example of a <em>uniform law of large numbers</em>).  This sample size ensures an estimate of the integral with an expected absolute error of <em>ε</em> or less.</p>
+      <p>If <em>h</em>(<strong>z</strong>) is one-dimensional, maps the closed unit interval to itself, and is Lipschitz continuous with Lipschitz constant 1 or less, then the sample size for <em>Algorithm E</em> can be <em>n</em> = ceil(23.42938/<em>ε</em><sup>2</sup>).  (<em>n</em> is an upper bound calculated using Theorem 15.1 of Tropp (2021)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>, one example of a <em>uniform law of large numbers</em>).  This sample size ensures an estimate of the integral with an expected absolute error of <em>ε</em> or less.</p>
     </li>
     <li>
-      <p>As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)<sup id="fnref:21" role="doc-noteref"><a href="#fn:21" class="footnote" rel="footnote">21</a></sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
+      <p>As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
       <ol>
         <li>For a sample size <em>n</em>, set <em>m</em> to floor(<em>n</em><sup>1/<em>d</em></sup>), where <em>d</em> is the number of dimensions in the sampling domain (number of components of each point).  Set <em>s</em> to 0.</li>
@@ -487,7 +487,7 @@ pprint(Max(1,kappa))
         <li>Return <em>s</em>/<em>m</em><sup><em>d</em></sup>.</li>
       </ol>
 
-      <p>The paper (Theorem 3.9) also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is Hölder continuous with Hölder exponent <em>β</em> or less <sup id="fnref:22" role="doc-noteref"><a href="#fn:22" class="footnote" rel="footnote">22</a></sup> and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>δ</em>)/2*<em>ε</em><sup>2</sup>)<sup><em>d</em>/(2*<em>β</em>+<em>d</em>)</sup>).</p>
+      <p>The paper (Theorem 3.9) also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is Hölder continuous with Hölder exponent <em>β</em> or less <sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup> and is defined on the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>δ</em>)/2*<em>ε</em><sup>2</sup>)<sup><em>d</em>/(2*<em>β</em>+<em>d</em>)</sup>).</p>
     </li>
   </ol>
 </blockquote>
@@ -507,7 +507,7 @@ pprint(Max(1,kappa))
 
 <p>In this section, ilog(<em>a</em>, <em>r</em>) means either <em>a</em> if <em>r</em> is 0, or max(ln(ilog(<em>a</em>, <em>r</em>−1)), 1) otherwise.</p>
 
-<p>Agarwal et al. (2017)<sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup> called this algorithm “aggressive elimination”, and it can be described as follows.</p>
+<p>Agarwal et al. (2017)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup> called this algorithm “aggressive elimination”, and it can be described as follows.</p>
 
 <ol>
   <li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8*<em>k</em>/<em>δ</em>)) * 2/(<em>D</em>*<em>D</em>)).</li>
@@ -537,73 +537,73 @@ pprint(Max(1,kappa))
 <p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1" role="doc-endnote">
+    <li id="fn:1">
       <p>Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:2" role="doc-endnote">
+    <li id="fn:2">
       <p>Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures &amp; Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015). <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:3" role="doc-endnote">
+    <li id="fn:3">
       <p>Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016). <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:4" role="doc-endnote">
+    <li id="fn:4">
       <p>Huber, M., “<a href="https://arxiv.org/abs/2210.12861"><strong>Tight relative estimation in the mean of Bernoulli random variables</strong></a>”, arXiv:2210.12861 [cs.LG], 2022. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:5" role="doc-endnote">
+    <li id="fn:5">
       <p>Huber, Mark, and Bo Jones. “Faster estimates of the mean of bounded random variables.” Mathematics and Computers in Simulation 161 (2019): 93-101. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:6" role="doc-endnote">
+    <li id="fn:6">
       <p>Huber, Mark, “<a href="https://arxiv.org/abs/1706.01478"><strong>An optimal(<em>ε</em>, <em>δ</em>)-approximation scheme for the mean of random variables with bounded relative variance</strong></a>”, arXiv:1706.01478, 2017. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:7" role="doc-endnote">
+    <li id="fn:7">
       <p>Kunsch, Robert J., Erich Novak, and Daniel Rudolf. “Solvable integration problems and optimal sample size selection.” Journal of Complexity 53 (2019): 40-67.  Also in <a href="https://arxiv.org/pdf/1805.08637.pdf"><strong>https://arxiv.org/pdf/1805.08637.pdf</strong></a> . <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:8" role="doc-endnote">
+    <li id="fn:8">
       <p>Hickernell, F.J., Jiang, L., et al., “<a href="https://arxiv.org/abs/1208.4318v3"><strong>Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling</strong></a>”, arXiv:1208.4318v3 [math.ST], 2012/2013. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:9" role="doc-endnote">
+    <li id="fn:9">
       <p>As used here, kurtosis is the 4th absolute central moment divided by the square of the 2nd absolute central moment <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:10" role="doc-endnote">
+    <li id="fn:10">
       <p>“<em>k</em> is even” means that <em>k</em> is divisible by 2.  This is true if <em>k</em> − 2*floor(<em>k</em>/2) equals 0, or if the least significant bit of abs(<em>x</em>) is 0. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:11" role="doc-endnote">
+    <li id="fn:11">
       <p>Lee, J.C. and Valiant, P., 2022. <a href="https://drops.dagstuhl.de/opus/volltexte/2022/15694/"><strong>Optimal Sub-Gaussian Mean Estimation in Very High Dimensions</strong></a>. In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:12" role="doc-endnote">
+    <li id="fn:12">
       <p>Dutta, Santanu, and Alok Goswami. “Mode estimation for discrete distributions.” Mathematical Methods of Statistics 19, no. 4 (2010): 374-384. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:13" role="doc-endnote">
+    <li id="fn:13">
       <p>A <em>Lipschitz continuous</em> function with Lipschitz constant <em>M</em> is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>δ</em> apart whenever <em>x</em> and <em>y</em> are in the function’s domain and no more than <em>δ</em> apart.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>M</em>*<em>x</em>. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:14" role="doc-endnote">
+    <li id="fn:14">
       <p>This was given as an <a href="https://stats.stackexchange.com/questions/522429"><strong>answer to a Stack Exchange question</strong></a>; see also Jiang and Hickernell, “<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>”, 2014.  As the answer notes, this sample size is based on Hoeffding’s inequality. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:15" role="doc-endnote">
+    <li id="fn:15">
       <p>Chen, Xinjia. “Exact computation of minimum sample size for estimation of binomial parameters.” Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007. <a href="#fnref:15" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:16" role="doc-endnote">
+    <li id="fn:16">
       <p>Follows from Chebyshev’s inequality.  The case of <em>f</em>(<em>x</em>)=<em>x</em> was mentioned as Equation 14 in Hickernell et al. (2012/2013). <a href="#fnref:16" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:17" role="doc-endnote">
+    <li id="fn:17">
       <p>Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval [<em>a</em>, <em>b</em>] is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:18" role="doc-endnote">
+    <li id="fn:18">
       <p>Wainwright, M.J., High-dimensional statistics: A nonasymptotic viewpoint, 2019. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:19" role="doc-endnote">
+    <li id="fn:19">
       <p>Deterministic (nonrandom) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field — see the following works and works that cite them:<br />Y. Zhang, “Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations”, dissertation, Illinois Institute of Technology, 2018.<br />N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br />Mishchenko, Konstantin. “<a href="https://arxiv.org/abs/2112.02089"><strong>Regularized Newton Method with Global $ O (1/k^2) $ Convergence</strong></a>”, arXiv:2112.02089 (2021).<br />Doikov, Nikita, K. Mishchenko, and Y. Nesterov. “<a href="https://arxiv.org/abs/2208.05888"><strong>Super-universal regularized Newton method</strong></a>”, arXiv:2208.05888 (2022). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:20" role="doc-endnote">
+    <li id="fn:20">
       <p>J.A. Tropp, “ACM 217: Probability in High Dimensions”, Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023. <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:21" role="doc-endnote">
+    <li id="fn:21">
       <p>Kunsch, R.J., Rudolf, D., “<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>”, arXiv:1809.09890, 2018. <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:22" role="doc-endnote">
+    <li id="fn:22">
       <p>A <a href="https://en.wikipedia.org/wiki/Hölder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>α</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>δ</em><sup><em>α</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function’s domain and no more than <em>δ</em> apart.<br />Here, <em>α</em> satisfies 0 &lt; <em>α</em> ≤ 1.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>M</em>*<em>x</em><sup><em>α</em></sup>. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:23" role="doc-endnote">
+    <li id="fn:23">
       <p>Agarwal, A., Agarwal, S., et al., “Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons”, <em>Proceedings of Machine Learning Research</em> 65 (2017). <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

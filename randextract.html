@@ -16,12 +16,12 @@
 
 <p>In information security, randomness extraction serves to generate a seed, password, encryption key, or other secret value from hard-to-predict nondeterministic sources.</p>
 
-<p>Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Possible choices of such extractors include keyed cryptographic hash functions (see, for example, (Cliff et al., 2009)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>; (Coretti et al., 2019)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>) and two-universal hash functions with a fixed but randomly chosen seed (Frauchiger et al., 2013)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>. In information security applications:</p>
+<p>Randomness extraction for information security is discussed in NIST SP 800-90B sec. 3.1.5.1, and RFC 4086 sec. 4.2 and 5.2. Possible choices of such extractors include keyed cryptographic hash functions (see, for example, (Cliff et al., 2009)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>; (Coretti et al., 2019)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>) and two-universal hash functions with a fixed but randomly chosen seed (Frauchiger et al., 2013)<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>. In information security applications:</p>
 
 <ul>
   <li>Unkeyed hash functions and other unkeyed extraction functions should not be used by themselves in randomness extraction.</li>
   <li>Lossless compression should not be used as a randomness extractor.</li>
-  <li>Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction (McInnes and Pinkas 1990)<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.</li>
+  <li>Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction (McInnes and Pinkas 1990)<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
 </ul>
 
 <p>Some papers also refer to two-source extractors and resilient functions (especially the works by E. Chattopadhyay and D. Zuckerman), but there are few if any real implementations of these extraction techniques.</p>
@@ -42,14 +42,14 @@
 
 <p>Outside of information security, randomness extraction serves the purpose of recycling randomly generated numbers or, more generally, to transform those numbers from one form to another while preserving their randomness.  This can be done, for example, to reduce calls to a pseudorandom number generator (PRNG) or to generate a new seed for such a PRNG.</p>
 
-<p>Perhaps the most familiar example of randomness extraction is the one by von Neumann (1951)<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>, which works if “independence of successive [coin] tosses is assumed”<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup>:</p>
+<p>Perhaps the most familiar example of randomness extraction is the one by von Neumann (1951)<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, which works if “independence of successive [coin] tosses is assumed”<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>:</p>
 
 <ol>
   <li>Flip a coin twice (whose probability of heads is unknown).</li>
   <li>If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.</li>
 </ol>
 
-<p>An algorithm found in (Morina et al. 2022)<sup id="fnref:6:1" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup> (called <strong>Algorithm M</strong> in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key “is to find two non overlapping events of the same probability” via “symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability”.</p>
+<p>An algorithm found in (Morina et al. 2022)<sup id="fnref:6:1"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> (called <strong>Algorithm M</strong> in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key “is to find two non overlapping events of the same probability” via “symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability”.</p>
 
 <ol>
   <li>Throw a (loaded) die, call the result <em>X</em>.  Throw the die again, call the result <em>Y</em>.</li>
@@ -58,7 +58,7 @@
 
 <p>Algorithm M in fact works in a surprisingly broad range of cases; for more, see the <a href="#Appendix"><strong>appendix</strong></a>.</p>
 
-<p>Pae (2005)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup> and (Pae and Loui 2006)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup> characterize <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length occurs with the same probability as every other output bit-string of that length, regardless of the input’s probability of zero or one.<sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup>  Among others, von Neumann’s extractor and the one by Peres (1992)<sup id="fnref:10" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones generated from a “coin” with a given probability of heads) as input and is described as follows:</p>
+<p>Pae (2005)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> and (Pae and Loui 2006)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> characterize <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length occurs with the same probability as every other output bit-string of that length, regardless of the input’s probability of zero or one.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>  Among others, von Neumann’s extractor and the one by Peres (1992)<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones generated from a “coin” with a given probability of heads) as input and is described as follows:</p>
 
 <ol>
   <li>Create two empty lists named U and V. Then, while two or more bits remain in the input:
@@ -73,11 +73,11 @@
   <li>If V is not empty, do a separate (recursive) run of this algorithm, reading from the bits placed in V.</li>
 </ol>
 
-<p>A streaming algorithm, which builds something like an “extractor tree”, is another example of a randomness extractor (Zhou and Bruck 2012)<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup>.</p>
+<p>A streaming algorithm, which builds something like an “extractor tree”, is another example of a randomness extractor (Zhou and Bruck 2012)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>.</p>
 
 <p>I maintain <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb"><strong>source code of this extractor and the Peres extractor</strong></a>, which also includes additional notes on randomness extraction.</p>
 
-<p>Pae’s “entropy-preserving” binarization (Pae 2018)<sup id="fnref:12" role="doc-noteref"><a href="#fn:12" class="footnote" rel="footnote">12</a></sup>, given later, is meant to be used in other extractor algorithms such as the ones mentioned earlier.  It assumes the number of possible values, <em>n</em>, is known. However, it is obviously not efficient if <em>n</em> is a large number.</p>
+<p>Pae’s “entropy-preserving” binarization (Pae 2018)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup>, given later, is meant to be used in other extractor algorithms such as the ones mentioned earlier.  It assumes the number of possible values, <em>n</em>, is known. However, it is obviously not efficient if <em>n</em> is a large number.</p>
 
 <ol>
   <li>Let <em>f</em> be a number in the interval [0, <em>n</em>) that was previously randomly generated.  If <em>f</em> is greater than 0, write a 1 (and go to step 2).</li>
@@ -89,12 +89,12 @@
 <ol>
   <li>Different kinds of random numbers should not be mixed in the same extractor stream.  For example, if one source outputs random 6-sided die results, another source outputs random sums of rolling 2 six-sided dice, and a third source outputs coin flips with a probability of heads of 0.75, there should be three extractor streams (for instance, three extractor trees that implement the Zhou and Bruck algorithm).</li>
   <li>Hash functions, such as those mentioned in my <a href="https://peteroupc.github.io/hqrand.html#Counter_Based_PRNGs"><strong>examples of high-quality PRNGs</strong></a>, also serve to produce random-behaving numbers from a variable number of bits.  In general, they can’t be extracting functions; however, as long as their output has more bits than used to produce it, that output can serve as input to an extraction algorithm.</li>
-  <li>Peres (1992)<sup id="fnref:10:1" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup> warns that if a program takes enough input bits (such as flips of a coin with unknown probability of heads) so that the extracting function outputs <em>m</em> bits with them, those <em>m</em> bits will not be uniformly distributed.  Instead, the extracting function should be passed blocks of input bits, one block at a time (where each block should have a fixed length of at least 2 bits), until <em>m</em> bits or more are generated by the extractor this way.</li>
+  <li>Peres (1992)<sup id="fnref:10:1"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup> warns that if a program takes enough input bits (such as flips of a coin with unknown probability of heads) so that the extracting function outputs <em>m</em> bits with them, those <em>m</em> bits will not be uniformly distributed.  Instead, the extracting function should be passed blocks of input bits, one block at a time (where each block should have a fixed length of at least 2 bits), until <em>m</em> bits or more are generated by the extractor this way.</li>
   <li>Extractors that maintain state, such as the Zhou and Bruck extractor tree, should be used only on sources whose distribution does not change significantly over time.  Dividing the source into blocks, as in the previous note, and assigning one extractor instance to each block, can improve robustness for sources whose distribution can change over time.</li>
-  <li>The lower bound on the average number of coin flips needed to sample a new probability given a coin that shows heads with an unknown probability is as follows (and is a special case of the <em>entropy bound</em>; see, for example, (Pae 2005)<sup id="fnref:7:1" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>, (Peres 1992)<sup id="fnref:10:2" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>): ln(2) / ((λ − 1) * ln(1 − λ) − λ * ln(λ)), where λ is the probability of heads of the input coin and ranges from 0 for always tails to 1 for always heads.  According to this formula, a growing number of coin flips is needed if the input coin strongly leans towards heads or tails.  (For certain values of λ, Kozen (2014)<sup id="fnref:13" role="doc-noteref"><a href="#fn:13" class="footnote" rel="footnote">13</a></sup> showed a tighter lower bound of this kind, but this bound is nontrivial and assumes λ is known.)</li>
+  <li>The lower bound on the average number of coin flips needed to sample a new probability given a coin that shows heads with an unknown probability is as follows (and is a special case of the <em>entropy bound</em>; see, for example, (Pae 2005)<sup id="fnref:7:1"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>, (Peres 1992)<sup id="fnref:10:2"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>): ln(2) / ((λ − 1) * ln(1 − λ) − λ * ln(λ)), where λ is the probability of heads of the input coin and ranges from 0 for always tails to 1 for always heads.  According to this formula, a growing number of coin flips is needed if the input coin strongly leans towards heads or tails.  (For certain values of λ, Kozen (2014)<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup> showed a tighter lower bound of this kind, but this bound is nontrivial and assumes λ is known.)</li>
 </ol>
 
-<p>Devroye and Gravel (2020)<sup id="fnref:14" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup> suggest a special randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em>.  Since the algorithm seems not to be well developed, I discuss this extractor in detail elsewhere, in “<a href="https://peteroupc.github.io/randmisc.html"><strong>Miscellaneous Notes on Randomization</strong></a>”.</p>
+<p>Devroye and Gravel (2020)<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup> suggest a special randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em>.  Since the algorithm seems not to be well developed, I discuss this extractor in detail elsewhere, in “<a href="https://peteroupc.github.io/randmisc.html"><strong>Miscellaneous Notes on Randomization</strong></a>”.</p>
 
 <p><a id="Notes"></a></p>
 
@@ -118,7 +118,7 @@
   <li>the chance that the first “die” shows a number less than the second “die” is the same as the chance that the first “die” shows a greater number.</li>
 </ul>
 
-<p>More formally, P(<em>X</em> &lt; <em>Y</em>) must be equal to P(<em>X</em> &gt; <em>Y</em>).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>, (De Schuymer et al. 2003)<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random “vector” [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions.  In the propositions below, a random variable is <em>nondegenerate</em> if it does not take on a single value with probability 1.</p>
+<p>More formally, P(<em>X</em> &lt; <em>Y</em>) must be equal to P(<em>X</em> &gt; <em>Y</em>).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>, (De Schuymer et al. 2003)<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random “vector” [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions.  In the propositions below, a random variable is <em>nondegenerate</em> if it does not take on a single value with probability 1.</p>
 
 <p><strong>Proposition 1.</strong> <em>Let X and Y be real-valued nondegenerate random variables.  Then Algorithm M outputs 1 or 0 with equal probability if and only if X and Y are statistically indifferent.</em></p>
 
@@ -137,9 +137,9 @@
 
 <p><strong>Proposition 2.</strong> <em>Let X and Y be real-valued nondegenerate random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent.</em></p>
 
-<p><em>Proof.</em> By definition, <em>X</em> and <em>Y</em> are statistically indifferent if and only if <em>X</em> is statistically preferred to <em>Y</em> and vice versa (that is, P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 &gt;= P(<em>Y</em>&gt;<em>X</em>) + P(<em>Y</em>=<em>X</em>)/2) (De Schuymer et al. 2003)<sup id="fnref:16:1" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.  Because both random variables are nondegenerate, P(<em>X</em>&gt;<em>Y</em>) or P(<em>Y</em>&gt;<em>X</em>) or both are nonzero, and P(<em>X</em>=<em>Y</em>) &lt; 1. Moreover, because both random variables are identically distributed, their distribution functions <em>F</em><sub><em>X</em></sub> and  <em>F</em><sub><em>Y</em></sub> are the same, and therefore their values and expectations for any particular <em>z</em> (for example, <em>F</em><sub><em>X</em></sub>(<em>z</em>) and E[<em>F</em><sub><em>X</em></sub>(<em>z</em>)], respectively) are the same.</p>
+<p><em>Proof.</em> By definition, <em>X</em> and <em>Y</em> are statistically indifferent if and only if <em>X</em> is statistically preferred to <em>Y</em> and vice versa (that is, P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 &gt;= P(<em>Y</em>&gt;<em>X</em>) + P(<em>Y</em>=<em>X</em>)/2) (De Schuymer et al. 2003)<sup id="fnref:16:1"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>.  Because both random variables are nondegenerate, P(<em>X</em>&gt;<em>Y</em>) or P(<em>Y</em>&gt;<em>X</em>) or both are nonzero, and P(<em>X</em>=<em>Y</em>) &lt; 1. Moreover, because both random variables are identically distributed, their distribution functions <em>F</em><sub><em>X</em></sub> and  <em>F</em><sub><em>Y</em></sub> are the same, and therefore their values and expectations for any particular <em>z</em> (for example, <em>F</em><sub><em>X</em></sub>(<em>z</em>) and E[<em>F</em><sub><em>X</em></sub>(<em>z</em>)], respectively) are the same.</p>
 
-<p>If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup id="fnref:15:1" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>, we see that we can replace—</p>
+<p>If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup id="fnref:15:1"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>, we see that we can replace—</p>
 
 <ul>
   <li>the left hand side of Equation 3.5 with 0 − 0, since it’s a difference of expectations of the same distribution function and random variable, and</li>
@@ -156,7 +156,7 @@
   <li>Set <em>X</em> and <em>Y</em> to two independent uniform(0, 1) random numbers, then set <em>Y</em> to (<em>X</em>+<em>Y</em>)/2.</li>
 </ul>
 
-<p>See also a procedure given as a remark near the end of a paper by Camion (1974)<sup id="fnref:17" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>.</p>
+<p>See also a procedure given as a remark near the end of a paper by Camion (1974)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>.</p>
 
 <p><a id="License"></a></p>
 
@@ -165,55 +165,55 @@
 <p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1" role="doc-endnote">
+    <li id="fn:1">
       <p>Cliff, Y., Boyd, C., Gonzalez Nieto, J. “How to Extract and Expand Randomness: A Summary and Explanation of Existing Results”, 2009. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:2" role="doc-endnote">
+    <li id="fn:2">
       <p>Coretti, S., Dodis, Y., et al., “Seedless Fruit is the Sweetest: Random Number Generation, Revisited”, 2019. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:3" role="doc-endnote">
+    <li id="fn:3">
       <p>Frauchiger, D., Renner, R., Troyer, M., “True randomness from realistic quantum devices”, 2013. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:4" role="doc-endnote">
+    <li id="fn:4">
       <p>McInnes, J. L., &amp; Pinkas, B. (1990, August). On the impossibility of private key cryptography with weakly random keys. In Conference on the Theory and Application of Cryptography (pp. 421-435). <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:5" role="doc-endnote">
+    <li id="fn:5">
       <p>von Neumann, J., “Various techniques used in connection with random digits”, 1951. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:6" role="doc-endnote">
+    <li id="fn:6">
       <p>Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. “From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains.” Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. <a href="https://doi.org/10.1214/21-AAP1679"><strong>https://doi.org/10.1214/21-AAP1679</strong></a> <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:6:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:7" role="doc-endnote">
+    <li id="fn:7">
       <p>Pae, S., “Random number generation using a biased source”, dissertation, University of Illinois at Urbana-Champaign, 2005. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:8" role="doc-endnote">
+    <li id="fn:8">
       <p>Pae, S., Loui, M.C., “Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution”, <em>IEEE Transactions on Information Theory</em> 52(11), November 2006. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:9" role="doc-endnote">
+    <li id="fn:9">
       <p>It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can’t be extracting, either. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:10" role="doc-endnote">
+    <li id="fn:10">
       <p>Peres, Y., “<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann’s procedure for extracting random bits</strong></a>”, Annals of Statistics 1992,20,1, p. 590-597. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:10:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:10:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
-    <li id="fn:11" role="doc-endnote">
+    <li id="fn:11">
       <p>Zhou, H. and Bruck, J., “<a href="https://arxiv.org/abs/1209.0730"><strong>Streaming algorithms for optimal generation of random bits</strong></a>”, arXiv:1209.0730 [cs.IT], 2012. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:12" role="doc-endnote">
+    <li id="fn:12">
       <p>S. Pae, “<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>”, arXiv:1602.06058v2 [cs.DS], 2018. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:13" role="doc-endnote">
+    <li id="fn:13">
       <p>Kozen, D., <a href="http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf"><strong>“Optimal Coin Flipping”</strong></a>, 2014. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:14" role="doc-endnote">
+    <li id="fn:14">
       <p>Devroye, L., Gravel, C., “<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>”, arXiv:1502.02539v6  [cs.IT], 2020. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:15" role="doc-endnote">
+    <li id="fn:15">
       <p>Montes Gutiérrez, I., “Comparison of alternatives under uncertainty and imprecision”, doctoral thesis, Universidad de Oviedo, 2014. <a href="#fnref:15" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:15:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:16" role="doc-endnote">
+    <li id="fn:16">
       <p>De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. “A fuzzy approach to stochastic dominance of random variables”, in <em>International Fuzzy Systems Association World Congress</em> 2003. <a href="#fnref:16" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:16:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:17" role="doc-endnote">
+    <li id="fn:17">
       <p>Camion, Paul, “Unbiased die rolling with a biased die”, North Carolina State University. Dept. of Statistics, 1974. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

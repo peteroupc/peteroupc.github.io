@@ -12,23 +12,23 @@
 
 <p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  Let $(X_0, X_1, X_2, X_3, …)$ be that endless stream, and call the numbers <em>input values</em>.</p>
 
-<p>Let <code>InDist</code> be the probability distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution <code>InDist</code>, such as its expected value (or mean or “long-run average”).  Suppose the problem is to <strong>produce a random variate with a distribution</strong> <code>OutDist</code> <strong>that depends on the unknown parameter $\lambda$</strong>.  Then, of the algorithms in the section “<a href="https://peteroupc.github.io/randmisc.html#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a>”:</p>
+<p>Let <code>InDist</code> be the probability distribution of these input values, and let $\lambda$ be an unknown parameter that determines the distribution <code>InDist</code>, such as its expected value (or mean or "long-run average"”).  Suppose the problem is to <strong>produce a random variate with a distribution</strong> <code>OutDist</code> <strong>that depends on the unknown parameter $\lambda$</strong>.  Then, of the algorithms in the section “<a href="https://peteroupc.github.io/randmisc.html#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a>”:</p>
 
 <ul>
-  <li>In <strong>Algorithm 1</strong> (Jacob and Thiery 2015)<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, <code>InDist</code> is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.</li>
-  <li>In <strong>Algorithm 2</strong> (Duvignau 2015)<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>, <code>InDist</code> is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and <code>OutDist</code> is a specific distribution that depends on the number of faces.</li>
-  <li>In <strong>Algorithm 3</strong> (Lee et al. 2014)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>, <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.</li>
-  <li>In <strong>Algorithm 4</strong> (Jacob and Thiery 2015)<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, <code>InDist</code> is arbitrary but must have a known minimum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.</li>
-  <li>In <strong>Algorithm 5</strong> (Akahira et al. 1992)<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.</li>
+  <li>In <strong>Algorithm 1</strong> (Jacob and Thiery 2015)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, <code>InDist</code> is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.</li>
+  <li>In <strong>Algorithm 2</strong> (Duvignau 2015)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>, <code>InDist</code> is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and <code>OutDist</code> is a specific distribution that depends on the number of faces.</li>
+  <li>In <strong>Algorithm 3</strong> (Lee et al. 2014)<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>, <code>InDist</code> is arbitrary, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.</li>
+  <li>In <strong>Algorithm 4</strong> (Jacob and Thiery 2015)<sup id="fnref:1:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, <code>InDist</code> is arbitrary but must have a known minimum, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.</li>
+  <li>In <strong>Algorithm 5</strong> (Akahira et al. 1992)<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>, <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> has an expected value of $f(\lambda)$.</li>
   <li>In the <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory problem</strong></a> (a problem of turning biased coins to biased coins), <code>InDist</code> is Bernoulli, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is Bernoulli with an expected value of $f(\lambda)$.</li>
 </ul>
 
 <p>In all cases given earlier, each input value is independent of everything else.</p>
 
-<p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli. <sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup>  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved…</p>
+<p>There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of <strong>Algorithm 5</strong> except <code>InDist</code> is any discrete distribution, not just Bernoulli. <sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved…</p>
 
 <ul>
-  <li>…when the number of input values taken is random (and may depend on already taken inputs), but is finite with probability 1 (a <em>sequential unbiased</em> estimator)?<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup></li>
+  <li>…when the number of input values taken is random (and may depend on already taken inputs), but is finite with probability 1 (a <em>sequential unbiased</em> estimator)?<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></li>
   <li>…when only a fixed number $n$ of input values can be taken (a <em>fixed-size unbiased</em> estimator)?</li>
   <li>…using an algorithm that produces outputs whose expected value <em>approaches</em> $f(\lambda)$ as more input values are taken (an <em>asymptotically unbiased</em> estimator)?</li>
 </ul>
@@ -43,7 +43,7 @@
   <li>whether outside randomness is allowed (that is, whether the estimator is <em>randomized</em>).</li>
 </ul>
 
-<p>An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (for example, Nacu and Peres (2005, Question 2)<sup id="fnref:7" role="doc-noteref"><a href="#fn:7" class="footnote" rel="footnote">7</a></sup>).</p>
+<p>An additional question is to find lower bounds on the input/output ratio that an algorithm can achieve as the number of inputs taken increases (for example, Nacu and Peres (2005, Question 2)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>).</p>
 
 <p>My interest on the problem is in the existence and construction of simple-to-implement algorithms that solve the <em>sampling problem</em> given here.  In addition, the cases that most interest me are when—</p>
 
@@ -67,7 +67,7 @@
 <ul>
   <li>Suppose <code>InDist</code> takes an unknown finite number $n$ of values with unknown probabilities ($n\ge 1$), $\lambda$ is $n$, and <code>OutDist</code> has an expected value of $\lambda$.
     <ul>
-      <li>No sequential nonrandomized unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)<sup id="fnref:8" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>. <sup id="fnref:9" role="doc-noteref"><a href="#fn:9" class="footnote" rel="footnote">9</a></sup></li>
+      <li>No sequential nonrandomized unbiased estimator exists, even if $n$ is known to have a maximum of 2 or greater (Christman and Nayak 1994)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>. <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></li>
       <li>Not aware of conditions for sequential randomized unbiased estimators.</li>
       <li>Not aware of conditions for fixed-size unbiased estimators.</li>
       <li>Not aware of conditions for asymptotically unbiased estimators.</li>
@@ -75,16 +75,16 @@
   </li>
   <li>Suppose <code>InDist</code> is a fair die with an unknown number of faces (1 or greater), $\lambda$ is the number of faces, and <code>OutDist</code> has an expected value of $f(\lambda)$.
     <ul>
-      <li>If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)<sup id="fnref:8:1" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>.</li>
-      <li>If $f$ is unbounded (including when $f(\lambda)=\lambda$), there is no fixed-size nonrandomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)<sup id="fnref:8:2" role="doc-noteref"><a href="#fn:8" class="footnote" rel="footnote">8</a></sup>.</li>
+      <li>If there is no maximum sample size, a sequential unbiased estimator exists for every $f$ (Christman and Nayak 1994)<sup id="fnref:8:1"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>.</li>
+      <li>If $f$ is unbounded (including when $f(\lambda)=\lambda$), there is no fixed-size nonrandomized unbiased estimator that is based only on the sample size and the number of unique items sampled (Christman and Nayak 1994)<sup id="fnref:8:2"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>.</li>
       <li>Not aware of conditions for more general fixed-size unbiased estimators.</li>
       <li>Not aware of conditions for asymptotically unbiased estimators.</li>
     </ul>
   </li>
   <li>Suppose <code>InDist</code> takes on numbers from a finite set; $\lambda$ is the expected value of <code>InDist</code>; and <code>OutDist</code> has an expected value of $f(\lambda)$.
     <ul>
-      <li>A fixed-size nonrandomized unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less <sup id="fnref:10" role="doc-noteref"><a href="#fn:10" class="footnote" rel="footnote">10</a></sup>, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)<sup id="fnref:11" role="doc-noteref"><a href="#fn:11" class="footnote" rel="footnote">11</a></sup>, Paninski (2003, proof of Proposition 8, more generally)<sup id="fnref:12" role="doc-noteref"><a href="#fn:12" class="footnote" rel="footnote">12</a></sup>).</li>
-      <li>The existence of randomized sequential unbiased estimators is claimed by Singh (1964)<sup id="fnref:13" role="doc-noteref"><a href="#fn:13" class="footnote" rel="footnote">13</a></sup>.  But see Akahira et al. (1992)<sup id="fnref:4:1" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>.</li>
+      <li>A fixed-size nonrandomized unbiased estimator exists only if $f$ is a polynomial in homogeneous form of degree $n$ or less <sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>, where $n$ is the number of inputs taken (Lehmann (1983, for coin flips)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>, Paninski (2003, proof of Proposition 8, more generally)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup>).</li>
+      <li>The existence of randomized sequential unbiased estimators is claimed by Singh (1964)<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>.  But see Akahira et al. (1992)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
       <li>Not aware of conditions for sequential nonrandomized unbiased estimators.</li>
       <li>Not aware of conditions for fixed-size randomized unbiased estimators.</li>
       <li>Not aware of conditions for asymptotically unbiased estimators.</li>
@@ -92,20 +92,20 @@
   </li>
   <li>Suppose <code>InDist</code> has a finite mean, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
     <ul>
-      <li>There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)<sup id="fnref:1:2" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
+      <li>There is no sequential unbiased estimator (and thus no fixed-size unbiased estimator) (Jacob and Thiery 2015)<sup id="fnref:1:2"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
       <li>Not aware of conditions for asymptotically unbiased estimators.</li>
     </ul>
   </li>
   <li>Suppose <code>InDist</code> has a finite mean and is supported on $[a, \infty)$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
     <ul>
-      <li>A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)<sup id="fnref:1:3" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.<sup id="fnref:14" role="doc-noteref"><a href="#fn:14" class="footnote" rel="footnote">14</a></sup></li>
+      <li>A sequential unbiased estimator exists only if $f$ is nowhere decreasing (Jacob and Thiery 2015)<sup id="fnref:1:3"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
       <li>Not aware of conditions for fixed-size unbiased estimators.</li>
       <li>Not aware of conditions for asymptotically unbiased estimators.</li>
     </ul>
   </li>
   <li>Suppose <code>InDist</code> has a finite mean and is supported on $(-\infty, a]$, $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is nonnegative and has an expected value of $f(\lambda)$.
     <ul>
-      <li>A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)<sup id="fnref:1:4" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</li>
+      <li>A sequential unbiased estimator exists only if $f$ is nowhere increasing (Jacob and Thiery 2015)<sup id="fnref:1:4"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
       <li>Not aware of conditions for fixed-size unbiased estimators.</li>
       <li>Not aware of conditions for asymptotically unbiased estimators.</li>
     </ul>
@@ -113,20 +113,20 @@
   <li>Suppose <code>InDist</code> is Bernoulli (a “biased coin”), $\lambda$ is the expected value of <code>InDist</code>, and <code>OutDist</code> is Bernoulli with an expected value of $f(\lambda)$.
     <ul>
       <li>Let $D$ be the set of allowed values for $\lambda$.  Thus, $D$ is either the closed unit interval or a subset thereof.</li>
-      <li>A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O’Brien 1994)<sup id="fnref:15" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>.
+      <li>A sequential unbiased estimator exists if and only if $f$ is everywhere 0, everywhere 1, or continuous and polynomially bounded on $D$ (Keane and O’Brien 1994)<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>.
         <ul>
-          <li>The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O’Brien 1994)<sup id="fnref:15:1" role="doc-noteref"><a href="#fn:15" class="footnote" rel="footnote">15</a></sup>.  See <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>this section</strong></a> for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).</li>
+          <li>The estimator can be nonrandomized whenever $D$ contains neither 0 nor 1 (Keane and O’Brien 1994)<sup id="fnref:15:1"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>.  See <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>this section</strong></a> for results when $\lambda$ is allowed to be 0 or 1 (the coin can show heads every time or tails every time).</li>
         </ul>
       </li>
-      <li>A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)<sup id="fnref:16" role="doc-noteref"><a href="#fn:16" class="footnote" rel="footnote">16</a></sup>.</li>
-      <li>Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, …$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials’ Bernstein coefficients lie in the closed unit interval (see also Singh (1964)<sup id="fnref:13:1" role="doc-noteref"><a href="#fn:13" class="footnote" rel="footnote">13</a></sup>).</li>
+      <li>A fixed-size unbiased estimator exists if and only if $f$ is writable as a polynomial of degree $n$ with $n+1$ Bernstein coefficients in the closed unit interval, where $n$ is the number of inputs taken (Goyal and Sigman 2012)<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>.</li>
+      <li>Perhaps it is true that an asymptotically unbiased estimator exists if and only if there are polynomials $p_1, p_2, …$ that converge pointwise to $f$ on $D$ (that is, for each $\lambda$ in $D$, $p_n(\lambda)$ approaches $f(\lambda)$ as $n$ increases), and the polynomials’ Bernstein coefficients lie in the closed unit interval (see also Singh (1964)<sup id="fnref:13:1"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>).</li>
     </ul>
   </li>
 </ul>
 
-<p>There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)<sup id="fnref:17" role="doc-noteref"><a href="#fn:17" class="footnote" rel="footnote">17</a></sup>, Hirano and Porter (2012)<sup id="fnref:18" role="doc-noteref"><a href="#fn:18" class="footnote" rel="footnote">18</a></sup>, Bickel and Lehmann (1969)<sup id="fnref:19" role="doc-noteref"><a href="#fn:19" class="footnote" rel="footnote">19</a></sup>.  Other results include Gajek (1995)<sup id="fnref:20" role="doc-noteref"><a href="#fn:20" class="footnote" rel="footnote">20</a></sup> (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)<sup id="fnref:21" role="doc-noteref"><a href="#fn:21" class="footnote" rel="footnote">21</a></sup>, Duncan (2004)<sup id="fnref:22" role="doc-noteref"><a href="#fn:22" class="footnote" rel="footnote">22</a></sup>.</p>
+<p>There are also three other results on the existence of fixed-size and asymptotically unbiased estimators, but they are relatively hard to translate to this problem in a simple way: Liu and Brown (1993)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>, Hirano and Porter (2012)<sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>, Bickel and Lehmann (1969)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>.  Other results include Gajek (1995)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup> (which has a result on building unbiased estimators from asymptotically unbiased ones), Rychlik (1995)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>, Duncan (2004)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>.</p>
 
-<p>In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers <sup id="fnref:23" role="doc-noteref"><a href="#fn:23" class="footnote" rel="footnote">23</a></sup>.</p>
+<p>In a result closely related to the sampling problem, given a stream of independent random variates each distributed as $\varphi$ with probability $\lambda$ or as $Q$ otherwise (where $\varphi$ and $Q$ are probability distributions, $\varphi$ and $\lambda$ are known, and $Q$ is unknown), there is no way in general to generate a variate distributed as $Q$, even if values from $Q$ and $\varphi$ must come from the same set of numbers <sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>.</p>
 
 <p><a id="Question"></a></p>
 
@@ -145,73 +145,73 @@
 <p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1" role="doc-endnote">
+    <li id="fn:1">
       <p>Jacob, P.E., Thiery, A.H., “On nonnegative unbiased estimators”, Ann. Statist., Volume 43, Number 2 (2015), 769-784. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:1:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:1:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:1:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a></p>
     </li>
-    <li id="fn:2" role="doc-endnote">
+    <li id="fn:2">
       <p>Duvignau, R., “Maintenance et simulation de graphes aléatoires dynamiques”, Doctoral dissertation, Université de Bordeaux, 2015. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:3" role="doc-endnote">
+    <li id="fn:3">
       <p>Lee, A., Doucet, A. and Łatuszyński, K., 2014. “<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>”, arXiv:1407.5770v1  [stat.CO]. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:4" role="doc-endnote">
+    <li id="fn:4">
       <p>AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. “Unbiased estimation in sequential binomial sampling”,  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:4:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:5" role="doc-endnote">
+    <li id="fn:5">
       <p>Singh (1964, “Existence of unbiased estimates”, Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists for a more general class of <code>InDist</code> distributions than the Bernoulli distribution, as long as there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, “Existence of unbiased estimates in sequential binomial experiments”, Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven’t seen (Sankhyā A 55, 1993). <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:6" role="doc-endnote">
+    <li id="fn:6">
       <p>An algorithm that takes a finite number of inputs with probability 1 is also known as a <em>closed sampling plan</em> in papers and books about sequential estimation. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:7" role="doc-endnote">
+    <li id="fn:7">
       <p>Nacu, Şerban, and Yuval Peres. “<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>”, The Annals of Applied Probability 15, no. 1A (2005): 93-115. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:8" role="doc-endnote">
+    <li id="fn:8">
       <p>Christman, M.C., Nayak, T.K., “<a href="https://www.jstor.org/stable/24305291"><strong>Sequential unbiased estimation of the number of classes in a population</strong></a>”, Statistica Sinica 4(1), 1994. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:8:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:8:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
-    <li id="fn:9" role="doc-endnote">
+    <li id="fn:9">
       <p>Christman and Nayak (1994) did not study the case when the estimator can use outside randomness or the case when $n$ is known to have a <em>minimum</em> of 2 or greater.  Duvignau (2015) studied a closely related problem. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:10" role="doc-endnote">
+    <li id="fn:10">
       <p>That is, the polynomial is writable as $f(\lambda)=a_0\lambda^0(1-\lambda)^{n-0}$ + $a_1\lambda^1(1-\lambda)^{n-1}$ +…+ $a_n\lambda^n(1-\lambda)^{n-n}$, where $n$ is 1 or less and where $a_0,…,a_n$ are real numbers. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:11" role="doc-endnote">
+    <li id="fn:11">
       <p>Lehmann, E.L., <em>Theory of Point Estimation</em>, 1983. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:12" role="doc-endnote">
+    <li id="fn:12">
       <p>Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:13" role="doc-endnote">
+    <li id="fn:13">
       <p>R. Singh, “Existence of unbiased estimates”, Sankhyā A 26, 1964. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:13:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:14" role="doc-endnote">
+    <li id="fn:14">
       <p>In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + …$, where $c_0, c_1, …$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:15" role="doc-endnote">
+    <li id="fn:15">
       <p>Keane,  M.  S.,  and  O’Brien,  G.  L., “A Bernoulli factory”, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994. <a href="#fnref:15" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:15:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:16" role="doc-endnote">
+    <li id="fn:16">
       <p>Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5. <a href="#fnref:16" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:17" role="doc-endnote">
+    <li id="fn:17">
       <p>Liu., R.C., Brown, L.D., “Nonexistence of informative unbiased estimators in singular problems”, Annals of Statistics 21(1), 1993. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:18" role="doc-endnote">
+    <li id="fn:18">
       <p>Hirano, Keisuke, and Jack R. Porter. “Impossibility results for nondifferentiable functionals.” Econometrica 80, no. 4 (2012): 1769-1790. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:19" role="doc-endnote">
+    <li id="fn:19">
       <p>P. J. Bickel. E. L. Lehmann. “Unbiased Estimation in Convex Families.” Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. <a href="https://doi.org/10.1214/aoms/1177697370"><strong>https://doi.org/10.1214/aoms/1177697370</strong></a> <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:20" role="doc-endnote">
+    <li id="fn:20">
       <p>Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245. <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:21" role="doc-endnote">
+    <li id="fn:21">
       <p>Rychlik, Tomasz. “A class of unbiased kernel estimates of a probability density function.” Applicationes Mathematicae 22, no. 4 (1995): 485-497. <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:22" role="doc-endnote">
+    <li id="fn:22">
       <p>Duncan, G. M. (2004). Unbiased Simulators for Analytic Functions and Maximum Unbiased Simulated Likelihood Estimation. Available at SSRN 692921 <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:23" role="doc-endnote">
+    <li id="fn:23">
       <p>Henderson, S.G., Glynn, P.W., “<a href="https://www.sciencedirect.com/science/article/pii/S0167637702002171"><strong>Nonexistence of a class of variate generation schemes</strong></a>”, <em>Operations Research Letters</em> 31 (2003).  It is also believed that the paper’s Theorem 2 remains true even if $Q$ must be a polynomial. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

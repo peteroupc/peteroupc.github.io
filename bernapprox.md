@@ -59,9 +59,9 @@ The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 
 
 For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
-Any polynomial $p(\lambda)$ can be written in _Bernstein form_ as&mdash;
+Any polynomial $P(\lambda)$ can be written in _Bernstein form_ as&mdash;
 
-$$p(\lambda) = {n\choose 0}\lambda^0 (1-\lambda)^{n-0} a[0] + {n\choose 1}\lambda^1 (1-\lambda)^{n-1} a[1] + ... + {n\choose n}\lambda^n (1-\lambda)^{n-n} a[n],$$
+$$P(\lambda) = a[0] p_{n,0}(\lambda) + ... + a[n] p_{n,n}(\lambda),\~\~\~\~\~\~p_{n,k}(\lambda)={n\choose k}\lambda^k (1-\lambda)^{n-k},$$
 
 where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are its _n_ plus one _Bernstein coefficients_ (which this document may simply call _coefficients_ if the meaning is obvious from the context).[^2]
 
@@ -86,7 +86,7 @@ Then, a polynomial of a high enough degree (called $n$) can be used to approxima
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | $W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f)(\lambda))$ + $3 (f(\lambda)$ &minus; $B_n(f)(\lambda))$. | Same. |
 | Butzer's linear combination (order 2). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see "[**Computational Issues**](#Computational_Issues)"), then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^6], Butzer (1955)[^7].  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly spaced points.|
 | Butzer's linear combination (order 3). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$. | Butzer (1955)[^7]. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly spaced points.|
-| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f'')/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from _a_[_j_], where $z=(((f''((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^8]; Bernstein (1932)[^9]; Lorentz (1966)[^10]. $n\ge 4$; $f''$ is the second derivative of $f$. Evaluates $f$ and $f''$ at $n-1$ evenly spaced points.|
+| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f^{(2)})/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from _a_[_j_], where $z=(((f^{(2)}((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^8]; Bernstein (1932)[^9]; Lorentz (1966)[^10]. $n\ge 4$; $f^{(2)}$ is the second derivative of $f$. Evaluates $f$ and $f^{(2)}$ at $n-1$ evenly spaced points.|
 
 The goal is now to find a polynomial of degree $n$, written in Bernstein form, such that&mdash;
 
@@ -463,9 +463,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^61]: Niculescu, Constantin P., and Constantin Buşe. "The Hardy-Landau-Littlewood inequalities with less smoothness." J. Inequal. in Pure and Appl. Math 4 (2003).
 
-[^62]: B-O. Eriksson, "Some best constants in the Landau Inequality on a Finite Interval", Journal of Approximation Theory 94 (1998).
-
-[^63]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
+[^62]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
 
 <a id=Appendix></a>
 
@@ -627,13 +625,13 @@ The following error bounds, which make use of Corollary B9A and the proof techni
 | Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{478 \Lambda_{4} \left(1 + \sqrt{2} + \sqrt{3}\right)}{3125 n^{\frac{5}{2}}}\lt \frac{0.6343 \Lambda_{4}}{n^{2.5}}$ |
 | Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{13 \Lambda_{5}}{25 n^{3}}= \frac{0.52 \Lambda_{5}}{n^{3}}$ |
 
-The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f'')(x)$ (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10].  This operator is a polynomial in Bernstein form of degree $n+2$.
+The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10].  This operator is a polynomial in Bernstein form of degree $n+2$.
 
 **Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
 
-<s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f''$, the second derivative of $f$, has the Lagrange remainder $R_{f\prime\prime,0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
+<s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f^{(2)}$, the second derivative of $f$, has the Lagrange remainder $R_{f^{(2)},0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
 
-<s>$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f'',0}(\lambda,x_0)))$$</s>
+<s>$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f^{(2)},0}(\lambda,x_0)))$$</s>
 
 <s>$$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$</s>
 
@@ -777,29 +775,9 @@ _Proof:_ This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)[
 
 In the following results, denote the maximum absolute value of $f$'s $r$-th derivative as $MX(f, r)$.
 
-**Proposition X3**: Let $f(\lambda)$ be continuous on the closed interval [-1, 1], and let $M_k$ be the maximum of the absolute value of $f$'s $k$-th derivative.  Then of the following inequalities, those that involve $M_r$ are true if $f$ has a continuous $r$-th derivative on the interval.
-
-- $M_1 \le 2 M_0 + (1/2) M_2$.
-- $M_1 \le 6 M_0 + (1/8) M_3$.
-- $M_2 \le 8 M_0 + (2/3) M_3$.
-- $M_1 \le 12 M_0 + (1/48) M_4$.
-- $M_2 \le 40 M_0 + (5/24) M_4$.
-- $M_3 \le 48 M_0 + (3/4) M_4$.
-- $M_1 \le 20 M_0 + (1/384) M_5$.
-- $M_2 \le 120 M_0 + (1/24) M_5$.
-- $M_3 \le 336 M_0 + (21/80) M_5$.
-- $M_4 \le 384 M_0 + (4/5) M_5$.
-- $M_1 \le 30 M_0 + (1/3840) M_6$.
-- $M_2 \le 280 M_0 + (7/1152) M_6$.
-- $M_3 \le 1344 M_0 + (7/120) M_6$.
-- $M_4 \le 3456 M_0 + (3/10) M_6$.
-- $M_5 \le 3840 M_0 + (5/6) M_6$.
-
-Uses a result from Eriksson (1998)[^62] with $c = 1$.  Note that $W^n_\infty$, the class of functions handled in the paper, is the class of functions with a continuous $n$-th derivative.
-
 **Proposition X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous $r$-th derivative for some $r\ge 4$.  Then $MX(f,r-1) \le 4^{r-1} (r!) MX(f,0) + MX(f,r+1)/2.$
 
-_Proof:_ See Babenko et al. (1995)[^63].
+_Proof:_ See Babenko et al. (1995)[^62].
 
 **Corollary X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fourth derivative.  Then $MX(f,3) \le 1536 MX(f,0) + MX(f,5)/2$.
 

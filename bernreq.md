@@ -78,7 +78,7 @@ However, ordinary Bernstein polynomials converge to a function at the rate $\Ome
 
 But Lorentz (1966)[^6] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
-Thus, researchers have studied alternatives to Bernstein polynomials that improve the convergence rate for "smoother" functions.  See Holtz et al. (2011)[^4], Sevy (1991)[^7], Waldron (2009)[^8], Costabile et al. (2005)[^9], Han (2003)[^10], Khosravian-Arab et al. (2018)[^22], and references therein; see also Micchelli (1973)[^11], Güntürk and Li (2021a)[^12], (2021b)[^13], Draganov (2024)[^14], and Tachev (2022)[^15].
+Thus, researchers have studied alternatives to Bernstein polynomials that improve the convergence rate for "smoother" functions.  See Holtz et al. (2011)[^4], Sevy (1991)[^7], Waldron (2009)[^8], Costabile et al. (2005)[^9], Han (2003)[^10], Khosravian-Arab et al. (2018)[^11], and references therein; see also Micchelli (1973)[^12], Güntürk and Li (2021a)[^13], (2021b)[^14], Draganov (2024)[^15], and Tachev (2022)[^16].
 
 These alternative polynomials usually come with results where the error bound is the desired $O(1/n^{k/2})$, but most of those results (with the notable exception of Sevy) have hidden constants with no upper bounds given, making them unimplementable (that is, it can't be known beforehand whether a given polynomial will come close to the target function within a user-specified error tolerance).
 
@@ -100,15 +100,15 @@ Equivalently (see also Nacu and Peres (2005)[^3]), there is $C_1>0$ such that th
 
 $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
-> **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ when $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
+> **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ for some $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 >
 > **Note:** I believe there is a counterexample to this conjecture, namely the sequence&mdash;
 >
 > $$B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2,$$
 >
-> where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded continuous functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
+> where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded continuous functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
 >
-> If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{r/4})$.
+> If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
 
 <a id=Strategies></a>
 
@@ -123,7 +123,7 @@ The following are some strategies for answering these questions:
 - Find polynomials of the following kinds and find explicit bounds, with no hidden constants, on the approximation error for those polynomials:
     - Polynomial operators that preserve polynomials at a higher degree than linear functions.
     - Operators that produce a degree-$n$ polynomial from $O(n^2)$ sample points.
-    - Polynomials built from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^16] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
+    - Polynomials built from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^17] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
 - Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^4].
 - Find a sequence of functions $W_n$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of two&mdash;
 
@@ -139,7 +139,7 @@ The following are some strategies for answering these questions:
 
 - Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
 - For each $r>0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, is finite.
-- [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let** $f(\lambda):[a, b] \to (0, 1)$ **be continuous, where** $0\lt a$, $a\lt b$, $b\lt 1$.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^17].
+- [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let** $f(\lambda):[a, b] \to (0, 1)$ **be continuous, where** $0\lt a$, $a\lt b$, $b\lt 1$.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^18].
 
     But, **is there an algorithm for $f$ that produces multiple independent outputs rather than one and has an expected number of coin flips per output that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain**? Call such an algorithm an _optimal factory_.  (See Nacu and Peres (2005, Question 1)[^3].)  And, does the answer change if the algorithm has access to a fair coin in addition to the biased coin?
 
@@ -147,14 +147,14 @@ The following are some strategies for answering these questions:
 
 - [**Pushdown automata and algebraic functions**](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata): A _pushdown automaton_ is a finite state machine with an unbounded stack, driven by a biased coin with an unknown probability of heads, $\lambda$. Its stack starts with a single symbol.  On each step, the machine flips the coin, then, based on the coin flip, the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero or more symbols. When the stack is empty, the machine stops and returns either 0 or 1 depending on the state it ends up at.
 
-    Let $f(\lambda)$ be continuous and map the open interval (0, 1) to itself. Mossel and Peres (2005)[^18] showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is _algebraic over the rational numbers_ (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions) for more information on my progress on the problem.
+    Let $f(\lambda)$ be continuous and map the open interval (0, 1) to itself. Mossel and Peres (2005)[^19] showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is _algebraic over the rational numbers_ (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions) for more information on my progress on the problem.
 
     Prove or disprove:
 
     1. If $f$ is algebraic over rational numbers it can be simulated by a pushdown automaton.
     2. min($\lambda$, $1-\lambda$) and $\lambda^{1/p}$, for every prime $p\ge 3$, can be simulated by a pushdown automaton.
     3. Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its "critical exponent" is a dyadic number greater than $-1$ or has the form $-1-1/2^k$ for some integer $k\ge 1$. (**See note 2 in** [**"End Notes"**](#End_Notes)**.**)
-- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^19] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in the closed unit interval.  Given that a polynomial's degree is $m$ and its "standard" coefficients are integers, what are upper bounds (or even exact maximums) on its coin flipping degree?
+- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^20] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in the closed unit interval.  Given that a polynomial's degree is $m$ and its "standard" coefficients are integers, what are upper bounds (or even exact maximums) on its coin flipping degree?
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute _p_-adic digit expansions.
     - Simulation experiments that succeed with an irrational probability.
     - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions of irrational constants.
@@ -174,7 +174,7 @@ Prove or disprove:
 - Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}\text{abs}(B_n(f)(\lambda)-f(\lambda)))$ (where $n\ge 1$ is an integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - \text{abs}(B_n(f)(1/2)-f(1/2)))$, if $f$ is also symmetric about 1/2.
 - Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is [**_strongly simulable_**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)) **if and only if**&mdash;
 
-    - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^17]), and
+    - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^18]), and
     - $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
     - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
     - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $h(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
@@ -185,9 +185,9 @@ Prove or disprove:
 
 ## End Notes
 
-**Note 1**: An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.  This question's requirements imply that $\sum_{a\ge 0}\max_\lambda \text{abs}(\gamma_a(\lambda)) \le 1$.  The proof of Keane and O'Brien (1994)[^17] produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.
+**Note 1**: An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.  This question's requirements imply that $\sum_{a\ge 0}\max_\lambda \text{abs}(\gamma_a(\lambda)) \le 1$.  The proof of Keane and O'Brien (1994)[^18] produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.
 
-**Note 2**: On pushdown automata: Etessami and Yannakakis (2009)[^20] showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota (2014)[^21] showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
+**Note 2**: On pushdown automata: Etessami and Yannakakis (2009)[^21] showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota (2014)[^22] showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 **Note 3**: The condition on nonnegative Bernstein coefficients ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005)[^3]. For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are "good".  See also my [**MathOverflow question**](https://mathoverflow.net/questions/429037/bounds-on-the-expectation-of-a-function-of-a-hypergeometric-random-variable) on finding bounds for hypergeometric variables.
 
@@ -217,26 +217,26 @@ Prove or disprove:
 
 [^10]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
-[^11]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^11]: Khosravian-Arab, Hassan, Mehdi Dehghan, and M. R. Eslahchi. "A new approach to improve the order of approximation of the Bernstein operators: theory and applications." Numerical Algorithms 77 (2018): 111-150.
 
-[^12]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
+[^12]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^13]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
+[^13]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
 
-[^14]: Draganov, B.R., "[**Simultaneous approximation by the Bernstein operator**](https://www.fmi.uni-sofia.bg/sites/default/files/dissertation_work_doctor_of_science/dissdsci_borislavdraganov.pdf)", dissertation, Sofia University "St. Kliment Ohridski", 2024.
+[^14]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
 
-[^15]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
+[^15]: Draganov, B.R., "[**Simultaneous approximation by the Bernstein operator**](https://www.fmi.uni-sofia.bg/sites/default/files/dissertation_work_doctor_of_science/dissdsci_borislavdraganov.pdf)", dissertation, Sofia University "St. Kliment Ohridski", 2024.
 
-[^16]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples, IMA Journal of Numerical Analysis 39(3), July 2019.
+[^16]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
-[^17]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^17]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples, IMA Journal of Numerical Analysis 39(3), July 2019.
 
-[^18]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
+[^18]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^19]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+[^19]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
 
-[^20]: Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
+[^20]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
 
-[^21]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
+[^21]: Etessami, K. And Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", Journal of the ACM 56(1), pp.1-66, 2009.
 
-[^22]: Khosravian-Arab, Hassan, Mehdi Dehghan, and M. R. Eslahchi. "A new approach to improve the order of approximation of the Bernstein operators: theory and applications." Numerical Algorithms 77 (2018): 111-150.
+[^22]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.

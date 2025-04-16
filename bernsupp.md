@@ -958,9 +958,9 @@ When $C_0$ or $C_1$ exists, find a good upper bound for it.
 >
 > 4. I believe there is a counterexample to the full conjecture, namely the sequence&mdash;
 >
-> $$B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2,$$
+>     $$B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2,$$
 >
-> where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
+>     where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
 
 ---------------------
 
