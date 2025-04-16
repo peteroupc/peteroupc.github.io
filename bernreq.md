@@ -94,11 +94,15 @@ For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such 
 
 $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
-whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - CM/n^{r/2}$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
+whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
-Equivalently (see also Nacu and Peres (2005)[^3]), there is $C_1>0$ such that the inequality $(PB)$ (see later) holds true for each integer $n\ge 1$ that's a power of 2 (see "Strategies", later).
+Equivalently (see also Nacu and Peres (2005)[^3]), there is $C_1>0$ such that the inequality&mdash;
 
-$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
+$$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le C_1M/n^{r/2},\tag{PB}$$
+
+holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ and $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
+
+$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$ or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
 > **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ for some $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 >
@@ -120,18 +124,11 @@ The following are some strategies for answering these questions:
     - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$; see Note 4 in "End Notes" later in this page): Propositions B10C and B10D.
     - Linear combinations of Bernstein polynomials (see Costabile et al. (2005)[^9]): Proposition B10.
     - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5) (Holtz et al. 2011)[^4].
+- Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^4].
 - Find polynomials of the following kinds and find explicit bounds, with no hidden constants, on the approximation error for those polynomials:
     - Polynomial operators that preserve polynomials at a higher degree than linear functions.
     - Operators that produce a degree-$n$ polynomial from $O(n^2)$ sample points.
     - Polynomials built from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^17] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
-- Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^4].
-- Find a sequence of functions $W_n$ and an explicit and tight upper bound on $C_1>0$ such that, for each integer $n\ge 1$ that's a power of two&mdash;
-
-    $$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)$$
-
-    $$=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
-
-    whenever $0\le k\le 2n$, where $M$ is the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (**See notes 3 and 4 in** "[**End Notes**](#End_Notes)" **as well as** "[**Proofs for Polynomial-Building Schemes**](https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes)".)
 
 <a id=Other_Questions></a>
 

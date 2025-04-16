@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2025/04/15"><meta name="citation_online_date" content="2025/04/15"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Open Questions on the Bernoulli Factory Problem</title><meta name="citation_title" content="Open Questions on the Bernoulli Factory Problem"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernreq.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernreq.html"><meta name="citation_date" content="2025/04/16"><meta name="citation_online_date" content="2025/04/16"><meta name="og:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernreq.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Open Questions on the Bernoulli Factory Problem"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -111,11 +111,15 @@
 
 \[\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},\]
 
-<p>whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, …, $2^i$, …, defined as $g_n=B_n(W_n(\lambda)) - CM/n^{r/2}$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it’s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</p>
+<p>whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, …, $2^i$, …, defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it’s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</p>
 
-<p>Equivalently (see also Nacu and Peres (2005)<sup id="fnref:3:1"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>), there is $C_1&gt;0$ such that the inequality $(PB)$ (see later) holds true for each integer $n\ge 1$ that’s a power of 2 (see “Strategies”, later).</p>
+<p>Equivalently (see also Nacu and Peres (2005)<sup id="fnref:3:1"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>), there is $C_1&gt;0$ such that the inequality—</p>
 
-<p>$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.</p>
+\[\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le C_1M/n^{r/2},\tag{PB}\]
+
+<p>holds true for each integer $n\ge 1$ that’s a power of 2 and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ and $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.</p>
+
+<p>$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$ or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.</p>
 
 <blockquote>
   <p><strong>Note:</strong> This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don’t do so and yet converge at the rate $O(n^{-r/2})$ for some $r\gt 2$. <strong>Also, see notes 3 and 4 in</strong> “<a href="#End_Notes"><strong>End Notes</strong></a>”.</p>
@@ -143,22 +147,13 @@
       <li>The <a href="https://link.springer.com/article/10.1007/s00365-010-9108-5"><strong>Lorentz operator</strong></a> (Holtz et al. 2011)<sup id="fnref:4:2"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
     </ul>
   </li>
+  <li>Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)<sup id="fnref:4:3"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
   <li>Find polynomials of the following kinds and find explicit bounds, with no hidden constants, on the approximation error for those polynomials:
     <ul>
       <li>Polynomial operators that preserve polynomials at a higher degree than linear functions.</li>
       <li>Operators that produce a degree-$n$ polynomial from $O(n^2)$ sample points.</li>
       <li>Polynomials built from samples at <em>rational</em> values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup> (for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, <a href="https://www.chebfun.org/ATAP/"><strong><em>Approximation Theory and Approximation Practice</em></strong></a>, 2013.</li>
     </ul>
-  </li>
-  <li>Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)<sup id="fnref:4:3"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
-  <li>
-    <p>Find a sequence of functions $W_n$ and an explicit and tight upper bound on $C_1&gt;0$ such that, for each integer $n\ge 1$ that’s a power of two—</p>
-
-\[\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\]
-
-\[=\text{abs}(\mathbb{E}[W_n(X_k/n)] - W_{2n}(\mathbb{E}[X_k/n]))\le \frac{C_1 M}{n^{r/2}},\tag{PB}\]
-
-    <p>whenever $0\le k\le 2n$, where $M$ is the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable, and $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ is the probability that $X_k$ equals $i$. (<strong>See notes 3 and 4 in</strong> “<a href="#End_Notes"><strong>End Notes</strong></a>” <strong>as well as</strong> “<a href="https://peteroupc.github.io/bernsupp.html#Proofs_for_Polynomial_Building_Schemes"><strong>Proofs for Polynomial-Building Schemes</strong></a>”.)</p>
   </li>
 </ul>
 
