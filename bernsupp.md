@@ -935,13 +935,13 @@ $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
 whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
-Then there is a number $C_0\ge D$ such that for every $C\ge C_0$, the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - CM/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. there are polynomials $g_n$ (for each $n\ge 1$) as follows.
+Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. there are polynomials $g_n$ (for each $n\ge 1$) as follows.
 
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
+Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality&mdash;
 
-$$\text{abs}\left(\left(\sum_{i=0}^k W_n\left(\frac{i}{n}\right) \sigma_{n,k,i}\right)-W_{2n}\left(\frac{k}{2n}\right)\right)\le \frac{C_1 M}{n^{r/2}},\tag{PB}$$
+$$0\le-W_{2n}\left(\frac{k}{2n}\right) + \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}=h(k,n)\le C_1M/n^{r/2},\tag{PB}$$
 
-whenever $0\le k\le 2n$, so that $C=\frac{C_1}{1-\sqrt{2/2^{r+1}}}$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
+holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
@@ -1021,9 +1021,9 @@ The following claim is believed to be true.
 3. preserves polynomials of degree $(r-1)$ or less, so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less, and
 4. has a continuous $r$-th derivative that satisfies $\text{abs}(W_n^{(r)}(\lambda))\le EM$ for some $E>0$.
 
-Then the left-hand side of (PB) is not greater than&mdash;
+Then&mdash;
 
-$$\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
+$$h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 
