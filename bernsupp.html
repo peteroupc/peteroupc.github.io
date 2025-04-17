@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/04/16"><meta name="citation_online_date" content="2025/04/16"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2025/04/17"><meta name="citation_online_date" content="2025/04/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1114,7 +1114,7 @@
 <p><strong>Corollary 1.</strong> <em>Let f(λ) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent $\alpha$, then one of the following schemes is valid in the sense of Theorem 1:</em></p>
 
 <ul>
-  <li><em>$n_0=1$ and $\eta(n)=M/(((2^{\alpha/2}-1) n^{\alpha/2})$.</em></li>
+  <li><em>$n_0=1$ and $\eta(n)=M/((2^{\alpha/2}-1) n^{\alpha/2})$.</em></li>
   <li><em>$n_0=4$ and $\eta(n)=M(2/7)^{\alpha-2}/((2^{\alpha/2}-1)n^{\alpha/2})$.</em></li>
 </ul>
 
@@ -1138,8 +1138,8 @@
 <p><strong>Corollary 2.</strong> <em>Let f(λ) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then one of the following schemes is valid in the sense of Theorem 1:</em></p>
 
 <ul>
-  <li>$n_0=1$ <em>and $\eta(n)=M/((\sqrt{2}−1)\sqrt{n})$.</em></li>
-  <li>$n_0=4$ <em>and $\eta(n)=M\sqrt{2/7}/((\sqrt{2}−1)\sqrt{n})$.</em></li>
+  <li>$n_0=1$ <em>and $\eta(n)=M/((\sqrt{2}-1)\sqrt{n})$.</em></li>
+  <li>$n_0=4$ <em>and $\eta(n)=M\sqrt{2/7}/((\sqrt{2}-1)\sqrt{n})$.</em></li>
 </ul>
 
 <blockquote>
@@ -1254,7 +1254,7 @@
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality—</p>
 
-\[0\le-W_{2n}\left(\frac{k}{2n}\right) + \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}=h(k,n)\le C_1M/n^{r/2},\tag{PB}\]
+\[0\le W_{2n}\left(\frac{k}{2n}\right) - \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}=h(k,n)\le C_1M/n^{r/2},\tag{PB}\]
 
 <p>holds true for each integer $n\ge 1$ that’s a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
 

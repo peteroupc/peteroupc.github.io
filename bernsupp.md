@@ -818,7 +818,7 @@ Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _
 
 **Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent $\alpha$, then one of the following schemes is valid in the sense of Theorem 1:_
 
-- _$n_0=1$ and $\eta(n)=M/(((2^{\alpha/2}-1) n^{\alpha/2})$._
+- _$n_0=1$ and $\eta(n)=M/((2^{\alpha/2}-1) n^{\alpha/2})$._
 - _$n_0=4$ and $\eta(n)=M(2/7)^{\alpha-2}/((2^{\alpha/2}-1)n^{\alpha/2})$._
 
 _Proof._ Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:
@@ -836,8 +836,8 @@ Lipschitz-continuous functions are Hölder continuous with Hölder constant _M_ 
 
 **Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then one of the following schemes is valid in the sense of Theorem 1:_
 
-- $n_0=1$ _and $\eta(n)=M/((\sqrt{2}&minus;1)\sqrt{n})$._
-- $n_0=4$ _and $\eta(n)=M\sqrt{2/7}/((\sqrt{2}&minus;1)\sqrt{n})$._
+- $n_0=1$ _and $\eta(n)=M/((\sqrt{2}-1)\sqrt{n})$._
+- $n_0=4$ _and $\eta(n)=M\sqrt{2/7}/((\sqrt{2}-1)\sqrt{n})$._
 
 > **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
 
@@ -939,7 +939,7 @@ Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality&mdash;
 
-$$0\le-W_{2n}\left(\frac{k}{2n}\right) + \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}=h(k,n)\le C_1M/n^{r/2},\tag{PB}$$
+$$0\le W_{2n}\left(\frac{k}{2n}\right) - \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}=h(k,n)\le C_1M/n^{r/2},\tag{PB}$$
 
 holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
