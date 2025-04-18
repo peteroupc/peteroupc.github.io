@@ -486,6 +486,14 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^61]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^62]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
+
+[^63]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004.
+
+[^64]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
+
+[^65]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -673,21 +681,30 @@ Some of the results rely on properties of random variables.  For a random variab
 
 The first results are lemmas that bound the difference between the mean of a function of a random variable and a function of that mean.  This is also known as a _Jensen gap_.
 
-**Lemma 2A**. _Let $f(\lambda)$ have a continuous derivative (denoted $f^{(1)}$) on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then if $r>0$ is a real number&mdash;_
+**Lemma 2A**. _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Let $h>0$ be a real number. Then:_
 
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \frac{(r+2)^2}{8r}\cdot \omega(f^{(1)}, r\cdot\sqrt{\text{Var}[Y]}) \cdot\sqrt{\text{Var}[Y]},$$
+| No. | If $f$ ... |  Then $\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le ... $ |
+ - | ----- | ----- |
+| 1 | Is continuous. | $(1 + (\text{Var}[Y])^{1/2}/h) \omega(f, h)$. |
+| 2 | Is continuous. | $(1 + (\text{Var}[Y])/h^2) \omega(f, h)$. |
+| 3 | Is continuous. | (Use ineq. 1 if $h<(\text{Var}[Y])^{1/2}$, or ineq. 2 otherwise.) |
+| 4 | Is continuous. | $\tilde\omega(f, \text{Var}[Y])$. |
+| 5 | Is Hölder continuous with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less. | $M (\text{Var}[Y])^{\alpha/2}$. |
+| 6 | Has a continuous derivative. | $((h+2)^2/(8h))\cdot \omega(f^{(1)}, h\cdot\sqrt{\text{Var}[Y]}) \cdot\sqrt{\text{Var}[Y]}$. |
+| 7 | Has a continuous derivative. | $\frac{1}{2}(\text{Var}[Y])^{1/2} \tilde\omega(f^{(1)}, (\text{Var}[Y])^{1/2})$. |
+| 8 | Has a Hölder-continuous derivative with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less. | $\frac{M}{2}(\text{Var}[Y])^{(1+\alpha)/2}$. |
 
-_where $\omega(f^{(1)}, \delta)$ is the smallest modulus of continuity of $f^{(1)}$, with parameter $\delta$.  If $f^{(1)}$ is Hölder continuous with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less (see "[**Definitions**](#Definitions)"), then&mdash;_
+_In the table, $\omega(f, \delta)$ is the smallest modulus of continuity of a function $f$, and $\tilde\omega(f, \delta)$ is the smallest concave modulus of continuity of $f$, both with parameter $\delta$._
 
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le \frac{r^{\alpha}(r+2)^2}{8r}\cdot M \cdot (\text{Var}[Y])^{(1+\alpha)/2},$$
+_Proof:_ Inequality 6 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^29], with $m=1$ (since $Y$ takes only values in the interval in question), $r=h$, and $x_0$ equal to the mean of $Y$.
 
-_where $r = (2-2\alpha)/(1+\alpha)$._
+$\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.
 
-_If $\alpha$ is 1 (so that $f^{(1)}$ is Lipschitz continuous), then the following holds true instead of the previous inequality:_
+Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^30]; inequality 2 follows from a result of Mond (1978)[^62]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^63], and inequality 4, a result of Peetre (1969)[^31].  Inequality 7 follows from a result of Gonska and Meier (1985)[^64]; see also Păltănea and Dimitriu (2016, remark 3)[^65].
 
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (M/2) \cdot\text{Var}[Y].$$
+Inequality 5 follows from inequality 4 using properties of Hölder-continuous functions; by assumption, $f$ admits the continuous and concave modulus of continuity $\omega(\delta)=M\delta^\alpha$, where $\delta>0$.  Inequality 8 follows from inequality 7 in the same manner.
 
-_Proof:_ This lemma is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^29], with $m=1$ (since $Y$ takes only values in the interval in question), $r$ as given, and $x_0$ equal to the mean of $Y$. The estimate is correct even if $Y$ takes a particular value with probability 1, since then the variance would be 0.  &#x25a1;
+The estimates are correct even if $Y$ takes a particular value with probability 1, since then the variance would be 0. &#x25a1;
 
 **Lemma 2B**. _For a value of $k$ given later, let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then&mdash;_
 
@@ -705,22 +722,6 @@ _Proof:_ This lemma is a special case of Theorem 2.31 of Anastassiou (1985)[^29]
 
 > **Note:** With the estimation just given for $w$, $C$ is believed to equal $1/((k+1)!)$.
 
-**Lemma 2C**.  _Let $f(\lambda)$ be continuous on the closed unit interval, let $Y$ be a random variable taking only values in that interval, and let $h$ satisfy $0<h\le 1$.  Then:_
-
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le (1 + \text{Var}[Y]/h^2) \omega(f, h),$$
-
-_where $\omega(f, h)$ is the smallest modulus of continuity of $f$, or:_
-
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le\tilde\omega(f, \sqrt{\text{Var}[Y]}),$$
-
-_where $\tilde\omega(f, h)$ is the smallest concave modulus of continuity of $f$._
-
-_If $f$ is also Hölder continuous with exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, then:_
-
-$$\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le M (\text{Var}[Y])^{\alpha/2}.$$
-
-_Proof:_ $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.  The first inequality then follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^30]. The second inequality follows from a result of Peetre (1969)[^31]. The third inequality results from properties of Hölder-continuous functions; by assumption, $f$ admits the continuous and concave modulus of continuity $\omega(\delta)=M\delta^\alpha$, where $\delta>0$. &#x25a1;
-
 Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric random variables that is essential in polynomial-building schemes.  This part of the lemma can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder-continuous_ functions (see "[**Definitions**](#Definitions)").
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2\*n, k, n) random variable, and let $n\ge 1$ be an integer._
@@ -735,15 +736,15 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric 
     - _&omega;(sqrt(1/(7\*n))) if n&ge;4._
     - _&omega;(sqrt(1/(2\*n)))._
     - _&omega;(sqrt( (k/(2\*n)) \* (1&minus;k/(2\*n)) / (2\*n&minus;1) ))._
-2. _If $f$ is Hölder continuous with Hölder constant M and with Hölder exponent &alpha; such that 0 < &alpha; &le; 1, then the expression (1) is less than or equal to&mdash;_
+2. _If $f$ is Hölder continuous with Hölder constant M or less and with Hölder exponent &alpha; such that 0 < &alpha; &le; 1, then the expression (1) is less than or equal to&mdash;_
     - _M\*(1/(2\*n))$^{\alpha/2}$,_
     - _M\*(1/(7\*n))$^{\alpha/2}$ if n&ge;4, and_
     - _M\*(1/(8\*n&minus;4))$^{\alpha/2}$._
-3. _If $f$ has a derivative that is Lipschitz continuous with Lipschitz constant M or less, then the expression (1) is less than or equal to&mdash;_
-    - _(M/2)\*(1/(7\*n)) if n&ge;4, and_
-    - _(M/2)\*(1/(8\*n&minus;4))._
+3. _If $f$ has a derivative that is Hölder continuous with Hölder constant M or less and with Hölder exponent &alpha;, then the expression (1) is less than or equal to&mdash;_
+    - _(M/2)\*(1/(7\*n))$^{(1+\alpha)/2}$ if n&ge;4, and_
+    - _(M/2)\*(1/(8\*n&minus;4))$^{(1+\alpha)/2}$._
 
-_Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\text{Var}[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Parts 1 and 2 then follow from the second and third inequality, respectively, of Lemma 2C, using more or less tight bounds for $\text{Var}[X/n]$.  For part 3, follows from Lemma 2A with the random variable $X/n$ in part 1, and plugging in estimates for the variance of $X/n$ found in part 1. &#x25a1;
+_Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\text{Var}[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2A, using more or less tight bounds for $\text{Var}[X/n]$.  For part 3, follows from Lemma 2A, inequality 6, with the random variable $X/n$ in part 1, and plugging in estimates for the variance of $X/n$ found in part 1. &#x25a1;
 
 > **Notes:**
 >
