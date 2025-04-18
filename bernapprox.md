@@ -669,8 +669,6 @@ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{3
 
 &#x25a1;
 
-> **Note**: The error bound $0.75 M_2/n^2$ for $U_{n,2}$ is false in general if $f(\lambda)$ is assumed only to be nonnegative, concave, and have a continuous second derivative on the closed unit interval.  A counterexample is $f(\lambda)=(1-(1-2\lambda)^{2.5})/2$ if $\lambda <1/2$ and $(1-(2\lambda-1)^{2.5})/2$ otherwise.
-
 **Proposition B10D:** Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2+M_3}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
@@ -683,7 +681,7 @@ $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+
 
 $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
 
-where $r=2$, using properties of $\omega_2$, the second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^53].  Therefore&mdash;
+where $r=2$, using properties of $\omega_2$, the smallest second-order modulus of continuity of $f^{(2)}$, given in Stancu et al. (2001)[^53].  Therefore&mdash;
 
 $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right) \tag{**}$$
 
