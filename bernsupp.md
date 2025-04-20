@@ -676,7 +676,6 @@ This section shows mathematical proofs for some of the polynomial-building schem
 
 In the following results:
 
-- A _strictly bounded factory function_ means a continuous function on the closed unit interval, with a minimum of greater than 0 and a maximum of less than 1.
 - A _modulus of continuity_ of a function _f_, denoted $\omega(\delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-(f(y))\le\omega(\delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega(\delta)$ is greater than or equal to $f$'s maximum range in a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^28].  For examples, see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)".
 
@@ -706,7 +705,7 @@ _In the table, $\omega(f, \delta)$ is the smallest modulus of continuity of a fu
 
 _Proof:_ Inequality 6 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^29], with $m=1$ (since $Y$ takes only values in the interval in question), $r=h$, and $x_0$ equal to the mean of $Y$.
 
-$\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.
+For any bounded random variable $X$, $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.
 
 Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^30]; inequality 2 follows from a result of Mond (1978)[^31]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^32], and inequality 4, a result of Peetre (1969)[^33].  Inequality 7 follows from a result of Gonska and Meier (1985)[^34]; see also Păltănea and Dimitriu (2016, remark 3)[^35].
 
@@ -724,7 +723,9 @@ $$\text{and }R(f,Y)\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_
 
 _and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$.  The second bound for $R(f,Y)$ assumes the closed interval is the closed unit interval._
 
-_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^36]). Because $\mathbb{E}[Y]$ preserves linear functions as stated in the proof of Lemma 2A, so that $\sigma_0(Y)=1$ and $\sigma_1(Y)=0$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  The first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^37], and the second bound for $R(f,Y)$ assumes the closed unit interval and comes from Gonska et al. (2006)[^38]; see also (Gonska 2007)[^39].  &#x25a1;
+_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^36]). Because $\mathbb{E}[X]$ for any bounded random variable $X$ preserves linear functions as stated in the proof of Lemma 2A, so that $\sigma_0(X)=1$ and $\sigma_1(X)=0$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^37], and the second assumes the closed unit interval and comes from Gonska et al. (2006)[^38]; see also Gonska (2007)[^39].  &#x25a1;
+
+> **Open question:** Is the second bound for $R(f,Y)$ true for any closed interval?
 
 **Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $R(f,Y)\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
 
@@ -765,7 +766,7 @@ _Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\text{Var}[X/n]\le (k/(2n))\
 >     4. If _f_ is nowhere increasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^42].
 
-**Theorem 1.** _Let $f$ be a strictly bounded factory function, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
+**Theorem 1.** _Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
 $$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$
 
@@ -831,10 +832,15 @@ Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _
 
 > **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^43] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^44]; see also Remark C of Nacu and Peres (2005)[^1].
 
-**Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If that function is Hölder continuous with Hölder constant M and Hölder exponent $\alpha$, then one of the following schemes is valid in the sense of Theorem 1:_
+**Corollary 1.** _Let f(&lambda;) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1. If that function is Hölder continuous with Hölder constant M or less and Hölder exponent $\alpha$, then one of the following schemes is valid in the sense of Theorem 1:_
 
 - _$n_0=1$ and $\eta(n)=M/((2^{\alpha/2}-1) n^{\alpha/2})$._
 - _$n_0=4$ and $\eta(n)=M(2/7)^{\alpha-2}/((2^{\alpha/2}-1)n^{\alpha/2})$._
+
+_If $f$ is Lipschitz continuous with Lipschitz constant M or less, then one of the following schemes is valid in the sense of Theorem 1:_
+
+- $n_0=1$ _and $\eta(n)=M/((\sqrt{2}-1)\sqrt{n})$._
+- $n_0=4$ _and $\eta(n)=M\sqrt{2/7}/((\sqrt{2}-1)\sqrt{n})$._
 
 _Proof._ Because $f$ is Hölder continuous, it admits the modulus of continuity $\omega(x)=Mx^{\alpha}$.  By part 1 of lemma 2:
 
@@ -843,35 +849,29 @@ _Proof._ Because $f$ is Hölder continuous, it admits the modulus of continuity 
 
 In both cases $\eta(n)$ is finite and converges to 0 as $n$ increases.
 
-The result then follows from Theorem 1. &#x25a1;
+The first and second schemes then follow from Theorem 1. The third and fourth schemes follow from the first and second because Lipschitz-continuous functions with Lipschitz constant _M_ are Hölder continuous with Hölder constant _M_ and exponent 1. &#x25a1;
 
-> **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder-continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+> **Notes:**
+>
+> 1. For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following code in Python that uses the SymPy computer algebra library: `alpha=(S(1)/2); rsolve(Eq(f(n), f(n+1)+z*(1/(2*2**n))**(alpha/2)), f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder-continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* $\sum_{i=0}^{2j-1} 2^{i/(2j)}$)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+> 2. The third scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
 
-Lipschitz-continuous functions are Hölder continuous with Hölder constant _M_ and exponent 1, which leads to...
-
-**Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is Lipschitz continuous with Lipschitz constant M, then one of the following schemes is valid in the sense of Theorem 1:_
-
-- $n_0=1$ _and $\eta(n)=M/((\sqrt{2}-1)\sqrt{n})$._
-- $n_0=4$ _and $\eta(n)=M\sqrt{2/7}/((\sqrt{2}-1)\sqrt{n})$._
-
-> **Note:** The first scheme given here is a special case of Theorem 1 that was already found by Nacu and Peres (2005\)[^1].
-
-**Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If that function has a Lipschitz-continuous derivative with Lipschitz constant L, then a scheme where_ $n_0=4$ _and_ $\eta(n)=L/(7n)$ _is valid in the sense of Theorem 1._
+**Corollary 3.** _Let f(&lambda;) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1. If that function has a Lipschitz-continuous derivative with Lipschitz constant L, then a scheme where_ $n_0=4$ _and_ $\eta(n)=L/(7n)$ _is valid in the sense of Theorem 1._
 
 _Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;
 
 > **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant \(a slightly stronger condition than having a Lipschitz-continuous derivative on that domain).
 
-**Theorem 2.** _Let f(&lambda;) be a strictly bounded factory function.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
+**Theorem 2.** _Let f(&lambda;) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with $\phi(n)=\mathbb{E}[f(Y/n)]$ (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
 _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the series converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
 **Proposition 1.**
 
-1. _Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the schemes of those results remain valid if **fbelow**(n, k) = f(k/n), rather than as given in those results._
-2. _Let f be as given in Theorem 1 or 2 or Corollary 1 to 3, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the schemes of those results remain valid if **fabove**(n, k) = f(k/n), rather than as given in those results._
+1. _Let f be as given in Theorem 1 or 2 or Corollary 1 or 3, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the schemes of those results remain valid if **fbelow**(n, k) = f(k/n), rather than as given in those results._
+2. _Let f be as given in Theorem 1 or 2 or Corollary 1 or 3, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the schemes of those results remain valid if **fabove**(n, k) = f(k/n), rather than as given in those results._
 
-_Proof._ Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 to 3, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.   &#x25a1;
+_Proof._ Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 or 3, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.   &#x25a1;
 
 The following lemma shows that if a scheme for $f(\lambda)$ shifts polynomials upward and downward, the pre-shifted polynomials are close to $f(\lambda)$ by the amount of the shift.
 
@@ -881,7 +881,7 @@ $$P(x)=\sum_{k=0}^n a_k {n \choose k} x^k (1-x)^{n-k},$$
 
 where the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.  The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ is denoted $B_n(f)$ and has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
 
-**Lemma 3.** _Let $f$ be a strictly bounded factory function. Let $S$ be an infinite set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f)$ be a nonnegative constant that depends on $f$ and $n$.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n$ in $S$) as follows:_
+**Lemma 3.** _Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1. Let $S$ be an infinite set of positive integers.  For each integer $n\ge 1$, let $W_n(\lambda)$ be a function, and let $\epsilon_n(f)$ be a nonnegative constant that depends on $f$ and $n$.  Suppose that there are polynomials $g_n$ and $h_n$ (for each $n$ in $S$) as follows:_
 
 1. _$g_n$ and $h_n$ have Bernstein coefficients $W_n(k/n) - \epsilon_n(f)$ and $W_n(k/n) + \epsilon_n(f)$, respectively ($0\le k\le n$)._
 2. _$g_n \le h_n$._
@@ -1050,7 +1050,7 @@ Because $W_n$ also satisfies point 2, the left-hand side of (PB) is not greater 
 
 $$\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))+\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}.$$
 
-Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected value or "long-run average" of $X/n$ is $k/(2n)$, so by Lemma 2B&mdash;
+Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected value or "long-run average" of $X/n$ is $k/(2n)$, so by Lemmas 2B and 2C&mdash;
 
 $$(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})$$
 
