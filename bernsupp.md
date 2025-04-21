@@ -61,7 +61,7 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 - A _Lipschitz continuous_ function with constant _L_ (the _Lipschitz constant_) is Hölder continuous with Hölder exponent 1 and Hölder constant _L_.<br>Roughly speaking, the function's "steepness" is no greater than that of _L_\*_x_.<br>If the function has a derivative on its domain, _L_ can be the maximum of the absolute value of that derivative.
 - A _convex_ function $f$ has the property that $f((x+y)/2) \le (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes down, then it's convex.
 - A _concave_ function $f$ has the property that $f((x+y)/2) \ge (f(x)+f(y))/2$ whenever $x$, $y$, and $(x+y)/2$ are in the function's domain.<br>Roughly speaking, if the function's "slope" never goes up, then it's concave.
-- The function $f$ is _bounded_ if there are two numbers $a$ and $b$ such that $a\le f(x)\le b$ whenever $x$ is in the function's domain.
+- A function $f$ is _bounded_ if there are two numbers $a$ and $b$ such that $a\le f(x)\le b$ whenever $x$ is in the function's domain.
 
 > **Note**: The "good behavior" of a function can be important when designing Bernoulli factory algorithms.  This page mostly cares how $f$ behaves when its domain is the closed unit interval, that is, when $0 \le x \le 1$.
 
@@ -502,6 +502,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^69]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^70]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -705,7 +707,7 @@ _In the table, $\omega(f, \delta)$ is the smallest modulus of continuity of a fu
 
 _Proof:_ Inequality 6 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^29], with $m=1$ (since $Y$ takes only values in the interval in question), $r=h$, and $x_0$ equal to the mean of $Y$.
 
-For any bounded random variable $X$, $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). Moreover, it reproduces linear functions because it is linear and the probabilities for $X$ sum to 1, so that $\mathbb{E}[f(X)] = x$ whenever $f(x) = x$ and $0\le x\le 1$.  It reproduces constants because the previous sentence is true for $x=1$.
+For any bounded random variable $X$, $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). The expectation reproduces constants because the sum of probabilities  probabilities for $X$ sum to 1, so that $\mathbb{E}[f(c)] = c$ for any constant $c$.  The expectation behaves as though it reproduces linear functions for this lemma's purposes because the first-order central moment of any bounded random variable ($\sigma_1(X)$) is 0.
 
 Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^30]; inequality 2 follows from a result of Mond (1978)[^31]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^32], and inequality 4, a result of Peetre (1969)[^33].  Inequality 7 follows from a result of Gonska and Meier (1985)[^34]; see also Păltănea and Dimitriu (2016, remark 3)[^35].
 
@@ -723,9 +725,9 @@ $$\text{and }R(f,Y)\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_
 
 _and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$.  The second bound for $R(f,Y)$ assumes the closed interval is the closed unit interval._
 
-_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^36]). Because $\mathbb{E}[X]$ for any bounded random variable $X$ preserves linear functions as stated in the proof of Lemma 2A, so that $\sigma_0(X)=1$ and $\sigma_1(X)=0$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^37], and the second assumes the closed unit interval and comes from Gonska et al. (2006)[^38]; see also Gonska (2007)[^39].  &#x25a1;
+_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^36]). Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^37], and the second assumes the closed unit interval and comes from Gonska et al. (2006)[^38]; see also Gonska (2007)[^39], Piţul (2007)[^70].  &#x25a1;
 
-> **Open question:** Is the second bound for $R(f,Y)$ true for any closed interval?
+> **Open question:** Is the second bound for $R(f,Y)$ true for an arbitrary closed interval?
 
 **Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $R(f,Y)\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
 
