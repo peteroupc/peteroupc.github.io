@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2025/04/20"><meta name="citation_online_date" content="2025/04/20"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_date" content="2025/04/21"><meta name="citation_online_date" content="2025/04/21"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -299,7 +299,13 @@
 
 <h3 id="taylor-polynomials-for-smooth-functions">Taylor Polynomials for “Smooth” Functions</h3>
 
-<p>If $f(\lambda)$ is “smooth” enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor’s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).</p>
+<p>Every continuous function defined on the closed interval $[a, b]$ can be written as—</p>
+
+\[f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + f^{(1)}(x_0)\frac{(\lambda-x_0)^1}{1!} + ... + f^{(r)}(x_0)\frac{(\lambda-x_0)^r}{r!},\]
+
+<p>as long as the function’s $r$-th derivative ($r\ge 0$) is defined at $x_0$, where $a\le x_0\le b$.  When this is the case, $f$ equals the $r$-th <em>Taylor polynomial</em> centered at $x_0$, plus the $r$-th <em>Taylor remainder</em>,  $R_{f,r}(\lambda, x_0)$.</p>
+
+<p>If $f(\lambda)$ is “smooth” enough on the closed unit interval $[0, 1]$, and if $\epsilon$ is big enough, then Taylor’s theorem shows how to build a polynomial that comes within $\epsilon$ of $f$, namely the appropriate Taylor polynomial of $f$. In this section $f$ may but need not be writable as a power series (see note).</p>
 
 <p>In this section, $M_r$ is not less than the maximum of the absolute value of $f$’s $r$-th derivative.</p>
 
@@ -313,7 +319,7 @@
   <li>$f(0)$ is known as well as $f^{(1)}(0), …, f^{(n)}(0)$.</li>
 </ol>
 
-<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given later, is within $\epsilon$ of $f$:</p>
+<p>Then the $n$-th <em>Taylor polynomial</em> centered at 0, given next, is within $\epsilon$ of $f$:</p>
 
 \[P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,\]
 
@@ -638,7 +644,7 @@
 
 <ul>
   <li>Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.)</li>
-  <li>The $r$-th <em>absolute central moment</em> of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r] = B_n(\text{abs}(\lambda-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$.</li>
+  <li>The $r$-th <em>central absolute moment</em> of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r] = B_n(\text{abs}(\lambda-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$.</li>
 </ul>
 
 <p>The following results bound the absolute value of $T_{n,r}$, $S_{n,r}$, and $M_{n,r}$.<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup></p>
@@ -692,18 +698,13 @@
   </tbody>
 </table>
 
-<p>The first row comes from a result of Adell and Cárdenas-Morales (2018)<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>.  The second row is an improved result of the first, from Molteni (2022)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>.  The third row follows from Lemma B5 and Schwarz’s inequality; for $n=1$, also follows from Cheng (1983)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>.  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz’s inequality</strong></a> (see also Bojanić and Shisha 1975<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup> for the case $r=4$).</p>
+<p><em>Proof:</em> The first row comes from a result of Adell and Cárdenas-Morales (2018)<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>.  The second row is an improved result of the first, from Molteni (2022)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>.  The third row follows from Lemma B5 and Schwarz’s inequality; for $n=1$, also follows from Cheng (1983)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>.  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using <a href="https://mathworld.wolfram.com/SchwarzsInequality.html"><strong>Schwarz’s inequality</strong></a> (see also Bojanić and Shisha 1975<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup> for the case $r=4$). □</p>
 
-<p><strong>Lemma B9</strong>: Let $r\ge 0$ be an integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see “<a href="#Definitions"><strong>Definitions</strong></a>”), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then:</p>
+<p>Taylor polynomials and Taylor remainders were discussed in the section “Taylor Polynomials for ‘Smooth’ Functions”.  The following lemma gives bounds on the Taylor remainder’s Bernstein polynomial.</p>
 
-<ol>
-  <li>$f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.</li>
-  <li>$\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.</li>
-</ol>
+<p><strong>Lemma B9</strong>: Let $r\ge 0$ be an integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see “<a href="#Definitions"><strong>Definitions</strong></a>”), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then the following bound holds true: $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.</p>
 
-<p><em>Proof</em>: The well-known result of part 1 says $f$ equals the <em>Taylor polynomial</em> of degree $r$ at $x_0$ plus the <em>Taylor remainder</em>,  $R_{f,r}(\lambda, x_0)$.  The other two parts give upper bounds on this remainder’s Bernstein polynomial.</p>
-
-<p>The result in part 2 relies on Lemma 2C in the article “<a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a>”, with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. □</p>
+<p><em>Proof</em>: This result  relies on Lemma 2C in the article “<a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a>”, with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. □</p>
 
 <blockquote>
   <p><strong>Note:</strong> It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)<sup id="fnref:10:1"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>.</p>
@@ -721,36 +722,32 @@
   <tbody>
     <tr>
       <td>0.</td>
-      <td>$3 M/(2 n^{1/2})$ for every integer $n\ge 2$.</td>
+      <td>$M(1/2)/n^{1/2}$ for every integer $n\ge 1$.</td>
     </tr>
     <tr>
       <td>1.</td>
-      <td>$5 M/(8 n)$ for every integer $n\ge 2$.</td>
+      <td>$M(1/8)/n = 0.125M/n$ for every integer $n\ge 1$.</td>
     </tr>
     <tr>
       <td>2.</td>
-      <td>$0.1777 M/n^{3/2}$ for every integer $n\ge 1$.</td>
-    </tr>
-    <tr>
-      <td>2.</td>
-      <td>$(\sqrt{3}+6) M/(48 n^{3/2}) &lt; 0.1611 M/n^{3/2}$ for every integer $n\ge 2$.</td>
+      <td>$M(\sqrt{3}/48)/n^{3/2} &lt; 0.3609M/n^{3/2}$ for every integer $n\ge 2$.</td>
     </tr>
     <tr>
       <td>3.</td>
-      <td>$(3+8\sqrt{3}) M/(384 n^2) &lt; 0.0439 M/n^2$ for every integer $n\ge 2$.</td>
+      <td>$M(1/128)/n^{2} = 0.0078125M/n^{2}$ for every integer $n\ge 1$.</td>
     </tr>
     <tr>
       <td>4.</td>
-      <td>$(\sqrt{5}+10)M/(1280 n^{5/2}) &lt; 0.00956 M/n^{5/2}$ for every integer $n\ge 2$.</td>
+      <td>$M(\sqrt{5}/1280)/n^{5/2} &lt; 0.001747/n^{5/2}$ for every integer $n\ge 2$.</td>
     </tr>
     <tr>
       <td>5.</td>
-      <td>$(5+12\sqrt{5})M/(15360 n^3) &lt; 0.00208 M/n^3$ for every integer $n\ge 2$.</td>
+      <td>$M(1/3072)/n^{3} &lt; 0.0003256/n^{3}$ for every integer $n\ge 1$.</td>
     </tr>
   </tbody>
 </table>
 
-<p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{439\Lambda_3}{625 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative’s Lipschitz constant or greater.</p>
+<p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative’s Lipschitz constant or greater.</p>
 
 <p><em>Proof</em>: This proof is inspired by the proof technique in Tachev (2022)<sup id="fnref:6:2"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>.</p>
 
@@ -762,11 +759,9 @@
 
 \[\text{abs}(L_{3,n/4}(f(\lambda))(x_0) - f(x_0)) = \text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))).\]
 
-<p>Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_{f,3}(\lambda, x_0))(x_0))$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)—</p>
+<p>Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_{f,3}(\lambda, x_0))(x_0))$ over $0\le x_0\le 1$.  By Corollary B9A, $\sigma_n \le \Lambda_3(1/128)/n^{3/2}$.  Therefore—</p>
 
-\[\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n\]
-
-\[\le (1/3)\frac{0.0439 \Lambda_3}{(n/4)^2} + 2\frac{0.0439 \Lambda_3}{(n/2)^2} + (8/3)\frac{0.0439 \Lambda_3}{n^2} =\frac{439\Lambda_3}{625 n^2}.\]
+\[\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n\le\frac{\Lambda_3}{8 n^2}.\]
 
 <p>□</p>
 
@@ -792,43 +787,43 @@
       <td>Has a Lipschitz-continuous second derivative.</td>
       <td>$-1$, $2$</td>
       <td>$\frac{n}{2}$, $n$</td>
-      <td>$\frac{1611 \Lambda_{2} \left(1 + \sqrt{2}\right)}{5000 n^{\frac{3}{2}}}\lt \frac{0.7779 \Lambda_{2}}{n^{1.5}}$</td>
+      <td>$\frac{\sqrt{3} + \sqrt{6}}{24 n^{3 / 2}}$ &lt; $\frac{0.1743}{n^{3/2}}$</td>
     </tr>
     <tr>
       <td>Has a Lipschitz-continuous third derivative.</td>
       <td>$\frac{1}{3}$, $-2$, $\frac{8}{3}$</td>
       <td>$\frac{n}{4}$, $\frac{n}{2}$, $n$</td>
-      <td>$\frac{439 \Lambda_{3}}{625 n^{2}} = \frac{0.7024 \Lambda_{3}}{n^{2}}$</td>
+      <td>$\frac{1}{8 n^{2}}$ = $\frac{0.125}{n^{2}}$</td>
     </tr>
     <tr>
       <td>Has a Lipschitz-continuous fourth derivative.</td>
       <td>$- \frac{1}{21}$, $\frac{2}{3}$, $- \frac{8}{3}$, $\frac{64}{21}$</td>
       <td>$\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$</td>
-      <td>$\frac{956 \Lambda_{4} \left(11 \sqrt{2} + 16\right)}{65625 n^{\frac{5}{2}}} \lt \frac{0.4598 \Lambda_{3}}{n^{2}}$</td>
+      <td>$\frac{11 \sqrt{10} + 16 \sqrt{5}}{840 n^{5 / 2}}$ &lt; $\frac{0.08401}{n^{5/2}}$</td>
     </tr>
     <tr>
       <td>Has a Lipschitz-continuous fifth derivative.</td>
       <td>$\frac{1}{315}$, $- \frac{2}{21}$, $\frac{8}{9}$, $- \frac{64}{21}$, $\frac{1024}{315}$</td>
       <td>$\frac{n}{16}$, $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$</td>
-      <td>$\frac{6656 \Lambda_{5}}{21875 n^{3}} \lt  \frac{0.3043 \Lambda_{5}}{n^{3}}$</td>
+      <td>$\frac{1}{21 n^{3}}$ &lt; $\frac{0.04762}{n^{3}}$</td>
     </tr>
     <tr>
       <td>Has a Lipschitz-continuous third derivative.</td>
       <td>$\frac{1}{2}$, $-4$, $\frac{9}{2}$</td>
       <td>$\frac{n}{3}$, $\frac{n}{2}$, $n$</td>
-      <td>$\frac{3951 \Lambda_{3}}{5000 n^{2}}\lt \frac{0.7902 \Lambda_{3}}{n^{2}}$</td>
+      <td>$\frac{25}{128 n^{2}}$ = $0.1953125/n^{2}$</td>
     </tr>
     <tr>
       <td>Has a Lipschitz-continuous fourth derivative.</td>
       <td>$- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$</td>
       <td>$\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$</td>
-      <td>$\frac{478 \Lambda_{4} \left(1 + \sqrt{2} + \sqrt{3}\right)}{3125 n^{\frac{5}{2}}}\lt \frac{0.6343 \Lambda_{4}}{n^{2.5}}$</td>
+      <td>$\frac{8 \sqrt{5} + 18 \sqrt{15} + 27 \sqrt{10}}{640 n^{5 / 2}}$ &lt; $\frac{0.2703}{n^{2.5}}$</td>
     </tr>
     <tr>
       <td>Has a Lipschitz-continuous fifth derivative.</td>
       <td>$\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$</td>
       <td>$\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$</td>
-      <td>$\frac{13 \Lambda_{5}}{25 n^{3}}= \frac{0.52 \Lambda_{5}}{n^{3}}$</td>
+      <td>$\frac{545}{1536 n^{3}}$ &lt; $\frac{0.3549}{n^{3}}$</td>
     </tr>
   </tbody>
 </table>

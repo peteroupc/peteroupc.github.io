@@ -142,7 +142,13 @@ The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$
 
 ### Taylor Polynomials for "Smooth" Functions
 
-If $f(\lambda)$ is "smooth" enough on the closed unit interval and if $\epsilon$ is big enough, then Taylor's theorem shows how to build a polynomial that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).
+Every continuous function defined on the closed interval $[a, b]$ can be written as&mdash;
+
+$$f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + f^{(1)}(x_0)\frac{(\lambda-x_0)^1}{1!} + ... + f^{(r)}(x_0)\frac{(\lambda-x_0)^r}{r!},$$
+
+as long as the function's $r$-th derivative ($r\ge 0$) is defined at $x_0$, where $a\le x_0\le b$.  When this is the case, $f$ equals the $r$-th _Taylor polynomial_ centered at $x_0$, plus the $r$-th _Taylor remainder_,  $R_{f,r}(\lambda, x_0)$.
+
+If $f(\lambda)$ is "smooth" enough on the closed unit interval $[0, 1]$, and if $\epsilon$ is big enough, then Taylor's theorem shows how to build a polynomial that comes within $\epsilon$ of $f$, namely the appropriate Taylor polynomial of $f$. In this section $f$ may but need not be writable as a power series (see note).
 
 In this section, $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 
@@ -154,7 +160,7 @@ Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\la
 4. $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and
 5. $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
 
-Then the $n$-th _Taylor polynomial_ centered at 0, given later, is within $\epsilon$ of $f$:
+Then the $n$-th _Taylor polynomial_ centered at 0, given next, is within $\epsilon$ of $f$:
 
 $$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$
 
@@ -522,7 +528,7 @@ $$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose
 where $\mathbb{E}[.]$ is the expected value ("long-run average").
 
 - Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.)
-- The $r$-th _absolute central moment_ of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r] = B_n(\text{abs}(\lambda-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$.
+- The $r$-th _central absolute moment_ of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r] = B_n(\text{abs}(\lambda-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$.
 
 The following results bound the absolute value of $T_{n,r}$, $S_{n,r}$, and $M_{n,r}$.[^39]
 
@@ -550,32 +556,28 @@ By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=19667
 | Is odd, and $3\le r\le 43$. | $\sqrt{\sigma(r-1,8)\sigma(r+1,8)} = r^{1/2}(r-1)! / (2\cdot 8^{(r-1)/2}((r-1)/2)!)$, for every integer $n\ge 2$. |
 | Is odd and greater than 43. | $\sqrt{\sigma(r-1,6)\sigma(r+1,6)}$, for every integer $n\ge 2$. |
 
-The first row comes from a result of Adell and Cárdenas-Morales (2018)[^41].  The second row is an improved result of the first, from Molteni (2022)[^42].  The third row follows from Lemma B5 and Schwarz's inequality; for $n=1$, also follows from Cheng (1983)[^43].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanić and Shisha 1975[^44] for the case $r=4$).
+_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^41].  The second row is an improved result of the first, from Molteni (2022)[^42].  The third row follows from Lemma B5 and Schwarz's inequality; for $n=1$, also follows from Cheng (1983)[^43].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanić and Shisha 1975[^44] for the case $r=4$). &#x25a1;
 
-**Lemma B9**: Let $r\ge 0$ be an integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then:
+Taylor polynomials and Taylor remainders were discussed in the section "Taylor Polynomials for 'Smooth' Functions".  The following lemma gives bounds on the Taylor remainder's Bernstein polynomial.
 
-1. $f$ can be written as $f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + \sum_{i=1}^{r} (\lambda-x_0)^i f^{(i)}(x_0)/(i!)$ where $f^{(i)}$ is the $i$-th derivative of $f$.
-2. $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.
+**Lemma B9**: Let $r\ge 0$ be an integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then the following bound holds true: $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.
 
-_Proof_: The well-known result of part 1 says $f$ equals the _Taylor polynomial_ of degree $r$ at $x_0$ plus the _Taylor remainder_,  $R_{f,r}(\lambda, x_0)$.  The other two parts give upper bounds on this remainder's Bernstein polynomial.
-
-The result in part 2 relies on Lemma 2C in the article "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)", with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. &#x25a1;
+_Proof_: This result  relies on Lemma 2C in the article "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)", with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. &#x25a1;
 
 > **Note:** It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)[^10].
 
 **Corollary B9A**: Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval, and let $M$ be that $r$-th derivative's Lipschitz constant or greater.  Let $R_{f,r}(\lambda, x_0)$ be as in Lemma B9.  Then, for every $0\le x_0 \le 1$:
 
 | If $r$ is: | Then $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le$ ... |
- --- | --- |
-| 0. | $3 M/(2 n^{1/2})$ for every integer $n\ge 2$. |
-| 1. | $5 M/(8 n)$ for every integer $n\ge 2$. |
-| 2. | $0.1777 M/n^{3/2}$ for every integer $n\ge 1$. |
-| 2. | $(\sqrt{3}+6) M/(48 n^{3/2}) < 0.1611 M/n^{3/2}$ for every integer $n\ge 2$. |
-| 3. | $(3+8\sqrt{3}) M/(384 n^2) < 0.0439 M/n^2$ for every integer $n\ge 2$. |
-| 4. | $(\sqrt{5}+10)M/(1280 n^{5/2}) < 0.00956 M/n^{5/2}$ for every integer $n\ge 2$. |
-| 5. | $(5+12\sqrt{5})M/(15360 n^3) < 0.00208 M/n^3$ for every integer $n\ge 2$. |
+ - | ------ |
+| 0. | $M(1/2)/n^{1/2}$ for every integer $n\ge 1$. |
+| 1. | $M(1/8)/n = 0.125M/n$ for every integer $n\ge 1$. |
+| 2. | $M(\sqrt{3}/48)/n^{3/2} < 0.3609M/n^{3/2}$ for every integer $n\ge 2$. |
+| 3. | $M(1/128)/n^{2} = 0.0078125M/n^{2}$ for every integer $n\ge 1$. |
+| 4. | $M(\sqrt{5}/1280)/n^{5/2} < 0.001747/n^{5/2}$ for every integer $n\ge 2$. |
+| 5. | $M(1/3072)/n^{3} < 0.0003256/n^{3}$ for every integer $n\ge 1$. |
 
-**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{439\Lambda_3}{625 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
+**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
 
 _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^6].
 
@@ -587,11 +589,9 @@ Therefore&mdash;
 
 $$\text{abs}(L_{3,n/4}(f(\lambda))(x_0) - f(x_0)) = \text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))).$$
 
-Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_{f,3}(\lambda, x_0))(x_0))$ over $0\le x_0\le 1$.  In turn (using Corollary B9A)&mdash;
+Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_{f,3}(\lambda, x_0))(x_0))$ over $0\le x_0\le 1$.  By Corollary B9A, $\sigma_n \le \Lambda_3(1/128)/n^{3/2}$.  Therefore&mdash;
 
-$$\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n$$
-
-$$\le (1/3)\frac{0.0439 \Lambda_3}{(n/4)^2} + 2\frac{0.0439 \Lambda_3}{(n/2)^2} + (8/3)\frac{0.0439 \Lambda_3}{n^2} =\frac{439\Lambda_3}{625 n^2}.$$
+$$\text{abs}(L_{3,n/4}(R_{f,3}(\lambda, x_0))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n\le\frac{\Lambda_3}{8 n^2}.$$
 
 &#x25a1;
 
@@ -605,13 +605,13 @@ The following error bounds, which make use of Corollary B9A and the proof techni
 
 | Property of $f$ on the closed unit interval | $\alpha_0$, $\alpha_1$, ... | $n(0)$, $n(1)$, ... | Upper bound of error |
   --- | -- | -- | ----- |
-| Has a Lipschitz-continuous second derivative. | $-1$, $2$ | $\frac{n}{2}$, $n$ | $\frac{1611 \Lambda_{2} \left(1 + \sqrt{2}\right)}{5000 n^{\frac{3}{2}}}\lt \frac{0.7779 \Lambda_{2}}{n^{1.5}}$ |
-| Has a Lipschitz-continuous third derivative. | $\frac{1}{3}$, $-2$, $\frac{8}{3}$ | $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{439 \Lambda_{3}}{625 n^{2}} = \frac{0.7024 \Lambda_{3}}{n^{2}}$ |
-| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{21}$, $\frac{2}{3}$, $- \frac{8}{3}$, $\frac{64}{21}$ | $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{956 \Lambda_{4} \left(11 \sqrt{2} + 16\right)}{65625 n^{\frac{5}{2}}} \lt \frac{0.4598 \Lambda_{3}}{n^{2}}$ |
-| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{315}$, $- \frac{2}{21}$, $\frac{8}{9}$, $- \frac{64}{21}$, $\frac{1024}{315}$ | $\frac{n}{16}$, $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{6656 \Lambda_{5}}{21875 n^{3}} \lt  \frac{0.3043 \Lambda_{5}}{n^{3}}$ |
-| Has a Lipschitz-continuous third derivative. | $\frac{1}{2}$, $-4$, $\frac{9}{2}$ | $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{3951 \Lambda_{3}}{5000 n^{2}}\lt \frac{0.7902 \Lambda_{3}}{n^{2}}$ |
-| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{478 \Lambda_{4} \left(1 + \sqrt{2} + \sqrt{3}\right)}{3125 n^{\frac{5}{2}}}\lt \frac{0.6343 \Lambda_{4}}{n^{2.5}}$ |
-| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{13 \Lambda_{5}}{25 n^{3}}= \frac{0.52 \Lambda_{5}}{n^{3}}$ |
+| Has a Lipschitz-continuous second derivative. | $-1$, $2$ | $\frac{n}{2}$, $n$ | $\frac{\sqrt{3} + \sqrt{6}}{24 n^{3 / 2}}$ &lt; $\frac{0.1743}{n^{3/2}}$ |
+| Has a Lipschitz-continuous third derivative. | $\frac{1}{3}$, $-2$, $\frac{8}{3}$ | $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{1}{8 n^{2}}$ = $\frac{0.125}{n^{2}}$ |
+| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{21}$, $\frac{2}{3}$, $- \frac{8}{3}$, $\frac{64}{21}$ | $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{11 \sqrt{10} + 16 \sqrt{5}}{840 n^{5 / 2}}$ &lt; $\frac{0.08401}{n^{5/2}}$ |
+| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{315}$, $- \frac{2}{21}$, $\frac{8}{9}$, $- \frac{64}{21}$, $\frac{1024}{315}$ | $\frac{n}{16}$, $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{1}{21 n^{3}}$ &lt; $\frac{0.04762}{n^{3}}$ |
+| Has a Lipschitz-continuous third derivative. | $\frac{1}{2}$, $-4$, $\frac{9}{2}$ | $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{25}{128 n^{2}}$ = $0.1953125/n^{2}$  |
+| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{8 \sqrt{5} + 18 \sqrt{15} + 27 \sqrt{10}}{640 n^{5 / 2}}$ &lt; $\frac{0.2703}{n^{2.5}}$ |
+| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{545}{1536 n^{3}}$ &lt; $\frac{0.3549}{n^{3}}$ |
 
 The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10].  This operator is a polynomial in Bernstein form of degree $n+2$.
 
