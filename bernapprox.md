@@ -144,11 +144,16 @@ The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$
 
 Every continuous function defined on the closed interval $[a, b]$ can be written as&mdash;
 
-$$f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + f^{(1)}(x_0)\frac{(\lambda-x_0)^1}{1!} + ... + f^{(r)}(x_0)\frac{(\lambda-x_0)^r}{r!},$$
+$$f(\lambda) = R_{f,r}(\lambda, x_0) + f(x_0) + f^{(1)}(x_0)\frac{(\lambda-x_0)^1}{1!} + ... + f^{(r)}(x_0)\frac{(\lambda-x_0)^r}{r!}$$
 
-as long as the function's $r$-th derivative ($r\ge 0$) is defined at $x_0$, where $a\le x_0\le b$.  When this is the case, $f$ equals the $r$-th _Taylor polynomial_ centered at $x_0$, plus the $r$-th _Taylor remainder_,  $R_{f,r}(\lambda, x_0)$.
+$$=R_{f,r}(\lambda, x_0) + Q_{f,r}(\lambda, x_0),$$
 
-If $f(\lambda)$ is "smooth" enough on the closed unit interval $[0, 1]$, and if $\epsilon$ is big enough, then Taylor's theorem shows how to build a polynomial that comes within $\epsilon$ of $f$, namely the appropriate Taylor polynomial of $f$. In this section $f$ may but need not be writable as a power series (see note).
+as long as the function's $r$-th derivative ($r\ge 0$) is defined at $x_0$, where $a\le x_0\le b$.  When this is the case, $f$ equals&mdash;
+
+-  $Q_{f,r}(\lambda, x_0)$, the $r$-th _Taylor polynomial_ centered at $x_0$, plus
+-  $R_{f,r}(\lambda, x_0)$, the $r$-th _Taylor remainder_.
+
+If $f(\lambda)$ is "smooth" enough on the closed unit interval $[0, 1]$, and if $\epsilon$ is big enough, then Taylor's theorem shows there is a Taylor polynomial of $f$ that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).
 
 In this section, $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 
@@ -160,11 +165,7 @@ Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\la
 4. $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and
 5. $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
 
-Then the $n$-th _Taylor polynomial_ centered at 0, given next, is within $\epsilon$ of $f$:
-
-$$P(\lambda) = a_0 \lambda^0 + a_1 \lambda^1 + ... + a_n \lambda^n,$$
-
-where $a_0 = f(0)$ and $a_i = f^{(i)}(0)/(i!)$ for $i\ge 1$.
+Then the $n$-th _Taylor polynomial_ centered at 0 ($Q_{f,n}$) is within $\epsilon$ of $f$.
 
 Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$, but they _are_ needed to ensure the Taylor polynomial's Bernstein coefficients will lie in the closed unit interval, as described after the note.
 
@@ -176,7 +177,7 @@ Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$
 >
 > then the algorithms in Carvalho and Moreira (2022)[^19] can be used to find the first $n$+1 power series coefficients such that $P(\lambda)$ is within $\epsilon$ of $f$ (see also the appendix).
 
-Now, the Taylor polynomial $P$, when written in its "power" form or "monomial" form, has "power" coefficients $a_0, ..., a_n$.
+Now, the Taylor polynomial $Q_{f,n}$, when written in its "power" form or "monomial" form, has "power" coefficients equal to $f(0), f^{(1)}(0)/(1!), ..., f^{(n)}(0)/(n!)$.
 
 Now, rewrite $P(\lambda)$ as a polynomial in Bernstein form.  (See "[**Computational Issues**](#Computational_Issues)" for details.)  Let $b_0, ..., b_n$ be the resulting Bernstein coefficients.  If any of those Bernstein coefficients is less than 0 or greater than 1, then&mdash;
 

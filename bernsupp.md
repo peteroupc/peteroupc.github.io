@@ -418,51 +418,51 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^27]: Dorian Popa, Ioan Raşa, "On the stability of some classical operators from approximation theory", _Expositiones Mathematicae_ 31(3), 2013, [**https://doi.org/10.1016/j.exmath.2013.01.007**](https://doi.org/10.1016/j.exmath.2013.01.007) (https://www.sciencedirect.com/science/article/pii/S072308691300008X).
 
-[^28]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^28]: Anastassiou, George A. “[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498).” Journal of Approximation Theory 45.3 (1985): 247-270.
 
-[^29]: Anastassiou, George A. “[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498).” Journal of Approximation Theory 45.3 (1985): 247-270.
+[^29]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
 
-[^30]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
+[^30]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
 
-[^31]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
+[^31]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004.
 
-[^32]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004.
+[^32]: Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory", in _Approximation Theory_, 1969.
 
-[^33]: Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory", in _Approximation Theory_, 1969.
+[^33]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
 
-[^34]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
+[^34]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
 
-[^35]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
+[^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
 
-[^36]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
+[^36]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
 
-[^37]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
+[^37]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", 2006.
 
-[^38]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", 2006.
+[^38]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
 
-[^39]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
+[^39]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
 
-[^40]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
+[^40]: Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)
 
-[^41]: Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)
+[^41]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.
 
-[^42]: Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.
+[^42]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
 
-[^43]: Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.
+[^43]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 
-[^44]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
+[^44]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
 
-[^45]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
+[^45]: When $r$ is 1 or 2, this case includes cases where $W_n$ equals $f$ at $0, 1/n, ..., n/n$ and converges uniformly to $f$.  One example is where $W_n$ is the Lagrange interpolating polynomial of degree $n$; given that $r$ is 1 or 2, $f$ is continuous and of bounded variation, so that $W_n$ converges uniformly to $f$ by a result of P. Vértesi, "Lagrange interpolation for continuous functions of bounded variation", _Acta Mathematica Hungarica_ 35(1), 1980. Another example is where $W_n$ is a rational interpolation described in Zhang and Liu, “Rational interpolation operator with finite Lebesgue constant.” _Calcolo_ 59.1 (2022).
 
-[^46]: When $r$ is 1 or 2, this case includes cases where $W_n$ equals $f$ at $0, 1/n, ..., n/n$ and converges uniformly to $f$.  One example is where $W_n$ is the Lagrange interpolating polynomial of degree $n$; given that $r$ is 1 or 2, $f$ is continuous and of bounded variation, so that $W_n$ converges uniformly to $f$ by a result of P. Vértesi, "Lagrange interpolation for continuous functions of bounded variation", _Acta Mathematica Hungarica_ 35(1), 1980. Another example is where $W_n$ is a rational interpolation described in Zhang and Liu, “Rational interpolation operator with finite Lebesgue constant.” _Calcolo_ 59.1 (2022).
+[^46]: Johnson, N.L., Kemp, A.W., Kotz, S., _Univariate Discrete Distributions, Third Edition_, Wiley, 2005.
 
-[^47]: Johnson, N.L., Kemp, A.W., Kotz, S., _Univariate Discrete Distributions, Third Edition_, Wiley, 2005.
+[^47]: Vatutin, V.A., Mikhaĭlov, V.G., "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles", Theory Probab. Appl. 27 (1982).
 
-[^48]: Vatutin, V.A., Mikhaĭlov, V.G., "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles", Theory Probab. Appl. 27 (1982).
+[^48]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963).
 
-[^49]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963).
+[^49]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
 
-[^50]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
+[^50]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
 [^51]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
 
@@ -503,6 +503,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^69]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^70]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^71]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
 
 <a id=Appendix></a>
 
@@ -679,7 +681,6 @@ This section shows mathematical proofs for some of the polynomial-building schem
 In the following results:
 
 - A _modulus of continuity_ of a function _f_, denoted $\omega(\delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-(f(y))\le\omega(\delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega(\delta)$ is greater than or equal to $f$'s maximum range in a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
-- A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^28].  For examples, see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)".
 
 Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
 
@@ -705,11 +706,11 @@ The first results are lemmas that bound the difference between the mean of a fun
 
 _In the table, $\omega(f, \delta)$ is the smallest modulus of continuity of a function $f$, and $\tilde\omega(f, \delta)$ is the smallest concave modulus of continuity of $f$, both with parameter $\delta$._
 
-_Proof:_ Inequality 6 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^29], with $m=1$ (since $Y$ takes only values in the interval in question), $r=h$, and $x_0$ equal to the mean of $Y$.
+_Proof:_ Inequality 6 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^28], with $m=1$ (since $Y$ takes only values in the interval in question), $r=h$, and $x_0$ equal to the mean of $Y$.
 
-For any bounded random variable $X$, $\mathbb{E}[X]$ is well known to be what is called a _positive linear operator_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). The expectation reproduces constants because the sum of probabilities for $X$ sum to 1, so that $\mathbb{E}[f(c)] = c$ for any constant $c$.  The expectation behaves as though it reproduces linear functions for this lemma's purposes because the first-order central moment of any bounded random variable ($\sigma_1(X)$) is 0.
+For any bounded random variable $X$, $\mathbb{E}[X]$ is well known to be what is called a _positive linear functional_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). The expectation reproduces constants because the sum of probabilities for $X$ sum to 1, so that $\mathbb{E}[f(c)] = c$ for any constant $c$.  The expectation behaves as though it reproduces linear functions for this lemma's purposes because the first-order central moment of any bounded random variable ($\sigma_1(X)$) is 0.
 
-Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^30]; inequality 2 follows from a result of Mond (1978)[^31]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^32], and inequality 4, a result of Peetre (1969)[^33].  Inequality 7 follows from a result of Gonska and Meier (1985)[^34]; see also Păltănea and Dimitriu (2016, remark 3)[^35].
+Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^29]; inequality 2 follows from a result of Mond (1978)[^30]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^31], and inequality 4, a result of Peetre (1969)[^32].  Inequality 7 follows from a result of Gonska and Meier (1985)[^33]; see also Păltănea and Dimitriu (2016, remark 3)[^34].
 
 Inequality 5 follows from inequality 4 using properties of Hölder-continuous functions; by assumption, $f$ admits the continuous and concave modulus of continuity $\omega(\delta)=M\delta^\alpha$, where $\delta>0$.  Inequality 8 follows from inequality 7 in the same manner.
 
@@ -721,17 +722,17 @@ $$Q(f,Y)\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma
 
 $$R(f,Y)\le\left(\frac{\tau_k(Y)}{k!}+\frac{\tau_{k+1}(Y)}{(k+1)!\cdot h}\right)\cdot\omega(f^{(k)}, h),$$
 
+$$\text{and }R(f,Y)\le\max\left(\frac{\tau_k(Y)}{k!}, \frac{\tau_{k+1}(Y)}{(k+1)!\cdot 2h}\right)\cdot\tilde\omega(f^{(k)}, 2h),$$
+
 $$\text{and }R(f,Y)\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_{k+1}(Y)}{(k+1)\tau_k(Y)}),$$
 
-_and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$.  The second bound for $R(f,Y)$ assumes the closed interval is the closed unit interval._
+_and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$._
 
-_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^36]). Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^37], and the second assumes the closed unit interval and comes from Gonska et al. (2006)[^38]; see also Gonska (2007)[^39], Piţul (2007)[^40].  &#x25a1;
+_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^35]). Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^36]; and the second bound comes from corollary 3.2 of Dimitriu (2010)[^71] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)[^37], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^38], Piţul (2007)[^39].  &#x25a1;
 
-> **Open question:** Is the second bound for $R(f,Y)$ true for an arbitrary closed interval?
+**Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $R(f,Y)\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
 
-**Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $R(f,Y)\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
-
-_Proof:_  Follows from the second bound for $R(f,Y)$ in Lemma 2B in the same manner as inequality 8 of Lemma 2A, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1. &#x25a1;
+_Proof:_  Follows from the third bound for $R(f,Y)$ in Lemma 2B in the same manner as inequality 8 of Lemma 2A, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1. &#x25a1;
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric random variables that is essential in polynomial-building schemes.  This part of the lemma can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder-continuous_ functions (see "[**Definitions**](#Definitions)").
 
@@ -762,11 +763,11 @@ _Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\text{Var}[X/n]\le (k/(2n))\
 > 1. A hypergeometric(2 \* _n_, _k_, _n_) random variable is the number of "good" balls out of _k_ balls taken uniformly at random, all at once, from a bag containing 2 \* _n_ balls, _n_ of which are "good".
 > 2. Parts 1 through 3 exploit a tighter bound on the variance of $X/n$ than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].
 > 3. All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
->     1. If _f_ is nowhere decreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^41]; (Gal 1995\)[^42].
->     2. If _f_ is nowhere increasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^41]; (Gal 1995\)[^42].
+>     1. If _f_ is nowhere decreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^40]; (Gal 1995\)[^41].
+>     2. If _f_ is nowhere increasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^40]; (Gal 1995\)[^41].
 >     3. If _f_ is nowhere decreasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is nowhere increasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^43].
+>     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^42].
 
 **Theorem 1.** _Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
@@ -832,7 +833,7 @@ Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The 
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's Bernstein coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their Bernstein coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
-> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^44] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^45]; see also Remark C of Nacu and Peres (2005)[^1].
+> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^43] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^44]; see also Remark C of Nacu and Peres (2005)[^1].
 
 **Corollary 1.** _Let f(&lambda;) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1. If that function is Hölder continuous with Hölder constant M or less and Hölder exponent $\alpha$, then one of the following schemes is valid in the sense of Theorem 1:_
 
@@ -870,8 +871,8 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 **Proposition 1.**
 
-1. _Let f be as given in Theorem 1 or 2 or Corollary 1 or 3, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the schemes of those results remain valid if **fbelow**(n, k) = f(k/n), rather than as given in those results._
-2. _Let f be as given in Theorem 1 or 2 or Corollary 1 or 3, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the schemes of those results remain valid if **fabove**(n, k) = f(k/n), rather than as given in those results._
+1. _Let f be as given in Theorem 1 or 2 or Corollary 1 or 3, except that f must be concave and may have a minimum of 0. Then the schemes of those results remain valid if **fbelow**(n, k) = f(k/n), rather than as given in those results._
+2. _Let f be as given in Theorem 1 or 2 or Corollary 1 or 3, except that f must be convex and may have a maximum of 1.  Then the schemes of those results remain valid if **fabove**(n, k) = f(k/n), rather than as given in those results._
 
 _Proof._ Parts 1 and 2 follow from Theorem 1 or 2 or Corollary 1 or 3, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein polynomials of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.   &#x25a1;
 
@@ -971,7 +972,7 @@ When $C_0$ or $C_1$ exists, find a good upper bound for it.
 > 3. This conjecture is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:
 >
 >     - $W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or
->     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^46]
+>     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^45]
 >
 > 4. I believe there is a counterexample to the full conjecture, namely the sequence&mdash;
 >
@@ -991,13 +992,13 @@ For every odd integer $s\ge 1$:
 
 $$\tau_s(X) \le \sqrt{\tau_{s-1}(X)\tau_{s+1}(X)}\le \sqrt{\sigma(s-1,n)\sigma(s+1,n)}.$$
 
-_Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random variable, which has the same distribution as the original, and set $k = n$, since the sample size is now $n$. (See also Johnson et al. (2005)[^47].)  Now it can be assumed without loss of generality that $0\le k\le n$.
+_Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random variable, which has the same distribution as the original, and set $k = n$, since the sample size is now $n$. (See also Johnson et al. (2005)[^46].)  Now it can be assumed without loss of generality that $0\le k\le n$.
 
 It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.
 
-The $s$-th central moment of $X$ is the expected value or "long-run average" of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^48], so by Hoeffding (1963)[^49], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
+The $s$-th central moment of $X$ is the expected value or "long-run average" of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^47], so by Hoeffding (1963)[^48], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
 
-In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^50] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
+In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^49] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
 
 By that result, if $s$ is an even integer then&mdash;
 
@@ -1152,7 +1153,7 @@ for i in range(20):
 
 ### Which functions don't require outside randomness to simulate?
 
-The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994\)[^28].  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms)".
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994\)[^50].  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms)".
 
 **Strong Simulability Statement.** A function _f_(_&lambda;_) is strongly simulable only if&mdash;
 
@@ -1160,6 +1161,12 @@ The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli fa
 2. _f_ maps the closed unit interval or a subset of it to the closed unit interval, and
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_.
+
+---
+
+> **Note:** A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are greater than or equal to min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994\)[^50].  For examples, see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)".
+
+---
 
 Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory algorithm for _f_ must return 1 with probability 1, or 0 with probability 1, when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
