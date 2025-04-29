@@ -223,7 +223,7 @@ The algorithms as described here are not always the fastest.  Indeed, there are 
 > **Notes:**
 >
 > 1. Most of the algorithms assume that a fair coin (see the previous section) is available, in addition to the input coins.  But in many cases, the algorithms can be written using nothing but those coins as a source of randomness.  See the [**appendix**](#Appendix) for details.
-> 2. Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_) (their "long run average" equals _f_(_&lambda;_)). See the [**appendix**](#Bernoulli_Factories_and_Unbiased_Estimation) for details.
+> 2. Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_) (their "long-run average" equals _f_(_&lambda;_)). See the [**appendix**](#Bernoulli_Factories_and_Unbiased_Estimation) for details.
 
 <a id=Implementation_Notes></a>
 
@@ -908,7 +908,7 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
 
 #### Convex Combinations
 
-Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7\)[^9].  (Alternatively, the algorithm can be seen as returning heads with probability **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected value, or "long-run average", of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
+Assume there is one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7\)[^9].  (Alternatively, the algorithm can be seen as returning heads with probability **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected value or "long-run average", of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer greater than 1 and less than 6, or it could be a Poisson random variate.  (Specifically, the number _X_ is generated with probability _g_(_X_).  If every _g_(_i_) is a rational number, the following [**algorithm**](https://www.keithschwarz.com/darts-dice-coins/) can generate _X_: "(1) Set _X_ to 0 and _d_ to 1. (2) With probability _g_(_X_)/_d_, return _X_; otherwise subtract _g_(_X_) from _d_, add 1 to _X_, and repeat this step.")
 2. Flip the coin represented by _X_ and return the result.
@@ -2677,7 +2677,7 @@ Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 - $U_n$ is 0 or greater and $L_n$ is 1 or less, and
 - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.
 
-Moreover, if there are infinitely many nonzero power coefficients, the _U_ and _L_ sequences have expected values ("long-run averages") converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper's Algorithm 3 (and thus the **general martingale algorithm**) to be valid.
+Moreover, if there are infinitely many nonzero power coefficients, the _U_ and _L_ sequences have expected values ("long-run average"s") converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values that approach $f(\lambda)$ as $n$ gets large.  These conditions are required for the paper's Algorithm 3 (and thus the **general martingale algorithm**) to be valid.
 
 <a id=Algorithm_for_sin___lambda_____pi___2></a>
 
@@ -2778,7 +2778,7 @@ The derivation below relies on the following fact: The probability satisfies&mda
 
 $$\int_0^1\sum_{k\text{ in }S} g(k,U)\,dU = \sum_{k\text{ in }S}\int_0^1 g(k,U)\,dU.$$
 
-Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures.
+Swapping the integral and the sum is not always possible, but it is in this case because the conditions of so-called Tonelli's theorem are met: $g(k,U)$ is continuous and nonnegative whenever $k$ is in $S$ and $0\le U\le 1$; and $S$ and the closed unit interval have natural sigma-finite measures (the set $S$ is a countable union of sets with measure 1, one for each integer in $S$, while the closed unit interval has measure 1).
 
 Now to show how the MGL generator produces the probability $\pi/4$.  Let $C(k)$ be the probability that this algorithm's step 2 generates a number $k$, namely&mdash;
 
