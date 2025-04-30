@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="dc.date" content="2025-04-27"><meta name="citation_date" content="2025/04/27"><meta name="citation_publication_date" content="2025/04/27"><meta name="citation_online_date" content="2025/04/27"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="dc.date" content="2025-04-30"><meta name="citation_date" content="2025/04/30"><meta name="citation_publication_date" content="2025/04/30"><meta name="citation_online_date" content="2025/04/30"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -8,11 +8,18 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
+<p><a id="Introduction"></a></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>The <em>Bernoulli factory problem</em> is: Suppose there is a coin that shows heads with an unknown probability, <em>λ</em>, and the goal is to use that coin (and possibly also a fair coin) to build a “new” coin that shows heads with a probability that depends on <em>λ</em>, call it <em>f</em>(<em>λ</em>).  This article discusses additional topics on the Bernoulli factory problem and should be read in conjunction with the article “<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>”.</p>
+
 <p><a id="Contents"></a></p>
 
 <h2 id="contents">Contents</h2>
 
 <ul>
+  <li><a href="#Introduction"><strong>Introduction</strong></a></li>
   <li><a href="#Contents"><strong>Contents</strong></a></li>
   <li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
   <li><a href="#Definitions"><strong>Definitions</strong></a></li>
@@ -55,7 +62,7 @@
 
 <p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/bernsupp.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/bernsupp.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a><strong>.  See</strong> “<a href="https://peteroupc.github.io/bernreq.html"><strong>Open Questions on the Bernoulli Factory Problem</strong></a>” <strong>for a list of things about this document that I seek answers to.</strong></p>
 
-<p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.  It should be read in conjunction with the article “<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>”.</p>
+<p>My audience for this article is <strong>computer programmers with mathematics knowledge, but little or no familiarity with calculus</strong>.</p>
 
 <p>I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, <a href="https://github.com/peteroupc/peteroupc.github.io/issues/18"><strong>I seek comments on the following aspects</strong></a>:</p>
 
@@ -94,8 +101,6 @@
 <p><a id="General_Factory_Functions"></a></p>
 
 <h2 id="general-factory-functions">General Factory Functions</h2>
-
-<p>As a reminder, the <em>Bernoulli factory problem</em> is: Suppose there is a coin that shows heads with an unknown probability, <em>λ</em>, and the goal is to use that coin (and possibly also a fair coin) to build a “new” coin that shows heads with a probability that depends on <em>λ</em>, call it <em>f</em>(<em>λ</em>).</p>
 
 <p>The algorithm for <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, works by building randomized upper and lower bounds for a function <em>f</em>(<em>λ</em>), based on flips of the input coin.  Roughly speaking, the algorithm works as follows:</p>
 

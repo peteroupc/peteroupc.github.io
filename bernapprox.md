@@ -2,6 +2,10 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+<a id=Introduction></a>
+
+## Introduction
+
 This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial's Bernstein coefficients will lie in the closed unit interval if $f$'s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application's purposes.
 
 The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (Therefore, although this page also discusses approximation by so-called _Chebyshev interpolants_, that method is relegated to the appendix.)
@@ -21,6 +25,7 @@ The goal of these approximations is to avoid introducing transcendental and trig
 
 ## Contents
 
+- [**Introduction**](#Introduction)
 - [**Contents**](#Contents)
 - [**About This Document**](#About_This_Document)
 - [**Definitions**](#Definitions)

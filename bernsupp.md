@@ -2,10 +2,17 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+<a id=Introduction></a>
+
+## Introduction
+
+The _Bernoulli factory problem_ is: Suppose there is a coin that shows heads with an unknown probability, _&lambda;_, and the goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, call it _f_(_&lambda;_).  This article discusses additional topics on the Bernoulli factory problem and should be read in conjunction with the article "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".
+
 <a id=Contents></a>
 
 ## Contents
 
+- [**Introduction**](#Introduction)
 - [**Contents**](#Contents)
 - [**About This Document**](#About_This_Document)
 - [**Definitions**](#Definitions)
@@ -35,7 +42,7 @@
 
 **This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernsupp.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernsupp.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  See** "[**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)" **for a list of things about this document that I seek answers to.**
 
-My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.  It should be read in conjunction with the article "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".
+My audience for this article is **computer programmers with mathematics knowledge, but little or no familiarity with calculus**.
 
 I encourage readers to implement any of the algorithms given in this page, and report their implementation experiences.  In particular, [**I seek comments on the following aspects**](https://github.com/peteroupc/peteroupc.github.io/issues/18):
 
@@ -68,8 +75,6 @@ The following terms can describe a function $f(x)$, specifically how "well-behav
 <a id=General_Factory_Functions></a>
 
 ## General Factory Functions
-
-As a reminder, the _Bernoulli factory problem_ is: Suppose there is a coin that shows heads with an unknown probability, _&lambda;_, and the goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, call it _f_(_&lambda;_).
 
 The algorithm for [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions), described in my main article on Bernoulli factory algorithms, works by building randomized upper and lower bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithm works as follows:
 
