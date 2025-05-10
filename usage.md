@@ -20,16 +20,17 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
 | cause | lead to, provoke, engender, occasion, beget, breed, bring on, bring about, give rise to, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
-| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on | |
+| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on, zoom in on | |
 | focused on (for example, _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
 | happen | occur, take place, unfold, come about, manifest, produce itself, present itself, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
+| leave | get out of, exit, step away (from), abandon, go away (from). | In the sense of 'go away'. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone]; _an event_ puts [someone] to death |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] the death of many; _an event_ puts many to death |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
-| _an event_ leaves many (people) injured | _an event_ injures many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
+| _an event_ leaves many (people) injured | _an event_ injures many; _an event_ hurts many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
 | Note that... | Observe that..., Notably..., Notice that..., Take note that..., It should be noted that..., It bears noting that..., Be aware that..., It is worth noting that, It bears mentioning that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
@@ -39,7 +40,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | people, persons | men and women, individuals, audience, public, population, anyone..., whoever..., [leave out].<br>_Informal:_ folks. | More generally, a more specific term than _people_ or _persons_ is preferred. Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider, for example: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underscore, add, explain, elaborate, conclude, reply, respond, answer, signal, indicate, point out, reveal, maintain, acknowledge, admit. | Spanish and French press articles tend to employ numerous synonyms for this word. |
+| say | declare, affirm, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ opine, note, share, affirm, argue, contend, highlight, emphasize, underline, underscore, add, explain, elaborate, conclude, reply, respond, answer, signal, indicate, point out, reveal, maintain, acknowledge, admit. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, speak with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>In [someone]'s estimation, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that...<br>As [someone] puts it, ... | Expressing an opinion. |
@@ -92,7 +93,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | one way or another | either way; [leave out] |Inspired by E. Bernal. |
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
 | other people | others |Inspired by E. Bernal. |
-| people's identities | people's identity, every personal identity |Inspired by E. Bernal. |
+| people's identities | every personal identity, who someone is |Inspired by E. Bernal. |
 | people's lives | life |Inspired by E. Bernal. |
 | people/persons being held/jailed | (the) detainees, the jailed.<br>_In criminal cases:_ (the) inmates, the prisoners. |Inspired by E. Bernal. |
 | people/persons know | it is known, it is generally known, it is commonly known, we know |Inspired by E. Bernal. |

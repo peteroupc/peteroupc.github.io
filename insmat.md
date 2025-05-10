@@ -12,15 +12,13 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Require as little preparation time as possible.
 
 3. Instructional materials should be [**knowledge-rich**](https://link.springer.com/book/10.1007/978-3-031-74661-1). In Language Arts, they should also follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).
-4. There is guidance for:
+4. There is guidance for [^6]:
 
     - [**Content**](https://www.coreknowledge.org/core-knowledge-sequence/) that could form part of a knowledge-rich curriculum up to eighth grade.
-    - Improving [**cultural responsiveness**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) in Literacy instructional materials.
     - Offering numerous [**options to do beyond-grade-level content and exercises**](https://slatestarcodex.com/2018/09/04/acc-entry-does-the-education-system-adequately-serve-advanced-students/) for willing and ready students, as long as these options are always presented to all students [^4].
     - [**Instructional practices**](https://www.thescienceofmath.com/) and [**course content**](https://mathacademy.com/courses) for Mathematics; also see [**Merlo 2024**](https://www.cis.org.au/publication/the-science-of-mathematics-and-how-to-apply-it/).
     - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
     - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government, or using such questions for retrieval practice.
-    - Increasing rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/) in U.S. History instructional materials.
     - Devoting at least [**45 minutes daily**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) to Social Studies instruction up to fifth grade.
     - Devoting [**at least as much daily time as other content subjects**](https://www.nsta.org/nstas-official-positions/elementary-school-science) to Science instruction up to fifth grade.
 
@@ -52,3 +50,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^4]: One example, similar to the approach found in _Illustrative Mathematics_, is the presence in student workbooks of "Are you ready for more?" followed by a challenging exercise. Another example is a relatively short unit on basic calculus concepts such as limits and continuous functions at the end of Algebra 2, such as the last unit of [**Fishtank Learning's Algebra 2 course**](https://www.fishtanklearning.org/curriculum/math/algebra-2/).
 
 [^5]: A list of some of the [**overused and discouraged words**](http://peteroupc.github.io/usage.html) is given elsewhere.  The works of Emilio Bernal Labrada, Theodore Bernstein, Mario Pei, Bill Bryson, and Richard Lederer, among others, provide guidance on good English usage.
+
+[^6]: There is also guidance relating to "culturally responsive pedagogy", which, while valuable, has no rigorous evidence of its improving student achievement by itself.  See, for example, the [**cultural responsiveness scorecard**](https://steinhardt.nyu.edu/sites/default/files/2020-12/CRE%20Scorecard%20Revised%20Aug%202020.pdf) or initiatives to increase rigor and quality of [**Latino American content**](https://unidosus.org/publications/analyzing-inclusion-of-latino-contributions-in-us-history-curricula-for-high-school/) and [**black American content**](https://hub.jhu.edu/2021/02/10/black-history-curricula-lacking-rigor-and-quality/)..

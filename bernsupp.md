@@ -723,21 +723,21 @@ Inequality 5 follows from inequality 4 using properties of Hölder-continuous fu
 
 The estimates are correct even if $Y$ takes a particular value with probability 1, since then the variance would be 0. &#x25a1;
 
-**Lemma 2B**. _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Let $h\gt 0$ be a real number. Then $\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))$ = $Q(f, Y) + R(f, Y)$, where&mdash;_
+**Lemma 2B**. _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Let $h\gt 0$ be a real number. Then $\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])$ = $Q(f, Y) + R(f, Y)$, where&mdash;_
 
-$$Q(f,Y)\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right),$$
+$$\text{abs}(Q(f,Y))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right),$$
 
-$$R(f,Y)\le\left(\frac{\tau_k(Y)}{k!}+\frac{\tau_{k+1}(Y)}{(k+1)!\cdot h}\right)\cdot\omega(f^{(k)}, h),$$
+$$\text{abs}(R(f,Y))\le\left(\frac{\tau_k(Y)}{k!}+\frac{\tau_{k+1}(Y)}{(k+1)!\cdot h}\right)\cdot\omega(f^{(k)}, h),$$
 
-$$\text{and }R(f,Y)\le\max\left(\frac{\tau_k(Y)}{k!}, \frac{\tau_{k+1}(Y)}{(k+1)!\cdot 2h}\right)\cdot\tilde\omega(f^{(k)}, 2h),$$
+$$\text{and }\text{abs}(R(f,Y))\le\max\left(\frac{\tau_k(Y)}{k!}, \frac{\tau_{k+1}(Y)}{(k+1)!\cdot 2h}\right)\cdot\tilde\omega(f^{(k)}, 2h),$$
 
-$$\text{and }R(f,Y)\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_{k+1}(Y)}{(k+1)\tau_k(Y)}),$$
+$$\text{and }\text{abs}(R(f,Y))\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_{k+1}(Y)}{(k+1)\tau_k(Y)}),$$
 
 _and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$._
 
 _Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^35]). Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound for $R(f,Y)$ comes from Păltănea and Smuc (2019, Theorem 1)[^36]; the second bound comes from corollary 3.2 of Dimitriu (2010)[^37] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)[^38], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^39], Piţul (2007)[^40].  &#x25a1;
 
-**Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $R(f,Y)\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
+**Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $\text{abs}(R(f,Y))\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
 
 _Proof:_  Follows from the third bound for $R(f,Y)$ in Lemma 2B in the same manner as inequality 10 of Lemma 2A. &#x25a1;
 
@@ -985,7 +985,7 @@ When $C_0$ or $C_1$ exists, find a good upper bound for it.
 >
 >     $$B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2,$$
 >
->     where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to 1/2, so that $M = 1/2$.
+>     where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to $f(\lambda)=1/2$, so that $M = 1/2$.
 
 ---------------------
 
