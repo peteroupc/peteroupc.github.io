@@ -26,7 +26,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
 | happen | occur, take place, unfold, come about, manifest, produce itself, present itself, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
-| leave | get out of, exit, step away (from), abandon, go away (from). | In the sense of 'go away'. |
+| leave | depart, get out of, exit, step away (from), abandon, go away (from). | In the sense of 'go away'. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone]; _an event_ puts [someone] to death |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] the death of many; _an event_ puts many to death |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
@@ -44,7 +44,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, speak with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>In [someone]'s estimation, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that...<br>As [someone] puts it, ... | Expressing an opinion. |
-| [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] calls [something]...<br>[someone] declares [something] (as)...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]<br>for [someone], [something] is... | |
+| [someone] says (that) [something] is... | [someone] considers [something] (as)...<br>[someone] labels [something] (as)...<br>[someone] finds [something]...<br>[someone] calls [something]...<br>[someone] pronounces [something]...<br>[someone] declares [something] (as)...<br>[someone] qualifies [something] as...<br>[something] is ... to [someone]<br>for [someone], [something] is... | |
 | [someone] was identified as [name]. | [someone] went by the name of [name].<br>[someone] was named [name].<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [someone], identified as [name], ... | [someone], going by the name of [name], ...<br>[someone], named [name], ...<br>[someone], [name], ... | Inspired by E. Bernal. |
 | [something] is used to [do something else] | [something] serves to [do something else]. |  |
