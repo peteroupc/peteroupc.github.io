@@ -15,7 +15,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, what is more, apart from that, additionally | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] (for example, _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
-| award winner | awardee | |
+| award winner | awardee, recipient (of an award) | |
 | bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant, illegitimate actor | |
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
 | cause | lead to, provoke, engender, occasion, beget, breed, bring on, bring about, give rise to, produce, result in | Verb. |
@@ -104,6 +104,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | pregnant people | the pregnant, pregnant women |  |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
 | rain conditions, rainy conditions | rain. _Or as appropriate_: drizzle, showers, squalls, light rain, heavy rain, downpours. |Inspired by E. Bernal. |
+| remove (_in the sense of 'erase' or 'abolish'_) | erase, delete, suppress, abolish, repeal, rescind, take away, get [something] off | It is correct to say 'remove [something] from [something else]' or use in the sense of 'move [something] away'. |
 | (they) saved their lives | (they) were saved, (they) saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
