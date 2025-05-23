@@ -1447,7 +1447,7 @@ See also (Downey 2007\)[^63] and the [**Rademacher Floating-Point Library**](htt
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or "long-run average") of a sampling distribution, or of a _function_ of values sampled from that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one of the values in the sample.  Algorithms to estimate expected values are called _estimators_.  One such estimator is to sample `n` values, apply `EFUNC(x)` to each sampled value `x`, add the values, and divide by `n` (see note below).  However, this estimator won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.  This estimator is called:
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or "long-run average") of a sampling distribution, or of a _function_ of values sampled from that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one of the values in the sample.  Algorithms to estimate expected values are called _estimators_.  One such estimator is to sample `n` values, apply `EFUNC(x)` to each sampled value `x`, add the values, and divide by `n` (see note later).  However, this estimator won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.  This estimator is called:
 
     - The **`n`th sample raw moment** (a raw moment is a mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
     - The **sample mean**, if `EFUNC(x)` is `x` or `pow(x, 1)`.
@@ -1961,7 +1961,7 @@ This section contains ways to choose independent uniform random points in or on 
 
 #### Random Points Inside a Simplex
 
-The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. The special case of 3 points came from Osada et al. (2002\)[^105].
+The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. The special case of 3 points came from Osada et al. (2002\)[^105].  For other cases, see the Dirichlet distribution entry in the section "Index of Nonuniform Distributions", earlier.
 
     METHOD VecAddProd(a, b, c)
       for j in 0...size(a): a[j]=a[j]+b[j]*c
