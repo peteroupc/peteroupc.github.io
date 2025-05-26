@@ -1847,7 +1847,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^15]: Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
     - Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this corresponds to the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
-    - The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332&getlang=en), 2009).
+    - The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, "Why the printing industry is not using D65?", Fogra Extra, 2009).
 
 [^16]: Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
 
