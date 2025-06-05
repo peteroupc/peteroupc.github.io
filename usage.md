@@ -104,7 +104,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | pregnant people | the pregnant, pregnant women |  |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
 | rain conditions, rainy conditions | rain. _Or as appropriate_: drizzle, showers, squalls, light rain, heavy rain, downpours. |Inspired by E. Bernal. |
-| remove (_in the sense of 'erase' or 'abolish'_) | eliminate, erase, delete, suppress, take away, get [something] off, get rid of, abolish, repeal, rescind, do away with | It is correct to say 'remove [something] from [something else]' or use in the sense of 'move [something] away'. |
+| remove (_in the sense of 'erase' or 'abolish'_) | eliminate, erase, delete, suppress, take away, get [something] off, get rid of, abolish, repeal, rescind, do away with | It is correct to say 'remove [something] from [something else]', speak of 'removing' an obstacle or disadvantage, or use in the sense of 'move [something] away'. |
 | (they) saved their lives | (they) were saved, (they) saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
