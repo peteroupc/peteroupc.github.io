@@ -1095,7 +1095,7 @@ The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the inp
 
 **The von Neumann schema.** Flajolet et al. (2010\)[^1], section 2, describes what it calls the _von Neumann schema_, which produces random integers based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:
 
-- A _permutation class_ is a rule that gives how a sequence of numbers must be ordered.  The ordering of the numbers is called a _permutation_.  Two examples of permutation classes cover permutations sorted in high-to-low order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.
+- A _permutation class_ is a rule that gives how a sequence of numbers must be ordered.  Two examples of permutation classes cover sequences of numbers sorted in high-to-low order, and sequences of numbers whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.
 
 Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 0$, with probability equal to&mdash;
 
@@ -1107,7 +1107,7 @@ $$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} 
 
 where:
 
-- $V(n)$ returns a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
+- $V(n)$ returns a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of sequences of size $n$ (with different numbers) that belong in the permutation class.
 - $EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an _exponential generating function_, which completely determines a permutation class.
 -  The probability that $r$ many values of $X$ are rejected by the von Neumann schema (for the choices of $g$ and $h$ above) is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.
 
@@ -1119,34 +1119,34 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 >
 > 1. Examples of permutation classes include the following (using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)[^50]):
 >
->     - Single-cycle permutations, or permutations whose highest number appears first (EGF(_&lambda;_) = Cyc(_&lambda;_) = ln(1/(1 &minus; _&lambda;_)); V(_n_) = ((_n_ &minus; 1)!) \[or 0 if _n_ is 0)\]).
->     - Sorted permutations, or permutations whose numbers are sorted in high-to-low order (EGF(_&lambda;_) = Set(_&lambda;_) = exp(_&lambda;_); V(_n_) = 1).
->     - All permutations (EGF(_&lambda;_) = Seq(_&lambda;_) = 1/(1 &minus; _&lambda;_); V(_n_) = _n_!),
->     - Alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_) = sec(_&lambda;_); V(_n_) = W(_n_/2) if _n_ is even[^27] and 0 otherwise, where the W(_m_) starting at _m_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_).
->     - Alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); V(_n_) = W((_n_+1)/2) if _n_ is odd[^25] and 0 otherwise, where the W(_m_) starting at _m_ = 1 is [**A000182**](https://oeis.org/A000182)).
+>     - Single-cycle sequences, or sequences whose highest number appears first (EGF(_&lambda;_) = Cyc(_&lambda;_) = ln(1/(1 &minus; _&lambda;_)); V(_n_) = ((_n_ &minus; 1)!) \[or 0 if _n_ is 0)\]).
+>     - Sorted sequences, or sequences whose numbers are sorted in high-to-low order (EGF(_&lambda;_) = Set(_&lambda;_) = exp(_&lambda;_); V(_n_) = 1).
+>     - All sequences (EGF(_&lambda;_) = Seq(_&lambda;_) = 1/(1 &minus; _&lambda;_); V(_n_) = _n_!),
+>     - Alternating sequences of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_) = sec(_&lambda;_); V(_n_) = W(_n_/2) if _n_ is even[^27] and 0 otherwise, where the W(_m_) starting at _m_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_).
+>     - Alternating sequences of odd size (EGF(_&lambda;_) = tan(_&lambda;_); V(_n_) = W((_n_+1)/2) if _n_ is odd[^25] and 0 otherwise, where the W(_m_) starting at _m_ = 1 is [**A000182**](https://oeis.org/A000182)).
 >
-> 2. Using the class of _sorted permutations_, we can generate a Poisson random variate with mean _&lambda;_ via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; giving out 1 if a Poisson random variate with mean _&lambda;_ is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson random variate with mean floor(_c_) to one with mean _c_&minus;floor(_c_) generates a Poisson random variate with mean _c_.
+> 2. Using the permutation class of _sorted sequences_, we can generate a Poisson random variate with mean _&lambda;_ via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; giving out 1 if a Poisson random variate with mean _&lambda;_ is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson random variate with mean floor(_c_) to one with mean _c_&minus;floor(_c_) generates a Poisson random variate with mean _c_.
 > 3. The algorithm for exp(&minus;_&lambda;_), described in example 2, is as follows:
 >
 >     1. Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way.
 >     2. With probability 1/((_X_)!), _X_ is accepted so return a number that is 1 if _X_ is 0 and 0 otherwise.  Otherwise, go to the previous step.
 >
-> 4. For the class of _alternating permutations of even size_ (see example 1), step 2 in **Algorithm BR** can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
+> 4. For the permutation class of _alternating sequences of even size_ (see example 1), step 2 in **Algorithm BR** can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
 >
->     - (2a.) (Limited to even-sized permutations.) If _X_ is odd[^25], reject _X_ (and go to step 1).
+>     - (2a.) (Limited to even-sized sequences.) If _X_ is odd[^25], reject _X_ (and go to step 1).
 >     - (2b.) Generate a uniform random variate between 0 and 1, call it U, then set _i_ to 1.
 >     - (2c.) While _i_ is less than _X_:
 >         - Generate a uniform random variate between 0 and 1, call it V.
 >         - If _i_ is odd[^25] and V is less than U, or if _i_ is even[^27] and U is less than V, reject _X_ (and go to step 1).
 >         - Add 1 to i, then set U to V.
 >
-> 5. For the class of _alternating permutations of odd size_ (see example 1), step 2 in **Algorithm BR** can be implemented as in example 4, except 2a reads: "(2a.) (Limited to odd-sized permutations.) If _X_ is even[^27], reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
+> 5. For the permutation class of _alternating sequences of odd size_ (see example 1), step 2 in **Algorithm BR** can be implemented as in example 4, except 2a reads: "(2a.) (Limited to odd-sized sequences.) If _X_ is even[^27], reject _X_ (and go to step 1)." (Flajolet et al. 2010, sec. 2.2\)[^1].
 > 6. By computing&mdash;
 >
 >     $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$
 >
->     (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.
-> 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because **Algorithm BR** is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
+>     (which is the probability of getting an odd-numbered output), and using the permutation class of sorted sequences ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema's output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.
+> 7. The _X_ generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because **Algorithm BR** is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt; 0, and if the permutation class of sorted sequences is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 
 **Examples for the von Neumann schema**.  Examples contained in Theorem 2.3 of Flajolet et al. (2010\)[^1].  In the table:
 
@@ -1155,18 +1155,18 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 
 | Function | Values Allowed |  Algorithm |
  --- | ---- | --- |
-| exp(&minus;_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses von Neumann schema algorithm (VNS) with **sorted** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
-| exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
-| (1&minus;_&lambda;_)\*exp(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with sorted permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_\*exp(1&minus;_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with sorted permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **single-cycle** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
-| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
-| (1&minus;_&lambda;_)\*ln(1/(1&minus;_&lambda;_)) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with single-cycle permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_\*ln(1/_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with single-cycle permutations, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| cos(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **alternating even-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **0**, and 0 otherwise. |
-| (1&minus;_&lambda;_)/cos(_&lambda;_) = (1&minus;_&lambda;_)\*sec(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with alternating even-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
-| _&lambda;_/tan(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **alternating odd-sized** permutations, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
-| (1&minus;_&lambda;_)\*tan(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with alternating odd-sized permutations, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| exp(&minus;_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses von Neumann schema algorithm (VNS) with **sorted** sequences, and the _&lambda;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| exp(_&lambda;_ &minus; 1) = exp(&minus;(1 &minus; _&lambda;_)) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with sorted sequences, and the _&mu;_ coin.  Return 1 if VNS returns 0, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*exp(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with sorted sequences, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_\*exp(1&minus;_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with sorted sequences, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_/ln(1/(1&minus;_&lambda;_)) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **single-cycle** sequences, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)/ln(1/_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with single-cycle sequences, and the _&mu;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*ln(1/(1&minus;_&lambda;_)) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with single-cycle  sequences, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_\*ln(1/_&lambda;_) | 0 &lt; _&lambda;_ &le; 1 | Uses VNS with single-cycle sequences, and the _&mu;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| cos(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **alternating even-sized** sequences, and the _&lambda;_ coin.  Return 1 if VNS returns **0**, and 0 otherwise. |
+| (1&minus;_&lambda;_)/cos(_&lambda;_) = (1&minus;_&lambda;_)\*sec(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with alternating even-sized sequences, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
+| _&lambda;_/tan(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with **alternating odd-sized** sequences, and the _&lambda;_ coin.  Return 1 if VNS returns **1**, and 0 otherwise. |
+| (1&minus;_&lambda;_)\*tan(_&lambda;_) | 0 &le; _&lambda;_ &lt; 1 | Uses VNS with alternating odd-sized sequences, and the _&lambda;_ coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise. |
 
 **Recap.**  As can be seen&mdash;
 
@@ -2734,7 +2734,7 @@ Then the algorithm's behavior is given in the tables below.
 | Numbers sorted in high-to-low order | Arbitrary; _D_ = _E_ | _n_ / ((_n_ + 1)!). | Odd is 1&minus;exp(&minus;1); even is exp(&minus;1). See note 3. |
 | Numbers sorted in high-to-low order | Each arbitrary | (&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(_z_) \* ((ECDF(_z_))<sup>_n_&minus;1</sup>/((_n_&minus;1)!) &minus; (ECDF(_z_))<sup>_n_</sup>/(_n_!)) _dz_), for every _n_ > 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV\)[^30]. DPDF and ECDF are defined later. | Odd is denominator of formula 1 below. |
 | Alternating numbers | Arbitrary; _D_ = _E_ | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. | Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1).  See note 3. |
-| Any | Arbitrary; _D_ = _E_ | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for every _n_ > 0.  _V_(_n_) is the number of permutations of size _n_ that belong in the permutation class. For this algorithm, _V_(_n_) must be greater than 0 and less than or equal to _n_ factorial; this algorithm won't work, for example, if there are 0 permutations of odd size.  | Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).  See note 3. |
+| Any | Arbitrary; _D_ = _E_ | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for every _n_ > 0.  _V_(_n_) is the number of sequences of size _n_ that belong in the permutation class. For this algorithm, _V_(_n_) must be greater than 0 and less than or equal to _n_ factorial; this algorithm won't work, for example, if there are 0 sequences of odd size.  | Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).  See note 3. |
 
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is _x_ or less given that _n_ is ... |
  --- | --- | ----- |
@@ -2751,7 +2751,7 @@ Then the algorithm's behavior is given in the tables below.
 > **Notes:**
 >
 > 1. All the functions possible for formulas 1 and 2 are nowhere decreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
-> 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
+> 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of sequences involved in the algorithm.  For example, the permutation class of _alternating sequences_ (sequences whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
 > 3. The results that point to this note have the special case that both _D_ and _E_ are uniform random variates between 0 and 1.  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then with probability 1, _x_ becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847).
 
 <a id=Derivation_of_an_Algorithm_for___pi___4></a>

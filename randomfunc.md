@@ -471,7 +471,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
 
 #### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list occur with the same probability.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007\)[^17].  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all orderings of that list occur with the same probability.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007\)[^17].  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -502,10 +502,10 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
 
 > **Notes:**
 >
-> 1. `j = RNDINTEXC(i + 1)` can't be replaced with `j = RNDINTEXC(size(list))` since it can cause certain permutations to be slightly more probable than others.  If that line is replaced with `j = RNDINTEXC(i)`, the result is Sattolo's algorithm (which chooses from among permutations with cycles), rather than a Fisher&ndash;Yates shuffle.
+> 1. `j = RNDINTEXC(i + 1)` can't be replaced with `j = RNDINTEXC(size(list))` since it can cause certain orderings to be slightly more probable than others.  If that line is replaced with `j = RNDINTEXC(i)`, the result is Sattolo's algorithm (which chooses from among orderings with cycles), rather than a Fisher&ndash;Yates shuffle.
 > 2. When it comes to shuffling, the choice of pseudorandom number generator (or whatever is simulating a "source of random numbers") is important; see my [**recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 > 3. A shuffling algorithm that can be carried out in parallel is described in (Bacher et al., 2015\)[^18].
-> 4. A _derangement_ is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007\)[^19]\: (1) modify `Shuffle` by adding the following line after `j = RNDINTEXC(i + 1)`: `if i == list[j]: return nothing`, and changing `while i > 0` to `while i >= 0`; (2) use the following pseudocode with the modified `Shuffle` method: `while True; list = []; for i in 0...n: AddItem(list, i); s=Shuffle(list); if s!=nothing: return s; end`.
+> 4. A _derangement_ is a way to arrange a list such that every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007\)[^19]\: (1) modify `Shuffle` by adding the following line after `j = RNDINTEXC(i + 1)`: `if i == list[j]: return nothing`, and changing `while i > 0` to `while i >= 0`; (2) use the following pseudocode with the modified `Shuffle` method: `while True; list = []; for i in 0...n: AddItem(list, i); s=Shuffle(list); if s!=nothing: return s; end`.
 > 5. Ting (2021\)[^15] showed how to reduce the space complexity of shuffling via a _hash table_: Modify `Shuffle` as follows: (1) Create a hash table at the start of the method; (2) instead of the swap `tmp = list[i]; list[i] = list[j]; list[j] = tmp`, use the following: `list[i] = HGET(j,j); HSET(k,HGET(i,i)); if k==i: HDEL(i)`, where `HSET(k,v)` sets the item with key `k` in the hash table to `v`; `HGET(k,v)` gets the item with key `k` in that table, or returns `v` if there is no such item; and `HDEL(k)` deletes the item with key `k` from that table. (The hash table can instead be any key/value map structure, including a red&ndash;black tree.  This can be combined with note 4 to generate derangements, except replace `list[j]` in note 4 with `HGET(j,j)`.)
 
 <a id=Random_Character_Strings></a>

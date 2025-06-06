@@ -1,4 +1,4 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="dc.date" content="2025-04-29"><meta name="citation_date" content="2025/04/29"><meta name="citation_publication_date" content="2025/04/29"><meta name="citation_online_date" content="2025/04/29"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Bernoulli Factory Algorithms"><meta name="dc.title" content="Bernoulli Factory Algorithms"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="dc.date" content="2025-06-06"><meta name="citation_date" content="2025/06/06"><meta name="citation_publication_date" content="2025/06/06"><meta name="citation_online_date" content="2025/06/06"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only fair coin flips, which is related to the Bernoulli factory problem. This page is devoted to methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn unfair coins into differently unfair coins, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Bernoulli Factory Algorithms"><meta name="dc.title" content="Bernoulli Factory Algorithms"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1659,7 +1659,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 <p><strong>The von Neumann schema.</strong> Flajolet et al. (2010)<sup id="fnref:1:7"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, section 2, describes what it calls the <em>von Neumann schema</em>, which produces random integers based on a coin with unknown heads probability.  To describe the schema, the following definition is needed:</p>
 
 <ul>
-  <li>A <em>permutation class</em> is a rule that gives how a sequence of numbers must be ordered.  The ordering of the numbers is called a <em>permutation</em>.  Two examples of permutation classes cover permutations sorted in high-to-low order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.</li>
+  <li>A <em>permutation class</em> is a rule that gives how a sequence of numbers must be ordered.  Two examples of permutation classes cover sequences of numbers sorted in high-to-low order, and sequences of numbers whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.</li>
 </ul>
 
 <p>Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 0$, with probability equal to—</p>
@@ -1673,7 +1673,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
 <p>where:</p>
 
 <ul>
-  <li>$V(n)$ returns a number in the interval [0, <em>n</em>!].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.</li>
+  <li>$V(n)$ returns a number in the interval [0, <em>n</em>!].  If $V(n)$ is an integer for every $n$, this is the number of sequences of size $n$ (with different numbers) that belong in the permutation class.</li>
   <li>$EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an <em>exponential generating function</em>, which completely determines a permutation class.</li>
   <li>The probability that $r$ many values of $X$ are rejected by the von Neumann schema (for the choices of $g$ and $h$ above) is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.</li>
 </ul>
@@ -1690,14 +1690,14 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
       <p>Examples of permutation classes include the following (using the notation in “Analytic Combinatorics” (Flajolet and Sedgewick 2009)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>):</p>
 
       <ul>
-        <li>Single-cycle permutations, or permutations whose highest number appears first (EGF(<em>λ</em>) = Cyc(<em>λ</em>) = ln(1/(1 − <em>λ</em>)); V(<em>n</em>) = ((<em>n</em> − 1)!) [or 0 if <em>n</em> is 0)]).</li>
-        <li>Sorted permutations, or permutations whose numbers are sorted in high-to-low order (EGF(<em>λ</em>) = Set(<em>λ</em>) = exp(<em>λ</em>); V(<em>n</em>) = 1).</li>
-        <li>All permutations (EGF(<em>λ</em>) = Seq(<em>λ</em>) = 1/(1 − <em>λ</em>); V(<em>n</em>) = <em>n</em>!),</li>
-        <li>Alternating permutations of even size (EGF(<em>λ</em>) = 1/cos(<em>λ</em>) = sec(<em>λ</em>); V(<em>n</em>) = W(<em>n</em>/2) if <em>n</em> is even<sup id="fnref:27:1"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> and 0 otherwise, where the W(<em>m</em>) starting at <em>m</em> = 0 is <a href="https://oeis.org/A000364"><strong>A000364</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>).</li>
-        <li>Alternating permutations of odd size (EGF(<em>λ</em>) = tan(<em>λ</em>); V(<em>n</em>) = W((<em>n</em>+1)/2) if <em>n</em> is odd<sup id="fnref:25:3"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup> and 0 otherwise, where the W(<em>m</em>) starting at <em>m</em> = 1 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>).</li>
+        <li>Single-cycle sequences, or sequences whose highest number appears first (EGF(<em>λ</em>) = Cyc(<em>λ</em>) = ln(1/(1 − <em>λ</em>)); V(<em>n</em>) = ((<em>n</em> − 1)!) [or 0 if <em>n</em> is 0)]).</li>
+        <li>Sorted sequences, or sequences whose numbers are sorted in high-to-low order (EGF(<em>λ</em>) = Set(<em>λ</em>) = exp(<em>λ</em>); V(<em>n</em>) = 1).</li>
+        <li>All sequences (EGF(<em>λ</em>) = Seq(<em>λ</em>) = 1/(1 − <em>λ</em>); V(<em>n</em>) = <em>n</em>!),</li>
+        <li>Alternating sequences of even size (EGF(<em>λ</em>) = 1/cos(<em>λ</em>) = sec(<em>λ</em>); V(<em>n</em>) = W(<em>n</em>/2) if <em>n</em> is even<sup id="fnref:27:1"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> and 0 otherwise, where the W(<em>m</em>) starting at <em>m</em> = 0 is <a href="https://oeis.org/A000364"><strong>A000364</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>).</li>
+        <li>Alternating sequences of odd size (EGF(<em>λ</em>) = tan(<em>λ</em>); V(<em>n</em>) = W((<em>n</em>+1)/2) if <em>n</em> is odd<sup id="fnref:25:3"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup> and 0 otherwise, where the W(<em>m</em>) starting at <em>m</em> = 1 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>).</li>
       </ul>
     </li>
-    <li>Using the class of <em>sorted permutations</em>, we can generate a Poisson random variate with mean <em>λ</em> via the von Neumann schema, where <em>λ</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(−<em>λ</em>) — giving out 1 if a Poisson random variate with mean <em>λ</em> is 0, or 0 otherwise — but for the reason given in the note, this algorithm gets slower as <em>λ</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson random variate with mean floor(<em>c</em>) to one with mean <em>c</em>−floor(<em>c</em>) generates a Poisson random variate with mean <em>c</em>.</li>
+    <li>Using the permutation class of <em>sorted sequences</em>, we can generate a Poisson random variate with mean <em>λ</em> via the von Neumann schema, where <em>λ</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(−<em>λ</em>) — giving out 1 if a Poisson random variate with mean <em>λ</em> is 0, or 0 otherwise — but for the reason given in the note, this algorithm gets slower as <em>λ</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson random variate with mean floor(<em>c</em>) to one with mean <em>c</em>−floor(<em>c</em>) generates a Poisson random variate with mean <em>c</em>.</li>
     <li>
       <p>The algorithm for exp(−<em>λ</em>), described in example 2, is as follows:</p>
 
@@ -1707,10 +1707,10 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
       </ol>
     </li>
     <li>
-      <p>For the class of <em>alternating permutations of even size</em> (see example 1), step 2 in <strong>Algorithm BR</strong> can be implemented as follows (Flajolet et al. 2010, sec. 2.2)<sup id="fnref:1:9"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>:</p>
+      <p>For the permutation class of <em>alternating sequences of even size</em> (see example 1), step 2 in <strong>Algorithm BR</strong> can be implemented as follows (Flajolet et al. 2010, sec. 2.2)<sup id="fnref:1:9"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>:</p>
 
       <ul>
-        <li>(2a.) (Limited to even-sized permutations.) If <em>X</em> is odd<sup id="fnref:25:4"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, reject <em>X</em> (and go to step 1).</li>
+        <li>(2a.) (Limited to even-sized sequences.) If <em>X</em> is odd<sup id="fnref:25:4"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, reject <em>X</em> (and go to step 1).</li>
         <li>(2b.) Generate a uniform random variate between 0 and 1, call it U, then set <em>i</em> to 1.</li>
         <li>(2c.) While <em>i</em> is less than <em>X</em>:
           <ul>
@@ -1721,15 +1721,15 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
         </li>
       </ul>
     </li>
-    <li>For the class of <em>alternating permutations of odd size</em> (see example 1), step 2 in <strong>Algorithm BR</strong> can be implemented as in example 4, except 2a reads: “(2a.) (Limited to odd-sized permutations.) If <em>X</em> is even<sup id="fnref:27:3"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>, reject <em>X</em> (and go to step 1).” (Flajolet et al. 2010, sec. 2.2)<sup id="fnref:1:10"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
+    <li>For the permutation class of <em>alternating sequences of odd size</em> (see example 1), step 2 in <strong>Algorithm BR</strong> can be implemented as in example 4, except 2a reads: “(2a.) (Limited to odd-sized sequences.) If <em>X</em> is even<sup id="fnref:27:3"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>, reject <em>X</em> (and go to step 1).” (Flajolet et al. 2010, sec. 2.2)<sup id="fnref:1:10"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
     <li>
       <p>By computing—</p>
 
 \[\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}\]
 
-      <p>(which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema’s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.</p>
+      <p>(which is the probability of getting an odd-numbered output), and using the permutation class of sorted sequences ($h_i(\lambda)=1/(i!)$), it is found that the von Neumann schema’s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$, where $sinh$ is the hyperbolic sine function.</p>
     </li>
-    <li>The <em>X</em> generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because <strong>Algorithm BR</strong> is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
+    <li>The <em>X</em> generated in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because <strong>Algorithm BR</strong> is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &gt; 0, and if the permutation class of sorted sequences is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
   </ol>
 </blockquote>
 
@@ -1752,62 +1752,62 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
     <tr>
       <td>exp(−<em>λ</em>)</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses von Neumann schema algorithm (VNS) with <strong>sorted</strong> permutations, and the <em>λ</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
+      <td>Uses von Neumann schema algorithm (VNS) with <strong>sorted</strong> sequences, and the <em>λ</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>exp(<em>λ</em> − 1) = exp(−(1 − <em>λ</em>))</td>
       <td>0 &lt; <em>λ</em> ≤ 1</td>
-      <td>Uses VNS with sorted permutations, and the <em>μ</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
+      <td>Uses VNS with sorted sequences, and the <em>μ</em> coin.  Return 1 if VNS returns 0, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>(1−<em>λ</em>)*exp(<em>λ</em>)</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with sorted permutations, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+      <td>Uses VNS with sorted sequences, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
     </tr>
     <tr>
       <td><em>λ</em>*exp(1−<em>λ</em>)</td>
       <td>0 &lt; <em>λ</em> ≤ 1</td>
-      <td>Uses VNS with sorted permutations, and the <em>μ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+      <td>Uses VNS with sorted sequences, and the <em>μ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
     </tr>
     <tr>
       <td><em>λ</em>/ln(1/(1−<em>λ</em>))</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with <strong>single-cycle</strong> permutations, and the <em>λ</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
+      <td>Uses VNS with <strong>single-cycle</strong> sequences, and the <em>λ</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>(1−<em>λ</em>)/ln(1/<em>λ</em>)</td>
       <td>0 &lt; <em>λ</em> ≤ 1</td>
-      <td>Uses VNS with single-cycle permutations, and the <em>μ</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
+      <td>Uses VNS with single-cycle sequences, and the <em>μ</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>(1−<em>λ</em>)*ln(1/(1−<em>λ</em>))</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with single-cycle permutations, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+      <td>Uses VNS with single-cycle  sequences, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
     </tr>
     <tr>
       <td><em>λ</em>*ln(1/<em>λ</em>)</td>
       <td>0 &lt; <em>λ</em> ≤ 1</td>
-      <td>Uses VNS with single-cycle permutations, and the <em>μ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+      <td>Uses VNS with single-cycle sequences, and the <em>μ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>cos(<em>λ</em>)</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with <strong>alternating even-sized</strong> permutations, and the <em>λ</em> coin.  Return 1 if VNS returns <strong>0</strong>, and 0 otherwise.</td>
+      <td>Uses VNS with <strong>alternating even-sized</strong> sequences, and the <em>λ</em> coin.  Return 1 if VNS returns <strong>0</strong>, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>(1−<em>λ</em>)/cos(<em>λ</em>) = (1−<em>λ</em>)*sec(<em>λ</em>)</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with alternating even-sized permutations, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+      <td>Uses VNS with alternating even-sized sequences, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
     </tr>
     <tr>
       <td><em>λ</em>/tan(<em>λ</em>)</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with <strong>alternating odd-sized</strong> permutations, and the <em>λ</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
+      <td>Uses VNS with <strong>alternating odd-sized</strong> sequences, and the <em>λ</em> coin.  Return 1 if VNS returns <strong>1</strong>, and 0 otherwise.</td>
     </tr>
     <tr>
       <td>(1−<em>λ</em>)*tan(<em>λ</em>)</td>
       <td>0 ≤ <em>λ</em> &lt; 1</td>
-      <td>Uses VNS with alternating odd-sized permutations, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
+      <td>Uses VNS with alternating odd-sized sequences, and the <em>λ</em> coin.  Return 1 if VNS finishes in one iteration, and 0 otherwise.</td>
     </tr>
   </tbody>
 </table>
@@ -3829,7 +3829,7 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
     <tr>
       <td>Any</td>
       <td>Arbitrary; <em>D</em> = <em>E</em></td>
-      <td>(∫<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>−1</sup>*V(<em>n</em>)/((<em>n</em>−1)!) − <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for every <em>n</em> &gt; 0.  <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that belong in the permutation class. For this algorithm, <em>V</em>(<em>n</em>) must be greater than 0 and less than or equal to <em>n</em> factorial; this algorithm won’t work, for example, if there are 0 permutations of odd size.</td>
+      <td>(∫<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>−1</sup>*V(<em>n</em>)/((<em>n</em>−1)!) − <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for every <em>n</em> &gt; 0.  <em>V</em>(<em>n</em>) is the number of sequences of size <em>n</em> that belong in the permutation class. For this algorithm, <em>V</em>(<em>n</em>) must be greater than 0 and less than or equal to <em>n</em> factorial; this algorithm won’t work, for example, if there are 0 sequences of odd size.</td>
       <td>Odd is 1 − 1 / EGF(1); even is 1/EGF(1).<br />Less than <em>k</em> is (<em>V</em>(0) − <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).  See note 3.</td>
     </tr>
   </tbody>
@@ -3894,7 +3894,7 @@ Due to a suggestion by Michael Shoemate who suggested it was “easy to get lost
 
   <ol>
     <li>All the functions possible for formulas 1 and 2 are nowhere decreasing functions.  Both formulas express what are called <em>cumulative distribution functions</em>, namely <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is even), respectively.</li>
-    <li>EGF(<em>z</em>) is the <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; …) uses the EGF tan(<em>λ</em>)+1/cos(<em>λ</em>).  Other examples of EGFs were given in the section on the von Neumann schema.</li>
+    <li>EGF(<em>z</em>) is the <em>exponential generating function</em> (EGF) for the kind of sequences involved in the algorithm.  For example, the permutation class of <em>alternating sequences</em> (sequences whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; …) uses the EGF tan(<em>λ</em>)+1/cos(<em>λ</em>).  Other examples of EGFs were given in the section on the von Neumann schema.</li>
     <li>The results that point to this note have the special case that both <em>D</em> and <em>E</em> are uniform random variates between 0 and 1.  Indeed, if each variate <em>x</em> in the sequence is transformed with <em>CDF</em>(<em>x</em>), where <em>CDF</em> is <em>D</em>’s cumulative distribution function, then with probability 1, <em>x</em> becomes a uniform random variate greater than 0 and less than 1, with the same numerical order as before.  See also <a href="https://stats.stackexchange.com/questions/550847"><strong>this Stack Exchange question</strong></a>.</li>
   </ol>
 </blockquote>
