@@ -14,21 +14,26 @@ All three serve to arouse nostalgia among 1990s computer users.
 
 An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.
 
-Limit 3D graphics to the following:
+Let the _pixel fill rate_ be the screen width times screen height times frames per second.  This is the number of pixels the game is intended to show per second.  For classic games released in the 1990s, this is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, the pixel fill rate is 256 &times; 192 &times; 60 = 2,949,120.
 
-1. No more than 2048 polygons can be displayed at a time.
+Let the _larger screen dimension_ be the larger of the screen width and the screen height.
+
+With the pixel fill rate in mind, limit 3D graphics to the following:
+
+1. The maximum number of polygons that can be displayed at a time is equal to the pixel fill rate divided by 1440.
     * A polygon is either a triangle, a convex quadrilateral, or a line segment.
     * Each vertex of the polygon must point to a vertex from the vertex list described below.
     * Each polygon can be translucent and/or wireframed.
 
-2. Polygons undergo perspective-correct rendering.
-3. The maximum number of vertices can be used at a time is 3 times the maximum number of polygons.
-    * A vertex consists of an XYZ position, an XY texture coordinate, and an RGB vertex color.
+2. The maximum number of vertices that can be used at a time is 3 times the maximum number of polygons.
+    * A vertex consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
-4. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  A texture's maximum image size is 192 kibibytes.
-5. Depth tests, clear colors, and fog colors are supported.
-6. The 3D graphics buffer's resolution is the same as the screen resolution.
+3. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  A texture's maximum image size, in kibibytes, is equal to 3/4 the larger screen dimension.
+4. Depth tests, clear colors, and fog colors are supported.
+5. The 3D graphics buffer's resolution is the same as the screen resolution.
+
+Polygons may, but need not, undergo perspective-correct rendering.
 
 Limit 2D graphics to the following:
 
@@ -37,16 +42,17 @@ Limit 2D graphics to the following:
 3. Each tile is 8 &times; 8 pixels and uses the colors of one of the sixteen palettes just described.
 4. The 2D and 3D layers may contain transparent pixels.
 5. One of the 2D layers can undergo a 2D affine transformation.
-6. Separate from layers, 2D sprites can be displayed.  No more than 128 sprites may be displayed at a time. Each sprite may be tile-based or bitmap-based and has dimensions of up to 64 &times; 64 pixels.  Sprites may contain transparent pixels.
+6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite may be tile-based or bitmap-based and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
 
-General:
+Music:
+
+- Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
+
+Other Notes:
 
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
-- 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) with up to 60 frames per second, or 256 &times; 384 screen resolution with up to 30 frames per second.
-- A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size, say, 2048 kibibytes.  This does not limit the size or number of graphics assets a game can have.
-- Music:  Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^1]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
-
-A game might use a different resolution than shown.  In that case, the maximum allowed number of polygons and vertices and the maximum texture size, sprite size, and sprite count, as well as the maximum graphics memory size, if any, will change in proportion to the new resolution. (For example, if the resolution is 640 &times; 480 with up to 60 frames per second, these maximums are multiplied by 6.25 = (640 &times; 480) / (256 &times; 192).  Other resolutions used in classic games include 320 &times; 200, 320 &times; 240, 640 &times; 350, and 512 &times; 384; another choice is 160 &times; 120.)
+- A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size in kibibytes.  One example is the pixel fill rate divided by 1440.  This does not limit the size or number of graphics assets a game can have.
+- Screen resolutions that have been used in classic games include 256 &times; 192, 640 &times; 480, 320 &times; 200, 320 &times; 240, 640 &times; 350, 512 &times; 384, and 160 &times; 120.  Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
