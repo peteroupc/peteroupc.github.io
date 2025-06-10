@@ -14,13 +14,14 @@ All three serve to arouse nostalgia among 1990s computer users.
 
 An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.
 
-Let the _pixel fill rate_ be the screen width times screen height times frames per second.  This is the number of pixels the game is intended to show per second.  For classic games released in the 1990s, this is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, the pixel fill rate is 256 &times; 192 &times; 60 = 2,949,120.
+Define the following:
 
-Let the _larger screen dimension_ be the larger of the screen width and the screen height.
+- Let the _pixel fill rate_ be the screen width times screen height times frames per second.  This is the number of pixels the game is intended to show per second.  For classic games released in the 1990s, this is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, the pixel fill rate is 256 &times; 192 &times; 60 = 2,949,120.
+- Let the _larger screen dimension_ be the larger of the screen width and the screen height.
 
-With the pixel fill rate in mind, limit 3D graphics to the following:
+With those definitions in mind, limit 3D graphics to the following:
 
-1. The maximum number of polygons that can be displayed at a time is equal to the pixel fill rate divided by 1440.
+1. The maximum number of polygons that can be displayed at a time is equal to the pixel fill rate divided by 1440. (For the example just given, the maximum number is 2,949,120 / 1440 = 2048.)
     * A polygon is either a triangle, a convex quadrilateral, or a line segment.
     * Each vertex of the polygon must point to a vertex from the vertex list described below.
     * Each polygon can be translucent and/or wireframed.
