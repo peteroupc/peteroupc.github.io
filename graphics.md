@@ -30,7 +30,7 @@ With those definitions in mind, limit 3D graphics to the following:
     * A vertex consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
-3. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  A texture's maximum image size, in kibibytes, is equal to 3/4 the larger screen dimension.
+3. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
 4. Depth tests, clear colors, and fog colors are supported.
 5. The 3D graphics buffer's resolution is the same as the screen resolution.
 
@@ -43,7 +43,7 @@ Limit 2D graphics to the following:
 3. Each tile is 8 &times; 8 pixels and uses the colors of one of the sixteen palettes just described.
 4. The 2D and 3D layers may contain transparent pixels.
 5. One of the 2D layers can undergo a 2D affine transformation.
-6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite may be tile-based or bitmap-based and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
+6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites that may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite may be tile-based or bitmap-based and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
 
 Music:
 
@@ -53,7 +53,7 @@ Other Notes:
 
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size in kibibytes.  One example is the pixel fill rate divided by 1440.  This does not limit the size or number of graphics assets a game can have.
-- Screen resolutions that have been used in classic games include 256 &times; 192, 640 &times; 480, 320 &times; 200, 320 &times; 240, 640 &times; 350, 512 &times; 384, and 160 &times; 120.  Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
+- Screen resolutions that have been used in classic games include 256 &times; 192, 640 &times; 480, 320 &times; 200, 320 &times; 240, 640 &times; 350, 512 &times; 352, 512 &times; 384, and 160 &times; 120.  Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
 
 These limitations were inspired by the graphics limitations of classic handheld game consoles.
 
