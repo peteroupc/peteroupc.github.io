@@ -668,7 +668,7 @@ END METHOD
     <p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
     <ul>
-      <li>If the ideal distribution is discrete (takes on values that can map to integers and back without loss), the algorithm samples exactly from that distribution. (But see the note below.)</li>
+      <li>If the ideal distribution is discrete (takes on values that can map to integers and back without loss), the algorithm samples exactly from that distribution. (But see the note later.)</li>
       <li>If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see later for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.</li>
       <li>In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).</li>
     </ul>
@@ -697,8 +697,8 @@ END METHOD
   <p><strong>Note:</strong> A discrete distribution can be sampled in finite time on average if and only if its so-called <em>Shannon entropy</em> is finite (Knuth and Yao 1976)<sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>. Unfortunately, some discrete distributions have infinite Shannon entropy, such as some members of the zeta Dirichlet family of distributions (Devroye and Gravel 2020)<sup id="fnref:25:1"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>.  Thus, in practice, an approximate or error-bounded sampler is needed for these distributions. Saad et al. (2020)<sup id="fnref:29"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">29</a></sup> discuss how to sample an approximation of a discrete distribution with a user-specified error tolerance, but only if the ideal distribution takes on a finite number of values (and thus has finite Shannon entropy).  On the other hand, a distribution has finite Shannon entropy whenever—</p>
 
   <ul>
-    <li>it takes on only integers 1 or greater and has a finite <em>t</em><sup>th</sup> moment for some <em>t</em> &gt; 0 (“long-run average” of values raised to <em>t</em><sup>th</sup> power) (Baccetti and Visser 2013)<sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>, or as a special case,</li>
-    <li>it takes on only integers 1 or greater and has a finite mean (“long-run average”), or</li>
+    <li>it takes on only integers 1 or greater and has a finite <em>t</em><sup>th</sup> moment for some <em>t</em> &gt; 0 ("long-run average"” of values raised to <em>t</em><sup>th</sup> power) (Baccetti and Visser 2013)<sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>, or as a special case,</li>
+    <li>it takes on only integers 1 or greater and has a finite mean ("long-run average"”), or</li>
     <li>it has the form <em>X</em> + <em>n</em>, where <em>n</em> is a constant and <em>X</em> is a random variate whose distribution has finite Shannon entropy.</li>
   </ul>
 </blockquote>

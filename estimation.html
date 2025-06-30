@@ -12,7 +12,7 @@
 
 <h2 id="introduction">Introduction</h2>
 
-<p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value (“long-run average”) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (the average of multiple estimates tends to the ideal mean value as more estimates are averaged), or they come close to the ideal value with a user-specified error tolerance.</p>
+<p>Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called <em>random variates</em>.  This page presents general-purpose algorithms for estimating the mean value ("long-run average"”) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (the average of multiple estimates tends to the ideal mean value as more estimates are averaged), or they come close to the ideal value with a user-specified error tolerance.</p>
 
 <p>The algorithms are described to make them easy to implement by programmers.</p>
 
@@ -51,7 +51,7 @@
 <p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.</p>
 
 <ul>
-  <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the “long-run average” value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If <strong>E</strong>[<em>X</em>] exists, then with probability 1, the average of the first <em>n</em> sampled items taken from the stream approaches the expected value as <em>n</em> gets large (as a result of the <em>law of large numbers</em>).</li>
+  <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the "long-run average"” value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If <strong>E</strong>[<em>X</em>] exists, then with probability 1, the average of the first <em>n</em> sampled items taken from the stream approaches the expected value as <em>n</em> gets large (as a result of the <em>law of large numbers</em>).</li>
   <li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.</li>
   <li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  The 2nd central moment is called <em>variance</em>.</li>
   <li>An <em>n<sup>th</sup> absolute central moment</em> is the expected value of abs(<em>X</em> − <em>μ</em>)<sup><em>n</em></sup>, where <em>μ</em> is the distribution’s mean.  This is the same as the central moment when <em>n</em> is even.</li>
