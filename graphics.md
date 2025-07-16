@@ -10,7 +10,7 @@ All three serve to arouse nostalgia among 1990s computer users.
 
 <a id=Graphics_Challenge_for_Retro_Style_Games></a>
 
-## Graphics Challenge for Retro Style Games
+## Graphics Challenge for Retro-Style Games
 
 An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.
 
@@ -53,9 +53,9 @@ Other Notes:
 - For classic games released in the 1990s, the number of pixels rendered per second (screen width times screen height times frames per second) is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, that makes 256 &times; 192 &times; 60 = 2,949,120 pixels per second.[^4]
 - Screen resolutions that have been used in classic games include 256 &times; 192, 640 &times; 480, 320 &times; 200, 320 &times; 240, 256 &times; 224, 240 &times; 160, 640 &times; 350, 640 &times; 400, 400 &times; 300, 512 &times; 352, 512 &times; 384, and 160 &times; 120, and, for monochrome graphics, 720 &times; 348 and 640 &times; 200.  Widescreen resolutions include 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.  Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
 
-These limitations were inspired by the graphics limitations of classic handheld game consoles.
+These limitations were inspired by the graphics limitations of PC games in the mid- to late 1990s and of classic handheld game consoles.
 
-A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^5]
+A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^5]  An example of an optional restriction is that the game must be limited to colors in the so-called _VGA palette_ (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
