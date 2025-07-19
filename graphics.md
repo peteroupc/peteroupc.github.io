@@ -51,7 +51,16 @@ Other Notes:
 - The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order.
 - A game may limit the amount of graphics memory (akin to VRAM) to a certain maximum size in kibibytes.  One example is the screen width times screen height divided by 24.  This does not limit the size or number of graphics assets a game can have.
 - For classic games released in the 1990s, the number of pixels rendered per second (screen width times screen height times frames per second) is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, that makes 256 &times; 192 &times; 60 = 2,949,120 pixels per second.[^4]
-- Screen resolutions that have been used in classic games include 256 &times; 192, 640 &times; 480, 320 &times; 200, 320 &times; 240, 256 &times; 224, 240 &times; 160, 640 &times; 350, 640 &times; 400, 400 &times; 300, 512 &times; 352, 512 &times; 384, and 160 &times; 120, and, for monochrome graphics, 720 &times; 348 and 640 &times; 200.  Widescreen resolutions include 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.  Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
+- Screen resolutions that have been used in classic games include:
+    - Video graphics array (VGA) display modes: 640 &times; 480, 320 &times; 240, 320 &times; 200.
+    - 4 &times; 3 aspect ratio: 640 &times; 480, 512 &times; 384, 400 &times; 300, 320 &times; 200, 256 &times; 192, 160 &times; 120.
+    - 16 &times; 9 aspect ratio: 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.
+    - Console aspect ratios: 256 &times; 224, 240 &times; 160, 160 &times; 120.
+    - PAL home computer aspect ratio: 320 &times; 256, 640 &times; 512.
+    - Monochrome graphics: 720 &times; 348, 640 &times; 200.
+    - Extended Graphics Adapter aspect ratio: 640 &times; 350.
+    - Other: 640 &times; 400, 512 &times; 352.
+- Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
 
 These limitations were inspired by the graphics limitations of PC games in the mid- to late 1990s and of classic handheld game consoles.
 
