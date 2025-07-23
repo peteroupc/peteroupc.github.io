@@ -53,13 +53,16 @@ Other Notes:
 - For classic games released in the 1990s, the number of pixels rendered per second (screen width times screen height times frames per second) is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, that makes 256 &times; 192 &times; 60 = 2,949,120 pixels per second.[^4]
 - Screen resolutions that have been used in classic games include:
     - Video graphics array (VGA) display modes: 640 &times; 480, 320 &times; 240, 320 &times; 200.
-    - 4 &times; 3 aspect ratio: 640 &times; 480, 512 &times; 384, 400 &times; 300, 320 &times; 200, 256 &times; 192, 160 &times; 120.
+    - 4 &times; 3 aspect ratio: 640 &times; 480, 512 &times; 384, 400 &times; 300, 320 &times; 240, 256 &times; 192, 160 &times; 120.
     - 16 &times; 9 aspect ratio: 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.
     - Console aspect ratios: 256 &times; 224, 240 &times; 160, 160 &times; 120.
     - PAL home computer aspect ratio: 320 &times; 256, 640 &times; 512.
     - Monochrome graphics: 720 &times; 348, 640 &times; 200.
     - Extended Graphics Adapter aspect ratio: 640 &times; 350.
-    - Other: 640 &times; 400, 512 &times; 352.
+    - 8 &times; 5 aspect ratio: 640 &times; 400, 320 &times; 200.
+    - Other: 512 &times; 352.
+
+    More demanding games in the late 1990s aimed for 800 &times; 600 resolution, but any screen resolution greater than 307,200 total pixels (640 &times; 480) is not within the spirit of this challenge.
 - Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
 
 These limitations were inspired by the graphics limitations of PC games in the mid- to late 1990s and of classic handheld game consoles.
@@ -97,14 +100,14 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ----------------
 
-[^2]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
+[^1]: As Ron Fosner wrote in early 1999: "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame".  R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999.
 
-[^3]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.  An example of a 2D library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly, is called [**_Tilengine_**](https://github.com/megamarc/Tilengine).
+[^2]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a  smaller resolution with no more than 16 or 256 simultaneous colors and to require all graphics drawing to be in software and not rely on a GPU or the operating system's graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI's `StretchDIBits` or copying to VGA's frame buffer), but I don't know of a way to describe further restrictions useful for retro-style game programming (in the mid- to late 1990s).  But PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
-[^4]: A sound bank of decent quality in either format is about 4 million bytes in size.  Making these banks would be easier if there were a guide on producing decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).
+[^3]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
-[^1]: The _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
+[^4]: The _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^5]: As Ron Fosner wrote in early 1999: "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame".  R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999.
+[^5]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.  The following are examples of a 2D library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/).  Michal Strehovský published an [**interesting technique to create small game applications**]( [https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/)).
 
-[^6]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a  smaller resolution with no more than 16 or 256 simultaneous colors and to require all graphics drawing to be in software and not rely on a GPU or the operating system's graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI's `StretchDIBits` or copying to VGA's frame buffer), but I don't know of a way to describe further restrictions useful for retro-style game programming (in the mid- to late 1990s).  But PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
+[^6]: A sound bank of decent quality in either format is about 4 million bytes in size.  Making these banks would be easier if there were a guide on producing decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).
