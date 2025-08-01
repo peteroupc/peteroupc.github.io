@@ -920,7 +920,7 @@
 <p>Some of the results rely on properties of random variables.  For a random variable $Y$, define—</p>
 
 <ul>
-  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or "long-run average"”) of $Y$,</li>
+  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “long-run average”) of $Y$,</li>
   <li>$\sigma_r(Y)$ as the $r$-th <em>central moment</em> (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,</li>
   <li>$\tau_r(Y)$ as the $r$-th <em>central absolute moment</em> of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and</li>
   <li>$\text{Var}[Y]$ as the <em>variance</em> (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.</li>
@@ -1352,7 +1352,7 @@
 
 <p>It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.</p>
 
-<p>The $s$-th central moment of $X$ is the expected value or "long-run average"” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called <em>Poisson binomial</em> random variables (they are sums of independent coin flip results with possibly different probabilities of “success”, where 1 marks a “success” and 0 marks a “failure”) (Vatutin and Mikhaĭlov 1982)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>, so by Hoeffding (1963)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>, when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of “successful” samples among $k$ independent samples with “success” probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.</p>
+<p>The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called <em>Poisson binomial</em> random variables (they are sums of independent coin flip results with possibly different probabilities of “success”, where 1 marks a “success” and 0 marks a “failure”) (Vatutin and Mikhaĭlov 1982)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>, so by Hoeffding (1963)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>, when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of “successful” samples among $k$ independent samples with “success” probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.</p>
 
 <p>In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup> gives an upper bound of binomial central moments for even $s$ when the “success” probability is 1/2.</p>
 
@@ -1393,7 +1393,7 @@
 
 \[\text{abs}((\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})-W_{n}(k/(2n)))+\frac{DM(2^{r/2}+1)}{2^{r/2}}\frac{1}{n^{r/2}}.\]
 
-<p>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected value or "long-run average"” of $X/n$ is $k/(2n)$, so by Lemmas 2B and 2C—</p>
+<p>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable. $W_n$ has a continuous $r$-th derivative, and has a Lipschitz-continuous $(r-1)$-th derivative, and the expected value or “long-run average” of $X/n$ is $k/(2n)$, so by Lemmas 2B and 2C—</p>
 
 \[(\sum_{i=0}^k (W_n(\frac{i}{n}))\sigma_{n,k,i})\]
 
@@ -1725,7 +1725,7 @@ for i in range(20):
 
 <p>Let <em>a</em> and <em>b</em> be real numbers satisfying 0 &lt; <em>a</em> &lt; <em>b</em> &lt; 1, such as <em>a</em>=1/100, <em>b</em>=99/100.  Define the <em>entropy bound</em> as <em>h</em>(<em>f</em>(<em>λ</em>))/<em>h</em>(<em>λ</em>) where <em>h</em>(<em>x</em>) = −<em>x</em>*ln(<em>x</em>)−(1−<em>x</em>)*ln(1−<em>x</em>) is related to the Shannon entropy function.  The question is:</p>
 
-<p><em>When the probability λ is such that a ≤ λ ≤ b, is there a multiple-output Bernoulli factory for f(λ) with an expected ("long-run average"”) number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an <strong>optimal factory</strong>.</em></p>
+<p><em>When the probability λ is such that a ≤ λ ≤ b, is there a multiple-output Bernoulli factory for f(λ) with an expected (“long-run average”) number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an <strong>optimal factory</strong>.</em></p>
 
 <p>(See Nacu and Peres (2005, Question 2)<sup id="fnref:1:22"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.)</p>
 
@@ -2101,7 +2101,7 @@ for i in range(20):
   <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number “close” to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 ≤ <code>z</code> ≤ 1 is irrational (Vatan 2001)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup>, (Kindler and Romik 2004)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>, and it can be shown that the expected value (mean or "long-run average"”) of <em>X</em> must be a rational number. <sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup></p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 ≤ <code>z</code> ≤ 1 is irrational (Vatan 2001)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup>, (Kindler and Romik 2004)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>, and it can be shown that the expected value (mean or “long-run average”) of <em>X</em> must be a rational number. <sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup></p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
