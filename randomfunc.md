@@ -224,9 +224,11 @@ Specifically:
         // can be left out
         rngv = floor(rngv / 2)
         if x > maxInclusive
-          x = x - maxIncMinus1 + 2
+          x = x - maxIncMinus1
+          x = x - 2
           if y <= maxInclusive: return y
-          y = y - maxIncMinus1 + 2
+          y = y - maxIncMinus1
+          y = y - 2
         end
       end
     END METHOD
