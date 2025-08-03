@@ -55,7 +55,7 @@ Other Notes:
     - Video graphics array (VGA) display modes: 640 &times; 480, 320 &times; 240, 320 &times; 200.
     - 4 &times; 3 aspect ratio: 640 &times; 480, 512 &times; 384, 400 &times; 300, 320 &times; 240, 256 &times; 192, 160 &times; 120.
     - 16 &times; 9 aspect ratio: 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.
-    - Console aspect ratios: 256 &times; 224, 240 &times; 160, 160 &times; 120.
+    - Game console aspect ratios: 320 &times; 224, 256 &times; 224, 240 &times; 160, 160 &times; 120.
     - PAL home computer aspect ratio: 320 &times; 256, 640 &times; 512.
     - Monochrome graphics: 720 &times; 348, 640 &times; 200.
     - Extended Graphics Adapter aspect ratio: 640 &times; 350.
@@ -75,7 +75,7 @@ A game may impose further resource limits to the specifications given here (for 
 
 To improve support for MIDI (Musical Instrument Digital Interface) music playback in open-source and other applications, I challenge the community to write the following items, all of which must be released to the public domain or under the Unlicense.
 
-- A cross-platform open-source library for _software_ synthesis of MIDI data stored in standard MIDI files (SMF, .mid), using instrument sound banks in SoundFont 2 (.sf2), Downloadable Sounds (.dls), and in OPL2, OPL3, and other FM synthesis sound banks, and possibly also in Timidity++/UltraSound patch format (.cfg, .pat). (Similar to _Fluidsynth_, but in the public domain or under the Unlicense. Instrument sound banks are files that describe how to render MIDI instruments as sound.  In addition, the source code in the nonpublic-domain _foo\_midi_, _libADLMIDI_, _libOPNMIDI_, and _OPL3BankEditor_ may be useful here, but review their licenses first.)
+- A cross-platform open-source library for _software_ synthesis (translation into digitized sound such as PCM) of MIDI data stored in standard MIDI files (SMF, .mid), using instrument sound banks in SoundFont 2 (.sf2), Downloadable Sounds (.dls), and in OPL2, OPL3, and other FM synthesis sound banks, and possibly also in Timidity++/UltraSound patch format (.cfg, .pat). (Similar to _Fluidsynth_, but in the public domain or under the Unlicense. Instrument sound banks are files that describe how to render MIDI instruments as sound.  In addition, the source code in the nonpublic-domain _foo\_midi_, _libADLMIDI_, _libOPNMIDI_, and _OPL3BankEditor_ may be useful here, but review their licenses first.)
     - The library should support popular loop-point conventions found in MIDI files.
     - The library should support seeking of MIDI files such that a pause and resume function can be offered by a media player.
 - An instrument sound bank for wavetable synthesis of all instruments and drum noises in the General MIDI System level 1 specification.
