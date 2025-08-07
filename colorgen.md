@@ -189,7 +189,7 @@ In general, the same three numbers, such as (1, 0.5, 0.3), identify a different-
 > **Notes:**
 >
 > 1. In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.
-> 2. In the TV and film industries, some RGB color spaces, including sRGB, belong in the category of so-called _standard dynamic range_ (_SDR_) color spaces, while others cover a wider range of colors (_wide color gamut_ or _WCG_), a wider "brightness" range (_high dynamic range_ or _HDR_), or both. (Mano 2018\)[^9] contains an introduction to WCG/HDR images.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.
+> 2. The term _wide color gamut_ (WCG) usually refers to a wider range of colors than sRGB.  The term [**_high dynamic range_**](https://android-developers.googleblog.com/2025/08/what-is-hdr.html) (HDR) refers to a higher maximum "brightness" compared to what is called _standard dynamic range_ (SDR), and does not necessarily mean a "darker" black level, "better" black detail, higher "contrast", or more vivid colors. (Mano 2018\)[^9] contains an introduction to WCG.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.
 > 3. RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc _encoded RGB_ colors.
 
 <a id=sRGB></a>
