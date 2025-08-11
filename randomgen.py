@@ -524,7 +524,7 @@ class OptimalSampler:
         return leaves
 
     def _tree(self, i, ancestors, leaves):
-        # sanity check
+        # correctness check
         if i > (1 << (self.k + 3)):
             raise ValueError
         if i in leaves:
