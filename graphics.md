@@ -31,7 +31,7 @@ Limit 3D graphics to the following:
 4. Depth tests, clear colors, and fog colors are supported.
 5. The 3D graphics buffer's resolution is the same as the screen resolution.
 
-Polygons may, but need not, undergo perspective-correct rendering.
+Polygons should undergo perspective-correct rendering at least at the vertices.
 
 Limit 2D graphics to the following: [^2]
 
@@ -55,7 +55,7 @@ Other Notes:
     - Video graphics array (VGA) display modes: 640 &times; 480, 320 &times; 240, 320 &times; 200.
     - 4 &times; 3 aspect ratio: 640 &times; 480, 512 &times; 384, 400 &times; 300, 320 &times; 240, 256 &times; 192, 160 &times; 120.
     - 16 &times; 9 aspect ratio: 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.
-    - Game console aspect ratios: 320 &times; 224, 256 &times; 224, 240 &times; 160, 160 &times; 120.
+    - Game console aspect ratios: 352 &times; 240, 320 &times; 224, 256 &times; 224, 240 &times; 160, 160 &times; 120.
     - PAL home computer aspect ratio: 320 &times; 256, 640 &times; 512.
     - Monochrome graphics: 720 &times; 348, 640 &times; 200.
     - Extended Graphics Adapter aspect ratio: 640 &times; 350.
@@ -113,7 +113,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: The _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^6]: Not mentioned in that document are graphics resembling:<br> (1) Multisegment liquid crystal displays, of the kind that Tiger Electronics was famous for..  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
+[^6]: Not mentioned in that document are graphics resembling:<br> (1) Multisegment liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
 [^7]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.  The following are examples of a 2D library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
 
