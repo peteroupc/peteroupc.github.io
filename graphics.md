@@ -35,12 +35,12 @@ Polygons should undergo perspective-correct rendering at least at the vertices.
 
 Limit 2D graphics to the following: [^2]
 
-1. Up to three tile-based 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth tile-based 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.
+1. Up to three 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.  Each 2D layer is a rectangular array of references to _tiles_ (a _tile_ is a small rectangular array of pixels).
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
 3. Each tile is 8 &times; 8 pixels and uses the colors of one of the sixteen palettes just described.
 4. The 2D and 3D layers may contain transparent pixels.
 5. One of the 2D layers can undergo a 2D affine transformation.
-6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites that may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite may be tile-based or bitmap-based and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
+6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites that may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite is a rectangular array of either tiles or pixels and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
 
 Music:
 
@@ -113,7 +113,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: The _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^6]: Not mentioned in that document are graphics resembling:<br> (1) Multisegment liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
+[^6]: Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
 [^7]: Especially if the library is self-contained and implements the specification with as little source code as possible.  It would not be within the spirit of this document to, say, display more polygons or vertices at a time than the maximum allowed using programming tricks, but any such tricks should not be hardware-accelerated.  The following are examples of a 2D library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
 

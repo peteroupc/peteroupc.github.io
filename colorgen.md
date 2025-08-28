@@ -102,9 +102,10 @@ This document presents an overview of many common color topics that are of gener
 - **D65/2 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **Image color list.** Means either&mdash;
     - a list of colors (which can have duplicates), all of the same color space, or
-    - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a three-dimensional image, a digital video, or a digital document.
+    - the colors (which can have duplicates) used in the pixels in a pixel image, in a vector graphic, a three-dimensional image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
-- **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
+- **Pixel image.** Image represented as a rectangular array of _pixels_, where each pixel stores a color value or a reference to a color value.  Also known as a _picture_, _raster image_, or _bitmap_.
+- **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
 
 <a id=Overview_of_Color_Vision></a>
@@ -1304,10 +1305,10 @@ The following approaches can generate a saturated or desaturated version of a co
 
     An [**_image color list_**](#Notation_and_Definitions) is achromatic if all its colors are achromatic.
 
-2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether that pixel is a "background" pixel (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.
+2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" pixels of a pixel image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether that pixel is a "background" pixel (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.
 3.  An application can **apply a function** to each component of an RGB or other multicomponent color, including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format[^32]), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
 4.  An application can **swap** the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: `[color[2], color[1], color[0]]`.
-5. Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).
+5. Pixel-level image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).
 
 <a id=Color_Differences></a>
 
@@ -1476,7 +1477,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 
 > **Notes:**
 >
-> 1. **Scale down**: For all these techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
+> 1. **Scale down**: For all these techniques, in the case of a pixel image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 > 2. **Color reduction**: Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
 >     - applying a _dithering_ technique (especially to reduce undesirable color "banding" in certain cases).[^36]
