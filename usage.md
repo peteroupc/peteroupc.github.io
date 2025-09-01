@@ -122,7 +122,7 @@ Even here, it is worth trying to rewrite a text to avoid discouraged words to th
 
 ## To Improve English Usage Through Word Processing Apps...
 
-What I would like to see is an open-source plugin for popular word-processing applications that finds overused and discouraged words and phrases in a document, such as those mentioned earlier, and suggests corresponding replacements.  (A similar practice is found in Web browsers' spell checkers and as a built-in feature in some closed source word-processing apps.)  For example, the plugin could look for instances of "sit down with", underline them, and show suggestions such as "interview", "consult with", and so on in a menu when the phrase is right-clicked on.
+What I would like to see is an open-source plugin for popular word-processing applications that finds overused and discouraged words and phrases in a document, such as those mentioned earlier, and suggests corresponding replacements.  (A similar practice is found in Web browsers' spell checkers and as a built-in feature in some closed source word-processing apps.)  For example, the plugin could look for instances of "sit down with", underline them, and show suggestions such as "interview", "consult with", and so on in a menu when the phrase is selected for a language check.
 
 <a id=Derivations></a>
 
