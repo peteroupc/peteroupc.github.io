@@ -66,7 +66,11 @@ Other Notes:
 - Classic games tended to aim for a frame rate of 30, 40, or 60 frames per second.
 - Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in classic multimedia and game applications. [^8]
 
-These limitations were inspired by the graphics limitations of PC games in the mid- to late 1990s and of classic handheld game consoles.
+These limitations were inspired by the graphics limitations of&mdash;
+
+- PC games in the mid- to late 1990s,
+- home game consoles (handheld and for TVs) released before 2000, and
+- the Game Boy Advance, Nintendo DS, and Nintendo 3DS, all of which were released after 2000 but have relatively meager graphics capability.
 
 A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^9]  An example of an optional restriction is that the game must be limited to colors in the so-called _VGA palette_ (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).
 
@@ -103,7 +107,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Notes
 
-[^1]: As Ron Fosner wrote in early 1999: "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame".  R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999.
+[^1]: As Ron Fosner wrote in early 1999: "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame".  R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999. "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000), noting that the game normally ran at 320 &times; 240 pixels and 30 frames per second.
 
 [^2]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a  smaller resolution with no more than 16 or 256 simultaneous colors and to require all graphics drawing to be in software and not rely on a GPU or the operating system's graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI's `StretchDIBits` or copying to VGA's frame buffer), but I don't know of a way to describe further restrictions useful for retro-style game programming (in the mid- to late 1990s).  But PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
