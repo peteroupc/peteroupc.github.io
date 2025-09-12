@@ -52,7 +52,7 @@ Screen resolution:
     - 16 &times; 9 aspect ratio: 640 &times; 360, 320 &times; 180, 512 &times; 288, and 256 &times; 144.
     - Game console aspect ratios: 352 &times; 240, 320 &times; 224, 256 &times; 224, 240 &times; 160, 160 &times; 120.
     - PAL home computer aspect ratios: 320 &times; 256, 640 &times; 512, 360 &times; 288.
-    - Monochrome graphics: 720 &times; 348,[^4] 640 &times; 200.[^5]
+    - Monochrome graphics: 720 &times; 348,[^4] 640 &times; 200, 512 &times; 342.[^5]
     - Extended Graphics Adapter aspect ratio: 640 &times; 350.
     - 8 &times; 5 aspect ratio: 640 &times; 400, 320 &times; 200.
     - Other: 512 &times; 352.
