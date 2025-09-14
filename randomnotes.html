@@ -668,7 +668,7 @@ END METHOD
     <p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
     <ul>
-      <li>If the ideal distribution is discrete (takes on values that can map to integers and back without loss), the algorithm samples exactly from that distribution. (But see the note later.)</li>
+      <li>If the ideal distribution is discrete (takes on values that can map to integers and back without loss), the algorithm samples exactly from that distribution. (But see the note below.)</li>
       <li>If the ideal distribution is not discrete, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see later for details).  The algorithm can instead sample a number from the distribution only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.</li>
       <li>In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).</li>
     </ul>
