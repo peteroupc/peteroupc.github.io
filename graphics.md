@@ -87,6 +87,7 @@ A game may impose further resource limits to the specifications given here (for 
 
 - The game is limited to colors in the so-called _VGA palette_ (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than 1,457,664 bytes (the capacity of a Windows-formatted high-density floppy disk).
+- The game uses no more than 16 million bytes of system memory at a time.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
