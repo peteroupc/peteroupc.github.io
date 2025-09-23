@@ -31,9 +31,9 @@ These are suggestions to improve core and supplemental instructional materials, 
 
 Suggestion number 5, in particular, is intended to address observations that our language may be getting poorer by the year, in terms of everyday vocabulary and linguistic variety (see, for example, Emilio Bernal's "Good usage prevents abusage"). [^5]
 
-<a id=More_concretely></a>
+<a id=Open_Source_Instructional_Resources></a>
 
-## More concretely...
+## Open-Source Instructional Resources
 
 More concretely, and without loss of generality, the following open-source resources should be developed and published for anyone to access and use free.  (The resources should follow suggestions 1, 2, 3, and 5 given earlier.)
 
