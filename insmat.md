@@ -8,7 +8,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - Devote most time to instruction that is interactive (teacher and students take turns), where the teacher explains and models concepts and procedures in small steps before getting students to apply those concepts and procedures. [^3]
     - Give review questions in class, with low or no stakes, at least once a week using the theory of spaced and interleaved retrieval practice (for example, a quiz of randomly arranged questions from [**last lesson, last week, last unit, and course-so-far**](https://x.com/SuzanneRelou/status/1878428245252558888)).
     - [**Get every student participating**](https://achemicalorthodoxy.co.uk/2020/02/09/ratio/) in the lessons as frequently as possible, such as by answering in unison either orally or with mini-whiteboards, by "turn-and-talk" for open-ended questions, and by calling on students at random.
-    - Encourage teachers to get every student attending to the lessons, such as by arranging desks in rows facing the teacher, reducing noise and classroom decoration, and banning mobile phone use.
+    - Encourage teachers to get every student attending to the lessons, such as by arranging seats in rows facing the teacher and assigning such seats to students; reducing noise and classroom decoration; and banning mobile phone use.
     - Require as little preparation time as possible.
 
 3. Instructional materials should be [**knowledge-rich**](https://link.springer.com/book/10.1007/978-3-031-74661-1). In Language Arts, they should also follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).
