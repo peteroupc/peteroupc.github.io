@@ -2753,7 +2753,7 @@ where the <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of 
   <li><em>ϵ</em> is a rational number greater than 0 and less than 1.  If <em>x</em>/<em>y</em> is greater than 1, <em>ϵ</em> must be such that 0 &lt; <em>ϵ</em> ≤1 − <em>λ</em> * <em>x</em>/<em>y</em>, in order to bound the function away from 0 and 1.  The greater <em>ϵ</em> is, the more efficient.</li>
 </ul>
 
-<p>As a result, some knowledge of <em>λ</em> has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
+<p>As a result, some knowledge of <em>λ</em> has to be available to the algorithm. The algorithm as described later also includes certain special cases, not mentioned in Huber, to make it more general.</p>
 
 <ol>
   <li>Special cases: If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em>, flip the input coin and return the result.  Otherwise, if <em>x</em> is less than <em>y</em>, then do the following: “With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0.”</li>
