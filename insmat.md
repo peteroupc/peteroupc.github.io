@@ -10,6 +10,8 @@ These are suggestions to improve core and supplemental instructional materials, 
     - [**Get every student participating**](https://achemicalorthodoxy.co.uk/2020/02/09/ratio/) in the lessons as frequently as possible, such as by answering in unison either orally or with mini-whiteboards, by "turn-and-talk" for open-ended questions, and by calling on students at random.
     - Encourage teachers to get every student attending to the lessons, such as by arranging seats in rows facing the teacher and assigning such seats to students; reducing noise and classroom decoration; and banning mobile phone use.
     - Require as little preparation time as possible.
+    - Avoid unnecessary tasks, especially cutting and gluing.
+    - Avoid unnecessary, distracting, or merely decorative pictures or illustrations.
 
 3. Instructional materials should be [**knowledge-rich**](https://link.springer.com/book/10.1007/978-3-031-74661-1). In Language Arts, they should also follow the criteria given in the [**Knowledge Matters Campaign's review tool**](https://knowledgematterscampaign.org/review-tool/).
 4. There is guidance for [^6]:
@@ -19,8 +21,7 @@ These are suggestions to improve core and supplemental instructional materials, 
     - [**Instructional practices**](https://www.thescienceofmath.com/) and [**course content**](https://mathacademy.com/courses) for Mathematics; also see [**Merlo 2024**](https://www.cis.org.au/publication/the-science-of-mathematics-and-how-to-apply-it/).
     - Structuring lessons in History and other aspects of Social Studies using the [**Four-Question Method**](https://4qmteaching.net/).
     - Structuring lessons in U.S. Civics using the questions in the civics portion of the naturalization test given by the U.S. government, or using such questions for retrieval practice.
-    - Devoting at least [**45 minutes daily**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) to Social Studies instruction up to fifth grade.
-    - Devoting [**at least as much daily time as other content subjects**](https://www.nsta.org/nstas-official-positions/elementary-school-science) to Science instruction up to fifth grade.
+    - Devoting a nontrivial amount of daily instructional time to [**Social Studies**](https://ccsso.org/sites/default/files/2018-11/Elementary%20SS%20Brief%2045%20Minute%20Version_0.pdf) and [**Science**](https://www.nsta.org/nstas-official-positions/elementary-school-science) instruction up to fifth grade.
 
 5. Instructional materials in Language Arts:
 
@@ -37,9 +38,9 @@ Suggestion number 5, in particular, is intended to address observations that our
 
 More concretely, and without loss of generality, the following open-source resources (for each grade from kindergarten through twelfth grade) should be developed and published for anyone to access and use free.  (The resources should follow suggestions 1, 2, 3, and 5 given earlier.)
 
-1. A fine-grained scope and sequence on mathematics, science, social studies, and English grammar/vocabulary/orthography topics, which may go beyond twelfth grade.  Each scope and sequence should be in the form of "tracks", as in [**_Connecting Math Concepts_**](https://www.mheducation.com/prek-12/program/connecting-math-concepts-comprehensive-edition-2012/MKTSP-UUF07M0.html#resources) and other Direct Instruction programs, or follow the guidance for "knowledge graphs" in the draft book [**_The Math Academy Way_**](https://www.justinmath.com/files/the-math-academy-way).  ([**Math Academy**](https://mathacademy.com) uses a knowledge graph for math &mdash; even up to calculus, statistics, etc. &mdash; but unfortunately it's unavailable to the public and making a similar graph might be problematic.)
+1. A fine-grained scope and sequence that associates mathematics, science, social studies, and English grammar/vocabulary/orthography topics with lessons.  The scope and sequence may go beyond twelfth grade and should be in the form of "tracks", as in [**_Connecting Math Concepts_**](https://www.mheducation.com/prek-12/program/connecting-math-concepts-comprehensive-edition-2012/MKTSP-UUF07M0.html#resources) and other Direct Instruction programs, or follow the guidance for "knowledge graphs" in the draft book [**_The Math Academy Way_**](https://www.justinmath.com/files/the-math-academy-way).  ([**Math Academy**](https://mathacademy.com) uses a knowledge graph for math &mdash; even up to calculus, statistics, etc. &mdash; but unfortunately it's unavailable to the public and making a similar graph might be problematic.)
 2. Daily lesson plans structured per the scope and sequence just described, [**following the FAST framework**](https://educationrickshaw.com/2025/09/06/the-truth-about-lesson-planning/) in Gene Tavernetti's _Teach FAST: Focused Adaptable Structured Teaching_.
-3. Language Arts units centered on full-text novels and plays in the public domain (out of copyright) along with full-text works on neighboring topics, following the framework in Doug Lemov's _Reading Reconsidered_ and _The Teach Like a Champion Guide to the Science of Reading_.
+3. Language Arts units centered on full-text prose novels and plays in the public domain (out of copyright) along with full-text works on neighboring topics, following the framework in Doug Lemov's _Reading Reconsidered_ and _The Teach Like a Champion Guide to the Science of Reading_.
 4. Instructional materials for teaching and reviewing English foundational reading and writing skills (such as academic vocabulary, orthography, morphology, sentence structure, syntax, handwriting, and oral reading fluency) efficiently, in no more than 30 minutes per day, at least to the extent the units mentioned in (3) do not already incorporate such instruction.
 5. An English grammar reference book designed for middle school and secondary students.
 

@@ -2,6 +2,8 @@
 
 Thanks to the _OpenStreetMap_ project and its vast geographical database, as well as advances in mapmaking software, the following should be doable nowadays with open-source software and freely-licensed data, but I haven't seen it yet:
 
+part of a business's inventory that is exposed for sale to the public
+
 An atlas of the world covering **all land masses in the scale 1:4,000,000**.  The maps in the atlas should be _political maps_, showing:
 
 - The boundaries and areas of countries and states (and their equivalents).
