@@ -18,9 +18,9 @@ Define the _larger screen dimension_ as the larger of the screen width and the s
 
 Limit 3D graphics to the following:
 
-1. The maximum number of polygons that can be displayed at a time is equal to screen width times screen height divided by 24.[^1] \(An example is 256 &times; 192 / 24 = 2048.)
+1. The maximum number of polygons that can be displayed at a time is equal to screen width times screen height divided by 24.[^1] \(Examples: 256 &times; 192 / 24 = 2048 polygons; 640 &times; 480 / 24 = 12800 polygons.)
     * A polygon is either a triangle, a convex quadrilateral, or a line segment.
-    * Each vertex of the polygon must point to a vertex from the vertex list described below.
+    * Each vertex of the polygon must point to a vertex from the vertex list described later.
     * Each polygon can be translucent and/or wireframed.
 
 2. The maximum number of vertices that can be used at a time is 3 times the maximum number of polygons.
@@ -39,7 +39,7 @@ Limit 2D graphics to the following: [^2]
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
 3. Each tile is 8 &times; 8 pixels and uses the colors of one of the sixteen palettes just described.
 4. The 2D and 3D layers may contain transparent pixels.
-5. One of the 2D layers can undergo a 2D affine transformation.
+5. Up to two of the 2D layers can undergo a 2D affine transformation.
 6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites that may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite is a rectangular array of either tiles or pixels and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
 
 The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order. [^3]
@@ -122,9 +122,10 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Notes
 
-[^1]: To bolster the suggestions in this specification, it would be of interest to find the number of polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal. For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000), noting that the game normally ran at 320 &times; 240 pixels.
+[^1]: To bolster the suggestions in this specification, it would be of interest to find the number of polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal. For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000), noting that the game normally ran at 320 &times; 240 pixels.<br>
+(4) MadOnion's [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.
 
-[^2]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a  smaller resolution with no more than 16 or 256 simultaneous colors and to require all graphics drawing to be in software and not rely on a GPU or the operating system's graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI's `StretchDIBits` or copying to VGA's frame buffer), but I don't know of a way to describe further restrictions useful for retro-style game programming (in the mid- to late 1990s).  But PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
+[^2]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a  smaller resolution with no more than 16 or 256 simultaneous colors and to require all graphics drawing to be in software and not rely on a video card or the operating system's graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI's `StretchDIBits` or copying to VGA's frame buffer), but I don't know of a way to describe further restrictions useful for retro-style game programming (in the mid- to late 1990s).  But PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
 [^3]: But alpha blending (the partial mixing of one color with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
