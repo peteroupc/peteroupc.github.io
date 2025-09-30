@@ -21,7 +21,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 **This document covers:**
 
-- Cryptographic RNGs[^2], noncryptographic RNGs, and manually-seeded pseudorandom number generators, as well as recommendations on their use and properties.
+- Cryptographic RNGs[^2], noncryptographic RNGs, and manually seeded pseudorandom number generators, as well as recommendations on their use and properties.
 - Nondeterministic sources, entropy, and seed generation.
 - Existing implementations of RNGs.
 - Guidance for designing RNGs for reuse by applications.
@@ -52,11 +52,11 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 - [**Summary**](#Summary)
 - [**Cryptographic RNGs**](#Cryptographic_RNGs)
 - [**Noncryptographic PRNGs**](#Noncryptographic_PRNGs)
-- [**Manually-Seeded PRNGs**](#Manually_Seeded_PRNGs)
-    - [**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)
-    - [**Manually-Seeded PRNG Recommendations**](#Manually_Seeded_PRNG_Recommendations)
-    - [**Manually-Seeded PRNG Use Cases**](#Manually_Seeded_PRNG_Use_Cases)
-    - [**Manually-Seeded PRNGs in Games**](#Manually_Seeded_PRNGs_in_Games)
+- [**Manually Seeded PRNGs**](#Manually_Seeded_PRNGs)
+    - [**When to Use a Manually Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)
+    - [**Manually Seeded PRNG Recommendations**](#Manually_Seeded_PRNG_Recommendations)
+    - [**Manually Seeded PRNG Use Cases**](#Manually_Seeded_PRNG_Use_Cases)
+    - [**Manually Seeded PRNGs in Games**](#Manually_Seeded_PRNGs_in_Games)
     - [**Single Random Value**](#Single_Random_Value)
     - [**Ensuring Reproducibility**](#Ensuring_Reproducibility)
 - [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation)
@@ -98,7 +98,7 @@ In this document:
 - Does the application use random-behaving numbers for **information security** purposes (for example, as passwords or other secrets)[^5]?
     - Yes: Use a [**cryptographic RNG**](#Cryptographic_RNGs).
 - No: Does the application require [**reproducible "random" numbers**](#When_to_Use_a_Manually_Seeded_PRNG)?
-    - Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
+    - Yes: Use a manually seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
         - Does the application run **multiple independent processes** that use pseudorandom numbers?
             - No: Initialize one PRNG with the seed.
             - Yes: Pass the seed to each process as described in "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)".
@@ -137,22 +137,22 @@ Noncryptographic PRNGs vary widely in the quality of randomness of the numbers t
 
 Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated upon PRNG creation) or _manually seeded_ (the PRNG uses a predetermined seed).
 
-- See "[**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)" to learn which kind of seeding to use.
+- See "[**When to Use a Manually Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)" to learn which kind of seeding to use.
 - See "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)" for advice on how to seed.
 - See "[**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)" for existing APIs.
 - For automatically-seeded PRNGs, an application should use only one instance of the generator and pass it around to parts of the application that need it.
 
 <a id=Manually_Seeded_PRNGs></a>
 
-## Manually-Seeded PRNGs
+## Manually Seeded PRNGs
 
 A given pseudorandom number generator (PRNG) generates the same sequence of "random" numbers for the same "seed".  A _seed_ is arbitrary data serving as the PRNG's input.  Some applications care about reproducible "randomness" and thus could set a PRNG's seed manually for reproducible "random" numbers.
 
 <a id=When_to_Use_a_Manually_Seeded_PRNG></a>
 
-### When to Use a Manually-Seeded PRNG
+### When to Use a Manually Seeded PRNG
 
-By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. Therefore, an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
+By seeding a PRNG manually for reproducible "randomness", an application will be tied to that PRNG or its implementation. Therefore, an application should not use a manually seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless&mdash;
 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
@@ -162,9 +162,9 @@ By seeding a PRNG manually for reproducible "randomness", an application will be
 
 <a id=Manually_Seeded_PRNG_Recommendations></a>
 
-### Manually-Seeded PRNG Recommendations
+### Manually Seeded PRNG Recommendations
 
-If an application chooses to use a manually-seeded PRNG for reproducible "randomness", the application&mdash;
+If an application chooses to use a manually seeded PRNG for reproducible "randomness", the application&mdash;
 
 - should choose a [**high-quality PRNG**](#High_Quality_RNGs_Requirements),
 - should choose a PRNG implementation with consistent behavior that will not change in the future,
@@ -173,23 +173,23 @@ If an application chooses to use a manually-seeded PRNG for reproducible "random
 
 For advice on generating seeds for the PRNG, see "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)").
 
-> **Example:** An application could implement a manually-seeded PRNG using a third-party library that specifically says it implements a [**high-quality PRNG algorithm**](#High_Quality_RNGs_Requirements), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
+> **Example:** An application could implement a manually seeded PRNG using a third-party library that specifically says it implements a [**high-quality PRNG algorithm**](#High_Quality_RNGs_Requirements), and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.
 
 <a id=Manually_Seeded_PRNG_Use_Cases></a>
 
-### Manually-Seeded PRNG Use Cases
+### Manually Seeded PRNG Use Cases
 
-Use cases for manually-seeded PRNGs include the following:
+Use cases for manually seeded PRNGs include the following:
 
 - Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.
 - Monte Carlo estimations.
 - Procedural noise generation.
 - Games that generate "random" content that is impractical to store.
-- Unit tests in which "randomness" ought not to influence whether they pass or fail.  Here, a manually-seeded PRNG with a fixed seed is used in place of another kind of RNG for the purpose of the test, to help ensure consistent results across the computers under test.
+- Unit tests in which "randomness" ought not to influence whether they pass or fail.  Here, a manually seeded PRNG with a fixed seed is used in place of another kind of RNG for the purpose of the test, to help ensure consistent results across the computers under test.
 
 <a id=Manually_Seeded_PRNGs_in_Games></a>
 
-### Manually-Seeded PRNGs in Games
+### Manually Seeded PRNGs in Games
 
 Many kinds of game software generate seemingly "random" game content that might need to be repeatedly regenerated, such as&mdash;
 
@@ -197,12 +197,12 @@ Many kinds of game software generate seemingly "random" game content that might 
 - [**shuffling**](#Shuffling) a virtual deck of cards for a solitaire game, or
 - a randomly chosen configuration of a game board or puzzle board.
 
-In general, the bigger that "random" content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  The following are special cases:
+In general, the bigger that "random" content is, the greater the justification to use a manually seeded PRNG and a custom seed to generate that content.  The following are special cases:
 
 1. If the game needs reproducible "random" content only at the start of the game session (for example, a "random" game board or a "random" order of virtual cards) and that content is small (say, no more than a hundred numbers):
-    - The game should not use a manually-seeded PRNG unless the seed is based on a "code" or "password" entered by the user.  This is a good sign that the game ought to store the "random" content instead of a seed.
+    - The game should not use a manually seeded PRNG unless the seed is based on a "code" or "password" entered by the user.  This is a good sign that the game ought to store the "random" content instead of a seed.
 2. In a networked game where multiple computers (for example, multiple players, or a client and server) have a shared view of the game state and numbers from an RNG or PRNG are used to update that game state:
-    - The game should not use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (for example, the random outcome is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game may use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.
+    - The game should not use a manually seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (for example, the random outcome is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game may use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.
 
 > **Examples:**
 >
@@ -227,7 +227,7 @@ If an application requires only one pseudorandom value, with a fixed number of b
 
 ### Ensuring Reproducibility
 
-To ensure that a manually-seeded PRNG delivers reproducible "random" numbers across computers, across runs, and across application versions, an application needs to take special care.  Reproducibility is often not achievable if the application relies on features or behavior outside the application's control, including any of the following:
+To ensure that a manually seeded PRNG delivers reproducible "random" numbers across computers, across runs, and across application versions, an application needs to take special care.  Reproducibility is often not achievable if the application relies on features or behavior outside the application's control, including any of the following:
 
 - **Floating-point numbers** are a major source of varying results. Different implementations of the same floating-point operation might have subtle differences even if they're given the same input.[^7] It is nontrivial to control for all of these differences, and they include:
     - Differences in accuracy, as with Java's `Math` vs. `StrictMath`, or the x87 `FSIN` instruction vs. a software implementation of sine.
@@ -237,7 +237,7 @@ To ensure that a manually-seeded PRNG delivers reproducible "random" numbers acr
 - **Nondeterministic sources** (where the output can vary even if input and state are the same), such as the file system or the system clock.
 - **Undocumented, undefined, or implementation-dependent behavior** or features, including a particular hash table traversal order or a particular size for C/C++'s `int` or `long`.
 
-Thus, an application ought to use manually-seeded PRNGs only when necessary, to minimize the need for reproducible "randomness".  Where reproducibility is required, the application ought to avoid floating-point numbers, nondeterministic features, and other behavior outside its control, and ought to stick to the same versions of algorithms it uses.
+Thus, an application ought to use manually seeded PRNGs only when necessary, to minimize the need for reproducible "randomness".  Where reproducibility is required, the application ought to avoid floating-point numbers, nondeterministic features, and other behavior outside its control, and ought to stick to the same versions of algorithms it uses.
 
 As for reproducible PRNGs, [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one example of a PRNG with consistent behavior, but none of the following is such a PRNG:
 
@@ -509,7 +509,7 @@ A cryptographic RNG is not required to reseed itself.
 > **Examples:** The following are examples of cryptographic RNGs:
 >
 > - Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) as input.
-> - A "fast-key-erasure" generator described by D.J. Bernstein in his blog (Bernstein 2017\)[^40].
+> - A "keyboard shortcut-erasure" generator described by D.J. Bernstein in his blog (Bernstein 2017\)[^40].
 > - The `Hash_DRBG` and `HMAC_DRBG` generators specified in NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.
 > - An RNG made up of two or more independently initialized cryptographic RNGs of different designs.[^41]
 > - RFC 8937 describes an RNG that hashes another cryptographic RNG's output with a secret value derived from a long-term key.
@@ -666,7 +666,7 @@ I acknowledge&mdash;
 
 [^39]: This data can come from nondeterministic sources, and also include any combination of process identifiers, time stamps, environment variables, pseudorandom numbers, virtual machine guest identifiers, and other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.
 
-[^40]: Bernstein, D.J.  "Fast-key-erasure random number generators", Jun. 23, 2017.
+[^40]: Bernstein, D.J.  "Keyboard shortcut-erasure random number generators", Jun. 23, 2017.
 
 [^41]: An example is the "shrinking generator" technique to combine two RNGs; see J. D. Cook, "Using one RNG to sample another", June 4, 2019, for more.
 

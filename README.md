@@ -48,8 +48,8 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Supplemental Color Topics for Programmers**](https://peteroupc.github.io/suppcolor.html)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 * Three challenges to the open-source community for classic computer applications:
-    - [**Graphics for retro-style game development**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Retro_Style_Games).
-    - [**MIDI music synthesis for retro-style games and apps**](https://peteroupc.github.io/graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
+    - [**Graphics for classic-style game development**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Retro_Style_Games).
+    - [**MIDI music synthesis for classic-style games and apps**](https://peteroupc.github.io/graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
     - [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
 * [**Traditional User Interface Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md)
 

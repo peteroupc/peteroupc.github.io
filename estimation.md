@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called _random variates_.  This page presents general-purpose algorithms for estimating the mean value ("long-run average") of those variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (the average of multiple estimates tends to the ideal mean value as more estimates are averaged), or they come close to the ideal value with a user-specified error tolerance.
+Suppose there is an endless stream of numbers, each generated at random and independently from each other, and as many numbers can be sampled from the stream as desired.  These numbers are called _random variates_.  This page presents general-purpose algorithms for estimating the mean value (“long-run average”) of those variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (the average of multiple estimates tends to the ideal mean value as more estimates are averaged), or they come close to the ideal value with a user-specified error tolerance.
 
 The algorithms are described to make them easy to implement by programmers.
 
@@ -40,7 +40,7 @@ The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 
 
 Each algorithm takes a stream of independent random variates (numbers).  These variates follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers have greater probability of occurring than others.  A distribution has the following properties.
 
-- The _expectation_, _expected value_, or _mean_ is the "long-run average" value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If **E**\[_X_\] exists, then with probability 1, the average of the first _n_ sampled items taken from the stream approaches the expected value as _n_ gets large (as a result of the _law of large numbers_).
+- The _expectation_, _expected value_, or _mean_ is the “long-run average” value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If **E**\[_X_\] exists, then with probability 1, the average of the first _n_ sampled items taken from the stream approaches the expected value as _n_ gets large (as a result of the _law of large numbers_).
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.
 - An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
 - An _n<sup>th</sup> absolute central moment_ is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.

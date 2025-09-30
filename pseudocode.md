@@ -12,7 +12,7 @@ This document explains the conventions and common functions used in some of my a
 
 ## Symbols
 
-In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) operators, other symbols are defined below.
+In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) operators, other symbols are defined next.
 
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
 * `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.

@@ -165,7 +165,7 @@ Specifically:
 | If the underlying source produces: | Then `NEXTRAND()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
 | Nonuniform numbers[^3]. | The next bit from a new source formed by taking the underlying source's outputs as input to a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to produce independent random integers that equal 1 or 0 with equal probability. | 2. |
-| Uniform numbers not described below. | Same as earlier. | 2<sup>_n_</sup>. |
+| Uniform numbers not described later. | Same as earlier. | 2<sup>_n_</sup>. |
 | Uniform 32-bit nonnegative integers. | The next number from the source. | 2<sup>32</sup>. |
 | Uniform 64-bit nonnegative integers. | The next number from the source. | 2<sup>64</sup>. |
 | Uniform integers in the interval \[0, _n_\). | The next number from the source. | _n_. |
@@ -1449,7 +1449,7 @@ See also (Downey 2007\)[^63] and the [**Rademacher Floating-Point Library**](htt
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or "long-run average") of a sampling distribution, or of a _function_ of values sampled from that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one of the values in the sample.  Algorithms to estimate expected values are called _estimators_.  One such estimator is to sample `n` values, apply `EFUNC(x)` to each sampled value `x`, add the values, and divide by `n` (see note later).  However, this estimator won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.  This estimator is called:
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or “long-run average”) of a sampling distribution, or of a _function_ of values sampled from that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one of the values in the sample.  Algorithms to estimate expected values are called _estimators_.  One such estimator is to sample `n` values, apply `EFUNC(x)` to each sampled value `x`, add the values, and divide by `n` (see note later).  However, this estimator won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.  This estimator is called:
 
     - The **`n`th sample raw moment** (a raw moment is a mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
     - The **sample mean**, if `EFUNC(x)` is `x` or `pow(x, 1)`.
@@ -1524,7 +1524,7 @@ Other methods that likewise produce a uniform-behaving point sample include the 
 
 **Requires random real numbers.**
 
-Generating random data points based on how a list of data points is distributed involves the field of **machine learning**: _fit a data model_ to the data points, then _predict_ a new data point based on that model, with randomness added to the mix. Three kinds of data models, described below, serve this purpose. (How fitting works is outside the scope of this page.  Moreover, the variety of machine learning models available makes clear that sampling using only preexisting data points is an ill-posed problem.)
+Generating random data points based on how a list of data points is distributed involves the field of **machine learning**: _fit a data model_ to the data points, then _predict_ a new data point based on that model, with randomness added to the mix. Three kinds of data models, described later, serve this purpose. (How fitting works is outside the scope of this page.  Moreover, the variety of machine learning models available makes clear that sampling using only preexisting data points is an ill-posed problem.)
 
 1. **Density estimation models.** [**Density estimation**](http://scikit-learn.org/stable/modules/density.html) models seek to describe the distribution of data points in a given data set, where areas with more points have a greater chance to be sampled.[^76] The following are examples.
 

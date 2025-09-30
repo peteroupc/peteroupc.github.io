@@ -1,4 +1,4 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="dc.date" content="2024-12-25"><meta name="citation_date" content="2024/12/25"><meta name="citation_publication_date" content="2024/12/25"><meta name="citation_online_date" content="2024/12/25"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Random Number Generator Recommendations for Applications"><meta name="dc.title" content="Random Number Generator Recommendations for Applications"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="dc.date" content="2025-09-30"><meta name="citation_date" content="2025/09/30"><meta name="citation_publication_date" content="2025/09/30"><meta name="citation_online_date" content="2025/09/30"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Random Number Generator Recommendations for Applications"><meta name="dc.title" content="Random Number Generator Recommendations for Applications"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -30,7 +30,7 @@ however, it’s not enough for this sequence to merely “look random”.  But u
 <p><strong>This document covers:</strong></p>
 
 <ul>
-  <li>Cryptographic RNGs<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>, noncryptographic RNGs, and manually-seeded pseudorandom number generators, as well as recommendations on their use and properties.</li>
+  <li>Cryptographic RNGs<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>, noncryptographic RNGs, and manually seeded pseudorandom number generators, as well as recommendations on their use and properties.</li>
   <li>Nondeterministic sources, entropy, and seed generation.</li>
   <li>Existing implementations of RNGs.</li>
   <li>Guidance for designing RNGs for reuse by applications.</li>
@@ -70,12 +70,12 @@ however, it’s not enough for this sequence to merely “look random”.  But u
   <li><a href="#Summary"><strong>Summary</strong></a></li>
   <li><a href="#Cryptographic_RNGs"><strong>Cryptographic RNGs</strong></a></li>
   <li><a href="#Noncryptographic_PRNGs"><strong>Noncryptographic PRNGs</strong></a></li>
-  <li><a href="#Manually_Seeded_PRNGs"><strong>Manually-Seeded PRNGs</strong></a>
+  <li><a href="#Manually_Seeded_PRNGs"><strong>Manually Seeded PRNGs</strong></a>
     <ul>
-      <li><a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>When to Use a Manually-Seeded PRNG</strong></a></li>
-      <li><a href="#Manually_Seeded_PRNG_Recommendations"><strong>Manually-Seeded PRNG Recommendations</strong></a></li>
-      <li><a href="#Manually_Seeded_PRNG_Use_Cases"><strong>Manually-Seeded PRNG Use Cases</strong></a></li>
-      <li><a href="#Manually_Seeded_PRNGs_in_Games"><strong>Manually-Seeded PRNGs in Games</strong></a></li>
+      <li><a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>When to Use a Manually Seeded PRNG</strong></a></li>
+      <li><a href="#Manually_Seeded_PRNG_Recommendations"><strong>Manually Seeded PRNG Recommendations</strong></a></li>
+      <li><a href="#Manually_Seeded_PRNG_Use_Cases"><strong>Manually Seeded PRNG Use Cases</strong></a></li>
+      <li><a href="#Manually_Seeded_PRNGs_in_Games"><strong>Manually Seeded PRNGs in Games</strong></a></li>
       <li><a href="#Single_Random_Value"><strong>Single Random Value</strong></a></li>
       <li><a href="#Ensuring_Reproducibility"><strong>Ensuring Reproducibility</strong></a></li>
     </ul>
@@ -142,7 +142,7 @@ however, it’s not enough for this sequence to merely “look random”.  But u
   </li>
   <li>No: Does the application require <a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>reproducible “random” numbers</strong></a>?
     <ul>
-      <li>Yes: Use a manually-seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
+      <li>Yes: Use a manually seeded high-quality PRNG.  If a seed is known, use it.  Otherwise, generate a fresh seed using a cryptographic RNG.
         <ul>
           <li>Does the application run <strong>multiple independent processes</strong> that use pseudorandom numbers?
             <ul>
@@ -202,7 +202,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>Noncryptographic PRNGs can be <em>automatically seeded</em> (a new seed is generated upon PRNG creation) or <em>manually seeded</em> (the PRNG uses a predetermined seed).</p>
 
 <ul>
-  <li>See “<a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>When to Use a Manually-Seeded PRNG</strong></a>” to learn which kind of seeding to use.</li>
+  <li>See “<a href="#When_to_Use_a_Manually_Seeded_PRNG"><strong>When to Use a Manually Seeded PRNG</strong></a>” to learn which kind of seeding to use.</li>
   <li>See “<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>” for advice on how to seed.</li>
   <li>See “<a href="#Existing_RNG_APIs_in_Programming_Languages"><strong>Existing RNG APIs in Programming Languages</strong></a>” for existing APIs.</li>
   <li>For automatically-seeded PRNGs, an application should use only one instance of the generator and pass it around to parts of the application that need it.</li>
@@ -210,15 +210,15 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><a id="Manually_Seeded_PRNGs"></a></p>
 
-<h2 id="manually-seeded-prngs">Manually-Seeded PRNGs</h2>
+<h2 id="manually seeded-prngs">Manually Seeded PRNGs</h2>
 
 <p>A given pseudorandom number generator (PRNG) generates the same sequence of “random” numbers for the same “seed”.  A <em>seed</em> is arbitrary data serving as the PRNG’s input.  Some applications care about reproducible “randomness” and thus could set a PRNG’s seed manually for reproducible “random” numbers.</p>
 
 <p><a id="When_to_Use_a_Manually_Seeded_PRNG"></a></p>
 
-<h3 id="when-to-use-a-manually-seeded-prng">When to Use a Manually-Seeded PRNG</h3>
+<h3 id="when-to-use-a-manually seeded-prng">When to Use a Manually Seeded PRNG</h3>
 
-<p>By seeding a PRNG manually for reproducible “randomness”, an application will be tied to that PRNG or its implementation. Therefore, an application should not use a manually-seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless—</p>
+<p>By seeding a PRNG manually for reproducible “randomness”, an application will be tied to that PRNG or its implementation. Therefore, an application should not use a manually seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless—</p>
 
 <ol>
   <li>the application might need to generate the same “random” result multiple times,</li>
@@ -233,9 +233,9 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><a id="Manually_Seeded_PRNG_Recommendations"></a></p>
 
-<h3 id="manually-seeded-prng-recommendations">Manually-Seeded PRNG Recommendations</h3>
+<h3 id="manually seeded-prng-recommendations">Manually Seeded PRNG Recommendations</h3>
 
-<p>If an application chooses to use a manually-seeded PRNG for reproducible “randomness”, the application—</p>
+<p>If an application chooses to use a manually seeded PRNG for reproducible “randomness”, the application—</p>
 
 <ul>
   <li>should choose a <a href="#High_Quality_RNGs_Requirements"><strong>high-quality PRNG</strong></a>,</li>
@@ -247,26 +247,26 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>For advice on generating seeds for the PRNG, see “<a href="#Seed_Generation_for_Noncryptographic_PRNGs"><strong>Seed Generation for Noncryptographic PRNGs</strong></a>”).</p>
 
 <blockquote>
-  <p><strong>Example:</strong> An application could implement a manually-seeded PRNG using a third-party library that specifically says it implements a <a href="#High_Quality_RNGs_Requirements"><strong>high-quality PRNG algorithm</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
+  <p><strong>Example:</strong> An application could implement a manually seeded PRNG using a third-party library that specifically says it implements a <a href="#High_Quality_RNGs_Requirements"><strong>high-quality PRNG algorithm</strong></a>, and could initialize that PRNG using a bit sequence from a cryptographic RNG.  The developers could also mention the use of the specific PRNG chosen on any code that uses it, to alert other developers that the PRNG needs to remain unchanged.</p>
 </blockquote>
 
 <p><a id="Manually_Seeded_PRNG_Use_Cases"></a></p>
 
-<h3 id="manually-seeded-prng-use-cases">Manually-Seeded PRNG Use Cases</h3>
+<h3 id="manually seeded-prng-use-cases">Manually Seeded PRNG Use Cases</h3>
 
-<p>Use cases for manually-seeded PRNGs include the following:</p>
+<p>Use cases for manually seeded PRNGs include the following:</p>
 
 <ul>
   <li>Simulations and machine learning.  This includes physics simulations and artificial intelligence (AI) in games, as well as simulations to reproduce published research data.</li>
   <li>Monte Carlo estimations.</li>
   <li>Procedural noise generation.</li>
   <li>Games that generate “random” content that is impractical to store.</li>
-  <li>Unit tests in which “randomness” ought not to influence whether they pass or fail.  Here, a manually-seeded PRNG with a fixed seed is used in place of another kind of RNG for the purpose of the test, to help ensure consistent results across the computers under test.</li>
+  <li>Unit tests in which “randomness” ought not to influence whether they pass or fail.  Here, a manually seeded PRNG with a fixed seed is used in place of another kind of RNG for the purpose of the test, to help ensure consistent results across the computers under test.</li>
 </ul>
 
 <p><a id="Manually_Seeded_PRNGs_in_Games"></a></p>
 
-<h3 id="manually-seeded-prngs-in-games">Manually-Seeded PRNGs in Games</h3>
+<h3 id="manually seeded-prngs-in-games">Manually Seeded PRNGs in Games</h3>
 
 <p>Many kinds of game software generate seemingly “random” game content that might need to be repeatedly regenerated, such as—</p>
 
@@ -276,17 +276,17 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
   <li>a randomly chosen configuration of a game board or puzzle board.</li>
 </ul>
 
-<p>In general, the bigger that “random” content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  The following are special cases:</p>
+<p>In general, the bigger that “random” content is, the greater the justification to use a manually seeded PRNG and a custom seed to generate that content.  The following are special cases:</p>
 
 <ol>
   <li>If the game needs reproducible “random” content only at the start of the game session (for example, a “random” game board or a “random” order of virtual cards) and that content is small (say, no more than a hundred numbers):
     <ul>
-      <li>The game should not use a manually-seeded PRNG unless the seed is based on a “code” or “password” entered by the user.  This is a good sign that the game ought to store the “random” content instead of a seed.</li>
+      <li>The game should not use a manually seeded PRNG unless the seed is based on a “code” or “password” entered by the user.  This is a good sign that the game ought to store the “random” content instead of a seed.</li>
     </ul>
   </li>
   <li>In a networked game where multiple computers (for example, multiple players, or a client and server) have a shared view of the game state and numbers from an RNG or PRNG are used to update that game state:
     <ul>
-      <li>The game should not use a manually-seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (for example, the random outcome is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game may use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.</li>
+      <li>The game should not use a manually seeded PRNG where predicting a random outcome could give a player a significant and unfair advantage (for example, the random outcome is the result of a die roll, or the top card of the draw pile, for a board or card game).  The game may use such a PRNG in other cases to ensure the game state is consistent among computers, including in physics simulations and AI.</li>
     </ul>
   </li>
 </ol>
@@ -325,7 +325,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h3 id="ensuring-reproducibility">Ensuring Reproducibility</h3>
 
-<p>To ensure that a manually-seeded PRNG delivers reproducible “random” numbers across computers, across runs, and across application versions, an application needs to take special care.  Reproducibility is often not achievable if the application relies on features or behavior outside the application’s control, including any of the following:</p>
+<p>To ensure that a manually seeded PRNG delivers reproducible “random” numbers across computers, across runs, and across application versions, an application needs to take special care.  Reproducibility is often not achievable if the application relies on features or behavior outside the application’s control, including any of the following:</p>
 
 <ul>
   <li><strong>Floating-point numbers</strong> are a major source of varying results. Different implementations of the same floating-point operation might have subtle differences even if they’re given the same input.<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> It is nontrivial to control for all of these differences, and they include:
@@ -340,7 +340,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
   <li><strong>Undocumented, undefined, or implementation-dependent behavior</strong> or features, including a particular hash table traversal order or a particular size for C/C++’s <code>int</code> or <code>long</code>.</li>
 </ul>
 
-<p>Thus, an application ought to use manually-seeded PRNGs only when necessary, to minimize the need for reproducible “randomness”.  Where reproducibility is required, the application ought to avoid floating-point numbers, nondeterministic features, and other behavior outside its control, and ought to stick to the same versions of algorithms it uses.</p>
+<p>Thus, an application ought to use manually seeded PRNGs only when necessary, to minimize the need for reproducible “randomness”.  Where reproducibility is required, the application ought to avoid floating-point numbers, nondeterministic features, and other behavior outside its control, and ought to stick to the same versions of algorithms it uses.</p>
 
 <p>As for reproducible PRNGs, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is one example of a PRNG with consistent behavior, but none of the following is such a PRNG:</p>
 
@@ -732,7 +732,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
   <ul>
     <li>Randomness extractors or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a> as input.</li>
-    <li>A “fast-key-erasure” generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>.</li>
+    <li>A “keyboard shortcut-erasure” generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>.</li>
     <li>The <code>Hash_DRBG</code> and <code>HMAC_DRBG</code> generators specified in NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.</li>
     <li>An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup></li>
     <li>RFC 8937 describes an RNG that hashes another cryptographic RNG’s output with a secret value derived from a long-term key.</li>
@@ -951,7 +951,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
       <p>This data can come from nondeterministic sources, and also include any combination of process identifiers, time stamps, environment variables, pseudorandom numbers, virtual machine guest identifiers, and other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:40">
-      <p>Bernstein, D.J.  “Fast-key-erasure random number generators”, Jun. 23, 2017. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Bernstein, D.J.  “Keyboard shortcut-erasure random number generators”, Jun. 23, 2017. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
       <p>An example is the “shrinking generator” technique to combine two RNGs; see J. D. Cook, “Using one RNG to sample another”, June 4, 2019, for more. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
