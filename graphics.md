@@ -39,13 +39,13 @@ Limit 3D graphics to the following:
 4. Depth tests, clear colors, and fog colors are supported.
 5. The 3D graphics buffer's resolution is the same as the screen resolution.
 
-Polygons should undergo perspective-correct rendering at least at the vertices.[^2]
+Polygons should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^2]
 
 Limit 2D graphics to the following: [^3]
 
 1. Up to three 2D layers can be displayed at a time.  If 3D graphics are not being displayed, a fourth 2D layer can also be displayed.  Otherwise, a layer for the 3D graphics can be displayed.  Each 2D layer is a rectangular array of references to _tiles_ (a _tile_ is a small rectangular array of pixels).
 2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
-3. Each tile is 8 &times; 8 pixels and uses the colors of one of the sixteen palettes just described.
+3. The tiles have the same size (32 &times; 32 pixels or smaller) and each tile uses the colors of one of the sixteen palettes just described.  A tile size of 8 &times; 8 pixels is suggested.
 4. The 2D and 3D layers may contain transparent pixels.
 5. Up to two of the 2D layers can undergo a 2D affine transformation.
 6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites that may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite is a rectangular array of either tiles or pixels and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels.
@@ -138,7 +138,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^2]: Affine (as opposed to perspective-correct) texture mapping, together with the rounding of vertex coordinates to integers and the lack of antialiasing, contributed to the characteristic distortion of 3-D graphics in many PlayStation (One) games.
 
-[^3]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a smaller resolution with no more than 16 or 256 simultaneous colors and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.
+[^3]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a smaller resolution with no more than 16 or 256 simultaneous colors and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and terminal workstations.
 
 [^4]: But alpha blending (the partial mixing of one color with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
@@ -146,7 +146,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: Commodore 64; NEC PC-8001; VGA mode 13h.
 
-[^7]: 12-inch classic Macintosh; "super VGA" mode commonly supported.
+[^7]: 12-inch classic Macintosh; one commonly supported "super VGA" mode.
 
 [^8]: Nintendo DS; NEC PC-6001; Sega Master System/Sega Mark III; MSX.
 
