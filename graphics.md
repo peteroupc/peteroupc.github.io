@@ -18,7 +18,7 @@ Classic graphics here means two- or three-dimensional graphics achieved by video
 
 Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can render even high-quality classic graphics using only software &mdash; without relying on specialized video cards &mdash; at screen resolutions typically targeted by late-1990s games.[^1]
 
-The specification in this challenge sets an _upper bound_ on the kind of computer graphics I am interested in.  Further limits to graphics computation (such as memory, resource, color, resolution, or polygon limits) are highly encouraged.
+The specification in this challenge sets an _upper bound_ on the kind of computer graphics I am interested in.  Further constraints to graphics computation (such as memory, resource, color, resolution, or polygon limits) are highly encouraged.
 
 -------
 
@@ -94,7 +94,7 @@ These limitations were inspired by the graphics limitations of&mdash;
 
 ------------
 
-A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^29]  Examples of optional limitations are the following:
+A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^29]  Examples of optional constraints are the following:
 
 - The game is limited to the 16 colors of the so-called _VGA palette_ (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than 1,457,664 bytes (the capacity of a Windows-formatted high-density floppy disk).
@@ -189,7 +189,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^27]: Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
-[^28]: This includes Windows games written for DirectX versions earlier than 7, and Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.  It also includes games for MS-DOS or PC-9801 that were published before 2000.
+[^28]: This includes:<br>(1) Windows games written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for graphics.<br>(2) Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.<br>(3) Games for MS-DOS or PC-9801 that were published before 2000.
 
 [^29]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_ or the original _Final Fantasy VII_) to simulate showing more polygons or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
 
