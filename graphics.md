@@ -74,7 +74,7 @@ Frame rate:
 
 Memory:
 
-- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24.  Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^24]
+- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^24]
 
 Music:
 
@@ -181,7 +181,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^23]: Virtual Boy.
 
-[^24]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4 mibibytes of system memory (and 1 mibibyte of video memory) were rare among consumers.
+[^24]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers.
 
 [^25]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
