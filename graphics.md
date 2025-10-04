@@ -181,7 +181,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^23]: Virtual Boy.
 
-[^24]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
+[^24]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4 mibibytes of system memory (and 1 mibibyte of video memory) were rare among consumers.
 
 [^25]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
