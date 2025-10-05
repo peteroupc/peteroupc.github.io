@@ -12,7 +12,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 
 | Instead of just saying... | Try saying... | Notes |
  --- | ---- | -- |
-| Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, what is more, apart from that, additionally | |
+| Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, not only that, what is more, apart from that, additionally | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
 | another [number] (for example, _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | award winner | awardee, recipient (of an award) | |

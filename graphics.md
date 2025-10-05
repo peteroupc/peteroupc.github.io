@@ -18,7 +18,7 @@ Classic graphics here means two- or three-dimensional graphics achieved by video
 
 Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can render even high-quality classic graphics using only software &mdash; without relying on specialized video cards &mdash; at screen resolutions typically targeted by late-1990s games.[^1]
 
-The specification in this challenge sets an _upper bound_ on the kind of computer graphics I am interested in.  Further constraints to graphics computation (such as memory, resource, color, resolution, or polygon limits) are highly encouraged.
+The specification in this challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further constraints to graphics computation (such as memory, resource, color, resolution, or polygon limits) are highly encouraged.
 
 -------
 
@@ -36,7 +36,7 @@ Limit 3D graphics to the following:
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
 3. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format.  Texture rendering supports flips and repeats on either or both axes.  The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
-4. Depth tests, clear colors, and fog colors are supported.
+4. Depth buffers, clear colors, and fog colors are supported.
 5. The 3D graphics buffer's resolution is the same as the screen resolution.
 
 Polygons should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^3]
@@ -97,7 +97,12 @@ These limitations were inspired by the graphics limitations of&mdash;
 A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^29]  Examples of optional constraints are the following:
 
 - The game is limited to the 16 colors of the so-called _VGA palette_ (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).
-- All game files can be packaged in a ZIP file or Win32 program file that takes no more than 1,457,664 bytes (the capacity of a Windows-formatted high-density floppy disk).
+- All game files can be packaged in a ZIP file or Win32 program file that takes no more than&mdash;
+    - 1,457,664 bytes (the capacity of a file-allocation-table (FAT) formatted high-density 3.5-inch floppy disk), or
+    - 1,213,952 bytes (the capacity of a FAT formatted high-density 5.25-inch floppy disk), or
+    - 730,112 bytes (the capacity of a FAT formatted normal-density 3.5-inch floppy disk), or
+    - 362,496 bytes (the capacity of a FAT formatted "360K" 5.25-inch floppy disk), or
+    - 681 million bytes (slightly less than the maximum capacity of a formatted CD-ROM).
 - The game uses no more than 16 million bytes of system memory at a time.
 - The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI’s `StretchDIBits` or copying to VGA’s frame buffer).
 - The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^30]
@@ -191,7 +196,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^28]: This includes:<br>(1) Windows games written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for graphics.<br>(2) Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.<br>(3) Games for MS-DOS or PC-9801 that were published before 2000.
 
-[^29]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_ or the original _Final Fantasy VII_) to simulate showing more polygons or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
+[^29]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_) to simulate showing more polygons or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
 
 [^30]: It wasn't until the Pentium processor's advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of _Michael Abrash's Graphics Programming Black Book_.
 
