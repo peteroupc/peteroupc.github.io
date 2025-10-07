@@ -48,7 +48,10 @@ Limit 2D graphics to the following: [^4]
 3. The tiles have the same size (32 &times; 32 pixels or smaller) and each tile uses the colors of one of the sixteen palettes just described.  A tile size of 8 &times; 8 pixels is suggested.
 4. The 2D and 3D layers may contain transparent pixels.
 5. Up to two of the 2D layers can undergo a 2D affine transformation.
-6. Separate from layers, 2D sprites can be displayed.  The maximum number of sprites that may be displayed at a time is equal to 1/2 the larger screen dimension. Each sprite is a rectangular array of either tiles or pixels and has a maximum pixel width and maximum pixel height each equal to 1/4 the larger screen dimension.  Sprites may contain transparent pixels, but not translucent (semitransparent) pixels.
+6. Separate from layers, 2D sprites can be displayed.  Each sprite is a rectangular array of either tiles or pixels, has size up to X &times; Y pixels, and may contain transparent pixels, but not translucent (semitransparent) pixels.. Up to N sprites can be displayed at a time.
+
+    - N is calculated as (screen width &times; screen height &times;16)/(X&times;Y), rounded up to the nearest power of 2. (An alternative limit is N = 512.)
+    - X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
 
 The 3D graphics layer, if any, can be alpha blended with the 2D graphics layers in any order. [^5]
 
@@ -64,7 +67,7 @@ Screen resolution:
     - Extended Graphics Adapter aspect ratio: 640 &times; 350.
     - Vertical arcade systems: 320 &times; 224.
     - 8 &times; 5 aspect ratio: 640 &times; 400[^18], 320 &times; 200.[^7]
-    - Other: 512 &times; 352, 416 &times; 240, 280 &times; 192,[^19] 480 &times; 272,[^20] 512 &times; 424, [^21] 400 &times; 240,[^22] 384 &times; 224.[^23]
+    - Other: 512 &times; 352, 416 &times; 240, 280 &times; 192,[^19] 480 &times; 272,[^20] 512 &times; 424, [^21] 400 &times; 240,[^22] 384 &times; 224,[^23] 160 &times; 200.[^24]
 
     More demanding games in the late 1990s aimed for 800 &times; 600 resolution, but any screen resolution greater than 307,200 total pixels (640 &times; 480) is not within the spirit of this challenge.
 
@@ -74,27 +77,27 @@ Frame rate:
 
 Memory:
 
-- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^24]
+- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^25]
 
 Music:
 
-- Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^25]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
+- Standard MIDI files (SMF) only.  The files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis.[^26]  As much as possible, instruments should match their meanings in the General MIDI System level 1.
 
 Other Notes:
 
-- For classic games released in the 1990s, the number of pixels rendered per second (screen width times screen height times frames per second) is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, that makes 256 &times; 192 &times; 60 = 2,949,120 pixels per second.[^26]
-- Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich  discussion of graphics used in classic multimedia and game applications. [^27]
+- For classic games released in the 1990s, the number of pixels rendered per second (screen width times screen height times frames per second) is usually a small number, no more than 10 million.  For example, if the game runs at a 256 &times; 192 screen resolution (256 pixels wide by 192 pixels high) at up to 60 frames per second, that makes 256 &times; 192 &times; 60 = 2,949,120 pixels per second.[^27]
+- Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich  discussion of graphics used in classic multimedia and game applications. [^28]
 
 These limitations were inspired by the graphics limitations of&mdash;
 
-- PC games in the mid- to late 1990s,[^28]
+- PC games in the mid- to late 1990s,[^29]
 - home computers released before 1995,
 - game consoles (handheld and for TVs) released before 2000, and
 - the Game Boy Advance, Nintendo DS, and Nintendo 3DS, all of which were released after 2000 but have relatively meager graphics capability.
 
 ------------
 
-A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^29]  Examples of optional constraints are the following:
+A game may impose further resource limits to the specifications given here (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^30]  Examples of optional constraints are the following:
 
 - The game is limited to the 16 colors of the so-called _VGA palette_ (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than&mdash;
@@ -105,7 +108,7 @@ A game may impose further resource limits to the specifications given here (for 
     - 681 million bytes (slightly less than the maximum capacity of a formatted CD-ROM).
 - The game uses no more than 16 million bytes of system memory at a time.
 - The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI’s `StretchDIBits` or copying to VGA’s frame buffer).
-- The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^30]
+- The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^31]
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -120,7 +123,7 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
     - Instruments should correspond as closely as possible to those in that specification, but should be small in file size or be algorithmically generated.
     - Instruments can be generated using the public-domain single-cycle wave forms found in the AdventureKid Wave Form collection, found at: [**AKWF-FREE**](https://github.com/KristofferKarlAxelEkstrand/AKWF-FREE).
     - The samples for each instrument are preferably generated by an algorithm, such as one that renders the instrument's tone in the frequency domain.  An example of this is found in [**`com.sun.media.sound.EmergencySoundbank`**](https://github.com/apple/openjdk/blob/xcodejdk14-release/src/java.desktop/share/classes/com/sun/media/sound/EmergencySoundbank.java), which however is licensed under the GNU General Public License version 2 rather than public domain.
-    - The instrument sound bank should be in either SoundFont 2 (.sf2) or Downloadable Sounds (.dls) format. [^31]
+    - The instrument sound bank should be in either SoundFont 2 (.sf2) or Downloadable Sounds (.dls) format. [^32]
     - The volume of all instruments in the sound bank should be normalized; some instruments should not sound louder than others.
 - An instrument sound bank for FM synthesis of all instruments and drum noises in the General MIDI System level 1 specification. Instruments should correspond as closely as possible to those in that specification.
 
@@ -152,7 +155,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: PlayStation (One); Nintendo 3DS lower screen; VGA "mode X".
 
-[^7]: Commodore 64; NEC PC-8001; VGA mode 13h.
+[^7]: Commodore 64; NEC PC-8001; VGA mode 13h; Color/Graphics Adapter (CGA) 4-color mode.
 
 [^8]: 12-inch classic Macintosh; one commonly supported "super VGA" mode.
 
@@ -186,18 +189,20 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^23]: Virtual Boy.
 
-[^24]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers.
+[^24]: CGA 16-color mode.
 
-[^25]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
+[^25]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers.
 
-[^26]: The _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
+[^26]: I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
-[^27]: Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
+[^27]: The _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^28]: This includes:<br>(1) Windows games written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for graphics.<br>(2) Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.<br>(3) Games for MS-DOS or PC-9801 that were published before 2000.
+[^28]: Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are "on" are, and draw white pixels (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
-[^29]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_) to simulate showing more polygons or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
+[^29]: This includes:<br>(1) Windows games written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for graphics.<br>(2) Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.<br>(3) Games for MS-DOS or PC-9801 that were published before 2000.
 
-[^30]: It wasn't until the Pentium processor's advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of _Michael Abrash's Graphics Programming Black Book_.
+[^30]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_) to simulate showing more polygons or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
 
-[^31]: A sound bank of decent quality in either format is about 4 million bytes in size.  Making these banks would be easier if there were a guide on producing decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).
+[^31]: It wasn't until the Pentium processor's advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of _Michael Abrash's Graphics Programming Black Book_.
+
+[^32]: A sound bank of decent quality in either format is about 4 million bytes in size.  Making these banks would be easier if there were a guide on producing decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).
