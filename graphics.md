@@ -147,7 +147,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: A computer has adequate performance for classic graphics if it achieves a score of&mdash;<br>(a) 2700 or greater on the 3DMark2000 benchmark when run without graphics acceleration, or<br>(b) 1500 or greater on the 3DMark2000 CPU Speed Test.
 
-[^2]: To bolster the suggestions in this specification, it would be of interest to find the number of polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal. For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000), noting that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.
+[^2]: To bolster the suggestions in this specification, it would be of interest to find the number of polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal. For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.
 
 [^3]: Affine (as opposed to perspective-correct) texture mapping, together with the rounding of vertex coordinates to integers and the lack of antialiasing, contributed to the characteristic distortion of 3-D graphics in many PlayStation (One) games.
 
@@ -159,7 +159,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^7]: PlayStation (One); Nintendo 3DS lower screen; VGA "mode X".
 
-[^8]: Commodore 64; NEC PC-8001; VGA mode 13h; Color/Graphics Adapter (CGA) 4-color mode.
+[^8]: Commodore 64; NEC PC-8001; VGA mode 13h; Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode.
 
 [^9]: One commonly supported "super VGA" mode, especially in mid-1990s gaming.
 
@@ -169,7 +169,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^12]: One movie file resolution.
 
-[^13]: 400 &times; 225 is used in the modern game _Unsighted_.
+[^13]: 400 &times; 225 is used in the modern game _Unsighted_. 480 &times; 270 is used in the modern game _Enter the Gungeon_.
 
 [^14]: PlayStation 2 NTSC.
 
@@ -191,11 +191,11 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^23]: Hercules Graphics Card monochrome.
 
-[^24]: Color/Graphics Adapter (CGA) monochrome; NEC PC-8801.
+[^24]: Color/Graphics Adapter (CGA) monochrome; NEC PC-8801; Atari ST 4-color mode.
 
 [^25]: 12-inch classic Macintosh.
 
-[^26]: NEC PC-9801.
+[^26]: NEC PC-9801; Atari ST monochrome.
 
 [^27]: Apple II.
 
