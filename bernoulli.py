@@ -247,16 +247,16 @@ class Bernoulli:
         Reference: Flajolet et al. 2010.
         """
         t = 0
-        while self.zero_or_one(1, 4) == 0:
+        while self.zero_or_one(1, 4) == 1:
             t += 1
-        while self.zero_or_one(1, 4) == 0:
+        while self.zero_or_one(1, 4) == 1:
             t += 1
         if self.zero_or_one(5, 9):
             t += 1
         if t == 0:
             return 1
         for i in range(3):
-            s = sum(self.randbit() for j in t * 2)
+            s = sum(self.randbit() for j in range(t * 2))
             if s != t:
                 return 0
         return 1
