@@ -82,7 +82,7 @@ A game may impose further resource limits to those specifications (for example, 
     - 362,496 bytes (the capacity of a FAT formatted "360K" 5.25-inch floppy disk), or
     - 681 million bytes (slightly less than the maximum capacity of a formatted CD-ROM).
 - The game uses no more than 16 million bytes of system memory at a time.
-- The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional graphics memory) at a time.[^12]
+- The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.[^12]
 - The game aims for a frame rate of 30 frames per second.
 - The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI’s `StretchDIBits` or copying to VGA’s frame buffer).
 - The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^13]
@@ -95,30 +95,30 @@ Screen resolution:
 
 - Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for such resolutions for 3-D graphics.
 
-- Screen resolutions that have been used in classic games include:[^14]
+- Screen resolutions that have been used in classic games include:[^14]ssss
 
     - Video graphics array (VGA) display modes: 640 &times; 480,[^15] 320 &times; 240,[^16] 320 &times; 200.[^17]
     - 4:3 aspect ratio: 640 &times; 480,[^15] 512 &times; 384,[^18] 400 &times; 300,[^19] 320 &times; 240,[^16] 256 &times; 192,[^20] 160 &times; 120.[^21]
     - Game console aspect ratios: 640 &times; 448,[^22] 320 &times; 224,[^23] 256 &times; 224,[^24] 256 &times; 240,[^25] 240 &times; 160,[^26] 160 &times; 144.[^27]
     - PAL home computer aspect ratios: 320 &times; 256,[^28] 640 &times; 512,[^29] 360 &times; 288.[^30]
-    - Monochrome graphics: 720 &times; 348,[^31] 640 &times; 200,[^32] 512 &times; 342.[^33]
-    - Extended Graphics Adapter aspect ratio: 640 &times; 350.
-    - 8:5 aspect ratio: 640 &times; 400[^34], 320 &times; 200.[^17]
-    - Other: 280 &times; 192,[^35] 480 &times; 272,[^36] 512 &times; 424, [^37] 400 &times; 240,[^38] 384 &times; 224,[^39] 160 &times; 200.[^40]
+    - Two-level monochrome graphics: 720 &times; 348,[^31] 640 &times; 200,[^32] 512 &times; 342.[^33]
+    - Extended Graphics Adapter aspect ratio: 640 &times; 350.[^34]
+    - 8:5 aspect ratio: 640 &times; 400[^35], 320 &times; 200.[^17]
+    - Other: 280 &times; 192,[^36] 480 &times; 272,[^37] 512 &times; 424, [^38] 400 &times; 240,[^39] 384 &times; 224,[^40] 160 &times; 200.[^41]
 
-    This list is far from complete.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the Sega Saturn or Nintendo 64, allowed games to be shown in multiple screen resolutions.
+    This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the Sega Saturn or Nintendo 64, allowed games to be shown in multiple screen resolutions.
 
 Music and sound:
 
-- Besides the limitation on music, this specification has no further limitations on sounds.  Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sound (pulse-code modulation, such as .WAV files).  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.  When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^41]
+- Besides the limitation on music, this specification has no further limitations on sounds.  Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sound (pulse-code modulation, such as .WAV files).  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.  When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^42]
 
 Frame rate:
 
-- Classic games for desktop or laptop computers tended to aim for a frame rate of 30, 40, or 60 frames per second, and game consoles for TVs were designed for the TV's usual refresh rate (nearly 60 frames per second for NTSC and 50 for PAL).[^42]
+- Classic games for desktop or laptop computers tended to aim for a frame rate of 30, 40, or 60 frames per second, and game consoles for TVs were designed for the TV's usual refresh rate (nearly 60 frames per second for NTSC and 50 for PAL).[^43]
 
 Memory:
 
-- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^43]
+- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^44]
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -133,7 +133,7 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
     - Instruments should correspond as closely as possible to those in that specification, but should be small in file size or be algorithmically generated.
     - Instruments can be generated using the public-domain single-cycle wave forms found in the AdventureKid Wave Form collection, found at: [**AKWF-FREE**](https://github.com/KristofferKarlAxelEkstrand/AKWF-FREE).
     - The samples for each instrument are preferably generated by an algorithm, such as one that renders the instrument's tone in the frequency domain.  An example of this is found in [**`com.sun.media.sound.EmergencySoundbank`**](https://github.com/apple/openjdk/blob/xcodejdk14-release/src/java.desktop/share/classes/com/sun/media/sound/EmergencySoundbank.java), which however is licensed under the GNU General Public License version 2 rather than public domain.
-    - The instrument sound bank should be in either SoundFont 2 (.sf2) or Downloadable Sounds (.dls) format. [^44]
+    - The instrument sound bank should be in either SoundFont 2 (.sf2) or Downloadable Sounds (.dls) format. [^45]
     - The volume of all instruments in the sound bank should be normalized; some instruments should not sound louder than others.
 - An instrument sound bank for FM synthesis of all instruments and drum noises in the General MIDI System level 1 specification. Instruments should correspond as closely as possible to those in that specification.
 
@@ -161,13 +161,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^4]: Affine (as opposed to perspective-correct) texture mapping, together with the rounding of vertex coordinates to integers and the lack of antialiasing, contributed to the characteristic distortion of 3-D graphics in many PlayStation (One) games.
 
-[^5]: A possible alternative to these 2D limits is to require the use of a frame buffer of 640 &times; 480 pixels or a smaller resolution with no more than 16 or 256 simultaneous colors and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
+[^5]: A possible alternative to these 2D limits is to require the use of a frame buffer with no more than 8 bits per pixel and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
 [^6]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
 [^7]: But alpha blending (the partial mixing of one color with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
-[^8]: If the game screen is monochrome (one bit per pixel), a game could choose to allow screen resolutions up to 800,000 total pixels.  For example, a 1024 &times; 768 monochrome screen has 786,432 total pixels.  However, monochrome graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a monochrome 800 &times; 450 display (378,000 total pixels).
+[^8]: If the game screen is two-level monochrome (one bit per pixel), a game could choose to allow screen resolutions up to 800,000 total pixels.  For example, a 1024 &times; 768 screen has 786,432 total pixels.  However, two-level monochrome graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-level monochrome 800 &times; 450 display (378,000 total pixels).
 
 [^9]: Standard MIDI files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
@@ -191,7 +191,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^19]: One low resolution required by the _PC 98 System Design Guide_.
 
-[^20]: Nintendo DS; NEC PC-6001; Sega Master System/Sega Mark III; MSX.
+[^20]: Nintendo DS; NEC PC-6001; Sega Master System/Sega Mark III; MSX; Colecovision.
 
 [^21]: Rarely used VGA display mode.
 
@@ -205,7 +205,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^26]: Game Boy Advance.
 
-[^27]: Game Boy, Game Boy Color.
+[^27]: Game Boy, Game Boy Color, Sega Game Gear.
 
 [^28]: Amiga PAL; Neo Geo PAL.
 
@@ -213,30 +213,32 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^30]: PAL overscan.
 
-[^31]: Hercules Graphics Card monochrome.
+[^31]: Hercules Graphics Card two-level monochrome.
 
-[^32]: Color/Graphics Adapter (CGA) monochrome; NEC PC-8801 8-color mode; Atari ST 4-color mode.
+[^32]: Color/Graphics Adapter (CGA) two-level monochrome; NEC PC-8801 8-color mode; Atari ST 4-color mode.
 
 [^33]: 12-inch classic Macintosh.
 
-[^34]: NEC PC-9801 8-color mode; Atari ST monochrome.
+[^34]: 16 colors.
 
-[^35]: Apple II.
+[^35]: NEC PC-9801 8-color mode; Atari ST two-level monochrome.
 
-[^36]: PlayStation Portable.
+[^36]: Apple II.
 
-[^37]: MSX 2.
+[^37]: PlayStation Portable.
 
-[^38]: Effective resolution of Nintendo 3DS upper screen without parallax effect.
+[^38]: MSX 2.
 
-[^39]: Virtual Boy.
+[^39]: Effective resolution of Nintendo 3DS upper screen without parallax effect.
 
-[^40]: CGA 16-color mode.
+[^40]: Virtual Boy.
 
-[^41]: The _Multimedia PC Specification_ (1991) required support in "multimedia PCs" for rendering at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in "multimedia PCs" for rendering at least 16-bit-per-sample stereo digitized sound at 44,100 Hz.
+[^41]: CGA 16-color mode.
 
-[^42]: Until the early 1990s, the number of pixels rendered per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, the _Multimedia PC Specification_ (1991) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 pixel video at 15 frames per second, the recommendation in article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
+[^42]: The _Multimedia PC Specification_ (1991) required support in "multimedia PCs" for rendering at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in "multimedia PCs" for rendering at least 16-bit-per-sample stereo digitized sound at 44,100 Hz.
 
-[^43]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers.
+[^43]: Until the early 1990s, the number of pixels rendered per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, the _Multimedia PC Specification_ (1991) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 pixel video at 15 frames per second, the recommendation in article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^44]: A sound bank of decent quality in either format is about 4 million bytes in size.  Making these banks would be easier if there were a guide on producing decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).
+[^44]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.<br>It is worth noting that, before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers.
+
+[^45]: A sound bank of decent quality in either format is about 4 million bytes in size.  Making these banks would be easier if there were a guide on producing decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).

@@ -1058,7 +1058,7 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 
 > **Examples:**
 >
-> 1. **Grayscale.** A color, `color`, can be converted to a gray tone, black, or white, as appropriate, by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
+> 1. **"Grayscale conversion".** A color, `color`, can be converted to black, white, or a shade of gray, as appropriate, by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
 > 2. An [**_image color list_**](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
 > 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
@@ -1125,7 +1125,7 @@ The following techniques generate new colors that are related to existing colors
     - **Tetradic**: Double complementary with Y = &pi;/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
 - **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, or tones**](#Alpha_Blending) of a given color are monochrome colors.
-- **Achromatic colors**: Colors without hue; that is, black, white, and shades of gray.
+- **Achromatic colors** (also known as **gray tones**): Colors without hue; that is, black, white, and shades of gray.
 
 <a id=Contrast_Between_Two_Colors></a>
 
@@ -1292,7 +1292,7 @@ The following approaches can generate a lighter or darker version of a color. In
 The following approaches can generate a saturated or desaturated version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.
 
 - **HSV "saturation" additive.** `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])`, where `hsv = RgbToHsv(color)`.  (Note that HSL's "saturation" is inferior here.)
-- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [**alpha blending**](#Alpha_Blending) that color with either its [**grayscale**](#Luminance_Factor_Grayscale) version or an arbitrary shade of gray.
+- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [**alpha blending**](#Alpha_Blending) that color with black, white, or a shade of gray, either by a [**"grayscale conversion"**](#Luminance_Factor_Grayscale) or by choosing an arbitrary shade of gray.
 - **Saturate matrix.**  See "[**Color Matrices**](#Color_Matrices)".
 
 <a id=Miscellaneous></a>
@@ -1492,7 +1492,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 
 A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, [**_linear RGB_ colors**](#RGB_Color_Spaces) should be used rather than encoded RGB colors.
 
-> **Example:** A **grayscale color map** consists of the encoded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
+> **Example:** A color map consisting of the encoded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]` is a progression from "black" to "white" going through shades of gray.
 
 <a id=Kinds_of_Color_Maps></a>
 

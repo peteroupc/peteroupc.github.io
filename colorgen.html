@@ -1,4 +1,4 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2025-09-30"><meta name="citation_date" content="2025/09/30"><meta name="citation_publication_date" content="2025/09/30"><meta name="citation_online_date" content="2025/09/30"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2025-10-23"><meta name="citation_date" content="2025/10/23"><meta name="citation_publication_date" content="2025/10/23"><meta name="citation_online_date" content="2025/10/23"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1212,7 +1212,7 @@ END METHOD
   <p><strong>Examples:</strong></p>
 
   <ol>
-    <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to a gray tone, black, or white, as appropriate, by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
+    <li><strong>“Grayscale conversion”.</strong> A color, <code>color</code>, can be converted to black, white, or a shade of gray, as appropriate, by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
     <li>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a>’s <strong>average luminance factor</strong> is often equivalent to the average <code>Luminance(color)</code> value among the colors in that image color list.</li>
     <li>An application can consider a color <strong>dark</strong> if <code>Luminance(color)</code> is lower than some threshold, say, 15.</li>
     <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
@@ -1294,7 +1294,7 @@ END METHOD
     </ul>
   </li>
   <li><strong>Monochrome colors</strong>: Colors with the same hue; for example, different <a href="#Alpha_Blending"><strong>shades, tints, or tones</strong></a> of a given color are monochrome colors.</li>
-  <li><strong>Achromatic colors</strong>: Colors without hue; that is, black, white, and shades of gray.</li>
+  <li><strong>Achromatic colors</strong> (also known as <strong>gray tones</strong>): Colors without hue; that is, black, white, and shades of gray.</li>
 </ul>
 
 <p><a id="Contrast_Between_Two_Colors"></a></p>
@@ -1576,7 +1576,7 @@ END METHOD
 
 <ul>
   <li><strong>HSV “saturation” additive.</strong> <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])</code>, where <code>hsv = RgbToHsv(color)</code>.  (Note that HSL’s “saturation” is inferior here.)</li>
-  <li><strong>Tones, or mixtures of gray.</strong> A “tone” is a desaturated version.  A color can be desaturated by <a href="#Alpha_Blending"><strong>alpha blending</strong></a> that color with either its <a href="#Luminance_Factor_Grayscale"><strong>grayscale</strong></a> version or an arbitrary shade of gray.</li>
+  <li><strong>Tones, or mixtures of gray.</strong> A “tone” is a desaturated version.  A color can be desaturated by <a href="#Alpha_Blending"><strong>alpha blending</strong></a> that color with black, white, or a shade of gray, either by a <a href="#Luminance_Factor_Grayscale"><strong>“grayscale conversion”</strong></a> or by choosing an arbitrary shade of gray.</li>
   <li><strong>Saturate matrix.</strong>  See “<a href="#Color_Matrices"><strong>Color Matrices</strong></a>”.</li>
 </ul>
 
@@ -1816,7 +1816,7 @@ END METHOD
 <p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> should be used rather than encoded RGB colors.</p>
 
 <blockquote>
-  <p><strong>Example:</strong> A <strong>grayscale color map</strong> consists of the encoded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</p>
+  <p><strong>Example:</strong> A color map consisting of the encoded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code> is a progression from “black” to “white” going through shades of gray.</p>
 </blockquote>
 
 <p><a id="Kinds_of_Color_Maps"></a></p>
