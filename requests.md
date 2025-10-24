@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-This page lists questions and issues relating to my articles posted on this site.  Any answers to these questions will greatly improve those articles.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
+This page lists questions and issues relating to my articles posted on this site.  They span topics in mathematics, probability, random numbers, programming, and image files.  Any answers to these questions will greatly improve those articles.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
 <a id=Contents></a>
 
@@ -15,6 +15,7 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Partially-Sampled Random Numbers**](#Partially_Sampled_Random_Numbers)
 - [**Randomized Estimation Algorithms**](#Randomized_Estimation_Algorithms)
 - [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
+- [**Questions on Image Formats**](#Questions_on_Image_Formats)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -95,6 +96,21 @@ Does any of the following exist?
 
 - A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or pending patent applications.
 - Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
+
+<a id=Questions_on_Image_Formats></a>
+
+## Questions on Image Formats
+
+To improve the handling of certain now-rarely seen image file types, such as OS/2 Presentation Manager bitmap files or Apple icon resources, answers to the following questions would be welcome:
+
+1. When OS/2 Presentation Manager draws a color icon, does Presentation Manager ignore the color table of the icon's AND/XOR mask (a two-level bitmap with the AND mask at the top and the XOR mask at the bottom)?
+2. Can an Apple icon resource (.icns) have two or more icons of the same type (such as 'il32' or 'l8mk')? If so, is the first icon of a given type used? The last icon? All icons of that kind?
+3. For icon types with a separate mask (such as 'ich4'), can an Apple icon resource (.icns) have an icon of that type but not its corresponding mask ('ich#' in this example)?
+
+The following issues with Windows bitmap files give points that I also seek clarification on.  You need not answer them, as they relate to unclear documentation from Microsoft.
+
+- [**https://github.com/MicrosoftDocs/windows-dev-docs/issues/5241**](https://github.com/MicrosoftDocs/windows-dev-docs/issues/5241)
+- [**https://github.com/MicrosoftDocs/windows-dev-docs/issues/5265**](https://github.com/MicrosoftDocs/windows-dev-docs/issues/5265)
 
 <a id=Notes></a>
 

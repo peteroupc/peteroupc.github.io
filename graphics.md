@@ -4,7 +4,7 @@ The following are three challenges I make to the computer community, relating to
 
 - [**Graphics for classic-style game development**](#Graphics_Challenge_for_Retro_Style_Games).
 - [**MIDI music synthesis for classic-style games and apps**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
-- [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#classic-tiled-wallpaper-challenge).
+- [**Tileable wallpapers with limited colors and resolution**](#Other_Challenges).
 
 All three serve to arouse nostalgia among 1990s computer users.
 
@@ -137,11 +137,12 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
     - The volume of all instruments in the sound bank should be normalized; some instruments should not sound louder than others.
 - An instrument sound bank for FM synthesis of all instruments and drum noises in the General MIDI System level 1 specification. Instruments should correspond as closely as possible to those in that specification.
 
-<a id=Classic_Wallpaper_Challenge></a>
+<a id=Other_Challenges></a>
 
-## Classic Wallpaper Challenge
+## Other Challenges
 
-See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
+- **Classic desktop wallpaper:** See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
+- **Button and border styles:** See [**`uielements.md` in the peteroupc/classic-wallpaper repository**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md)" for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
 
 <a id=License></a>
 
