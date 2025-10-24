@@ -74,7 +74,7 @@ A game may impose further resource limits to those specifications (for example, 
 
 - The game is limited to the 16 colors of the so-called _VGA palette_.
     - In the 8-bit-per-component format, this palette's colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.
-    - In the vertex color format, the closest colors to this palette are: 23/23/23; or each color component is 0 or 16; or each color component is 0 or 31.
+    - In the vertex color format, the closest colors to this palette are: 24/24/24; or each color component is 0 or 16; or each color component is 0 or 31.
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than&mdash;
     - 1,457,664 bytes (the capacity of a file-allocation-table (FAT) formatted high-density 3.5-inch floppy disk), or
     - 1,213,952 bytes (the capacity of a FAT formatted high-density 5.25-inch floppy disk), or
@@ -95,7 +95,7 @@ Screen resolution:
 
 - Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for such resolutions for 3-D graphics.
 
-- Screen resolutions that have been used in classic games include:[^14]ssss
+- Screen resolutions that have been used in classic games include:[^14]
 
     - Video graphics array (VGA) display modes: 640 &times; 480,[^15] 320 &times; 240,[^16] 320 &times; 200.[^17]
     - 4:3 aspect ratio: 640 &times; 480,[^15] 512 &times; 384,[^18] 400 &times; 300,[^19] 320 &times; 240,[^16] 256 &times; 192,[^20] 160 &times; 120.[^21]
@@ -169,7 +169,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^8]: If the game screen is two-level monochrome (one bit per pixel), a game could choose to allow screen resolutions up to 800,000 total pixels.  For example, a 1024 &times; 768 screen has 786,432 total pixels.  However, two-level monochrome graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-level monochrome 800 &times; 450 display (378,000 total pixels).
 
-[^9]: Standard MIDI files should be rendered using a cross-platform open-source software synthesizer (see next section), using either FM or wavetable synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
+[^9]: Standard MIDI files should be rendered using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wavetable synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.
 
 [^10]: This includes:<br>(1) Windows games and screen savers written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for graphics.<br>(2) Windows games and screen savers using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.  Examples are  _Chip's Challenge_ for Windows (1992) and Brian Goble's _The Adventures of MicroMan_ (1993).<br>(3) Games for MS-DOS or PC-9801 that were published before 2000.  Examples are _Quake_ (1996) and _WarCraft_ (1994).<br>(4) Games using an OpenGL version earlier than 1.2 for graphics.
 

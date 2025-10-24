@@ -9,7 +9,20 @@ to see this site's source code.
 
 ### Articles
 
-Open-source articles on randomness, programming, and more.  Help me on my [**requests and open questions**](./requests.html) (and [**open questions on the Bernoulli factory problem**](./bernreq.html), and [**other open questions on probability**](./requestsother.html)).
+Open-source articles on randomness, programming, and more.
+
+**Open Questions**
+
+Help me on my requests, open questions, and interesting challenges, listed next.
+
+* [**Requests and open questions**](./requests.html).
+* [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](./bernreq.html).
+* [**Other open questions on probability**](./requestsother.html)).
+* [**Open questions on image formats**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#open-questions).
+* [**Graphics and Music Challenges for Classic Computer Applications**](https://peteroupc.github.io/graphics.html).
+* [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md).
+* [**A Wish for a New Atlas**](./newatlas.html).
+* [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html).
 
 **Random and Pseudorandom Number Generators**
 
@@ -47,7 +60,7 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 * Three challenges to the open-source community for classic computer applications:
-    - [**Graphics for classic-style game development**](./graphics.html#Graphics_Challenge_for_Retro_Style_Games).
+    - [**Graphics for classic-style game development**](./graphics.html#Graphics_Challenge_for_Classic_Style_Games).
     - [**MIDI music synthesis for classic-style games and apps**](./graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
     - [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
 * [**Traditional User Interface Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md)
