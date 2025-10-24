@@ -2,8 +2,6 @@
 
 Thanks to the _OpenStreetMap_ project and its vast geographical database, as well as advances in mapmaking software, the following should be doable nowadays with open-source software and freely-licensed data, but I haven't seen it yet:
 
-part of a business's inventory that is exposed for sale to the public
-
 An atlas of the world covering **all land masses in the scale 1:4,000,000**.  The maps in the atlas should be _political maps_, showing:
 
 - The boundaries and areas of countries and states (and their equivalents).
@@ -14,7 +12,7 @@ An atlas of the world covering **all land masses in the scale 1:4,000,000**.  Th
 - Relief shading.
 - Natural features (for example, plains, mountain ranges, islands) labeled.
 
-The maps should not be in Mercator projection, and the size of each page should be letter size or A4.  Essentially, the maps should feel similar to the classic _Quick Reference World Atlas_ that Rand McNally Publishing used to publish.
+The maps should not be in Mercator projection except along the equator, and the size of each page should be letter size or A4.  Essentially, the maps should feel similar to the classic _Quick Reference World Atlas_ that Rand McNally Publishing used to publish.
 
 An atlas like this would be a handy reference for homes or classrooms.
 
