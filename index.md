@@ -17,7 +17,7 @@ Help me on my requests, open questions, and interesting challenges, listed next.
 
 * [**Requests and open questions**](./requests.html).
 * [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](./bernreq.html).
-* [**Other open questions on probability**](./requestsother.html)).
+* [**Other open questions on probability**](./requestsother.html).
 * [**Open questions on image formats**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#open-questions).
 * [**Graphics and Music Challenges for Classic Computer Applications**](https://peteroupc.github.io/graphics.html).
 * [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md).
