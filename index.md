@@ -15,7 +15,7 @@ Open-source articles on randomness, programming, and more.
 
 Help me on my requests, open questions, and interesting challenges, listed next.
 
-* [**Requests and open questions**](./requests.html).  Spanning various topics from mathematics to random numbers to programming.
+* [**Requests and open questions**](./requests.html).  Spanning topics in mathematics, probability, random numbers, programming, and image files.
 * [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](./bernreq.html).  For experts in mathematics and probability.
 * [**Other open questions on probability**](./requestsother.html).    For experts in mathematics and probability.
 * [**Graphics and Music Challenges for Classic Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.

@@ -101,9 +101,9 @@ Does any of the following exist?
 
 ## Questions on Image Formats
 
-To improve the handling of certain now-rarely seen image file types, such as OS/2 Presentation Manager bitmap files or Apple icon resources, answers to the following questions would be welcome:
+To improve the handling of certain now-rarely seen image file types, such as OS/2 Presentation Manager icon files or Apple icon resources, answers to the following questions would be welcome:
 
-1. When OS/2 Presentation Manager draws a color icon, does Presentation Manager ignore the color table of the icon's AND/XOR mask (a two-level bitmap with the AND mask at the top and the XOR mask at the bottom)?
+1. When OS/2 Presentation Manager draws a color icon, does Presentation Manager ignore the color table of the icon's AND/XOR mask (a two-level image with the AND mask at the top and the XOR mask at the bottom)?
 2. Can an Apple icon resource (.icns) have two or more icons of the same type (such as 'il32' or 'l8mk')? If so, is the first icon of a given type used? The last icon? All icons of that kind?
 3. For icon types with a separate mask (such as 'ich4'), can an Apple icon resource (.icns) have an icon of that type but not its corresponding mask ('ich#' in this example)?
 
