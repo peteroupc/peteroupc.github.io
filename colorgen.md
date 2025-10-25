@@ -1124,8 +1124,8 @@ The following techniques generate new colors that are related to existing colors
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
     - **Tetradic**: Double complementary with Y = &pi;/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
-- **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, or tones**](#Alpha_Blending) of a given color are monochrome colors.
 - **Achromatic colors** (also known as **gray tones**): Colors without hue; that is, black, white, and shades of gray.
+- **Monochrome colors**: If all the colors in a series are achromatic, or if they all belong to the same hue, the colors are _monochrome_.  For example, different [**shades, tints, or tones**](#Alpha_Blending) of a given color are monochrome colors.
 
 <a id=Contrast_Between_Two_Colors></a>
 

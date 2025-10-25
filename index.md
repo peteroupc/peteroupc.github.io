@@ -15,11 +15,11 @@ Open-source articles on randomness, programming, and more.
 
 Help me on my requests, open questions, and interesting challenges, listed next.
 
-* [**Requests and open questions**](./requests.html).
-* [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](./bernreq.html).
-* [**Other open questions on probability**](./requestsother.html).
-* [**Graphics and Music Challenges for Classic Computer Applications**](https://peteroupc.github.io/graphics.html).
-* [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md).
+* [**Requests and open questions**](./requests.html).  Spanning various topics from mathematics to random numbers to programming.
+* [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](./bernreq.html).  For experts in mathematics and probability.
+* [**Other open questions on probability**](./requestsother.html).    For experts in mathematics and probability.
+* [**Graphics and Music Challenges for Classic Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
+* [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md). For graphics programmers.
 * [**A Wish for a New Atlas**](./newatlas.html).
 * [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html).
 
