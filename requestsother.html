@@ -1,4 +1,4 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Other Open Questions on Probability</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/requestsother.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requestsother.html"><meta name="citation_title" content="Other Open Questions on Probability"><meta name="dc.date" content="2025-09-30"><meta name="citation_date" content="2025/09/30"><meta name="citation_publication_date" content="2025/09/30"><meta name="citation_online_date" content="2025/09/30"><meta name="og:title" content="Other Open Questions on Probability"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requestsother.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Other Open Questions on Probability"><meta name="dc.title" content="Other Open Questions on Probability"><meta name="twitter:title" content="Other Open Questions on Probability"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Other Open Questions on Probability</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/requestsother.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requestsother.html"><meta name="citation_title" content="Other Open Questions on Probability"><meta name="dc.date" content="2025-10-25"><meta name="citation_date" content="2025/10/25"><meta name="citation_publication_date" content="2025/10/25"><meta name="citation_online_date" content="2025/10/25"><meta name="og:title" content="Other Open Questions on Probability"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requestsother.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Other Open Questions on Probability"><meta name="dc.title" content="Other Open Questions on Probability"><meta name="twitter:title" content="Other Open Questions on Probability"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -337,21 +337,17 @@
   </li>
   <li>
     <p>Let $M_k$ be an upper bound on the $k$th central absolute moment of $X$, for $k&gt;1$.  <a href="https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality"><strong>Based on the Chebyshev inequality</strong></a> (as well as Hickernell et al. 2013; Kunsch et al. 2018), is the mean $\mathbb{E}[X]$ within $\epsilon$ of the mean of $n$ i.i.d. samples, where—</p>
-  </li>
-</ol>
 
 \[n=\left\lceil\frac{M_k}{\delta\epsilon^k}\right\rceil,\]
 
-<p>with probability at least $1-\delta$?</p>
+    <p>with probability at least $1-\delta$?</p>
 
-<pre>If so: Let $f(x)$ be uniformly continuous on the real line. Let $m(\epsilon)$ be an inverse modulus of continuity of $f$, that is, a function that satisfies $\text{abs}(f(y)-f(z))&lt;\epsilon$ whenever $\text{abs}(y-z)&lt;m(\epsilon)$. Then is $f(\mathbb{E}[X])$ within $\epsilon$ of the mean of $f$ on $n$ i.i.d. samples, where&amp;mdash;
-</pre>
+    <p>If so: Let $f(x)$ be uniformly continuous on the real line. Let $m(\epsilon)$ be an inverse modulus of continuity of $f$, that is, a function that satisfies $\text{abs}(f(y)-f(z))&lt;\epsilon$ whenever $\text{abs}(y-z)&lt;m(\epsilon)$. Then is $f(\mathbb{E}[X])$ within $\epsilon$ of the mean of $f$ on $n$ i.i.d. samples, where—</p>
 
 \[n=\left\lceil\frac{M_k}{\delta(m(\epsilon))^k}\right\rceil,\]
 
-<p>with probability at least $1-\delta$?  In both questions, $\epsilon$ and $\delta$ are user-specified values.</p>
-
-<ol>
+    <p>with probability at least $1-\delta$?  In both questions, $\epsilon$ and $\delta$ are user-specified values.</p>
+  </li>
   <li>
     <p>Let $g$ be a known piecewise continuous function on [0, 1], and suppose $X$ lies on the interval [0, 1].  How can <a href="https://stats.stackexchange.com/a/523355/296678"><strong>a Stack Exchange answer</strong></a> be adapted to $g$, so that the algorithm estimates $g(\mathbb{E}[X])$ with either a high probability of a “small” absolute error or one of a “small” relative error at all points in [0, 1] except at a “negligible” area around $g$’s discontinuities? Is it enough to replace $g$ with a continuous function $f$ that equals $g$ everywhere except at that “negligible” area? Here, the accuracy tolerances for small error, high probability, and “negligible” area are user-specified. Perhaps the tolerance could be defined as the integral of absolute differences between $f$ and $g$ instead of “negligible area”; in that case, how should the continuous $f$ be built?</p>
   </li>

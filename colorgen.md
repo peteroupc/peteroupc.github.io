@@ -1879,7 +1879,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^28]: B. MacEvoy calls these [**_hue harmonies_**](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [**summary of harmonious color relationships**](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).  See also U.S. patent US6870544, "Harmonizing color selection system and method", which expired in February 2022.
 
-[^29]: Porter, T., and Duff. T. "Compositing Digital Images". Computer Graphics 18(3), p 253 ff., 1984.
+[^29]: Porter, T., and Duff, T. "Compositing Digital Images". Computer Graphics 18(3), p 253 ff., 1984.
 
 [^30]: P. Haeberli, [**"Matrix Operations for Image Processing"**](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.
 

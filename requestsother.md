@@ -261,15 +261,15 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
 2. Let $M_k$ be an upper bound on the $k$th central absolute moment of $X$, for $k>1$.  [**Based on the Chebyshev inequality**](https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality) (as well as Hickernell et al. 2013; Kunsch et al. 2018), is the mean $\mathbb{E}[X]$ within $\epsilon$ of the mean of $n$ i.i.d. samples, where&mdash;
 
-$$n=\left\lceil\frac{M_k}{\delta\epsilon^k}\right\rceil,$$
+    $$n=\left\lceil\frac{M_k}{\delta\epsilon^k}\right\rceil,$$
 
-with probability at least $1-\delta$?
+    with probability at least $1-\delta$?
 
     If so: Let $f(x)$ be uniformly continuous on the real line. Let $m(\epsilon)$ be an inverse modulus of continuity of $f$, that is, a function that satisfies $\text{abs}(f(y)-f(z))<\epsilon$ whenever $\text{abs}(y-z)<m(\epsilon)$. Then is $f(\mathbb{E}[X])$ within $\epsilon$ of the mean of $f$ on $n$ i.i.d. samples, where&mdash;
 
-$$n=\left\lceil\frac{M_k}{\delta(m(\epsilon))^k}\right\rceil,$$
+    $$n=\left\lceil\frac{M_k}{\delta(m(\epsilon))^k}\right\rceil,$$
 
-with probability at least $1-\delta$?  In both questions, $\epsilon$ and $\delta$ are user-specified values.
+    with probability at least $1-\delta$?  In both questions, $\epsilon$ and $\delta$ are user-specified values.
 
 3. Let $g$ be a known piecewise continuous function on [0, 1], and suppose $X$ lies on the interval [0, 1].  How can [**a Stack Exchange answer**](https://stats.stackexchange.com/a/523355/296678) be adapted to $g$, so that the algorithm estimates $g(\mathbb{E}[X])$ with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around $g$'s discontinuities? Is it enough to replace $g$ with a continuous function $f$ that equals $g$ everywhere except at that "negligible" area? Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified. Perhaps the tolerance could be defined as the integral of absolute differences between $f$ and $g$ instead of "negligible area"; in that case, how should the continuous $f$ be built?
 
