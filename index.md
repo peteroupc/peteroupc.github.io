@@ -18,6 +18,7 @@ Help me on my requests, open questions, and interesting challenges, listed next.
 * [**Requests and open questions**](./requests.html).  Spanning topics in mathematics, probability, random numbers, programming, and image files.
 * [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](./bernreq.html).  For experts in mathematics and probability.
 * [**Other open questions on probability**](./requestsother.html).    For experts in mathematics and probability.
+* [**The sampling problem**](./sampling.html). For experts in mathematics and probability.
 * [**Graphics and Music Challenges for Classic Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
 * [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md). For graphics programmers.
 * [**A Wish for a New Atlas**](./newatlas.html). To condense vast geographic knowledge into a compact book.
