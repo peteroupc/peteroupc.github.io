@@ -18,7 +18,7 @@ Classic graphics here means two- or three-dimensional graphics achieved by video
 
 Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can render even high-quality classic graphics using only software &mdash; without relying on specialized video cards &mdash; at screen resolutions typically targeted by late-1990s games.[^2]
 
-The specification in this challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further constraints to graphics computation (such as memory, resource, color, resolution, or polygon limits) are highly encouraged.
+The specification in this challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further constraints to graphics computation (such as memory, resource, color, resolution, or triangle limits) are highly encouraged.
 
 -------
 
@@ -26,19 +26,19 @@ Define the _larger screen dimension_ as the larger of the screen width and the s
 
 Limit 3D graphics to the following:
 
-1. The maximum number of polygons that can be displayed at a time is equal to screen width times screen height divided by 24.[^3] \(Examples: 256 &times; 192 / 24 = 2048 polygons; 640 &times; 480 / 24 = 12800 polygons.)
-    * A polygon is either a triangle, a convex quadrilateral, or a line segment.
-    * Each vertex of the polygon must point to a vertex from the vertex list described later.
-    * Each polygon can be translucent and/or wireframed.
+1. The maximum number of primitives that can be displayed at a time is equal to screen width times screen height divided by 24.[^3] \(Examples: 256 &times; 192 / 24 = 2048 polygons; 640 &times; 480 / 24 = 12800 primitives.)
+    * A _primitive_ is either a triangle, a convex quadrilateral, or a line segment.
+    * Each vertex of the primitive must point to a vertex from the vertex list described later.
+    * Each primitive can be translucent and/or wireframed.
 
-2. The maximum number of vertices that can be used at a time is 3 times the maximum number of polygons.
+2. The maximum number of vertices that can be used at a time is 3 times the maximum number of primitives.
     * A vertex consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
 3. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format. The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
 4. Depth buffers (Z buffers), clear colors, and fog colors are supported.
 5. The 3D graphics buffer's resolution is the same as the screen resolution.
-6. Polygons should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^4]
+6. Primitives should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^4]
 
 Limit 2D graphics to the following: [^5]
 
@@ -70,7 +70,7 @@ This specification was inspired by the graphics limitations of&mdash;
 - game consoles (handheld and for TVs) released before 2000, and
 - the Game Boy Advance, Nintendo DS, and Nintendo 3DS, all of which were released after 2000 but have relatively meager graphics capability.
 
-A game may impose further resource limits to those specifications (for example, to reduce the maximum number of 3D polygons, to disallow polygons, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^11]  Examples of optional constraints are the following:
+A game may impose further resource limits to those specifications (for example, to reduce the maximum number of 3D triangles, to disallow 3D rendering, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^11]  Examples of optional constraints are the following:
 
 - The game is limited to the 16 colors of the so-called _VGA palette_.
     - In the 8-bit-per-component format, this palette's colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.
@@ -100,7 +100,7 @@ Screen resolution:
     - Video graphics array (VGA) display modes: 640 &times; 480,[^15] 320 &times; 240,[^16] 320 &times; 200.[^17]
     - 4:3 aspect ratio: 640 &times; 480,[^15] 512 &times; 384,[^18] 400 &times; 300,[^19] 320 &times; 240,[^16] 256 &times; 192,[^20] 160 &times; 120.[^21]
     - Game console aspect ratios: 640 &times; 448,[^22] 320 &times; 224,[^23] 256 &times; 224,[^24] 256 &times; 240,[^25] 240 &times; 160,[^26] 160 &times; 144.[^27]
-    - PAL home computer aspect ratios: 320 &times; 256,[^28] 640 &times; 512,[^29] 360 &times; 288.[^30]
+    - 5:4 aspect ratio (PAL): 320 &times; 256,[^28] 640 &times; 512,[^29] 360 &times; 288.[^30]
     - Two-level monochrome graphics: 720 &times; 348,[^31] 640 &times; 200,[^32] 512 &times; 342.[^33]
     - Enhanced Graphics Adapter aspect ratio: 640 &times; 350.[^34]
     - 8:5 aspect ratio: 640 &times; 400,[^35] 320 &times; 200.[^17]
@@ -158,7 +158,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^2]: A computer has adequate performance for classic graphics if it achieves a score of&mdash;<br>(a) 2700 or greater on the 3DMark2000 benchmark when run without graphics acceleration, or<br>(b) 1500 or greater on the 3DMark2000 CPU Speed Test.<br>Either score corresponds to the running of a then-demanding 3-D graphics demo at 60 frames per second or faster.
 
-[^3]: To bolster the suggestions in this specification, it would be of interest to find the number of polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal. For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.
+[^3]: To bolster the suggestions in this specification, it would be of interest to find the number of triangles or polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal. For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.
 
 [^4]: Affine (as opposed to perspective-correct) texture mapping, together with the rounding of vertex coordinates to integers and the lack of antialiasing, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
 
@@ -174,19 +174,19 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^10]: This includes:<br>(1) Windows games and screen savers written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for graphics.<br>(2) Windows games and screen savers using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.  Examples are  _Chip's Challenge_ for Windows (1992) and Brian Goble's _The Adventures of MicroMan_ (1993).<br>(3) Games for MS-DOS or PC-9801 that were published before 2000.  Examples are _Quake_ (1996) and _WarCraft_ (1994).<br>(4) Games using an OpenGL version earlier than 1.2 for graphics.
 
-[^11]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation) to simulate showing more polygons or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
+[^11]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).<br>This specification does not preclude the use of prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation) to simulate showing more triangles or vertices at a time than otherwise allowed.  Doing this simulation using other software programming tricks would not be within the spirit of this specification, though.
 
 [^12]: MS-DOS applications are normally limited to 640 kibibytes or less of _conventional memory_, along with whatever memory is carried by the video card.  262,144 bytes is the usual minimum of graphics memory for VGA video cards.
 
 [^13]: It wasn't until the Pentium processor's advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of _Michael Abrash's Graphics Programming Black Book_.
 
-[^14]: In addition to the resolutions shown here, there are modern games that employ low resolutions with a 16:9 aspect ratio, to take advantage of high-definition displays.  These include 640 &times; 360 (_Blasphemous_); 400 &times; 225 (_Unsighted_); 480 &times; 270 (_Enter the Gungeon_); 320 &times; 180 (_Celeste_).
+[^14]: In addition to the resolutions shown here, there are modern games that employ low resolutions with the same 16:9 aspect ratio as high-definition displays.  These include 640 &times; 360 (_Blasphemous_); 400 &times; 225 (_Unsighted_); 480 &times; 270 (_Enter the Gungeon_); 320 &times; 180 (_Celeste_).
 
 [^15]: VGA mode 12h (16 colors).
 
 [^16]: PlayStation (One); Nintendo 3DS lower screen; larger VGA "mode X" (256 colors).
 
-[^17]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors); Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode.
+[^17]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors); Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
 
 [^18]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also required by the _PC 98 System Design Guide_.
 
@@ -198,9 +198,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^22]: PlayStation 2 NTSC.
 
-[^23]: PC Engine/TurboGrafx 16; Sega Mega Drive/Sega Genesis; Neo Geo NTSC.
+[^23]: Sega Mega Drive/Sega Genesis; Neo Geo NTSC.
 
-[^24]: Effective resolution of Famicom/Nintendo Entertainment System NTSC; Super Famicom/Super Nintendo Entertainment System NTSC.
+[^24]: Effective resolution of Famicom/Nintendo Entertainment System NTSC; Super Famicom/Super Nintendo Entertainment System NTSC; minimum resolution of PC Engine/TurboGrafx 16.
 
 [^25]: Nintendo Entertainment System PAL; Super Nintendo Entertainment System PAL.
 
@@ -208,7 +208,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^27]: Game Boy, Game Boy Color, Sega Game Gear.
 
-[^28]: Amiga PAL; Neo Geo PAL.
+[^28]: Amiga PAL ("square" pixels); Neo Geo PAL.
 
 [^29]: PlayStation 2 PAL.  Note that this covers more than 307,200 total pixels.
 
