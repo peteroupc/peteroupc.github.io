@@ -190,7 +190,7 @@ In general, the same three numbers, such as (1, 0.5, 0.3), identify a different-
 > **Notes:**
 >
 > 1. In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.
-> 2. The term _wide color gamut_ (WCG) usually refers to a wider range of colors than sRGB.  The term [**_high dynamic range_**](https://android-developers.googleblog.com/2025/08/what-is-hdr.html) (HDR) refers to a higher maximum "brightness" compared to what is called "standard dynamic range" or "SDR"[^9], and does not necessarily mean a "darker" black level, "better" black detail, higher "contrast", or more vivid colors. (Mano 2018\)[^10] contains an introduction to WCG.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.
+> 2. The term _wide color gamut_ (WCG) usually refers to a wider range of colors than sRGB.  The term [**_high dynamic range_**](https://android-developers.googleblog.com/2025/08/what-is-hdr.html) (HDR) refers to a higher maximum _luminance_ (see "CIE XYZ", later) compared to what is called "standard dynamic range" or "SDR"[^9], and does not necessarily mean a "darker" black level, "better" black detail, higher "contrast", or more vivid colors. (Mano 2018\)[^10] contains an introduction to WCG.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.
 > 3. RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc _encoded RGB_ colors.
 
 <a id=sRGB></a>
@@ -1834,7 +1834,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^8]: B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".
 
-[^9]: "Standard dynamic range" is poorly defined; it typically refers to image content and displays that reach no more than the maximum "brightness" achievable by typical cathode-ray-tube monitors for consumer use.
+[^9]: "Standard dynamic range" is poorly defined; it typically refers to image content and displays that reach no more than the maximum luminance achievable by typical cathode-ray-tube monitors for consumer use.
 
 [^10]: Mano, Y., et al.  "Enhancing the Netflix UI Experience with HDR", Netflix Technology Blog, Medium.com, Sep. 24, 2018.
 
