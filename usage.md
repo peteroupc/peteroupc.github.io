@@ -26,7 +26,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
 | happen | occur, take place, unfold, come about, manifest, produce itself, present itself, come to pass. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
-| leave | depart, get out of, exit, step away (from), abandon, go away (from). | In the sense of 'go away'. |
+| leave | depart, get out of, exit, step away (from), abandon, go away (from), get away (from), run away (from), walk away. | In the sense of 'go away'. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone]; _an event_ puts [someone] to death |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] the death of many; _an event_ puts many to death |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
