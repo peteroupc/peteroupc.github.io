@@ -57,16 +57,16 @@ def prepareMarkdown(data)
      next "[^#{newref+1}]"
   }
   if data.include?("](\#Note1")
-     raise "Sanity check failure"
+     raise "Correctness check failure"
   end
   if data.include?("](\#Note6")
-     raise "Sanity check failure"
+     raise "Correctness check failure"
   end
   data=data.gsub( /\[\^([A-Za-z\d]+)\](\s*)\(/ ) { "[^#{$1}]#{$2}\\(" } #/
   data=data.gsub( /<<([^\|\n>]*)\|([^\|]+?)>>/ ){
      noteref=$1||""
      notedata=$2
-     next $& if noteref[/^\s+/] # sanity check
+     next $& if noteref[/^\s+/] # correctness check
      newref=newnotetexts.length
      newrefid="Note#{newref+1}"
      noterefs[noteref]=newref
