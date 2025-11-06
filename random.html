@@ -4,7 +4,7 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="random-number-generator-recommendations-for-applications">Random Number Generator Recommendations for Applications</h1>
+<h1 id="random-number-generator-recommendations-for-applications">Random Number Generator Recommendations for Applications</h1><p>This version of the document is dated 2025-09-30.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -210,13 +210,13 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><a id="Manually_Seeded_PRNGs"></a></p>
 
-<h2 id="manually-seeded-prngs">Manually Seeded PRNGs</h2>
+<h2 id="manually seeded-prngs">Manually Seeded PRNGs</h2>
 
 <p>A given pseudorandom number generator (PRNG) generates the same sequence of “random” numbers for the same “seed”.  A <em>seed</em> is arbitrary data serving as the PRNG’s input.  Some applications care about reproducible “randomness” and thus could set a PRNG’s seed manually for reproducible “random” numbers.</p>
 
 <p><a id="When_to_Use_a_Manually_Seeded_PRNG"></a></p>
 
-<h3 id="when-to-use-a-manually-seeded-prng">When to Use a Manually Seeded PRNG</h3>
+<h3 id="when-to-use-a-manually seeded-prng">When to Use a Manually Seeded PRNG</h3>
 
 <p>By seeding a PRNG manually for reproducible “randomness”, an application will be tied to that PRNG or its implementation. Therefore, an application should not use a manually seeded PRNG (rather than a cryptographic or automatically-seeded RNG) unless—</p>
 
@@ -233,7 +233,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><a id="Manually_Seeded_PRNG_Recommendations"></a></p>
 
-<h3 id="manually-seeded-prng-recommendations">Manually Seeded PRNG Recommendations</h3>
+<h3 id="manually seeded-prng-recommendations">Manually Seeded PRNG Recommendations</h3>
 
 <p>If an application chooses to use a manually seeded PRNG for reproducible “randomness”, the application—</p>
 
@@ -252,7 +252,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><a id="Manually_Seeded_PRNG_Use_Cases"></a></p>
 
-<h3 id="manually-seeded-prng-use-cases">Manually Seeded PRNG Use Cases</h3>
+<h3 id="manually seeded-prng-use-cases">Manually Seeded PRNG Use Cases</h3>
 
 <p>Use cases for manually seeded PRNGs include the following:</p>
 
@@ -266,7 +266,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p><a id="Manually_Seeded_PRNGs_in_Games"></a></p>
 
-<h3 id="manually-seeded-prngs-in-games">Manually Seeded PRNGs in Games</h3>
+<h3 id="manually seeded-prngs-in-games">Manually Seeded PRNGs in Games</h3>
 
 <p>Many kinds of game software generate seemingly “random” game content that might need to be repeatedly regenerated, such as—</p>
 
