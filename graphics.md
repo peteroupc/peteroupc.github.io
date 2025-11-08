@@ -1,12 +1,13 @@
 # Graphics and Music Challenges for Classic Computer Applications
 
-The following are three challenges I make to the computer community, relating to:
+The following are challenges I make to the computer community, relating to:
 
 - [**Graphics for classic-style game development**](#Graphics_Challenge_for_Retro_Style_Games).
 - [**MIDI music synthesis for classic-style games and apps**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
-- [**Tileable wallpapers with limited colors and resolution**](#Other_Challenges_and_Projects).
+- [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
+- [**Other challenges and projects**](#Other_Challenges_and_Projects).
 
-All three serve to arouse nostalgia among 1990s computer users.
+All of them serve to arouse nostalgia among 1990s computer users.
 
 <a id=Graphics_Challenge_for_Classic_Style_Games></a>
 
@@ -144,7 +145,7 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
 - **Classic desktop wallpaper:** See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
 - **Button and border styles:** See [**`uielements.md` in the "peteroupc/classic-wallpaper" repository**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
 - **Survey of polygon and memory use in 1990s 3-D games:** To bolster the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory use (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^45]
-- **Sound bank development guide:** Write an open-source guide on using free-of-cost software to produce decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).  See the section on [**building instrument banks, earlier**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks). For this purpose, a sound bank in SoundFont 2 or Downloadable Sounds format that is of decent quality is about 4 million bytes in size.
+- **Sound bank development guide:** Write an open-source and detailed guide on using free-of-cost software to produce decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).  See the section on [**building instrument banks, earlier**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks). For this purpose, a sound bank in SoundFont 2 or Downloadable Sounds format that is of decent quality is about 4 million bytes in size.
 
 <a id=License></a>
 
