@@ -1862,7 +1862,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
     - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and
     - such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "[**Good Colour Maps: How to Design Them**](https://arxiv.org/abs/1509.03700)", arXiv:1509.03700 [cs.GR], 2015).
 
-[^21]: The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light&ndash;dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.
+[^21]: The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light&ndash;dark signal and the two opponent signals red/green and blue/yellow. See also endnote 5.
 
 [^22]: The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are subjective terms: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue strength (_colorfulness_) of an area in proportion to its brightness. (See also the CIE's International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on [**colorfulness**](https://en.wikipedia.org/wiki/Colorfulness)).
 
