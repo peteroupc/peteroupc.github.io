@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Essentials of SVG</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+            <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
+                    tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
+            </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1 id="essentials-of-svg">Essentials of SVG</h1>
+
+<p>The following short note explains the most useful things to know when writing vector graphics to SVG.</p>
+
+<p>First, we start with a skeleton of an SVG file (which uses the XML data format):</p>
+
+<pre>&lt;svg width='300px' height='300px' viewBox='0 0 100 100'
+     xmlns='http://www.w3.org/2000/svg'&gt;
+     &lt;ellipse style='stroke:none;fill:red' cx='10' cy='10' rx='2' ry='2'/&gt;
+     &lt;path style='stroke:black;fill:none' d='M10 10L20 20 L30 10Z'/&gt;
+&lt;/svg&gt;
+</pre>
+
+<p>In this simple example, we can already see several useful things:</p>
+
+<ul>
+  <li><code>width</code> and <code>height</code> give the size of the SVG in pixels relative to the host document.</li>
+  <li><code>viewBox</code> gives the size of the shape in SVG units (not pixels).  It has four numbers giving the left side, top side, width, and height.  y-coordinates run downwards.</li>
+  <li><code>ellipse</code> draws an ellipse.  <code>cx</code>, <code>cy</code>, <code>rx</code>, and <code>ry</code> gives its center’s-, x-, and y-coordinates and its horizontal and vertical radii, all in SVG units.</li>
+  <li><code>path</code> gives the shape of the path in a compact form specified as the <code>d</code> attribute.  Each path is broken up into commands, which are <a href="https://www.w3.org/TR/SVG/paths.html#PathData"><strong>detailed further in the SVG specification</strong></a>. The most important of these are perhaps M, L, and Z: the M command moves the pen; the L command draws with the pen, moving it to a new position; and the Z command closes the shape by drawing with the pen straight to the shape’s beginning.  In general, numbers given in the path specification are in SVG units, relative to the SVG document itself.</li>
+  <li><code>style</code> gives styling instructions for the path or ellipse.  Perhaps the most important style rules are <code>stroke</code>, <code>fill</code>, and <code>stroke-width</code>, and the following are examples of the <code>style</code> attribute, which are mostly self-explanatory: <code>style='stroke:red;stroke-width:1px'</code>, <code>style='stroke:none;'</code>, <code>style='fill:blue;'</code>, <code>style='fill:none;'</code> (here <code>px</code> means an SVG unit, relative to the SVG document itself).  An additional style rule is <code>vector-effect</code>, which can take the value <code>non-scaling-stroke</code> if the stroke should have the same thickness regardless of scaling (example: <code>style='stroke-width:1px; vector-effect:non-scaling-stroke'</code>).</li>
+</ul>
+
+<p>An SVG document can have any number of <code>path</code> elements, <code>ellipse</code> elements, or both, and each of these elements is a separate shape. Finally, each <code>path</code> and <code>ellipse</code> element can have a <code>transform</code> attribute, which describes an optional geometric transformation.  The attribute’s value is made up of <a href="https://www.w3.org/TR/SVG11/coords.html#TransformAttribute"><strong>one or more commands</strong></a> described further in the SVG specification.  The commands, which are followed in the order written, include “translate(x,y)” which moves the zero-point; “rotate(d)” which rotates the coordinate system by <em>d</em> degrees, and “scale(x)” which scales the coordinates by a factor of <em>x</em>. Examples of the attribute include <code>transform='translate(3, 5)'</code>, <code>transform='rotate(90)'</code>, and <code>transform=' translate(2, 2) scale(2)'</code>.</p>
+
+<p><a id="License"></a></p>
+
+<h2 id="license">License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+
+<div class="noprint">
+<p>
+<a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<p style='font-size:120%;font-weight:bold'><a href='https://peteroupc.github.io/svg.pdf'>Download a PDF of this page</a></p></nav></body></html>
