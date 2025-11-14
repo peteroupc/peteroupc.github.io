@@ -37,9 +37,10 @@ Limit 3-D graphics to the following:
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
 3. Textures must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format. The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
-4. Depth buffers (Z buffers), clear colors, and fog colors are supported.
-5. The 3-D graphics buffer's resolution is the same as the screen resolution.
-6. Primitives should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^3]
+4. Textures may contain transparent pixels.
+5. Depth buffers (Z buffers), clear colors, and fog colors are supported.
+6. The 3-D graphics buffer's resolution is the same as the screen resolution.
+7. Primitives should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^3]
 
 Limit 2-D graphics to the following: [^4]
 
@@ -107,19 +108,25 @@ Screen resolution:
     - 8:5 aspect ratio: 640 &times; 400,[^34] 320 &times; 200.[^16]
     - Other: 280 &times; 192,[^35] 480 &times; 272,[^36] 512 &times; 424, [^37] 400 &times; 240,[^38] 384 &times; 224,[^39] 160 &times; 200,[^40] 480 &times; 240.[^41]
 
-    This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the Sega Saturn or Nintendo 64, allowed games to be shown in multiple screen resolutions.
+    This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the Sega Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.
 
 - As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors" (S. Pruitt, "Frequently Asked Questions About HTML Coding for Internet Explorer 3.0", updated Jan. 30, 1997).
 
 - A game can support multiple "viewport sizes" (for the area of the screen in which the game's action is drawn) and/or pixel-column or -row doubling, all without changing screen resolution.  For example, the original _Doom_ (1993) supported several viewport sizes (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^42]
 
-Music and sound:
+Primitives per frame:
 
-- Besides the limitation on music, this specification has no further limitations on sounds.  Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sound (pulse-code modulation, such as .WAV files).  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.  When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^43]
+- The ability to display more than 20,000 3-D primitives at a time is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
 
 Frame rate:
 
-- No particular frame rate is required.  Modern games implementing this specification can choose to target 30, 40, or 60 frames per second.  Game consoles for TVs were designed for the TV's usual refresh rate (nearly 60 frames per second for NTSC and 50 for PAL).[^44] _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^42]
+- No particular frame rate is required.  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for the TV's usual refresh rate (nearly 60 frames per second for NTSC and 50 for PAL).[^43] _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^42]
+
+- For comfort purposes, a minimum frame rate may be required for games written for virtual reality headsets.  But such games are outside the scope of this specification.
+
+Music and sound:
+
+- Besides the limitation on music, this specification has no further limitations on sounds.  Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sound (pulse-code modulation, such as .WAV files).  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.  When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^44]
 
 Memory:
 
@@ -249,12 +256,12 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^42]: Fabien Sanglard, _Game Engine Black Book: Doom_.
 
-[^43]: The _Multimedia PC Specification_ (1991) required support in "multimedia PCs" for rendering at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in "multimedia PCs" for rendering at least 16-bit-per-sample stereo digitized sound at 44,100 Hz.
+[^43]: Until the early 1990s, the number of pixels rendered per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, the _Multimedia PC Specification_ (1991) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 pixel video at 15 frames per second, the recommendation in article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^44]: Until the early 1990s, the number of pixels rendered per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, the _Multimedia PC Specification_ (1991) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 pixel video at 15 frames per second, the recommendation in article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
+[^44]: The _Multimedia PC Specification_ (1991) required support in "multimedia PCs" for rendering at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in "multimedia PCs" for rendering at least 16-bit-per-sample stereo digitized sound at 44,100 Hz.
 
 [^45]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
 [^46]: A "top-of-the-line" PC from 1994 came with 8192 kibibytes of system memory: Fabien Sanglard, _Game Engine Black Book: Doom_.
 
-[^47]: For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.
+[^47]: For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.<br><br>An [**early study of polygon rendering rates**](http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html) in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding these rates in DOS games as opposed to, say, Windows games that use Direct3D.

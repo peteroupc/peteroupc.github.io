@@ -6,8 +6,10 @@ First, we start with a skeleton of an SVG file (which uses the XML data format):
 
     <svg width='300px' height='300px' viewBox='0 0 100 100'
          xmlns='http://www.w3.org/2000/svg'>
-         <ellipse style='stroke:none;fill:red' cx='10' cy='10' rx='2' ry='2'/>
-         <path style='stroke:black;fill:none' d='M10 10L20 20 L30 10Z'/>
+         <ellipse style='stroke:none;fill:red'
+           cx='10' cy='10' rx='2' ry='2'/>
+         <path style='stroke:black;fill:none'
+           d='M10 10L20 20 L30 10Z'/>
     </svg>
 
 In this simple example, we can already see several useful things:
