@@ -102,7 +102,7 @@ Screen resolution:
     - Video graphics array (VGA) display modes: 640 &times; 480,[^14] 320 &times; 240,[^15] 320 &times; 200.[^16]
     - 4:3 aspect ratio: 640 &times; 480,[^14] 512 &times; 384,[^17] 400 &times; 300,[^18] 320 &times; 240,[^15] 256 &times; 192,[^19] 160 &times; 120.[^20]
     - Game console aspect ratios: 640 &times; 448,[^21] 320 &times; 224,[^22] 256 &times; 224,[^23] 256 &times; 240,[^24] 240 &times; 160,[^25] 160 &times; 144.[^26]
-    - 5:4 aspect ratio (PAL): 320 &times; 256,[^27] 640 &times; 512,[^28] 360 &times; 288.[^29]
+    - 5:4 aspect ratio (found above all in phase-alternating-line [PAL] displays): 320 &times; 256,[^27] 640 &times; 512,[^28] 360 &times; 288.[^29]
     - Two-level monochrome graphics: 720 &times; 348,[^30] 640 &times; 200,[^31] 512 &times; 342.[^32]
     - Enhanced Graphics Adapter aspect ratio: 640 &times; 350.[^33]
     - 8:5 aspect ratio: 640 &times; 400,[^34] 320 &times; 200.[^16]
@@ -116,13 +116,13 @@ Screen resolution:
 
 Primitives per frame:
 
-- The ability to display more than 20,000 3-D primitives at a time is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
+- The ability to display more than 20,000 triangles at a time is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
 
 Frame rate:
 
 - No particular frame rate is required.  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for the TV's usual refresh rate (nearly 60 frames per second for NTSC and 50 for PAL).[^43] _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^42]
 
-- For comfort reasons, a minimum frame rate may be required for games written for virtual-reality headsets.  But such games are outside the scope of this specification.
+- For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000, and are outside the scope of this specification.
 
 Music and sound:
 
@@ -159,7 +159,7 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
 
 - **Classic desktop wallpaper:** See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
 - **Button and border styles:** See [**`uielements.md` in the "peteroupc/classic-wallpaper" repository**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
-- **Survey of polygon and memory usage in 1990s 3-D games:** To bolster the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^47]
+- **Survey of polygon and memory usage in 1990s 3-D games:** To buttress the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^47]
 - **Sound bank development guide:** Write an open-source and detailed guide on using free-of-cost software to produce decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).  See the section on [**building instrument banks, earlier**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks). For this purpose, a sound bank in SoundFont 2 or Downloadable Sounds format that is of decent quality is about 4 million bytes in size.
 
 <a id=License></a>
