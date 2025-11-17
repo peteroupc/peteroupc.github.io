@@ -71,7 +71,7 @@ Other requirements:
 
 This specification for "classic graphics"[^8] in modern games largely reflects the graphics limitations of&mdash;
 
-- PCs released in the mid- to late 1990s,
+- consumer PCs released in the mid- to late 1990s,
 - home computers released before 1995,
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier, and
@@ -90,7 +90,7 @@ In general, PC applications that feature classic graphics include:
 
 ### Optional Limits
 
-A game may impose further resource limits to those specifications (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D rendering, to reduce the number of colors per tile allowed, or [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^9]  Examples of optional constraints are the following:
+A game may impose further resource limits to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D rendering, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^9]  Examples of optional constraints are the following:
 
 - The game is limited to the 16 colors of the so-called _VGA palette_.
     - In the 8-bit-per-component format, this palette's colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.
@@ -107,9 +107,9 @@ A game may impose further resource limits to those specifications (for example, 
 - The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame buffer to the screen (such as through GDI’s `StretchDIBits` or copying to VGA’s frame buffer).
 - The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^11]
 
-<a id=Notes_on_Specifications></a>
+<a id=Notes_on_Specification></a>
 
-### Notes on Specifications
+### Notes on Specification
 
 Screen resolution:
 
@@ -128,7 +128,7 @@ Screen resolution:
 
     This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the Sega Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.
 
-- As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors" (S. Pruitt, "Frequently Asked Questions About HTML Coding for Internet Explorer 3.0", updated Jan. 30, 1997).
+- As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^47]
 
 - A game can support multiple "viewport sizes" (for the area of the screen in which the game's action is drawn) and/or pixel-column or -row doubling, all without changing screen resolution.  For example, the original _Doom_ (1993) supported several viewport sizes (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^41]
 
@@ -282,4 +282,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^46]: For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at 320 &times; 240 pixels.<br>(4) The [**3DMark2000 benchmark**](https://web.archive.org/web/20050404173017/http://www.nvnews.net/reviews/annihilator_pro/3dmark_2000/html/tests.htm#fill) comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail and is intended for 640 &times; 480 resolution.<br>(5) An [**early study of polygon rendering rates**](http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html) in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games.
 
-[^47]: This aspect ratio is found above all in PAL (phase-alternating-line) displays.
+[^47]: S. Pruitt, "Frequently Asked Questions About HTML Coding for Internet Explorer 3.0", updated Jan. 30, 1997
