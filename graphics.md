@@ -9,6 +9,25 @@ The following are challenges I make to the computer community, relating to:
 
 All of them serve to arouse nostalgia among 1990s computer users.
 
+<a id=Contents></a>
+
+## Contents
+
+- [**Contents**](#Contents)
+- [**Graphics Challenge for Classic-Style Games**](#Graphics_Challenge_for_Classic_Style_Games)
+    - [**The Specification**](#The_Specification)
+    - [**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)
+    - [**Optional Limits**](#Optional_Limits)
+    - [**Notes on Specification**](#Notes_on_Specification)
+- [**Building a Public-Domain music synthesis library and instrument banks**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks)
+- [**Other Challenges and Projects**](#Other_Challenges_and_Projects)
+    - [**Classic desktop wallpaper**](#Classic_desktop_wallpaper)
+    - [**Button and border styles for classic interfaces**](#Button_and_border_styles_for_classic_interfaces)
+    - [**Survey of polygon and memory usage in 1990s 3-D games**](#Survey_of_polygon_and_memory_usage_in_1990s_3_D_games)
+    - [**Sound bank development guide**](#Sound_bank_development_guide)
+- [**License**](#License)
+- [**Notes**](#Notes)
+
 <a id=Graphics_Challenge_for_Classic_Style_Games></a>
 
 ## Graphics Challenge for Classic-Style Games
@@ -175,10 +194,31 @@ To improve support for MIDI (Musical Instrument Digital Interface) music playbac
 
 ## Other Challenges and Projects
 
-- **Classic desktop wallpaper:** See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
-- **Button and border styles:** See [**`uielements.md` in the "peteroupc/classic-wallpaper" repository**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
-- **Survey of polygon and memory usage in 1990s 3-D games:** To buttress the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^47]
-- **Sound bank development guide:** Write an open-source and detailed guide on using free-of-cost software to produce decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).  See the section on [**building instrument banks, earlier**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks). For this purpose, a sound bank in SoundFont 2 or Downloadable Sounds format that is of decent quality is about 4 million bytes in size.
+Other challenges and projects I make to the computer community.
+
+<a id=Classic_desktop_wallpaper></a>
+
+### Classic desktop wallpaper
+
+See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited palette of colors and a limited pixel size &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
+
+<a id=Button_and_border_styles_for_classic_interfaces></a>
+
+### Button and border styles for classic interfaces
+
+See [**`uielements.md` in the "peteroupc/classic-wallpaper" repository**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
+
+<a id=Survey_of_polygon_and_memory_usage_in_1990s_3_D_games></a>
+
+### Survey of polygon and memory usage in 1990s 3-D games
+
+To buttress the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^47]
+
+<a id=Sound_bank_development_guide></a>
+
+### Sound bank development guide
+
+Write an open-source and detailed guide on using free-of-cost software to produce decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).  See the section on [**building instrument banks, earlier**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks). For this purpose, a sound bank in SoundFont 2 or Downloadable Sounds format that is of decent quality is about 4 million bytes in size.
 
 <a id=License></a>
 
