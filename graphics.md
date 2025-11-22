@@ -57,7 +57,7 @@ Limit 3-D graphics to the following:
     * A vertex consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
     * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
 
-3. Textures (images from which 3-D primitives are drawn) must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format. The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
+3. Textures (images that are applied to the surface of 3-D objects) must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format. The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
 4. Textures may contain transparent pixels.
 5. Depth buffers (Z buffers), screen-clearing colors, and fog colors are supported.
 6. The 3-D graphics buffer's resolution is the same as the screen resolution.
@@ -81,8 +81,8 @@ The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layer
 
 Other requirements:
 
-- **Screen resolution:** Screen resolution is 307,200 total pixels (for example, 640 &times; 480) or smaller.[^6]
-- **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 and the [**Authoring Guidelines for MIDI Files**](https://learn.microsoft.com/en-us/windows/win32/multimedia/authoring-guidelines-for-midi-files) should be followed for such files.[^7]
+- **Screen resolution:** Screen resolution is no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels wide by 480 pixels high).[^6]
+- **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^7]
 
 <a id=Classic_Graphics_in_Scope></a>
 
@@ -152,13 +152,15 @@ Screen resolution:
 
 - A game can support multiple "viewport sizes" (for the area of the screen in which the game's action is drawn) and/or pixel-column or -row doubling, all without changing screen resolution.  For example, the original _Doom_ (1993) supported several viewport sizes (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^43]
 
-3-D triangles:
+3-D graphics:
 
 - The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
 
-- This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation) to simulate showing more triangles or vertices at a time than otherwise allowed.
+- This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
 
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as through layers of sprites) are outside the spirit of this specification.
+
+- Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 
 Frame rate:
 
@@ -237,9 +239,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: A computer has adequate performance for classic graphics if it achieves a score of&mdash;<br>(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 &times; 480) when run without graphics acceleration, or<br>(b) 195 or greater on the 3DMark2000 CPU speed test.<br>Both figures correspond to the running of two graphically demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo's detail level averages more than 12,800 triangles per frame; see the section "Test Descriptions" in the 3DMark2000 help).
 
-[^2]: Affine (as opposed to perspective-correct) texture mapping, together with the rounding of vertex coordinates to integers and the lack of edge smoothing (antialiasing), contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
+[^2]: An _affine_ texture mapping keeps parallel lines parallel.  A _perspective-correct_ texture mapping accounts for distance from the viewer: closer objects appear larger.  Affine texture mapping, together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
 
-[^3]: A possible alternative to these 2-D limits is to require the use of a frame buffer with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
+[^3]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of pixels in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
 [^4]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
