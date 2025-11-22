@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.date" content="2025-11-21"><meta name="citation_date" content="2025/11/21"><meta name="citation_publication_date" content="2025/11/21"><meta name="citation_online_date" content="2025/11/21"><meta name="og:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.date" content="2025-11-22"><meta name="citation_date" content="2025/11/22"><meta name="citation_publication_date" content="2025/11/22"><meta name="citation_online_date" content="2025/11/22"><meta name="og:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-computer-applications">Graphics and Music Challenges for Classic Computer Applications</h1><p>This version of the document is dated 2025-11-21.</p>
+<h1 id="graphics-and-music-challenges-for-classic-computer-applications">Graphics and Music Challenges for Classic Computer Applications</h1><p>This version of the document is dated 2025-11-22.</p>
 
 <p>The following are challenges I make to the computer community, relating to:</p>
 
@@ -117,7 +117,7 @@
 
 <h3 id="classic-graphics-in-scope">Classic Graphics in Scope</h3>
 
-<p>This specification for “classic graphics”<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> in modern games largely reflects the graphics limitations of—</p>
+<p>This specification for “classic graphics”<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> in modern games largely reflects the graphic s limitations of—</p>
 
 <ul>
   <li>consumer PCs released in the mid- to late 1990s,</li>
@@ -202,6 +202,17 @@
   </li>
 </ul>
 
+<p>Frame rate:</p>
+
+<ul>
+  <li>
+    <p>No particular frame rate is required.<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC and 50 for PAL). <em>Doom</em> (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.<sup id="fnref:43:1"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup></p>
+  </li>
+  <li>
+    <p>For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000, and are outside the scope of this specification.</p>
+  </li>
+</ul>
+
 <p>3-D graphics:</p>
 
 <ul>
@@ -215,25 +226,25 @@
     <p>This specification allows for drawing a 3-D graphic as a <a href="https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation"><strong><em>voxel mesh</em></strong></a> (formed from very small brick-shaped elements called <em>voxels</em>), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as through layers of sprites) are outside the spirit of this specification.</p>
   </li>
   <li>
+    <p>The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective-correct texture mapping, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexturing, edge antialiasing, source alpha blending, and destination alpha blending.  Software that is as performant as hardware meeting the requirements and recommendations of the <em>PC 99 System Design Guide</em> sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.</p>
+  </li>
+  <li>
     <p>Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000’s beginning.</p>
-  </li>
-</ul>
-
-<p>Frame rate:</p>
-
-<ul>
-  <li>
-    <p>No particular frame rate is required.<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC and 50 for PAL). <em>Doom</em> (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.<sup id="fnref:43:1"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup></p>
-  </li>
-  <li>
-    <p>For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000, and are outside the scope of this specification.</p>
   </li>
 </ul>
 
 <p>Music and sound:</p>
 
 <ul>
-  <li>Besides the limitation on music, this specification has no further limitations on sounds.  Early game consoles supported sound only through one or more <em>programmable sound generators</em>, such as square and triangle wave generators, as opposed to digitized sounds<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>.  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.  When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup></li>
+  <li>
+    <p>Besides the limitation on music, this specification has no further limitations on sounds.</p>
+  </li>
+  <li>
+    <p>Early game consoles supported sound only through one or more <em>programmable sound generators</em>, such as square and triangle wave generators, as opposed to digitized sounds<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>.  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.</p>
+  </li>
+  <li>
+    <p>When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup></p>
+  </li>
 </ul>
 
 <p>Memory:</p>

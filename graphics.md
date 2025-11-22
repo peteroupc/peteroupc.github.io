@@ -88,7 +88,7 @@ Other requirements:
 
 ### Classic Graphics in Scope
 
-This specification for "classic graphics"[^8] in modern games largely reflects the graphics limitations of&mdash;
+This specification for "classic graphics"[^8] in modern games largely reflects the graphic s limitations of&mdash;
 
 - consumer PCs released in the mid- to late 1990s,
 - home computers released before 1995,
@@ -152,6 +152,12 @@ Screen resolution:
 
 - A game can support multiple "viewport sizes" (for the area of the screen in which the game's action is drawn) and/or pixel-column or -row doubling, all without changing screen resolution.  For example, the original _Doom_ (1993) supported several viewport sizes (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^43]
 
+Frame rate:
+
+- No particular frame rate is required.[^44]  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC and 50 for PAL). _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^43]
+
+- For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000, and are outside the scope of this specification.
+
 3-D graphics:
 
 - The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
@@ -160,17 +166,17 @@ Screen resolution:
 
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as through layers of sprites) are outside the spirit of this specification.
 
+- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective-correct texture mapping, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexturing, edge antialiasing, source alpha blending, and destination alpha blending.  Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.
+
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
-
-Frame rate:
-
-- No particular frame rate is required.[^44]  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC and 50 for PAL). _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^43]
-
-- For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000, and are outside the scope of this specification.
 
 Music and sound:
 
-- Besides the limitation on music, this specification has no further limitations on sounds.  Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sounds[^45].  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.  When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^46]
+- Besides the limitation on music, this specification has no further limitations on sounds.
+
+- Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sounds[^45].  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.
+
+- When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^46]
 
 Memory:
 
