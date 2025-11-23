@@ -61,7 +61,7 @@ Limit 3-D graphics to the following:
 4. Textures may contain transparent pixels.
 5. Depth buffers (Z buffers), screen-clearing colors, and fog colors are supported.
 6. The 3-D graphics buffer's resolution is the same as the screen resolution.
-7. Primitives should undergo perspective-correct texture mapping, but affine mapping may be implemented instead.[^2]
+7. Primitives should undergo perspective correction, but this is optional.[^2]
 
 Limit 2-D graphics to the following: [^3]
 
@@ -88,13 +88,15 @@ Other requirements:
 
 ### Classic Graphics in Scope
 
-This specification for "classic graphics"[^8] in modern games largely reflects the graphic s limitations of&mdash;
+This specification for "classic graphics"[^8] in modern games largely reflects the graphics limitations of&mdash;
 
-- consumer PCs released in the mid- to late 1990s,
+- consumer PCs (personal computers) released in the mid- to late 1990s,
 - home computers released before 1995,
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier, and
 - the Game Boy Advance, Nintendo DS, and Nintendo 3DS, all of which were released after 2000 but have relatively meager graphics capability.
+
+In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.
 
 Some video game hardware from the late 1990s may have 3-D graphics capabilities exceeding what is "classic" here, such as Sega Model 3 (1996), Sega Naomi, or NVIDIA GeForce 256 (late 1999).
 
@@ -154,9 +156,15 @@ Screen resolution:
 
 Frame rate:
 
-- No particular frame rate is required.[^44]  Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.  Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC and 50 for PAL). _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^43]
+- No particular frame rate is required.[^44]
 
-- For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000, and are outside the scope of this specification.
+- Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.
+
+- Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC and 50 for PAL).
+
+- _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^43]
+
+- For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000 (with the notable exception of Nintendo's Virtual Boy), and are outside the scope of this specification.
 
 3-D graphics:
 
@@ -166,7 +174,7 @@ Frame rate:
 
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as through layers of sprites) are outside the spirit of this specification.
 
-- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective-correct texture mapping, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexturing, edge antialiasing, source alpha blending, and destination alpha blending.  Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.
+- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective correction, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexturing, edge antialiasing, source alpha blending, and destination alpha blending.  Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.
 
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 
@@ -245,13 +253,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: A computer has adequate performance for classic graphics if it achieves a score of&mdash;<br>(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 &times; 480) when run without graphics acceleration, or<br>(b) 195 or greater on the 3DMark2000 CPU speed test.<br>Both figures correspond to the running of two graphically demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo's detail level averages more than 12,800 triangles per frame; see the section "Test Descriptions" in the 3DMark2000 help).
 
-[^2]: An _affine_ texture mapping keeps parallel lines parallel.  A _perspective-correct_ texture mapping accounts for distance from the viewer: closer objects appear larger.  Affine texture mapping, together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
+[^2]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (also known as _affine texture mapping_), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
 
 [^3]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of pixels in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
 [^4]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
-[^5]: But alpha blending (the mixing of one color with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
+[^5]: But alpha blending (the mixing of one image with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
 [^6]: If the game screen is two colors only (such as black and white), a game could choose to allow screen resolutions up to 800,000 total pixels.  For example, a 1024 &times; 768 screen has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels).
 
@@ -273,9 +281,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^15]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors); Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
 
-[^16]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also required by the _PC 98 System Design Guide_.
+[^16]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also recommended by the _PC 98 System Design Guide_.
 
-[^17]: One low resolution required by the _PC 98 System Design Guide_.
+[^17]: One low resolution recommended by the _PC 98 System Design Guide_.
 
 [^18]: Nintendo DS; NEC PC-6001; Sega Master System/Sega Mark III; MSX; Colecovision.
 
@@ -333,7 +341,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^45]: Digitized sound is also known as pulse-code modulation (PCM) and is often stored in files ending in ".WAV".
 
-[^46]: The _Multimedia PC Specification_ (1991) required support in "multimedia PCs" for rendering at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in "multimedia PCs" for rendering at least 16-bit-per-sample stereo digitized sound at 44,100 Hz.
+[^46]: The _Multimedia PC Specification_ (1991) required support in "multimedia PCs" for playback of at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in "multimedia PCs" for playing back at least 16-bit-per-sample stereo digitized sound at 44,100 Hz.
 
 [^47]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
