@@ -55,27 +55,36 @@ Limit 3-D graphics to the following:
 
 2. The maximum number of vertices that can be displayed at a time is 3 times the maximum number of primitives.
     * A vertex consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
-    * For each color, the red component is 5 bits, the green, 5 bits, and the blue, 5 bits.
+    * Each vertex color must follow this color format: The red, green, and blue components occupy up to 5 bits each.
 
-3. Textures (images that are applied to the surface of 3-D objects) must have the same color format as vertex colors, or may employ a 4-, 16-, or 256-color palette with that color format. The width and height of each texture must be a power of 2.  A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
-4. Textures may contain transparent pixels.
-5. Depth buffers (Z buffers), screen-clearing colors, and fog colors are supported.
-6. The 3-D graphics buffer's resolution is the same as the screen resolution.
-7. Primitives should undergo perspective correction, but this is optional.[^2]
+3. Each texture (an image that is applied to the surface of 3-D objects) must&mdash;
+    * be in a 16-bit-per-pixel format, where each pixel has the vertex color format given earlier, or
+    * be in a 1-, 2-, 4-, or 8-bit-per-pixel format and have a table of colors with the vertex color format given earlier.
+
+4. The width and height of each texture must be a power of 2.
+5. A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
+6. Textures may contain transparent pixels.
+7. Depth buffers (Z buffers), screen-clearing colors, and fog colors are supported.
+8. The 3-D graphics buffer's resolution is the same as the screen resolution.
+9. 3-D primitives should undergo perspective correction, but this is optional.[^2]
 
 Limit 2-D graphics to the following: [^3]
 
 1. Up to three 2-D layers can be displayed at a time.  If 3-D graphics are not being displayed, a fourth 2-D layer can also be displayed.  Otherwise, a layer for the 3-D graphics can be displayed.  Each 2-D layer is a rectangular array of references to _tiles_ (a _tile_ is a small rectangular array of pixels).
-2. There are sixteen palettes of 16 colors each (using the color format for vertex colors).
-3. The tiles have the same size (32 &times; 32 pixels or smaller) and each tile uses the colors of one of the sixteen palettes just described.  A tile size of 8 &times; 8 pixels is suggested.
-4. The 2-D and 3-D layers may contain transparent pixels.
-5. Up to two of the 2-D layers can undergo a 2-D affine transformation.
-6. Separate from layers, 2-D sprites can be displayed.  Each sprite is a rectangular array of either tiles or pixels, has size up to X &times; Y pixels, and may contain transparent pixels, but not translucent (semitransparent) pixels. Up to N sprites can be displayed at a time.  Each sprite can be rendered above or below any of the 2-D layers.
-
-    - X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
-    - N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^4]
-
-7. Tiles and sprites can be rendered flipped on either or both axes.
+2. The 2-D and 3-D layers may contain transparent pixels.
+3. Up to two of the 2-D layers can undergo a 2-D affine transformation.
+4. The tiles have the same size (32 &times; 32 pixels or smaller). A tile size of 8 &times; 8 pixels is suggested.
+5. There are sixteen color tables reserved for use by tiles.  Each color in the table is of the vertex color format given earlier. The application chooses one:
+    1. Each tile is in a 1-bit-per-pixel format, and each color table has 2 colors.
+    2. Each tile is in a 2-bit-per-pixel format, and each color table has 4 colors.
+    3. Each tile is in a 4-bit-per-pixel format, and each color table has 16 colors.
+6. Separate from layers, 2-D _sprites_ can be displayed.  Each sprite is a rectangular array of either tiles or pixels.
+7. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
+8. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^4]
+9. Each sprite made of pixels (rather than tiles) must have a pixel format allowed for 3-D textures, given earlier.
+10. Each sprite can be rendered above or below any of the 2-D layers.
+11. Sprites may contain transparent pixels, but not translucent (semitransparent) pixels.
+12. Tiles and sprites can be rendered flipped on either or both axes.
 
 The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^5]
 
@@ -172,9 +181,9 @@ Frame rate:
 
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
 
-- This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as through layers of sprites) are outside the spirit of this specification.
+- This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification.
 
-- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective correction, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexture blending, edge antialiasing, source alpha blending, and destination alpha blending.[^45]  Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.
+- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective correction, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexture blending, edge antialiasing, source alpha blending, and destination alpha blending.[^45] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.  Stencil buffers, bump mapping, and environment mapping are borderline "classic-graphics" capabilities.
 
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 
@@ -339,7 +348,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^44]: Until the early 1990s, the number of pixels an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, the _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-pixel graphics at a rate of 140,000 pixels per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million pixels per second (sufficient for 320 &times; 240 pixel video at 15 frames per second, the recommendation in article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million pixels per second needed to display 640 &times; 480 pixel video smoothly at 20 frames per second.
 
-[^45]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (_Michael Abrash's Graphics Programming Black Book_, chapter 69).  Multitexture blending includes _bump mapping_ and _environment mapping_, prevalent in 1998 and 1999.
+[^45]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (_Michael Abrash's Graphics Programming Black Book_, chapter 69).
 
 [^46]: Digitized sound is also known as pulse-code modulation (PCM) and is often stored in files ending in ".WAV".
 
