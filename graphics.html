@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.date" content="2025-11-26"><meta name="citation_date" content="2025/11/26"><meta name="citation_publication_date" content="2025/11/26"><meta name="citation_online_date" content="2025/11/26"><meta name="og:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.date" content="2025-12-04"><meta name="citation_date" content="2025/12/04"><meta name="citation_publication_date" content="2025/12/04"><meta name="citation_online_date" content="2025/12/04"><meta name="og:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-computer-applications">Graphics and Music Challenges for Classic Computer Applications</h1><p>This version of the document is dated 2025-11-26.</p>
+<h1 id="graphics-and-music-challenges-for-classic-computer-applications">Graphics and Music Challenges for Classic Computer Applications</h1><p>This version of the document is dated 2025-12-04.</p>
 
 <p>The following are challenges I make to the computer community, relating to:</p>
 
@@ -74,14 +74,14 @@
   </li>
   <li>The maximum number of vertices that can be displayed at a time is 3 times the maximum number of primitives.
     <ul>
-      <li>A vertex consists of an XYZ position, an XY texture coordinate, and a red–green–blue vertex color.</li>
+      <li>A <em>vertex</em> consists of an XYZ position, an XY texture coordinate, and a red–green–blue vertex color.</li>
       <li>Each vertex color follows this color format: The red, green, and blue components occupy up to 5 bits each.</li>
     </ul>
   </li>
   <li>Each <em>texture</em> (an image that is applied to the surface of 3-D objects)—
     <ul>
       <li>is in a 16-bit-per-pixel format, where each pixel has the vertex color format given earlier, or</li>
-      <li>is in a 1-, 2-, 4-, or 8-bit-per-pixel format and have a table of colors with the vertex color format given earlier.</li>
+      <li>is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with the vertex color format given earlier.</li>
     </ul>
   </li>
   <li>The width and height of each texture is a power of 2.</li>
@@ -99,7 +99,7 @@
   <li>The 2-D and 3-D layers may contain transparent pixels.</li>
   <li>Up to two of the 2-D layers can undergo a 2-D affine transformation.</li>
   <li>The tiles have the same size (32 × 32 pixels or smaller). A tile size of 8 × 8 pixels is suggested.</li>
-  <li>There are sixteen color tables reserved for use by tiles.  Each color in each table is of the vertex color format given earlier. The application chooses one:
+  <li>There are sixteen color tables reserved for use by tiles.  Each color in each table is of the vertex color format given earlier. Each tile uses one of these color tables. The application chooses one:
     <ol>
       <li>Each tile is in a 1-bit-per-pixel format, and each color table has 2 colors.</li>
       <li>Each tile is in a 2-bit-per-pixel format, and each color table has 4 colors.</li>
@@ -110,9 +110,9 @@
   <li>Each sprite has size up to X × Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)</li>
   <li>Up to N sprites can be displayed at a time, where N is calculated as (screen width × screen height × 16) / (X × Y), rounded up, but not more than 512.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></li>
   <li>Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.</li>
-  <li>Each sprite can be rendered above or below any of the 2-D layers.</li>
+  <li>Each sprite can be drawn above or below any of the 2-D layers.</li>
   <li>Sprites may contain transparent pixels, but not translucent (semitransparent) pixels.</li>
-  <li>Tiles and sprites can be rendered flipped on either or both axes.</li>
+  <li>Tiles and sprites can be drawn flipped on either or both axes.</li>
 </ol>
 
 <p>The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. <sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
@@ -152,6 +152,8 @@
   <li>So-called “multimedia titles” from the 1990s, or applications resembling interactive versions of books (generally reference and other nonfiction works), complete with sound, animation, and video.  See the <em>Authoring Guide</em> that came with Microsoft’s Multimedia Development Kit.</li>
 </ol>
 
+<p>The game <em>Quake III Arena</em>, released in December 1999, <a href="https://www.dosdays.co.uk/topics/early_3d_games.php"><strong>required DirectX 7 and at least 64 million bytes of memory</strong></a>, and is one potential upper limit to what is considered “classic graphics” in this specification.</p>
+
 <p><a id="Optional_Limits"></a></p>
 
 <h3 id="optional-limits">Optional Limits</h3>
@@ -161,7 +163,7 @@
 <ul>
   <li>The game is limited to the 16 colors of the so-called <em>VGA palette</em>.
     <ul>
-      <li>In the 8-bit-per-component format, this palette’s colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.</li>
+      <li>In the 8-bit-per-component color format, this palette’s colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.</li>
       <li>In the vertex color format, the closest colors to this palette are: 24/24/24; or each color component is 0 or 16; or each color component is 0 or 31.</li>
     </ul>
   </li>
@@ -248,7 +250,7 @@
     <p>This specification allows for drawing a 3-D graphic as a <a href="https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation"><strong><em>voxel mesh</em></strong></a> (formed from very small brick-shaped elements called <em>voxels</em>), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification.</p>
   </li>
   <li>
-    <p>The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), MIP mapping, bilinear filtering, flat shading, Gouraud shading, perspective correction, per-vertex specular highlighting, per-vertex depth-based fog, Bresenham 3-D line drawing, multitexture blending, edge antialiasing, source alpha blending, and destination alpha blending.<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> Software that is as performant as hardware meeting the requirements and recommendations of the <em>PC 99 System Design Guide</em> sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.  Stencil buffers, bump mapping, and environment mapping are borderline “classic-graphics” capabilities.</p>
+    <p>The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,<sup id="fnref:2:1"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> per-vertex specular highlighting, per-vertex depth-based fog, Bresenham’s line drawing algorithm, multitexture blending, edge antialiasing (smoothing), stencil buffers, source alpha blending, and destination alpha blending.<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> Software that is as performant as hardware meeting the requirements and recommendations of the <em>PC 99 System Design Guide</em> sections 14.27 to 14.34, except for the screen resolution, frame rate, and buffering requirements, is recommended.  MIP mapping, bump mapping and environment mapping are borderline “classic-graphics” capabilities.</p>
   </li>
   <li>
     <p>Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000’s beginning.</p>
@@ -276,7 +278,7 @@
     <p>This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup></p>
   </li>
   <li>
-    <p>Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers.<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup></p>
+    <p>Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers; see “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”.</p>
   </li>
   <li>
     <p>Before 1999, computers with more than 32,768 kibibytes of system memory were rare among consumers. (In the <em>PC 99 System Design Guide</em>, “entertainment PCs” required at least 64 million bytes of system memory.)</p>
@@ -330,7 +332,7 @@
 
 <h3 id="survey-of-polygon-and-memory-usage-in-1990s-3-d-games">Survey of polygon and memory usage in 1990s 3-D games</h3>
 
-<p>To buttress the suggestions in the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification on classic graphics</strong></a>, given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
+<p>To buttress the suggestions in the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification on classic graphics</strong></a>, given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup></p>
 
 <p><a id="Sound_bank_development_guide"></a></p>
 
@@ -354,7 +356,7 @@
       <p>A computer has adequate performance for classic graphics if it achieves a score of—<br />(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 × 480) when run without graphics acceleration, or<br />(b) 195 or greater on the 3DMark2000 CPU speed test.<br />Both figures correspond to the running of two graphically demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo’s detail level averages more than 12,800 triangles per frame; see the section “Test Descriptions” in the 3DMark2000 help). <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (also known as <em>affine texture mapping</em>), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called <em>affine texture mapping</em>), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:2:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:3">
       <p>A possible alternative to these 2-D limits is to require the use of a frame buffer (array of pixels in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be rendered in software, but I don’t know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br />The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -369,7 +371,7 @@
       <p>If the game screen is two colors only (such as black and white), a game could choose to allow screen resolutions up to 800,000 total pixels.  For example, a 1024 × 768 screen has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels). <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
-      <p>Standard MIDI files should be rendered using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br />Standard MIDI files organize MIDI sounds into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under the <em>Multimedia PC Specification</em> (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br />Standard MIDI files organize MIDI sounds into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under the <em>Multimedia PC Specification</em> (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
       <p>Matt Saettler, “Graphics Design and Optimization”, Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in classic games and other audiovisual computer applications.  Not mentioned in that document are graphics resembling:<br /> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size picture that assigns each segment a unique color and, each frame, draw black pixels on the screen where the segments that are “on” are, and draw white pixels (or another background) elsewhere on the screen.<br />(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a “stereo rack system”. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -378,7 +380,7 @@
       <p>Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn’t necessarily meet its requirements exactly: <a href="https://github.com/megamarc/Tilengine"><strong><em>Tilengine</em></strong></a>, <a href="https://github.com/rxi/kit/"><strong><em>kit</em></strong></a>, <a href="https://github.com/mattiasgustavsson/dos-like"><strong><em>DOS-like</em></strong></a>, <a href="https://github.com/raysan5/raylib"><strong><em>raylib</em>’s <code>rlsw</code> software renderer</strong></a>.  Michal Strehovský published an <a href="https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/"><strong>interesting technique to create small game applications</strong></a>. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:10">
-      <p>MS-DOS applications are normally limited to 640 kibibytes or less of <em>conventional memory</em>, along with whatever memory is carried by the video card.  262,144 bytes is the usual minimum of graphics memory for VGA video cards. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>MS-DOS applications are normally limited to 640 kibibytes or less of <em>conventional memory</em>, along with whatever memory is carried by the video card.  (PCs running on the very early Intel 8086 and 8088 processors can map out no more than 640 kibibytes of system memory.) 262,144 bytes is the usual minimum of graphics memory for VGA video cards. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:11">
       <p>It wasn’t until the Pentium processor’s advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of <em>Michael Abrash’s Graphics Programming Black Book</em>. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -468,7 +470,7 @@
       <p>Virtual Boy. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:40">
-      <p>CGA 16-color mode. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>One “Tandy graphics adapter” mode. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
       <p>Minimum resolution for “handheld PCs” (<em>Windows CE Programmer’s Guide</em>, MSDN Library, June 1998). <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -495,10 +497,7 @@
       <p>PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, <em>Quake</em> (1996) required 8 million and recommended 16 million bytes of system memory. <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:49">
-      <p>A “top-of-the-line” PC from 1994 came with 8192 kibibytes of system memory: Fabien Sanglard, <em>Game Engine Black Book: Doom</em>. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:50">
-      <p>For example:<br />(1) B. Tschirren, “Realism and Believability in MPEG-4 Facial Models”, Curtin University of Technology, 2000, includes a statement that games like <em>Quake III Arena</em> [1999] render up to 10,000 triangles per frame.<br />(2) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (R. Fosner, “DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code”, <em>Microsoft Systems Journal</em> January 1999).<br />(3) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000); to be noted here is that the game normally ran at 320 × 240 pixels.<br />(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(5) An <a href="http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html"><strong>early study of polygon rendering rates</strong></a> in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>For example:<br />(1) B. Tschirren, “Realism and Believability in MPEG-4 Facial Models”, Curtin University of Technology, 2000, includes a statement that games like <em>Quake III Arena</em> [1999] render up to 10,000 triangles per frame.<br />(2) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (R. Fosner, “DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code”, <em>Microsoft Systems Journal</em> January 1999).<br />(3) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000); to be noted here is that the game normally ran at 320 × 240 pixels.<br />(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(5) An <a href="http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html"><strong>early study of polygon rendering rates</strong></a> in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
