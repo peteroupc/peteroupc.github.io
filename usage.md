@@ -51,7 +51,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | The fact that... | That... | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | The fact that _he appeared_ | That _he appeared_, _His appearance_, _His appearing_. | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
-| use | employ, utilize, make use of | Verb. |
+| use | employ, make use of. | Verb. Also: "_something_ is used to..." &rarr; _something_ is for..., _something_ serves to...; "you can use _something_ to..." &rarr; with _something_ you can..., _something_ lets you...; _something_ helps you.... |
 | what's happening | what's going on, what's occurring, what's [synonym for _happening_]. | Inspired by E. Bernal. |
 
 Another technique to try is to rewrite a text to avoid overused words as much as possible.
@@ -74,7 +74,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | [adjective] day today (for example, _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
 | due to the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
-| examples include but are not limited to | examples are | The word "examples" already conveys the idea that the list is not all-inclusive. |
+| examples include but are not limited to | examples are | The word "examples" already says that the list is not all-inclusive. |
 | family members | relatives, kin |'Relatives' suggested by E. Bernal. |
 | including but not limited to | including | |
 | individual people | individuals |Inspired by E. Bernal. |
@@ -83,7 +83,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | is someone who is [adjective] (for example, _is someone who is reliable_) | is [adjective]; is a(n) [adjective] one |Inspired by E. Bernal. |
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
-| least favorite | least desired |Inspired by E. Bernal. |
+| least favorite | least desired, least preferred |Inspired by E. Bernal. |
 | literally (_in the sense of 'absolutely'_) | absolutely, totally, utterly, altogether, downright, completely, certainly; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
