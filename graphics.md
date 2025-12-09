@@ -48,7 +48,7 @@ Define the _larger screen dimension_ as the larger of the screen width and the s
 
 Limit 3-D graphics to the following:
 
-1. The maximum number of primitives that can be displayed at a time (per frame) is equal to screen width times screen height divided by 24. \(Examples: 256 &times; 192 / 24 = 2048 primitives; 640 &times; 480 / 24 = 12800 primitives.  See also survey project in "Other Challenges and Projects", later.)
+1. The maximum number of primitives that can be displayed at a time (per frame) is equal to screen width times screen height divided by 24. \(See also survey project in "Other Challenges and Projects", later.)
     * A _primitive_ is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.
     * Each vertex of the primitive points to a vertex from the vertex list described later.
     * Each primitive can be translucent.
@@ -68,25 +68,31 @@ Limit 3-D graphics to the following:
 8. The 3-D graphics buffer's resolution is the same as the screen resolution.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^2]
 
+> **Example:** For 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
+
 Limit 2-D graphics to the following: [^3]
 
 1. Up to three 2-D _layers_ can be displayed at a time.  If 3-D graphics are not being displayed, a fourth 2-D layer can also be displayed.  Otherwise, a layer for the 3-D graphics can be displayed.  Each 2-D layer is a rectangular array of references to _tiles_ (a _tile_ is a small rectangular array of pixels).
 2. The 2-D and 3-D layers may contain transparent pixels.
 3. Up to two of the 2-D layers can undergo a 2-D affine transformation.
 4. The tiles have the same size (32 &times; 32 pixels or smaller). A tile size of 8 &times; 8 pixels is suggested.
-5. There are sixteen color tables reserved for use by tiles.  Each color in each table is of the vertex color format given earlier. Each tile uses one of these color tables. The application chooses one:
-    1. Each tile is in a 1-bit-per-pixel format, and each color table has 2 colors.
-    2. Each tile is in a 2-bit-per-pixel format, and each color table has 4 colors.
-    3. Each tile is in a 4-bit-per-pixel format, and each color table has 16 colors.
-6. Separate from layers, 2-D _sprites_ can be displayed.  Each sprite is a rectangular array of either tiles or pixels.
-7. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
-8. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^4]
-9. Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.
-10. Each sprite can be drawn above or below any of the 2-D layers.
-11. Sprites may contain transparent pixels, but not translucent (semitransparent) pixels.
-12. Tiles and sprites can be drawn flipped on either or both axes.
+5. The application chooses one:
+    1. Each tile is in a 1-bit-per-pixel format and uses one of 16 color tables, with 2 colors per table.
+    2. Each tile is in a 2-bit-per-pixel format and uses one of 16 color tables, with 4 colors per table.
+    3. Each tile is in a 4-bit-per-pixel format and uses one of 16 color tables, with 16 colors per table.
+    3. There is a single 256-color table for use by tiles.  Each tile is in an 8-bit-per-pixel format.
+6. Each color in each color table used by tiles is of the vertex color format given earlier.
+7. Separate from layers, 2-D _sprites_ can be displayed.  Each sprite is a rectangular array of either tiles or pixels.
+8. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
+9. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^4]
+10. Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.
+11. Each sprite can be drawn above or below any of the 2-D layers.
+12. Sprites may contain transparent pixels, but not translucent (semitransparent) pixels.
+13. Tiles and sprites can be drawn flipped on either or both axes.
 
 The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^5]
+
+> **Example:** For 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, and no more than 192 sprites at a time.
 
 Other requirements:
 
@@ -182,7 +188,7 @@ Frame rate:
 - The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification.
-- In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/**](article) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
+- In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^2] per-vertex specular highlighting, per-vertex depth-based fog, Bresenham's line drawing algorithm, multitexture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^45] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping and environment mapping are borderline "classic-graphics" capabilities.
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 
