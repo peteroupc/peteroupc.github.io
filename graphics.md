@@ -142,7 +142,7 @@ A game may impose further constraints to this specification (for example, to red
 - The game uses no more than 16 million bytes of system memory at a time.
 - The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.[^10]
 - The game aims for a frame rate of 30 frames per second.
-- The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame to the screen (such as through GDI’s `StretchDIBits` or copying to VGA’s frame buffer).
+- The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame to the screen (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).
 - The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^11]
 
 <a id=Notes_on_Specification></a>
