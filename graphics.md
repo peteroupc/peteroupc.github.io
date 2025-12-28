@@ -2,7 +2,7 @@
 
 The following are challenges I make to the computer community, relating to:
 
-- [**Graphics for classic-style game development**](#Graphics_Challenge_for_Retro_Style_Games).
+- [**Graphics for classic-style game development**](#Graphics_Challenge_for_Classic_Style_Games).
 - [**MIDI music synthesis for classic-style games and apps**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
 - [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
 - [**Other challenges and projects**](#Other_Challenges_and_Projects).

@@ -20,6 +20,7 @@ Help me on my requests, open questions, and interesting challenges, listed next.
 * [**Other open questions on probability**](./requestsother.html).    For experts in mathematics and probability.
 * [**The sampling problem**](./sampling.html). For experts in mathematics and probability.
 * [**Graphics and Music Challenges for Classic-Style Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
+* [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).  For digital artists and graphics programmers.
 * [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md). For graphics programmers.
 * [**A Wish for a New Atlas**](./newatlas.html). To condense vast geographic knowledge into a compact book.
 * [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html).  To improve education of children.
