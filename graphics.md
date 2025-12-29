@@ -116,7 +116,7 @@ This specification for "classic graphics"[^11] in modern games largely reflects 
 
 In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.
 
-Some video game hardware from the late 1990s may have 3-D graphics capabilities beyond what is "classic" here, such as Sega Model 3 (1996), Sega NAOMI (1998), or NVIDIA GeForce 256 (late 1999).
+Some video game hardware from the late 1990s may have 3-D graphics capabilities beyond what is "classic" here, such as SEGA Model 3 (1996), SEGA NAOMI (1998), or NVIDIA GeForce 256 (late 1999).
 
 In general, PC applications that feature classic graphics include:
 
@@ -169,7 +169,7 @@ Screen resolution:
     - 8:5 aspect ratio: 640 &times; 400,[^38] 320 &times; 200.[^19]
     - Other: 280 &times; 192,[^39] 480 &times; 272,[^40] 512 &times; 424, [^41] 400 &times; 240,[^42] 384 &times; 224,[^43] 160 &times; 200,[^44] 480 &times; 240.[^45]
 
-    This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the Sega Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.
+    This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.
 
 - As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^46]
 
@@ -189,7 +189,7 @@ Frame rate:
 
 3-D graphics:
 
-- The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the Sega Model 3.
+- The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from very small brick-shaped elements called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification.
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^49] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
@@ -207,6 +207,10 @@ Memory:
 - This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^53]
 - Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers; see "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)".
 - Before 1999, computers with more than 32,768 kibibytes of system memory were rare among consumers. (In the _PC 99 System Design Guide_, "entertainment PCs" required at least 64 million bytes of system memory.)
+
+Game image effects (filters):
+
+- Effects that modify the game image to emulate cathode-ray-tube displays are outside the scope of this challenge.   So are effects that [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game image to fit the height or width of the screen. A game can have these effects if it wishes, but they should not be forced.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -277,7 +281,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
-[^7]: Sega arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically.  In the Super Famicom/Super Nintendo Entertainment System, sprites could not be scaled, but they could be flipped.
+[^7]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically.  In the Super Famicom/Super Nintendo Entertainment System, sprites could not be scaled, but they could be flipped.
 
 [^8]: But alpha blending (the mixing of one image with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
@@ -307,13 +311,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^21]: One low resolution recommended by the _PC 98 System Design Guide_.
 
-[^22]: Nintendo DS; NEC PC-6001; Sega Master System/Sega Mark III; MSX; Colecovision.
+[^22]: Nintendo DS; NEC PC-6001; SEGA Master System/SEGA Mark III; MSX; Colecovision.
 
 [^23]: Rarely used VGA display mode.
 
 [^24]: PlayStation 2 NTSC.
 
-[^25]: Sega Mega Drive/Sega Genesis; Neo Geo NTSC.
+[^25]: SEGA Mega Drive/SEGA Genesis; Neo Geo NTSC.
 
 [^26]: Effective resolution of Famicom/Nintendo Entertainment System NTSC; Super Famicom/Super Nintendo Entertainment System NTSC; minimum resolution of PC Engine/TurboGrafx 16.
 
@@ -321,7 +325,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^28]: Game Boy Advance.
 
-[^29]: Game Boy, Game Boy Color, Sega Game Gear.
+[^29]: Game Boy, Game Boy Color, SEGA Game Gear.
 
 [^30]: Aspect ratio found above all in PAL (phase-alternating-line) displays.
 
