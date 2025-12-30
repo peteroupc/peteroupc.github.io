@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2025-12-29"><meta name="citation_date" content="2025/12/29"><meta name="citation_publication_date" content="2025/12/29"><meta name="citation_online_date" content="2025/12/29"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2025-12-30"><meta name="citation_date" content="2025/12/30"><meta name="citation_publication_date" content="2025/12/30"><meta name="citation_online_date" content="2025/12/30"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2025-12-29.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2025-12-30.</p>
 
 <p>The following are challenges I make to the computer community, relating to:</p>
 
@@ -111,7 +111,7 @@
     </ol>
   </li>
   <li>Each color in each color table used by tiles is of the vertex color format given earlier.</li>
-  <li>Tiles can be drawn flipped on either or both axes.</li>
+  <li>Tiles can be horizontally flipped, vertically flipped, or both.</li>
   <li>Separate from layers, 2-D <em>sprites</em> can be displayed.  Each sprite is a rectangular array of either tiles or pixels.</li>
   <li>Each sprite has size up to X × Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)</li>
   <li>Up to N sprites can be displayed at a time, where N is calculated as (screen width × screen height × 16) / (X × Y), rounded up, but not more than 512.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></li>
@@ -120,7 +120,7 @@
   <li>The application chooses one:
     <ol>
       <li>Each sprite can undergo a 2-D affine transformation.</li>
-      <li>Each sprite can be drawn flipped on either or both axes.<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup></li>
+      <li>Each sprite can be horizontally flipped, vertically flipped, or both.<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup></li>
       <li>No affine transformation or flipping of sprites is allowed.</li>
     </ol>
   </li>
@@ -196,7 +196,7 @@
   <li>The game uses no more than 16 million bytes of system memory at a time.</li>
   <li>The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
   <li>The game aims for a rate of 30 frames per second.</li>
-  <li>The game’s graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished frame to the screen (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).</li>
+  <li>The game’s graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).</li>
   <li>The game’s graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup></li>
 </ul>
 
@@ -265,26 +265,26 @@
   <li>Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000’s beginning.</li>
 </ul>
 
+<p>Screen image effects (filters):</p>
+
+<ul>
+  <li>Effects that modify the game screen image to emulate CRT displays<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> are outside the scope of this challenge.   So are effects that <a href="https://www.pcgamingwiki.com/wiki/Glossary:Scaling"><strong>scale</strong></a> the game screen to fit the height or width of the player’s display.<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup> A game can have these effects if it wishes, but they should be game settings.</li>
+</ul>
+
 <p>Music and sound:</p>
 
 <ul>
   <li>Besides the limitation on music, this specification has no further limitations on sounds.</li>
-  <li>Early game consoles supported sound only through one or more <em>programmable sound generators</em>, such as square and triangle wave generators, as opposed to digitized sounds<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>.  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.</li>
-  <li>When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup></li>
+  <li>Early game consoles supported sound only through one or more <em>programmable sound generators</em>, such as square and triangle wave generators, as opposed to digitized sounds<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.</li>
+  <li>When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup></li>
 </ul>
 
 <p>Memory:</p>
 
 <ul>
-  <li>This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup></li>
+  <li>This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup></li>
   <li>Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers; see “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”.</li>
   <li>Before 1999, computers with more than 32,768 kibibytes of system memory were rare among consumers. (In the <em>PC 99 System Design Guide</em>, “entertainment PCs” required at least 64 million bytes of system memory.)</li>
-</ul>
-
-<p>Game image effects (filters):</p>
-
-<ul>
-  <li>Effects that modify the game image to emulate cathode-ray-tube displays are outside the scope of this challenge.   So are effects that <a href="https://www.pcgamingwiki.com/wiki/Glossary:Scaling"><strong>scale</strong></a> the game image to fit the height or width of the screen. A game can have these effects if it wishes, but they should not be forced.</li>
 </ul>
 
 <p><a id="Building_a_Public_Domain_music_synthesis_library_and_instrument_banks"></a></p>
@@ -334,7 +334,7 @@
 
 <h3 id="survey-of-polygon-and-memory-usage-in-1990s-3-d-games">Survey of polygon and memory usage in 1990s 3-D games</h3>
 
-<p>To buttress the suggestions in the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification on classic graphics</strong></a>, given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup></p>
+<p>To buttress the suggestions in the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification on classic graphics</strong></a>, given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup></p>
 
 <p><a id="Sound_bank_development_guide"></a></p>
 
@@ -379,7 +379,7 @@
       <p>But alpha blending (the mixing of one image with another) was “relatively new to PC games” at the time of <em>Quake</em>’s release in 1996, according to <em>Michael Abrash’s Graphics Programming Black Book</em>. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:9">
-      <p>If the game screen is two colors only (such as black and white), a game could choose to allow screen resolutions up to 800,000 total pixels.  For example, a 1024 × 768 screen has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels). <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels). <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:10">
       <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br />Standard MIDI files organize MIDI sounds into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under the <em>Multimedia PC Specification</em> (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -505,16 +505,22 @@
       <p><em>Quake</em> (1996) also employed <em>subdivision rasterization</em> for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (<em>Michael Abrash’s Graphics Programming Black Book</em>, chapter 69). <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:51">
-      <p>Digitized sound is also known as pulse-code modulation (PCM) and is often stored in files ending in “.WAV”. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:52">
-      <p>The <em>Multimedia PC Specification</em> (1992) required support in “multimedia PCs” for playback of at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in “multimedia PCs” for playing back at least 16-bit-per-sample stereo digitized sound at 44,100 Hz. <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>This does not include the decoding of small videos to fit the <em>game screen</em>, as opposed to the player’s display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen “on the fly”, in the process of displaying them.  For example, such a game could decode videos of size 160 × 100 to fit a game screen of 320 × 200. <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:53">
-      <p>PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, <em>Quake</em> (1996) required 8 million and recommended 16 million bytes of system memory. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Digitized sound is also known as pulse-code modulation (PCM) and is often stored in files ending in “.WAV”. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:54">
-      <p>For example:<br />(1) B. Tschirren, “Realism and Believability in MPEG-4 Facial Models”, Curtin University of Technology, 2000, includes a statement that games like <em>Quake III Arena</em> [1999] render up to 10,000 triangles per frame.<br />(2) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (R. Fosner, “DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code”, <em>Microsoft Systems Journal</em> January 1999).<br />(3) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000); to be noted here is that the game normally ran at 320 × 240 pixels.<br />(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(5) An <a href="http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html"><strong>early study of polygon rendering rates</strong></a> in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The <em>Multimedia PC Specification</em> (1992) required support in “multimedia PCs” for playback of at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 Hz.  The Multimedia PC level 2 specification (1993) required support in “multimedia PCs” for playing back at least 16-bit-per-sample stereo digitized sound at 44,100 Hz. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:55">
+      <p>PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, <em>Quake</em> (1996) required 8 million and recommended 16 million bytes of system memory. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:56">
+      <p>For example:<br />(1) B. Tschirren, “Realism and Believability in MPEG-4 Facial Models”, Curtin University of Technology, 2000, includes a statement that games like <em>Quake III Arena</em> [1999] render up to 10,000 triangles per frame.<br />(2) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (R. Fosner, “DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code”, <em>Microsoft Systems Journal</em> January 1999).<br />(3) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000); to be noted here is that the game normally ran at 320 × 240 pixels.<br />(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(5) An <a href="http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html"><strong>early study of polygon rendering rates</strong></a> in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
