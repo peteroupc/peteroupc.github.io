@@ -185,7 +185,7 @@ Frame rate:
 
 - _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^47]
 
-- For comfort reasons, a minimum frame rate may be required for video games written for virtual-reality headsets.  But such games were rare before 2000 (with the notable exception of Nintendo's Virtual Boy), and are outside the scope of this specification.
+- For comfort reasons, a minimum frame rate may be required for video games that offer "3-D vision" by rendering multiple views of the scene at a time, in conjunction with special glasses (for example, a SEGA Master System accessory) or a virtual-reality headset (for example, Nintendo's Virtual Boy).  But such games were rare before 2000.
 
 3-D graphics:
 
@@ -195,6 +195,7 @@ Frame rate:
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^49] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^4] per-vertex specular highlighting, per-vertex depth-based fog, Bresenham's line drawing algorithm, multitexture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping and environment mapping are borderline "classic-graphics" capabilities.  Bilinear filtering is optional under this specification.
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
+- This specification is not concerned much with video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
 Screen image effects (filters):
 
