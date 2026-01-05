@@ -202,7 +202,7 @@ Frame rate:
 
 Screen image effects (filters):
 
-- Effects that modify the game screen image to emulate CRT displays[^52] are outside the scope of this challenge.   So are effects that [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display.[^53] A game can have these effects if it wishes, but they should be game settings.
+- Effects that modify the game screen image to emulate CRT displays[^52] are outside the scope of this challenge.   So are effects that [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display.[^53] This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.
 
 Music and sound:
 
