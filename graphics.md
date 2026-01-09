@@ -68,7 +68,9 @@ Limit 3-D graphics to the following:[^2]
 8. The 3-D graphics buffer's resolution is the same as the screen resolution.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^4]
 
-> **Example:** For 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
+> [!EXAMPLE]
+>
+> For 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
 
 Limit 2-D graphics to the following: [^5]
 
@@ -95,7 +97,9 @@ Limit 2-D graphics to the following: [^5]
 
 The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^9]
 
-> **Example:** For 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
+> [!NOTE]
+>
+> For 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
 
 Other requirements:
 
