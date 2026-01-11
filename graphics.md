@@ -188,6 +188,8 @@ This section has notes on this specification, such as how its requirements corre
 
 - A game can support multiple "viewport sizes" (for the area of the screen in which the game's action is drawn) and/or pixel-column or -row doubling, all without changing screen resolution.  For example, the original _Doom_ (1993) supported several viewport sizes (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^48]
 
+- Games within the scope of this challenge are meant to be run in a desktop window if the player's display is 800 &times; 600 pixels or larger.  The same is true if the game's resolution is 620 &times; 420 pixels or smaller and the player's display is 640 &times; 480 pixels.  The game may also support fullscreen display.
+
 <a id=Frame_rate></a>
 
 #### Frame rate
