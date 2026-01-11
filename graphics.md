@@ -19,6 +19,12 @@ All may interest 1990s computer users.
     - [**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)
     - [**Optional Limits**](#Optional_Limits)
     - [**Notes on Specification**](#Notes_on_Specification)
+        - [**Screen resolutions**](#Screen_resolutions)
+        - [**Frame rate**](#Frame_rate)
+        - [**3-D graphics**](#3_D_graphics)
+        - [**Screen image effects (filters)**](#Screen_image_effects_filters)
+        - [**Sounds**](#Sounds)
+        - [**Memory**](#Memory)
 - [**Building a Public-Domain music synthesis library and instrument banks**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks)
 - [**Other Challenges and Projects**](#Other_Challenges_and_Projects)
     - [**Classic desktop wallpaper**](#Classic_desktop_wallpaper)
@@ -68,9 +74,7 @@ Limit 3-D graphics to the following:[^2]
 8. The 3-D graphics buffer's resolution is the same as the screen resolution.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^4]
 
-> [!EXAMPLE]
->
-> For 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
+> **Example:** For 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
 
 Limit 2-D graphics to the following: [^5]
 
@@ -97,9 +101,7 @@ Limit 2-D graphics to the following: [^5]
 
 The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^9]
 
-> [!NOTE]
->
-> For 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
+> **Example:** For 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
 
 Other requirements:
 
@@ -161,7 +163,11 @@ A game may impose further constraints to this specification (for example, to red
 
 ### Notes on Specification
 
-Screen resolution:
+This section has notes on this specification, such as how its requirements correspond to the graphics abilities of classic video games.
+
+<a id=Screen_resolutions></a>
+
+#### Screen resolutions
 
 - Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for such resolutions for 3-D graphics.
 
@@ -182,7 +188,9 @@ Screen resolution:
 
 - A game can support multiple "viewport sizes" (for the area of the screen in which the game's action is drawn) and/or pixel-column or -row doubling, all without changing screen resolution.  For example, the original _Doom_ (1993) supported several viewport sizes (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^48]
 
-Frame rate:
+<a id=Frame_rate></a>
+
+#### Frame rate
 
 - No particular frame rate is required.[^49]
 
@@ -194,7 +202,9 @@ Frame rate:
 
 - For comfort reasons, a minimum frame rate may be required for video games that offer "[**3-D vision**](https://www.pcgamingwiki.com/wiki/Glossary:Native_3D)" by rendering multiple views of the scene at a time, in conjunction with special glasses (for example, a SEGA Master System accessory) or a virtual-reality headset (for example, Nintendo's Virtual Boy).  But such games were rare before 2000.
 
-3-D graphics:
+<a id=3_D_graphics></a>
+
+#### 3-D graphics
 
 - The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
@@ -204,17 +214,23 @@ Frame rate:
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
-Screen image effects (filters):
+<a id=Screen_image_effects_filters></a>
+
+#### Screen image effects (filters)
 
 - Effects that modify the game screen image to emulate CRT displays[^52] are outside the scope of this challenge.   So are effects that [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display.[^53] This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.
 
-Music and sound:
+<a id=Sounds></a>
+
+#### Sounds
 
 - Besides the limitation on music, this specification has no further limitations on sounds.
 - Early game consoles supported sound only through one or more _programmable sound generators_, such as square and triangle wave generators, as opposed to digitized sounds[^54].  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.
 - When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.[^55]
 
-Memory:
+<a id=Memory></a>
+
+#### Memory
 
 - This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^56]
 - Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers; see "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)".

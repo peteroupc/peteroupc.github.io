@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-01-09"><meta name="citation_date" content="2026/01/09"><meta name="citation_publication_date" content="2026/01/09"><meta name="citation_online_date" content="2026/01/09"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-01-11"><meta name="citation_date" content="2026/01/11"><meta name="citation_publication_date" content="2026/01/11"><meta name="citation_online_date" content="2026/01/11"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-01-09.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-01-11.</p>
 
 <p>The following are challenges I make to the computer community, relating to:</p>
 
@@ -28,7 +28,16 @@
       <li><a href="#The_Specification"><strong>The Specification</strong></a></li>
       <li><a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a></li>
       <li><a href="#Optional_Limits"><strong>Optional Limits</strong></a></li>
-      <li><a href="#Notes_on_Specification"><strong>Notes on Specification</strong></a></li>
+      <li><a href="#Notes_on_Specification"><strong>Notes on Specification</strong></a>
+        <ul>
+          <li><a href="#Screen_resolutions"><strong>Screen resolutions</strong></a></li>
+          <li><a href="#Frame_rate"><strong>Frame rate</strong></a></li>
+          <li><a href="#3_D_graphics"><strong>3-D graphics</strong></a></li>
+          <li><a href="#Screen_image_effects_filters"><strong>Screen image effects (filters)</strong></a></li>
+          <li><a href="#Sounds"><strong>Sounds</strong></a></li>
+          <li><a href="#Memory"><strong>Memory</strong></a></li>
+        </ul>
+      </li>
     </ul>
   </li>
   <li><a href="#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks"><strong>Building a Public-Domain music synthesis library and instrument banks</strong></a></li>
@@ -93,9 +102,7 @@
 </ol>
 
 <blockquote>
-  <p>[!EXAMPLE]</p>
-
-  <p>For 640 × 480 pixels, no more than 12,800 primitives (640 × 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 × 256 pixels.</p>
+  <p><strong>Example:</strong> For 640 × 480 pixels, no more than 12,800 primitives (640 × 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 × 256 pixels.</p>
 </blockquote>
 
 <p>Limit 2-D graphics to the following: <sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
@@ -132,9 +139,7 @@
 <p>The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></p>
 
 <blockquote>
-  <p>[!NOTE]</p>
-
-  <p>For 640 × 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</p>
+  <p><strong>Example:</strong> For 640 × 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</p>
 </blockquote>
 
 <p>Other requirements:</p>
@@ -213,7 +218,11 @@
 
 <h3 id="notes-on-specification">Notes on Specification</h3>
 
-<p>Screen resolution:</p>
+<p>This section has notes on this specification, such as how its requirements correspond to the graphics abilities of classic video games.</p>
+
+<p><a id="Screen_resolutions"></a></p>
+
+<h4 id="screen-resolutions">Screen resolutions</h4>
 
 <ul>
   <li>
@@ -243,7 +252,9 @@
   </li>
 </ul>
 
-<p>Frame rate:</p>
+<p><a id="Frame_rate"></a></p>
+
+<h4 id="frame-rate">Frame rate</h4>
 
 <ul>
   <li>
@@ -263,7 +274,9 @@
   </li>
 </ul>
 
-<p>3-D graphics:</p>
+<p><a id="3_D_graphics"></a></p>
+
+<h4 id="d-graphics">3-D graphics</h4>
 
 <ul>
   <li>The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.</li>
@@ -275,13 +288,17 @@
   <li>This specification is not centered on video games that offer “3-D vision” (see note under “Frame rate”), given how rare they were before 2000.</li>
 </ul>
 
-<p>Screen image effects (filters):</p>
+<p><a id="Screen_image_effects_filters"></a></p>
+
+<h4 id="screen-image-effects-filters">Screen image effects (filters)</h4>
 
 <ul>
   <li>Effects that modify the game screen image to emulate CRT displays<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup> are outside the scope of this challenge.   So are effects that <a href="https://www.pcgamingwiki.com/wiki/Glossary:Scaling"><strong>scale</strong></a> the game screen to fit the height or width of the player’s display.<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup> This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.</li>
 </ul>
 
-<p>Music and sound:</p>
+<p><a id="Sounds"></a></p>
+
+<h4 id="sounds">Sounds</h4>
 
 <ul>
   <li>Besides the limitation on music, this specification has no further limitations on sounds.</li>
@@ -289,7 +306,9 @@
   <li>When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 Hz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup></li>
 </ul>
 
-<p>Memory:</p>
+<p><a id="Memory"></a></p>
+
+<h4 id="memory">Memory</h4>
 
 <ul>
   <li>This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup></li>
