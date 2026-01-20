@@ -104,7 +104,7 @@ This document presents an overview of many common color topics that are of gener
     - a list of colors (which can have duplicates), all of the same color space, or
     - the colors (which can have duplicates) used in the pixels in a pixel image, in a vector graphic, a three-dimensional image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
-- **Pixel image.** Image represented as a rectangular array of _pixels_, where each pixel stores a color value or a reference to a color value.  Also known as a _picture_, _raster image_, or _bitmap image_.
+- **Pixel image.** Image represented as point samples called _pixels_ arranged in a rectangular array, where each pixel stores a color value or a reference to a color value.  Also known as a _picture_, _raster image_, or _bitmap image_.
 - **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
 
@@ -633,7 +633,7 @@ The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB 
 
 > **Notes:**
 >
-> 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, for example, by Y&prime;, luma) than chromatic sensitivity (for example, C<sub>_B_</sub>, C<sub>_R_</sub>).
+> 1. This document does not seek to survey the various ways in which the point samples in images and videos are represented as Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, for example, by Y&prime;, luma) than chromatic sensitivity (for example, C<sub>_B_</sub>, C<sub>_R_</sub>).
 > 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4 and detailed in a [**Dolby white paper**](https://www.dolby.com/us/en/technologies/dolby-vision/ICtCp-white-paper.pdf).
 
 <a id=Other_Color_Models></a>
@@ -728,7 +728,7 @@ The following summarizes the transformations needed to convert a color from (rel
 
 1. An XYZ-to-linear-RGB transform.  This is usually a [**matrix**](#Conversion_Matrices_Between_XYZ_and_RGB) generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white points, but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above\)[^17].
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.
-3. A pixel encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) or another form.  This can be left out.
+3. A color encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) or another form.  This can be left out.
 4. The final color form is serialized into a binary, text, or other representation (see also "[**Representing RGB Colors**](#Representing_RGB_Colors)").
 
 The corresponding conversions to XYZ are then the inverse of the conversions just given.
@@ -1305,10 +1305,10 @@ The following approaches can generate a saturated or desaturated version of a co
 
     An [**_image color list_**](#Notation_and_Definitions) is achromatic if all its colors are achromatic.
 
-2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" pixels of a pixel image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether that pixel is a "background" pixel (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.
+2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" areas of a pixel image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether the pixel belongs in the "background" (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color the pixel is instead.
 3.  An application can **apply a function** to each component of an RGB or other multicomponent color, including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format[^33]), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
 4.  An application can **swap** the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: `[color[2], color[1], color[0]]`.
-5. Pixel-level image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).
+5. Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).
 
 <a id=Color_Differences></a>
 
@@ -1830,7 +1830,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^6]: For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
 
-[^7]: Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them.
+[^7]: Color display devices are often made up of tiny areas with "red", "green", and "blue" dots, but [**don't necessarily map these areas one-to-one to pixels**](https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf).  These dots may not necessarily be "red", "green", and "blue" nowadays; indeed recent display devices and luminaires are likely to be made of areas with, say "red", "green", "blue", and "white", or RGBW, rather than just three kinds of dots. Ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them.
 
 [^8]: B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".
 
