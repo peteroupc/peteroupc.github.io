@@ -1264,7 +1264,7 @@ END METHOD
 
 <h3 id="binarization">Binarization</h3>
 
-<p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.</p>
+<p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying color samples (pixels) or colors into one of two categories (usually black or white).  It involves applying a function to a color or color sample and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.</p>
 
 <ul>
   <li><strong>Black and white.</strong> Generate <code>[1, 1, 1]</code> (white) if a <em>light–dark factor</em> (such as the color’s <a href="#CIELAB"><strong>CIELAB</strong></a> lightness, <em>L*</em>, divided by 100) is greater than 0.5, or <code>[0, 0, 0]</code> (black) otherwise.</li>

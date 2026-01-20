@@ -1101,7 +1101,7 @@ Alpha blends can support the following color operations.
 
 ### Binarization
 
-_Binarization_, also known as _thresholding_, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.
+_Binarization_, also known as _thresholding_, involves classifying color samples (pixels) or colors into one of two categories (usually black or white).  It involves applying a function to a color or color sample and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.
 
 - **Black and white.** Generate `[1, 1, 1]` (white) if a _light&ndash;dark factor_ (such as the color's [**CIELAB**](#CIELAB) lightness, _L*_, divided by 100) is greater than 0.5, or `[0, 0, 0]` (black) otherwise.
 - **Contrasting color.** Generate `[1, 1, 1]` (white) if a _light&ndash;dark factor_ is less than 0.5, or `[0, 0, 0]` (black) otherwise.
