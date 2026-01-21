@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2026-01-20"><meta name="citation_date" content="2026/01/20"><meta name="citation_publication_date" content="2026/01/20"><meta name="citation_online_date" content="2026/01/20"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2026-01-21"><meta name="citation_date" content="2026/01/21"><meta name="citation_publication_date" content="2026/01/21"><meta name="citation_online_date" content="2026/01/21"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-01-20.</p>
+<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-01-21.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -149,11 +149,11 @@
   <li><strong>Image color list.</strong> Means either—
     <ul>
       <li>a list of colors (which can have duplicates), all of the same color space, or</li>
-      <li>the colors (which can have duplicates) used in the pixels in a pixel image, in a vector graphic, a three-dimensional image, a digital video, or a digital document.</li>
+      <li>the colors (which can have duplicates) used in the pixels in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.</li>
     </ul>
   </li>
   <li><strong>ISO.</strong> International Organization for Standardization.</li>
-  <li><strong>Pixel image.</strong> Image represented as point samples called <em>pixels</em> arranged in a rectangular array, where each pixel stores a color value or a reference to a color value.  Also known as a <em>picture</em>, <em>raster image</em>, or <em>bitmap image</em>.</li>
+  <li><strong>Image.</strong> Rectangular array of samples called <em>pixels</em>, where each pixel stores a color value or a reference to a color value.  Also known as a <em>picture</em>, <em>raster image</em>, or <em>bitmap image</em>.</li>
   <li><strong>Light source.</strong> Means a <a href="https://cie.co.at/eilvterm/17-27-002"><strong><em>primary light source</em></strong></a> or an <a href="https://cie.co.at/eilvterm/17-23-018"><strong><em>illuminant</em></strong></a>, as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.</li>
   <li><strong>RGB.</strong> Red-green-blue.</li>
 </ul>
@@ -1593,15 +1593,15 @@ END METHOD
 
     <p>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a> is achromatic if all its colors are achromatic.</p>
   </li>
-  <li>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace “background” areas of a pixel image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel’s color to determine whether the pixel belongs in the “background” (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color the pixel is instead.</li>
+  <li>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace “background” areas of an image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel’s color to determine whether the pixel belongs in the “background” (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color the pixel is instead.</li>
   <li>An application can <strong>apply a function</strong> to each component of an RGB or other multicomponent color, including a power function (of the form <em>base</em><sup><em>exponent</em></sup>), an inversion (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
   <li>An application can <strong>swap</strong> the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: <code>[color[2], color[1], color[0]]</code>.</li>
-  <li>Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).</li>
+  <li>Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other
+<a id="Color_Differences"></a></li>
 </ol>
 
-<p><a id="Color_Differences"></a></p>
-
 <h2 id="color-differences">Color Differences</h2>
+<p>convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).</p>
 
 <p>Color difference algorithms are used to determine if two colors are similar.</p>
 
@@ -1795,7 +1795,7 @@ END METHOD
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li><strong>Scale down</strong>: For all these techniques, in the case of a pixel image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or “resample” images are out of scope for this page, however.</li>
+    <li><strong>Scale down</strong>: For all these techniques, in the case of an image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or “resample” images are out of scope for this page, however.</li>
     <li><strong>Color reduction</strong>: Reducing the number of colors in an image usually involves finding that image’s dominant colors and either—
       <ul>
         <li>applying a “nearest neighbor” approach (replacing that image’s colors with their <a href="#Nearest_Colors"><strong>nearest dominant colors</strong></a>), or</li>
@@ -1803,7 +1803,7 @@ END METHOD
       </ul>
     </li>
     <li><strong>Unique colors</strong>: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup></li>
-    <li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image’s edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.</li>
+    <li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image’s edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the list of dominant colors.</li>
     <li>Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see <code>stackoverflow.com/questions/43111029</code>).</li>
     <li><strong>Extracting a scene’s “true colors”</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from <a href="http://eilv.cie.co.at/term/567"><strong><em>scene-referred</em> image data</strong></a>.<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup> PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it’s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br />Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image’s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
   </ol>
@@ -1993,7 +1993,7 @@ end
     </ul>
   </li>
   <li><strong>Similar random colors:</strong> Generating a random color that’s similar to another can be done by generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences"><strong>earlier</strong></a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.</li>
-  <li><strong>Image noise:</strong> This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in <em>uniform noise</em>, each component of a multicomponent color is changed to  <code>min(1,max(0,c+RNDRANGEMinMaxExc(-level, level)))</code>, where <code>c</code> is the value of the previous component and <code>level</code> is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>, and <em>salt-and-pepper noise</em> that involves replacing each pixel by black or white at a predetermined probability each.</li>
+  <li><strong>Image noise:</strong> This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in <em>uniform noise</em>, each component of a multicomponent color is changed to  <code>min(1,max(0,c+RNDRANGEMinMaxExc(-level, level)))</code>, where <code>c</code> is the value of the previous component and <code>level</code> is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>, and <em>salt-and-pepper noise</em> that involves replacing each pixel with black or white at a predetermined probability each.</li>
 </ul>
 
 <blockquote>

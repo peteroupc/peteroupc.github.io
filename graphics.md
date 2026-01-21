@@ -362,7 +362,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^31]: Aspect ratio found above all in PAL (phase-alternating-line) displays.  The resolution 640 &times; 512 (PlayStation 2 PAL), included in this category, covers more than 307,200 total pixels.
 
-[^32]: Amiga PAL (uniform pixel spacing); Neo Geo PAL.
+[^32]: Amiga PAL (same pixel spacing horizontally as vertically); Neo Geo PAL.
 
 [^33]: PAL overscan.
 

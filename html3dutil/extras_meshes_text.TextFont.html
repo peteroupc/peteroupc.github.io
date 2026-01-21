@@ -19,11 +19,12 @@ traditional image fonts, also known as BMFONT, and signed distance field fonts.<
 or more textures containing the shape of each font glyph. The glyphs
 are packed so that the glyphs don’t overlap each other.</p>
 
-<p>In a signed distance field font, each pixel’s alpha value depends on the
-distance from that location to the edge of the glyph. A pixel alpha less
-than 0.5 (127 in most image formats) means the pixel is outside the
-glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
-outside the glyph) and 1 (for inside the glyph) means the pixel is
+<p>In a signed distance field font, the point where each pixel lies has integer coordinates, and
+each pixel’s alpha value depends on the
+distance from that location to the edge of the glyph. An alpha value less
+than 0.5 (127 in most image formats) means the point where the pixel is found is outside the
+glyph, greater than 0.5 means that point is inside the glyph, and 0 (for
+outside the glyph) and 1 (for inside the glyph) means that point is
 outside a buffer zone formed by the glyph’s outline. Each glyph is usually
 given extra space to accommodate the signed distance field information.</p>
 
