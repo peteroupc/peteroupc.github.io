@@ -17,7 +17,7 @@ All may interest 1990s computer users.
 - [**Graphics Challenge for Classic-Style Games**](#Graphics_Challenge_for_Classic_Style_Games)
     - [**The Specification**](#The_Specification)
     - [**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)
-    - [**Graphics Engines and APIs**](#Graphics_Engines_and_APIs)
+    - [**Open-Source Graphics Engines and APIs**](#Open_Source_Graphics_Engines_and_APIs)
     - [**Optional Limits**](#Optional_Limits)
     - [**Notes on Specification**](#Notes_on_Specification)
         - [**Screen resolutions**](#Screen_resolutions)
@@ -138,18 +138,16 @@ One of the following games can be considered an upper limit to what is considere
 - _Quake III Arena_ (December 1999), which [**required DirectX 7 and at least 64 million bytes of memory**](https://www.dosdays.co.uk/topics/early_3d_games.php).
 - _Falcon 4.0_ (1998).
 
-<a id=Graphics_Engines_and_APIs></a>
+<a id=Open_Source_Graphics_Engines_and_APIs></a>
 
-### Graphics Engines and APIs
+### Open-Source Graphics Engines and APIs
 
-It would be of interest to write a free and open-source graphics library that implements this specification and renders graphics in software (with a minimum of source code and dependencies), or to lay down a lean application programming interface (API) for this specification.[^13]  The following are examples:
+It would be of interest to write a free and open-source graphics engine that implements this specification and renders graphics in software (with a minimum of source code and dependencies),[^13] or to lay down a lean application programming interface (API) for this specification.  The following are examples:
 
-- _Quake_, _Quake II_, and _Quake III Arena_ popularized the practice of using only a subset of the OpenGL 1.1 API for a game's graphics rendering (for example, "Optimizing OpenGL drivers for Quake3" by the developer of _Quake III Arena_).
+- _Quake_, _Quake II_, and _Quake III Arena_ popularized the practice of using only a subset of the OpenGL 1.1 API for a game's graphics rendering (see, for example, "Optimizing OpenGL drivers for Quake3" by the developer of _Quake III Arena_).
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the 2-D game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would be worthwhile.
 
-Given a game that follows this specification, it is allowed and encouraged to make it compatible with Windows XP or even Windows 98, with very low resource usage.
-
-In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).
+In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).
 
 <a id=Optional_Limits></a>
 
@@ -169,6 +167,8 @@ A game may impose further constraints to this specification (for example, to red
     - 681 million bytes (slightly less than the maximum capacity of a formatted CD-ROM).
 - The game uses no more than 16 million bytes of system memory at a time.
 - The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.[^15]
+- The game is a Win32 application compatible with Windows XP.
+- The game is a Win32 application compatible with Windows 98.
 - The game aims for a rate of 30 frames per second.
 - The game's graphics are _rendered in software_ (see section "Graphics Engines and APIs").
 - The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^16]
@@ -338,7 +338,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^12]: Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in classic games and other audiovisual computer applications.  Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size image that assigns each segment a unique color and, each frame, draw black where where the segments that are "on" are, and draw white (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
-[^13]: Especially if the library is self-contained and implements the specification with as little source code as possible.  The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
+[^13]: The following are examples of a graphics library that follows the spirit of this specification, even though it doesn't necessarily meet its requirements exactly: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
 
 [^14]: An example is _Loom_ (1990).
 
