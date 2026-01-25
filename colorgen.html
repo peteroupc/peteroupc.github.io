@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2026-01-21"><meta name="citation_date" content="2026/01/21"><meta name="citation_publication_date" content="2026/01/21"><meta name="citation_online_date" content="2026/01/21"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2026-01-23"><meta name="citation_date" content="2026/01/23"><meta name="citation_publication_date" content="2026/01/23"><meta name="citation_online_date" content="2026/01/23"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-01-21.</p>
+<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-01-23.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -149,11 +149,14 @@
   <li><strong>Image color list.</strong> Means either—
     <ul>
       <li>a list of colors (which can have duplicates), all of the same color space, or</li>
-      <li>the colors (which can have duplicates) used in the pixels in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.</li>
+      <li>the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.</li>
     </ul>
   </li>
   <li><strong>ISO.</strong> International Organization for Standardization.</li>
-  <li><strong>Image.</strong> Rectangular array of samples called <em>pixels</em>, where each pixel stores a color value or a reference to a color value.  Also known as a <em>picture</em>, <em>raster image</em>, or <em>bitmap image</em>.</li>
+  <li><strong>Image.</strong> Rectangular array of samples called <em>pixels</em>, where each pixel stores a color value or a reference to a color value.  Also known as a <em>raster image</em>, or <em>bitmap image</em>.
+&lt;!–</li>
+  <li><strong>Picture.</strong> Means a two-dimensional image or a two-dimensional geometric model.
+–&gt;</li>
   <li><strong>Light source.</strong> Means a <a href="https://cie.co.at/eilvterm/17-27-002"><strong><em>primary light source</em></strong></a> or an <a href="https://cie.co.at/eilvterm/17-23-018"><strong><em>illuminant</em></strong></a>, as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.</li>
   <li><strong>RGB.</strong> Red-green-blue.</li>
 </ul>
@@ -1180,11 +1183,14 @@ END METHOD
 
 <h3 id="luminance-factor-grayscale">Luminance Factor (Grayscale)</h3>
 
-<p>The <a href="http://eilv.cie.co.at/term/717"><strong><em>luminance factor</em></strong></a>—
-- is a single number indicating a color’s luminance relative to “white”, that is, how much light reaches the eyes when that color is viewed, in comparison to “white”,
-- is called <strong><code>Luminance(color)</code></strong> in this document,
-- is equivalent to the Y component of a relative <a href="#CIE_XYZ"><strong>XYZ color</strong></a>, and
-- ranges from 0 for “black” to 1 for “white”.</p>
+<p>The <a href="http://eilv.cie.co.at/term/717"><strong><em>luminance factor</em></strong></a>—</p>
+
+<ul>
+  <li>is a single number indicating a color’s luminance relative to “white”, that is, how much light reaches the eyes when that color is viewed, in comparison to “white”,</li>
+  <li>is called <strong><code>Luminance(color)</code></strong> in this document,</li>
+  <li>is equivalent to the Y component of a relative <a href="#CIE_XYZ"><strong>XYZ color</strong></a>, and</li>
+  <li>ranges from 0 for “black” to 1 for “white”.</li>
+</ul>
 
 <p>Finding a color’s luminance factor depends on that color’s color space.</p>
 
@@ -1596,12 +1602,12 @@ END METHOD
   <li>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace “background” areas of an image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel’s color to determine whether the pixel belongs in the “background” (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color the pixel is instead.</li>
   <li>An application can <strong>apply a function</strong> to each component of an RGB or other multicomponent color, including a power function (of the form <em>base</em><sup><em>exponent</em></sup>), an inversion (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
   <li>An application can <strong>swap</strong> the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: <code>[color[2], color[1], color[0]]</code>.</li>
-  <li>Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other
-<a id="Color_Differences"></a></li>
+  <li>Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).</li>
 </ol>
 
+<p><a id="Color_Differences"></a></p>
+
 <h2 id="color-differences">Color Differences</h2>
-<p>convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).</p>
 
 <p>Color difference algorithms are used to determine if two colors are similar.</p>
 
@@ -1780,7 +1786,7 @@ END METHOD
     <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
     <ul>
-      <li>Generate or furnish a list of colors that cover the space of colors well.  This is the <em>color palette</em>. A good example is the <a href="#RGB_Colors_and_the_0_1_Format"><strong>“safety palette”</strong></a> <sup id="fnref:33:1"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup>.</li>
+      <li>Generate or furnish a list of colors that cover the space of colors well.  This is the <em>color palette</em>. A good example is the <a href="#Representing_RGB_Colors"><strong>“safety palette”</strong></a> <sup id="fnref:33:1"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup>.</li>
       <li>Create a list with as many zeros as the number of colors in the palette.  This is the <em>histogram</em>.</li>
       <li>For each color in the image color list, find its <a href="#Nearest_Colors"><strong>nearest color</strong></a> in the color palette, and add 1 to the nearest color’s corresponding value in the histogram.</li>
       <li>Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.</li>
@@ -2232,7 +2238,7 @@ END METHOD
       <p>For information on how defective color vision can be simulated, see “<a href="http://ixora.io/projects/colorblindness/color-blindness-simulation-research/"><strong>Color Blindness Simulation Research</strong></a>”, by “Jim”. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
-      <p>Color display devices are often made up of tiny areas with “red”, “green”, and “blue” dots, but <a href="https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf"><strong>don’t necessarily map these areas one-to-one to pixels</strong></a>.  These dots may not necessarily be “red”, “green”, and “blue” nowadays; indeed recent display devices and luminaires are likely to be made of areas with, say “red”, “green”, “blue”, and “white”, or RGBW, rather than just three kinds of dots. Ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Color display devices are often made up of tiny areas with “red”, “green”, and “blue” dots or strips, but <a href="https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf"><strong>don’t necessarily map these areas one-to-one to pixels</strong></a>.  These dots or strips may not necessarily be “red”, “green”, and “blue” nowadays; indeed recent display devices and luminaires are likely to be made of areas with, say “red”, “green”, “blue”, and “white”, or RGBW, rather than just three kinds of dots or strips. Ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots or strips should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
       <p>Smith, A.R., “<a href="http://alvyray.com/Memos/CG/Microsoft/7_alpha.pdf"><strong>Alpha and the History of Digital Compositing</strong></a>”, Microsoft Technical Memo 7 (1995). <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

@@ -220,7 +220,7 @@ Color measurements of the same sample can vary depending on many things, includi
 - how the sample is prepared,
 - how the sample is presented to the measurement device,
 - for opaque samples, whether that device includes gloss in the measurement (as in "sphere" or "diffuse/8&deg;" devices) or excludes it (as in "45/0" or "0/45" devices),
-- for nonopaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
+- for nonopaque samples, whether the device measures light passing through the sample in all directions (_total transmission_) or straight-on only (_regular transmission_),
 - how the measurement device illuminates the sample and filters the light in the device's path (especially if it's a colorimeter or the sample is fluorescent),
 - the measurement device's aperture (sample view area),
 - ambient temperature and relative humidity, and

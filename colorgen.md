@@ -102,9 +102,12 @@ This document presents an overview of many common color topics that are of gener
 - **D65/2 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **Image color list.** Means either&mdash;
     - a list of colors (which can have duplicates), all of the same color space, or
-    - the colors (which can have duplicates) used in the pixels in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.
+    - the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
-- **Image.** Rectangular array of samples called _pixels_, where each pixel stores a color value or a reference to a color value.  Also known as a _picture_, _raster image_, or _bitmap image_.
+- **Image.** Rectangular array of samples called _pixels_, where each pixel stores a color value or a reference to a color value.  Also known as a _raster image_, or _bitmap image_.
+<!--
+- **Picture.** Means a two-dimensional image or a two-dimensional geometric model.
+-->
 - **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
 
@@ -1030,6 +1033,7 @@ This section goes over many of the operations that can be done on colors.  Note 
 ### Luminance Factor (Grayscale)
 
 The [**_luminance factor_**](http://eilv.cie.co.at/term/717)&mdash;
+
 - is a single number indicating a color's luminance relative to "white", that is, how much light reaches the eyes when that color is viewed, in comparison to "white",
 - is called **`Luminance(color)`** in this document,
 - is equivalent to the Y component of a relative [**XYZ color**](#CIE_XYZ), and
@@ -1308,11 +1312,11 @@ The following approaches can generate a saturated or desaturated version of a co
 2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" areas of an image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether the pixel belongs in the "background" (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color the pixel is instead.
 3.  An application can **apply a function** to each component of an RGB or other multicomponent color, including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format[^34]), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
 4.  An application can **swap** the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: `[color[2], color[1], color[0]]`.
-5. Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other
+5. Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).
+
 <a id=Color_Differences></a>
 
 ## Color Differences
-convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).
 
 Color difference algorithms are used to determine if two colors are similar.
 
@@ -1468,7 +1472,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 
 2. **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
-    - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the [**"safety palette"**](#RGB_Colors_and_the_0_1_Format) [^33].
+    - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the [**"safety palette"**](#Representing_RGB_Colors) [^33].
     - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
     - For each color in the image color list, find its [**nearest color**](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
     - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.
@@ -1830,7 +1834,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^6]: For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
 
-[^7]: Color display devices are often made up of tiny areas with "red", "green", and "blue" dots, but [**don't necessarily map these areas one-to-one to pixels**](https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf).  These dots may not necessarily be "red", "green", and "blue" nowadays; indeed recent display devices and luminaires are likely to be made of areas with, say "red", "green", "blue", and "white", or RGBW, rather than just three kinds of dots. Ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them.
+[^7]: Color display devices are often made up of tiny areas with "red", "green", and "blue" dots or strips, but [**don't necessarily map these areas one-to-one to pixels**](https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf).  These dots or strips may not necessarily be "red", "green", and "blue" nowadays; indeed recent display devices and luminaires are likely to be made of areas with, say "red", "green", "blue", and "white", or RGBW, rather than just three kinds of dots or strips. Ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots or strips should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside the development of solid-state lighting, luminaires, or display devices, or of software to control them.
 
 [^8]: Smith, A.R., "[**Alpha and the History of Digital Compositing**](http://alvyray.com/Memos/CG/Microsoft/7_alpha.pdf)", Microsoft Technical Memo 7 (1995).
 
