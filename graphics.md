@@ -142,12 +142,14 @@ One of the following games can be considered an upper limit to what is considere
 
 ### Graphics Engines and APIs
 
-It would be of interest to write a free and open-source graphics library that implements this specification in software, with a minimum of source code, or to lay down a lean application programming interface (API) for this specification.[^13]  The following are examples:
+It would be of interest to write a free and open-source graphics library that implements this specification and renders graphics in software (with a minimum of source code and dependencies), or to lay down a lean application programming interface (API) for this specification.[^13]  The following are examples:
 
 - _Quake_, _Quake II_, and _Quake III Arena_ popularized the practice of using only a subset of the OpenGL 1.1 API for a game's graphics rendering (for example, "Optimizing OpenGL drivers for Quake3" by the developer of _Quake III Arena_).
-- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the 2-D game engine _Pyxel_.  But, in addition to the efforts here, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would also be worthwhile.
+- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the 2-D game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would be worthwhile.
 
-Given a game that follows this specification, it is well within the specification's spirit to make it compatible with Windows XP or even Windows 98, with very low resource usage.
+Given a game that follows this specification, it is allowed and encouraged to make it compatible with Windows XP or even Windows 98, with very low resource usage.
+
+In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).
 
 <a id=Optional_Limits></a>
 
@@ -168,7 +170,7 @@ A game may impose further constraints to this specification (for example, to red
 - The game uses no more than 16 million bytes of system memory at a time.
 - The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.[^15]
 - The game aims for a rate of 30 frames per second.
-- The game's graphics are rendered in software.  That is, the rendering does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics programming interface (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).
+- The game's graphics are _rendered in software_ (see section "Graphics Engines and APIs").
 - The game's graphics rendering employs only 32-bit and smaller integers and fixed-point arithmetic.[^16]
 
 <a id=Notes_on_Specification></a>
@@ -227,7 +229,7 @@ This section has notes on this specification, such as how its requirements corre
 
 - The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
-- This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.  Unless done entirely in software, ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification.
+- This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.  Ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification unless the meshes are _rendered in software_ (see section "Graphics Engines and APIs").
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^49] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^4] per-vertex specular highlighting, per-vertex depth-based fog, Bresenham's line drawing algorithm, multitexture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping and environment mapping are borderline "classic-graphics" capabilities.  Bilinear filtering is optional under this specification.
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
@@ -320,7 +322,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^4]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
 
-[^5]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be rendered in software, but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
+[^5]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be _rendered in software_ (see section "Graphics Engines and APIs"), but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
 [^6]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
