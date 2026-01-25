@@ -17,6 +17,7 @@ All may interest 1990s computer users.
 - [**Graphics Challenge for Classic-Style Games**](#Graphics_Challenge_for_Classic_Style_Games)
     - [**The Specification**](#The_Specification)
     - [**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)
+    - [**Graphics Engines and APIs**](#Graphics_Engines_and_APIs)
     - [**Optional Limits**](#Optional_Limits)
     - [**Notes on Specification**](#Notes_on_Specification)
         - [**Screen resolutions**](#Screen_resolutions)
@@ -137,11 +138,22 @@ One of the following games can be considered an upper limit to what is considere
 - _Quake III Arena_ (December 1999), which [**required DirectX 7 and at least 64 million bytes of memory**](https://www.dosdays.co.uk/topics/early_3d_games.php).
 - _Falcon 4.0_ (1998).
 
+<a id=Graphics_Engines_and_APIs></a>
+
+### Graphics Engines and APIs
+
+It would be of interest to write a free and open-source graphics library that implements this specification in software, with a minimum of source code, or to lay down a lean application programming interface (API) for this specification.[^13]  The following are examples:
+
+- _Quake_, _Quake II_, and _Quake III Arena_ popularized the practice of using only a subset of the OpenGL 1.1 API for a game's graphics rendering (for example, "Optimizing OpenGL drivers for Quake3" by the developer of _Quake III Arena_).
+- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the 2-D game engine _Pyxel_.  But, in addition to the efforts here, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would also be worthwhile.
+
+Given a game that follows this specification, it is well within the specification's spirit to make it compatible with Windows XP or even Windows 98, with very low resource usage.
+
 <a id=Optional_Limits></a>
 
 ### Optional Limits
 
-A game may impose further constraints to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.[^13]  Examples of optional constraints are the following:
+A game may impose further constraints to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose. Examples of optional constraints are the following:
 
 - The game displays no more than 16 colors at a time.[^14]
 - The game is limited to the 16 colors of the so-called _VGA palette_.

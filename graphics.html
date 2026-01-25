@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-01-23"><meta name="citation_date" content="2026/01/23"><meta name="citation_publication_date" content="2026/01/23"><meta name="citation_online_date" content="2026/01/23"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-01-25"><meta name="citation_date" content="2026/01/25"><meta name="citation_publication_date" content="2026/01/25"><meta name="citation_online_date" content="2026/01/25"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-01-23.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-01-25.</p>
 
 <p>The following are challenges I make to the computer community, relating to:</p>
 
@@ -27,6 +27,7 @@
     <ul>
       <li><a href="#The_Specification"><strong>The Specification</strong></a></li>
       <li><a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a></li>
+      <li><a href="#Graphics_Engines_and_APIs"><strong>Graphics Engines and APIs</strong></a></li>
       <li><a href="#Optional_Limits"><strong>Optional Limits</strong></a></li>
       <li><a href="#Notes_on_Specification"><strong>Notes on Specification</strong></a>
         <ul>
@@ -184,11 +185,24 @@
   <li><em>Falcon 4.0</em> (1998).</li>
 </ul>
 
+<p><a id="Graphics_Engines_and_APIs"></a></p>
+
+<h3 id="graphics-engines-and-apis">Graphics Engines and APIs</h3>
+
+<p>It would be of interest to write a free and open-source graphics library that implements this specification in software, with a minimum of source code, or to lay down a lean application programming interface (API) for this specification.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>  The following are examples:</p>
+
+<ul>
+  <li><em>Quake</em>, <em>Quake II</em>, and <em>Quake III Arena</em> popularized the practice of using only a subset of the OpenGL 1.1 API for a game’s graphics rendering (for example, “Optimizing OpenGL drivers for Quake3” by the developer of <em>Quake III Arena</em>).</li>
+  <li>The <a href="https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference"><strong>API reference</strong></a> for the 2-D game engine <em>Pyxel</em>.  But, in addition to the efforts here, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would also be worthwhile.</li>
+</ul>
+
+<p>Given a game that follows this specification, it is well within the specification’s spirit to make it compatible with Windows XP or even Windows 98, with very low resource usage.</p>
+
 <p><a id="Optional_Limits"></a></p>
 
 <h3 id="optional-limits">Optional Limits</h3>
 
-<p>A game may impose further constraints to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to <a href="https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes"><strong>reduce to a limited set the colors</strong></a> ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.  I would also be interested in learning about a free and open-source graphics library that implements this specification.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>  Examples of optional constraints are the following:</p>
+<p>A game may impose further constraints to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to <a href="https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes"><strong>reduce to a limited set the colors</strong></a> ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose. Examples of optional constraints are the following:</p>
 
 <ul>
   <li>The game displays no more than 16 colors at a time.<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
