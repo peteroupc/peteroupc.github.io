@@ -86,7 +86,7 @@ Limit 2-D graphics to the following: [^5]
     1. Each tile is in a 1-bit-per-pixel format and uses one of 16 _color tables_, with 2 colors per table.
     2. Each tile is in a 2-bit-per-pixel format and uses one of 16 color tables, with 4 colors per table.
     3. Each tile is in a 4-bit-per-pixel format and uses one of 16 color tables, with 16 colors per table.
-    3. There is a single 256-color table for use by tiles.  Each tile is in an 8-bit-per-pixel format.
+    4. There is a single 256-color table for use by tiles.  Each tile is in an 8-bit-per-pixel format.
 5. Each color in each color table used by tiles is of the vertex color format given earlier.
 6. Tiles can be horizontally flipped, vertically flipped, or both.
 7. Separate from layers, 2-D _sprites_ can be displayed.  Each sprite is a rectangular array of either tiles or pixels.
@@ -231,9 +231,11 @@ This section has notes on this specification, such as how its requirements corre
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.  Ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification unless the meshes are _rendered in software_ (see section "Graphics Engines and APIs").
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^49] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
-- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^4] per-vertex specular highlighting, per-vertex depth-based fog, Bresenham's line drawing algorithm, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering is optional under this specification.
+- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^4] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering is optional under this specification.
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
+
+triangle flat shading
 
 <a id=Screen_image_effects_filters></a>
 
@@ -324,7 +326,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be _rendered in software_ (see section "Graphics Engines and APIs"), but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
-[^6]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
+[^6]: Tile- and sprite-based graphics were in place largely because they saved memory; they were popularized by the arcade game _Galaxian_.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
 [^7]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically.  In the Super Famicom/Super Nintendo Entertainment System, sprites could not be scaled, but they could be flipped.
 
