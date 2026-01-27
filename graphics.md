@@ -235,8 +235,6 @@ This section has notes on this specification, such as how its requirements corre
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
-triangle flat shading
-
 <a id=Screen_image_effects_filters></a>
 
 #### Screen image effects (filters)
