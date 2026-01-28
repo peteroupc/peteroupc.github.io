@@ -4,7 +4,7 @@ Notes on developing an application programming interface (API) for classic graph
 
 <a id=Goal_An_Open_Source_Engine_or_API_for_Classic_Graphics></a>
 
-## Goal: An Open Source Engine or API for Classic Graphics
+## Goal: An Open-Source Engine or API for Classic Graphics
 
 It would be of interest to write a free and open-source graphics engine that implements this specification and renders graphics in software (with a minimum of source code and dependencies),[^1] or to establish a lean API for this specification.  The following are examples:
 
@@ -55,6 +55,8 @@ Like the corresponding `...OneTex` versions, with the following exceptions. The 
 
 This is far from a complete list of useful 3-D drawing functions; there may be others, but the goal is to define only those functions and 3-D capabilities actually used by video games in the 1990s and earlier.
 
+The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_Graphics) as within its spirit: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending. The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
+
 <a id=License></a>
 
 ## License
@@ -65,4 +67,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Notes
 
-[^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The following are examples of a graphics library that follows the spirit, even if not the letter, of the classic graphics specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
+[^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The following are examples of a graphics library that follows the spirit, even if not the letter, of the classic-graphics specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
