@@ -30,9 +30,15 @@ The following are potential C-language functions a lean graphics API can have.  
     DrawTrianglesOneTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture);
 
-Draws a sequence of triangles.  The `vertices` array is a rectangular array of vertices, where each vertex takes up eight `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; and the texture coordinates (U and V).  The number of `float`s pointed to must equal 8 times `numvertices`. The number of indices (`numindices`) must be a multiple of 3.
+Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3.
 
 > **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a screen resolution of 640 &times; 480.
+
+There are several possibilities for "vertex blocks":
+
+- Each "vertex block" has eight `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; and the texture coordinates (U and V).
+- Each "vertex block" has five `float` values: the x-, y-, and z-coordinates; and a color's red, green, and blue values, each ranging from 0 through 1.  This is for games that render only triangles without textures.
+- Each "vertex block" has five `float` values: the x-, y-, and z-coordinates; and the two texture coordinates.  This is for games that render only textured triangles.
 
 `state` is the 3-D graphics state, to be determined.  This state will include the game's frame buffer, and possibly additional parameters yet to be determined.
 
@@ -53,7 +59,7 @@ Draws a triangle strip.  `vertices`, `texture`, and `numvertices` are as in `Dra
     DrawTriangleStripTwoTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture1, Texture *texture2);
 
-Like the corresponding `...OneTex` versions, with the following exceptions. The `vertices` array is a rectangular array of vertices, where each vertex takes up ten `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; the texture coordinates (U and V) for `texture1`; and the texture coordinates for `texture2`.  The number of `float`s pointed to must equal 10 times `numvertices`.  These functions are suggested here because some games from the late 1990s rely on so-called _light-map_ textures and two-texture blending rather than in-game lighting calculations.
+Like the corresponding `...OneTex` versions, with the following exceptions. The `vertices` array is a rectangular array of vertices, where each vertex takes up ten `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; the texture coordinates (U and V) for `texture1`; and the texture coordinates for `texture2`.  These functions are suggested here because some games from the late 1990s rely on so-called _light-map_ textures and two-texture blending rather than in-game lighting calculations.
 
 This is far from a complete list of useful 3-D drawing functions; there may be others, but the goal is to define only those functions and 3-D capabilities actually used by video games in the 1990s and earlier.
 
