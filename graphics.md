@@ -17,7 +17,6 @@ All may interest 1990s computer users.
 - [**Graphics Challenge for Classic-Style Games**](#Graphics_Challenge_for_Classic_Style_Games)
     - [**The Specification**](#The_Specification)
     - [**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)
-    - [**Open-Source Graphics Engines and APIs**](#Open_Source_Graphics_Engines_and_APIs)
     - [**Optional Limits**](#Optional_Limits)
     - [**Notes on Specification**](#Notes_on_Specification)
         - [**Screen resolutions**](#Screen_resolutions)
@@ -45,7 +44,7 @@ In general, _classic graphics_ means two- or three-dimensional graphics achieved
 
 This challenge is intended to enable innovative video games with very low resource requirements; most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality classic graphics using only software &mdash; without relying on specialized video cards &mdash; at screen resolutions typically targeted by video games in the 1990s and earlier.[^1]
 
-The challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further constraints to graphics computation (such as memory, resource, color, resolution, or triangle limits) are highly encouraged.
+The challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further [**constraints to graphics computation**](#Optional_Limits) (such as memory, resource, color, resolution, or triangle limits) are highly encouraged. It is also encouraged to write a free and open-source graphics engine[^2] or establish a lean programming interface for this graphics specification.  For details, see "[**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html)".
 
 <a id=The_Specification></a>
 
@@ -53,7 +52,7 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 
 Define the _larger screen dimension_ as the larger of the screen width and the screen height.
 
-Limit 3-D graphics to the following:[^2]
+Limit 3-D graphics to the following:[^3]
 
 1. The maximum number of primitives that can be displayed at a time (per frame) is equal to screen width times screen height divided by 24. \(See also survey project in "Other Challenges and Projects", later.)
     * A _primitive_ is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.
@@ -62,7 +61,7 @@ Limit 3-D graphics to the following:[^2]
 
 2. The maximum number of vertices that can be displayed at a time is 3 times the maximum number of primitives.
     * A _vertex_ consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
-    * Each vertex color follows this color format: The red, green, and blue components occupy up to 5 bits each.[^3]
+    * Each vertex color follows this color format: The red, green, and blue components occupy up to 5 bits each.[^4]
 
 3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has the vertex color format given earlier, or
@@ -73,11 +72,11 @@ Limit 3-D graphics to the following:[^2]
 6. Textures may contain transparent pixels.
 7. Depth buffers (Z buffers) and depth-based pixel-level fog are supported.
 8. The 3-D graphics buffer's resolution is the same as the screen resolution.
-9. 3-D primitives should undergo perspective correction, but this is optional.[^4]
+9. 3-D primitives should undergo perspective correction, but this is optional.[^5]
 
 > **Example:** For 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
 
-Limit 2-D graphics to the following: [^5]
+Limit 2-D graphics to the following: [^6]
 
 1. Up to three 2-D _layers_ can be displayed at a time.  If 3-D graphics are not being displayed, a fourth 2-D layer can also be displayed.  Otherwise, a layer for the 3-D graphics can be displayed.  Each 2-D layer is a rectangular array of references to _tiles_ (a _tile_ is a small rectangular array of pixels).
 2. Up to two of the 2-D layers can undergo a 2-D affine transformation.
@@ -91,29 +90,29 @@ Limit 2-D graphics to the following: [^5]
 6. Tiles can be horizontally flipped, vertically flipped, or both.
 7. Separate from layers, 2-D _sprites_ can be displayed.  Each sprite is a rectangular array of either tiles or pixels.
 8. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
-9. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^6]
+9. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^7]
 10. Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.
 11. Each sprite can be drawn above or below any of the 2-D layers.
 12. The application chooses one:
     1. Each sprite can undergo a 2-D affine transformation.
-    2. Each sprite can be horizontally flipped, vertically flipped, or both.[^7]
+    2. Each sprite can be horizontally flipped, vertically flipped, or both.[^8]
     3. No affine transformation or flipping of sprites is allowed.
-13. Layers, tiles, and sprites may contain transparent pixels, but not translucent (semitransparent) pixels.  As an exception, the 3-D layer may contain translucent pixels.[^8]
+13. Layers, tiles, and sprites may contain transparent pixels, but not translucent (semitransparent) pixels.  As an exception, the 3-D layer may contain translucent pixels.[^9]
 
-The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^9]
+The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^10]
 
 > **Example:** For 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
 
 Other requirements:
 
-- **Screen resolution:** Screen resolution is no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels wide by 480 pixels high).[^10]
-- **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^11]
+- **Screen resolution:** Screen resolution is no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels wide by 480 pixels high).[^11]
+- **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^12]
 
 <a id=Classic_Graphics_in_Scope></a>
 
 ### Classic Graphics in Scope
 
-This specification for "classic graphics"[^12] in modern games largely reflects the graphics limitations of&mdash;
+This specification for "classic graphics"[^13] in modern games largely reflects the graphics limitations of&mdash;
 
 - consumer PCs (personal computers) released in the mid- to late 1990s,
 - home computers released before 1995,
@@ -137,12 +136,6 @@ One of the following games can be considered an upper limit to what is considere
 
 - _Quake III Arena_ (December 1999), which [**required DirectX 7 and at least 64 million bytes of memory**](https://www.dosdays.co.uk/topics/early_3d_games.php).
 - _Falcon 4.0_ (1998).
-
-<a id=Open_Source_Graphics_Engines_and_APIs></a>
-
-### Open-Source Graphics Engines and APIs
-
-It is encouraged to write a free and open-source graphics engine[^13] or establish a lean programming interface for this graphics specification.  For details, see "[**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html).
 
 <a id=Optional_Limits></a>
 
@@ -228,7 +221,7 @@ This section has notes on this specification, such as how its requirements corre
 - This specification allows for prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
 - This specification allows for drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.  Ways to render voxel meshes without relying on triangles (such as by layers of sprites) are outside the spirit of this specification unless the meshes are _rendered in software_ (see section "Optional Limits").
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^49] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
-- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^4] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering is optional under this specification.
+- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^5] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering is optional under this specification.
 - Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
@@ -313,29 +306,29 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: A computer has adequate performance for classic graphics if it achieves a score of&mdash;<br>(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 &times; 480) when run without graphics acceleration, or<br>(b) 195 or greater on the 3DMark2000 CPU speed test.<br>Both figures correspond to the running of two graphically demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo's detail level averages more than 12,800 triangles per frame; see the section "Test Descriptions" in the 3DMark2000 help).
 
-[^2]: One editor specialized for creating classic 3-D models is the open-source tool [**_Blockbench_**](https://www.blockbench.net/).
+[^2]: The following are examples of a graphics library that follows the spirit, even if not the letter, of this specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
 
-[^3]: If there is interest, this format may instead be: The red and blue components occupy 5 bits each; the green component, 6 bits.
+[^3]: One editor specialized for creating classic 3-D models is the open-source tool [**_Blockbench_**](https://www.blockbench.net/).
 
-[^4]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
+[^4]: If there is interest, this format may instead be: The red and blue components occupy 5 bits each; the green component, 6 bits.
 
-[^5]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be _rendered in software_ (see section "Optional Limits"), but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
+[^5]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
 
-[^6]: Tile- and sprite-based graphics were in place largely because they saved memory; they were popularized by the arcade game _Galaxian_.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
+[^6]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be _rendered in software_ (see section "Optional Limits"), but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
-[^7]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically.  In the Super Famicom/Super Nintendo Entertainment System, sprites could not be scaled, but they could be flipped.
+[^7]: Tile- and sprite-based graphics were in place largely because they saved memory; they were popularized by the arcade game _Galaxian_.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
-[^8]: If there is interest I may allow 2-D sprites to have translucent pixels in this specification.  But support for such sprites was probably rare before 1995.
+[^8]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically.  In the Super Famicom/Super Nintendo Entertainment System, sprites could not be scaled, but they could be flipped.
 
-[^9]: But alpha blending (the mixing of one image with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
+[^9]: If there is interest I may allow 2-D sprites to have translucent pixels in this specification.  But support for such sprites was probably rare before 1995.
 
-[^10]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels).
+[^10]: But alpha blending (the mixing of one image with another) was "relatively new to PC games" at the time of _Quake_'s release in 1996, according to _Michael Abrash's Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
-[^11]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br>Standard MIDI files organize MIDI sounds into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under the _Multimedia PC Specification_ (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
+[^11]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels).
 
-[^12]: Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in classic games and other audiovisual computer applications.  Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size image that assigns each segment a unique color and, each frame, draw black where where the segments that are "on" are, and draw white (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
+[^12]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br>Standard MIDI files organize MIDI sounds into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under the _Multimedia PC Specification_ (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
 
-[^13]: The following are examples of a graphics library that follows the spirit, even if not the letter, of this specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
+[^13]: Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in classic games and other audiovisual computer applications.  Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind that Tiger Electronics was famous for.  These are simple to emulate, though: design a screen-size image that assigns each segment a unique color and, each frame, draw black where where the segments that are "on" are, and draw white (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
 [^14]: An example is _Loom_ (1990).
 
