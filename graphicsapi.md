@@ -1,6 +1,6 @@
 # Lean Programming Interfaces for Classic Graphics
 
-Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in the [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000.
+Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders".
 
 <a id=Goal_An_Open_Source_Engine_or_API_for_Classic_Graphics></a>
 
@@ -17,7 +17,9 @@ It would be of interest to write a free and open-source graphics engine that imp
 
 The simplest way to proceed is to give the application a _frame buffer_, a block of memory consisting of a rectangular array of pixel samples.  The nature of each pixel sample depends on the game's needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.[^1]
 
-A tile- and sprite-based API suggested by the classic graphics specification is yet to be determined.
+> **Note:** Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels.
+
+A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
 <a id=3_D_Graphics></a>
 
@@ -34,7 +36,7 @@ Draws a sequence of triangles.  The `vertices` array is a rectangular array of v
 
 `state` is the 3-D graphics state, to be determined.  This state will include the game's frame buffer, and possibly additional parameters yet to be determined.
 
-`texture` is information about the texture, to be determined.  This information will include the texture's image data.
+`texture` is information about the texture, to be determined.  This information will include the texture's image data and a blending operation (add, modulate, etc.).
 
     DrawTriangleFanOneTex(State3D *state, float* vertices, uint32_t numvertices, Texture *texture);
 
