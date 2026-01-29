@@ -10,6 +10,7 @@ It would be of interest to write a free and open-source graphics engine that imp
 
 - _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 API for a game's graphics rendering (see, for example, "Optimizing OpenGL drivers for Quake3" by the developer of _Quake III Arena_).
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the 2-D game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would be worthwhile.
+- BGI, a 2-D graphics API (`graphics.h`) by what was then known as Borland.
 
 <a id=2_D_Graphics></a>
 
@@ -25,19 +26,38 @@ A tile- and sprite-based API suggested by the classic-graphics specification is 
 
 ## 3-D Graphics
 
-The following are potential C-language functions a lean graphics API can have.  The API may have any or all of these functions, depending on its needs:
+Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple capabilities for real-time rendering of three-dimensional scenes.
+
+The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_Graphics) as within its spirit:
+
+- Z buffering (depth buffering).
+- Bilinear filtering.
+- Flat shading and Gouraud shading.
+- Perspective correction.
+- Per-vertex specular highlighting.
+- Per-vertex depth-based fog.
+- Line drawing.
+- Two-texture blending.
+- Edge antialiasing (smoothing).
+- MIP mapping.
+- Source and destination alpha blending.
+
+The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
+
+Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
+
+The following are potential C-language functions a lean graphics API can have.  The API may have any or all of these functions, depending on its needs.
 
     DrawTrianglesOneTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture);
 
-Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3.
+Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.
 
 > **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a screen resolution of 640 &times; 480.
 
 There are several possibilities for "vertex blocks":
 
 - Each "vertex block" has eight `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; and the texture coordinates (U and V).
-- Each "vertex block" has five `float` values: the x-, y-, and z-coordinates; and a color's red, green, and blue values, each ranging from 0 through 1.  This is for games that render only triangles without textures.
 - Each "vertex block" has five `float` values: the x-, y-, and z-coordinates; and the two texture coordinates.  This is for games that render only textured triangles.
 
 `state` is the 3-D graphics state, to be determined.  This state will include the game's frame buffer, and possibly additional parameters yet to be determined.
@@ -55,15 +75,20 @@ Draws a triangle strip.  `vertices`, `texture`, and `numvertices` are as in `Dra
     DrawTrianglesTwoTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture1, Texture *texture2);
     DrawTriangleFanTwoTex(State3D *state, float* vertices, uint32_t numvertices,
-       uint32_t * indices, uint32_t numindices, Texture *texture1, Texture *texture2);
+       Texture *texture1, Texture *texture2);
     DrawTriangleStripTwoTex(State3D *state, float* vertices, uint32_t numvertices,
-       uint32_t * indices, uint32_t numindices, Texture *texture1, Texture *texture2);
+       Texture *texture1, Texture *texture2);
 
-Like the corresponding `...OneTex` versions, with the following exceptions. The `vertices` array is a rectangular array of vertices, where each vertex takes up ten `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; the texture coordinates (U and V) for `texture1`; and the texture coordinates for `texture2`.  These functions are suggested here because some games from the late 1990s rely on so-called _light-map_ textures and two-texture blending rather than in-game lighting calculations.
+Like the corresponding `...OneTex` versions, with the following exceptions. Each vertex block has ten `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; the texture coordinates (U and V) for `texture1`; and the texture coordinates for `texture2`.  These functions are suggested here because some games from the late 1990s rely on so-called _light-map_ textures and two-texture blending rather than in-game lighting calculations.
 
-This is far from a complete list of useful 3-D drawing functions; there may be others, but the goal is to define only those functions and 3-D capabilities actually used by video games in the 1990s and earlier.
+    DrawTriangles(State3D *state, float* vertices, uint32_t numvertices,
+       uint32_t * indices, uint32_t numindices);
+    DrawTriangleFan(State3D *state, float* vertices, uint32_t numvertices);
+    DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
 
-The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_Graphics) as within its spirit: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending. The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
+Draws triangles without textures.  Like the corresponding `...OneTex` versions, with the following exceptions. Each "vertex block" has six `float` values: the x-, y-, and z-coordinates; and a color's red, green, and blue values, each ranging from 0 through 1.  This is for games that render only triangles without textures.  These functions are suggested here because some games from the mid- to late 1990s often draw polygons without textures.
+
+This is far from a complete list of useful 3-D drawing functions; there may be others, but the goal is to define a compact set of functions supporting only those 3-D capabilities actually used by video games in the 1990s and earlier.
 
 <a id=License></a>
 
