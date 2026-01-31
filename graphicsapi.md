@@ -26,9 +26,9 @@ A tile- and sprite-based API suggested by the classic-graphics specification is 
 
 ## 3-D Graphics
 
-Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple capabilities for real-time rendering of three-dimensional scenes.
+Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple, yet admirable capabilities for real-time rendering of three-dimensional scenes.
 
-The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_Graphics) as within its spirit:
+The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_graphics) as within its spirit:
 
 - Z buffering (depth buffering).
 - Bilinear filtering.
@@ -45,6 +45,8 @@ The [**classic-graphics specification**](https://peteroupc.github.io/graphics.ht
 The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
 
 Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
+
+Because of the relatively simple graphics and low scene complexity (fewer than 20,000 triangles per frame) in 1990s 3-D games compared to today, any implementation of this 3-D graphics API should render graphics in software[^1], and may also support rendering with hardware acceleration.
 
 The following are potential C-language functions a lean graphics API can have.  The API may have any or all of these functions, depending on its needs.
 

@@ -172,9 +172,9 @@ A color can be specified in one of two ways:
 
 The **red&ndash;green&ndash;blue (RGB) color model** is the most commonly seen color model in mainstream computer programming.  The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on display devices.[^7] The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
 
-**RGB colors.** An RGB color consists of three components in the following order: "red", "green", "blue".
+**RGB colors.** An RGB color consists of three components (_color components_ or _color channels_) in the following order: "red", "green", "blue".
 
-**RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_,[^8] which ranges from fully transparent to fully opaque. Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered fully opaque.
+**RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_ or _alpha channel_,[^8] which ranges from fully transparent to fully opaque. Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered fully opaque.
 
 **0-1 format.** In this document, an RGB or RGBA color is in the **0-1 format** if all its components are 0 or greater and 1 or less.  This document understands all RGB and RGBA colors to be in this format unless noted otherwise.
 
