@@ -12,6 +12,8 @@ It would be of interest to write a free and open-source graphics engine that imp
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would be worthwhile.
 - BGI, a 2-D graphics API (`graphics.h`) by what was then known as Borland.
 
+The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable innovative video games on those computers.
+
 <a id=2_D_Graphics></a>
 
 ## 2-D Graphics
