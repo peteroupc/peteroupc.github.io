@@ -1062,7 +1062,7 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 
 > **Examples:**
 >
-> 1. **"Grayscale conversion".** A color, `color`, can be converted to black, white, or a shade of gray, as appropriate, by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
+> 1. **"Grayscale conversion".** An encoded RGB color, `color`, can be converted to a linear RGB color (in the same RGB color space) representing black, white, or a shade of gray, as appropriate, by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
 > 2. An [**_image color list_**](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
 > 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.

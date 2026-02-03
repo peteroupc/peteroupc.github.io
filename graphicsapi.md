@@ -9,7 +9,7 @@ Notes on developing an application programming interface (API) for classic graph
 It would be of interest to write a free and open-source graphics engine that implements this specification and renders graphics in software (with a minimum of source code and dependencies),[^1] or to establish a lean API for this specification.  The following are examples:
 
 - _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 API for a game's graphics rendering (see, for example, "Optimizing OpenGL drivers for Quake3" by the developer of _Quake III Arena_).
-- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the 2-D game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would be worthwhile.
+- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration (notably the OpenGL API) would be worthwhile.
 - BGI, a 2-D graphics API (`graphics.h`) by what was then known as Borland.
 
 <a id=2_D_Graphics></a>
@@ -22,11 +22,31 @@ The simplest way to proceed is to give the application a _frame buffer_, a block
 
 A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
+A lean API for copying and stretching 2-D images as well as for geometric drawing (for example, simple shapes, 2-D path filling and stroking, flood fills, line and curve drawing) is also yet to be determined. (For such an API, antialiasing support is optional.)  The API could include functions for the following:
+
+- Getting and setting pixel values of an image.
+- Filling an axis-aligned rectangular area of an image with a solid color, supporting only integer coordinates.
+- Copying an axis-aligned rectangular area of an image onto another image, with optional nearest-neighbor scaling.
+- Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
+- Drawing one-unit-thick outlines of 2-D paths with a solid color.[^2]
+- Flood filling colored areas of an image.
+
+A leaner API could provide for the following instead:
+
+- Getting and setting pixel values of an image.
+- Filling the following figures with a solid color, supporting only integer coordinates.
+    - Axis-aligned rectangles and ellipses.
+    - Polygons with even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^3]
+- Drawing one-unit-thick line segments and elliptical arcs with a solid color, supporting only integer coordinates.
+- Flood filling colored areas of an image.
+
 <a id=3_D_Graphics></a>
 
 ## 3-D Graphics
 
-Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple, yet admirable capabilities for real-time rendering of three-dimensional scenes.
+Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple, yet admirable capabilities for real-time rendering of three-dimensional scenes, as well as a low scene complexity (fewer than 20,000 triangles per frame).
+
+This section gives suggestions for a lean API supporting 3-D graphics. Any implementation of it should render graphics in software[^1] and optionally with hardware acceleration.
 
 The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_graphics) as within its spirit:
 
@@ -46,9 +66,9 @@ The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen r
 
 Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
 
-Because of the relatively simple graphics and low scene complexity (fewer than 20,000 triangles per frame) in 1990s 3-D games compared to today, any implementation of this 3-D graphics API should render graphics in software[^1], and may also support rendering with hardware acceleration.
+<a id=Suggested_C_Language_Functions></a>
 
-The following are potential C-language functions a lean graphics API can have.  The API may have any or all of these functions, depending on its needs.
+### Suggested C-Language Functions
 
     DrawTrianglesOneTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture);
@@ -60,7 +80,7 @@ Draws a sequence of triangles.  The `vertices` array is a rectangular array of n
 There are several possibilities for "vertex blocks":
 
 - Each "vertex block" has eight `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; and the texture coordinates (U and V).
-- Each "vertex block" has five `float` values: the x-, y-, and z-coordinates; and the two texture coordinates.  This is for games that render only textured triangles.
+- Each "vertex block" has five `float` values: the x-, y-, and z-coordinates; and the two texture coordinates.  This is for games that render only textured triangles and calculate their own lighting.
 
 `state` is the 3-D graphics state, to be determined.  This state will include the game's frame buffer, and possibly additional parameters yet to be determined.
 
@@ -103,3 +123,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 ## Notes
 
 [^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The following are examples of a graphics library that follows the spirit, even if not the letter, of the classic-graphics specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
+
+[^2]: Here, a "unit" means the spacing between an image's pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992.
+
+[^3]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Michael Abrash's Graphics Programming Black Book Special Edition, 1997.
