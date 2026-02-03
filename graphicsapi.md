@@ -22,13 +22,13 @@ The simplest way to proceed is to give the application a _frame buffer_, a block
 
 A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
-A lean API for copying and stretching 2-D images as well as for geometric drawing (for example, simple shapes, 2-D path filling and stroking, flood fills, line and curve drawing) is also yet to be determined. (For such an API, antialiasing support is optional.)  The API could include functions for the following:
+The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.[^2] \(For such an API, antialiasing support is optional.)
 
 - Getting and setting pixel values of an image.
 - Filling an axis-aligned rectangular area of an image with a solid color, supporting only integer coordinates.
-- Copying an axis-aligned rectangular area of an image onto another image, with optional nearest-neighbor scaling.
+- Copying an axis-aligned rectangular area of an image onto another image, with optional nearest-neighbor scaling.  The copying can optionally exclude transparent pixels or pixels of a certain color.
 - Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
-- Drawing one-unit-thick outlines of 2-D paths with a solid color.[^2]
+- Drawing one-unit-thick outlines of 2-D paths with a solid color.[^3]
 - Flood filling colored areas of an image.
 
 A leaner API could provide for the following instead:
@@ -36,7 +36,7 @@ A leaner API could provide for the following instead:
 - Getting and setting pixel values of an image.
 - Filling the following figures with a solid color, supporting only integer coordinates.
     - Axis-aligned rectangles and ellipses.
-    - Polygons with even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^3]
+    - Polygons with even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^4]
 - Drawing one-unit-thick line segments and elliptical arcs with a solid color, supporting only integer coordinates.
 - Flood filling colored areas of an image.
 
@@ -124,6 +124,8 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The following are examples of a graphics library that follows the spirit, even if not the letter, of the classic-graphics specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
 
-[^2]: Here, a "unit" means the spacing between an image's pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992.
+[^2]: It is unclear whether 2-D games from the 1990s and earlier made much use of 2-D affine transformations (which keep parallel lines parallel; examples are scalings and rotations), enough to justify including in a lean API.  Indeed, even Windows 95 and Windows 98 had no built-in way to draw graphics under arbitrary affine transformations.<br>It is also unclear whether the lean API should support so-called "raster operations" (bit-by-bit operations between two images), such as those found in the Windows API.<br>Text rendering is not included in this lean API, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.
 
-[^3]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Michael Abrash's Graphics Programming Black Book Special Edition, 1997.
+[^3]: Here, a "unit" means the spacing between an image's pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992.
+
+[^4]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Michael Abrash's Graphics Programming Black Book Special Edition, 1997.
