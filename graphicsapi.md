@@ -39,7 +39,7 @@ A leaner API could provide for the following instead:
 - Filling the following figures with a solid color, supporting only integer coordinates.
     - Axis-aligned rectangles and ellipses.
     - Polygons with even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^4]
-- Drawing one-unit-thick line segments and elliptical arcs with a solid color, supporting only integer coordinates.
+- Drawing one-unit-thick line segments with a solid color, supporting only integer coordinates.  Support for drawing elliptical arcs this way is optional.
 - Flood filling colored areas of an image.
 
 <a id=3_D_Graphics></a>
@@ -114,6 +114,13 @@ Draws triangles without textures.  Like the corresponding `...OneTex` versions, 
 
 This is far from a complete list of useful 3-D drawing functions; there may be others, but the goal is to define a compact set of functions supporting only those 3-D capabilities actually used by video games in the 1990s and earlier.
 
+<a id=Further_Reading></a>
+
+## Further Reading
+
+- Jon Christiansen, "Microsoft Windows CE Graphical Features". Describes the 2-D graphics features of Windows CE 2.0 (an operating system for embedded and handheld computers) from about 1997.
+- "Microsoft C/C++ Version 7.0 Run-Time Library Reference" (1991), section 2.6.  Describes the graphics routines the named library supports.
+
 <a id=License></a>
 
 ## License
@@ -126,7 +133,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The following are examples of a graphics library that follows the spirit, even if not the letter, of the classic-graphics specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/).
 
-[^2]: It is unclear whether to include any of the following in the lean 2-D graphics API; this will depend on how heavily pre-2000 or pre-1995 games made use of them.<br><br>a. 2-D affine transformations (which keep parallel lines parallel; examples are scalings, shears, and rotations).<br>b. Translations, rotations and scalings, but no other 2-D affine transformations.<br>c. Translations, rotations, scalings, and reflections, but no other 2-D affine transformations.<br>d. So-called "[**raster operations**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API.<br>e. [**Alpha compositing**](https://ciechanow.ski/alpha-compositing/) while drawing 2-D graphics.<br>f. Drawing one image part over another (Porter and Duff's "over" operation), with optional translucency, but no other nontrivial alpha compositing.  The images may have translucent (semitransparent) or transparent pixels.<br>g. Same as (f), except the images can't have translucent pixels.<br><br>By contrast, text rendering is not included in this lean API, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.
+[^2]: It is unclear whether to include any of the following in the lean 2-D graphics API; this will depend on how heavily pre-2000 or pre-1995 games made use of them.<br><br>a. 2-D affine transformations (which keep parallel lines parallel; examples are scalings, shears, and rotations).<br>b. Translations, rotations and scalings, but no other 2-D affine transformations.<br>c. Translations, rotations, scalings, and reflections, but no other 2-D affine transformations.<br>d. So-called "[**raster operations**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API.<br>e. [**Alpha compositing**](https://ciechanow.ski/alpha-compositing/) while drawing 2-D graphics.<br>f. Drawing one image part over another (Porter and Duff's "over" operation), with optional translucency, but no other nontrivial alpha compositing.  The images may have translucent (semitransparent) or transparent pixels.<br>g. Same as (f), except the images can't have translucent pixels.<br>h. Drawing dashed 2-D paths.<br><br>By contrast, text rendering is not included in this lean API, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.
 
 [^3]: Here, a "unit" means the spacing between an image's pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992.
 
