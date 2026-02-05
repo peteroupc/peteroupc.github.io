@@ -119,7 +119,7 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 ## Further Reading
 
 - Jon Christiansen, "Microsoft Windows CE Graphical Features". Describes the 2-D graphics features of Windows CE 2.0 (an operating system for embedded and handheld computers) from about 1997.
-- "Microsoft C/C++ Version 7.0 Run-Time Library Reference" (1991), section 2.6.  Describes the graphics routines the named library supports.
+- _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6.  Describes the graphics routines the named library supports.
 
 <a id=License></a>
 
