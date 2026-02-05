@@ -110,6 +110,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
 | [time] before now | [time] ago |Inspired by E. Bernal. |
 | until such time as | until |  |
+| up to but not more than | up to | |
 | [verb] whether or not (for example, _know whether or not_, _determine whether or not_) | [verb] whether\*\* | Suggested by E. Bernal. |
 
 Even here, it is worth trying to rewrite a text to avoid discouraged words to the greatest extent possible.
