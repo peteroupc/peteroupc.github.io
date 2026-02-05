@@ -105,9 +105,6 @@ This document presents an overview of many common color topics that are of gener
     - the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
 - **Image.** Rectangular array of samples called _pixels_, where each pixel stores a color value or a reference to a color value.  Also known as a _raster image_, or _bitmap image_.
-<!--
-- **Picture.** Means a two-dimensional image or a two-dimensional geometric model.
--->
 - **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
 
