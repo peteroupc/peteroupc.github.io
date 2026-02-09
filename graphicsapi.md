@@ -27,8 +27,8 @@ A tile- and sprite-based API suggested by the classic-graphics specification is 
 The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.[^2] \(For such an API, antialiasing support is optional.)
 
 - Getting and setting pixel values of an image.
-- Filling an axis-aligned rectangular area of an image with a solid color, supporting only integer coordinates.
-- Copying an axis-aligned rectangular area of an image onto another image, with optional nearest-neighbor scaling.  The copying can optionally exclude transparent pixels or pixels of a certain color.
+- Filling with a solid color an axis-aligned rectangular area (with integer coordinates) of an image with a solid color.
+- Copying an axis-aligned rectangular area (with integer coordinates) of an image onto another image, with optional nearest-neighbor scaling.  The copying can optionally exclude transparent pixels or pixels of a certain color.
 - Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
 - Drawing one-unit-thick outlines of 2-D paths with a solid color.[^3]
 - Flood filling colored areas of an image.
