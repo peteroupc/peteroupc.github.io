@@ -134,7 +134,7 @@ The human eye has an inner back lining (called the _retina_) filled with three k
 
 The human visual system compares the responses it receives from the cones and converts them to three kinds of signals, namely a light&ndash;dark signal and the two _opponent signals_ red/green and blue/yellow. It's these signals, and not the cone responses, that are passed to the brain.[^5]
 
-The human brain interprets the signals from the eyes to judge color appearance, taking into account the visual situation. One process involved in this is called _adaptation_, in which the human visual system, roughly speaking, treats the brightest thing in the scene as "white" and mentally adjusts the rest of the colors it sees accordingly, to account for differences in lighting.  Adaptation is thus similar to a digital camera's "auto white balance".
+With these signals, the human visual system can judge color appearance, taking into account the visual situation. One process involved in this is called _adaptation_, in which the human visual system, roughly speaking, treats the brightest thing in the scene as "white" and mentally adjusts the rest of the colors it sees accordingly, to account for differences in lighting.  Adaptation is thus similar to a digital camera's "auto white balance".
 
 > **Notes:**
 >
