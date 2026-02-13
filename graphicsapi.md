@@ -24,7 +24,7 @@ The simplest way to proceed is to give the application a _frame buffer_, a block
 
 A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
-The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.[^2] \(For such an API, antialiasing support is optional, and it's enough for the 2-D API to draw to images stored in system memory, and not also drawing to video memory or directly to the screen.)
+The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.[^2] \(For such an API, antialiasing support is optional, and it's enough for the API to draw to images stored in system memory, and not also drawing to video memory or directly to the screen.)
 
 - Getting and setting pixel values of an image.
 - Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image with a solid color.
