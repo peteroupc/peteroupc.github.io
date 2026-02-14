@@ -217,8 +217,8 @@ in a B-spline curve.</li>
 path as this one but has its u-coordinates remapped to fit the specified range.</li>
   <li><a href="#BSplineCurve.fromBezierCurve">fromBezierCurve</a><br />Creates a B-spline curve from the control points of a Bézier curve.</li>
   <li><a href="#BSplineCurve.fromConicCurve">fromConicCurve</a><br />Creates a B-spline curve from the control points of a conic curve as described
-in Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
-Derivations”, 1996.</li>
+in <a href="https://developer.apple.com/library/archive/technotes/tn/tn1052.html">Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations”, 1996</a>.</li>
   <li><a href="#BSplineCurve_getControlPoints">getControlPoints</a><br />Gets a reference to the array of control points used
 in this curve object.</li>
   <li><a href="#BSplineCurve_getKnots">getKnots</a><br />Gets a reference to the array of knots used
@@ -471,14 +471,14 @@ return new PiecewiseCurve(curves)
 ### (static) BSplineCurve.fromConicCurve(controlPoints, lamda)</p>
 
 <p>Creates a B-spline curve from the control points of a conic curve as described
-in Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
-Derivations”, 1996.</p>
+in <a href="https://developer.apple.com/library/archive/technotes/tn/tn1052.html">Apple TN1052, “QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations”, 1996</a>.</p>
 
 <h4 id="parameters-9">Parameters</h4>
 
 <ul>
   <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number»)<br />Same meaning as fromBezierCurve(), except there must be three control points.</li>
-  <li><code>lamda</code> (Type: number)<br />Curvature parameter, which must be 0 or greater. If 1, same as a Bézier quadratic (degree-2) curve. If 0, same as a straight line segment between the first and third control point. If less than 1 (elliptical arc), then closer to 0 means closer to that straight line. If greater than 0 (hyperbola), then the larger, the closer to the straight-line path between the first and second and then from the second to the third control point.</li>
+  <li><code>lamda</code> (Type: number)<br />Curvature parameter, which must be 0 or greater. If 1, same as a Bézier quadratic (degree-2) curve. If 0, same as a straight line segment between the first and third control point. If less than 1 (elliptical arc), then closer to 0 means closer to that straight line. If greater than 1 (hyperbola), then the larger, the closer to the straight-line path between the first and second and then from the second to the third control point.</li>
 </ul>
 
 <h4 id="return-value-9">Return Value</h4>
