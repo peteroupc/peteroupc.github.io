@@ -45,7 +45,7 @@ A leaner API could provide for the following instead:
 The following is not included in either API.
 
 - Color palette functions.  Images may or may not have a color table, and the application is assumed to handle colors on an image-by-image basis.  (There is the matter of sending finished images to the user's display, which may vary in the number of colors it supports, but the lean 2-D API need not be concerned about this.)
-- Text rendering, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.
+- Text rendering, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^5]
 
 <a id=3_D_Graphics></a>
 
@@ -146,3 +146,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^3]: Here, a "unit" means the spacing between an image's pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992.
 
 [^4]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Michael Abrash's Graphics Programming Black Book Special Edition, 1997.
+
+[^5]: [**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text. A _glyph_ is a writing element of a _font_; examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination. Before 2000, there were three kinds of _fonts_ (also called typefaces) for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially _emoji_, to outline fonts and (2) [**"subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial.
