@@ -55,7 +55,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 <p><a name="Surface_bitangent"></a></p>
 
-<h3 id="surfacenumbitangentu-v">Surface&amp;num;bitangent(u, v)</h3>
+<h3 id="surfacebitangentu-v">Surface#bitangent(u, v)</h3>
 
 <p>Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.</p>
 
@@ -93,7 +93,7 @@ return [u, v, 0];
 
 <p><a name="Surface_endPoints"></a></p>
 
-<h3 id="surfacenumendpoints">Surface&amp;num;endPoints()</h3>
+<h3 id="surfaceendpoints">Surface#endPoints()</h3>
 
 <p>Returns the starting and ending u- and v-coordinates of this surface.
 This method calls the evaluator’s <code>endPoints</code>
@@ -109,7 +109,7 @@ method.</p>
 
 <p><a name="Surface_evaluate"></a></p>
 
-<h3 id="surfacenumevaluateu-v">Surface&amp;num;evaluate(u, v)</h3>
+<h3 id="surfaceevaluateu-v">Surface#evaluate(u, v)</h3>
 
 <p>Finds the position of this surface at the specified u- and v-coordinates.</p>
 
@@ -127,7 +127,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <p><a name="Surface_gradient"></a></p>
 
-<h3 id="surfacenumgradientu-v">Surface&amp;num;gradient(u, v)</h3>
+<h3 id="surfacegradientu-v">Surface#gradient(u, v)</h3>
 
 <p>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</p>
 
@@ -190,7 +190,7 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 
 <p><a name="Surface_normal"></a></p>
 
-<h3 id="surfacenumnormalu-v">Surface&amp;num;normal(u, v)</h3>
+<h3 id="surfacenormalu-v">Surface#normal(u, v)</h3>
 
 <p>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but “normalized” to a unit vector.</p>
@@ -209,7 +209,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <p><a name="Surface_tangent"></a></p>
 
-<h3 id="surfacenumtangentu-v">Surface&amp;num;tangent(u, v)</h3>
+<h3 id="surfacetangentu-v">Surface#tangent(u, v)</h3>
 
 <p>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 The implementation in <a href="Surface.html">Surface</a> calls the evaluator’s <code>tangent</code>

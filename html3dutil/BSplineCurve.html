@@ -260,7 +260,7 @@ If this bit is set, the length of each control point must be at least 2.</p>
 
 <p><a name="BSplineCurve_accel"></a></p>
 
-<h3 id="bsplinecurvenumaccelu">BSplineCurve&amp;num;accel(u)</h3>
+<h3 id="bsplinecurveaccelu">BSplineCurve#accel(u)</h3>
 
 <p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
@@ -282,7 +282,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="BSplineCurve_arcLength"></a></p>
 
-<h3 id="bsplinecurvenumarclengthu">BSplineCurve&amp;num;arcLength(u)</h3>
+<h3 id="bsplinecurvearclengthu">BSplineCurve#arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the specified u-coordinate of this curve.
@@ -303,7 +303,7 @@ method if it implements it; otherwise, calculates a numerical integral using the
 
 <p><a name="BSplineCurve_changeEnds"></a></p>
 
-<h3 id="bsplinecurvenumchangeendsep1-ep2">BSplineCurve&amp;num;changeEnds(ep1, ep2)</h3>
+<h3 id="bsplinecurvechangeendsep1-ep2">BSplineCurve#changeEnds(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
@@ -387,7 +387,7 @@ The first knot will be 0 and the last knot will be 1. (Type: Array.&lt;number&gt
 
 <p><a name="BSplineCurve_endPoints"></a></p>
 
-<h3 id="bsplinecurvenumendpoints">BSplineCurve&amp;num;endPoints()</h3>
+<h3 id="bsplinecurveendpoints">BSplineCurve#endPoints()</h3>
 
 <p>Returns the starting and coordinates of this curve.</p>
 
@@ -398,7 +398,7 @@ the starting and ending u-coordinates, respectively, of the curve. (Type: Array.
 
 <p><a name="BSplineCurve_evaluate"></a></p>
 
-<h3 id="bsplinecurvenumevaluateu">BSplineCurve&amp;num;evaluate(u)</h3>
+<h3 id="bsplinecurveevaluateu">BSplineCurve#evaluate(u)</h3>
 
 <p>Evaluates the curve function based on a point
 in a B-spline curve.</p>
@@ -426,7 +426,7 @@ points.push(curve.evaluate(i/10.0));
 
 <p><a name="BSplineCurve_fitRange"></a></p>
 
-<h3 id="bsplinecurvenumfitrangeep1-ep2">BSplineCurve&amp;num;fitRange(ep1, ep2)</h3>
+<h3 id="bsplinecurvefitrangeep1-ep2">BSplineCurve#fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the specified range.
@@ -499,7 +499,7 @@ Derivations”, 1996</a>.</p>
 
 <p><a name="BSplineCurve_getControlPoints"></a></p>
 
-<h3 id="bsplinecurvenumgetcontrolpoints">BSplineCurve&amp;num;getControlPoints()</h3>
+<h3 id="bsplinecurvegetcontrolpoints">BSplineCurve#getControlPoints()</h3>
 
 <p>Gets a reference to the array of control points used
 in this curve object.</p>
@@ -510,7 +510,7 @@ in this curve object.</p>
 
 <p><a name="BSplineCurve_getKnots"></a></p>
 
-<h3 id="bsplinecurvenumgetknots">BSplineCurve&amp;num;getKnots()</h3>
+<h3 id="bsplinecurvegetknots">BSplineCurve#getKnots()</h3>
 
 <p>Gets a reference to the array of knots used
 in this curve object.</p>
@@ -521,7 +521,7 @@ in this curve object.</p>
 
 <p><a name="BSplineCurve_getLength"></a></p>
 
-<h3 id="bsplinecurvenumgetlength">BSplineCurve&amp;num;getLength()</h3>
+<h3 id="bsplinecurvegetlength">BSplineCurve#getLength()</h3>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
@@ -531,7 +531,7 @@ in this curve object.</p>
 
 <p><a name="BSplineCurve_getPoints"></a></p>
 
-<h3 id="bsplinecurvenumgetpointscount">BSplineCurve&amp;num;getPoints(count)</h3>
+<h3 id="bsplinecurvegetpointscount">BSplineCurve#getPoints(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -552,7 +552,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number» | Array.&lt;Ob
 
 <p><a name="BSplineCurve_getPointsAsObjects"></a></p>
 
-<h3 id="bsplinecurvenumgetpointsasobjectscount">BSplineCurve&amp;num;getPointsAsObjects(count)</h3>
+<h3 id="bsplinecurvegetpointsasobjectscount">BSplineCurve#getPointsAsObjects(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -584,7 +584,7 @@ var buffer=new THREE.BufferGeometry()
 
 <p><a name="BSplineCurve_jerk"></a></p>
 
-<h3 id="bsplinecurvenumjerku">BSplineCurve&amp;num;jerk(u)</h3>
+<h3 id="bsplinecurvejerku">BSplineCurve#jerk(u)</h3>
 
 <p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
@@ -606,7 +606,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="BSplineCurve_normal"></a></p>
 
-<h3 id="bsplinecurvenumnormalu">BSplineCurve&amp;num;normal(u)</h3>
+<h3 id="bsplinecurvenormalu">BSplineCurve#normal(u)</h3>
 
 <p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
@@ -629,7 +629,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="BSplineCurve_split"></a></p>
 
-<h3 id="bsplinecurvenumsplitu">BSplineCurve&amp;num;split(u)</h3>
+<h3 id="bsplinecurvesplitu">BSplineCurve#split(u)</h3>
 
 <p>Splits this B-spline curve into two at the specified point.</p>
 
@@ -650,7 +650,7 @@ will be null if <code>u</code> is at or after the end of the curve. (Type: Array
 
 <p><a name="BSplineCurve_tangent"></a></p>
 
-<h3 id="bsplinecurvenumtangentu">BSplineCurve&amp;num;tangent(u)</h3>
+<h3 id="bsplinecurvetangentu">BSplineCurve#tangent(u)</h3>
 
 <p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
@@ -668,7 +668,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="BSplineCurve_toArcLengthParam"></a></p>
 
-<h3 id="bsplinecurvenumtoarclengthparam">BSplineCurve&amp;num;toArcLengthParam()</h3>
+<h3 id="bsplinecurvetoarclengthparam">BSplineCurve#toArcLengthParam()</h3>
 
 <p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -752,7 +752,7 @@ versions.) (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="BSplineCurve_velocity"></a></p>
 
-<h3 id="bsplinecurvenumvelocityu">BSplineCurve&amp;num;velocity(u)</h3>
+<h3 id="bsplinecurvevelocityu">BSplineCurve#velocity(u)</h3>
 
 <p>Finds the velocity (derivative) of
 this curve at the specified point.</p>

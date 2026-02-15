@@ -68,7 +68,7 @@ in this curve object.</li>
 
 <p><a name="BSplineSurface_bitangent"></a></p>
 
-<h3 id="bsplinesurfacenumbitangentu-v">BSplineSurface&amp;num;bitangent(u, v)</h3>
+<h3 id="bsplinesurfacebitangentu-v">BSplineSurface#bitangent(u, v)</h3>
 
 <p>Finds the <a href="Surface.html">bitangent vector</a> at the specified point on the surface.</p>
 
@@ -108,7 +108,7 @@ knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSpline
 
 <p><a name="BSplineSurface_endPoints"></a></p>
 
-<h3 id="bsplinesurfacenumendpoints">BSplineSurface&amp;num;endPoints()</h3>
+<h3 id="bsplinesurfaceendpoints">BSplineSurface#endPoints()</h3>
 
 <p>Returns the starting and ending u- and v-coordinates of this surface.
 This method calls the evaluator’s <code>endPoints</code>
@@ -124,7 +124,7 @@ method.</p>
 
 <p><a name="BSplineSurface_evaluate"></a></p>
 
-<h3 id="bsplinesurfacenumevaluateu-v">BSplineSurface&amp;num;evaluate(u, v)</h3>
+<h3 id="bsplinesurfaceevaluateu-v">BSplineSurface#evaluate(u, v)</h3>
 
 <p>Evaluates the surface function based on a point
 in a B-spline surface.</p>
@@ -161,7 +161,7 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&
 
 <p><a name="BSplineSurface_getControlPoints"></a></p>
 
-<h3 id="bsplinesurfacenumgetcontrolpoints">BSplineSurface&amp;num;getControlPoints()</h3>
+<h3 id="bsplinesurfacegetcontrolpoints">BSplineSurface#getControlPoints()</h3>
 
 <p>Gets a reference to the array of control point arrays used
 in this surface object.</p>
@@ -172,7 +172,7 @@ in this surface object.</p>
 
 <p><a name="BSplineSurface_getKnots"></a></p>
 
-<h3 id="bsplinesurfacenumgetknots">BSplineSurface&amp;num;getKnots()</h3>
+<h3 id="bsplinesurfacegetknots">BSplineSurface#getKnots()</h3>
 
 <p>Gets a reference to the array of knot vectors used
 in this curve object.</p>
@@ -183,7 +183,7 @@ in this curve object.</p>
 
 <p><a name="BSplineSurface_gradient"></a></p>
 
-<h3 id="bsplinesurfacenumgradientu-v">BSplineSurface&amp;num;gradient(u, v)</h3>
+<h3 id="bsplinesurfacegradientu-v">BSplineSurface#gradient(u, v)</h3>
 
 <p>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</p>
 
@@ -246,7 +246,7 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 
 <p><a name="BSplineSurface_normal"></a></p>
 
-<h3 id="bsplinesurfacenumnormalu-v">BSplineSurface&amp;num;normal(u, v)</h3>
+<h3 id="bsplinesurfacenormalu-v">BSplineSurface#normal(u, v)</h3>
 
 <p>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but “normalized” to a unit vector.</p>
@@ -265,7 +265,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <p><a name="BSplineSurface_tangent"></a></p>
 
-<h3 id="bsplinesurfacenumtangentu-v">BSplineSurface&amp;num;tangent(u, v)</h3>
+<h3 id="bsplinesurfacetangentu-v">BSplineSurface#tangent(u, v)</h3>
 
 <p>Finds the <a href="Surface.html">tangent vector</a> at the specified point on the surface.</p>
 

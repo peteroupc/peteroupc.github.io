@@ -122,7 +122,7 @@ but not both.</li>
 
 <p><a name="GraphicsPath_arc"></a></p>
 
-<h3 id="graphicspathnumarcx-y-radius-startangle-endangle-ccw">GraphicsPath&amp;num;arc(x, y, radius, startAngle, endAngle, ccw)</h3>
+<h3 id="graphicspatharcx-y-radius-startangle-endangle-ccw">GraphicsPath#arc(x, y, radius, startAngle, endAngle, ccw)</h3>
 
 <p>Adds path segments in the form of a circular arc to this path,
 using the parameterization specified in the “arc” method of the
@@ -145,7 +145,7 @@ HTML Canvas 2D Context.</p>
 
 <p><a name="GraphicsPath_arcShape"></a></p>
 
-<h3 id="graphicspathnumarcshapex-y-w-h-start-sweep-type">GraphicsPath&amp;num;arcShape(x, y, w, h, start, sweep, type)</h3>
+<h3 id="graphicspatharcshapex-y-w-h-start-sweep-type">GraphicsPath#arcShape(x, y, w, h, start, sweep, type)</h3>
 
 <p>Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse’s center
@@ -169,7 +169,7 @@ and dimensions, start angle, and sweep angle.</p>
 
 <p><a name="GraphicsPath_arcShapeForBox"></a></p>
 
-<h3 id="graphicspathnumarcshapeforboxx-y-w-h-start-sweep-type">GraphicsPath&amp;num;arcShapeForBox(x, y, w, h, start, sweep, type)</h3>
+<h3 id="graphicspatharcshapeforboxx-y-w-h-start-sweep-type">GraphicsPath#arcShapeForBox(x, y, w, h, start, sweep, type)</h3>
 
 <p>Adds path segments to this path that form an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse’s corner point
@@ -193,7 +193,7 @@ and dimensions, start angle, and sweep angle.</p>
 
 <p><a name="GraphicsPath_arcSvgTo"></a></p>
 
-<h3 id="graphicspathnumarcsvgtorx-ry-rot-largearc-sweep-x2-y2">GraphicsPath&amp;num;arcSvgTo(rx, ry, rot, largeArc, sweep, x2, y2)</h3>
+<h3 id="graphicspatharcsvgtorx-ry-rot-largearc-sweep-x2-y2">GraphicsPath#arcSvgTo(rx, ry, rot, largeArc, sweep, x2, y2)</h3>
 
 <p>Adds path segments in the form of an elliptical arc to this path,
 using the parameterization used by the SVG specification.</p>
@@ -216,7 +216,7 @@ using the parameterization used by the SVG specification.</p>
 
 <p><a name="GraphicsPath_arcTo"></a></p>
 
-<h3 id="graphicspathnumarctox1-y1-x2-y2-radius">GraphicsPath&amp;num;arcTo(x1, y1, x2, y2, radius)</h3>
+<h3 id="graphicspatharctox1-y1-x2-y2-radius">GraphicsPath#arcTo(x1, y1, x2, y2, radius)</h3>
 
 <p>Adds path segments in the form of a circular arc to this path,
 using the parameterization specified in the “arcTo” method of the
@@ -238,7 +238,7 @@ HTML Canvas 2D Context.</p>
 
 <p><a name="GraphicsPath_arrow"></a></p>
 
-<h3 id="graphicspathnumarrowx0-y0-x1-y1-headwidth-headlength-tailwidth">GraphicsPath&amp;num;arrow(x0, y0, x1, y1, headWidth, headLength, tailWidth)</h3>
+<h3 id="graphicspatharrowx0-y0-x1-y1-headwidth-headlength-tailwidth">GraphicsPath#arrow(x0, y0, x1, y1, headWidth, headLength, tailWidth)</h3>
 
 <p>Adds path segments to this path in the form of an arrow shape.</p>
 
@@ -261,7 +261,7 @@ from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="Graphic
 
 <p><a name="GraphicsPath_bevelRect"></a></p>
 
-<h3 id="graphicspathnumbevelrectx-y-w-h-arccx-arccy">GraphicsPath&amp;num;bevelRect(x, y, w, h, arccx, arccy)</h3>
+<h3 id="graphicspathbevelrectx-y-w-h-arccx-arccy">GraphicsPath#bevelRect(x, y, w, h, arccx, arccy)</h3>
 
 <p>Adds path segments to this path that form an axis-aligned rectangle with beveled corners.</p>
 
@@ -282,7 +282,7 @@ from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="Graphic
 
 <p><a name="GraphicsPath_bezierCurveTo"></a></p>
 
-<h3 id="graphicspathnumbeziercurvetox-y-x2-y2-x3-y3">GraphicsPath&amp;num;bezierCurveTo(x, y, x2, y2, x3, y3)</h3>
+<h3 id="graphicspathbeziercurvetox-y-x2-y2-x3-y3">GraphicsPath#bezierCurveTo(x, y, x2, y2, x3, y3)</h3>
 
 <p>Adds a cubic Bézier curve to this path starting
 at this path’s current position. The current position will be
@@ -305,7 +305,7 @@ the curve’s first control point.</p>
 
 <p><a name="GraphicsPath_closePath"></a></p>
 
-<h3 id="graphicspathnumclosepath">GraphicsPath&amp;num;closePath()</h3>
+<h3 id="graphicspathclosepath">GraphicsPath#closePath()</h3>
 
 <p>Makes this path closed. Adds a line segment to the
 path’s start position, if necessary.</p>
@@ -316,7 +316,7 @@ path’s start position, if necessary.</p>
 
 <p><a name="GraphicsPath_difference"></a></p>
 
-<h3 id="graphicspathnumdifferencepath-flatness">GraphicsPath&amp;num;difference(path, [flatness])</h3>
+<h3 id="graphicspathdifferencepath-flatness">GraphicsPath#difference(path, [flatness])</h3>
 
 <p>Computes the difference between this path’s shape and another
 path’s shape. The points given in the <a href="GraphicsPath.html#GraphicsPath_union">GraphicsPath#union</a> method
@@ -336,7 +336,7 @@ and the other path. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)</p>
 
 <p><a name="GraphicsPath_ellipse"></a></p>
 
-<h3 id="graphicspathnumellipsecx-cy-w-h">GraphicsPath&amp;num;ellipse(cx, cy, w, h)</h3>
+<h3 id="graphicspathellipsecx-cy-w-h">GraphicsPath#ellipse(cx, cy, w, h)</h3>
 
 <p>Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.</p>
@@ -356,7 +356,7 @@ and dimensions.</p>
 
 <p><a name="GraphicsPath_ellipseForBox"></a></p>
 
-<h3 id="graphicspathnumellipseforboxx-y-w-h">GraphicsPath&amp;num;ellipseForBox(x, y, w, h)</h3>
+<h3 id="graphicspathellipseforboxx-y-w-h">GraphicsPath#ellipseForBox(x, y, w, h)</h3>
 
 <p>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse’s corner point
 and dimensions.</p>
@@ -409,7 +409,7 @@ from an SVG string describing a curved path.</p>
 
 <p><a name="GraphicsPath_getBounds"></a></p>
 
-<h3 id="graphicspathnumgetbounds">GraphicsPath&amp;num;getBounds()</h3>
+<h3 id="graphicspathgetbounds">GraphicsPath#getBounds()</h3>
 
 <p>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.</p>
@@ -424,7 +424,7 @@ returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;n
 
 <p><a name="GraphicsPath_getCurrentPoint"></a></p>
 
-<h3 id="graphicspathnumgetcurrentpoint">GraphicsPath&amp;num;getCurrentPoint()</h3>
+<h3 id="graphicspathgetcurrentpoint">GraphicsPath#getCurrentPoint()</h3>
 
 <p>Gets the current point stored in this path.</p>
 
@@ -434,7 +434,7 @@ returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;n
 
 <p><a name="GraphicsPath_getCurves"></a></p>
 
-<h3 id="graphicspathnumgetcurves">GraphicsPath&amp;num;getCurves()</h3>
+<h3 id="graphicspathgetcurves">GraphicsPath#getCurves()</h3>
 
 <p>Gets a <a href="Curve.html">curve evaluator object</a> for
 the curves described by this path. The return value doesn’t track changes to the path.</p>
@@ -457,7 +457,7 @@ only be 2-dimensional).
 
 <a name="GraphicsPath_getLinePoints"></a>
 
-### GraphicsPath&num;getLinePoints([flatness])
+### GraphicsPath#getLinePoints([flatness])
 
 Gets an array of the end points of
 line segments approximating the path.
@@ -473,7 +473,7 @@ line segments approximating the path. (Type: Array.&lt;Array.&lt;number&gt;&gt;)
 
 <a name="GraphicsPath_getLinePointsAsObjects"></a>
 
-### GraphicsPath&num;getLinePointsAsObjects([flatness])
+### GraphicsPath#getLinePointsAsObjects([flatness])
 
 Gets an array of the end points of
 line segments approximating the path. The positions will be in the form of objects with
@@ -498,7 +498,7 @@ The following example initializes a three.js BufferGeometry with the points retr
 
 <a name="GraphicsPath_getLines"></a>
 
-### GraphicsPath&num;getLines([flatness])
+### GraphicsPath#getLines([flatness])
 
 Gets an array of line segments approximating
 the path.
@@ -514,7 +514,7 @@ Each line segment is an array of four numbers: the x- and y-coordinates of the s
 
 <a name="GraphicsPath_getPoints"></a>
 
-### GraphicsPath&num;getPoints(numPoints)
+### GraphicsPath#getPoints(numPoints)
 
 Gets an array of points evenly spaced across the length
 of the path.
@@ -534,7 +534,7 @@ is 1. (Type: Array.&lt;Array.&lt;number&gt;&gt;)
 
 <a name="GraphicsPath_getPointsAsObjects"></a>
 
-### GraphicsPath&num;getPointsAsObjects(numPoints)
+### GraphicsPath#getPointsAsObjects(numPoints)
 
 Gets an array of points evenly spaced across the length
 of the path. The positions will be in the form of objects with
@@ -565,7 +565,7 @@ example requires the three.js library.
 
 <a name="GraphicsPath_getSubpaths"></a>
 
-### GraphicsPath&num;getSubpaths()
+### GraphicsPath#getSubpaths()
 
 Creates an array of the disconnected portions of this path.
 
@@ -577,7 +577,7 @@ array if this path has no subpaths. (Type: Array.&lt;<a href="GraphicsPath.html"
 
 <a name="GraphicsPath_getTriangles"></a>
 
-### GraphicsPath&num;getTriangles([flatness])
+### GraphicsPath#getTriangles([flatness])
 
 Converts the subpaths in this path to triangles.
 Treats each subpath as a polygon even if it isn't closed.
@@ -603,7 +603,7 @@ in that order). (Type: Array.&lt;Array.&lt;number&gt;&gt;)
 
 <a name="GraphicsPath_interpolate"></a>
 
-### GraphicsPath&num;interpolate(other, t)
+### GraphicsPath#interpolate(other, t)
 
 Does a linear interpolation between two graphics paths.
 
@@ -620,7 +620,7 @@ The interpolated path. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_intersection"></a>
 
-### GraphicsPath&num;intersection(path, [flatness])
+### GraphicsPath#intersection(path, [flatness])
 
 Computes the intersection, or the area common to both this path's shape
 and another path's shape. The points given in the <a href="GraphicsPath.html#GraphicsPath_union">GraphicsPath#union</a> method
@@ -638,7 +638,7 @@ both paths. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_isIncomplete"></a>
 
-### GraphicsPath&num;isIncomplete()
+### GraphicsPath#isIncomplete()
 
 Returns whether the curve path is incomplete
 because of an error in parsing the curve string.
@@ -652,7 +652,7 @@ Return value. (Type: boolean)
 
 <a name="GraphicsPath_line"></a>
 
-### GraphicsPath&num;line(x0, y0, x1, y1)
+### GraphicsPath#line(x0, y0, x1, y1)
 
 Adds a line segment to this path.
 
@@ -669,7 +669,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_lineTo"></a>
 
-### GraphicsPath&num;lineTo(x, y)
+### GraphicsPath#lineTo(x, y)
 
 Adds a line segment to the path, starting
 at the path's end position, then
@@ -686,7 +686,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_merge"></a>
 
-### GraphicsPath&num;merge(path)
+### GraphicsPath#merge(path)
 
 Merges the path segments in another path onto this one.
 
@@ -700,7 +700,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_moveTo"></a>
 
-### GraphicsPath&num;moveTo(x, y)
+### GraphicsPath#moveTo(x, y)
 
 Moves the current start position and end position to the specified position.
 
@@ -715,7 +715,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_pathLength"></a>
 
-### GraphicsPath&num;pathLength([flatness])
+### GraphicsPath#pathLength([flatness])
 
 Finds the approximate length of this path.
 
@@ -730,7 +730,7 @@ in units. (Type: number)
 
 <a name="GraphicsPath_polyline"></a>
 
-### GraphicsPath&num;polyline(pointCoords, closed)
+### GraphicsPath#polyline(pointCoords, closed)
 
 Adds path segments to this path that form a polygon or a connected line segment strand.
 
@@ -746,7 +746,7 @@ Throws an error if "pointCoords" has an odd length. (Type: <a href="GraphicsPath
 
 <a name="GraphicsPath_quadraticCurveTo"></a>
 
-### GraphicsPath&num;quadraticCurveTo(x, y, x2, y2)
+### GraphicsPath#quadraticCurveTo(x, y, x2, y2)
 
 Adds a quadratic B&eacute;zier curve to this path starting
 at this path's current position. The current position will be
@@ -765,7 +765,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_rect"></a>
 
-### GraphicsPath&num;rect(x, y, w, h)
+### GraphicsPath#rect(x, y, w, h)
 
 Adds path segments to this path that form an axis-aligned rectangle.
 
@@ -782,7 +782,7 @@ This object. If "w" or "h" is 0, no path segments will be appended. (Type: <a hr
 
 <a name="GraphicsPath_regularPolygon"></a>
 
-### GraphicsPath&num;regularPolygon(cx, cy, sides, radius, [phaseInDegrees])
+### GraphicsPath#regularPolygon(cx, cy, sides, radius, [phaseInDegrees])
 
 Adds path segments to this path that form a regular polygon.
 
@@ -800,7 +800,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_regularStar"></a>
 
-### GraphicsPath&num;regularStar(cx, cy, points, radiusOut, radiusIn, phaseInDegrees)
+### GraphicsPath#regularStar(cx, cy, points, radiusOut, radiusIn, phaseInDegrees)
 
 Adds path segments to this path that form a regular N-pointed star.
 
@@ -819,7 +819,7 @@ This object. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_reverse"></a>
 
-### GraphicsPath&num;reverse()
+### GraphicsPath#reverse()
 
 Returns a path that reverses the course of this path.
 
@@ -830,7 +830,7 @@ object with its path segments reversed. (Type: <a href="GraphicsPath.html">Graph
 
 <a name="GraphicsPath_roundRect"></a>
 
-### GraphicsPath&num;roundRect(x, y, w, h, arccx, arccy)
+### GraphicsPath#roundRect(x, y, w, h, arccx, arccy)
 
 Adds path segments to this path that form an axis-aligned rounded rectangle.
 
@@ -849,7 +849,7 @@ This object. If "w" or "h" is less than 0, no path segments will be appended. (T
 
 <a name="GraphicsPath_toCurvePath"></a>
 
-### GraphicsPath&num;toCurvePath()
+### GraphicsPath#toCurvePath()
 
 Creates a path in which arcs are decomposed
 to cubic B&eacute;zier curves (which will approximate those arcs).
@@ -861,7 +861,7 @@ segments, B&eacute;zier curves, and close commands. (Type: <a href="GraphicsPath
 
 <a name="GraphicsPath_toLinePath"></a>
 
-### GraphicsPath&num;toLinePath([flatness])
+### GraphicsPath#toLinePath([flatness])
 
 Creates a path in which curves and arcs are decomposed
 to line segments.
@@ -877,7 +877,7 @@ segments and close commands. (Type: <a href="GraphicsPath.html">GraphicsPath</a>
 
 <a name="GraphicsPath_toString"></a>
 
-### GraphicsPath&num;toString()
+### GraphicsPath#toString()
 
 Returns this path in the form of a string in SVG path format.
 See <a href="GraphicsPath.html#GraphicsPath.fromString">GraphicsPath.fromString</a>.
@@ -889,7 +889,7 @@ format. (Type: string)
 
 <a name="GraphicsPath_transform"></a>
 
-### GraphicsPath&num;transform(trans)
+### GraphicsPath#transform(trans)
 
 Returns a modified version of this path that is transformed
 according to the specified affine transformation (a transformation
@@ -905,7 +905,7 @@ The transformed version of this path. (Type: <a href="GraphicsPath.html">Graphic
 
 <a name="GraphicsPath_union"></a>
 
-### GraphicsPath&num;union(path, [flatness])
+### GraphicsPath#union(path, [flatness])
 
 Computes the combination of this path's shape with another
 path's shape. The following points apply to this method:<ul>
@@ -931,7 +931,7 @@ The union of the two paths. (Type: <a href="GraphicsPath.html">GraphicsPath</a>)
 
 <a name="GraphicsPath_xor"></a>
 
-### GraphicsPath&num;xor(path, [flatness])
+### GraphicsPath#xor(path, [flatness])
 
 Computes the shape contained in either this path or another path,
 but not both. The points given in the <a href="GraphicsPath.html#GraphicsPath_union">GraphicsPath#union</a> method

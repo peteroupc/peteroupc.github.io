@@ -64,7 +64,7 @@ an <i>arc length parameterization</i>.</li>
 
 <p><a name="extras_evaluators.Roulette_accel"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumaccelu">module:extras/evaluators.Roulette&amp;num;accel(u)</h3>
+<h3 id="moduleextrasevaluatorsrouletteaccelu">module:extras/evaluators.Roulette#accel(u)</h3>
 
 <p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
@@ -86,7 +86,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="extras_evaluators.Roulette_arcLength"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumarclengthu">module:extras/evaluators.Roulette&amp;num;arcLength(u)</h3>
+<h3 id="moduleextrasevaluatorsroulettearclengthu">module:extras/evaluators.Roulette#arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the specified u-coordinate of this curve.
@@ -107,7 +107,7 @@ method if it implements it; otherwise, calculates a numerical integral using the
 
 <p><a name="extras_evaluators.Roulette_changeEnds"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumchangeendsep1-ep2">module:extras/evaluators.Roulette&amp;num;changeEnds(ep1, ep2)</h3>
+<h3 id="moduleextrasevaluatorsroulettechangeendsep1-ep2">module:extras/evaluators.Roulette#changeEnds(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
@@ -138,7 +138,7 @@ also be used to grow the path of the curve.</p>
 
 <p><a name="extras_evaluators.Roulette_endPoints"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumendpoints">module:extras/evaluators.Roulette&amp;num;endPoints()</h3>
+<h3 id="moduleextrasevaluatorsrouletteendpoints">module:extras/evaluators.Roulette#endPoints()</h3>
 
 <p>Returns the starting and ending u-coordinates of this curve.</p>
 
@@ -185,7 +185,7 @@ and D = <code>distFromRollerCenter</code>).&lt;ul&gt;</p>
 
 <p><a name="extras_evaluators.Roulette_evaluate"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumevaluateu">module:extras/evaluators.Roulette&amp;num;evaluate(u)</h3>
+<h3 id="moduleextrasevaluatorsrouletteevaluateu">module:extras/evaluators.Roulette#evaluate(u)</h3>
 
 <p>Finds the position of this curve at the specified u-coordinate.</p>
 
@@ -202,7 +202,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="extras_evaluators.Roulette_fitRange"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumfitrangeep1-ep2">module:extras/evaluators.Roulette&amp;num;fitRange(ep1, ep2)</h3>
+<h3 id="moduleextrasevaluatorsroulettefitrangeep1-ep2">module:extras/evaluators.Roulette#fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the specified range.
@@ -223,7 +223,7 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p><a name="extras_evaluators.Roulette_getLength"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumgetlength">module:extras/evaluators.Roulette&amp;num;getLength()</h3>
+<h3 id="moduleextrasevaluatorsroulettegetlength">module:extras/evaluators.Roulette#getLength()</h3>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
@@ -233,7 +233,7 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p><a name="extras_evaluators.Roulette_getPoints"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumgetpointscount">module:extras/evaluators.Roulette&amp;num;getPoints(count)</h3>
+<h3 id="moduleextrasevaluatorsroulettegetpointscount">module:extras/evaluators.Roulette#getPoints(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -254,7 +254,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number» | Array.&lt;Ob
 
 <p><a name="extras_evaluators.Roulette_getPointsAsObjects"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumgetpointsasobjectscount">module:extras/evaluators.Roulette&amp;num;getPointsAsObjects(count)</h3>
+<h3 id="moduleextrasevaluatorsroulettegetpointsasobjectscount">module:extras/evaluators.Roulette#getPointsAsObjects(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -320,7 +320,7 @@ and height abs(R-D)\*2.</li>
 
 <p><a name="extras_evaluators.Roulette_jerk"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumjerku">module:extras/evaluators.Roulette&amp;num;jerk(u)</h3>
+<h3 id="moduleextrasevaluatorsroulettejerku">module:extras/evaluators.Roulette#jerk(u)</h3>
 
 <p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
@@ -342,7 +342,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="extras_evaluators.Roulette_normal"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumnormalu">module:extras/evaluators.Roulette&amp;num;normal(u)</h3>
+<h3 id="moduleextrasevaluatorsroulettenormalu">module:extras/evaluators.Roulette#normal(u)</h3>
 
 <p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
@@ -386,7 +386,7 @@ inside another fixed circle).</p>
 
 <p><a name="extras_evaluators.Roulette_tangent"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumtangentu">module:extras/evaluators.Roulette&amp;num;tangent(u)</h3>
+<h3 id="moduleextrasevaluatorsroulettetangentu">module:extras/evaluators.Roulette#tangent(u)</h3>
 
 <p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
@@ -404,7 +404,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="extras_evaluators.Roulette_toArcLengthParam"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumtoarclengthparam">module:extras/evaluators.Roulette&amp;num;toArcLengthParam()</h3>
+<h3 id="moduleextrasevaluatorsroulettetoarclengthparam">module:extras/evaluators.Roulette#toArcLengthParam()</h3>
 
 <p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -461,7 +461,7 @@ and D = <code>distFromCenter</code>).&lt;ul&gt;</p>
 
 <p><a name="extras_evaluators.Roulette_velocity"></a></p>
 
-<h3 id="moduleextrasevaluatorsroulettenumvelocityu">module:extras/evaluators.Roulette&amp;num;velocity(u)</h3>
+<h3 id="moduleextrasevaluatorsroulettevelocityu">module:extras/evaluators.Roulette#velocity(u)</h3>
 
 <p>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>velocity</code>

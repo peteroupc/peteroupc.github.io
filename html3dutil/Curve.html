@@ -129,7 +129,7 @@ an <i>arc length parameterization</i>.</li>
 
 <p><a name="Curve_accel"></a></p>
 
-<h3 id="curvenumaccelu">Curve&amp;num;accel(u)</h3>
+<h3 id="curveaccelu">Curve#accel(u)</h3>
 
 <p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
@@ -151,7 +151,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="Curve_arcLength"></a></p>
 
-<h3 id="curvenumarclengthu">Curve&amp;num;arcLength(u)</h3>
+<h3 id="curvearclengthu">Curve#arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the specified u-coordinate of this curve.
@@ -172,7 +172,7 @@ method if it implements it; otherwise, calculates a numerical integral using the
 
 <p><a name="Curve_changeEnds"></a></p>
 
-<h3 id="curvenumchangeendsep1-ep2">Curve&amp;num;changeEnds(ep1, ep2)</h3>
+<h3 id="curvechangeendsep1-ep2">Curve#changeEnds(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
@@ -203,7 +203,7 @@ also be used to grow the path of the curve.</p>
 
 <p><a name="Curve_endPoints"></a></p>
 
-<h3 id="curvenumendpoints">Curve&amp;num;endPoints()</h3>
+<h3 id="curveendpoints">Curve#endPoints()</h3>
 
 <p>Returns the starting and ending u-coordinates of this curve.</p>
 
@@ -216,7 +216,7 @@ method.</p>
 
 <p><a name="Curve_evaluate"></a></p>
 
-<h3 id="curvenumevaluateu">Curve&amp;num;evaluate(u)</h3>
+<h3 id="curveevaluateu">Curve#evaluate(u)</h3>
 
 <p>Finds the position of this curve at the specified u-coordinate.</p>
 
@@ -233,7 +233,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="Curve_fitRange"></a></p>
 
-<h3 id="curvenumfitrangeep1-ep2">Curve&amp;num;fitRange(ep1, ep2)</h3>
+<h3 id="curvefitrangeep1-ep2">Curve#fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the specified range.
@@ -254,7 +254,7 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p><a name="Curve_getLength"></a></p>
 
-<h3 id="curvenumgetlength">Curve&amp;num;getLength()</h3>
+<h3 id="curvegetlength">Curve#getLength()</h3>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
@@ -264,7 +264,7 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p><a name="Curve_getPoints"></a></p>
 
-<h3 id="curvenumgetpointscount">Curve&amp;num;getPoints(count)</h3>
+<h3 id="curvegetpointscount">Curve#getPoints(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -285,7 +285,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number» | Array.&lt;Ob
 
 <p><a name="Curve_getPointsAsObjects"></a></p>
 
-<h3 id="curvenumgetpointsasobjectscount">Curve&amp;num;getPointsAsObjects(count)</h3>
+<h3 id="curvegetpointsasobjectscount">Curve#getPointsAsObjects(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -317,7 +317,7 @@ var buffer=new THREE.BufferGeometry()
 
 <p><a name="Curve_jerk"></a></p>
 
-<h3 id="curvenumjerku">Curve&amp;num;jerk(u)</h3>
+<h3 id="curvejerku">Curve#jerk(u)</h3>
 
 <p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
@@ -339,7 +339,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="Curve_normal"></a></p>
 
-<h3 id="curvenumnormalu">Curve&amp;num;normal(u)</h3>
+<h3 id="curvenormalu">Curve#normal(u)</h3>
 
 <p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
@@ -362,7 +362,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="Curve_tangent"></a></p>
 
-<h3 id="curvenumtangentu">Curve&amp;num;tangent(u)</h3>
+<h3 id="curvetangentu">Curve#tangent(u)</h3>
 
 <p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
@@ -380,7 +380,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <p><a name="Curve_toArcLengthParam"></a></p>
 
-<h3 id="curvenumtoarclengthparam">Curve&amp;num;toArcLengthParam()</h3>
+<h3 id="curvetoarclengthparam">Curve#toArcLengthParam()</h3>
 
 <p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -415,7 +415,7 @@ var point = arclen.evaluate(Math.random()*arclen.getLength())
 
 <p><a name="Curve_velocity"></a></p>
 
-<h3 id="curvenumvelocityu">Curve&amp;num;velocity(u)</h3>
+<h3 id="curvevelocityu">Curve#velocity(u)</h3>
 
 <p>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>velocity</code>
