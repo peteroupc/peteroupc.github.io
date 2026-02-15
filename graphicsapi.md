@@ -27,11 +27,12 @@ A tile- and sprite-based API suggested by the classic-graphics specification is 
 The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.[^2] \(For such an API, antialiasing support is optional, and it's enough for the API to draw to images stored in system memory, and not also drawing to video memory or directly to the screen.)
 
 - Getting and setting pixel values of an image.
-- Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image with a solid color.
+- Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image.
 - Copying a rectangular area (whose edges have integer coordinates) of an image onto another image, with optional nearest-neighbor scaling.  The copying can optionally exclude transparent pixels or pixels of a certain color.
 - Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
 - Drawing one-unit-thick outlines of 2-D paths with a solid color.[^3]
 - Flood filling colored areas of an image.
+- Optionally, "inverting" the colors or color indices of an image's rectangular area (whose edges have integer coordinates).
 
 A leaner API could provide for the following instead:
 
@@ -41,6 +42,7 @@ A leaner API could provide for the following instead:
     - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^4]
 - Drawing one-unit-thick line segments with a solid color, supporting only integer coordinates.  Support for drawing elliptical arcs this way is optional.
 - Flood filling colored areas of an image.
+- Optionally, "inverting" the colors or color indices of an image's rectangular area (whose edges have integer coordinates).
 
 The following is not included in either API.
 
@@ -147,4 +149,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^4]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Michael Abrash's Graphics Programming Black Book Special Edition, 1997.
 
-[^5]: [**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text. A _glyph_ is a writing element of a _font_; examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination. Before 2000, there were three kinds of _fonts_ (also called typefaces) for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially _emoji_, to outline fonts and (2) [**"subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial.
+[^5]: [**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text. A _glyph_ is a writing element of a _font_; examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially _emoji_, to outline fonts and (2) [**"subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial.

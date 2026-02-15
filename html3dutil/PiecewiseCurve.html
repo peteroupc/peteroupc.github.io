@@ -85,7 +85,7 @@ an <i>arc length parameterization</i>.</li>
 </ul>
 
 <p><a name="PiecewiseCurve_accel"></a>
-### PiecewiseCurve#accel(u)</p>
+### PiecewiseCurve&amp;num;accel(u)</p>
 
 <p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
@@ -106,7 +106,7 @@ the velocity vector.</p>
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="PiecewiseCurve_arcLength"></a>
-### PiecewiseCurve#arcLength(u)</p>
+### PiecewiseCurve&amp;num;arcLength(u)</p>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the specified u-coordinate of this curve.</p>
@@ -122,7 +122,7 @@ curve and the point at the specified u-coordinate of this curve.</p>
 <p>The approximate arc length of this curve at the specified u-coordinate. (Type: number)</p>
 
 <p><a name="PiecewiseCurve_changeEnds"></a>
-### PiecewiseCurve#changeEnds(ep1, ep2)</p>
+### PiecewiseCurve&amp;num;changeEnds(ep1, ep2)</p>
 
 <p>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
@@ -152,7 +152,7 @@ also be used to grow the path of the curve.</p>
 <p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
 
 <p><a name="PiecewiseCurve_endPoints"></a>
-### PiecewiseCurve#endPoints()</p>
+### PiecewiseCurve&amp;num;endPoints()</p>
 
 <p>Returns the starting and ending u-coordinates of this curve.</p>
 
@@ -164,7 +164,7 @@ Returns <code>[0, n]</code>, where <code>n</code> is the number
 of curves that make up this piecewise curve.</p>
 
 <p><a name="PiecewiseCurve_evaluate"></a>
-### PiecewiseCurve#evaluate(u)</p>
+### PiecewiseCurve&amp;num;evaluate(u)</p>
 
 <p>Finds the position of this curve at the specified u-coordinate.</p>
 
@@ -180,7 +180,7 @@ of curves that make up this piecewise curve.</p>
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="PiecewiseCurve_fitRange"></a>
-### PiecewiseCurve#fitRange(ep1, ep2)</p>
+### PiecewiseCurve&amp;num;fitRange(ep1, ep2)</p>
 
 <p>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the specified range.
@@ -291,7 +291,7 @@ in uniform parameterization.)</p>
 same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
 
 <p><a name="PiecewiseCurve_getCurves"></a>
-### PiecewiseCurve#getCurves()</p>
+### PiecewiseCurve&amp;num;getCurves()</p>
 
 <p>Gets a reference to the curves that make up this piecewise curve.</p>
 
@@ -300,7 +300,7 @@ same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve
 <p>The curves that make up this piecewise curve. (Type: Array.&lt;<a href="Curve.html">Curve</a>&gt;)</p>
 
 <p><a name="PiecewiseCurve_getLength"></a>
-### PiecewiseCurve#getLength()</p>
+### PiecewiseCurve&amp;num;getLength()</p>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
@@ -309,7 +309,7 @@ same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve
 <p>The distance from the start of the curve to its end. (Type: number)</p>
 
 <p><a name="PiecewiseCurve_getPoints"></a>
-### PiecewiseCurve#getPoints(count)</p>
+### PiecewiseCurve&amp;num;getPoints(count)</p>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -329,7 +329,7 @@ element will be the start of the curve. If “count” is 2 or greater, the last
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number» | Array.&lt;Object&gt;)</p>
 
 <p><a name="PiecewiseCurve_getPointsAsObjects"></a>
-### PiecewiseCurve#getPointsAsObjects(count)</p>
+### PiecewiseCurve&amp;num;getPointsAsObjects(count)</p>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -360,7 +360,7 @@ var buffer=new THREE.BufferGeometry()
 </pre>
 
 <p><a name="PiecewiseCurve_jerk"></a>
-### PiecewiseCurve#jerk(u)</p>
+### PiecewiseCurve&amp;num;jerk(u)</p>
 
 <p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
@@ -381,7 +381,7 @@ the acceleration vector.</p>
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="PiecewiseCurve_normal"></a>
-### PiecewiseCurve#normal(u)</p>
+### PiecewiseCurve&amp;num;normal(u)</p>
 
 <p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
@@ -403,7 +403,7 @@ vector divided by that derivative’s length. The normal returned by this method
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="PiecewiseCurve_tangent"></a>
-### PiecewiseCurve#tangent(u)</p>
+### PiecewiseCurve&amp;num;tangent(u)</p>
 
 <p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
@@ -420,7 +420,7 @@ The <b>tangent vector</b> is the same as the velocity vector, but “normalized�
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name="PiecewiseCurve_toArcLengthParam"></a>
-### PiecewiseCurve#toArcLengthParam()</p>
+### PiecewiseCurve&amp;num;toArcLengthParam()</p>
 
 <p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -454,7 +454,7 @@ var point = arclen.evaluate(Math.random()*arclen.getLength())
 </pre>
 
 <p><a name="PiecewiseCurve_velocity"></a>
-### PiecewiseCurve#velocity(u)</p>
+### PiecewiseCurve&amp;num;velocity(u)</p>
 
 <p>Finds an approximate velocity vector at the specified u-coordinate of this curve.</p>
 

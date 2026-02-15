@@ -38,11 +38,12 @@
 
 <ul>
   <li>Getting and setting pixel values of an image.</li>
-  <li>Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image with a solid color.</li>
+  <li>Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image.</li>
   <li>Copying a rectangular area (whose edges have integer coordinates) of an image onto another image, with optional nearest-neighbor scaling.  The copying can optionally exclude transparent pixels or pixels of a certain color.</li>
   <li>Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).</li>
   <li>Drawing one-unit-thick outlines of 2-D paths with a solid color.<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
   <li>Flood filling colored areas of an image.</li>
+  <li>Optionally, “inverting” the colors or color indices of an image’s rectangular area (whose edges have integer coordinates).</li>
 </ul>
 
 <p>A leaner API could provide for the following instead:</p>
@@ -57,6 +58,7 @@
   </li>
   <li>Drawing one-unit-thick line segments with a solid color, supporting only integer coordinates.  Support for drawing elliptical arcs this way is optional.</li>
   <li>Flood filling colored areas of an image.</li>
+  <li>Optionally, “inverting” the colors or color indices of an image’s rectangular area (whose edges have integer coordinates).</li>
 </ul>
 
 <p>The following is not included in either API.</p>
@@ -189,7 +191,7 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
       <p>A “monotone-vertical” polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Michael Abrash’s Graphics Programming Black Book Special Edition, 1997. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5">
-      <p><a href="https://behdad.org/text2024"><strong>Text rendering</strong></a> is essentially the drawing of <em>glyphs</em> of text. A <em>glyph</em> is a writing element of a <em>font</em>; examples are letters, digits, the <em>i</em>’s dot, and the <em>f-f-l</em> combination. Before 2000, there were three kinds of <em>fonts</em> (also called typefaces) for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts and (2) <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“subpixel” antialiasing</strong></a> of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://behdad.org/text2024"><strong>Text rendering</strong></a> is essentially the drawing of <em>glyphs</em> of text. A <em>glyph</em> is a writing element of a <em>font</em>; examples are letters, digits, the <em>i</em>’s dot, and the <em>f-f-l</em> combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts and (2) <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“subpixel” antialiasing</strong></a> of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
