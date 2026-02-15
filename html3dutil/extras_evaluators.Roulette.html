@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name="extras_evaluators.Roulette"></a>
-### new module:extras/evaluators.Roulette(rollingCurve, fixedCurve, polePoint, [revolutions])</p>
+<p><a name="extras_evaluators.Roulette"></a></p>
+
+<h3 id="new-moduleextrasevaluatorsrouletterollingcurve-fixedcurve-polepoint-revolutions">new module:extras/evaluators.Roulette(rollingCurve, fixedCurve, polePoint, [revolutions])</h3>
 
 <p><strong>Augments:</strong> <a href="Curve.html">Curve</a></p>
 
@@ -61,8 +62,9 @@ an <i>arc length parameterization</i>.</li>
   <li><a href="#extras_evaluators.Roulette_velocity">velocity</a><br />Finds an approximate velocity vector at the specified u-coordinate of this curve.</li>
 </ul>
 
-<p><a name="extras_evaluators.Roulette_accel"></a>
-### module:extras/evaluators.Roulette&amp;num;accel(u)</p>
+<p><a name="extras_evaluators.Roulette_accel"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumaccelu">module:extras/evaluators.Roulette&amp;num;accel(u)</h3>
 
 <p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
@@ -82,8 +84,9 @@ the velocity vector.</p>
 <p>An array describing an acceleration vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="extras_evaluators.Roulette_arcLength"></a>
-### module:extras/evaluators.Roulette&amp;num;arcLength(u)</p>
+<p><a name="extras_evaluators.Roulette_arcLength"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumarclengthu">module:extras/evaluators.Roulette&amp;num;arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the specified u-coordinate of this curve.
@@ -102,8 +105,9 @@ method if it implements it; otherwise, calculates a numerical integral using the
 
 <p>The approximate arc length of this curve at the specified u-coordinate. (Type: number)</p>
 
-<p><a name="extras_evaluators.Roulette_changeEnds"></a>
-### module:extras/evaluators.Roulette&amp;num;changeEnds(ep1, ep2)</p>
+<p><a name="extras_evaluators.Roulette_changeEnds"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumchangeendsep1-ep2">module:extras/evaluators.Roulette&amp;num;changeEnds(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
@@ -132,8 +136,9 @@ also be used to grow the path of the curve.</p>
 
 <p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
 
-<p><a name="extras_evaluators.Roulette_endPoints"></a>
-### module:extras/evaluators.Roulette&amp;num;endPoints()</p>
+<p><a name="extras_evaluators.Roulette_endPoints"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumendpoints">module:extras/evaluators.Roulette&amp;num;endPoints()</h3>
 
 <p>Returns the starting and ending u-coordinates of this curve.</p>
 
@@ -144,8 +149,9 @@ the curve, and the second is its ending coordinate.
 Returns <code>[0, 1]</code> if the evaluator doesn’t implement an <code>endPoints</code>
 method.</p>
 
-<p><a name="extras_evaluators_Roulette.epitrochoid"></a>
-### (static) module:extras/evaluators~Roulette.epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, [rotationDegrees], [revolutions])</p>
+<p><a name="extras_evaluators_Roulette.epitrochoid"></a></p>
+
+<h3 id="static-moduleextrasevaluatorsrouletteepitrochoidouterradius-rollerradius-distfromrollercenter-rotationdegrees-revolutions">(static) module:extras/evaluators~Roulette.epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, [rotationDegrees], [revolutions])</h3>
 
 <p>Creates a <a href="Curve.html">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
 of another circle, whose position is fixed, with a center of (0,0).
@@ -177,8 +183,9 @@ and D = <code>distFromRollerCenter</code>).&lt;ul&gt;</p>
   <li><code>revolutions</code> (Type: number) (optional)<br />Number of times to roll the inner circle around the outer circle to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.</li>
 </ul>
 
-<p><a name="extras_evaluators.Roulette_evaluate"></a>
-### module:extras/evaluators.Roulette&amp;num;evaluate(u)</p>
+<p><a name="extras_evaluators.Roulette_evaluate"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumevaluateu">module:extras/evaluators.Roulette&amp;num;evaluate(u)</h3>
 
 <p>Finds the position of this curve at the specified u-coordinate.</p>
 
@@ -193,8 +200,9 @@ and D = <code>distFromRollerCenter</code>).&lt;ul&gt;</p>
 <p>An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="extras_evaluators.Roulette_fitRange"></a>
-### module:extras/evaluators.Roulette&amp;num;fitRange(ep1, ep2)</p>
+<p><a name="extras_evaluators.Roulette_fitRange"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumfitrangeep1-ep2">module:extras/evaluators.Roulette&amp;num;fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the specified range.
@@ -213,8 +221,9 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
 
-<p><a name="extras_evaluators.Roulette_getLength"></a>
-### module:extras/evaluators.Roulette&amp;num;getLength()</p>
+<p><a name="extras_evaluators.Roulette_getLength"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumgetlength">module:extras/evaluators.Roulette&amp;num;getLength()</h3>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
@@ -222,8 +231,9 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p>The distance from the start of the curve to its end. (Type: number)</p>
 
-<p><a name="extras_evaluators.Roulette_getPoints"></a>
-### module:extras/evaluators.Roulette&amp;num;getPoints(count)</p>
+<p><a name="extras_evaluators.Roulette_getPoints"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumgetpointscount">module:extras/evaluators.Roulette&amp;num;getPoints(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -242,8 +252,9 @@ an arc-length parameterization.</p>
 element will be the start of the curve. If “count” is 2 or greater, the last element
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number» | Array.&lt;Object&gt;)</p>
 
-<p><a name="extras_evaluators.Roulette_getPointsAsObjects"></a>
-### module:extras/evaluators.Roulette&amp;num;getPointsAsObjects(count)</p>
+<p><a name="extras_evaluators.Roulette_getPointsAsObjects"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumgetpointsasobjectscount">module:extras/evaluators.Roulette&amp;num;getPointsAsObjects(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -273,8 +284,9 @@ var buffer=new THREE.BufferGeometry()
 .setFromPoints(points);
 </pre>
 
-<p><a name="extras_evaluators_Roulette.hypotrochoid"></a>
-### (static) module:extras/evaluators~Roulette.hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees], [revolutions])</p>
+<p><a name="extras_evaluators_Roulette.hypotrochoid"></a></p>
+
+<h3 id="static-moduleextrasevaluatorsroulettehypotrochoidouterradius-innerradius-distfrominnercenter-rotationdegrees-revolutions">(static) module:extras/evaluators~Roulette.hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees], [revolutions])</h3>
 
 <p>Creates a <a href="Curve.html">curve evaluator object</a> for a <i>hypotrochoid</i>, a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).</p>
@@ -306,8 +318,9 @@ and height abs(R-D)\*2.</li>
   <li><code>revolutions</code> (Type: number) (optional)<br />Number of times to roll the inner circle around the outer circle to generate the hypotrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.</li>
 </ul>
 
-<p><a name="extras_evaluators.Roulette_jerk"></a>
-### module:extras/evaluators.Roulette&amp;num;jerk(u)</p>
+<p><a name="extras_evaluators.Roulette_jerk"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumjerku">module:extras/evaluators.Roulette&amp;num;jerk(u)</h3>
 
 <p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
@@ -327,8 +340,9 @@ the acceleration vector.</p>
 <p>An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="extras_evaluators.Roulette_normal"></a>
-### module:extras/evaluators.Roulette&amp;num;normal(u)</p>
+<p><a name="extras_evaluators.Roulette_normal"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumnormalu">module:extras/evaluators.Roulette&amp;num;normal(u)</h3>
 
 <p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
@@ -349,8 +363,9 @@ vector divided by that derivative’s length. The normal returned by this method
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="extras_evaluators_Roulette.rose"></a>
-### (static) module:extras/evaluators~Roulette.rose(num, denom, distFromInnerCenter, [rotationDegrees])</p>
+<p><a name="extras_evaluators_Roulette.rose"></a></p>
+
+<h3 id="static-moduleextrasevaluatorsrouletterosenum-denom-distfrominnercenter-rotationdegrees">(static) module:extras/evaluators~Roulette.rose(num, denom, distFromInnerCenter, [rotationDegrees])</h3>
 
 <p>Creates a <a href="Curve.html">curve evaluator object</a> for a rose, a special
 form of hypotrochoid (roulette curve generated when one circle rolls
@@ -369,8 +384,9 @@ inside another fixed circle).</p>
 
 <p>The resulting curve evaluator object. (Type: Roulette)</p>
 
-<p><a name="extras_evaluators.Roulette_tangent"></a>
-### module:extras/evaluators.Roulette&amp;num;tangent(u)</p>
+<p><a name="extras_evaluators.Roulette_tangent"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumtangentu">module:extras/evaluators.Roulette&amp;num;tangent(u)</h3>
 
 <p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
@@ -386,8 +402,9 @@ The <b>tangent vector</b> is the same as the velocity vector, but “normalized�
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="extras_evaluators.Roulette_toArcLengthParam"></a>
-### module:extras/evaluators.Roulette&amp;num;toArcLengthParam()</p>
+<p><a name="extras_evaluators.Roulette_toArcLengthParam"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumtoarclengthparam">module:extras/evaluators.Roulette&amp;num;toArcLengthParam()</h3>
 
 <p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -420,8 +437,9 @@ on a curve.</p>
 var point = arclen.evaluate(Math.random()*arclen.getLength())
 </pre>
 
-<p><a name="extras_evaluators_Roulette.trochoid"></a>
-### (static) module:extras/evaluators~Roulette.trochoid(radius, distFromCenter, [distance])</p>
+<p><a name="extras_evaluators_Roulette.trochoid"></a></p>
+
+<h3 id="static-moduleextrasevaluatorsroulettetrochoidradius-distfromcenter-distance">(static) module:extras/evaluators~Roulette.trochoid(radius, distFromCenter, [distance])</h3>
 
 <p>Creates a <a href="Curve.html">curve evaluator object</a> for a <i>trochoid</i>, a curve drawn by a circle that rolls along the x-axis.</p>
 
@@ -441,8 +459,9 @@ and D = <code>distFromCenter</code>).&lt;ul&gt;</p>
   <li><code>distance</code> (Type: number) (optional)<br />Distance to roll the inner circle along the x-axis to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 2 * π * <code>radius</code>.</li>
 </ul>
 
-<p><a name="extras_evaluators.Roulette_velocity"></a>
-### module:extras/evaluators.Roulette&amp;num;velocity(u)</p>
+<p><a name="extras_evaluators.Roulette_velocity"></a></p>
+
+<h3 id="moduleextrasevaluatorsroulettenumvelocityu">module:extras/evaluators.Roulette&amp;num;velocity(u)</h3>
 
 <p>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>velocity</code>

@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name="Transform"></a>
-### new Transform()</p>
+<p><a name="Transform"></a></p>
+
+<h3 id="new-transform">new Transform()</h3>
 
 <p><strong>Deprecated: It is intended to render this class obsolete and rely on three.js.</strong></p>
 
@@ -47,8 +48,9 @@ rotation.</li>
 size.</li>
 </ul>
 
-<p><a name="Transform_copy"></a>
-### Transform&amp;num;copy()</p>
+<p><a name="Transform_copy"></a></p>
+
+<h3 id="transformnumcopy">Transform&amp;num;copy()</h3>
 
 <p>Makes a copy of this transform. The copied object
 will have its own version of the rotation, scale,
@@ -58,8 +60,9 @@ position, and matrix data.</p>
 
 <p>A copy of this transform. (Type: <a href="Transform.html">Transform</a>)</p>
 
-<p><a name="Transform_getMatrix"></a>
-### Transform&amp;num;getMatrix()</p>
+<p><a name="Transform_getMatrix"></a></p>
+
+<h3 id="transformnumgetmatrix">Transform&amp;num;getMatrix()</h3>
 
 <p>Gets the transformation matrix used by an object. Depending
 on the state of this transform, will return either:&lt;ul&gt;</p>
@@ -75,6 +78,7 @@ multiplied in that order, otherwise.
 Return value. (Type: Array.&lt;number&gt;)
 
 <a name="Transform_getPosition"></a>
+
 ### Transform&num;getPosition()
 
 Returns a copy of a three-element array giving the x-, y-, and z-coordinates of the position
@@ -85,6 +89,7 @@ of an object relative to its original position.
 Return value. (Type: Array.&lt;number&gt;)
 
 <a name="Transform_getQuaternion"></a>
+
 ### Transform&num;getQuaternion()
 
 Returns a copy of the rotation of an object in the form of a glmath.
@@ -94,6 +99,7 @@ Returns a copy of the rotation of an object in the form of a glmath.
 Return value. (Type: Array.&lt;number&gt;)
 
 <a name="Transform_getScale"></a>
+
 ### Transform&num;getScale()
 
 Returns a copy of a three-element array giving the scaling for an object's width,
@@ -105,6 +111,7 @@ For each component, 1 means no scaling.
 Return value. (Type: Array.&lt;number&gt;)
 
 <a name="Transform_isIdentity"></a>
+
 ### Transform&num;isIdentity()
 
 Returns whether this transform is the identity transform.
@@ -114,6 +121,7 @@ Returns whether this transform is the identity transform.
 Return value. (Type: boolean)
 
 <a name="Transform_movePosition"></a>
+
 ### Transform&num;movePosition(x, y, z)
 
 Moves the relative position of an object from its original
@@ -131,6 +139,7 @@ and the transform wasn't reset yet with Transform#resetTransform.
 This object. (Type: <a href="Transform.html">Transform</a>)
 
 <a name="Transform_multQuaternion"></a>
+
 ### Transform&num;multQuaternion(quat)
 
 Combines an object's current rotation with another rotation
@@ -159,6 +168,7 @@ This object. (Type: <a href="Transform.html">Transform</a>)
     transform.multQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
 
 <a name="Transform_multRotation"></a>
+
 ### Transform&num;multRotation(angle, v, vy, vz)
 
 Combines an object's current rotation with another rotation
@@ -180,6 +190,7 @@ and the transform wasn't reset yet with Transform#resetTransform.
 This object. (Type: <a href="Transform.html">Transform</a>)
 
 <a name="Transform_reset"></a>
+
 ### Transform&num;reset()
 
 Resets this transform to the untransformed state.
@@ -189,6 +200,7 @@ Resets this transform to the untransformed state.
 This object. (Type: <a href="Transform.html">Transform</a>)
 
 <a name="Transform_setMatrix"></a>
+
 ### Transform&num;setMatrix(value)
 
 Sets this transform's transformation matrix. This method
@@ -204,6 +216,7 @@ accordingly to the matrix given.
 This object. (Type: <a href="Transform.html">Transform</a>)
 
 <a name="Transform_setPosition"></a>
+
 ### Transform&num;setPosition(x, [y], [z])
 
 Sets the relative position of an object from its original
@@ -229,6 +242,7 @@ This object. (Type: <a href="Transform.html">Transform</a>)
     transform.setPosition([2,4,5]);
 
 <a name="Transform_setQuaternion"></a>
+
 ### Transform&num;setQuaternion(quat)
 
 Sets this transform's rotation in the form of a glmath (a 4-element array
@@ -259,6 +273,7 @@ This object. (Type: <a href="Transform.html">Transform</a>)
     transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
 
 <a name="Transform_setRotation"></a>
+
 ### Transform&num;setRotation(angle, v, vy, vz)
 
 Sets this transform's rotation in the form of an angle and an axis of
@@ -277,6 +292,7 @@ and the transform wasn't reset yet with Transform#resetTransform.
 This object. (Type: <a href="Transform.html">Transform</a>)
 
 <a name="Transform_setScale"></a>
+
 ### Transform&num;setScale(x, [y], [z])
 
 Sets the scale of an object relative to its original

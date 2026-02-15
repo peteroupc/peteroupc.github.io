@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name="Surface"></a>
-### new Surface(surface)</p>
+<p><a name="Surface"></a></p>
+
+<h3 id="new-surfacesurface">new Surface(surface)</h3>
 
 <p>A surface evaluator object for a parametric surface.</p>
 
@@ -52,8 +53,9 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
   <li><a href="#Surface_tangent">tangent</a><br />Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.</li>
 </ul>
 
-<p><a name="Surface_bitangent"></a>
-### Surface&amp;num;bitangent(u, v)</p>
+<p><a name="Surface_bitangent"></a></p>
+
+<h3 id="surfacenumbitangentu-v">Surface&amp;num;bitangent(u, v)</h3>
 
 <p>Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.</p>
 
@@ -89,8 +91,9 @@ return [u, v, 0];
 });
 </pre>
 
-<p><a name="Surface_endPoints"></a>
-### Surface&amp;num;endPoints()</p>
+<p><a name="Surface_endPoints"></a></p>
+
+<h3 id="surfacenumendpoints">Surface&amp;num;endPoints()</h3>
 
 <p>Returns the starting and ending u- and v-coordinates of this surface.
 This method calls the evaluator’s <code>endPoints</code>
@@ -104,8 +107,9 @@ and fourth elements are its starting and ending v-coordinates.
 Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn’t implement an <code>endPoints</code>
 method.</p>
 
-<p><a name="Surface_evaluate"></a>
-### Surface&amp;num;evaluate(u, v)</p>
+<p><a name="Surface_evaluate"></a></p>
+
+<h3 id="surfacenumevaluateu-v">Surface&amp;num;evaluate(u, v)</h3>
 
 <p>Finds the position of this surface at the specified u- and v-coordinates.</p>
 
@@ -121,8 +125,9 @@ method.</p>
 <p>An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="Surface_gradient"></a>
-### Surface&amp;num;gradient(u, v)</p>
+<p><a name="Surface_gradient"></a></p>
+
+<h3 id="surfacenumgradientu-v">Surface&amp;num;gradient(u, v)</h3>
 
 <p>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.</p>
 
@@ -183,8 +188,9 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 }})
 </pre>
 
-<p><a name="Surface_normal"></a>
-### Surface&amp;num;normal(u, v)</p>
+<p><a name="Surface_normal"></a></p>
+
+<h3 id="surfacenumnormalu-v">Surface&amp;num;normal(u, v)</h3>
 
 <p>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but “normalized” to a unit vector.</p>
@@ -201,8 +207,9 @@ The <b>normal vector</b> is the same as the gradient vector, but “normalized�
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="Surface_tangent"></a>
-### Surface&amp;num;tangent(u, v)</p>
+<p><a name="Surface_tangent"></a></p>
+
+<h3 id="surfacenumtangentu-v">Surface&amp;num;tangent(u, v)</h3>
 
 <p>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 The implementation in <a href="Surface.html">Surface</a> calls the evaluator’s <code>tangent</code>

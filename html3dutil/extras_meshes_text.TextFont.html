@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name="extras_meshes_text.TextFont"></a>
-### new module:extras/meshes/text.TextFont()</p>
+<p><a name="extras_meshes_text.TextFont"></a></p>
+
+<h3 id="new-moduleextrasmeshestexttextfont">new module:extras/meshes/text.TextFont()</h3>
 
 <p>Represents an image font, which supports drawing two-dimensional
 text. This class supports
@@ -72,8 +73,9 @@ drawn using this font.</li>
 draw text in the specified position, size, and color.</li>
 </ul>
 
-<p><a name="extras_meshes_text_TextFont.loadData"></a>
-### (static) module:extras/meshes/text~TextFont.loadData(data, fontFileName)</p>
+<p><a name="extras_meshes_text_TextFont.loadData"></a></p>
+
+<h3 id="static-moduleextrasmeshestexttextfontloaddatadata-fontfilename">(static) module:extras/meshes/text~TextFont.loadData(data, fontFileName)</h3>
 
 <p>Loads an image font definition from a file.
 Note that this method only loads the font data and not the images
@@ -97,8 +99,9 @@ used to represent the font.</p>
   </tbody>
 </table>
 
-<p><a name="extras_meshes_text_TextFont_loadTextures"></a>
-### module:extras/meshes/text~TextFont&amp;num;loadTextures(textureLoader)</p>
+<p><a name="extras_meshes_text_TextFont_loadTextures"></a></p>
+
+<h3 id="moduleextrasmeshestexttextfontnumloadtexturestextureloader">module:extras/meshes/text~TextFont&amp;num;loadTextures(textureLoader)</h3>
 
 <p>Loads the texture files used by this font object.</p>
 
@@ -115,8 +118,9 @@ used to represent the font.</p>
 resolves, each item in the resulting array will be a loaded
 Texture object. (Type: Promise.&lt;H3DU.Texture&gt;)</p>
 
-<p><a name="extras_meshes_text_TextFont.loadWithTextures"></a>
-### (static) module:extras/meshes/text~TextFont.loadWithTextures(fontFileName, textureLoader)</p>
+<p><a name="extras_meshes_text_TextFont.loadWithTextures"></a></p>
+
+<h3 id="static-moduleextrasmeshestexttextfontloadwithtexturesfontfilename-textureloader">(static) module:extras/meshes/text~TextFont.loadWithTextures(fontFileName, textureLoader)</h3>
 
 <p>Loads an image font definition from a file along with the textures
 used by that font.</p>
@@ -142,6 +146,7 @@ in the order in which they are declared in the font data file.
 &lt;/ul&gt; (Type: Promise)
 
 <a name="extras_meshes_text_TextFont_makeTextMeshes"></a>
+
 ### module:extras/meshes/text~TextFont&num;makeTextMeshes(str, params)
 
 Creates an array of meshes containing the primitives
@@ -159,6 +164,7 @@ There is one mesh for each texture page of the font. If none of the
 text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;H3DU.MeshBuffer&gt;)
 
 <a name="extras_meshes_text_TextFont_measure"></a>
+
 ### module:extras/meshes/text~TextFont&num;measure(str, params)
 
 Calculates the width and height of a text string when
@@ -177,6 +183,7 @@ height of the string (taking into account line feed characters,
 U+000A, that break lines). (Type: Array.&lt;number&gt;)
 
 <a name="extras_meshes_text_TextFont_textShape"></a>
+
 ### module:extras/meshes/text~TextFont&num;textShape(str, params)
 
 Creates a group of shapes containing the primitives needed to

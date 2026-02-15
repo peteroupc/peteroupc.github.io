@@ -8,8 +8,9 @@
 
 <p><a href="index.html">Back to documentation index.</a></p>
 
-<p><a name="PiecewiseCurve"></a>
-### new PiecewiseCurve(curves)</p>
+<p><a name="PiecewiseCurve"></a></p>
+
+<h3 id="new-piecewisecurvecurves">new PiecewiseCurve(curves)</h3>
 
 <p><strong>Augments:</strong> <a href="Curve.html">Curve</a></p>
 
@@ -84,8 +85,9 @@ an <i>arc length parameterization</i>.</li>
   <li><a href="#PiecewiseCurve_velocity">velocity</a><br />Finds an approximate velocity vector at the specified u-coordinate of this curve.</li>
 </ul>
 
-<p><a name="PiecewiseCurve_accel"></a>
-### PiecewiseCurve&amp;num;accel(u)</p>
+<p><a name="PiecewiseCurve_accel"></a></p>
+
+<h3 id="piecewisecurvenumaccelu">PiecewiseCurve&amp;num;accel(u)</h3>
 
 <p>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>accel</code>
@@ -105,8 +107,9 @@ the velocity vector.</p>
 <p>An array describing an acceleration vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="PiecewiseCurve_arcLength"></a>
-### PiecewiseCurve&amp;num;arcLength(u)</p>
+<p><a name="PiecewiseCurve_arcLength"></a></p>
+
+<h3 id="piecewisecurvenumarclengthu">PiecewiseCurve&amp;num;arcLength(u)</h3>
 
 <p>Finds an approximate arc length (distance) between the start of this
 curve and the point at the specified u-coordinate of this curve.</p>
@@ -121,8 +124,9 @@ curve and the point at the specified u-coordinate of this curve.</p>
 
 <p>The approximate arc length of this curve at the specified u-coordinate. (Type: number)</p>
 
-<p><a name="PiecewiseCurve_changeEnds"></a>
-### PiecewiseCurve&amp;num;changeEnds(ep1, ep2)</p>
+<p><a name="PiecewiseCurve_changeEnds"></a></p>
+
+<h3 id="piecewisecurvenumchangeendsep1-ep2">PiecewiseCurve&amp;num;changeEnds(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
@@ -151,8 +155,9 @@ also be used to grow the path of the curve.</p>
 
 <p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
 
-<p><a name="PiecewiseCurve_endPoints"></a>
-### PiecewiseCurve&amp;num;endPoints()</p>
+<p><a name="PiecewiseCurve_endPoints"></a></p>
+
+<h3 id="piecewisecurvenumendpoints">PiecewiseCurve&amp;num;endPoints()</h3>
 
 <p>Returns the starting and ending u-coordinates of this curve.</p>
 
@@ -163,8 +168,9 @@ the curve, and the second is its ending coordinate.
 Returns <code>[0, n]</code>, where <code>n</code> is the number
 of curves that make up this piecewise curve.</p>
 
-<p><a name="PiecewiseCurve_evaluate"></a>
-### PiecewiseCurve&amp;num;evaluate(u)</p>
+<p><a name="PiecewiseCurve_evaluate"></a></p>
+
+<h3 id="piecewisecurvenumevaluateu">PiecewiseCurve&amp;num;evaluate(u)</h3>
 
 <p>Finds the position of this curve at the specified u-coordinate.</p>
 
@@ -179,8 +185,9 @@ of curves that make up this piecewise curve.</p>
 <p>An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="PiecewiseCurve_fitRange"></a>
-### PiecewiseCurve&amp;num;fitRange(ep1, ep2)</p>
+<p><a name="PiecewiseCurve_fitRange"></a></p>
+
+<h3 id="piecewisecurvenumfitrangeep1-ep2">PiecewiseCurve&amp;num;fitRange(ep1, ep2)</h3>
 
 <p>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the specified range.
@@ -199,8 +206,9 @@ Here, -π now maps to 0, and π now maps to 1.</p>
 
 <p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
 
-<p><a name="PiecewiseCurve.fromCatmullRomSpline"></a>
-### (static) PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])</p>
+<p><a name="PiecewiseCurve.fromCatmullRomSpline"></a></p>
+
+<h3 id="static-piecewisecurvefromcatmullromsplinespline-param-closed">(static) PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])</h3>
 
 <p>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull–Rom spline. A Catmull–Rom spline is defined by
@@ -220,8 +228,9 @@ of neighboring points on the spline.</p>
 
 <p>A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull–Rom spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
 
-<p><a name="PiecewiseCurve.fromEllipseArc"></a>
-### (static) PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)</p>
+<p><a name="PiecewiseCurve.fromEllipseArc"></a></p>
+
+<h3 id="static-piecewisecurvefromellipsearcx-y-radiusx-radiusy-start-sweep">(static) PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)</h3>
 
 <p>Creates a piecewise curve that describes an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse’s center
@@ -243,8 +252,9 @@ cubic rational B-spline curves.</p>
 
 <p>The resulting piecewise curve. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
 
-<p><a name="PiecewiseCurve.fromHermiteSpline"></a>
-### (static) PiecewiseCurve.fromHermiteSpline(spline)</p>
+<p><a name="PiecewiseCurve.fromHermiteSpline"></a></p>
+
+<h3 id="static-piecewisecurvefromhermitesplinespline">(static) PiecewiseCurve.fromHermiteSpline(spline)</h3>
 
 <p>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline. A Hermite spline is a collection of points that the curve will go through,
@@ -266,8 +276,9 @@ guaranteed to preserve the increasing or decreasing nature of the function or cu
 <p>A piecewise curve made up of cubic B-spline curves describing the
 same path as the Hermite spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
 
-<p><a name="PiecewiseCurve.fromTCBSpline"></a>
-### (static) PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])</p>
+<p><a name="PiecewiseCurve.fromTCBSpline"></a></p>
+
+<h3 id="static-piecewisecurvefromtcbsplinespline-tension-continuity-bias-closed-rigidends">(static) PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])</h3>
 
 <p>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic TCB spline (tension/continuity/bias spline, also known as Kochanek–Bartels spline).
@@ -290,8 +301,9 @@ in uniform parameterization.)</p>
 <p>A piecewise curve made up of cubic B-spline curves describing the
 same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
 
-<p><a name="PiecewiseCurve_getCurves"></a>
-### PiecewiseCurve&amp;num;getCurves()</p>
+<p><a name="PiecewiseCurve_getCurves"></a></p>
+
+<h3 id="piecewisecurvenumgetcurves">PiecewiseCurve&amp;num;getCurves()</h3>
 
 <p>Gets a reference to the curves that make up this piecewise curve.</p>
 
@@ -299,8 +311,9 @@ same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve
 
 <p>The curves that make up this piecewise curve. (Type: Array.&lt;<a href="Curve.html">Curve</a>&gt;)</p>
 
-<p><a name="PiecewiseCurve_getLength"></a>
-### PiecewiseCurve&amp;num;getLength()</p>
+<p><a name="PiecewiseCurve_getLength"></a></p>
+
+<h3 id="piecewisecurvenumgetlength">PiecewiseCurve&amp;num;getLength()</h3>
 
 <p>Convenience method for getting the total length of this curve.</p>
 
@@ -308,8 +321,9 @@ same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve
 
 <p>The distance from the start of the curve to its end. (Type: number)</p>
 
-<p><a name="PiecewiseCurve_getPoints"></a>
-### PiecewiseCurve&amp;num;getPoints(count)</p>
+<p><a name="PiecewiseCurve_getPoints"></a></p>
+
+<h3 id="piecewisecurvenumgetpointscount">PiecewiseCurve&amp;num;getPoints(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -328,8 +342,9 @@ an arc-length parameterization.</p>
 element will be the start of the curve. If “count” is 2 or greater, the last element
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number» | Array.&lt;Object&gt;)</p>
 
-<p><a name="PiecewiseCurve_getPointsAsObjects"></a>
-### PiecewiseCurve&amp;num;getPointsAsObjects(count)</p>
+<p><a name="PiecewiseCurve_getPointsAsObjects"></a></p>
+
+<h3 id="piecewisecurvenumgetpointsasobjectscount">PiecewiseCurve&amp;num;getPointsAsObjects(count)</h3>
 
 <p>Gets an array of positions on the curve at fixed intervals
 of u-coordinates. Note that these positions will not generally be
@@ -359,8 +374,9 @@ var buffer=new THREE.BufferGeometry()
 .setFromPoints(points);
 </pre>
 
-<p><a name="PiecewiseCurve_jerk"></a>
-### PiecewiseCurve&amp;num;jerk(u)</p>
+<p><a name="PiecewiseCurve_jerk"></a></p>
+
+<h3 id="piecewisecurvenumjerku">PiecewiseCurve&amp;num;jerk(u)</h3>
 
 <p>Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>jerk</code>
@@ -380,8 +396,9 @@ the acceleration vector.</p>
 <p>An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="PiecewiseCurve_normal"></a>
-### PiecewiseCurve&amp;num;normal(u)</p>
+<p><a name="PiecewiseCurve_normal"></a></p>
+
+<h3 id="piecewisecurvenumnormalu">PiecewiseCurve&amp;num;normal(u)</h3>
 
 <p>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator’s <code>normal</code>
@@ -402,8 +419,9 @@ vector divided by that derivative’s length. The normal returned by this method
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="PiecewiseCurve_tangent"></a>
-### PiecewiseCurve&amp;num;tangent(u)</p>
+<p><a name="PiecewiseCurve_tangent"></a></p>
+
+<h3 id="piecewisecurvenumtangentu">PiecewiseCurve&amp;num;tangent(u)</h3>
 
 <p>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but “normalized” to a unit vector.</p>
@@ -419,8 +437,9 @@ The <b>tangent vector</b> is the same as the velocity vector, but “normalized�
 <p>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
 
-<p><a name="PiecewiseCurve_toArcLengthParam"></a>
-### PiecewiseCurve&amp;num;toArcLengthParam()</p>
+<p><a name="PiecewiseCurve_toArcLengthParam"></a></p>
+
+<h3 id="piecewisecurvenumtoarclengthparam">PiecewiseCurve&amp;num;toArcLengthParam()</h3>
 
 <p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -453,8 +472,9 @@ on a curve.</p>
 var point = arclen.evaluate(Math.random()*arclen.getLength())
 </pre>
 
-<p><a name="PiecewiseCurve_velocity"></a>
-### PiecewiseCurve&amp;num;velocity(u)</p>
+<p><a name="PiecewiseCurve_velocity"></a></p>
+
+<h3 id="piecewisecurvenumvelocityu">PiecewiseCurve&amp;num;velocity(u)</h3>
 
 <p>Finds an approximate velocity vector at the specified u-coordinate of this curve.</p>
 
