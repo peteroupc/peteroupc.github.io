@@ -31,6 +31,7 @@ All may interest 1990s computer users.
     - [**Button and border styles for classic interfaces**](#Button_and_border_styles_for_classic_interfaces)
     - [**Survey of polygon and memory usage in 1990s 3-D games**](#Survey_of_polygon_and_memory_usage_in_1990s_3_D_games)
     - [**Sound bank development guide**](#Sound_bank_development_guide)
+    - [**Guide for creating 3-D models in the pre-2000 style**](#Guide_for_creating_3_D_models_in_the_pre_2000_style)
 - [**License**](#License)
 - [**Notes**](#Notes)
 
@@ -297,6 +298,12 @@ In this sense, theoretical performance of game consoles or other computers is le
 ### Sound bank development guide
 
 Write an open-source and detailed guide on using free-of-cost software to produce decent-quality instrument banks from the recordings of real musical instruments (rather than copying or converting other instrument banks or recording from commercial synthesizers).  See the section on [**building instrument banks, earlier**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks). For this purpose, a sound bank in SoundFont 2 or Downloadable Sounds format that is of decent quality is about 4 million bytes in size.
+
+<a id=Guide_for_creating_3_D_models_in_the_pre_2000_style></a>
+
+### Guide for creating 3-D models in the pre-2000 style
+
+Develop a guide for creating 3-D models for use in modern video games that follow the [**specification**](#Graphics_Challenge_for_Classic_Style_Games), given earlier on classic (pre-2000) 3-D graphics, in a similar vein to "[**Game-Ready 3D Models: Requirements, Creation, and Export**](https://threedium.io/3d-model/game-ready)" (which was designed for high-system-resource games from 2024 or so).  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps.)
 
 <a id=License></a>
 
