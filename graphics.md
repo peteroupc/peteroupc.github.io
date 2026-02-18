@@ -170,7 +170,7 @@ Examples of optional constraints are the following:
 
 ### Notes on Specification
 
-This section has notes on this specification, such as how its requirements correspond to the graphics abilities of classic video games.
+This section has notes on this specification, such as how its requirements correspond to the graphics abilities of pre-2000 video games.
 
 <a id=Screen_resolutions></a>
 
@@ -356,7 +356,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^20]: PlayStation (One); Nintendo 3DS lower screen; larger VGA "mode X" (256 colors).
 
-[^21]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors); Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
+[^21]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors), especially seen in MS-DOS games; Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
 
 [^22]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also recommended by the _PC 98 System Design Guide_.
 
