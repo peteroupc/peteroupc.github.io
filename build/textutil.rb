@@ -5,7 +5,7 @@ def prepareMarkdown(data)
   data=data.gsub(/<a\s+(id|name)[^>]*>\s*<\/a>\n+/,"")
   data=data.gsub(/\#\n*\#\#/,"###")
   data=data.gsub(/\t/," "*8)
-  # Fix an issue with "|¨ characters within LaTeX markup
+  # Fix an issue with "|" characters within LaTeX markup
   # being misinterpreted as table notation
   data=data.gsub(/\$([^\n\$]+)\$/){
     next $& if !$1.include?("|")
@@ -82,11 +82,11 @@ def prepareMarkdown(data)
   #data=data.gsub(/(<small>)?(-\s+)?<sup\s+id[\s\S]+?(?=\#\#|\z)/){
   #  next newnotetexts.join("\n")+"\n\n"
   #}
-
-  data=data.gsub(/^(\#\#+)[ \t]+Notes[ \t]*\n+[\s\S]*?(?=\#\#|\z)/){
+  data=data.gsub(/^(\#\#+)[ \t]+(End\s+Notes|Footnotes|Notes)[ \t]*\n+[\s\S]*?(?=\#\#|\z)/){
    p1=$1
    p2=$2
-   ret="#{p1} Notes\n\n"+newnotetexts.join("\n\n")+"\n\n"
+   p3=$3
+   ret="#{p1} #{p2}\n\n"+newnotetexts.join("\n\n")+"\n\n"
   }
   data.scan(/^(\#\#+)\s+(.*)\s+?/){|heading|
    h0=heading[0]
