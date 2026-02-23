@@ -1126,7 +1126,7 @@ The following techniques generate new colors that are related to existing colors
     - **Tetradic**: Double complementary with Y = &pi;/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
 - **Achromatic colors** (also known as **gray tones**): Colors without hue; that is, black, white, and shades of gray.
-- **Monochrome colors**: If all the colors in a series are achromatic, or if they all belong to the same hue, the colors are _monochrome_.  For example, different [**shades, tints, or tones**](#Alpha_Blending) of a given color are monochrome colors.
+- **Monochrome colors**: If all the colors in a series are achromatic, or if they are all shades of the same color or tints of the same color, the colors are _monochrome_.
 
 <a id=Contrast_Between_Two_Colors></a>
 
@@ -1633,7 +1633,7 @@ The techniques follow.
 - To generate a **random shade** of a given RGB color, generate `Lerp3(color1, [0, 0, 0], RNDRANGEMinMaxExc(0.2, 1.0))`.
 - To generate a **random tint** of a given RGB color, generate `Lerp3(color1, [1, 1, 1], RNDRANGEMinMaxExc(0.0, 0.9))`.
 - To generate a **random tone** of a given RGB color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGEMinMaxExc(0.0, 0.9))`.
-- To generate a **random monochrome RGB color**, generate `HslToRgb(H, RNDRANGEMinMaxExc(0, 1),RNDRANGEMinMaxExc(0, 1))`, where `H` is an arbitrary [**hue**](#HSV).
+- To generate a **random RGB color of the same hue**, generate `HslToRgb(H, RNDRANGEMinMaxExc(0, 1),RNDRANGEMinMaxExc(0, 1))`, where `H` is an arbitrary [**hue**](#HSV).
 - **Random color sampling:**
     - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDRANGEMinMaxExc(0, 1))`.
     - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also [**"Sampling With Replacement: Choosing a Random Item from a List"**](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).

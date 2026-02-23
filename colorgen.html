@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2026-02-09"><meta name="citation_date" content="2026/02/09"><meta name="citation_publication_date" content="2026/02/09"><meta name="citation_online_date" content="2026/02/09"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_title" content="Color Topics for Programmers"><meta name="dc.date" content="2026-02-19"><meta name="citation_date" content="2026/02/19"><meta name="citation_publication_date" content="2026/02/19"><meta name="citation_online_date" content="2026/02/19"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Color Topics for Programmers"><meta name="dc.title" content="Color Topics for Programmers"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-02-09.</p>
+<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-02-19.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -1297,7 +1297,7 @@ END METHOD
     </ul>
   </li>
   <li><strong>Achromatic colors</strong> (also known as <strong>gray tones</strong>): Colors without hue; that is, black, white, and shades of gray.</li>
-  <li><strong>Monochrome colors</strong>: If all the colors in a series are achromatic, or if they all belong to the same hue, the colors are <em>monochrome</em>.  For example, different <a href="#Alpha_Blending"><strong>shades, tints, or tones</strong></a> of a given color are monochrome colors.</li>
+  <li><strong>Monochrome colors</strong>: If all the colors in a series are achromatic, or if they are all shades of the same color or tints of the same color, the colors are <em>monochrome</em>.</li>
 </ul>
 
 <p><a id="Contrast_Between_Two_Colors"></a></p>
@@ -1987,7 +1987,7 @@ end
   <li>To generate a <strong>random shade</strong> of a given RGB color, generate <code>Lerp3(color1, [0, 0, 0], RNDRANGEMinMaxExc(0.2, 1.0))</code>.</li>
   <li>To generate a <strong>random tint</strong> of a given RGB color, generate <code>Lerp3(color1, [1, 1, 1], RNDRANGEMinMaxExc(0.0, 0.9))</code>.</li>
   <li>To generate a <strong>random tone</strong> of a given RGB color, generate <code>Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGEMinMaxExc(0.0, 0.9))</code>.</li>
-  <li>To generate a <strong>random monochrome RGB color</strong>, generate <code>HslToRgb(H, RNDRANGEMinMaxExc(0, 1),RNDRANGEMinMaxExc(0, 1))</code>, where <code>H</code> is an arbitrary <a href="#HSV"><strong>hue</strong></a>.</li>
+  <li>To generate a <strong>random RGB color of the same hue</strong>, generate <code>HslToRgb(H, RNDRANGEMinMaxExc(0, 1),RNDRANGEMinMaxExc(0, 1))</code>, where <code>H</code> is an arbitrary <a href="#HSV"><strong>hue</strong></a>.</li>
   <li><strong>Random color sampling:</strong>
     <ul>
       <li>To select a random continuous color from a color map (<code>colormap</code>): <code>ColorMapContinuous(colormap, RNDRANGEMinMaxExc(0, 1))</code>.</li>

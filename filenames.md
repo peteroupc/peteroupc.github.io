@@ -13,12 +13,12 @@ The issue of supporting file names is tricky, because different file systems&mda
 For example, by default&mdash;
 
 - NTFS does case-sensitive comparisons of file names, but preserves the case of file names it stores;
-- ext2 does a case-insensitive comparison of file names, and
+- ext2 does a case-insensitive comparison of file names; and
 - HFS Plus uses a particular normalization form in file name storage.
 
 Most but not all modern file systems support file names with _non-basic code points_ (names with code points beyond the Basic Latin range of the Unicode Standard).  Such file names are called _internationalized file names_ here.
 
-In addition, certain file names are problematic; examples are "con", "aux", and other names reserved by earlier versions of the Windows operating system.  (For Windows-specific information on file name support, see "[**Naming Files, Paths, and Namespaces**](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)" in Microsoft Docs.)
+In addition, certain file names are problematic; examples are "con", "aux", and other names reserved by earlier versions of the Windows operating system.  (For Windows-specific information on file name support, see "[**Naming Files, Paths, and Namespaces**](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file)" in Microsoft Learn.)
 
 Applications that wish to support internationalized file names can follow the suggestions below.
 
@@ -26,7 +26,7 @@ Applications that wish to support internationalized file names can follow the su
 
 ### Guidance for User-Facing Files
 
-_User-facing files_ are files created by customers or introduced into the application by customers.  End users may want to name files in their language, making it necessary for many applications to support internationalized file names.
+_User-facing files_ are files created by customers or introduced into the application by customers.  Users may want to name files in their language, making it necessary for many applications to support internationalized file names.
 
 **When creating new files:** The MailLib library includes a [**`MakeFilename`**](https://peteroupc.github.io/MailLib/docs/PeterO.Mail.ContentDisposition.html#MakeFilename_string) method that converts a title or file name to a suitable name for saving data to a file.  `MakeFilename` does a number of things to maximize the chance that the name can be used as is in most file systems.
 

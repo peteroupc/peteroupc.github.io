@@ -66,14 +66,15 @@ Limit 3-D graphics to the following:[^3]
 
 3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has the vertex color format given earlier, or
-    * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with the vertex color format given earlier.
+    * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 
 4. The width and height of each texture is a power of 2.
 5. A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
 6. Textures may contain transparent pixels.
-7. Depth buffers (Z buffers) and depth-based pixel-level fog are supported.
-8. The 3-D graphics buffer's resolution is the same as the screen resolution.
-9. 3-D primitives should undergo perspective correction, but this is optional.[^5]
+7. Textures should not be "pixelated" before the game uses them.  A "pixelated" image occurs when an image is enlarged with point filtering (also called box filtering or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
+8. Depth buffers (Z buffers) and depth-based pixel-level fog are supported.
+9. The 3-D graphics buffer's resolution is the same as the screen resolution.
+10. 3-D primitives should undergo perspective correction, but this is optional.[^5]
 
 > **Example:** For a "screen resolution" (see later) of 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
 
@@ -90,7 +91,7 @@ Limit 2-D graphics to the following: [^6]
 5. Each color in each color table used by tiles is of the vertex color format given earlier.
 6. Tiles can be horizontally flipped, vertically flipped, or both.
 7. Separate from layers, 2-D _sprites_ can be displayed.  Each sprite is a rectangular array of either tiles or pixels.
-8. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
+8. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.  The width and height of each sprite need not be a power of 2.)
 9. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^7]
 10. Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.
 11. Each sprite can be drawn above or below any of the 2-D layers.
@@ -99,6 +100,7 @@ Limit 2-D graphics to the following: [^6]
     2. Each sprite can be horizontally flipped, vertically flipped, or both.[^8]
     3. No affine transformation or flipping of sprites is allowed.
 13. Layers, tiles, and sprites may contain transparent pixels, but not translucent (semitransparent) pixels.  As an exception, the 3-D layer may contain translucent pixels.[^9]
+14. Sprites and tiles should not be "pixelated" before the game uses them.
 
 The 3-D graphics layer, if any, can be alpha blended with the 2-D graphics layers in any order. [^10]
 
@@ -119,7 +121,7 @@ This specification for "classic graphics"[^13] in modern games largely reflects 
 - home computers released before 1995,
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier, and
-- the Game Boy Advance, Nintendo DS, and Nintendo 3DS, all of which were released after 2000 but have relatively meager graphics ability.
+- the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphics ability.
 
 In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.
 
@@ -196,7 +198,7 @@ This section has notes on this specification, such as how its requirements corre
 - A game can support&mdash;
 
     - multiple sizes for the area of the screen where the game's action is drawn, or
-    - pixel-column or -row doubling,
+    - pixel-column or -row doubling as a "quality" setting,
 
     or both features, without changing the size of the game's image.  For example, the original _Doom_ (1993) supported several sizes of this kind (on PC, they were 96 &times; 48, 128 &times; 64, 160 &times; 80, and so on up to 288 &times; 144, as well as 320 &times; 168 and 320 &times; 200) and optional pixel-column doubling.[^48]
 
