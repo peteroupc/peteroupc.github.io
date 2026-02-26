@@ -86,7 +86,7 @@ Limit 2-D graphics to the following: [^6]
     3. If 3-D graphics are being displayed, one of the 2-D layers is replaced with a _3-D layer_, which is an image on which the 3-D graphics are drawn. The 2-D layer replaced this way can vary over time.
     4. The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.[^7]
 2. Tiles. A _tile_ is a small rectangular array of pixels.
-    1. Tiles have the same width and the same height (32 &times; 32 pixels or smaller). 8 &times; 8 pixels is the suggested width and height, but the width and height need not be a power of 2.
+    1. Every tile has the same width and the same height as every other.  The width must be 32 or less, and the height must be 32 or less.
     2. The application chooses one:
         1. Each tile is in a 1-bit-per-pixel format and uses one of 16 _color tables_, with 2 colors per table.
         2. Each tile is in a 2-bit-per-pixel format and uses one of 16 color tables, with 4 colors per table.
@@ -94,11 +94,11 @@ Limit 2-D graphics to the following: [^6]
         4. There is a single 256-color table for use by tiles.  Each tile is in an 8-bit-per-pixel format.
     3. Each color in each color table used by tiles is of the vertex color format given earlier.
     4. Tiles may contain transparent, but not translucent, pixels.
-    5. Tiles can be horizontally flipped, vertically flipped, or both.
-    6. Tiles should not be "pixelated" before the game uses them.
+    5. Tiles should not be "pixelated" before the game uses them.
+    6. When referenced in a 2-D layer, a tile can be horizontally flipped, vertically flipped, or both.
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
-    1. Each sprite has size up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
-    2. Sprites need not have the same size, and the width and height of each sprite need not be a power of 2.
+    1. Each sprite has up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
+    2. Besides the previous point, sprites can have any width and height.
     3. Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.
     4. Sprites may contain transparent, but not translucent, pixels.
     5. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
@@ -109,6 +109,8 @@ Limit 2-D graphics to the following: [^6]
     7. Sprites should not be "pixelated" before the game uses them.
     8. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^9]
 
+> **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
+>
 > **Example:** For a "screen resolution" (see later) of 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
 
 Other requirements:
@@ -333,7 +335,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
 
-[^6]: A possible alternative to these 2-D limits is to require the use of a frame buffer (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and to require that all graphics be _rendered in software_ (see section "Optional Limits"), but I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>The tile-based limits specified here also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
+[^6]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all graphics in the game must be _rendered in software_ (see section [**"Optional Limits"**](#Optional_Limits)).  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
 [^7]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s release in 1996, according to _Michael Abrash’s Graphics Programming Black Book_. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
@@ -341,7 +343,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^9]: Tile- and sprite-based graphics were in place largely because they saved memory; they were popularized by the arcade game _Galaxian_.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer.
 
-[^10]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels).<br><br>In the Godot engine, the screen resolution corresponds to the "Viewport Width" (`window/size/viewport_width`) and "Viewport Height" (`window/size/viewport_height`) project settings.  In the Unity engine, the screen resolution corresponds to the settings `defaultScreenWidth` and `defaultScreenHeight`, and there is advice from 2019 relating to the graphics style in [**"8-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games) and [**"16-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games) game consoles.  In Unreal Engine, the screen resolution apparently corresponds to `ResolutionSizeX` and `ResolutionSizeY`.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification.
+[^10]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels).<br><br>In the Godot engine, the screen resolution corresponds to the "Viewport Width" (`window/size/viewport_width`) and "Viewport Height" (`window/size/viewport_height`) project settings.  For the Unity engine, there is advice from 2019 relating to the graphics style in [**"8-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games) and [**"16-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games) game consoles.  In Unreal Engine, the screen resolution apparently corresponds to `ResolutionSizeX` and `ResolutionSizeY`.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification.
 
 [^11]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br>Standard MIDI files organize MIDI sounds into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under the _Multimedia PC Specification_ (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
 
@@ -425,7 +427,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^51]: CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s.
 
-[^52]: Effects to scale the game screen include so-called "pixel-art scaling algorithms" such as `HQX` and `2xSaI`, as well as bilinear or nearest-neighbor filtering.<br>Effects to scale the game screen do not include the decoding of small videos to fit the _game screen_, as opposed to the player's display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen "on the fly", in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 &times; 200. (See, for instance, Nigel Thompson, "[**Stretching 256-Color Images Using Interpolation**](https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10))", Microsoft Developer Network, March 7, 1995.)
+[^52]: Effects to scale the game screen include so-called "pixel-art scaling algorithms" such as `HQX` and `2xSaI`, as well as bilinear or point filtering.<br>Effects to scale the game screen do not include the decoding of small videos to fit the _game screen_, as opposed to the player's display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen "on the fly", in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 &times; 200. (See, for instance, Nigel Thompson, "[**Stretching 256-Color Images Using Interpolation**](https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10))", Microsoft Developer Network, March 7, 1995.)
 
 [^53]: Digitized sound is also known as pulse-code modulation (PCM) and is often stored in files ending in ".WAV".
 
