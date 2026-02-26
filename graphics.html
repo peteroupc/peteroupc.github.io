@@ -428,11 +428,6 @@
 
 <h2 id="notes">Notes</h2>
 
-<p><br />1. Instead of tiles, sprites, and layers, the game uses a <em>frame buffer</em> (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all graphics in the game must be <em>rendered in software</em> (see section <a href="#Optional_Limits"><strong>“Optional Limits”</strong></a>).  But I don’t know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.
-<br />2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don’t apply) and can have transparent and translucent pixels.
-<br />3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).
-<br /><br />The tile-based limits in this specification also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.</p>
-
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1">
@@ -451,7 +446,7 @@
       <p>Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called <em>affine texture mapping</em>), together with the rounding of vertex coordinates to integers and the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:5:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:6">
-      <p>It is being considered whether to replace these 2-D limits with one of the following alternatives:<br /> <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>It is being considered whether to replace these 2-D limits with one of the following alternatives:<br /><br />1. Instead of tiles, sprites, and layers, the game uses a <em>frame buffer</em> (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all graphics in the game must be <em>rendered in software</em> (see section <a href="#Optional_Limits"><strong>“Optional Limits”</strong></a>).  But I don’t know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br />2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don’t apply) and can have transparent and translucent pixels.<br />3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br /><br />The tile-based limits in this specification also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
       <p>Translucent pixels enable <em>alpha blending</em> techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of <em>Quake</em>’s release in 1996, according to <em>Michael Abrash’s Graphics Programming Black Book</em>. Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
