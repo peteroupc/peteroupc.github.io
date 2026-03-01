@@ -33,24 +33,24 @@ The following is a sketch of what could be included in a lean API for copying an
 - Drawing one-unit-thick outlines of 2-D paths with a solid color.[^3]
 - Flood filling colored areas of an image.
 - Optionally, "inverting" the colors or color indices of an image's rectangular area (whose edges have integer coordinates).
-- Optionally, fading an image to or from black.[^7]
+- Optionally, fading an image to or from black.[^4]
 
 A leaner API could provide for the following instead:
 
 - Getting and setting pixel values of an image.
 - Filling the following figures with a solid color.
     - Rectangles whose edges have integer coordinates, and ellipses that are tightly contained in them.
-    - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^4]
+    - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^5]
 - Drawing one-unit-thick line segments with a solid color, supporting only integer coordinates.
 - Flood filling colored areas of an image.
 - Optionally:
     - "Inverting" the colors or color indices of an image's rectangular area (whose edges have integer coordinates).
-    - Drawing one-unit-thick elliptical arcs with a solid color, supporting only integer coordinates.[^5]
+    - Drawing one-unit-thick elliptical arcs with a solid color, supporting only integer coordinates.[^6]
 
 The following is not included in either API.
 
 - Color palette functions.  Images may or may not have a color table, and the application is assumed to handle colors on an image-by-image basis.  (There is the matter of sending finished images to the user's display, which may vary in the number of colors it supports, but the lean 2-D API need not be concerned about this.)
-- Text rendering, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^6]
+- Text rendering, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^7]
 
 <a id=3_D_Graphics></a>
 
@@ -157,10 +157,10 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^3]: Here, a "unit" means the spacing between an image's pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992.
 
-[^4]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of _Michael Abrash's Graphics Programming Black Book Special Edition_, 1997.
+[^4]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
 
-[^5]: Elliptical arcs were not supported in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features".
+[^5]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of _Michael Abrash's Graphics Programming Black Book Special Edition_, 1997.
 
-[^6]: [**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text. A _glyph_ is a writing element of a _font_; examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially _emoji_, to outline fonts and (2) [**"subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial.
+[^6]: Elliptical arcs were not supported in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features".
 
-[^7]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
+[^7]: [**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text. A _glyph_ is a writing element of a _font_; examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially _emoji_, to outline fonts and (2) [**"subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial.

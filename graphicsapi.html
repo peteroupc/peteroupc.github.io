@@ -4,7 +4,7 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-03-01.</p>
+<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-03-01.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p>Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my <a href="https://peteroupc.github.io/graphics.html"><strong>specification for such graphics</strong></a>, <em>classic graphics</em> generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable “shaders”. In general, pre-2000 graphics involve a game screen of 640 × 480 or smaller, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.</p>
 
@@ -44,7 +44,7 @@
   <li>Drawing one-unit-thick outlines of 2-D paths with a solid color.<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
   <li>Flood filling colored areas of an image.</li>
   <li>Optionally, “inverting” the colors or color indices of an image’s rectangular area (whose edges have integer coordinates).</li>
-  <li>Optionally, fading an image to or from black.<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></li>
+  <li>Optionally, fading an image to or from black.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></li>
 </ul>
 
 <p>A leaner API could provide for the following instead:</p>
@@ -54,7 +54,7 @@
   <li>Filling the following figures with a solid color.
     <ul>
       <li>Rectangles whose edges have integer coordinates, and ellipses that are tightly contained in them.</li>
-      <li>Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></li>
+      <li>Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></li>
     </ul>
   </li>
   <li>Drawing one-unit-thick line segments with a solid color, supporting only integer coordinates.</li>
@@ -62,7 +62,7 @@
   <li>Optionally:
     <ul>
       <li>“Inverting” the colors or color indices of an image’s rectangular area (whose edges have integer coordinates).</li>
-      <li>Drawing one-unit-thick elliptical arcs with a solid color, supporting only integer coordinates.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></li>
+      <li>Drawing one-unit-thick elliptical arcs with a solid color, supporting only integer coordinates.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></li>
     </ul>
   </li>
 </ul>
@@ -71,7 +71,7 @@
 
 <ul>
   <li>Color palette functions.  Images may or may not have a color table, and the application is assumed to handle colors on an image-by-image basis.  (There is the matter of sending finished images to the user’s display, which may vary in the number of colors it supports, but the lean 2-D API need not be concerned about this.)</li>
-  <li>Text rendering, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">7</a></sup></li>
+  <li>Text rendering, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup></li>
 </ul>
 
 <p><a id="3_D_Graphics"></a></p>
@@ -206,17 +206,17 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
     <li id="fn:3">
       <p>Here, a “unit” means the spacing between an image’s pixels.  Thicker outlines can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment’s endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support outlining paths thicker than one unit.  See also Ron Gery, “Primitive Cool”, Microsoft Developer Network, Mar. 17, 1992. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:7">
-      <p>This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:4">
-      <p>A “monotone-vertical” polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of <em>Michael Abrash’s Graphics Programming Black Book Special Edition</em>, 1997. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5">
-      <p>Elliptical arcs were not supported in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, “Microsoft Windows CE Graphics Features”. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A “monotone-vertical” polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of <em>Michael Abrash’s Graphics Programming Black Book Special Edition</em>, 1997. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p><a href="https://behdad.org/text2024"><strong>Text rendering</strong></a> is essentially the drawing of <em>glyphs</em> of text. A <em>glyph</em> is a writing element of a <em>font</em>; examples are letters, digits, the <em>i</em>’s dot, and the <em>f-f-l</em> combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts and (2) <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“subpixel” antialiasing</strong></a> of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Elliptical arcs were not supported in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, “Microsoft Windows CE Graphics Features”. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:7">
+      <p><a href="https://behdad.org/text2024"><strong>Text rendering</strong></a> is essentially the drawing of <em>glyphs</em> of text. A <em>glyph</em> is a writing element of a <em>font</em>; examples are letters, digits, the <em>i</em>’s dot, and the <em>f-f-l</em> combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts and (2) <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“subpixel” antialiasing</strong></a> of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
