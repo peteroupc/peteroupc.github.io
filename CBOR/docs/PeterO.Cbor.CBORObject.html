@@ -5,7 +5,8 @@
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>PeterO.Cbor.CBORObject</h1>
-<p>## PeterO.Cbor.CBORObject</p>
+
+<h2 id="peterocborcborobject">PeterO.Cbor.CBORObject</h2>
 
 <pre>public sealed class CBORObject :
     System.IComparable,
@@ -16,7 +17,7 @@
 
 <p><b>Converting CBOR objects</b></p>
 
-<p>There are many ways to get a CBOR object, including from bytes, objects, streams and JSON, as described below.</p>
+<p>There are many ways to get a CBOR object, including from bytes, objects, streams and JSON, as described later.</p>
 
 <p><b>To and from byte arrays:</b> The CBORObject.DecodeFromBytes method converts a byte array in CBOR format to a CBOR object. The EncodeToBytes method converts a CBOR object to its corresponding byte array in CBOR format.</p>
 
@@ -705,7 +706,7 @@ This object is not an array.</li>
     PeterO.Cbor.CBORObject patch);
 </pre>
 
-<p>Returns a copy of this object after applying the operations in a JSON patch, in the form of a CBOR object. JSON patches are specified in RFC 6902 and their format is summarized in the remarks below.</p>
+<p>Returns a copy of this object after applying the operations in a JSON patch, in the form of a CBOR object. JSON patches are specified in RFC 6902 and their format is summarized in the remarks given later.</p>
 
 <p><b>Remarks:</b> A JSON patch is an array with one or more maps. Each map has the following keys:</p>
 
@@ -3120,7 +3121,7 @@ The string is not in JSON format.</p>
     <p>(*) In the Java version, eligible getters are public, nonstatic methods starting with “get” or “is” (either word followed by a character other than a basic digit or lowercase letter, that is, other than “a” to “z” or “0” to “9”), that take no parameters and do not return void, except that methods named “getClass” are not eligible getters. In addition, public, nonstatic, nonfinal fields are also eligible getters. If a class has two otherwise eligible getters (methods and/or fields) of the form “isX” and “getX”, where “X” is the same in both, or two such getters with the same name but different return type, they are not eligible getters.</p>
   </li>
   <li>
-    <p>Then, the method returns a CBOR map with each eligible getter’s name or property name as each key, and with the corresponding value returned by that getter as that key’s value. Before adding a key-value pair to the map, the key’s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p>
+    <p>Then, the method returns a CBOR map with each eligible getter’s name or property name as each key, and with the corresponding value returned by that getter as that key’s value. Before adding a key-value pair to the map, the key’s name adjusts according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p>
   </li>
 </ul>
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Converting Images to Vector Graphics</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+            <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
+                    tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
+            </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1 id="converting-images-to-vector-graphics">Converting Images to Vector Graphics</h1>
+
+<p>This page concerns ways to go about remaking traditional user interface icons, which have the form of images (rectangular arrays of samples called <em>pixels</em>), as vector graphics (or geometric models), a process sometimes called <em>image vectorization</em>.  The icons concerned here tend to have the following properties: <sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
+
+<ul>
+  <li>The icon’s dimensions are usually 32 × 32, but can range from 15 × 15 to 64 × 64.</li>
+  <li>The icon is drawn in a limited color palette (no more than 32 colors), ordinarily 16 colors or fewer.</li>
+  <li>The icon may have transparent pixels, but no semitransparent (translucent) pixels.</li>
+</ul>
+
+<p>The output should be a vector graphic with the following properties:</p>
+
+<ul>
+  <li>A point-sampled version of the vector graphic (without antialiasing or scaling) should closely match the input image.</li>
+  <li>The graphic is reasonably scalable, with horizontal and vertical scaling factors each from 50% through 300%.   The low end is given to accommodate displays with nonsquare pixel spacing; the high end, displays with dense pixel spacing.</li>
+  <li>Single-color line segments or curves that are one unit thick should be rendered as line or curve commands.</li>
+  <li>Simple polygons of a single color in the input image should be rendered as such in the vector graphic.</li>
+  <li>Size blowup compared to the image should be reasonable (for example, no more than a 2-times blowup on average).  Notably, if the input image depicts a single-color polygon, the vector graphic should be a single-color polygon which often consumes less memory than the image.</li>
+  <li>Optional: Contours recognized as arcs, ellipses, or circles should be rendered as such.</li>
+  <li>Optional: The algorithm should recognize half-tone dithered areas as solid-colored areas.</li>
+</ul>
+
+<p>In addition, the algorithm:</p>
+
+<ul>
+  <li>Should not involve neural networks.</li>
+  <li>Should not be covered by active patents or patent applications.</li>
+</ul>
+
+<p>Algorithms that convert images to vector graphics—</p>
+
+<ul>
+  <li>in the form of unions of shapes that cover the area between pixels (for example, <a href="https://github.com/xyproto/png2svg"><strong><em>png2svg</em></strong></a>), or</li>
+  <li>in the form of halftone dots that simulate the area surrounding neighboring pixels (as in newsprint or comic book halftoning),</li>
+</ul>
+
+<p>are not within the scope of this document.</p>
+
+<p><a id="Existing_Algorithms"></a></p>
+
+<h2 id="existing-algorithms">Existing Algorithms</h2>
+
+<p>There is an algorithm by Kopf and Lischinski (“Depixelizing Pixel Art”, <em>ACM Transactions on Graphics</em> 30(4), 2011) that tackles the task of generating vector graphics from “pixel-art” images, including those of the kind at issue here.  However:</p>
+
+<ol>
+  <li>The algorithm generates curved shapes even if they originate from 1-unit thick line segments or curves.</li>
+  <li>The algorithm doesn’t generate polygons even in cases where that shape is best.</li>
+  <li>The algorithm runs slowly: tens of seconds to generate a vector graphic from a 64 × 64 icon.</li>
+  <li>The resulting vector graphic does not have a reasonable size compared to the input image.</li>
+  <li>I don’t know whether the algorithm is covered by any pending or active patents.</li>
+</ol>
+
+<p>Potrace version 1.16 (2019) likewise suffers from points 1 and 2, and also supports only black-and-white opaque images and not color ones.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Pixel-art_scaling_algorithms"><strong>Algorithms designed for scaling images</strong></a>, such as Eric Johnston’s <code>EPX</code>, Derek Liauw Kie Fa’s <code>2xSaI</code>, Maxim Stepin’s <code>Hqx</code>, and Andrea Mazzoleni’s <code>Scale2x</code>, have no known adaptation for converting a image to a vector graphic.  In any case, none of the algorithms mentioned renders 1-unit-thick lines as vector line commands.</p>
+
+<p>A <a href="https://github.com/eviltrout/agi-upscale"><strong>related project</strong></a> involves drawing enlarged versions of a vector graphic defined essentially by 1-unit-thick lines and by flood fills rather than polygons.</p>
+
+<p><a id="Example"></a></p>
+
+<h2 id="example">Example</h2>
+
+<p>Take the following image:</p>
+
+<p><img src="diamond.png" alt="**Diamond image**" /></p>
+
+<p>The desired vector graphic should have the following commands in this order:</p>
+
+<ol>
+  <li>Polygon, filled with white, connecting the points (1.5, 15.5), (15.5, 1.5), (29.5, 15.5), (15.5, 29.5).  (The coordinates adjust by 0.5 because of the placement of pixels at half-integer coordinates in SVG, for example.)</li>
+  <li>1-unit-thick polyline (sequence of line segments), colored black, connecting the points in the foregoing polygon.  Alternatively, that polygon is stroked with a 1-unit-thick black outline in addition to being filled. <sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
+</ol>
+
+<p><a href="https://peteroupc.github.io/svg.html"><strong>In SVG</strong></a>, the desired vector graphic looks like:</p>
+
+<p><img src="diamond.svg" alt="**Diamond vector graphic**" /></p>
+
+<p><a id="License"></a></p>
+
+<h2 id="license">License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under the <a href="https://unlicense.org"><strong>Unlicense</strong></a>.</p>
+
+<p><a id="Notes"></a></p>
+
+<h2 id="notes">Notes</h2>
+
+<p><a href="/classic-wallpaper/">Back to classic-wallpaper start page.</a></p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>A image with a high number of unique colors (say, 32 or more), is hard to convert to a vector graphic without sacrificing image quality.  While such images ought to be designed as vector graphics from the start, a simple upscaling and downscaling solution, such as bilinear filtering, is acceptable for such images, especially for the use case of user-interface graphics where scaling factors from 50% through 300% are expected.<br />Limited-color images greater than 64 × 64 are also of interest and occur among user-interface graphics (such as wizard graphics in Windows 95), but are not the main priority; indeed, the larger the image size, the more time the conversion to a vector graphic is expected to take. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>In SVG, the stroke would also be marked with the <code>vector-effect:non-scaling-stroke</code> style, so that the stroke looks 1 unit thick regardless of scaling. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+
+<div class="noprint">
+<p>
+<a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav></body></html>
