@@ -235,7 +235,7 @@
 
 <p>In general, from about 1990 to about 1997, user-interface text was drawn in one color only and rarely had smoothed edges; the edges were smoothed only if the display mode can show more than 256 colors at a time.  In fancier ways to show text, a “shadowed” text look was often achieved using multiple shifted renderings of the text in a single color (for example, from one unit upward and leftward to three units downward and rightward) followed by an unshifted rendering in the base color or pattern.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>  But new applications should avoid having text in icons, cursors, and other images.</p>
 
-<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.  Existing images that function like icons should be <a href="https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
+<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
 
 <p><a id="Animations"></a></p>
 
@@ -250,7 +250,7 @@
 <p>For a high degree of flexibility, new graphical user interface systems should allow for the following:</p>
 
 <ul>
-  <li>Designing icons, cursors, and other user-interface elements in the form of <a href="https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.html"><strong>vector graphics</strong></a> if desired.</li>
+  <li>Designing icons, cursors, and other user-interface elements in the form of <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>vector graphics</strong></a> if desired.</li>
   <li>Having certain outlines of shapes in vector graphics be filled with system colors, the values of which are user-defined (such as a button face color or button highlight color).</li>
   <li>Designing user-interface elements as images or vector graphics limited to gray tones, where the system replaces each gray tone in the image or graphic with the corresponding color in a color gradient involving one or more system colors.</li>
   <li>Drawing the same icon, cursor, or graphic—
@@ -303,47 +303,48 @@ authors’ suggestions for the three-dimensional appearance of buttons and certa
 
 <ul>
   <li>The <code>QLCDNumber</code> interface element, from the Qt framework, displays a number in a form resembling seven-segment displays.  The number’s digits are vector graphics (geometric models), not images, and <code>QLCDNumber</code> supports a drawing mode where the upper and left-hand outlines are drawn in a lighter color than the lower and right-hand outlines.</li>
-  <li>
-    <p>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</p>
-
-    <p>// First calculate the background color’s “brightness”,
-  // then calculate the derivative colors.
-  // Assumes each component of background color is
-  // from 0 through 1.
-  // ‘getrgb’ gets the color’s three components.
-  rgb=getrgb(background); r=rgb[0];g=rgb[1];b=rgb[2]
-  // default values for thresholds
-  foregroundThreshold=0.7
-  lightThreshold=0.93
-  darkThreshold=0.2
-  // find “brightness” of background color
-  brightness=0.75 * ((r+g+b)/3) + 0.25 * (0.3<em>r+0.59</em>g+0.11<em>b)
-  // find foreground color
-  if brightness&gt;foregroundThreshold
-     foreground=[0,0,0] // black
-  else
-     foreground=[1,1,1] // white
-  end
-  if brightness&lt;darkThreshold
-      // very dark color
-      select_color=background+0.15</em>(1-background)
-      lower_shadow=background+0.3<em>(1-background)
-      upper_shadow=background+0.5</em>(1-background)
-  else if brightness&gt;lightThreshold
-      // very light color
-      select_color=background-0.15<em>background
-      lower_shadow=background-0.4</em>background
-      upper_shadow=background-0.2<em>background
-  else
-      // medium color
-      select_color=background-0.15</em>background
-      fac = 0.6-0.2<em>brightness
-      lower_shadow=background-fac</em>background
-      fac = 0.5+0.1<em>brightness
-      upper_shadow=background+fac</em>(1-background)
-  end</p>
-  </li>
+  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
 </ul>
+
+<hr />
+
+<pre>// First calculate the background color's "brightness",
+// then calculate the derivative colors.
+// Assumes each component of background color is
+// from 0 through 1.
+// 'getrgb' gets the color's three components.
+rgb=getrgb(background); r=rgb[0];g=rgb[1];b=rgb[2]
+// default values for thresholds
+foregroundThreshold=0.7
+lightThreshold=0.93
+darkThreshold=0.2
+// find "brightness" of background color
+brightness=0.75 * ((r+g+b)/3) + 0.25 * (0.3*r+0.59*g+0.11*b)
+// find foreground color
+if brightness&gt;foregroundThreshold
+   foreground=[0,0,0] // black
+else
+   foreground=[1,1,1] // white
+end
+if brightness&lt;darkThreshold
+    // very dark color
+    select_color=background+0.15*(1-background)
+    lower_shadow=background+0.3*(1-background)
+    upper_shadow=background+0.5*(1-background)
+else if brightness&gt;lightThreshold
+    // very light color
+    select_color=background-0.15*background
+    lower_shadow=background-0.4*background
+    upper_shadow=background-0.2*background
+else
+    // medium color
+    select_color=background-0.15*background
+    fac = 0.6-0.2*brightness
+    lower_shadow=background-fac*background
+    fac = 0.5+0.1*brightness
+    upper_shadow=background+fac*(1-background)
+end
+</pre>
 
 <p><a id="License"></a></p>
 

@@ -294,7 +294,7 @@ See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-
 
 ### Button and border styles for classic interfaces
 
-See [**"Traditional User-Interface Graphics" in the "peteroupc/classic-wallpaper" repository**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
+See [**"Traditional User-Interface Graphics" in the "peteroupc/classic-wallpaper" repository**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
 
 <a id=Survey_of_polygon_and_memory_usage_in_1990s_3_D_games></a>
 

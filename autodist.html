@@ -479,7 +479,7 @@ function dicetable(weights, offset, srcFaces) {
   let wgcd=weightsgcd(weights)
   weights=weights.map(o=>o/wgcd)
   // Notice that this method works for any number of faces
-  // if the sum of weights is adjusted so that every prime number
+  // if the sum of weights adjusts so that every prime number
   // dividing that sum also divides 'srcFaces' (see Lemma 3 of
   // Kloeckner's paper).
   if(srcFaces==null)srcFaces=6

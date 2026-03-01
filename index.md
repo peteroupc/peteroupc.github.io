@@ -21,7 +21,7 @@ Help me on my requests, open questions, and interesting challenges, listed next.
 * [**The sampling problem**](./sampling.html). For experts in mathematics and probability.
 * [**Graphics and Music Challenges for Classic-Style Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
 * [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).  For digital artists and graphics programmers.
-* [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md). For graphics programmers.
+* [**Converting Pixel Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html). For graphics programmers.
 * [**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html). For graphics programmers.
 * [**A Wish for a New Atlas**](./newatlas.html). To condense vast geographic knowledge into a compact book.
 * [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html).  To improve education of children.
@@ -66,8 +66,8 @@ In the articles above, I put an emphasis on random variate generation that:
     - [**MIDI music synthesis for classic-style games and apps**](./graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
     - [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
 * [**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html).
-* [**Traditional User Interface Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/uielements.md)
-* [**Converting Pixel Images to Vector Graphics**](https://github.com/peteroupc/classic-wallpaper/blob/main/pixeltovector.md)
+* [**Traditional User Interface Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html)
+* [**Converting Pixel Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html)
 
 **Other Articles on Mathematics and Programming**
 

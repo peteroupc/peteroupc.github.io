@@ -1,0 +1,430 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Classic Tiled Wallpaper Challenge</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+            <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
+                    tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
+            </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1 id="classic-tiled-wallpaper-challenge">Classic Tiled Wallpaper Challenge</h1>
+
+<p>This repository is intended to hold open-source wallpaper graphics and source code for the following challenge.</p>
+
+<p>Given that desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 × 1080 or larger), rendering tileable backgrounds with limited colors and pixel size ever harder to find, I make the following challenge.</p>
+
+<p><a id="The_Challenge"></a></p>
+
+<h2 id="the-challenge">The Challenge</h2>
+
+<p>Create a tileable desktop wallpaper graphic <sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> meeting the following requirements.</p>
+
+<ul>
+  <li>The graphic is one of the following:
+    <ul>
+      <li>It is an image (also known as a <em>raster image</em>, a rectangular array of pixels) with one of the color palettes and one of the pixel dimensions given later.</li>
+      <li>It is a vector graphic in the Scalable Vector Graphics (SVG) format made only of two-dimensional filled outlines with no stroke.  Excessive detail should be avoided.  Moreover:
+        <ul>
+          <li>Each outline is filled black and either opaque or translucent (semitransparent).  The vector graphic can then be scaled to any pixel dimension desired and turned into a grayscale (see later) image using known techniques (see <a href="https://heropatterns.com/"><strong><em>Hero Patterns</em></strong></a> for an example).  Or…</li>
+          <li>Each outline is opaque and filled with one of up to ten colors from a color palette given later.  See <a href="https://www.colourlovers.com/patterns"><strong><em>colourlovers.com</em></strong></a> for examples.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>The graphic is preferably abstract, should not employ trademarks, and is suitable for all ages.</li>
+  <li>The graphic does not contain text.  Graphics that contain depictions of people or human faces are not preferred.</li>
+  <li>The graphic should be uncompressed or compressed without loss (so in PNG or BMP format, for example, rather than JPG format).</li>
+  <li>The graphic is in the public domain or licensed under the <a href="https://unlicense.org/"><strong>Unlicense</strong></a> or, less preferably, another open-source license approved by the Open Source Initiative.</li>
+  <li>The graphic was not produced by artificial-intelligence tools or with their help.</li>
+</ul>
+
+<p>Also welcome would be computer code (released to the public domain or licensed under the Unlicense) to generate tileable or seamless—</p>
+
+<ul>
+  <li>noise,</li>
+  <li>procedural textures or patterns, or</li>
+  <li>arrangements of symbols or small graphics or images with partial transparency,</li>
+</ul>
+
+<p>meeting the requirements given earlier.</p>
+
+<p>In general, the following are not within the scope of this challenge.</p>
+
+<ul>
+  <li>Photographic images (see “Wallpaper Generation Notes”, later in this document).</li>
+  <li>Graphics with a single solid color on all four sides; such graphics are trivially tileable.</li>
+  <li>Graphics that can be tiled in one dimension only, such as those depicting horizontal or vertical borders with an “infinitely” extending background.</li>
+</ul>
+
+<p><a id="Color_Palettes"></a></p>
+
+<h2 id="color-palettes">Color Palettes</h2>
+
+<p>The color palettes allowed are as follows.</p>
+
+<ul>
+  <li>Two colors only.
+    <ul>
+      <li>Such as black and white, which allows for hue shifting to, say, a black-to-red or gray-to-blue palette.</li>
+    </ul>
+  </li>
+  <li>16-color VGA (Video Graphics Array) palette (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).</li>
+  <li>216-color “safety palette” (each color component is a multiple of 51). <sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
+  <li>216-color “safety palette” plus VGA palette.</li>
+  <li>A subset of a color palette given earlier, such as:
+    <ul>
+      <li>The following gray tones: black (0, 0, 0), gray (128, 128, 128), white (255, 255, 255). (Allows for hue shifting to, say, a black-to-red palette.)</li>
+      <li>The VGA palette’s four gray tones: black, gray (128, 128, 128), light gray (192, 192, 192), white. (Allows for hue shifting to, say, a black-to-red palette.)</li>
+      <li>An 8-color palette where each color component is 0 or 255 (a subset of the 16-color VGA palette).</li>
+      <li>The VGA palette without the color (192, 192, 192).<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Any 16-color or 256-color repertoire that was used in a significant volume of application and video-game graphics before the year 2000 is also allowed.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></p>
+
+<p>Additional color palettes allowed are as follows.</p>
+
+<ul>
+  <li>The VGA palette plus the following four colors set by early versions of Windows: (192,220,192), (160,160,164), (255,251,240), (166,202,240).</li>
+  <li>The VGA palette plus each “half-and-half mixture” <sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> of any two colors in the palette, for a total of 98 unique colors (each color component is 0, 64, 128, or 192; or each color component is 0, 128, or 255; or each color component is 96 or 160; or each color component is 96 or 224).</li>
+  <li>16-color <a href="https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/"><strong>canonical Color/Graphics Adapter (CGA) palette</strong></a> (each color component is 85 or 255; or each color component is 0 or 170, except (170, 85, 0) instead of (170, 170, 0)).</li>
+  <li>The canonical CGA palette plus each “half-and-half mixture” <sup id="fnref:5:1"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> of any two colors in the palette, for a total of 85 unique colors.</li>
+  <li>One of the following “color-cube” palettes:
+    <ul>
+      <li>A 27-color palette where each color component is 0, 128, or 255.</li>
+      <li>The 64 colors displayable by Enhanced Graphics Adapter (EGA) and “Tandy graphics adapter” monitors (each color component is 0, 85, 170, or 255).</li>
+      <li>A 125-color palette where each color component is 0, 64, 128, 192, or 255.</li>
+    </ul>
+  </li>
+  <li>An excerpt from larger divisions of the “color cube”:
+    <ul>
+      <li>Up to 16 colors from those displayable by original Atari ST computers and other 9-bit color displays (each color component is either 255 or a multiple of 32).</li>
+      <li>Up to 32 or 64 colors from those displayable by Amiga computers and other 12-bit color displays (each color component is a multiple of 17).</li>
+      <li>Up to 16 colors from those displayable by 15-bit color displays (each color component is a multiple of 8).</li>
+    </ul>
+  </li>
+  <li>A palette of the 256 colors used by default in <a href="https://github.com/canidlogic/vgapal"><strong>VGA 256-color mode</strong></a>.</li>
+  <li>A palette of five to 64 gray tones (all color components the same).</li>
+  <li>A 255-color palette in which each color component is a multiple of 3 and each color is as follows: All components are the same; or both the green and blue components are 0; or the red component is 255 and the green and blue components are the same.
+    <ul>
+      <li>Essentially, the palette is made of two color gradients: one going from black to white, and another going from black to “red” (255,0,0) to white.</li>
+      <li>This palette is proposed to allow for easy “recoloring” of an image based on a so-called <em>accent color</em>: the cases just given deal with a mixture of “black” and “white”; a mixture of “black” (0,0,0) and the accent color; and a mixture of “white” (255,255,255) and the accent color.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>  An example occurs with “red” and “blue” variants of a playing card back.  For examples, see the <code>recolor()</code> and <code>recolordither()</code> methods in <code>desktopwallpaper.py</code>.</li>
+    </ul>
+  </li>
+  <li>A palette just described, except (129, 129, 129) is replaced with (128, 128, 128); (129, 0, 0), with (128, 0, 0); and (255, 129, 129), with (255, 128, 128).</li>
+  <li>A 255-color palette consisting of a gradient from “black” to “white”: (0, 0, 0), (2, 2, 2), (4, 4, 4), …, (250, 250, 250), (252, 252, 252), (255, 255, 255); and a gradient from “black” to “red”: (2, 0, 0), (4, 0, 0), …, (250, 0, 0), (252, 0, 0), (254, 0, 0), (255, 0, 0).</li>
+  <li>A subset of a color palette mentioned earlier in this section.</li>
+</ul>
+
+<p>The following color palettes are allowed, but not preferred:</p>
+
+<ul>
+  <li>Up to 16 colors from those displayable by 16-bit color displays (each red and blue component is a multiple of 8; each green, a multiple of 4).</li>
+  <li>Up to 16 colors from those displayable by pure VGA monitors (each color component is a multiple of 4).</li>
+  <li>A palette of 236 gray tones (all color components the same).</li>
+  <li>A palette of 256 gray tones (all color components the same).</li>
+  <li>A color palette of up to 256 colors listed in the <a href="https://lospec.com/palette-list"><strong><em>Lospec</em> palette list</strong></a>.</li>
+  <li>A 765-color palette in which each color is as follows: All components are the same; or both the green and blue components are 0; or the red component is 255 and the green and blue components are the same.
+    <ul>
+      <li>Essentially, the palette is made of two color gradients: one going from black to white, and another going from black to “red” (255,0,0) to white.</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p><strong>Notes:</strong></p>
+
+  <ol>
+    <li>The <a href="https://github.com/peteroupc/classic-wallpaper/tree/main/palettes"><strong><em>palettes</em> directory</strong></a> of this repository hosts palette files for many of the color combinations described earlier.  The palette files are designed for use in software programs for drawing, especially those devoted to pixel art.</li>
+    <li>The palette can have one or more sequences of colors that smoothly range from one color to another, to aid in achieving gradient fills or other specialized shading techniques in a <em>ramp color model</em>.  For example, a palette can have ten colors (indexed from 0 through 9) that range from black to green, and ten additional colors (indexed from 10 through 19) that range from black to red.<sup id="fnref:6:1"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></li>
+  </ol>
+</blockquote>
+
+<p><a id="Pixel_Dimensions"></a></p>
+
+<h2 id="pixel-dimensions">Pixel Dimensions</h2>
+
+<p>The pixel dimensions allowed are as follows.</p>
+
+<ul>
+  <li>Preferred: 8 × 8, 16 × 16, 32 × 32, 64 × 64, 64 × 32, 32 × 64, 96 × 96, 128 × 128, 256 × 256.</li>
+  <li>32 × 32 or 64 × 64, where the second, fourth, etc. column is the same as the previous column (each logical pixel is 2 × 1).</li>
+  <li>Not preferred: 320 × 240, 320 × 200.</li>
+  <li>Not preferred: Custom size up to 96 × 96.</li>
+  <li>Not preferred: Custom size up to 256 × 256.</li>
+</ul>
+
+<p><a id="Examples"></a></p>
+
+<h2 id="examples">Examples</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Made by</th>
+      <th>Colors</th>
+      <th>Size</th>
+      <th>License/Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dstripe.png</td>
+      <td>peteroupc</td>
+      <td>Black and white</td>
+      <td>32 × 32</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>dzigzag.png</td>
+      <td>peteroupc</td>
+      <td>Black and white</td>
+      <td>64 × 32</td>
+      <td>Unlicense <sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup></td>
+    </tr>
+    <tr>
+      <td>dzigzagcyan.png</td>
+      <td>peteroupc</td>
+      <td>Two colors (cyan and teal)</td>
+      <td>64 × 32</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>truchet2color.png</td>
+      <td>peteroupc</td>
+      <td>Black and white</td>
+      <td>32 × 32</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>truchet2colorthick.png</td>
+      <td>peteroupc</td>
+      <td>Black and white</td>
+      <td>32 × 32</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>truchet3color.png</td>
+      <td>peteroupc</td>
+      <td>Black/gray/white</td>
+      <td>32 × 32</td>
+      <td>Unlicense <sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></td>
+    </tr>
+    <tr>
+      <td>smallslant.png</td>
+      <td>peteroupc</td>
+      <td>Four tones</td>
+      <td>8 × 8</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>truchetff5500vga.png</td>
+      <td>peteroupc</td>
+      <td>VGA palette</td>
+      <td>32 × 32</td>
+      <td>Unlicense <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></td>
+    </tr>
+    <tr>
+      <td>boxes.png</td>
+      <td>peteroupc</td>
+      <td>VGA palette</td>
+      <td>128 × 128</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>circlec.png</td>
+      <td>peteroupc</td>
+      <td>VGA palette</td>
+      <td>128 × 128</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>circlews.png</td>
+      <td>peteroupc</td>
+      <td>“Safety palette”</td>
+      <td>128 × 128</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>check.png</td>
+      <td>peteroupc</td>
+      <td>VGA palette</td>
+      <td>96 × 96</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td>brushed.png</td>
+      <td>peteroupc</td>
+      <td>VGA palette</td>
+      <td>96 × 96</td>
+      <td>Unlicense</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/JohnGWebDev/Background-Textures"><strong>JohnGWebDev/Background-Textures</strong></a></td>
+      <td>John Galiszewski</td>
+      <td>Black and white</td>
+      <td>All 100 × 100</td>
+      <td>MIT License</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The texture generator at <a href="https://github.com/schalkt/tgen"><strong><code>schalkt/tgen</code></strong></a>, under an MIT License, is another example.</p>
+
+<p><a id="Wallpaper_Generation_Notes"></a></p>
+
+<h2 id="wallpaper-generation-notes">Wallpaper Generation Notes</h2>
+
+<ol>
+  <li>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred (that is, a version of the image where the colors are limited to gray tones, black, and white), since then the image could be color-shifted and then adapted to have the colors of any limited-color palette by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating <em>halftoning techniques</em>. Dithering scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.  For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.
+    <ul>
+      <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting can be limited to the nongrayscale part.</li>
+      <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned earlier in “Color Palettes”), it can be manually adapted instead.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Other tileable wallpapers employing more than 256 colors and otherwise satisfying the challenge’s requirements are acceptable, though not preferable.  If an image used as wallpaper has more than 256 colors and otherwise meets those requirements, it can be adapted to have the colors of a limited-color palette (see “Color Palettes”, earlier) by dithering techniques, where the image can be converted to a grayscale image, color shifted, or both before adapting it this way.  And, if the image is not tileable, the <em>desktopwallpaper.py</em> has an <code>argyle</code> method that generates a tileable wallpaper image from two images of the same size, neither of which need be tileable.</p>
+  </li>
+  <li>
+    <p>An unusual form of wallpaper results from layering a tileable foreground over a nontileable (abstract) background, where the foreground has transparent pixels and wraps around the edges.  Examples of this technique are shown in the wallpaper files <code>RIBBONS.BMP</code> and <code>PARTY.BMP</code>, both of which were distributed with Windows 3.0 and the latter was inspired by the Memphis group style.</p>
+  </li>
+  <li>
+    <p>One example of tileable noise can be generated using the “<a href="https://en.wikipedia.org/wiki/Diamond-square_algorithm"><strong>diamond-square algorithm</strong></a>”.</p>
+  </li>
+  <li>
+    <p>One way to generate a wallpaper image is by blending a solid color (or another tileable wallpaper) with a tileable image consisting of only transparent pixels and semitransparent and opaque black pixels (such as a masonry pattern).</p>
+  </li>
+  <li>
+    <p><strong>Stochastic tiling:</strong> Wang tiles are a finite set of tiles (here, wallpaper graphics) that can cover an arbitrary grid without seams.  One example is the <a href="https://web.archive.org/web/20150612010851/http://www.cr31.co.uk/stagecast/wang/intro.html"><strong>set of 16 tiles</strong></a> whose edges have two variations each: two upper-edge, two lower-edge, two left-edge, and two right-edge variations.</p>
+
+    <ul>
+      <li>A randomized tiling, or <em>stochastic tiling</em>, can be generated from this tile set by repeatedly selecting a grid position and choosing a random tile that can go in that position without introducing seams, until the whole grid is covered.</li>
+      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></li>
+    </ul>
+
+    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></p>
+  </li>
+</ol>
+
+<p><a id="Sample_Wallpaper_Generation_Code"></a></p>
+
+<h2 id="sample-wallpaper-generation-code">Sample Wallpaper Generation Code</h2>
+
+<p>This repository has the following code files in Python for generating tiled wallpapers and reading and writing Windows icon files and images in the PNG and Windows bitmap formats: <code>desktopwallpaper.py</code>, <code>imageformat.py</code>, <code>randomwp.py</code>.</p>
+
+<p>This repository also has a directory (<code>rust/</code>) with Rust source code for generating a tiled wallpaper.</p>
+
+<p>In addition, the following code in Python is presented as an example of computer code to generate tileable wallpaper patterns. It uses the <code>desktopwallpaper</code> and <code>imageformat</code> modules and helped generate <code>circlec.png</code> and <code>circlews.png</code>.</p>
+
+<p>```python
+import desktopwallpaper as dw
+import imageformat as ifmt
+import random</p>
+
+<p>def contouring(x,y,z):
+    return abs(x<strong>z+y</strong>z)**(1/z)</p>
+
+<p>def _togray(x):
+    return int(abs(max(-1, min(1, x))) * 255.0)</p>
+
+<p>width = 128
+height = 128
+# Draw an image with a grayscale gradient fill
+image = [
+    _togray(contouring((p%width) * 2.0 / width - 1.0, (p//width) * 2.0 / height - 1.0, 2.5))
+    for p in range(width*height)
+]
+# Generate a random color gradient
+colors = dw.randomColorization()
+# Create a colorized version of the image
+image = [cc for pix in [colors[x] for x in image] for cc in pix]
+# Draw a checkerboard overlay over the image
+image = dw.checkerboard(
+  dw.blankimage(width,height,[random.randint(0, 255) for i in range(3)]),
+  image,
+  width, height)
+# Dither the image
+image2 = [x for x in image]  # copy image for dithering
+# Dither in VGA colors
+dw.patternDither(image, width, height, dw.classiccolors())
+# Dither in “safety palette”
+dw.websafeDither(image2, width, height)
+# Write dithered images
+ifmt.writepng(“/tmp/circlec.png”, image, width, height)
+ifmt.writepng(“/tmp/circlews.png”, image2, width, height)
+```</p>
+
+<p>Replacing the <code>contouring</code> method just given with the one given next leads to a diagonal gradient fill that’s tileable:</p>
+
+<p><code>
+def contouring(x,y,z):
+   c=abs(x+y)%2.0; return 2-c if c &gt; 1.0 else c
+</code></p>
+
+<p><a id="Other_User_Interface_Graphics"></a></p>
+
+<h2 id="other-user-interface-graphics">Other User-Interface Graphics</h2>
+
+<p>For discussions on the traditional design of user-interface elements such as buttons, border styles, icons, cursors, and animations, see <a href="https://peteroupc.github.io/classic-wallpaper/docs/uielements.html"><strong>uielements.md</strong></a> in this repository.</p>
+
+<p>The page also describes an additional challenge to write computer code (released to the public domain or licensed under the Unlicense) to draw traditional button and border styles.</p>
+
+<p>For discussions on converting traditional icons to vector graphics, see <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>pixeltovector.md</strong></a> in this repository.</p>
+
+<p><a id="License"></a></p>
+
+<h2 id="license">License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under the <a href="https://unlicense.org"><strong>Unlicense</strong></a>.</p>
+
+<p><a id="Notes"></a></p>
+
+<h2 id="notes">Notes</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Every tileable desktop wallpaper has a pattern that belongs in one of 17 <a href="https://en.wikipedia.org/wiki/Wallpaper_group"><strong><em>wallpaper groups</em></strong></a>.  The shape of the pattern is a rectangle in ten of them, a diamond with one corner pointing upward in two of them, and another parallelogram in the remaining five.  Many tileable wallpapers are <em>seamless</em>, but not all (consider a pattern of bricks or square floor tiles).<br />For the Macintosh operating system, System 7.5.x and Mac OS 7.6.x, 8.x, and 9.x supported <em>desktop patterns</em> of size up to 128 × 128 pixels, Mac OS 8.x and 9.x distinguished between desktop patterns and <em>desktop pictures</em> (of usually larger size and lying above the desktop pattern), and versions earlier than System 7.5 supported only 8-×-8-pixel desktop patterns.<br />In Windows version 3.1, Windows 95, and Windows 98, <em>desktop patterns</em> are of size 8x8 pixels and have only two colors (black and the desktop background color), and <em>desktop wallpaper</em> is of arbitrary size and lies above the desktop pattern. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>The “safety palette”, also known as the “Web safe” colors, consists of 216 colors that are uniformly spaced in the red–green–blue color cube.  Robert Hess’s article “<a href="https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10)"><strong>The Safety Palette</strong></a>”, 1996, described the advantage that images that use only colors in this palette won’t dither when displayed by Web browsers on displays that can show up to 256 colors at once. (See also <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>Wikipedia</strong></a>. Dithering is the scattering of colors in a limited set to simulate colors outside that set.)  When the “safety palette” forms part of a 256-color repertoire, as it usually does, 40 slots are left that can be filled with additional colors, and as Hess mentions, graphics designers have no control over what these additional colors are. Usually these additional colors include the four Windows-specific colors plus the eight VGA palette colors not already in the “safety palette”.  For Java’s <code>BufferedImage.TYPE_BYTE_INDEXED</code>, these 40 colors are gray tones not already in the “safety palette”. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>The Enhanced Graphics Adapter (EGA) video driver for Windows version 3.1 supports 16 logical colors, but only 15 “physical” colors: the VGA palette is used, except the logical color (192, 192, 192) is missing and often replaced with a dithered mixture of dark gray and “white” (which is one possible way to adapt images colored using the VGA palette to the EGA driver). <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>In the Windows version 3.1 system palette, “the low-intensity system color values for the VGA [driver] are different from those for the [IBM] 8514 [video driver]” (Windows 3.1 SDK, <em>Programmer’s Reference</em> Volume 1, section 23.2.2), but how exactly they differ is not set forth in any article, as far as I am aware. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>A “half-and-half mixture” of two colors is found by averaging their three components then rounding each average up to the nearest integer. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:5:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:6">
+      <p>See also <em>OpenGL Programming Guide</em> (1993), chapter 6; D. Rogerson, “OpenGL IV: Color Index Mode” (Jan. 19, 1995). <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:6:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:7">
+      <p>Can be generated from <code>dstripe</code> using the following ImageMagick command: <code>magick dstripe.png \( +clone -flop \) +append dzigzag.png</code>. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:8">
+      <p>Can be generated from <code>truchet2color</code> using the following ImageMagick command: <code>magick truchet2color.png \( +clone \( +clone \) -append \( +clone \) +append -crop 50%x50%+1+1 \( -size 1x2 gradient:#FFFFFF-#808080 \) -clut \) -compose Multiply -composite truchet3color.png</code>.  Here, <code>#FFFFFF</code> and <code>#808080</code> indicate the two colors white and gray, respectively. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:9">
+      <p>Can be generated from <code>truchet3color</code> using the following <a href="https://imagemagick.org/"><strong>ImageMagick</strong></a> command: <code>magick truchet3color.png \( +clone -grayscale Rec709Luma \) \( -size 1x256 gradient:#000000-#ff5500 \) -delete 0 -clut  \( -size 1x1 xc:#000000 xc:#808080 xc:#FFFFFF xc:#C0C0C0 xc:#FF0000 xc:#800000 xc:#00FF00 xc:#008000 xc:#0000FF xc:#000080 xc:#FF00FF xc:#800080 xc:#00FFFF xc:#008080 xc:#FFFF00 xc:#808000 +append -write mpr:z +delete \) -dither FloydSteinberg -remap mpr:z truchetff5500vga.png</code>. This example, which employs a color shift and dither, demonstrates that derivative colored wallpapers with limited colored palettes can easily be generated from black/gray/white wallpapers using non-AI computer programs. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:10">
+      <p>This covers the special case of <em>Truchet tiles</em>, involving two versions of a graphic where each edge is symmetric and the second version is horizontally or vertically mirrored from the first. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:11">
+      <p>For more on stochastic tiling using Wang tiles, see Cohen, M.F., Shade, J., et al., “Wang Tiles for Image and Texture Generation”, SIGGRAPH 2003.<br />Tiling techniques that also blend adjacent tiles to hide seams are too complex to describe here. For examples, see Efros and Freeman, “Image Quilting for Texture Synthesis and Transfer”, SIGGRAPH 2001; Deliot and Heitz, “Procedural Stochastic Textures by Tiling and Blending”, 2019. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+
+<div class="noprint">
+<p>
+<a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<p style='font-size:150%;font-weight:bold'><a href='https://github.com/peteroupc/classic-wallpaper/archive/master.zip'>Download Source</a><br><a href='https://github.com/peteroupc/classic-wallpaper/releases'>Released Versions</a><br><a href='https://github.com/peteroupc/classic-wallpaper'>Browse Source Code</a></p></nav></body></html>

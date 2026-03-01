@@ -279,7 +279,7 @@ QuickHull.prototype.buildMesh = function(pointCloud, epsilon) {
   // Epsilon we use depends on the scale
   this.epsilon = epsilon * this.scale;
   this.epsilonSquared = this.epsilon * this.epsilon;
-  this.planar = false; // The planar case happens when all the points appear to lie on a two dimensional subspace of R^3.
+  this.planar = false; // The planar case happens when all the points appear to lie on a two-dimensional subspace of R^3.
   this.createConvexHalfEdgeMesh();
   if (this.planar) {
     const extraPointIndex = this.planarPointCloudTemp.length - 1;
