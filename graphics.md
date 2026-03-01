@@ -68,12 +68,12 @@ Limit 3-D graphics to the following:[^3]
     * is in a 16-bit-per-pixel format, where each pixel has the vertex color format given earlier, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 
-4. The width and height of each texture is a power of 2.
+4. The width and height of each texture are each powers of 2.
 5. A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
 6. Textures may contain transparent pixels.
 7. Textures should not be "pixelated" before the game uses them.  A "pixelated" image occurs when an image is enlarged with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 8. Depth buffers (Z buffers) and depth-based pixel-level fog are supported.
-9. The 3-D graphics buffer's resolution is the same as the screen resolution.
+9. The 3-D graphics buffer's resolution is the same as the "screen resolution".
 10. 3-D primitives should undergo perspective correction, but this is optional.[^5]
 
 > **Example:** For a "screen resolution" (see later) of 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.
@@ -99,7 +99,7 @@ Limit 2-D graphics to the following: [^6]
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
     1. Each sprite has up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
     2. Besides the previous point, sprites can have any width and height.
-    3. Each sprite made of pixels (rather than tiles) has a pixel format allowed for 3-D textures, given earlier.
+    3. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier.
     4. Sprites may contain transparent, but not translucent, pixels.
     5. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
     6. The application chooses one:
@@ -236,7 +236,7 @@ This section has notes on this specification, such as how its requirements corre
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^49] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^5] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^50] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering and edge antialiasing are optional under this specification.
-- Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.
+- Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.  The same is true for ray-traced or path-traced graphics.
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
 <a id=Screen_image_effects_filters></a>
