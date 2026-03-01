@@ -2026,7 +2026,7 @@ Use the CBORObject overload instead.</p>
  object is converted to JSON with <code>ToJSONString</code>, then the JSON is
  converted back to CBOR with this method, the new CBOR object will not
  necessarily be the same as the old CBOR object, especially if the old CBOR
- object uses data types not supported in JSON, such as integers in map
+ object uses data types not available in JSON, such as integers in map
  keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2080,7 +2080,7 @@ Use the CBORObject overload instead.</p>
 <p>Note that if a CBOR object is converted to JSON with <code>
  ToJSONString</code>, then the JSON is converted back to CBOR with this method, the
  new CBOR object will not necessarily be the same as the old CBOR object,
- especially if the old CBOR object uses data types not supported in JSON,
+ especially if the old CBOR object uses data types not available in JSON,
  such as integers in map keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2127,7 +2127,7 @@ Use the CBORObject overload instead.</p>
  object is converted to JSON with <code>ToJSONString</code>, then the JSON is
  converted back to CBOR with this method, the new CBOR object will not
  necessarily be the same as the old CBOR object, especially if the old CBOR
- object uses data types not supported in JSON, such as integers in map
+ object uses data types not available in JSON, such as integers in map
  keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2166,7 +2166,7 @@ Use the CBORObject overload instead.</p>
 <p>Note that if a CBOR object is converted to JSON with <code>
  ToJSONString</code>, then the JSON is converted back to CBOR with this method, the
  new CBOR object will not necessarily be the same as the old CBOR object,
- especially if the old CBOR object uses data types not supported in JSON,
+ especially if the old CBOR object uses data types not available in JSON,
  such as integers in map keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -3698,7 +3698,7 @@ Use the CBORObject overload instead.</p>
  com.upokecenter.cbor.CBORObject.FromObject(System.Byte[])</code>.</li><li>In
  the.NET version, a nullable is converted to <code>CBORObject.Null</code> if the
  nullable's value is <code>null</code> , or converted according to the nullable's
- underlying type, if that type is supported by this method.</li><li>In the
+ underlying type, if that type is allowed for this method.</li><li>In the
  Java version, a number of type <code>BigInteger</code> or <code>BigDecimal</code> is
  converted to the corresponding CBOR number.</li><li>A number of type <code>
  EDecimal</code> , <code>EFloat</code> , <code>EInteger</code> , and <code>ERational</code> in the
@@ -3745,8 +3745,8 @@ Use the CBORObject overload instead.</p>
  getters.</li><li>Then, the method returns a CBOR map with each eligible
  getter's name or property name as each key, and with the corresponding value
  returned by that getter as that key's value. Before adding a key-value pair
- to the map, the key's name adjusts according to the rules described in
- the <code>PODOptions</code> documentation. Note that for
+ to the map, the key's name adjusts according to the rules described in the
+ <code>PODOptions</code> documentation. Note that for
  security reasons, certain types are not supported even if they contain
  eligible getters.</li></ul>
 <p><b>REMARK:</b> .NET enumeration (<code>
@@ -4518,7 +4518,7 @@ Use the CBORObject overload instead.</p>
 <p>Note that if a CBOR object is converted to JSON with
  <code>ToJSONBytes</code>, then the JSON is converted back to CBOR with this
  method, the new CBOR object will not necessarily be the same as the old CBOR
- object, especially if the old CBOR object uses data types not supported in
+ object, especially if the old CBOR object uses data types not available in
  JSON, such as integers in map keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -4564,7 +4564,7 @@ Use the CBORObject overload instead.</p>
 <p>Note that if a CBOR object is converted to JSON with <code>
  ToJSONBytes</code>, then the JSON is converted back to CBOR with this method, the
  new CBOR object will not necessarily be the same as the old CBOR object,
- especially if the old CBOR object uses data types not supported in JSON,
+ especially if the old CBOR object uses data types not available in JSON,
  such as integers in map keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -4618,7 +4618,7 @@ Use the CBORObject overload instead.</p>
 <p>Note that if a CBOR object is converted to JSON with
  <code>ToJSONBytes</code>, then the JSON is converted back to CBOR with this
  method, the new CBOR object will not necessarily be the same as the old CBOR
- object, especially if the old CBOR object uses data types not supported in
+ object, especially if the old CBOR object uses data types not available in
  JSON, such as integers in map keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -4679,7 +4679,7 @@ Use the CBORObject overload instead.</p>
 <p>Note that if a CBOR object is converted to JSON with <code>
  ToJSONBytes</code>, then the JSON is converted back to CBOR with this method, the
  new CBOR object will not necessarily be the same as the old CBOR object,
- especially if the old CBOR object uses data types not supported in JSON,
+ especially if the old CBOR object uses data types not available in JSON,
  such as integers in map keys.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -6057,22 +6057,21 @@ Use the CBORObject overload instead.</p>
 <p>Returns a copy of this object after applying the operations in a JSON
  patch, in the form of a CBOR object. JSON patches are specified in RFC 6902
  and their format is summarized in the remarks given later.</p>
-<p><b>Remarks:</b>
- A JSON patch is an array with one or more maps. Each map has the following
- keys: </p>
-<ul> <li>"op" - Required. This key's value is the patch operation
- and must be "add", "remove", "move", "copy", "test", or "replace", in basic
- lowercase letters and no other case combination.</li><li>"value" - Required
- if the operation is "add", "replace", or "test" and specifies the item to
- add (insert), or that will replace the existing item, or to check an
- existing item for equality, respectively. (For "test", the operation fails
- if the existing item doesn't match the specified value.)</li><li>"path" -
- Required for all operations. A JSON Pointer (RFC 6901) specifying the
- destination path in the CBOR object for the operation. For more information,
- see RFC 6901 or the documentation for AtJSONPointer(pointer,
- defaultValue).</li><li>"from" - Required if the operation is "move" or
- "copy". A JSON Pointer (RFC 6901) specifying the path in the CBOR object
- where the source value is located.</li></ul>
+<p><b>Remarks:</b> A JSON patch is an array with one or more maps. Each map
+ has the following keys: </p>
+<ul> <li>"op" - Required. This key's value is
+ the patch operation and must be "add", "remove", "move", "copy", "test", or
+ "replace", in basic lowercase letters and no other case
+ combination.</li><li>"value" - Required if the operation is "add",
+ "replace", or "test" and specifies the item to add (insert), or that will
+ replace the existing item, or to check an existing item for equality,
+ respectively. (For "test", the operation fails if the existing item doesn't
+ match the specified value.)</li><li>"path" - Required for all operations. A
+ JSON Pointer (RFC 6901) specifying the destination path in the CBOR object
+ for the operation. For more information, see RFC 6901 or the documentation
+ for AtJSONPointer(pointer, defaultValue).</li><li>"from" - Required if the
+ operation is "move" or "copy". A JSON Pointer (RFC 6901) specifying the path
+ in the CBOR object where the source value is located.</li></ul>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6790,7 +6789,7 @@ Use the CBORObject overload instead.</p>
  JSON string, or to write out a CBOR object as part of a JSON text
  sequence.</p>
 <p><b>Warning:</b> In general, if this CBOR object contains
- integer map keys or uses other features not supported in JSON, and the
+ integer map keys or uses other features not available in JSON, and the
  application converts this CBOR object to JSON and back to CBOR, the
  application <i>should not</i> expect the new CBOR object to be exactly the
  same as the original. This is because the conversion in many cases may have
@@ -6847,7 +6846,7 @@ Use the CBORObject overload instead.</p>
  floating-point numbers.)</li><li>Infinity and not-a-number will be converted
  to null.</li></ul>
 <p><b>Warning:</b> In general, if this CBOR object
- contains integer map keys or uses other features not supported in JSON, and
+ contains integer map keys or uses other features not available in JSON, and
  the application converts this CBOR object to JSON and back to CBOR, the
  application <i>should not</i> expect the new CBOR object to be exactly the
  same as the original. This is because the conversion in many cases may have

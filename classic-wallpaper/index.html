@@ -315,18 +315,17 @@
 
 <p>In addition, the following code in Python is presented as an example of computer code to generate tileable wallpaper patterns. It uses the <code>desktopwallpaper</code> and <code>imageformat</code> modules and helped generate <code>circlec.png</code> and <code>circlews.png</code>.</p>
 
-<p>```python
-import desktopwallpaper as dw
+<pre>import desktopwallpaper as dw
 import imageformat as ifmt
-import random</p>
+import random
 
-<p>def contouring(x,y,z):
-    return abs(x<strong>z+y</strong>z)**(1/z)</p>
+def contouring(x,y,z):
+    return abs(x**z+y**z)**(1/z)
 
-<p>def _togray(x):
-    return int(abs(max(-1, min(1, x))) * 255.0)</p>
+def _togray(x):
+    return int(abs(max(-1, min(1, x))) * 255.0)
 
-<p>width = 128
+width = 128
 height = 128
 # Draw an image with a grayscale gradient fill
 image = [
@@ -346,19 +345,18 @@ image = dw.checkerboard(
 image2 = [x for x in image]  # copy image for dithering
 # Dither in VGA colors
 dw.patternDither(image, width, height, dw.classiccolors())
-# Dither in “safety palette”
+# Dither in "safety palette"
 dw.websafeDither(image2, width, height)
 # Write dithered images
-ifmt.writepng(“/tmp/circlec.png”, image, width, height)
-ifmt.writepng(“/tmp/circlews.png”, image2, width, height)
-```</p>
+ifmt.writepng("/tmp/circlec.png", image, width, height)
+ifmt.writepng("/tmp/circlews.png", image2, width, height)
+</pre>
 
 <p>Replacing the <code>contouring</code> method just given with the one given next leads to a diagonal gradient fill that’s tileable:</p>
 
-<p><code>
-def contouring(x,y,z):
+<pre>def contouring(x,y,z):
    c=abs(x+y)%2.0; return 2-c if c &gt; 1.0 else c
-</code></p>
+</pre>
 
 <p><a id="Other_User_Interface_Graphics"></a></p>
 

@@ -4,7 +4,7 @@ The following are challenges I make to the computer community, relating to:
 
 - [**Graphics for classic-style game development**](#Graphics_Challenge_for_Classic_Style_Games).
 - [**MIDI music synthesis for classic-style games and apps**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
-- [**Tileable wallpapers with limited colors and resolution**](https://github.com/peteroupc/classic-wallpaper).
+- [**Tileable wallpapers with limited colors and resolution**](https://peteroupc.github.io/classic-wallpaper).
 - [**Other challenges and projects**](#Other_Challenges_and_Projects).
 
 All may interest 1990s computer users.
@@ -152,7 +152,7 @@ One of the following games can be considered an upper limit to what is considere
 
 ### Optional Limits
 
-A game may impose further constraints to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://github.com/peteroupc/classic-wallpaper?tab=readme-ov-file#color-palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.
+A game may impose further constraints to this specification (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://peteroupc.github.io/classic-wallpaper#Color_Palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.
 
 Examples of optional constraints are the following:
 
@@ -288,13 +288,13 @@ Other challenges and projects I make to the computer community.
 
 ### Classic desktop wallpaper
 
-See the "[**peteroupc/classic-wallpaper**](https://github.com/peteroupc/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited selection of colors and limited dimensions in pixels &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
+See the "[**peteroupc/classic-wallpaper**](https://peteroupc.github.io/classic-wallpaper)" repository for a challenge on creating tileable desktop wallpapers with a limited selection of colors and limited dimensions in pixels &mdash; such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 &times; 1080 or larger).
 
 <a id=Button_and_border_styles_for_classic_interfaces></a>
 
 ### Button and border styles for classic interfaces
 
-See [**"Traditional User-Interface Graphics" in the "peteroupc/classic-wallpaper" repository**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
+See [**"Traditional User-Interface Graphics"**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
 
 <a id=Survey_of_polygon_and_memory_usage_in_1990s_3_D_games></a>
 
