@@ -3849,7 +3849,7 @@ class RandomGen:
         be less than or equal to that parameter. Optional if a PDF is given.
         For best results, the CDF should be
         strictly increasing everywhere in the
-        interval [xmin, xmax].  The CDF must output values in [0, 1].
+        interval [xmin, xmax].  The CDF must give out values in [0, 1].
         - mn, mx: Sampling domain.  The random variate
         will be in the interval [mn, mx].  For best results,
         the range given by mn and mx should cover all or
