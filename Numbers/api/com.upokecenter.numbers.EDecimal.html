@@ -82,8 +82,8 @@
  an exception too, unless the flag's trap is enabled in the arithmetic
  context (see EContext's Traps property).</p>
 <p>If an operation requires
- creating an intermediate value that might be too big to fit in memory (or
- might require more than 2 gigabytes of memory to store -- due to the current
+ creating an intermediate value that might be too big to fit in system memory (or
+ might require more than 2 gigabytes of system memory to store -- due to the current
  use of a 32-bit integer internally as a length), the operation may signal an
  invalid-operation flag and return not-a-number (NaN). In certain rare cases,
  the compareTo method may throw OutOfMemoryError (called OutOfMemoryError in
@@ -6671,7 +6671,7 @@ Renamed to ToEFloat.</p>
 <p>Converts this value to an arbitrary-precision integer, discarding the
  fractional part in this value. Note that depending on the value, especially
  the exponent, generating the arbitrary-precision integer may require a huge
- amount of memory. Use the ToSizedEInteger method to convert a number to an
+ amount of system memory. Use the ToSizedEInteger method to convert a number to an
  EInteger only if the integer fits in a bounded bit range; that method will
  throw an exception on overflow.</p>
 
@@ -6702,7 +6702,7 @@ Renamed to ToEFloat.</p>
 <p>Converts this value to an arbitrary-precision integer, checking whether the
  fractional part of the value would be lost. Note that depending on the
  value, especially the exponent, generating the arbitrary-precision integer
- may require a huge amount of memory. Use the ToSizedEIntegerIfExact method
+ may require a huge amount of system memory. Use the ToSizedEIntegerIfExact method
  to convert a number to an EInteger only if the integer fits in a bounded bit
  range; that method will throw an exception on overflow.</p>
 
@@ -6732,7 +6732,7 @@ Renamed to ToEFloat.</p>
 <p>Converts this value to an arbitrary-precision integer, checking whether the
  fractional part of the value would be lost. Note that depending on the
  value, especially the exponent, generating the arbitrary-precision integer
- may require a huge amount of memory. Use the ToSizedEIntegerIfExact method
+ may require a huge amount of system memory. Use the ToSizedEIntegerIfExact method
  to convert a number to an EInteger only if the integer fits in a bounded bit
  range; that method will throw an exception on overflow.</p>
 
@@ -7338,4 +7338,4 @@ Renamed to ToEFloat.</p>
 <a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
-</nav></body></html>
+<p>Open questions for math and probability experts:</p><ul><li><a href='https://peteroupc.github.io/requests.html'><b>Requests and open questions</b></a>.<li><a href='https://peteroupc.github.io/bernreq.html'><b>Open questions on the Bernoulli factory problem (the new-coins-from-old problem)</b></a>.<li><a href='https://peteroupc.github.io/requestsother.html'><b>Other open questions on probability</b></a>.<li><a href='https://peteroupc.github.io/sampling.html'><b>The sampling problem</b></a>.</ul><p>Of interest to the computer graphics and music community:</p><ul><li><a href='https://peteroupc.github.io/graphics.html'><b>Graphics for classic-style game development</b></a>.<li><a href='https://peteroupc.github.io/graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks'><b>MIDI music synthesis for classic-style games and apps</b></a>.<li><a href='https://peteroupc.github.io/classic-wallpaper'><b>Tileable wallpapers with limited colors and resolution</b></a>.<li><a href='https://peteroupc.github.io/classic-wallpaper/docs/uielements.html'><b>Traditional user-interface graphics</b></a>.<li><a href='https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html'><b>Converting images to vector graphics</b></a>.</ul></nav></body></html>

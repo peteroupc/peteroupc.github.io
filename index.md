@@ -66,7 +66,7 @@ In the articles above, I put an emphasis on random variate generation that:
     - [**MIDI music synthesis for classic-style games and apps**](./graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks).
     - [**Tileable wallpapers with limited colors and resolution**](https://peteroupc.github.io/classic-wallpaper).
 * [**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html).
-* [**Traditional User Interface Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html)
+* [**Traditional User-Interface Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html)
 * [**Converting Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html)
 
 **Other Articles on Mathematics and Programming**
