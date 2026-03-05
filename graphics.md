@@ -300,9 +300,9 @@ See [**"Traditional User-Interface Graphics"**](https://peteroupc.github.io/clas
 
 ### Survey of polygon and memory usage in 1990s 3-D games
 
-To buttress the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to find the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^56]
+To buttress the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to measure the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^56]
 
-In this sense, theoretical performance of game consoles or other computers (for example, "console X can render up to Y triangles per second") is less useful than the average performance of video games on those consoles or computers (for example, "game X shows up to Y polygons at a time at Z frames per second" or "scenes in game X have Y triangles on average" or "game X uses Y bytes of memory while running on Windows 98").
+In this sense, theoretical performance of game consoles, computers, or video cards (for example, "console X can render up to Y triangles per second") is less useful than the average performance of video games on those consoles or computers (for example, "game X shows up to Y polygons at a time at Z frames per second" or "scenes in game X have Y triangles on average" or "game X uses Y bytes of memory while running on Windows 98").
 
 <a id=Sound_bank_development_guide></a>
 
