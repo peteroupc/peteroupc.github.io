@@ -25,11 +25,11 @@ All may interest 1990s computer users.
         - [**Screen image effects (filters)**](#Screen_image_effects_filters)
         - [**Sounds**](#Sounds)
         - [**Memory**](#Memory)
+    - [**Seeking Comments**](#Seeking_Comments)
 - [**Building a Public-Domain music synthesis library and instrument banks**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks)
 - [**Other Challenges and Projects**](#Other_Challenges_and_Projects)
     - [**Classic desktop wallpaper**](#Classic_desktop_wallpaper)
     - [**Button and border styles for classic interfaces**](#Button_and_border_styles_for_classic_interfaces)
-    - [**Survey of polygon and memory usage in 1990s 3-D games**](#Survey_of_polygon_and_memory_usage_in_1990s_3_D_games)
     - [**Sound bank development guide**](#Sound_bank_development_guide)
     - [**Guide for creating 3-D models in the pre-2000 style**](#Guide_for_creating_3_D_models_in_the_pre_2000_style)
 - [**License**](#License)
@@ -186,7 +186,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Screen resolutions
 
-- Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for such resolutions for 3-D graphics.
+- Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for the 800 &times; 600 resolution or higher for 3-D graphics.
 
 - Screen resolutions that have been used in classic games include:[^17]
 
@@ -261,6 +261,43 @@ This section has notes on this specification, such as how its requirements corre
 - Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers; see "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)".
 - Before 1999, computers with more than 32,768 kibibytes of system memory were rare among consumers. (In the _PC 99 System Design Guide_, "entertainment PCs" required at least 64 million bytes of system memory.)
 
+<a id=Seeking_Comments></a>
+
+### Seeking Comments
+
+As with the rest of this open-source article, [**comments on this specification**](https://www.reddit.com/r/retrogamedev/comments/1rl36fo/pre2000_computer_graphics_for_modern_video_games/) are welcome.  But most useful would be comments that improve or refine the specification to fit the graphics abilities of pre-2000 video games.
+
+A comment is useful here if, for example, it gives _measurements_ (or references to other works that make such measurements) on the graphics capabilities (for example, polygons shown each frame, average frame rate, memory use, sprite count, etc.) actually achieved by games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.
+
+This includes statements like the following, with references or measurements:
+
+- "Game X shows up to Y polygons at a time at Z frames per second and screen resolution W".[^56]
+- "Scenes in game X have Y triangles on average".[^57]
+- "Game X uses a fixed palette of Y colors".
+- "Game X uses Y bytes of memory while running on Windows 98".
+- "Game X shows up to Y sprites at a time" (for 2-D games such as those built using the tool Director, then by Macromedia).
+- "Game X shows up to Y sprites at a time at screen resolution Z".
+- "Game X supports drawing sprites with 2-D rotations" (for 2-D games).
+- "Game X, from year Y, supports sprites with translucent (semitransparent) pixels" (for 2-D games).
+- "Game X, from year Y, supports translucent alpha blending" (for 2-D games).
+- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics).
+- The 3-D game X, from year Y, supports a [**given 3-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#3_D_Graphics).
+
+(Those statements will also help me define constraints for video games up to an earlier year than 1999.)
+
+Statements like the following are also useful, with references:
+
+- "In year X [1999 or earlier], Y% of PC users used screen resolution Z".
+- "In year X [1999 or earlier], Y% of PC users had Z million bytes of memory".
+- A market-share-weighted average of system memory requirements of video games in year X.
+- On a market-share-weighted basis, X% of video games in year Y ran on 256-color display modes.
+- On a market-share-weighted basis, X% of video games in year Y ran on 16-color display modes.
+
+Statements like the following are less useful, since they often don't relate to the actual performance of specific video games:
+
+- "Console X can render up to Y triangles per second".
+- "Video card X can render up to Y pixels per second".
+
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
 ## Building a Public-Domain music synthesis library and instrument banks
@@ -295,14 +332,6 @@ See the "[**peteroupc/classic-wallpaper**](https://peteroupc.github.io/classic-w
 ### Button and border styles for classic interfaces
 
 See [**"Traditional User-Interface Graphics"**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
-
-<a id=Survey_of_polygon_and_memory_usage_in_1990s_3_D_games></a>
-
-### Survey of polygon and memory usage in 1990s 3-D games
-
-To buttress the suggestions in the [**specification on classic graphics**](#Graphics_Challenge_for_Classic_Style_Games), given earlier in this page, it would be of interest to measure the number of triangles or polygons per frame and graphics memory usage (for a given resolution and frame rate) actually achieved on average by 3-D video games in the mid- to late 1990s.  Such information is hard to find and is often anecdotal.[^56]
-
-In this sense, theoretical performance of game consoles, computers, or video cards (for example, "console X can render up to Y triangles per second") is less useful than the average performance of video games on those consoles or computers (for example, "game X shows up to Y polygons at a time at Z frames per second" or "scenes in game X have Y triangles on average" or "game X uses Y bytes of memory while running on Windows 98").
 
 <a id=Sound_bank_development_guide></a>
 
@@ -436,4 +465,6 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^55]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
-[^56]: For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br>(5) An [**early study of polygon rendering rates**](http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html) in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games.
+[^56]: Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be gleaned from screenshots or videos of gameplay.  For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br>(5) An [**early study of polygon rendering rates**](http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html) in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games.
+
+[^57]: Note that polygon count cannot always be gleaned from screenshots or videos of gameplay.
