@@ -179,7 +179,7 @@
 <p>Icons and cursors can include transparent pixels, but should have no translucent (semitransparent) pixels except for 8-bpc icons and cursors.</p>
 
 <blockquote>
-  <p><strong>Note:</strong> Icon formats for OS/2 Presentation Manager and Microsoft Windows allow for icons and cursors with <em>inverted pixels</em> (where some existing pixels have their colors inverted), in addition to transparent and translucent (semitransparent) pixels.  Describing these icon formats here is beyond the scope of this page, but see the <a href="./imageformat.html"><strong><code>imageformat</code> module documentation</strong></a>.</p>
+  <p><strong>Note:</strong> Icon formats for OS/2 Presentation Manager and Microsoft Windows allow for icons and cursors with <em>inverted pixels</em> (where some existing pixels have their colors inverted), in addition to transparent and translucent (semitransparent) pixels.  Describing these icon formats here is beyond the scope of this page, but see the <a href="https://github.com/peteroupc/classic-wallpaper/blob/main/imageformat.html"><strong><code>imageformat</code> module documentation</strong></a>.</p>
 </blockquote>
 
 <p><a id="Drawing_Style"></a></p>
@@ -235,20 +235,13 @@
 
 <p>In general, from about 1990 to about 1997, user-interface text was drawn in one color only and rarely had smoothed edges; the edges were smoothed only if the display mode can show more than 256 colors at a time.  In fancier ways to show text, a “shadowed” text look was often achieved using multiple shifted renderings of the text in a single color (for example, from one unit upward and leftward to three units downward and rightward) followed by an unshifted rendering in the base color or pattern.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>  But new applications should avoid having text in icons, cursors, and other images.</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.«</td>
-      <td>I am reminded of the way textures were created for the modern game <em>QUOD</em> by “Daivuk”: they were stored as editing commands such as bevels, sunken areas, and tiling.»  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</td>
-    </tr>
-  </tbody>
-</table>
+<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.<sup id="fnref:22a"><a href="#fn:22a" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
 
 <p><a id="Animations"></a></p>
 
 <h2 id="animations">Animations</h2>
 
-<p>Although Windows 95 and later versions have an <em>animation control</em> for displaying simple video files without sound that are limited to 256 colors, this control appears to be rarely used.  More usually, traditional desktop applications don’t store an animation as a video file; rather, the images making up the animation are either stored as separate image files or arranged in a row or column of a single image file (in either case with transparent pixels marked with a color not present in the animation’s frames). <sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  The source code file <em>desktopwallpaper.py</em> has a method, named <code>writeavi</code>, to write video files.</p>
+<p>Although Windows 95 and later versions have an <em>animation control</em> for displaying simple video files without sound that are limited to 256 colors, this control appears to be rarely used.  More usually, traditional desktop applications don’t store an animation as a video file; rather, the images making up the animation are either stored as separate image files or arranged in a row or column of a single image file (in either case with transparent pixels marked with a color not present in the animation’s frames). <sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>  The source code file <em>desktopwallpaper.py</em> has a method, named <code>writeavi</code>, to write video files.</p>
 
 <p><a id="Flexible_User_Interface_Graphics"></a></p>
 
@@ -262,7 +255,7 @@
   <li>Designing user-interface elements as images or vector graphics limited to gray tones, where the system replaces each gray tone in the image or graphic with the corresponding color in a color gradient involving one or more system colors.</li>
   <li>Drawing the same icon, cursor, or graphic—
     <ul>
-      <li>in multiple variations in size (width, height, or both), each with a different level of detail (where the system is expected to use a shrinking of the smallest available graphic that’s larger than the requested size, if the requested size is not available), even in the case of <a href="https://www.haiku-os.org/docs/userguide/en/applications/icon-o-matic.html"><strong>vector graphics</strong></a> <sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>, and</li>
+      <li>in multiple variations in size (width, height, or both), each with a different level of detail (where the system is expected to use a shrinking of the smallest available graphic that’s larger than the requested size, if the requested size is not available), even in the case of <a href="https://www.haiku-os.org/docs/userguide/en/applications/icon-o-matic.html"><strong>vector graphics</strong></a> <sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, and</li>
       <li>with a different maximum number of unique colors (such as 2, 8, 16, 256, or 2^24 colors).</li>
     </ul>
   </li>
@@ -310,7 +303,7 @@ authors’ suggestions for the three-dimensional appearance of buttons and certa
 
 <ul>
   <li>The <code>QLCDNumber</code> interface element, from the Qt framework, displays a number in a form resembling seven-segment displays.  The number’s digits are vector graphics (geometric models), not images, and <code>QLCDNumber</code> supports a drawing mode where the upper and left-hand outlines are drawn in a lighter color than the lower and right-hand outlines.</li>
-  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
+  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
 </ul>
 
 <hr />
@@ -431,6 +424,9 @@ end
     </li>
     <li id="fn:22">
       <p>For example, see the discussion on buttons in the <em>RIPscrip</em> specification developed by TeleGrafix in 1992 and 1993. This specification was designed for building graphical user interfaces for online bulletin board systems under the EGA display mode. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:22a">
+      <p>I am reminded of the way textures were created for the modern game <em>QUOD</em> by “Daivuk”: they were stored as editing commands such as bevels, sunken areas, and tiling. <a href="#fnref:22a" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:23">
       <p><em>The Microsoft Windows User Experience</em> considers an animation to be fluid only if it runs at 16 or more frames per second.  For an example of an animation in the form of a single image file, see Herman Rodent, “Animation in Win32”, Microsoft Developer Network, Feb. 1, 1994. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

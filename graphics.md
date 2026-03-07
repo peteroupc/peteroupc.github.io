@@ -267,13 +267,14 @@ This section has notes on this specification, such as how its requirements corre
 
 As with the rest of this open-source article, [**comments on this specification**](https://www.reddit.com/r/retrogamedev/comments/1rl36fo/pre2000_computer_graphics_for_modern_video_games/) are welcome.  But most useful would be comments that improve or refine the specification to fit the graphics abilities of pre-2000 video games.
 
-A comment is useful here if, for example, it gives _measurements_ (or references to other works that make such measurements) on the graphics capabilities (for example, polygons shown each frame, average frame rate, memory use, sprite count, etc.) actually achieved by games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.  (I repeat: _measurements_, not inferences or guesses from screenshots or videos.)
+A comment is useful here if, for example, it gives _measurements_ (or references to other works that make such measurements) on the graphics capabilities (for example, polygons shown each frame, average frame rate, memory use, sprite count, etc.) actually achieved by video games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.  (I repeat: _measurements_, not inferences or guesses from screenshots or videos.)
 
 This includes statements like the following, with references or measurements:
 
 - "Game X shows up to Y polygons at a time at Z frames per second and screen resolution W".[^56]
 - "Scenes in game X have Y triangles on average".
 - "Game X uses a fixed palette of Y colors".
+- "Game X shows no more than 256 simultaneous colors".
 - "Game X uses Y bytes of memory while running on Windows 98".
 - "Game X shows up to Y sprites at a time" (for 2-D games such as those built using the tool Director, then by Macromedia).
 - "Game X shows up to Y sprites at a time at screen resolution Z".
@@ -289,15 +290,21 @@ Statements like the following are also useful, with references:
 
 - "In year X [1999 or earlier], Y% of PC users used screen resolution Z".
 - "In year X [1999 or earlier], Y% of PC users had Z million bytes of memory".
+- "In year X, Y% of home PCs were equipped with 3-D video cards".
 - A market-share-weighted average of system memory requirements of video games in year X.
 - On a market-share-weighted basis, X% of video games in year Y ran on 256-color display modes.
 - On a market-share-weighted basis, X% of video games in year Y ran on 16-color display modes.
 
-Statements like the following are less useful, since they often don't relate to the actual performance of specific video games:
+Statements like the following are not very useful, since they often don't relate to the actual performance of specific video games:
 
-- "Console X can process up to Y triangles per second".
-- "Video card X can render up to Y polygons per second".
+- "Game console X can process up to Y triangles per second".
+- "Video card X can render up to Y polygons per frame".
 - "Video card X can render up to Y pixels per second".
+
+The following are examples of the kind of statements desired:
+
+- _Actua Soccer_ (_VR Soccer '96_) (1995) [**averaged 776 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/) at 640 &times; 480 resolution.
+- _Terminal Velocity_ (1995) [**averaged 498 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/tv_stats/) at 640 &times; 480 resolution.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -466,4 +473,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^55]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
-[^56]: Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be gleaned from screenshots or videos of gameplay.  For example:<br>(1) B. Tschirren, "Realism and Believability in MPEG-4 Facial Models", Curtin University of Technology, 2000, includes a statement that games like _Quake III Arena_ [1999] render up to 10,000 triangles per frame.<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br>(5) An [**early study of polygon rendering rates**](http://www-graphics.stanford.edu/~bjohanso/index-virge-study.html) in DOS-based 3-D games, by B. Johanson and B. Oberstein (1996), shows the difficulty of finding triangle output rates in DOS games.
+[^56]: Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br>(1) John Carmack's .plan from Sep. 2, 1999 mentions that _Quake III Arena_ targeted "10,000 triangles a frame".<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.
