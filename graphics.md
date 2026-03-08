@@ -274,14 +274,12 @@ This includes statements like the following, with references or measurements:
 
 - "Game X shows up to Y polygons at a time at Z frames per second and screen resolution W".[^58]
 - "Scenes in game X have Y triangles on average".
-- "Game X uses a fixed palette of Y colors".
 - "Game X shows no more than [16 or 256] simultaneous colors".
 - "Game X uses Y bytes of memory while running on Windows 98".
 - "Game X shows up to Y sprites at a time [at screen resolution Z]" (for 2-D games such as those built using the tool Director, then by Macromedia).
-- "Game X supports drawing sprites with 2-D rotations" (for 2-D games).
 - "Game X, from year Y, supports sprites with translucent (semitransparent) pixels" (for 2-D games).
 - "Game X, from year Y, supports translucent alpha blending" (for 2-D games).
-- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics).
+- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics) (for example, 2-D rotations of sprites; filling ellipses with a solid color).
 - The 3-D game X, from year Y, supports a [**given 3-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#3_D_Graphics).
 
 (Those statements will also help me define constraints for video games up to an earlier year than 1999.)
@@ -310,6 +308,7 @@ The following are examples of the kind of statements desired:
 ### Further Reading
 
 - J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995.
+- Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame and average memory usage.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
