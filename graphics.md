@@ -302,7 +302,7 @@ The following are examples of the kind of statements desired:
 
 - _Actua Soccer_ (_VR Soccer '96_) (1995) [**averaged 776 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/) at 640 &times; 480 resolution.
 - _Terminal Velocity_ (1995) [**averaged 498 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/tv_stats/) at 640 &times; 480 resolution.
-- A benchmark of _Quake III Arena_ averaged about 3,250 and 3,360 triangles per frame after backface culling, at screen resolutions 320 &times; 240 and 640 &times; 480, respectively (Antochi et al. 2003)[^59], (Antochi et al. 2004)[^60].
+- A benchmark of _Quake III Arena_ averaged 3,250 and topped out at 6,970 triangles per frame after backface culling, at screen resolution 640 &times; 480 (Antochi et al. 2003)[^59], (Antochi et al. 2004)[^60].
 
 <a id=Further_Reading></a>
 
@@ -486,4 +486,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^59]: Antochi, Iosif, et al. "3D Graphics Benchmarks for Low-Power Architectures." 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003.
 
-[^60]: Antochi, I., et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
+[^60]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
