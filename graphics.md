@@ -302,6 +302,7 @@ The following are examples of the kind of statements desired:
 
 - _Actua Soccer_ (_VR Soccer '96_) (1995) [**averaged 776 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/) at 640 &times; 480 resolution.
 - _Terminal Velocity_ (1995) [**averaged 498 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/tv_stats/) at 640 &times; 480 resolution.
+- A benchmark of _Quake III Arena_ averaged about 3,250 and 3,360 triangles per frame after backface culling, at screen resolutions 320 &times; 240 and 640 &times; 480, respectively (Antochi et al. 2003)[^59], (Antochi et al. 2004)[^60].
 
 <a id=Further_Reading></a>
 
@@ -482,3 +483,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^57]: "Typical PCs in 1998", [**https://www.dosdays.co.uk/topics/1998.php.**](https://www.dosdays.co.uk/topics/1998.php.)
 
 [^58]: Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br>(1) John Carmack's .plan from Sep. 2, 1999 mentions that _Quake III Arena_ targeted "10,000 triangles a frame".<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.
+
+[^59]: Antochi, Iosif, et al. "3D Graphics Benchmarks for Low-Power Architectures." 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003.
+
+[^60]: Antochi, I., et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
