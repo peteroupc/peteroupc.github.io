@@ -26,6 +26,7 @@ All may interest 1990s computer users.
         - [**Sounds**](#Sounds)
         - [**Memory**](#Memory)
     - [**Seeking Comments**](#Seeking_Comments)
+    - [**Further Reading**](#Further_Reading)
 - [**Building a Public-Domain music synthesis library and instrument banks**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks)
 - [**Other Challenges and Projects**](#Other_Challenges_and_Projects)
     - [**Classic desktop wallpaper**](#Classic_desktop_wallpaper)
@@ -259,7 +260,7 @@ This section has notes on this specification, such as how its requirements corre
 
 - This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^55]
 - Before 1995, computer memory was expensive, so that computers with more than 4096 kibibytes of system memory (and 1024 kibibytes of video memory) were rare among consumers; see "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)".
-- Before 1999, computers with more than 32,768 kibibytes of system memory were rare among consumers. (In the _PC 99 System Design Guide_, "entertainment PCs" required at least 64 million bytes of system memory.)
+- "Most PCs sold in 1997 came with anywhere from 8MB up to 32MB" of system memory.[^57] In 1998, this range was "from 32MB up to 128MB".[^58]
 
 <a id=Seeking_Comments></a>
 
@@ -305,6 +306,12 @@ The following are examples of the kind of statements desired:
 
 - _Actua Soccer_ (_VR Soccer '96_) (1995) [**averaged 776 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/) at 640 &times; 480 resolution.
 - _Terminal Velocity_ (1995) [**averaged 498 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/tv_stats/) at 640 &times; 480 resolution.
+
+<a id=Further_Reading></a>
+
+### Further Reading
+
+- J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -474,3 +481,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^55]: PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, _Quake_ (1996) required 8 million and recommended 16 million bytes of system memory.
 
 [^56]: Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br>(1) John Carmack's .plan from Sep. 2, 1999 mentions that _Quake III Arena_ targeted "10,000 triangles a frame".<br>(2) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(3) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(4) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.
+
+[^57]: "Typical PCs in 1997", [https://www.dosdays.co.uk/topics/1997.php.](https://www.dosdays.co.uk/topics/1997.php.) "MB" is ambiguous here; it often means either one million bytes or 1024 times 1024 bytes.
+
+[^58]: "Typical PCs in 1998", [https://www.dosdays.co.uk/topics/1998.php.](https://www.dosdays.co.uk/topics/1998.php.)
