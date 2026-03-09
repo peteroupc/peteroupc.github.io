@@ -161,6 +161,7 @@ Examples of optional constraints are the following:
 - The game is limited to the 16 colors of the so-called _VGA palette_.
     - In the 8-bit-per-component color format, this palette's colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.
     - In the vertex color format, the closest colors to this palette are: 24/24/24; or each color component is 0 or 16; or each color component is 0 or 31.
+- The game displays no more than 256 colors at a time.[^61]
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than&mdash;
     - 1,457,664 bytes (the capacity of a file-allocation-table (FAT) formatted high-density 3.5-inch floppy disk), or
     - 1,213,952 bytes (the capacity of a FAT formatted high-density 5.25-inch floppy disk), or
@@ -287,7 +288,7 @@ This includes statements like the following, with references or measurements:
 Statements like the following are also useful, with references:
 
 - "In year X [1999 or earlier], Y% of PC users used screen resolution Z".
-- "In year X [1999 or earlier], Y% of PC users had Z million bytes of memory".
+- "In year X [1999 or earlier], Y% of home PCs in use were equipped with Z million bytes of memory".
 - "In year X, Y% of home PCs were equipped with 3-D video cards".
 - A market-share-weighted average of system memory requirements of video games in year X.
 - On a market-share-weighted basis, X% of video games in year Y ran on [16 or 256]-color display modes.
@@ -302,14 +303,14 @@ The following are examples of the kind of statements desired:
 
 - _Actua Soccer_ (_VR Soccer '96_) (1995) [**averaged 776 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/) at 640 &times; 480 resolution.
 - _Terminal Velocity_ (1995) [**averaged 498 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/tv_stats/) at 640 &times; 480 resolution.
-- A benchmark of _Quake III Arena_ averaged 3,250 and topped out at 6,970 triangles per frame after backface culling, at screen resolution 640 &times; 480 (Antochi et al. 2003)[^59], (Antochi et al. 2004)[^60].
+- A benchmark of _Quake III Arena_ averaged 3,250 and topped out at 6,970 triangles per frame after back-face culling, at screen resolution 640 &times; 480 (Antochi et al. 2003)[^59], (Antochi et al. 2004)[^60].
 
 <a id=Further_Reading></a>
 
 ### Further Reading
 
-- J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995.
-- Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame and average memory usage.
+- Lamothe, A., _Tricks of the Windows Game Programming Gurus_, 1999.
+- Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -487,3 +488,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^59]: Antochi, Iosif, et al. "3D Graphics Benchmarks for Low-Power Architectures." 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003.
 
 [^60]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
+
+[^61]: This was recommended for Macintosh games in J. McCornack et al., _Tricks of the Mac Game Programming Gurus_ (Hayden Books, 1995), notably because 8-bit-per-pixel images transfer faster and save memory; see also chapter 70 of _Michael Abrash's Graphics Programming Black Book_.
