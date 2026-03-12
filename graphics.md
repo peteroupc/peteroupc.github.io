@@ -100,15 +100,14 @@ Limit 2-D graphics to the following: [^7]
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
     1. Each sprite has up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
     2. Besides the previous point, sprites can have any width and height.
-    3. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier.
-    4. Sprites may contain transparent, but not translucent, pixels.
-    5. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
-    6. The application chooses one:
+    3. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier, and may contain transparent, but not translucent, pixels.
+    4. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
+    5. The application chooses one:
         1. Each sprite can undergo a 2-D affine transformation.
         2. Each sprite can be horizontally flipped, vertically flipped, or both.[^9]
         3. No affine transformation or flipping of sprites is allowed.
-    7. Sprites should not be "pixelated" before the game uses them.
-    8. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^10]
+    6. Sprites should not be "pixelated" before the game uses them.
+    7. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^10]
 
 > **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
 >
