@@ -232,13 +232,14 @@ This section has notes on this specification, such as how its requirements corre
 
 #### 3-D graphics
 
-- The ability to display more than 20,000 triangles at a time (per frame) is not within the spirit of this challenge, even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
+- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^6] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^51] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering and edge antialiasing are optional under this specification.
 - This specification allows for:
     - Prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing more triangles or vertices at a time than otherwise allowed.
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
-- It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^51] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
-- The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^6] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^52] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering and edge antialiasing are optional under this specification.
-- Phong shading (pixel-level specular highlighting) is not within the spirit of this specification, given that it was too slow for real-time graphics as of 2000's beginning.  The same is true for ray-traced or path-traced graphics.
+- The following are not within the spirit of this challenge:
+    - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
+    - Phong shading, ray-traced graphics, and path-traced graphics, which were too slow for real-time graphics in the 20th century.
+- It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^52] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
 <a id=Screen_image_effects_filters></a>
@@ -288,10 +289,14 @@ This includes statements like the following, with references or measurements:
 Statements like the following are also useful, with references:
 
 - "In year X [1999 or earlier], Y% of PC users used screen resolution Z".
-- "In year X [1999 or earlier], Y% of home PCs in use were equipped with Z million bytes of memory".
+- "In year X [1999 or earlier], Y% of home computers in use were equipped with Z million bytes of memory".
 - "In year X, Y% of home PCs were equipped with 3-D video cards".
 - A market-share-weighted average of system memory requirements of video games in year X.
-- On a market-share-weighted basis, X% of video games in year Y ran on [16 or 256]-color display modes.
+- On a market-share-weighted basis, X% of video games in year Y&mdash;
+    - ran on [16 or 256]-color display modes, or
+    - were played on arcade machines, or
+    - were played on PCs, or
+    - were played on game console Z.
 
 Statements like the following are not very useful, since they often don't relate to the actual performance of specific video games:
 
@@ -311,11 +316,14 @@ The following are examples of the kind of statements desired:
 
 ### Further Reading
 
+- (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
+- Donnelly, P., "Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation", Microsoft Developer Network, Nov. 25, 1996.
+- Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
+- Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
 - Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999.
-- Tomas (Akenine-)Möller, Eric Haines, _Real-Time Rendering_ (first edition), 1999.
-- Lamothe, A., _Black Art of 3D Game Programming_, Waite Group, 1995.
 - Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).
-- Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003.
+- Rodent, H., "Animation in Win32", Microsoft Developer Network, Feb. 1, 1994.
+- Thompson, N., _Animation Techniques in Win32_, Microsoft Press, 1995.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -396,7 +404,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^11]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels).<br><br>In the Godot engine, the screen resolution corresponds to the "Viewport Width" (`window/size/viewport_width`) and "Viewport Height" (`window/size/viewport_height`) project settings.  For the Unity engine, there is advice from 2019 relating to the graphics style in [**"8-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games) and [**"16-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games) game consoles.  In Unreal Engine, the screen resolution apparently corresponds to `ResolutionSizeX` and `ResolutionSizeY`.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification.
 
-[^12]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br>Standard MIDI files organize MIDI sounds into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under the _Multimedia PC Specification_ (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
+[^12]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than 1024 kibibytes of code.<br>Standard MIDI files organize MIDI commands into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under the _Multimedia PC Specification_ (1992), the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", in the Microsoft Knowledge Base): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
 
 [^13]: Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in computer games and other audiovisual computer applications up to 1992.  Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind found in Nintendo's Game & Watch and many Tiger Electronics handheld games.  These are simple to emulate, though: design a screen-size image that assigns each segment a unique color and, each frame, draw black where where the segments that are "on" are, and draw white (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
@@ -474,9 +482,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^50]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, the _Multimedia PC Specification_ (1992) recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  The Multimedia PC level 2 specification (1993) upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  For details on these specifications, see article Q106055 in the Microsoft Knowledge Base.  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
 
-[^51]: By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were [**introduced in 1988**](https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/).
+[^51]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (_Michael Abrash's Graphics Programming Black Book_, chapter 69).<br>Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". _Tricks of the Mac Game Programming Gurus_ (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
 
-[^52]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (_Michael Abrash's Graphics Programming Black Book_, chapter 69).<br>Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". _Tricks of the Mac Game Programming Gurus_ (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
+[^52]: By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were [**introduced in 1988**](https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/).
 
 [^53]: CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s.
 
