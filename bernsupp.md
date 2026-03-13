@@ -685,7 +685,7 @@ This section shows mathematical proofs for some of the polynomial-building schem
 
 In the following results:
 
-- A _modulus of continuity_ of a function _f_, denoted $\omega(\delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-(f(y))\le\omega(\delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega(\delta)$ is greater than or equal to $f$'s maximum range in a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
+- A _modulus of continuity_ of a function _f_, denoted $\omega(\delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-(f(y))\le\omega(\delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega(\delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
 
 Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
 
@@ -1559,7 +1559,7 @@ Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)[^55]
 Another interesting class of machines (called _pushdown generators_ here) are similar to pushdown automata (see above), with the following exceptions:
 
 1. Each transition rule can also, optionally, give out a base-_N_ digit in its right-hand side.  An example is: (_state_, _flip_, _sy_) &rarr; (_digit_, _state2_, {_sy2_}).
-2. The machine must output infinitely many digits if allowed to run forever.
+2. The machine must give out infinitely many digits if allowed to run forever.
 3. Rules that would pop the last symbol from the stack are not allowed.
 
 The "output" of the machine is now a real number _X_ in the form of the base-_N_ digit expansion `0.dddddd...`, where `dddddd...` are the digits produced by the machine from left to right.  In the rest of this section:
