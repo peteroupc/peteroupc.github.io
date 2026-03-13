@@ -232,6 +232,7 @@ This section has notes on this specification, such as how its requirements corre
 #### 3-D graphics
 
 - The following 3-D graphics capabilities, typical of the late 1990s, are within the spirit of this specification: Z buffering (depth buffering), bilinear filtering, flat shading, Gouraud shading, perspective correction,[^6] per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, edge antialiasing (smoothing), MIP mapping, source alpha blending, and destination alpha blending.[^53] Software that is as performant as hardware meeting the requirements and recommendations of the _PC 99 System Design Guide_ sections 14.27 to 14.34, except for the screen resolution, frame rate, and double buffering requirements, is recommended.  Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline "classic-graphics" capabilities.  Bilinear filtering and edge antialiasing are optional under this specification.
+- For years earlier than 1999, some of the capabilities in the previous point might not be typical.
 - This specification allows for:
     - Prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation), to simulate showing highly detailed imagery.
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
@@ -317,6 +318,7 @@ The following are examples of the kind of statements desired:
 
 ### Further Reading
 
+- Abrash, M., [**_Michael Abrash's Graphics Programming Black Book: Special Edition_**](https://github.com/jagregory/abrash-black-book), 1997.
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
 - Donnelly, P., "Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation", Microsoft Developer Network, Nov. 25, 1996.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
@@ -397,7 +399,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^7]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all graphics in the game must be _rendered in software_.  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have graphics that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
-[^8]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s release in 1996, according to _Michael Abrash’s Graphics Programming Black Book_, and is practically not discussed at all in _Tricks of the Mac Game Programming Gurus_ (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
+[^8]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s release in 1996, according to Abrash (1997), and is practically not discussed at all in _Tricks of the Mac Game Programming Gurus_ (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
 [^9]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically. In the Super Famicom/Super Nintendo Entertainment System, sprites could not be scaled, but they could be flipped.
 
@@ -411,13 +413,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^14]: An example is _Loom_ (1990).
 
-[^15]: This was recommended for Macintosh games in J. McCornack et al., _Tricks of the Mac Game Programming Gurus_ (Hayden Books, 1995), notably because 8-bit-per-pixel images transfer faster and save memory over images with more bits per pixel; see also chapter 70 of _Michael Abrash's Graphics Programming Black Book_ (dealing with the porting of an 8-bit-per-pixel game to a 16-bit-per-pixel video card).
+[^15]: This was recommended for Macintosh games in J. McCornack et al., _Tricks of the Mac Game Programming Gurus_ (Hayden Books, 1995), notably because 8-bit-per-pixel images transfer faster and save memory over images with more bits per pixel; see also chapter 70 of Abrash (1997) (dealing with the porting of an 8-bit-per-pixel game to a 16-bit-per-pixel video card).
 
 [^16]: Popular file size limit of so-called "64K intros".
 
 [^17]: MS-DOS applications are normally limited to 640 kibibytes or less of _conventional memory_, along with whatever memory is carried by the video card.  (PCs running on the very early Intel 8086 and 8088 processors can map out no more than 640 kibibytes of system memory.) 262,144 bytes is the usual minimum of graphics memory for VGA video cards.
 
-[^18]: It wasn't until the Pentium processor's advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of _Michael Abrash's Graphics Programming Black Book_.
+[^18]: It wasn't until the Pentium processor's advent that floating-point arithmetic was embraced in 3-D game programming: for example, see chapter 63 of Abrash (1997).
 
 [^19]: In addition to the resolutions shown here, there are modern games that employ low resolutions with the same 16:9 aspect ratio as high-definition displays.  These include 640 &times; 360 (_Blasphemous_); 400 &times; 225 (_Unsighted_); 480 &times; 270 (_Enter the Gungeon_); 320 &times; 180 (_Celeste_).
 
@@ -487,7 +489,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^52]: Stands for phase alternating line.
 
-[^53]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (_Michael Abrash's Graphics Programming Black Book_, chapter 69).<br>Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". _Tricks of the Mac Game Programming Gurus_ (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
+[^53]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).<br>Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". _Tricks of the Mac Game Programming Gurus_ (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
 
 [^54]: By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were [**introduced in 1988**](https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/).
 
