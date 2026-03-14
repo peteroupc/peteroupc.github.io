@@ -283,14 +283,16 @@ This includes statements like the following, with references or measurements:
 - "Game X shows up to Y sprites at a time [at screen resolution Z]" (for 2-D games such as those built using the tool Director, then by Macromedia).
 - "Game X, from year Y, supports sprites with translucent (semitransparent) pixels" (for 2-D games).
 - "Game X, from year Y, supports translucent alpha blending" (for 2-D games).
-- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics) (for example, 2-D rotations of sprites; filling ellipses with a solid color).
-- The 3-D game X, from year Y, supports a [**given 3-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#3_D_Graphics).
+- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics) (for example, 2-D rotations of sprites; filling ellipses with a solid color; flood filling).
+- The 3-D game X, from year Y, supports a [**given 3-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#3_D_Graphics) (for example, texture mapping, Gouraud shading, bump mapping, edge antialiasing, alpha blending, MIP mapping).
 
 (Those statements will also help me define constraints for video games up to an earlier year than 1999.)
 
 Statements like the following are also useful, with references:
 
 - "In year X [1999 or earlier], Y% of PC users used screen resolution Z".
+- In year X, a given 3-D graphics capability became typical in 3-D video games.
+- In year X, a given 2-D graphics capability became typical in 2-D video games.
 - "In year X [1999 or earlier], Y% of home computers in use were equipped with Z million bytes of memory".
 - "In year X, Y% of home PCs were equipped with 3-D video cards".
 - A market-share-weighted average of system memory requirements of video games in year X.
