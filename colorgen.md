@@ -999,7 +999,7 @@ In the following pseudocode&mdash;
 
 ### Oklab
 
-Oklab was developed by Björn Ottosson in 2020 and is described in his page "[**A Perceptual Color Space for Image Processing**](https://bottosson.github.io/posts/oklab/)".  It is similar to CIELAB, but is defined with the D65 white point.
+Oklab was developed by Björn Ottosson in 2020 and is described in his page "[**A Perceptual Color Space for Image Processing**](https://bottosson.github.io/posts/oklab/)".  It is similar to CIELAB, but is defined with the D65/2 white point.
 
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 
