@@ -43,7 +43,6 @@ The goal of these approximations is to avoid introducing transcendental and trig
 - [**Appendix**](#Appendix)
     - [**Results Used in Approximations by Polynomials**](#Results_Used_in_Approximations_by_Polynomials)
     - [**Chebyshev Interpolants**](#Chebyshev_Interpolants)
-    - [**Results on Derivative Bounds**](#Results_on_Derivative_Bounds)
 - [**License**](#License)
 
 <a id=About_This_Document></a>
@@ -431,45 +430,39 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^39]: _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 
-[^40]: Adell, J. A., Bustamante, J., & Quesada, J. M. (2015). Estimates for the moments of Bernstein polynomials. Journal of Mathematical Analysis and Applications, 432(1), 114-128.
+[^40]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
 
-[^41]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
+[^41]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
 
-[^42]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
+[^42]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983).
 
-[^43]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983).
+[^43]: G.G. Lorentz, _Bernstein polynomials_, 1953.
 
-[^44]: G.G. Lorentz, _Bernstein polynomials_, 1953.
+[^44]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
 
-[^45]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
+[^45]: May, C.P., "Saturation and inverse theorems for a class of exponential-type operators", Canadian Journal of Mathematics 28 (1976).
 
-[^46]: May, C.P., "Saturation and inverse theorems for a class of exponential-type operators", Canadian Journal of Mathematics 28 (1976).
+[^46]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
 
-[^47]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
+[^47]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
 
-[^48]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
+[^48]: Kacsó, D.P., "Simultaneous approximation by almost convex operators", 2002.
 
-[^49]: Kacsó, D.P., "Simultaneous approximation by almost convex operators", 2002.
+[^49]: Stancu, D.D., Agratini, O., et al. Analiză Numerică şi Teoria Aproximării, 2001.
 
-[^50]: Stancu, D.D., Agratini, O., et al. Analiză Numerică şi Teoria Aproximării, 2001.
+[^50]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
 
-[^51]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
+[^51]: Berens, H., Lorentz, G.G., "Inverse theorems for Bernstein polynomials", Indiana University Mathematics Journal 21 (1972).
 
-[^52]: Berens, H., Lorentz, G.G., "Inverse theorems for Bernstein polynomials", Indiana University Mathematics Journal 21 (1972).
+[^52]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
-[^53]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
+[^53]: H. Wang, "[**Analysis of error localization of Chebyshev spectral approximations**](https://arxiv.org/abs/2106.03456v3)", arXiv:2106.03456v3 [math.NA], 2023.
 
-[^54]: H. Wang, "[**Analysis of error localization of Chebyshev spectral approximations**](https://arxiv.org/abs/2106.03456v3)", arXiv:2106.03456v3 [math.NA], 2023.
+[^54]: Trefethen, L.N., [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
 
-[^55]: Trefethen, L.N., [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
+[^55]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
-[^56]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
-
-[^57]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
-
-[^58]: Niculescu, Constantin P., and Constantin Buşe. "The Hardy-Landau-Littlewood inequalities with less smoothness." J. Inequal. in Pure and Appl. Math 4 (2003).
-
-[^59]: Babenko, V. F., V. A. Kofanov, and S. A. Pichugov. "On inequalities for norms of intermediate derivatives on a finite interval", Ukrainian Mathematical Journal 47, no. 1 (1995): 121-124.
+[^56]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
 
 <a id=Appendix></a>
 
@@ -536,21 +529,7 @@ where $\mathbb{E}[.]$ is the expected value (“long-run average”).
 - Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.)
 - The $r$-th _central absolute moment_ of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r] = B_n(\text{abs}(\lambda-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$.
 
-The following results bound the absolute value of $T_{n,r}$, $S_{n,r}$, and $M_{n,r}$.[^39]
-
-**Lemma B5**: For every integer $n\ge 1$:
-
-- $\text{abs}(S_{n,0}(p))=1=1\cdot(p(1-p)/n)^{0/2}$.
-- $\text{abs}(S_{n,1}(p))=0=0\cdot(p(1-p)/n)^{1/2}$.
-- $\text{abs}(S_{n,2}(p))=p(1-p)/n=1\cdot(p(1-p)/n)^{2/2}$.
-
-The proof is straightforward.
-
-**Result B5A**:  Let $\Delta_n(x)=\max(1/n,(x(1-x)/n)^{1/2})$.  For every real number $r\gt 0$, $M_{n,r}(p)\le (c+d)(\Delta_n(x))^r$, where $c=2\cdot 4^{r/2}\Gamma(r/2+1)$, $d=2\cdot 8^r\Gamma(r+1)$, and $\Gamma(x)$ is the gamma function.
-
-_Proof_: By Theorem 1 of Adell et al. (2015)[^40] with $\delta=1/2$, $M_{n,r}(p)\le c(p(1-p)/n)^{r/2}+d/n^r$, and in turn, $c(p(1-p)/n)^{r/2}+d/n^r\le c(\Delta_n(p))^r+d(\Delta_n(p))^r$ = $(c+d)(\Delta_n(p))^r$.  &#x25a1;
-
-By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=196672$ when $r=4$.
+The following results bound the absolute value of $M_{n,r}$.[^39]
 
 **Lemma B7**: Let $r\ge 0$, and let $\sigma(r,t) = (r!)/(((r/2)!)t^{r/2})$.  Then for values of $r$ and $n$ described in the following table, $M_{n, r}(p)\le \mu_{n,r}/n^{r/2}$, where $\mu_{n,r}$ is as given in the table.
 
@@ -562,13 +541,13 @@ By Result B5A, $c+d=264$ when $r=2$, $c+d\lt 6165.27$ when $r=3$, and $c+d=19667
 | Is odd, and $3\le r\le 43$. | $\sqrt{\sigma(r-1,8)\sigma(r+1,8)} = r^{1/2}(r-1)! / (2\cdot 8^{(r-1)/2}((r-1)/2)!)$, for every integer $n\ge 2$. |
 | Is odd and greater than 43. | $\sqrt{\sigma(r-1,6)\sigma(r+1,6)}$, for every integer $n\ge 2$. |
 
-_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^41].  The second row is an improved result of the first, from Molteni (2022)[^42].  The third row follows from Lemma B5 and Schwarz's inequality; for $n=1$, also follows from Cheng (1983)[^43].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanić and Shisha 1975[^44] for the case $r=4$). &#x25a1;
+_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^40].  The second row is an improved result of the first, from Molteni (2022)[^41].  The third row follows from Cheng (1983)[^42].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using [**Schwarz's inequality**](https://mathworld.wolfram.com/SchwarzsInequality.html) (see also Bojanić and Shisha 1975[^43] for the case $r=4$). &#x25a1;
 
 Taylor polynomials and Taylor remainders were discussed in the section "Taylor Polynomials for 'Smooth' Functions".  The following lemma gives bounds on the Taylor remainder's Bernstein polynomial.
 
 **Lemma B9**: Let $r\ge 0$ be an integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then the following bound holds true: $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.
 
-_Proof_: This result  relies on Lemma 2C in the article "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)", with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. &#x25a1;
+_Proof_: This result relies on Lemma 2C in the article "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)", with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. &#x25a1;
 
 > **Note:** It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)[^10].
 
@@ -589,7 +568,7 @@ _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^6].
 
 Because $f$ has a Lipschitz-continuous third derivative, $f$ has the Taylor remainder $R_{f,3}(\lambda, x_0)$ given in Lemma B9 and Corollary B9A.
 
-It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, and linear functions, and constants), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^45], Butzer (1955)[^7], May (1976)[^46].  Because of this, it can be assumed without loss of generality that $f$ and the first, second, and third derivatives of $f$ equal zero at $x_0$.
+It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, and linear functions, and constants), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^44], Butzer (1955)[^7], May (1976)[^45].  Because of this, it can be assumed without loss of generality that $f$ and the first, second, and third derivatives of $f$ equal zero at $x_0$.
 
 Therefore&mdash;
 
@@ -605,7 +584,7 @@ The proof of Proposition B10 shows how to prove an upper bound on the approximat
 
 $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)$$
 
-(where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^35], citing Stoer and Bulirsch (1970)[^47].
+(where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^35], citing Stoer and Bulirsch (1970)[^46].
 
 The following error bounds, which make use of Corollary B9A and the proof technique in Proposition B10, can be shown.  In the following table, $\Lambda_r$ is the maximum of $f$'s $r$-th derivative's Lipschitz constant or greater, and each result applies only to values of $n$ where all the numbers in the third column are integers greater than 1.
 
@@ -645,7 +624,7 @@ In the following propositions:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.$$
 
-_Proof_: This proof is inspired by a result in Draganov (2014, Theorem 4.1)[^48].
+_Proof_: This proof is inspired by a result in Draganov (2014, Theorem 4.1)[^47].
 
 The error to be bounded can be expressed as $\text{abs}((B_n(f)-f)( B_n(f)-f ))$.  Following Corollary B10B:
 
@@ -669,13 +648,13 @@ $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2+M_3}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
 
 $$\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$
 
-_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^49], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:
+_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^48], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:
 
 $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$
 
 $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
 
-where $r=2$, using properties of $\omega_2$, the smallest second-order modulus of continuity of $f^{(2)}$, given, for example, in Stancu et al. (2001)[^50] and Gonska (1985)[^60]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
+where $r=2$, using properties of $\omega_2$, the smallest second-order modulus of continuity of $f^{(2)}$, given, for example, in Stancu et al. (2001)[^49] and Gonska (1985)[^60]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
 
 $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right) \tag{**}$$
 
@@ -683,7 +662,7 @@ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2
 
 &#x25a1;
 
-The following error bounds follow from results of Sevy (1991)[^51], especially theorems 3.1 and 3.7 there:
+The following error bounds follow from results of Sevy (1991)[^50], especially theorems 3.1 and 3.7 there:
 
 | If _f_(_&lambda;_) on the closed unit interval: |  Then the following polynomial: |  Is close to _f_ with the following error bound: |
  --- | - | --- |
@@ -696,9 +675,9 @@ The following error bounds follow from results of Sevy (1991)[^51], especially t
 
 $$\text{abs}(W_n^{(k)}(f)(\lambda)) \le 3 \max_\lambda(\text{abs}(f^{(k)}(\lambda))).$$
 
-_Proof:_ $W_n$ can be rewritten as $f + (f - B_n(f))$, given that Bernstein polynomials are linear operators.  Then the left-hand side is no more than $\max_\lambda(\text{abs}(f^{(k)}(\lambda))) + \max_\lambda(\text{abs}(f - B_n^{(k)}(f))(\lambda))$. By Lemma 3.6 of Sevy (1991)[^51], the second term is no more than $2 \max_\lambda(\text{abs}(f^{(k)}(\lambda)))$, which gives the desired result. (See also a similar result of estimating the second derivative of $B_n(f)$ in Lemma 4 of Berens and Lorentz (1972)[^52].) &#x25a1;
+_Proof:_ $W_n$ can be rewritten as $f + (f - B_n(f))$, given that Bernstein polynomials are linear operators.  Then the left-hand side is no more than $\max_\lambda(\text{abs}(f^{(k)}(\lambda))) + \max_\lambda(\text{abs}(f - B_n^{(k)}(f))(\lambda))$. By Lemma 3.6 of Sevy (1991)[^50], the second term is no more than $2 \max_\lambda(\text{abs}(f^{(k)}(\lambda)))$, which gives the desired result. (See also a similar result of estimating the second derivative of $B_n(f)$ in Lemma 4 of Berens and Lorentz (1972)[^51].) &#x25a1;
 
-Han's (2000)[^53] so-called "multi-node expansions" transform certain operations that preserve all polynomials of degree up to $m$ to those that do so up to $m+r$.  For the Bernstein polynomials, this expansion is $H_{n,r}(\lambda)=B_n(f)(\lambda) + \sum_{j=1}^{r} \frac{r+1-j}{(r+1)(j!)}B_n((\lambda-t)^j f^{(j)}(t))(\lambda)$, where $t$ is a variable that is sampled to form the Bernstein polynomial within the sum.  In this case, the expansion is a polynomial of degree $n+r$ and preserves all polynomials of degree up to $r+1$.  Using Theorem 3 of Han's paper for the Bernstein case of $H_{n,r}$ gives...
+Han's (2000)[^52] so-called "multi-node expansions" transform certain operations that preserve all polynomials of degree up to $m$ to those that do so up to $m+r$.  For the Bernstein polynomials, this expansion is $H_{n,r}(\lambda)=B_n(f)(\lambda) + \sum_{j=1}^{r} \frac{r+1-j}{(r+1)(j!)}B_n((\lambda-t)^j f^{(j)}(t))(\lambda)$, where $t$ is a variable that is sampled to form the Bernstein polynomial within the sum.  In this case, the expansion is a polynomial of degree $n+r$ and preserves all polynomials of degree up to $r+1$.  Using Theorem 3 of Han's paper for the Bernstein case of $H_{n,r}$ gives...
 
 **Proposition B12**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r\ge 3$ is an integer.  Then, for every $n\ge 1$, $H_{n,r-2}$ is within $\frac{(r-2)!}{((r-1)!)\cdot(r!)} M_r \mu_{n,r}/n^{r/2}$ of $f$, where $\mu_{n,r}$ is as in Lemma B7.
 
@@ -711,7 +690,7 @@ Han's (2000)[^53] so-called "multi-node expansions" transform certain operations
 The following is a method that employs _Chebyshev interpolants_ to compute the Bernstein coefficients of a polynomial that comes within $\epsilon$ of $f(\lambda)$, as long as $f$ meets certain conditions.  Because the method introduces a trigonometric function (the cosine function), it appears here in the appendix and it runs too slowly for real-time or "online" use; rather, this method is more suitable for pregenerating ("offline") the approximate version of a function known in advance.
 
 - $f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of _bounded variation_, as described later.
-- Suppose $f$'s domain is the interval $[a, b]$.  Then the _Chebyshev interpolant_ of degree $n$ of $f$ (Wang 2023)[^54], (Trefethen 2013)[^55] is&mdash;
+- Suppose $f$'s domain is the interval $[a, b]$.  Then the _Chebyshev interpolant_ of degree $n$ of $f$ (Wang 2023)[^53], (Trefethen 2013)[^54] is&mdash;
 
     $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$
 
@@ -721,17 +700,17 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
     - $\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,
     - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
     - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
-- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^55] as well as a statement in note 1 at the end of this section.
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^54] as well as a statement in note 1 at the end of this section.
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
-    - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^56].
+    - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^55].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.
-- If $f$ is so "smooth" to be _analytic_ (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^55].
+- If $f$ is so "smooth" to be _analytic_ (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^54].
 
 -------------
 
 1. Compute the required degree $n$ as given earlier, with error tolerance $\epsilon/2$.
 2. Compute the values $c_k$ as given earlier, which relate to $f$'s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.
-3. Compute the (_n_+1)&times;(_n_+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^57].
+3. Compute the (_n_+1)&times;(_n_+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^56].
 4. Multiply the matrix by the transposed vector of values $(c_0, ..., c_n)$ to get the polynomial's Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)
 5. (Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.
 6. Return the Bernstein coefficients $b_0, ..., b_n$.
@@ -748,32 +727,6 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
 >     $$f(x)=f(z)+f^{(1)}(z)(\lambda-z)^1/1! + f^{(2)}(z)(\lambda-z)^2/2! + ...,$$
 >
 >     for every point $\lambda$ satisfying $\text{abs}(\lambda-z)<r$, where $f^{(i)}$ is the $i$-th derivative of $f$.  The largest value of $r$ that makes $f$ analytic at $z$ is the _radius of convergence_ of $f$ at $z$.
-
-<a id=Results_on_Derivative_Bounds></a>
-
-### Results on Derivative Bounds
-
-These results relate to bounds on a function's derivatives. Though not yet used in this article, the results may be of interest to readers.
-
-**Proposition X1**: Let $f(\lambda)$ map the closed unit interval to itself, have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$. Then the derivative's absolute value is no more than&mdash;
-
-$$\max(4m+M/4, 2\sqrt{mM}) \le \max(4+M, 2\sqrt{M}).$$
-
-_Proof:_ This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)[^58].
-
-**Proposition X2**: Let $f(\lambda)$ map the closed unit interval to itself, have a maximum of $m$, and have a Lipschitz-continuous derivative with Lipschitz constant $M$ (see "Definitions"). Then the derivative's absolute value is no more than $4m+M/4$ if $m/M\ge 1/16$, or $2\sqrt{mM}$ otherwise.
-
-_Proof:_ This is a corollary to Theorem 3.1 found in Niculescu and Buşe (2003)[^58].
-
-In the following results, denote the maximum absolute value of $f$'s $r$-th derivative as $MX(f, r)$.
-
-**Proposition X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous $r$-th derivative for some $r\ge 4$.  Then $MX(f,r-1) \le 4^{r-1} (r!) MX(f,0) + MX(f,r+1)/2.$
-
-_Proof:_ See Babenko et al. (1995)[^59].
-
-**Corollary X4**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fourth derivative.  Then $MX(f,3) \le 1536 MX(f,0) + MX(f,5)/2$.
-
-**Corollary X5**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous fifth derivative.  Then $MX(f,4) \le 30720 MX(f,0) + MX(f,6)/2$.
 
 <a id=License></a>
 

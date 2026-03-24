@@ -639,7 +639,7 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
 >
 > **Note:** If a polynomial's "power" coefficients can be rational numbers (ratios of two integers), even a degree-2 polynomial can have an arbitrarily high coin-flipping degree.  An example is the family of degree-2 polynomials $r\lambda-r\lambda^2$, where $r$ is a rational number greater than 0 and less than 4.
 
-**Lemma A:** Let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then $0\le a_0 \le 1$, and the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
+**Lemma A:** Let $a_0, ..., a_n$ be real numbers, and let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself.  Then $0\le a_0 \le 1$, and the values $a_0, ..., a_n$ must sum to a value that is 0 or greater and 1 or less.
 
 _Proof_:  This can be seen by evaluating $p(1) = a_0 + ... + a_n$ and $p(0) = a_0$.  If $p(1)$ or $p(0)$ is less than 0 or greater than 1, then $p$ does not meet the hypothesis of the lemma. &#x25a1;
 
