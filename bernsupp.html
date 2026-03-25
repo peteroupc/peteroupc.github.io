@@ -209,7 +209,7 @@
   <li>If <em>f</em>(1) = 0, then <code>High</code>(1) = 0. (This is required to ensure correctness in case <em>λ</em> is 1.)</li>
 </ul>
 
-<p>Also, <code>High</code> is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, <code>High</code> can be the following degree-_n_ polynomial: 1−(1−<em>λ</em>)<sup><em>n</em></sup>, where <em>n</em>≥1 is an integer.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
+<p>Also, <code>High</code> is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, <code>High</code> can be the following degree-_n_ polynomial: 1−(1−<em>λ</em>)<sup><em>n</em></sup>, where $n$ is a positive integer.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
 
 <p>The algorithm is now described.</p>
 
@@ -265,7 +265,7 @@
   <li><em>r</em>(<em>λ</em>) = lim<sub><em>ν</em>→<em>λ</em></sub> (1−<em>g</em>(<em>ν</em>))/(1−<em>q</em>(<em>ν</em>)).</li>
 </ul>
 
-<p>Roughly speaking, <code>Low</code> is a function that bounds <em>f</em> from below, just as <code>High</code> bounds <em>f</em> from above. <code>Low</code> is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm; one example is the polynomial <em>λ</em><sup><em>n</em></sup> where <em>n</em>≥1 is an integer.  If both <code>Low</code> and <code>High</code> are polynomials of the same degree, <em>q</em> will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see “<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>”).</p>
+<p>Roughly speaking, <code>Low</code> is a function that bounds <em>f</em> from below, just as <code>High</code> bounds <em>f</em> from above. <code>Low</code> is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm; one example is the polynomial <em>λ</em><sup><em>n</em></sup> where $n$ is a positive integer.  If both <code>Low</code> and <code>High</code> are polynomials of the same degree, <em>q</em> will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see “<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>”).</p>
 
 <p>Now, if <em>r</em>(<em>λ</em>) is continuous on the closed unit interval, then <em>f</em> can be simulated using the following algorithm:</p>
 
@@ -2081,7 +2081,7 @@ for i in range(20):
 
 <p><em>Proof:</em> See Mossel and Peres (2005)<sup id="fnref:55:8"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>. □</p>
 
-<p><strong>Corollary 1:</strong> <em>The function f(λ) = λ<sup>m/(2<sup>n</sup>)</sup>, where n ≥ 1 is an integer and where m ≥ 1 is an integer, is in class <strong>PDA</strong>.</em></p>
+<p><strong>Corollary 1:</strong> <em>The function f(λ) = λ<sup>m/(2<sup>n</sup>)</sup>, where $n$ and $m$ are positive integers, is in class <strong>PDA</strong>.</em></p>
 
 <p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>λ</em>); if <em>n</em> is 2, write <em>f</em> as (sqrt∘sqrt)(<em>λ</em>); and for general <em>n</em>, write <em>f</em> as (sqrt∘sqrt∘…∘sqrt)(<em>λ</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 

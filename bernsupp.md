@@ -1549,7 +1549,7 @@ According to Etessami and Yannakakis (2009)[^60], the recursive Markov chain can
 
 _Proof:_ See Mossel and Peres (2005)[^55]. &#x25a1;
 
-**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class **PDA**._
+**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where $n$ and $m$ are positive integers, is in class **PDA**._
 
 _Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as (sqrt&#x2218;sqrt)(_&lambda;_); and for general _n_, write _f_ as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt)(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can _f_.
 
