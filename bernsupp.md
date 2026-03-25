@@ -154,7 +154,7 @@ More specifically, `High`(_&lambda;_) must meet the following requirements:
 - 1 &gt; `High`(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 whenever 0 < _&lambda;_ < 1.
 - If _f_(1) = 0, then `High`(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
-Also, `High` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, `High` can be the following degree-_n_ polynomial: 1&minus;(1&minus;_&lambda;_)<sup>_n_</sup>, where _n_&ge;1 is an integer.[^5]
+Also, `High` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm.  For example, `High` can be the following degree-_n_ polynomial: 1&minus;(1&minus;_&lambda;_)<sup>_n_</sup>, where $n$ is a positive integer.[^5]
 
 The algorithm is now described.
 
@@ -191,7 +191,7 @@ then _f_ can be simulated using the following algorithm:
 - _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> `Low`(_&nu;_)/`High`(_&nu;_).
 - _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/(1&minus;_q_(_&nu;_)).
 
-Roughly speaking, `Low` is a function that bounds _f_ from below, just as `High` bounds _f_ from above. `Low` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm; one example is the polynomial _&lambda;_<sup>_n_</sup> where _n_&ge;1 is an integer.  If both `Low` and `High` are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
+Roughly speaking, `Low` is a function that bounds _f_ from below, just as `High` bounds _f_ from above. `Low` is a Bernoulli factory function that should admit a simple Bernoulli factory algorithm; one example is the polynomial _&lambda;_<sup>_n_</sup> where $n$ is a positive integer.  If both `Low` and `High` are polynomials of the same degree, _q_ will be a ratio of polynomials with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
 
 Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can be simulated using the following algorithm:
 
@@ -437,17 +437,17 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^34]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
 
-[^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
+[^35]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
 
-[^36]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
+[^36]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
 
-[^37]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
+[^37]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", 2006.
 
-[^38]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", 2006.
+[^38]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
 
-[^39]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
+[^39]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
 
-[^40]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
+[^40]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
 
 [^41]: Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)
 
@@ -725,7 +725,7 @@ The estimates are correct even if $Y$ takes a particular value with probability 
 
 **Lemma 2B**. _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Let $h\gt 0$ be a real number. Then $\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])$ = $Q(f, Y) + R(f, Y)$, where&mdash;_
 
-$$\text{abs}(Q(f,Y))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right),$$
+$$\text{abs}(Q(f,Y) - f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right),$$
 
 $$\text{abs}(R(f,Y))\le\left(\frac{\tau_k(Y)}{k!}+\frac{\tau_{k+1}(Y)}{(k+1)!\cdot h}\right)\cdot\omega(f^{(k)}, h),$$
 
@@ -733,9 +733,14 @@ $$\text{and }\text{abs}(R(f,Y))\le\max\left(\frac{\tau_k(Y)}{k!}, \frac{\tau_{k+
 
 $$\text{and }\text{abs}(R(f,Y))\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_{k+1}(Y)}{(k+1)\tau_k(Y)}),$$
 
-_and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$._
+_and where&mdash;_
 
-_Proof:_ Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called _Taylor polynomial_ of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the _Taylor remainder_ of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)[^35]). Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)[^36]; the second bound comes from corollary 3.2 of Dimitriu (2010)[^37] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)[^38], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^39], Piţul (2007)[^40].  &#x25a1;
+- _$Q(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the_ Taylor polynomial _of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,_
+- _$R(f,Y)$ is the_ Taylor remainder _of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,_
+- _$\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and_
+- _$\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$._
+
+_Proof:_  Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)[^35]; the second bound comes from corollary 3.2 of Dimitriu (2010)[^36] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)[^37], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^38], Piţul (2007)[^39].  See also Anastassiou (1985, theorem 2.31)[^40].&#x25a1;
 
 **Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $\text{abs}(R(f,Y))\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
 
@@ -743,7 +748,7 @@ _Proof:_  Follows from the third bound for $R(f,Y)$ in Lemma 2B in the same mann
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric random variables that is essential in polynomial-building schemes.  This part of the lemma can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder-continuous_ functions (see "[**Definitions**](#Definitions)").
 
-**Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2\*n, k, n) random variable, and let $n\ge 1$ be an integer._
+**Lemma 2.** _Let f(&lambda;) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2\*n, k, n) random variable, and let $n$ be a positive integer._
 
 1. _Let $\omega(\delta)$ be a modulus of continuity of $f$.  If $\omega$ is continuous and concave, then the expression&mdash;_
 
@@ -776,13 +781,13 @@ _Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\text{Var}[X/n]\le (k/(2n))\
 >     4. If _f_ is nowhere increasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^43].
 
-**Theorem 1.** _Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
+**Theorem 1.** _Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1, let $n_0$ be a positive integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let&mdash;_
 
 $$\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),$$
 
 _for every integer n&ge;1 that's a power of 2.  If the series &eta;(n) converges to a finite value for each such $n$, and if it converges to 0 as $n$ gets large, then the following scheme for f(&lambda;) is valid in the following sense:_
 
-- _There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of two) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is **fbelow**(n, k) and **fabove**(n, k), respectively (where $0\le k\le n$), where:_
+- _There are polynomials $g_n$ and $h_n$ (where $n$ is a positive integer power of two) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is **fbelow**(n, k) and **fabove**(n, k), respectively (where $0\le k\le n$), where:_
     - _If $n_0 = 1$: **fbelow**(n, k) =_ $f(k/n)-\eta(n)$; **fabove**(n, k) =_ $f(k/n)+\eta(n)$._
     - _If $n_0 > 1$:_
         -  _**fbelow**(n, k) =_ min(**fbelow**($n_0$,0), **fbelow**($n_0$,1), ..., **fbelow**($n_0$,$n_0$)) _if_ $n < n_0$; $f(k/n)-\eta(n)$ _otherwise._
@@ -910,13 +915,13 @@ This combined means that $\text{abs}(f(x) - B_n(W_n(\lambda))) \le \epsilon_n(f)
 
 **Corollary 4**.  _If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that's a power of 2; that is, $\text{abs}(B_n(f(\lambda))) \le \eta(n)$ for every such $n$._
 
-**Lemma 5**. _Let $n\ge 1$ be an integer.  Suppose_ $g_{2n}$ _and_ $g_{n}$ _are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose_ $g_{2n}$ _and_ $g_n$ _satisfy the following property:_ $(g_{2n}-g_n)$ _is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$. Then for every $x\ge 0$,_ $g_{2n}+x$ _and_ $g_n$ _satisfy that property, and for every $x\ge 1$_, $g_{2n}\cdot x$ _and_ $g_n$ _do as well._
+**Lemma 5**. _Let $n$ be a positive integer.  Suppose_ $g_{2n}$ _and_ $g_{n}$ _are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose_ $g_{2n}$ _and_ $g_n$ _satisfy the following property:_ $(g_{2n}-g_n)$ _is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$. Then for every $x\ge 0$,_ $g_{2n}+x$ _and_ $g_n$ _satisfy that property, and for every $x\ge 1$_, $g_{2n}\cdot x$ _and_ $g_n$ _do as well._
 
 The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, if $x$ is nonnegative, $g_{2n}$'s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have nonnegative Bernstein coefficients as required by the property.
 
 It is also true that $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property for every $x\ge 0$, and $g_{2n}+y$ and $g_n+y$ do so for every real number $y$, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, $g_n+x=g_n$, and $g_{2n}+x=g_{2n}$, so that the property is trivially satisfied.)
 
-**Proposition:** The sequence $c/2^n$ is bounded from above by the sequence $p(1-p)^n$ (where $n\ge 0$ is an integer) when $c$ is 0.4 and $p$ is 0.49.
+**Proposition:** The sequence $c/2^n$ is bounded from above by the sequence $p(1-p)^n$ (where $n$ is zero or a positive integer) when $c$ is 0.4 and $p$ is 0.49.
 
 > **Note:** The two sequences are examples of _geometric sequences_.
 

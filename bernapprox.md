@@ -155,13 +155,13 @@ $$=R_{f,r}(\lambda, x_0) + Q_{f,r}(\lambda, x_0),$$
 as long as the function's $r$-th derivative ($r\ge 0$) is defined at $x_0$, where $a\le x_0\le b$.  When this is the case, $f$ equals&mdash;
 
 -  $Q_{f,r}(\lambda, x_0)$, the $r$-th _Taylor polynomial_ centered at $x_0$, plus
--  $R_{f,r}(\lambda, x_0)$, the $r$-th _Taylor remainder_.
+-  $R_{f,r}(\lambda, x_0)$, the $r$-th _Taylor remainder_ centered at $x_0$.
 
 If $f(\lambda)$ is "smooth" enough on the closed unit interval $[0, 1]$, and if $\epsilon$ is big enough, then Taylor's theorem shows there is a Taylor polynomial of $f$ that comes within $\epsilon$ of $f$. In this section $f$ may but need not be writable as a power series (see note).
 
 In this section, $M_r$ is not less than the maximum of the absolute value of $f$'s $r$-th derivative.
 
-Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;
+Let $n$ be zero or a positive integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\lambda)$.  Suppose that&mdash;
 
 1. $f$ is continuous on the closed unit interval, and
 2. $f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and
@@ -171,7 +171,7 @@ Let $n\ge 0$ be an integer, and let $f^{(i)}$ be the $i$-th derivative of $f(\la
 
 Then the $n$-th _Taylor polynomial_ centered at 0 ($Q_{f,n}$) is within $\epsilon$ of $f$.
 
-Items 2 and 3 above are not needed to find a polynomial within $\epsilon$ of $f$, but they _are_ needed to ensure the Taylor polynomial's Bernstein coefficients will lie in the closed unit interval, as described after the note.
+Points 2 and 3, given earlier, are not needed to find a polynomial within $\epsilon$ of $f$, but they _are_ needed to ensure the Taylor polynomial's Bernstein coefficients will lie in the closed unit interval, as described after the note.
 
 > **Note:** If $f(\lambda)$ can be rewritten as a _power series_, namely $f(\lambda) = c_0 \lambda^0 + c_1 \lambda^1 + ... + c_i \lambda^i + ...$ whenever $0\le\lambda\le 1$ (so that $f$ has a continuous $k$-th derivative for every $k$), and if the power series coefficients $c_i$&mdash;
 >
@@ -529,7 +529,7 @@ where $\mathbb{E}[.]$ is the expected value (“long-run average”).
 - Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)=T_{n,r}(p)/n^r=\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.)
 - The $r$-th _central absolute moment_ of $X/n$ or the ratio of heads to tosses is denoted $M_{n,r}(p) = \mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r] = B_n(\text{abs}(\lambda-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$.
 
-The following results bound the absolute value of $M_{n,r}$.[^39]
+The following result bounds the absolute value of $M_{n,r}$.[^39]
 
 **Lemma B7**: Let $r\ge 0$, and let $\sigma(r,t) = (r!)/(((r/2)!)t^{r/2})$.  Then for values of $r$ and $n$ described in the following table, $M_{n, r}(p)\le \mu_{n,r}/n^{r/2}$, where $\mu_{n,r}$ is as given in the table.
 
@@ -545,7 +545,7 @@ _Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)
 
 Taylor polynomials and Taylor remainders were discussed in the section "Taylor Polynomials for 'Smooth' Functions".  The following lemma gives bounds on the Taylor remainder's Bernstein polynomial.
 
-**Lemma B9**: Let $r\ge 0$ be an integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then the following bound holds true: $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.
+**Lemma B9**: Let $r$ be zero or a positive integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then the following bound holds true: $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Lemma B7.
 
 _Proof_: This result relies on Lemma 2C in the article "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)", with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. &#x25a1;
 
@@ -602,7 +602,7 @@ The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-
 
 **Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
 
-<s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Lagrange remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f^{(2)}$, the second derivative of $f$, has the Lagrange remainder $R_{f^{(2)},0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
+<s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Taylor remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f^{(2)}$, the second derivative of $f$, has the Taylor remainder $R_{f^{(2)},0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
 
 <s>$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f^{(2)},0}(\lambda,x_0)))$$</s>
 

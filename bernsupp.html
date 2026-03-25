@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-03-24"><meta name="citation_date" content="2026/03/24"><meta name="citation_publication_date" content="2026/03/24"><meta name="citation_online_date" content="2026/03/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-03-25"><meta name="citation_date" content="2026/03/25"><meta name="citation_publication_date" content="2026/03/25"><meta name="citation_online_date" content="2026/03/25"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-03-24.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-03-25.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -1006,7 +1006,7 @@
 
 <p><strong>Lemma 2B</strong>. <em>Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Let $h\gt 0$ be a real number. Then $\mathbb{E}[f(Y)]-f(\mathbb{E}[Y])$ = $Q(f, Y) + R(f, Y)$, where—</em></p>
 
-\[\text{abs}(Q(f,Y))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right),\]
+\[\text{abs}(Q(f,Y) - f(\mathbb{E}[Y]))\le \left(\sum_{i=2}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i(Y))}{i!}\right),\]
 
 \[\text{abs}(R(f,Y))\le\left(\frac{\tau_k(Y)}{k!}+\frac{\tau_{k+1}(Y)}{(k+1)!\cdot h}\right)\cdot\omega(f^{(k)}, h),\]
 
@@ -1014,9 +1014,16 @@
 
 \[\text{and }\text{abs}(R(f,Y))\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)}, \frac{\tau_{k+1}(Y)}{(k+1)\tau_k(Y)}),\]
 
-<p><em>and where $\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$’s $k$-th derivative, and $\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$.</em></p>
+<p><em>and where—</em></p>
 
-<p><em>Proof:</em> Write $Q(f,Y)$ as $Q(f,Y)=g(f,Y)-f(\mathbb{E}[Y])$, where $g(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the so-called <em>Taylor polynomial</em> of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$.  $R(f,Y)$ is the <em>Taylor remainder</em> of $\mathbb{E}[f(Y)]$ (see also Anastassiou (1985, theorem 2.31)<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup>). Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup>; the second bound comes from corollary 3.2 of Dimitriu (2010)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup> and Brudnyĭ’s lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>, where the closed interval assumed was the closed unit interval; see also Gonska (2007)<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>, Piţul (2007)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>.  □</p>
+<ul>
+  <li><em>$Q(f,Y)=\sum</em>{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the_ Taylor polynomial <em>of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,</em></li>
+  <li><em>$R(f,Y)$ is the</em> Taylor remainder <em>of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,</em></li>
+  <li><em>$\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$’s $k$-th derivative, and</em></li>
+  <li><em>$\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$.</em></li>
+</ul>
+
+<p><em>Proof:</em>  Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup>; the second bound comes from corollary 3.2 of Dimitriu (2010)<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> and Brudnyĭ’s lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>, where the closed interval assumed was the closed unit interval; see also Gonska (2007)<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>, Piţul (2007)<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>.  See also Anastassiou (1985, theorem 2.31)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>.□</p>
 
 <p><strong>Lemma 2C.</strong> <em>Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then</em> $\text{abs}(R(f,Y))\le M \tau_{k+1}(Y)/((k+1)!)$, <em>where</em> $R(f,Y)$ <em>is as in Lemma 2B.</em></p>
 
@@ -1024,7 +1031,7 @@
 
 <p>Lemma 6(i) of Nacu and Peres (2005)<sup id="fnref:1:7"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> finds a bound involving hypergeometric random variables that is essential in polynomial-building schemes.  This part of the lemma can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of <em>Hölder-continuous</em> functions (see “<a href="#Definitions"><strong>Definitions</strong></a>”).</p>
 
-<p><strong>Lemma 2.</strong> <em>Let f(λ) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2*n, k, n) random variable, and let $n\ge 1$ be an integer.</em></p>
+<p><strong>Lemma 2.</strong> <em>Let f(λ) be a continuous function that maps the closed unit interval to itself, let X be a hypergeometric(2*n, k, n) random variable, and let $n$ be a positive integer.</em></p>
 
 <ol>
   <li>
@@ -1076,14 +1083,14 @@
   </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1, let $n_0\ge 1$ be an integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let—</em></p>
+<p><strong>Theorem 1.</strong> <em>Let $f$ be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1, let $n_0$ be a positive integer, and let $\phi(n)$ be a function that takes on a nonnegative value.  Suppose $f$ is such that the expression (1) in Lemma 2 is less than or equal to $\phi(n)$ whenever $n\ge n_0$ is an integer power of 2.  Let—</em></p>
 
 \[\eta(n)=\sum_{k\ge \log_2(n)} \phi(2^k),\]
 
 <p><em>for every integer n≥1 that’s a power of 2.  If the series η(n) converges to a finite value for each such $n$, and if it converges to 0 as $n$ gets large, then the following scheme for f(λ) is valid in the following sense:</em></p>
 
 <ul>
-  <li><em>There are polynomials $g_n$ and $h_n$ (where $n\ge 1$ is an integer power of two) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively (where $0\le k\le n$), where:</em>
+  <li><em>There are polynomials $g_n$ and $h_n$ (where $n$ is a positive integer power of two) as follows. The $k$-th Bernstein coefficient of $g_n$ and $h_n$ is <strong>fbelow</strong>(n, k) and <strong>fabove</strong>(n, k), respectively (where $0\le k\le n$), where:</em>
     <ul>
       <li><em>If $n_0 = 1$: <strong>fbelow</strong>(n, k) =</em> $f(k/n)-\eta(n)$; <strong>fabove</strong>(n, k) =_ $f(k/n)+\eta(n)$._</li>
       <li><em>If $n_0 &gt; 1$:</em>
@@ -1246,13 +1253,13 @@
 
 <p><strong>Corollary 4</strong>.  <em>If $f(\lambda)$ satisfies a scheme given in Theorem 1 with $n_0\ge 1$, then $B_n(f(\lambda))$ comes within $\eta(n)$ of $f$ for every integer $n\ge n_0$ that’s a power of 2; that is, $\text{abs}(B_n(f(\lambda))) \le \eta(n)$ for every such $n$.</em></p>
 
-<p><strong>Lemma 5</strong>. <em>Let $n\ge 1$ be an integer.  Suppose</em> $g_{2n}$ <em>and</em> $g_{n}$ <em>are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose</em> $g_{2n}$ <em>and</em> $g_n$ <em>satisfy the following property:</em> $(g_{2n}-g_n)$ <em>is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$. Then for every $x\ge 0$,</em> $g_{2n}+x$ <em>and</em> $g_n$ <em>satisfy that property, and for every $x\ge 1$</em>, $g_{2n}\cdot x$ <em>and</em> $g_n$ <em>do as well.</em></p>
+<p><strong>Lemma 5</strong>. <em>Let $n$ be a positive integer.  Suppose</em> $g_{2n}$ <em>and</em> $g_{n}$ <em>are polynomials in Bernstein form of degree $2n$ and $n$, respectively, and their domain is the closed unit interval. Suppose</em> $g_{2n}$ <em>and</em> $g_n$ <em>satisfy the following property:</em> $(g_{2n}-g_n)$ <em>is a polynomial with nonnegative Bernstein coefficients once it is rewritten to a polynomial in Bernstein form of degree exactly $2n$. Then for every $x\ge 0$,</em> $g_{2n}+x$ <em>and</em> $g_n$ <em>satisfy that property, and for every $x\ge 1$</em>, $g_{2n}\cdot x$ <em>and</em> $g_n$ <em>do as well.</em></p>
 
 <p>The proof follows from two well-known properties of polynomials in Bernstein form: adding $x$ to $g_{2n}$ amounts to adding $x$ to its Bernstein coefficients, and multiplying $g_{2n}$ by $x$ amounts to multiplying its Bernstein coefficients by $x$.  In either case, if $x$ is nonnegative, $g_{2n}$’s Bernstein coefficients become no less than they otherwise would, so that $(g_{2n}-g_n)$ continues to have nonnegative Bernstein coefficients as required by the property.</p>
 
 <p>It is also true that $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property for every $x\ge 0$, and $g_{2n}+y$ and $g_n+y$ do so for every real number $y$, but a detailed proof of this is left as an exercise to anyone interested. (If $x=0$, $g_n\cdot x=g_{2n}\cdot x=0$, $g_n+x=g_n$, and $g_{2n}+x=g_{2n}$, so that the property is trivially satisfied.)</p>
 
-<p><strong>Proposition:</strong> The sequence $c/2^n$ is bounded from above by the sequence $p(1-p)^n$ (where $n\ge 0$ is an integer) when $c$ is 0.4 and $p$ is 0.49.</p>
+<p><strong>Proposition:</strong> The sequence $c/2^n$ is bounded from above by the sequence $p(1-p)^n$ (where $n$ is zero or a positive integer) when $c$ is 0.4 and $p$ is 0.49.</p>
 
 <blockquote>
   <p><strong>Note:</strong> The two sequences are examples of <em>geometric sequences</em>.</p>
@@ -2245,22 +2252,22 @@ for i in range(20):
       <p>Păltănea, R, Dimitriu, M.T., “On some second order moduli of smoothness.” General Mathematics 24 (2016) <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:35">
-      <p>Anastassiou, George A. “<a href="https://www.sciencedirect.com/science/article/pii/0021904585900498"><strong>A study of positive linear operators by the method of moments, one-dimensional case</strong></a>.” Journal of Approximation Theory 45.3 (1985): 247-270. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Păltănea, R., Smuc, M., “Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity”, <em>Results in Mathematics</em> 74 (2019). <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:36">
-      <p>Păltănea, R., Smuc, M., “Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity”, <em>Results in Mathematics</em> 74 (2019). <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Dimitriu, M.T., “<a href="https://www.jstor.org/stable/43964559"><strong>Estimates with optimal constants using Peetre’s K-functionals</strong></a>”, <em>Carpathian Journal of Mathematics</em> 26 (2010). <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:37">
-      <p>Dimitriu, M.T., “<a href="https://www.jstor.org/stable/43964559"><strong>Estimates with optimal constants using Peetre’s K-functionals</strong></a>”, <em>Carpathian Journal of Mathematics</em> 26 (2010). <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gonska, Heiner, Paula Piţul, and Ioan Raşa. “On Peano’s form of the Taylor remainder, Voronovskaja’s theorem and the commutator of positive linear operators”, 2006. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:38">
-      <p>Gonska, Heiner, Paula Piţul, and Ioan Raşa. “On Peano’s form of the Taylor remainder, Voronovskaja’s theorem and the commutator of positive linear operators”, 2006. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gonska, Heiner. “On the degree of approximation in Voronovskaja’s theorem”, Studia Univ. Babeş-Bolyai, Math., September 2007. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:39">
-      <p>Gonska, Heiner. “On the degree of approximation in Voronovskaja’s theorem”, Studia Univ. Babeş-Bolyai, Math., September 2007. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:40">
-      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Anastassiou, George A. “<a href="https://www.sciencedirect.com/science/article/pii/0021904585900498"><strong>A study of positive linear operators by the method of moments, one-dimensional case</strong></a>.” Journal of Approximation Theory 45.3 (1985): 247-270. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
       <p>Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, <em>Calcolo</em> 27 (1990) <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:41:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
