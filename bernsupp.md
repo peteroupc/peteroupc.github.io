@@ -735,7 +735,7 @@ $$\text{and }\text{abs}(R(f,Y))\le\frac{\tau_k(Y)}{k!}\cdot\tilde\omega(f^{(k)},
 
 _and where&mdash;_
 
-- _$Q(f,Y)=\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ is the_ Taylor polynomial _of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,_
+- $Q(f,Y)=$ $\sum_{i=0}^k f^{(i)}(\mathbb{E}[Y])\cdot\sigma_{i}(Y)/(i!)$ _is the_ Taylor polynomial _of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,_
 - _$R(f,Y)$ is the_ Taylor remainder _of $\mathbb{E}[f(Y)]$ centered at $\mathbb{E}[Y]$,_
 - _$\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and_
 - _$\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$._
@@ -959,7 +959,7 @@ Let $r\ge 1$, and let $f(\lambda)$ be a function that&mdash;
 
 Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be bounded functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
-For each integer $n\ge1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
+For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
 $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
@@ -971,11 +971,15 @@ Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the ineq
 
 $$W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
 
+$$\text{or }\frac{C_1M}{n^{r/2}} + \sum_{i=0}^k \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge 0,$$
+
+$$\text{or }\sum_{i=0}^k \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},$$
+
 holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
-When $C_0$ or $C_1$ exists, find a good upper bound for it.
+$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$ or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
 > **Notes:**
 >

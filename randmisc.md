@@ -395,7 +395,7 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 - Tahir and Cordeiro (2016\)[^36] calls a distribution of minimums a _compound distribution_, and a distribution of maximums a _complementary compound distribution_.
 - Pérez-Casany et al. (2016\)[^37] calls a distribution of minimums or of maximums a _random-stopped extreme distribution_.
 - Let _S_ be a sum of _N_ variates as described earlier.  Then Amponsah et al. (2021)[^38] describe the distribution of (_S_, _N_), a two-variable random variate often called an _episode_.
-- A distribution of sums can be called a _stopped-sum distribution_ (Johnson et al. 2005\)[^39]. (In this case, _N_ can be 0 so that _N_ &ge; 0 is an integer distributed as _Y_.)
+- A distribution of sums can be called a _stopped-sum distribution_ (Johnson et al. 2005\)[^39]. (In this case, _N_ can be 0 so that $N$ is zero or a positive integer distributed as _Y_.)
 
 A variate following a distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^40]\:
 
@@ -487,7 +487,7 @@ In the following table, _U_ is a uniform random variate between 0 and 1, and all
 | Skew symmetric or symmetry-modulated (Azzalini and Capitanio 2003)[^64], (Azzalini 2022)[^65]. | _Z_ if _T_ &le; _w_(_Z_), or &minus;_Z_ otherwise. | _Z_ follows a symmetric distribution around 0; _T_ follows a symmetric distribution (not necessarily around 0). _w_(_x_) satisfies &minus;_w_(_x_) = _w_(&minus;_x_). |
 | Skew normal (Azzalini 1985)[^66]. | Skew symmetric with _Z_ and _T_ both separate Normal(0, 1) variates, and _w_(_x_) = _x_\*_&alpha;_. | _&alpha;_ is a real number. |
 | Logarithmic skew normal (Gómez-Déniz et al. 2020)[^67] | exp(SNE(_&lambda;_,_&lambda;_)\*_&sigma;_+_&mu;_). | _&mu;_ and _&lambda;_ are real numbers; _&sigma;_ > 0. SNE is described later. |
-| Tilted beta binomial (Hahn 2022)[^68] | Binomial(_n_, Tilted-beta(_&theta;_, _v_, _&alpha;_, _&beta;_)) variate. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0, _&beta;_>0; _n_ &ge; 0 is an integer. |
+| Tilted beta binomial (Hahn 2022)[^68] | Binomial(_n_, Tilted-beta(_&theta;_, _v_, _&alpha;_, _&beta;_)) variate. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0, _&beta;_>0; $n$ is zero or a positive integer. |
 | Two-piece distribution (Rubio and Steel 2020)[^69]. | _&mu;_ &minus; abs(_Z_)\*_sigma1_ with probability _sigma1_/(_sigma1_+_sigma2_), or _&mu;_ + abs(_Z_)\*_sigma2_ otherwise. | _&mu;_ is a real number; _sigma1_>0; _sigma2_>0; _Z_ follows a symmetric distribution around 0. |
 | Asymmetric generalized Gaussian (Tesei and Regazzoni 1996)[^70] | Two-piece distribution where _Z_ is exponential-power(_&alpha;_). | _&alpha;_>0; _&mu;_ is a real number; _sigma1_>0; _sigma2_>0. |
 
@@ -497,7 +497,7 @@ In the following table, _U_ is a uniform random variate between 0 and 1, and all
 | Generalized skew normal (SNE(_&lambda;_,_&xi;_)) (Henze 1986)[^72] | **First algorithm:** (1) Generate _Y_ and _Z_, two Normal(0,1) variates; (2) if _Z_<_Y_\*_&lambda;_+_&xi;_, return _Y_; else go to 1. **Second algorithm:** (1) Let _il_=1/sqrt(1+_&lambda;_<sup>2</sup>); (2) Generate _Y_ and _Z_, two Normal(0,1) variates; (3) if _Y_>&minus;_&xi;_\*_il_, return _Y_\*_&lambda;_\*_il_ + _Z_; else go to 2. | _&lambda;_ and _&xi;_ are real numbers. |
 | Generalized geometric (Francis-Staite and White 2022)[^73] | (1) Set _ret_ to 1; (2) with probability _&rho;_(_ret_), add 1 to _ret_ and repeat this step; otherwise, return _ret_. | 0 &le; _&rho;_(_k_) &le; 1 for each _k_. |
 | Generalized Sibuya (Kozubowski and Podgórski 2018)[^74] | (1) Set _ret_ to 1; (2) with probability _&alpha;_/(_&nu;_+_ret_), return _ret_; otherwise, add 1 to _ret_ and repeat this step. | _&alpha;_ < _&nu;_ + 1, and _&nu;_ &ge; 0.[^75] |
-| Himanshu (Agarwal and Pandey 2022)[^76] | (1) Set _ret_ to 0; (2) flip coin that shows heads with probability _p_, _n_ times; (3) if any flip shows 0 (tails), add 1 to _ret_ and go to 2; otherwise, return _ret_. | 0 &le; _p_ &le; 1; _n_ &ge; 1 is an integer. |
+| Himanshu (Agarwal and Pandey 2022)[^76] | (1) Set _ret_ to 0; (2) flip coin that shows heads with probability _p_, _n_ times; (3) if any flip shows 0 (tails), add 1 to _ret_ and go to 2; otherwise, return _ret_. | 0 &le; _p_ &le; 1; $n$ is a positive integer. |
 | Tilted beta (Hahn and López Martín 2005)[^77] | (1) With probability _&theta;_, return a beta(_&alpha;_, _&beta;_) variate; (2) Generate a uniform variate in (0, 1), call it _x_; (3) Flip coin that returns 1 with probability _x_, and another that returns 1 with probability _v_; (4) If both coins return 1 or both return 0, return _x_; otherwise go to step 2. | 0 &le; _&theta;_ &le; 1;  0 &le; _v_ &le; 1; _&alpha;_>0; _&beta;_>0. |
 
 <a id=Random_Variate_Generation_via_Quantiles></a>
@@ -593,7 +593,7 @@ In this section:
 
 The rest of this section deals with oracles that go beyond coins.
 
-**Algorithm 1.** Suppose the oracle produces random variates on a closed interval \[_a_, _b_\], with an unknown mean of _&mu;_. The goal is now to produce nonnegative random variates whose expected value (“long-run average”) is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
+**Algorithm 1.** Suppose the oracle produces random variates on a closed interval \[_a_, _b_\], with an unknown mean (or expected value or “long-run average”) of _&mu;_. The goal is now to produce nonnegative random variates whose mean is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
 - _f_ is continuous on the closed interval, and
 - _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)
@@ -655,7 +655,7 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 The following algorithms are included here because they require applying an arbitrary function (such as _f_(_&lambda;_)) to a potentially irrational number.
 
-**Algorithm 3.** Suppose the oracle produces random variates with a known or unknown expected value (“long-run average” or mean). The goal is now to produce nonnegative random variates whose expected value is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
+**Algorithm 3.** Suppose the oracle produces random variates with a known or unknown mean (or expected value or “long-run average”). The goal is now to produce nonnegative random variates whose mean is the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever&mdash;
 
 - _f_ has a finite lower bound and a finite upper bound on its domain, and
 - the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0.
@@ -665,11 +665,11 @@ The algorithm to achieve this goal follows (see Lee et al. 2014[^88]\)\:
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, take a number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014\)[^88].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose expected value (“long-run average”) is that mean.
+> **Example:** An example from Lee et al. (2014\)[^88].  Say the oracle produces uniform random variates in \[0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce nonnegative random variates whose mean (or expected value or “long-run average”) is that mean.
 >
 > **Notes:**
 >
-> 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected value or “long-run average”) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 1 or 0 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
+> 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] is the mean or expected value or “long-run average”) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 1 or 0 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
 > 2. (Lee et al. 2014, Corollary 4\)[^88]\: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
@@ -694,9 +694,9 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 
 > **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  Otherwise, the algorithm can introduce numerical errors unless care is taken (see note 2 in "Distributions with nowhere increasing or nowhere decreasing weights", earlier).  See also note 3 on the previous algorithm.
 
-**Algorithm 5.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose expected value is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^89], (Akahira et al. 1992)[^90].
+**Algorithm 5.** Suppose there is a coin that shows heads (or 1) with the unknown probability _&lambda;_, where $0\lt\lambda\lt 1$.  The goal is now to produce random variates whose mean (or expected value or “long-run average”) is _f_(_&lambda;_), where $f(\lambda)$ is a function on the closed unit interval and need not be continuous.  This can be done with the following algorithm (Akahira and Koike 1998)[^89], (Akahira et al. 1992)[^90].
 
-- First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), ...$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must approach $f(\lambda)$ with increasing $n$ (that is, $g_n$ must _converge pointwise_ to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article "[**Approximations in Bernstein Form**](https://peteroupc.github.io/bernapprox.html)".
+- First, define a sequence $g_1(\lambda), g_2(\lambda), g_3(\lambda), ...$ of polynomials in Bernstein form, where the number after $g$ is the degree of the polynomial.  For every point $\lambda$ satisfying $0\le\lambda\le 1$, $g_n(\lambda)$ must have a limit of $f(\lambda)$ as $n$ increases (that is, $g_n$ must _converge pointwise_ to $f$).  Denote $g_n[k]$ as the $k$-th Bernstein coefficient of the polynomial $g_n$, where $0\le k\le n$.  See also my article "[**Approximations in Bernstein Form**](https://peteroupc.github.io/bernapprox.html)".
 - Second, define probabilities $p_0, p_1, p_2, ...$ that are positive and sum to 1 (except $p_0$ can be 0).  An example is $p_n = p(1-p)^n$, where $0\lt p\lt 1$.
 
 1. Generate at random an integer (which is 0 or greater) that equals $i$ with probability $p_i$.  Call the integer $n$.
@@ -704,7 +704,7 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 3. If $n$ is 0, define $E(n, k)$ as 0.  Otherwise, define $E(n, k)$ as $(g_n[k]-k\cdot g_{n-1}[k-1]/n - (n-k) g_{n-1}[k]/n)/p_n$ (letting $g_0[k]=0$ and letting $g_m[j]=0$ whenever $j\lt 0$ or $j\gt m$).  (**Note:** This implies that if $g_n = g_{n-1}$, then $E(n,k)$ is 0.)
 4. Return $E(n, k)$.
 
-The output returned in step 4 will have expected value $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash;
+The output returned in step 4 will have a mean of $f(\lambda)$ if the following condition is met: The sum of the polynomials&mdash;
 
 $$p_n\text{abs}(E(n,0)){n\choose 0}\lambda^0(1-\lambda)^{n-0} + ... + p_n\text{abs}(E(n,n)){n\choose n}\lambda^n(1-\lambda)^{n-n},$$
 
@@ -903,7 +903,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^90]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
-[^91]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists given an oracle of variates with unknown mean $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
+[^91]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with a mean of $f(\lambda)$ exists given an oracle of variates with an unknown mean equal to $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 <a id=License></a>
 

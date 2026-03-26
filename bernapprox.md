@@ -340,7 +340,7 @@ See also the [**open questions**](https://peteroupc.github.io/bernreq.html#Polyn
 The following references discuss schemes that&mdash;
 
 - approximate functions with a continuous $r$-th derivative on the closed unit interval, where $r\ge 3$,
-- using polynomials of degree $n$,
+- using polynomials of a degree $n$ (where $n$ is an arbitrary positive integer, not necessarily $r$ or less[^57]),
 - at a rate no slower than a constant times $1/n^{r/2}$, and
 - without introducing transcendental or trigonometric functions.
 
@@ -463,6 +463,8 @@ There may be other useful schemes for polynomials not mentioned in this document
 [^55]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
 [^56]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+
+[^57]: Thus, Taylor polynomials won't work, for example.
 
 <a id=Appendix></a>
 
