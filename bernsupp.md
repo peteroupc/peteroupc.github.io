@@ -511,6 +511,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^71]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^72]: Favard J., "Sur l’interpolation", _J. Math. Pures Appl._ 19 (1940).
+
+[^73]: De Boor, C., "On 'Best' Interpolation", _Journal of Approximation Theory_ 16 (1976).
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -996,7 +1000,20 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$ or $n$. 
 >
 >     where $\varphi_n$ is a strictly decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$.  $W_n$ is then a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of bounded functions that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to $f(\lambda)=1/2$, so that $M = 1/2$.
 
----------------------
+This problem can be tackled as follows.  Let&mdash;
+
+$$A(k,n)=\sum_{i=0}^k \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i},$$
+
+where $n$ and $k$ are as in the conjecture.  Then, for each $n$ and $k$, find $C_2 = A(k,n)\frac{n^{r/2}}{M_{\text{inf}}}$, where $M_{\text{inf}}$ is the smallest $M$ among all functions with a continuous $k$-th derivative.  Only negative values of $C_2$ are important here.  If $C_2$ doesn't grow without bound as $n$ increases, then take the smallest $C_2$ and find its absolute value, resulting in $C_1$.
+
+To find $M_{\text{inf}}$, the following result is useful. Let $k$ be a positive integer, and let a sequence of point/value pairs $(p_i, v_i)$ (for example, $(0, 0), (1/2, 1), (1, 0)$) be given.  Then Favard (1940)[^72] (see also De Boor (1976)[^73]) described a function that has the smallest $M$ among all functions $f(x)$ that&mdash;
+
+- have a Lipschitz-continuous $(k-1)$-th derivative on the closed unit interval, and
+- satisfy $f(p_i) = v_i$ for each $i$.
+
+This function with the smallest $M$ is a piecewise function, where each piece is a polynomial of degree $k$ and the points $p_0$, $p_1$, and so on mark the beginning and end of each piece.
+
+----------
 
 The following results on hypergeometric random variables are useful.  Denote the $s$-th central absolute moment of a random variable $Y$ as $\tau_s(Y)$.
 
