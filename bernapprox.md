@@ -6,7 +6,7 @@
 
 ## Introduction
 
-This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial's Bernstein coefficients will lie in the closed unit interval if $f$'s values lie in that interval.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application's purposes.
+This page describes how to compute a polynomial in Bernstein form that comes close to a known function $f(\lambda)$ with a user-defined error tolerance, so that the polynomial's Bernstein coefficients will lie in the closed unit interval if $f$'s values do.  The polynomial is often simpler to calculate than the original function $f$ and can often be accurate enough for an application's purposes.
 
 The goal of these approximations is to avoid introducing transcendental and trigonometric functions to the approximation method. (Therefore, although this page also discusses approximation by so-called _Chebyshev interpolants_, that method is relegated to the appendix.)
 
@@ -656,7 +656,7 @@ $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+
 
 $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
 
-where $r=2$, using properties of $\omega_2$, the smallest second-order modulus of continuity of $f^{(2)}$, given, for example, in Stancu et al. (2001)[^50] and Gonska (1985)[^60]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
+where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Stancu et al. (2001)[^50] and Gonska (1985)[^60]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
 
 $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right) \tag{**}$$
 

@@ -49,7 +49,7 @@ Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functio
 
 1. (_Exact Bernoulli factory_): Compute the Bernstein coefficients of a sequence of polynomials ($g_n$) of degree 2, 4, 8, ..., $2^i$, ... that converge to $f$ from below and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. Assume $0\lt f(\lambda)\lt 1$ or a piecewise polynomial can come between $f$ or $1-f$ and the x-axis.
 2. (_Approximate Bernoulli factory_): Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.
-3. (_Series expansion of simple functions_): Find a nonnegative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$.[^2]
+3. (_Series expansion of simple functions_): Find a nonnegative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$.[^2]  Do the same for a function that is within $\epsilon$ of $f$, rather than $f$.
 
 The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
@@ -73,7 +73,7 @@ _For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _in Bernstein
 
 ### A Matter of Efficiency
 
-However, ordinary Bernstein polynomials converge to a function at the rate $\Omega(1/n)$ in general, a result known since Voronovskaya (1932)[^7] and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
+However, ordinary Bernstein polynomials converge to a function at the rate $\Omega(1/n)$ unless the function is linear, a result known since Voronovskaya (1932)[^7] and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
 But Lorentz (1966)[^8] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
 
