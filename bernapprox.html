@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="dc.date" content="2026-04-01"><meta name="citation_date" content="2026/04/01"><meta name="citation_publication_date" content="2026/04/01"><meta name="citation_online_date" content="2026/04/01"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Approximations in Bernstein Form"><meta name="dc.title" content="Approximations in Bernstein Form"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="dc.date" content="2026-04-07"><meta name="citation_date" content="2026/04/07"><meta name="citation_publication_date" content="2026/04/07"><meta name="citation_online_date" content="2026/04/07"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Approximations in Bernstein Form"><meta name="dc.title" content="Approximations in Bernstein Form"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1><p>This version of the document is dated 2026-04-01.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1><p>This version of the document is dated 2026-04-07.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -87,7 +87,7 @@
 
 <p>Any polynomial $P(\lambda)$ can be written in <em>Bernstein form</em> as—</p>
 
-\[P(\lambda) = a[0] p_{n,0}(\lambda) + ... + a[n] p_{n,n}(\lambda),\~\~\~\~\~\~p_{n,k}(\lambda)={n\choose k}\lambda^k (1-\lambda)^{n-k},\]
+\[P(\lambda) = a[0] p_{n,0}(\lambda) + ... + a[n] p_{n,n}(\lambda),\text{    }p_{n,k}(\lambda)={n\choose k}\lambda^k (1-\lambda)^{n-k},\]
 
 <p>where <em>n</em> is the polynomial’s <em>degree</em> and <em>a</em>[0], <em>a</em>[1], …, <em>a</em>[<em>n</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em> (which this document may simply call <em>coefficients</em> if the meaning is obvious from the context).<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
@@ -148,7 +148,7 @@
     <tr>
       <td>Lorentz operator (order 2).</td>
       <td>$Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f^{(2)})/(2(n-2))$.</td>
-      <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f^{(2)}((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], …, <em>a</em>[<em>n</em>].</td>
+      <td><strong>Get coefficients for $n$ given $n-2$</strong>, call them <em>a</em>[0], …, <em>a</em>[<em>n</em>].  Then for each integer $j$ with $1\le j\less n$, subtract $z$ from <em>a</em>[<em>j</em>], where $z=(((f^{(2)}((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now <em>a</em>[0], …, <em>a</em>[<em>n</em>].</td>
       <td>Holtz et al. (2011)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>; Bernstein (1932)<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>; Lorentz (1966)<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>. $n\ge 4$; $f^{(2)}$ is the second derivative of $f$. Evaluates $f$ and $f^{(2)}$ at $n-1$ evenly spaced points.</td>
     </tr>
   </tbody>
@@ -278,7 +278,7 @@
 
   <ol>
     <li>
-      <p>A polynomial’s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either—</p>
+      <p>A polynomial’s Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \less\delta\le 1$) by setting either—</p>
 
       <ul>
         <li>$c$=floor($c/\delta$) * $\delta$ (rounding down), or</li>
@@ -325,7 +325,7 @@
 <ol>
   <li>$f$ is continuous on the closed unit interval, and</li>
   <li>$f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and</li>
-  <li>$f$ satisfies $\epsilon\lt f(\lambda)\lt 1-\epsilon$ whenever $0\lt\lambda\lt 1$, and</li>
+  <li>$f$ satisfies $\epsilon\less f(\lambda)\less 1-\epsilon$ whenever $0\less\lambda\less 1$, and</li>
   <li>$f$’s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and</li>
   <li>$f(0)$ is known as well as $f^{(1)}(0), …, f^{(n)}(0)$.</li>
 </ol>
@@ -480,7 +480,7 @@
       <td>$B_n(f)$.</td>
       <td>$\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ ≤ $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$.</td>
       <td>$n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$.</td>
-      <td>Knoop and Pottinger (1976)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>. $0\lt\alpha\le 1$ is $r$-th derivative’s Hölder exponent.</td>
+      <td>Knoop and Pottinger (1976)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>. $0\less\alpha\le 1$ is $r$-th derivative’s Hölder exponent.</td>
     </tr>
   </tbody>
 </table>
@@ -540,7 +540,7 @@
 
 <ol>
   <li>
-    <p>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</p>
+    <p>Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\greater 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.</p>
 
     <p>The approximation error must be no more than a constant times $1/n^{r/2}$ if the specified class has only functions with continuous $r$-th derivative.</p>
 
@@ -641,7 +641,7 @@
 
 <p><strong>Proposition B3</strong>: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$’s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.</p>
 
-<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)<sup id="fnref:11:1"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup> showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. □</p>
+<p><em>Proof</em>: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)<sup id="fnref:11:1"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup> showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\less\lambda\less 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. □</p>
 
 <p>The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made, where $n$ is 1 or greater.  Then the total number of heads $X$ follows a <em>binomial distribution</em>, and the $r$-th central moment of that distribution is as follows:</p>
 
@@ -738,7 +738,7 @@
   </tbody>
 </table>
 
-<p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative’s Lipschitz constant or greater.</p>
+<p><strong>Proposition B10</strong>: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\greater 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative’s Lipschitz constant or greater.</p>
 
 <p><em>Proof</em>: This proof is inspired by the proof technique in Tachev (2022)<sup id="fnref:6:2"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>.</p>
 
@@ -821,13 +821,13 @@
 
 <p>The <em>Lorentz operator</em> of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011)<sup id="fnref:8:1"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>, (Lorentz 1966)<sup id="fnref:10:2"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>.  This operator is a polynomial in Bernstein form of degree $n+2$.</p>
 
-<p><strong>Proposition B10A:</strong> <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s></p>
+<p><strong>Proposition B10A:</strong> <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \less 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s></p>
 
 <s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Taylor remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f^{(2)}$, the second derivative of $f$, has the Taylor remainder $R_{f^{(2)},0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
 
 <s>$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f^{(2)},0}(\lambda,x_0)))$$</s>
 
-<s>$$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$</s>
+<s>$$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \less 0.098585 L_2/(n^{3/2}).$$</s>
 
 <p>□</p>
 
@@ -843,7 +843,7 @@
   <li>$H_r$ means a value equal to or greater than the Hölder constant of $f^{(r)}$.</li>
 </ul>
 
-<p><strong>Proposition B10C:</strong> Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$’s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:</p>
+<p><strong>Proposition B10C:</strong> Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\less\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$’s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:</p>
 
 \[\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.\]
 
@@ -865,7 +865,7 @@
 
 <p>□</p>
 
-<p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:</p>
+<p><strong>Proposition B10D:</strong> Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\less\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:</p>
 
 \[\text{abs}(f-U_{n,2}(f))\le \frac{M_2+M_3}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})\]
 
@@ -955,7 +955,7 @@
       <li>$T_k(x)$ is the $k$-th <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> (<code>chebyshevt(k,x)</code> in the SymPy computer algebra library).</li>
     </ul>
   </li>
-  <li>Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative’s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)<sup id="fnref:55:1"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup> as well as a statement in note 1 at the end of this section.
+  <li>Let $r\ge 1$ and $n\greater r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of <em>bounded variation</em>, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative’s <em>total variation</em> or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)<sup id="fnref:55:1"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup> as well as a statement in note 1 at the end of this section.
     <ul>
       <li>If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).</li>
       <li>If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>.</li>
@@ -1009,7 +1009,7 @@
       <p>In case 3 in general, if $f$ is analytic at every point on an interval, the “most stable” approximation occurs when the sample points are clustered at a quadratic rate toward the endpoints. Adcock, B., Platte, R.B., Shadrin, A., “<a href="https://doi.org/10.1093/imanum/dry024"><strong>Optimal sampling rates for approximating analytic functions from pointwise samples</strong></a>, <em>IMA Journal of Numerical Analysis</em> 39(3), July 2019. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>choose(<em>n</em>, <em>k</em>) = (1*2*3*…*<em>n</em>)/((1*…*<em>k</em>)*(1*…*(<em>n</em>−<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> − <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>−<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>−<em>k</em>+1 ≤ <em>i</em> ≤ <em>n</em>, then multiplying the results (Yannis Manolopoulos. 2002. “Binomial coefficient computation: recursion or iteration?”, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>−1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.<br /><em>n</em>! = 1*2*3*…*<em>n</em> is also known as $n$ factorial; in this document, (0!) = 1. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>choose(<em>n</em>, <em>k</em>) = (1*2*3*…*<em>n</em>)/((1*…*<em>k</em>)*(1*…*(<em>n</em>−<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> − <em>k</em>)!) $={n \choose k}$ is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>−<em>i</em>+1) for each integer <em>i</em> satisfying <em>n</em>−<em>k</em>+1 ≤ <em>i</em> ≤ <em>n</em>, then multiplying the results (Yannis Manolopoulos. 2002. “Binomial coefficient computation: recursion or iteration?”, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, $m-1$) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.<br /><em>n</em>! = 1*2*3*…*<em>n</em> is also known as $n$ factorial; in this document, (0!) = 1. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3">
       <p>Micchelli, Charles. “<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>”, Journal of Approximation Theory 8, no. 1 (1973): 1-18. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

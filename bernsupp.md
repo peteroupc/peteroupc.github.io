@@ -704,7 +704,7 @@ The first results are lemmas that bound the difference between the mean of a fun
 
 **Lemma 2A**. _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Let $h>0$ be a real number. Then:_
 
-| No. | If $f$ ... |  Then $\text{abs}(\mathbb{E}[f(Y)]-f(\mathbb{E}[Y]))\le ... $ |
+| No. | If $f$ ... |  Then $\text{abs}(E[f(Y)]-f(E[Y]))\le ... $ |
  - | ----- | ----- |
 | 1 | Is continuous. | $(1 + (\text{Var}[Y])^{1/2}/h) \omega(f, h)$. |
 | 2 | Is continuous. | $(1 + (\text{Var}[Y])/h^2) \omega(f, h)$. |
