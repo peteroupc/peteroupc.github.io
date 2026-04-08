@@ -517,6 +517,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^74]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^75]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators"\ Journal of Approximation Theory (227), 2018, [https://doi.org/10.1016/j.jat.2017.12.001.](https://doi.org/10.1016/j.jat.2017.12.001.)
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -529,7 +531,7 @@ In the examples given in this section, _f_(_&lambda;_) is a function defined on 
 
 Generally, how well-behaved a function is depends on how many continuous derivatives it has, and whether those derivatives are Lipschitz continuous or Hölder continuous, among other things.  The following lists several classes of functions, from worst to best behaved and from "largest" to "smallest":
 
-Functions continuous except possibly at one point &rarr; Continuous functions &rarr; Hölder-continuous functions &rarr; Lipschitz-continuous functions &rarr; With continuous first derivative &rarr; With Hölder continuous first derivative &rarr;  With Lipschitz continuous first derivative &rarr; With continuous second derivative &rarr; With infinitely many derivatives &rarr; Analytic functions.
+Functions continuous except possibly at one point &rarr; Continuous functions &rarr; Hölder-continuous functions &rarr; Lipschitz-continuous functions &rarr; With continuous first derivative &rarr; With Hölder continuous first derivative &rarr;  With Lipschitz continuous first derivative &rarr; With continuous second derivative &rarr; With infinitely many derivatives &rarr; Analytic functions &rarr; Polynomials.
 
 **Concave and convex functions.**  The following table shows examples of functions that are convex, concave, or neither.  All these functions are continuous.  Also, review the [**definitions**](#Definitions).
 
@@ -542,7 +544,7 @@ Functions continuous except possibly at one point &rarr; Continuous functions &r
 | _&lambda;_<sup>_z_</sup>, where _z_&ge; 1. | Convex. ||
 | exp(&minus;_&lambda;_/4). | Concave. | |
 
-**Hölder and Lipschitz-continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
+**Hölder- and Lipschitz-continuous functions.** The following table shows some functions that are Hölder continuous and some that are not.  Also, review the [**definitions**](#Definitions).
 
 | Function _f_(_&lambda;_)\: | Hölder exponent (_&alpha;_) and an upper bound of the Hölder constant (_L_)\: | Notes |
  --- | --- | --- |
@@ -721,7 +723,7 @@ _In the table, $\omega(f, \delta)$ is the smallest modulus of continuity of a fu
 
 _Proof:_ Inequality 7 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985)[^28], with $m=1$ (since $Y$ takes only values in the interval in question), $r=h$, and $x_0$ equal to the mean of $Y$.
 
-Let $X$ be a bounded random variable (one that takes only values in an interval).  Then $\mathbb{E}[X]$ is well known to be what is called a _positive linear functional_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). The expectation reproduces constants because the sum of probabilities for $X$ sum to 1, so that $\mathbb{E}[f(c)] = c$ for any constant $c$.  The expectation behaves as though it reproduces linear functions for this lemma's purposes because the first-order central moment of any bounded random variable ($\sigma_1(X)$) is 0.
+Let $X$ be a bounded random variable (one that takes only values in an interval).  Then $\mathbb{E}[X]$ is well known to be what is called a _positive linear functional_ (positive because, if $X$ is nonnegative, so is $\mathbb{E}[X]$; linear because $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$ and $c\mathbb{E}[X]=\mathbb{E}[cX]$ for any constant $c$ and bounded random variables $X$ and $Y$). Taking expected values reproduces constants because the sum of probabilities for $X$ sum to 1, so that $\mathbb{E}[f(c)] = c$ for any constant $c$.  Taking expected values behaves as though it reproduces linear functions for this lemma's purposes because the first-order central moment of any bounded random variable ($\sigma_1(X)$) is 0.
 
 Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^29]; inequality 2 follows from a result of Mond (1978)[^30]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^31], and inequality 4, a result of Peetre (1969)[^32].  Inequality 7 follows from a result of Gonska and Meier (1985)[^33]; see also Păltănea and Dimitriu (2016, remark 3)[^34].
 
@@ -983,7 +985,7 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 
 It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
 
-$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$ or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
+$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambda$, or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
 > **Notes:**
 >
@@ -1064,6 +1066,8 @@ The following claim is believed to be true.
 Then&mdash;
 
 $$h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
+>
+>**Note:** Because of the assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) or a _nonanalytic operator_ (so that $W_i$ can be nonanalytic for some $i$) (Gavrea and Ivan 2018)[^75].
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 

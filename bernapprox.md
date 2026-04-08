@@ -90,7 +90,7 @@ Then, a polynomial of a high enough degree (called $n$) can be used to approxima
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | $W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f)(\lambda))$ + $3 (f(\lambda)$ &minus; $B_n(f)(\lambda))$. | Same. |
 | Butzer's linear combination (order 2). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see "[**Computational Issues**](#Computational_Issues)"), then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^6], Butzer (1955)[^7].  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly spaced points.|
 | Butzer's linear combination (order 3). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$. | Butzer (1955)[^7]. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly spaced points.|
-| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f^{(2)})/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\less n$, subtract $z$ from _a_[_j_], where $z=(((f^{(2)}((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^8]; Bernstein (1932)[^9]; Lorentz (1966)[^10]. $n\ge 4$; $f^{(2)}$ is the second derivative of $f$. Evaluates $f$ and $f^{(2)}$ at $n-1$ evenly spaced points.|
+| Lorentz operator (order 2). | $Q_{n-2,2}=B_{n-2}(f)-x(1-x)\cdot$ $B_{n-2}(f^{(2)})/(2(n-2))$. | **Get coefficients for $n$ given $n-2$**, call them _a_[0], ..., _a_[_n_].  Then for each integer $j$ with $1\le j\lt n$, subtract $z$ from _a_[_j_], where $z=(((f^{(2)}((j-1)/(n-2)))$ / $(4(n-2)))\cdot 2j(n-j)/((n-1)\cdot(n))$.  The final Bernstein coefficients are now _a_[0], ..., _a_[_n_]. | Holtz et al. (2011)[^8]; Bernstein (1932)[^9]; Lorentz (1966)[^10]. $n\ge 4$; $f^{(2)}$ is the second derivative of $f$. Evaluates $f$ and $f^{(2)}$ at $n-1$ evenly spaced points.|
 
 The goal is now to find a polynomial of degree $n$, written in Bernstein form, such that&mdash;
 
@@ -130,7 +130,7 @@ The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$
 
 > **Notes:**
 >
-> 1. A polynomial's Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \less\delta\le 1$) by setting either&mdash;
+> 1. A polynomial's Bernstein coefficients can be rounded to multiples of $\delta$ (where $0 \lt\delta\le 1$) by setting either&mdash;
 >
 >     - $c$=floor($c/\delta$) \* $\delta$ (rounding down), or
 >     - $c$=floor($c/\delta + 1/2$) \* $\delta$ (rounding to the nearest multiple),
@@ -165,7 +165,7 @@ Let $n$ be zero or a positive integer, and let $f^{(i)}$ be the $i$-th derivativ
 
 1. $f$ is continuous on the closed unit interval, and
 2. $f$ satisfies $\epsilon\le f(0)\le 1-\epsilon$ and $\epsilon\le f(1)\le 1-\epsilon$, and
-3. $f$ satisfies $\epsilon\less f(\lambda)\less 1-\epsilon$ whenever $0\less\lambda\less 1$, and
+3. $f$ satisfies $\epsilon\lt f(\lambda)\lt 1-\epsilon$ whenever $0\lt\lambda\lt 1$, and
 4. $f$'s $(n+1)$-th derivative is continuous and satisfies $\epsilon\ge M_{n+1}/((n+1)!)$, and
 5. $f(0)$ is known as well as $f^{(1)}(0), ..., f^{(n)}(0)$.
 
@@ -275,7 +275,7 @@ In the following table:
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Has an _r_-th derivative that is close to _f_ with the following error bound: | And a value of _n_ that achieves the bound is:  | Notes |
  --- | --- | --- | --- | --- |
-| Has Hölder continuous $r$-th derivative. | $B_n(f)$. | $\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$. | $n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$. | Knoop and Pottinger (1976)[^23]. $0\less\alpha\le 1$ is $r$-th derivative's Hölder exponent. |
+| Has Hölder continuous $r$-th derivative. | $B_n(f)$. | $\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$. | $n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$. | Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative's Hölder exponent. |
 
 > **Note:** In general, it is not possible to approximate a continuous function's derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)[^21]).
 
@@ -317,7 +317,7 @@ Worth discussing are the approximating rational functions studied in Zhang and L
 
 Readers are requested to let me know of additional solutions to the following problems:
 
-1. Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\greater 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.
+1. Let $f(\lambda)$ be continuous and map the closed unit interval to itself.  Given $\epsilon\gt 0$, and given that $f(\lambda)$ belongs to a large class of functions (for example, it has a continuous, Lipschitz continuous, concave, or nowhere decreasing $k$-th derivative for some integer $k$, or any combination of these), compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f(\lambda)$.
 
     The approximation error must be no more than a constant times $1/n^{r/2}$ if the specified class has only functions with continuous $r$-th derivative.
 
@@ -520,7 +520,7 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^39], showi
 
 **Proposition B3**: Let $f(\lambda)$ map the closed unit interval to itself and have a Lipschitz-continuous derivative with Lipschitz constant $L$.  If $f(\lambda) \ge \frac{L \lambda(1-\lambda)}{2m}$ on $f$'s domain, for some $m\ge 1$, then $W_{n,2}$ is nonnegative there, for every $n\ge m$.
 
-_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^11] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\less\lambda\less 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
+_Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^11] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
 The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.  Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made, where $n$ is 1 or greater.  Then the total number of heads $X$ follows a _binomial distribution_, and the $r$-th central moment of that distribution is as follows:
 
@@ -564,7 +564,7 @@ _Proof_: This result relies on Lemma 2C in the article "[**Supplemental Notes fo
 | 4. | $M(\sqrt{5}/1280)/n^{5/2} < 0.001747/n^{5/2}$ for every integer $n\ge 2$. |
 | 5. | $M(1/3072)/n^{3} < 0.0003256/n^{3}$ for every integer $n\ge 1$. |
 
-**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\greater 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
+**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
 
 _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^6].
 
@@ -602,13 +602,13 @@ The following error bounds, which make use of Corollary B9A and the proof techni
 
 The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10].  This operator is a polynomial in Bernstein form of degree $n+2$.
 
-**Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \less 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
+**Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
 
 <s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^8] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Taylor remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f^{(2)}$, the second derivative of $f$, has the Taylor remainder $R_{f^{(2)},0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
 
 <s>$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f^{(2)},0}(\lambda,x_0)))$$</s>
 
-<s>$$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \less 0.098585 L_2/(n^{3/2}).$$</s>
+<s>$$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$</s>
 
 &#x25a1;
 
@@ -622,7 +622,7 @@ In the following propositions:
 - $M_r = \max(\text{abs}(f^{(r)}))$ means a value equal to or greater than the maximum of the absolute value of $f^{(r)}$.
 - $H_r$ means a value equal to or greater than the Hölder constant of $f^{(r)}$.
 
-**Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\less\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
+**Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.$$
 
@@ -644,7 +644,7 @@ $$\le \frac{M_2}{8 n^{2}} + \frac{5H_2}{32 n^{1+\alpha/2}}\le \frac{5H_2+4M_2}{3
 
 &#x25a1;
 
-**Proposition B10D:** Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\less\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
+**Proposition B10D:** Let $f(\lambda)$ have a Hölder-continuous third derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $H_3$ or less.  If $n\ge 6$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2+M_3}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
 
@@ -702,7 +702,7 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
     - $\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,
     - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
     - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
-- Let $r\ge 1$ and $n\greater r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^55] as well as a statement in note 1 at the end of this section.
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^55] as well as a statement in note 1 at the end of this section.
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
     - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^56].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.

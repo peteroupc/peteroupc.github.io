@@ -101,7 +101,7 @@ $$W_{2n}\left(\frac{k}{2n}\right) + C_1 M/n^{r/2} - \sum_{i=0}^k W_n\left(\frac{
 
 holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ and $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
 
-$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$ or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
+$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambda$, or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
 > **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ for some $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 >
