@@ -97,7 +97,7 @@ whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that the polynomial
 
 Equivalently (see also Nacu and Peres (2005)[^4]), there is $C_1>0$ such that the inequality&mdash;
 
-$$W_{2n}\left(\f; frac{k}{2n}\right) + C_1 M/n^{r/2} - \sum_{i=0}^k W_n\left(f; \frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
+$$W_{2n}\left(f; frac{k}{2n}\right) + C_1 M/n^{r/2} - \sum_{i=0}^k W_n\left(f; \frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
 
 holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ and $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
 
