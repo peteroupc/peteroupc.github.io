@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="dc.date" content="2026-03-26"><meta name="citation_date" content="2026/03/26"><meta name="citation_publication_date" content="2026/03/26"><meta name="citation_online_date" content="2026/03/26"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Miscellaneous Observations on Randomization"><meta name="dc.title" content="Miscellaneous Observations on Randomization"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="dc.date" content="2026-04-12"><meta name="citation_date" content="2026/04/12"><meta name="citation_publication_date" content="2026/04/12"><meta name="citation_online_date" content="2026/04/12"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Miscellaneous Observations on Randomization"><meta name="dc.title" content="Miscellaneous Observations on Randomization"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="miscellaneous-observations-on-randomization">Miscellaneous Observations on Randomization</h1><p>This version of the document is dated 2026-03-26.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="miscellaneous-observations-on-randomization">Miscellaneous Observations on Randomization</h1><p>This version of the document is dated 2026-04-12.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -899,53 +899,19 @@
 
 <h2 id="batching-random-samples-via-randomness-extraction">Batching Random Samples via Randomness Extraction</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Devroye and Gravel (2020)<sup id="fnref:78:3"><a href="#fn:78" class="footnote" rel="footnote" role="doc-noteref">78</a></sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits given that it produces a specific output <em>Y</em> (or <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) for short):</td>
-    </tr>
-  </tbody>
-</table>
+<p>Devroye and Gravel (2020)<sup id="fnref:78:3"><a href="#fn:78" class="footnote" rel="footnote" role="doc-noteref">78</a></sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits given that it produces a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
 
 <ol>
   <li>Start with the interval [0, 1].</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>For each pair (<em>X</em>, <em>Y</em>) in the batch, the interval shrinks from below by <em>P</em>(<em>X</em>−1</td>
-          <td><em>Y</em>) and from above by <em>P</em>(<em>X</em></td>
-          <td><em>Y</em>). (For example, if [0.2, 0.8] (range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is [0.2+0.1*0.6, 0.2+0.8*0.6] = [0.26, 0.68].  For correctness, though, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
+  <li>For each pair (<em>X</em>, <em>Y</em>) in the batch, the interval shrinks from below by <em>P</em>(<em>X</em>−1 | <em>Y</em>) and from above by <em>P</em>(<em>X</em> | <em>Y</em>). (For example, if [0.2, 0.8] (range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is [0.2+0.1*0.6, 0.2+0.8*0.6] = [0.26, 0.68].  For correctness, though, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)</li>
   <li>Extract the bits, starting from the binary point, that the final interval’s lower and upper bound have in common (or 0 bits if the upper bound is 1). (For example, if the final interval is [0.101010…, 0.101110…] in binary, the bits 1, 0, 1 are extracted, since the common bits starting from the point are 101.)</li>
 </ol>
 
 <p>After a sampling method produces an output <em>Y</em>, both <em>X</em> (the number of random bits the sampler consumed) and <em>Y</em> (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>The issue of finding <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup id="fnref:83"><a href="#fn:83" class="footnote" rel="footnote" role="doc-noteref">83</a></sup>, <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to give out <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011…, then <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is 0.1010 / 0.101011…).</td>
-    </tr>
-  </tbody>
-</table>
+<p>The issue of finding <em>P</em>(<em>X</em> | <em>Y__X</em> | <em>Y</em>) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup id="fnref:83"><a href="#fn:83" class="footnote" rel="footnote" role="doc-noteref">83</a></sup>, <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em> | <em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled <em>Y</em> at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to give out <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the <em>X</em><sup>th</sup> binary digit after the point and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011…, then <em>P</em>(<em>X</em> | <em>Y</em>) is 0.1010 / 0.101011…).</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Unfortunately, <em>P</em>(<em>X</em></td>
-      <td><em>Y</em>) is not easy to calculate when the number of values <em>Y</em> can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes <em>bits</em> as input, such as the von Neumann, Peres, or Zhou–Bruck extractor (see “<a href="https://peteroupc.github.io/randextract.html"><strong>Notes on Randomness Extraction</strong></a>”).  The algorithm counts the number of bits it consumes (<em>X</em>) to produce an output, then feeds <em>X</em> to the extractor as follows.</td>
-    </tr>
-  </tbody>
-</table>
+<p>Unfortunately, <em>P</em>(<em>X</em> | <em>Y</em>) is not easy to calculate when the number of values <em>Y</em> can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes <em>bits</em> as input, such as the von Neumann, Peres, or Zhou–Bruck extractor (see “<a href="https://peteroupc.github.io/randextract.html"><strong>Notes on Randomness Extraction</strong></a>”).  The algorithm counts the number of bits it consumes (<em>X</em>) to produce an output, then feeds <em>X</em> to the extractor as follows.</p>
 
 <ol>
   <li>Let <em>z</em> be abs(<em>X</em>−<em>lastX</em>), where <em>lastX</em> is either the last value of <em>X</em> fed to this extractor for this batch or 0 if there is no such value.</li>
