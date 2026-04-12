@@ -2834,7 +2834,7 @@ then the function can be separated into two polynomials that sum to the denomina
 
 Suppose a polynomial&mdash;
 
-- is 0 or greater for every _&lambda;_ 0 or greater, but not greater than 1,
+- is 0 or greater for every _&lambda;_ that is 0 or greater, but not greater than 1,
 - has degree _n_ or less, and
 - is written in form 1 as given earlier.
 
@@ -2850,7 +2850,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 
 - For each integer _m_ satisfying 0 &le; _m_ &le; _n_, the new polynomial's homogeneous coefficient at _m_ is found as follows:
     1. Set _r_ to 0.
-    2. For each integer _i_ satisfying 0 &le; _i_ &le; _m_, if there is a homogeneous coefficient _c\[i\]_, add _c\[i\]_\*choose(_n_&minus;_i_, _n_&minus;_m_) to _r_.
+    2. For each integer _i_ satisfying 0 &le; _i_ &le; _m_, if there is a coefficient _c\[i\]_ (in the old polynomial), add _c\[i\]_\*choose(_n_&minus;_i_, _n_&minus;_m_) to _r_.
     3. Now, _r_ is the new homogeneous coefficient (corresponding to the term _r_\* _&lambda;_<sup>_m_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_m_</sup>).
 
 > **Example:** Let the following polynomial be given: 3\*_&lambda;_<sup>2</sup> + 10\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.  This is a degree-3 polynomial, and we seek to turn it into a degree-5 homogeneous polynomial.  The result becomes the sum of the terms&mdash;

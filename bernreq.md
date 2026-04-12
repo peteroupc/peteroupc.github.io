@@ -87,17 +87,17 @@ These alternative polynomials usually come with results where the error bound is
 
 The following is a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^i}(\lambda),...$ be a sequence of bounded functions on [0, 1] that converge uniformly to $f$.
+Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative, and denote the Bernstein polynomial of degree $n$ of a function $g$ as $B_n(g)$. Let $W_{2^0}(g; \lambda), W_{2^1}(g; \lambda), ..., W_{2^i}(g; \lambda),...$ be a sequence of operators that map a continuous function $g$ on $[0, 1]$ to a bounded function on $[0, 1]$ and converge uniformly to $f$.
 
 For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
 
-$$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
+$$\text{abs}(f(\lambda)-B_n(W_n(f; \lambda); \lambda)) \le DM/n^{r/2},$$
 
-whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
+whenever $0\le \lambda\le 1$.  Then there is $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(f; \lambda); \lambda) - C_0 M/n^{r/2}$, converge from below to $f$ and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
 Equivalently (see also Nacu and Peres (2005)[^4]), there is $C_1>0$ such that the inequality&mdash;
 
-$$W_{2n}\left(\frac{k}{2n}\right) + C_1 M/n^{r/2} - \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
+$$W_{2n}\left(\f; frac{k}{2n}\right) + C_1 M/n^{r/2} - \sum_{i=0}^k W_n\left(f; \frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
 
 holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}=\mathbb{P}(X_k=i)$ and $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
 
@@ -105,7 +105,7 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambd
 
 > **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ for some $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 >
-> **Note:** I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(\lambda))=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
+> **Note:** I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(f; \lambda); \lambda)=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
 
 <a id=Strategies></a>
 
@@ -211,7 +211,7 @@ Prove or disprove:
 
 [^18]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
-[^19]: If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$, which don't reproduce polynomials of higher degree than linear functions, making it hard to find a bound better than $O(1/n)$ that satisfies the conjecture when $r\ge 3$.
+[^19]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$, which don't reproduce polynomials of higher degree than linear functions, making it hard to find a bound better than $O(1/n)$ that satisfies the conjecture when $r\ge 3$.
 
 [^20]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples, IMA Journal of Numerical Analysis 39(3), July 2019.
 
