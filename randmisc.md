@@ -101,7 +101,7 @@ Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the i
 
 ### On Geometric Samplers
 
-As used in Bringmann and Friedrich (2013\)[^7], a geometric(_p_) random variate expresses the number of failing trial before the first success, where each trial ("coin flip") is independent and has success probability _p_, satisfying 0 &lt; _p_ &le; 1.
+As used in Bringmann and Friedrich (2013\)[^7], a geometric(_p_) random variate expresses the number of failing trials before the first success, where each trial ("coin flip") is independent and has success probability _p_, satisfying 0 &lt; _p_ &le; 1.
 
 > **Note**: The terms "geometric distribution" and "geometric random variate" have conflicting meanings in academic works.
 
@@ -122,7 +122,7 @@ The first subalgorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</s
 6. Multiply _r_ by 2, then set _r_ to _r_ plus either 1 or 0 with equal probability.
 7. If _r_ &le; floor((_pnum_\*_i_)/_pden_) &minus; 2, return 1. If _r_ &ge; floor((_pnum_\*_i_)/_pden_) + 1, return 0.  If neither is the case, multiply _i_ by 2 and go to step 2.
 
-The second subalgorithm returns either an integer _m_ that satisfies $0\le m\less 2^k$, with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.
+The second subalgorithm returns either an integer _m_ that satisfies $0\le m\lt 2^k$, with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that $2^k (px/py)\le 1$.
 
 1. Set _r_ and _m_ to 0.
 2. Set _b_ to 0, then while _b_ is less than _k_:
@@ -903,7 +903,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^90]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
-[^91]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with a mean of $f(\lambda)$ exists given an oracle of variates with an unknown mean equal to $\lambda$ if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
+[^91]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with a mean of $f(\lambda)$ exists, given an oracle of variates with an unknown mean equal to $\lambda$, if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 <a id=License></a>
 
