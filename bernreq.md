@@ -119,8 +119,9 @@ The following are some strategies for answering these questions:
     - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5) (Holtz et al. 2011)[^5].
 - Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^5].
 - Find polynomials of the following kinds and find explicit bounds, with no hidden constants, on the approximation error for those polynomials:
-    - Polynomial operators that preserve polynomials at a higher degree than linear functions.
-    - Operators that produce a degree-$n$ polynomial from $O(n^2)$ sample points.
+    - Operators that produce a degree-$n$ polynomial in Bernstein form, or a ratio of two such polynomials, such that&mdash;
+        - the operator preserves polynomials at a higher degree than linear functions, or
+        - $O(n^2)$ sample points are required.
     - Polynomials built from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^20] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
 
 <a id=Other_Questions></a>
