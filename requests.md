@@ -9,6 +9,7 @@ This page lists questions and issues relating to my articles posted on this site
 ## Contents
 
 - [**Contents**](#Contents)
+- [**Summary**](#Summary)
 - [**My Probability Questions**](#My_Probability_Questions)
 - [**Randomization and Sampling Methods**](#Randomization_and_Sampling_Methods)
 - [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
@@ -18,6 +19,21 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Questions on Image Formats**](#Questions_on_Image_Formats)
 - [**Notes**](#Notes)
 - [**License**](#License)
+
+<a id=Summary></a>
+
+## Summary
+
+Listing of pages containing requests and open questions.
+
+* [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](https://peteroupc.github.io/bernreq.html).  For experts in mathematics and probability.
+* [**Other open questions on probability**](https://peteroupc.github.io/requestsother.html).    For experts in mathematics and probability.
+* [**The sampling problem**](https://peteroupc.github.io/sampling.html). For experts in mathematics and probability.
+* [**Graphics and Music Challenges for Classic-Style Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
+* [**Tileable wallpapers with limited colors and resolution**](https://peteroupc.github.io/classic-wallpaper).  For digital artists and graphics programmers.
+* [**Converting Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html). For graphics programmers.
+* [**A Wish for a New Atlas**](https://peteroupc.github.io/newatlas.html). To condense vast geographic knowledge into a compact book.
+* [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html).  To improve education of children.
 
 <a id=My_Probability_Questions></a>
 
