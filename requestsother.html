@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Other Open Questions on Probability</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/requestsother.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requestsother.html"><meta name="citation_title" content="Other Open Questions on Probability"><meta name="dc.date" content="2025-10-25"><meta name="citation_date" content="2025/10/25"><meta name="citation_publication_date" content="2025/10/25"><meta name="citation_online_date" content="2025/10/25"><meta name="og:title" content="Other Open Questions on Probability"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requestsother.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Other Open Questions on Probability"><meta name="dc.title" content="Other Open Questions on Probability"><meta name="twitter:title" content="Other Open Questions on Probability"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Other Open Questions on Probability</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/requestsother.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requestsother.html"><meta name="citation_title" content="Other Open Questions on Probability"><meta name="dc.date" content="2026-04-20"><meta name="citation_date" content="2026/04/20"><meta name="citation_publication_date" content="2026/04/20"><meta name="citation_online_date" content="2026/04/20"><meta name="og:title" content="Other Open Questions on Probability"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requestsother.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Other Open Questions on Probability"><meta name="dc.title" content="Other Open Questions on Probability"><meta name="twitter:title" content="Other Open Questions on Probability"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="other-open-questions-on-probability">Other Open Questions on Probability</h1><p>This version of the document is dated 2025-10-25.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="other-open-questions-on-probability">Other Open Questions on Probability</h1><p>This version of the document is dated 2026-04-20.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p>This page lists certain open questions on probability.  Any answers to these questions will greatly improve my articles posted on this site.  If you can answer any of them, post an issue in the <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a>.</p>
 
@@ -34,7 +34,7 @@
     </ul>
   </li>
   <li><a href="#Questions_on_Estimation_Algorithms"><strong>Questions on Estimation Algorithms</strong></a></li>
-  <li><a href="#References"><strong>References</strong></a></li>
+  <li><a href="#Notes"><strong>Notes</strong></a></li>
   <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -76,9 +76,9 @@
 
 <p>In the transition rules above, <em>digit</em> is either a base-N digit or the empty string. Also, the machine terminates with probability 0, and rules that would cause the stack to be empty are not allowed. The infinite “output” of the machine is a real number $X$ in the interval [0, 1], in the form of the base-N digit expansion <code>0.dddddd...</code>, where <code>dddddd...</code> are the digits produced by the machine from left to right.</p>
 
-<p>See also Yao 1985.</p>
+<p>See also Yao (1985)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976) is the special case of a pushdown generator where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used. (In other words, a finite-state generator is a <em>finite automaton</em> driven by fair coin flips.)</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> is the special case of a pushdown generator where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used. (In other words, a finite-state generator is a <em>finite automaton</em> driven by fair coin flips.)</p>
 
 <p><a id="Distributions_Computable_by_Pushdown_Generators"></a></p>
 
@@ -91,13 +91,13 @@
 <p>In this sense, there are existing results for finite-state generators. For example:</p>
 
 <ul>
-  <li>Let $X$ be the random variable computable by a finite-state generator, and let $PDF(x)$ be the probability density function of $X$. Then if $PDF(x)$ is infinitely differentiable on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Kindler and Romik 2004).</li>
+  <li>Let $X$ be the random variable computable by a finite-state generator, and let $PDF(x)$ be the probability density function of $X$. Then if $PDF(x)$ is infinitely differentiable on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Kindler and Romik 2004)<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.</li>
 </ul>
 
 <p>Also, I believe that the <a href="https://peteroupc.github.io/bernsupp.html#Finite_State_and_Pushdown_Generators"><strong>following results</strong></a> are true:</p>
 
 <ol>
-  <li>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values. Then: Each value occurs with a rational probability; and each value is either rational or transcendental. This belief is in view of the results of Adamczewski et al. 2020.</li>
+  <li>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values. Then: Each value occurs with a rational probability; and each value is either rational or transcendental. This belief is in view of the results of Adamczewski et al. (2020)<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
   <li>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function.</li>
 </ol>
 
@@ -284,7 +284,7 @@
 
 <ul>
   <li>If the class is sorted permutations, both $D$ and $E$ are the uniform distribution, and given that the return value $n$ is odd, it is known since von Neumann’s 1951 algorithm that that number has an exponential distribution limited to the interval [0, 1].</li>
-  <li>If the class is sorted permutations, both $D$ and $E$ are arbitrary distributions, and given that the return value $n$ is odd, then Forsythe (1972) and Monahan (1979) have characterized the distribution function of the sequence’s first number.</li>
+  <li>If the class is sorted permutations, both $D$ and $E$ are arbitrary distributions, and given that the return value $n$ is odd, then Forsythe (1972)<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> and Monahan (1979)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> have characterized the distribution function of the sequence’s first number.</li>
 </ul>
 
 <p>See the tables in my section “<a href="https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>” for further examples.</p>
@@ -324,7 +324,7 @@
       <li>having decreasing or nowhere increasing probabilities,</li>
     </ul>
 
-    <p>or any combination of these.  Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)—</p>
+    <p>or any combination of these.  Then, is there an algorithm, besides the algorithm of Kunsch et al. (2019)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>—</p>
 
     <ul>
       <li>whose output is within $\epsilon$ of $f(\mathbb{E}[X])$ in terms of absolute error with probability at least 1 minus $\delta$, or</li>
@@ -333,10 +333,10 @@
 
     <p>where $\epsilon$ and $\delta$ are user-specified values? (Relative error means $\text{abs}(\hat\mu/f(\mathbb{E}[X])-1)$ where $\hat\mu$ is the estimate.)</p>
 
-    <p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  My article on <a href="https://peteroupc.github.io/estimation.html"><strong>estimation algorithms</strong></a> already gives a relative-error algorithm for the geometric distribution in a note.</p>
+    <p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. (2019)<sup id="fnref:7:1"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>).  My article on <a href="https://peteroupc.github.io/estimation.html"><strong>estimation algorithms</strong></a> already gives a relative-error algorithm for the geometric distribution in a note.</p>
   </li>
   <li>
-    <p>Let $M_k$ be an upper bound on the $k$th central absolute moment of $X$, for $k&gt;1$.  <a href="https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality"><strong>Based on the Chebyshev inequality</strong></a> (as well as Hickernell et al. 2013; Kunsch et al. 2018), is the mean $\mathbb{E}[X]$ within $\epsilon$ of the mean of $n$ i.i.d. samples, where—</p>
+    <p>Let $M_k$ be an upper bound on the $k$th central absolute moment of $X$, for $k&gt;1$.  <a href="https://stats.stackexchange.com/questions/555066/a-generalized-randomized-mean-estimate-based-on-the-chebyshev-inequality"><strong>Based on the Chebyshev inequality</strong></a> (as well as Hickernell et al. (2013)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>; Kunsch et al. (2019)<sup id="fnref:7:2"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>), is the mean $\mathbb{E}[X]$ within $\epsilon$ of the mean of $n$ i.i.d. samples, where—</p>
 
 \[n=\left\lceil\frac{M_k}{\delta\epsilon^k}\right\rceil,\]
 
@@ -352,32 +352,50 @@
     <p>Let $g$ be a known piecewise continuous function on [0, 1], and suppose $X$ lies on the interval [0, 1].  How can <a href="https://stats.stackexchange.com/a/523355/296678"><strong>a Stack Exchange answer</strong></a> be adapted to $g$, so that the algorithm estimates $g(\mathbb{E}[X])$ with either a high probability of a “small” absolute error or one of a “small” relative error at all points in [0, 1] except at a “negligible” area around $g$’s discontinuities? Is it enough to replace $g$ with a continuous function $f$ that equals $g$ everywhere except at that “negligible” area? Here, the accuracy tolerances for small error, high probability, and “negligible” area are user-specified. Perhaps the tolerance could be defined as the integral of absolute differences between $f$ and $g$ instead of “negligible area”; in that case, how should the continuous $f$ be built?</p>
   </li>
   <li>
-    <p>If $X$ is Bernoulli with unknown mean 0 &lt; <em>λ</em> ≤ 1, is the following algorithm an unbiased estimator of 1/<em>λ</em>? Take random variates i.i.d. until a 1 is taken, then count the number of variates taken this way.  This question is asked because the results of Jacob and Thiery (2015) don’t cover the case of whether a nonnegative unbiased estimator of $f(\mathbb{E}[X])$ exists when $f:(a,b]\to[0,\infty)$ is unbounded, as opposed to when $f$ is bounded or when $f$’s <em>domain</em> is unbounded or a <em>closed</em> interval.</p>
+    <p>If $X$ is Bernoulli with unknown mean 0 &lt; <em>λ</em> ≤ 1, is the following algorithm an unbiased estimator of 1/<em>λ</em>? Take random variates i.i.d. until a 1 is taken, then count the number of variates taken this way.  This question is asked because the results of Jacob and Thiery (2015)<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup> don’t cover the case of whether a nonnegative unbiased estimator of $f(\mathbb{E}[X])$ exists when $f:(a,b]\to[0,\infty)$ is unbounded, as opposed to when $f$ is bounded or when $f$’s <em>domain</em> is unbounded or a <em>closed</em> interval.</p>
   </li>
 </ol>
 
-<p><a id="References"></a></p>
+<p><a id="Notes"></a></p>
 
-<h2 id="references">References</h2>
-
-<ul>
-  <li>Hickernell, F.J., Jiang, L., et al., “<a href="https://arxiv.org/abs/1208.4318v3"><strong>Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling</strong></a>”, arXiv:1208.4318v3 [math.ST], 2012/2013.</li>
-  <li>Kunsch, Robert J., Erich Novak, and Daniel Rudolf. “Solvable integration problems and optimal sample size selection.” Journal of Complexity 53 (2019): 40-67.</li>
-  <li>Forsythe, G.E., “Von Neumann’s Comparison Method for Random Sampling from the Normal and Other Distributions”, <em>Mathematics of Computation</em> 26(120), October 1972.</li>
-  <li>Monahan, J. “Extensions of von Neumann’s method for generating random variables.” Mathematics of Computation 33 (1979): 1065-1069.</li>
-  <li>Knuth, Donald E. And Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”, in Algorithms and Complexity: New Directions and Recent Results, 1976.</li>
-  <li>Vatan, F., “Distribution functions of probabilistic automata”, in Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC ‘01), pp. 684-693, 2001.</li>
-  <li>Kindler, Guy and D. Romik, “On distributions computable by random walks on graphs, “ SIAM Journal on Discrete Mathematics 17 (2004): 624-633.</li>
-  <li>Adamczewski, B., Cassaigne, J. And Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</li>
-  <li>Yao, Andrew C. “Context-free grammars and random number generation.” In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985.</li>
-  <li>Jacob, P.E., Thiery, A.H., “On nonnegative unbiased estimators”, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</li>
-</ul>
+<h2 id="notes">Notes</h2>
 
 <p><a id="License"></a></p>
 
 <h2 id="license">License</h2>
 
 <p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Yao, Andrew C. “Context-free grammars and random number generation.” In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Knuth, Donald E. And Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”, in Algorithms and Complexity: New Directions and Recent Results, 1976. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>Kindler, Guy and D. Romik, “On distributions computable by random walks on graphs, “ SIAM Journal on Discrete Mathematics 17 (2004): 624-633. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>Adamczewski, B., Cassaigne, J. And Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>Forsythe, G.E., “Von Neumann’s Comparison Method for Random Sampling from the Normal and Other Distributions”, <em>Mathematics of Computation</em> 26(120), October 1972. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:6">
+      <p>Monahan, J. “Extensions of von Neumann’s method for generating random variables.” Mathematics of Computation 33 (1979): 1065-1069. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:7">
+      <p>Kunsch, Robert J., Erich Novak, and Daniel Rudolf. “Solvable integration problems and optimal sample size selection.” Journal of Complexity 53 (2019): 40-67. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:7:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:8">
+      <p>Hickernell, F.J., Jiang, L., et al., “<a href="https://arxiv.org/abs/1208.4318v3"><strong>Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling</strong></a>”, arXiv:1208.4318v3 [math.ST], 2012/2013. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:9">
+      <p>Jacob, P.E., Thiery, A.H., “On nonnegative unbiased estimators”, Ann. Statist., Volume 43, Number 2 (2015), 769-784. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
