@@ -105,13 +105,13 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambd
 
 > **Note:** This conjecture may be easy to prove if $W_n$ reproduces polynomials of degree $(r-1)$ or less.  But there are $B_n(W_n)$ (notably the iterated Boolean sum of Bernstein polynomials) that don't do so and yet converge at the rate $O(n^{-r/2})$ for some $r\gt 2$. **Also, see notes 3 and 4 in** "[**End Notes**](#End_Notes)".
 >
-> **Note:** I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(f; \lambda); \lambda)=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
+> **Note:** I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(f; \lambda); \lambda)=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. $W_n$ then maps to a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of operators that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to $f(\lambda)=1/2$, so that $M = 1/2$.  If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
 >
-> **Note:** If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. Based on the proof techniques in several academic works ((Acu et al. 2018, theorem 2.7)[^19], (Khosravian-Arab et al. 2018, theorem 15)[^20], (Ditzian and Totik 1987)[^21]), the following can be shown.  Let $L(g)$ be a linear operator that maps a continuous function $g(x)$ on $[0, 1]$ to a continuous function on that interval.  Let $f(x)$ be a function with a continuous $r$-th derivative on $[0, 1]$, where $k$ is a positive integer.  Let $t$ and $x$ be numbers in that interval. Then $L(f)$ can be written as&mdash;
+> **Note:** If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le\lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. Based on the proof techniques in several academic works ((Acu et al. 2018, theorem 2.7)[^19], (Khosravian-Arab et al. 2018, theorem 15)[^20], (Ditzian and Totik 1987)[^21]), the following can be shown.  Let $L(g)$ be a linear operator that maps a continuous function $g(x)$ on $[0, 1]$ to a continuous function on that interval.  Let $f(x)$ be a function with a continuous $r$-th derivative on $[0, 1]$, where $k$ is a positive integer.  Let $t$ and $x$ be numbers in that interval. Then $L(f)$ can be written as&mdash;
 >
 > $$L(f)(x) = L(1)(x)\cdot f(x) + \left(\sum_{i=1}^r L((t-x)^i)(x)\frac{f^{(i)}(x)}{i!}\right)$$
 >
-> $$+ \frac{1}{r!} L((t-x)^k(f^{(r)}(x_1)-f^{(r)}(x)))(x),$$
+> $$+ \frac{1}{r!} L((t-x)^r(f^{(r)}(x_1)-f^{(r)}(x)))(x),$$
 >
 > for some number $x_1$ between $t$ and $x$.  In this equation, the last term is the result of applying $L$ to the Taylor remainder of $f$ at $t$.  Thus, to find upper bounds for $L(f)$, it's enough to find&mdash;
 >
@@ -225,7 +225,7 @@ Prove or disprove:
 
 [^19]: Acu, A.-M., Gupta, V., et al., "[**Better numerical approximation by Durrmeyer-type operators**](https://arxiv.org/abs/1810.06829)", arXiv:1810.06829 [math.NA]
 
-[^20]: Khosravian-Arab, H., Dehghan, M. & Eslahchi, M.R. A new approach to improve the order of approximation of the Bernstein operators: theory and applications. _Numerical Algorithms_ 77, 111–150 (2018). [https://doi.org/10.1007/s11075-017-0307-z](https://doi.org/10.1007/s11075-017-0307-z)
+[^20]: Khosravian-Arab, H., Dehghan, M. & Eslahchi, M.R. A new approach to improve the order of approximation of the Bernstein operators: theory and applications. _Numerical Algorithms_ 77, 111–150 (2018). [**https://doi.org/10.1007/s11075-017-0307-z**](https://doi.org/10.1007/s11075-017-0307-z)
 
 [^21]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, Springer, 1987.
 
