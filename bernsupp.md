@@ -955,9 +955,9 @@ Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality&mdash;
 
-$$W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
+$$W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^n W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
 
-$$\text{or }\sum_{i=0}^k \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},$$
+$$\text{or }\sum_{i=0}^n \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},$$
 
 holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
 
@@ -1004,11 +1004,11 @@ Then the resulting $M_{\text{inf}}$ is the smallest norm for a function with a c
 
 The following results on hypergeometric random variables are useful.  Denote the $s$-th central absolute moment of a random variable $Y$ as $\tau_s(Y)$.
 
-**Lemma C1.** Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable, where $n$ and $k$ are integers satisfying $n\ge 1$ and $0\le k\le 2n$.  Then, for every even integer $s\ge 0$:
+**Lemma C1.** _Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable, where $n$ and $k$ are integers satisfying $n\ge 1$ and $0\le k\le 2n$.  Then, for every even integer $s\ge 0$:_
 
 $$\tau_s(X) \le \frac{s!}{8^{s/2}((s/2)!)}n^{s/2} = \sigma(s, n).$$
 
-For every odd integer $s\ge 1$:
+_For every odd integer $s\ge 1$:_
 
 $$\tau_s(X) \le \sqrt{\tau_{s-1}(X)\tau_{s+1}(X)}\le \sqrt{\sigma(s-1,n)\sigma(s+1,n)}.$$
 
@@ -1102,7 +1102,7 @@ For a description of the polynomials in the third column, see [**"Approximations
 
 #### Example of Polynomial-Building Scheme
 
-The following example uses the results above to build a polynomial-building scheme for a factory function.
+The following example uses the results earlier in this appendix to build a polynomial-building scheme for a factory function.
 
 Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and $1/(\ln(\lambda/\exp(3)))^2$ otherwise. (This function is not Hölder continuous; its slope is exponentially steep at the point 0.)  Then the following scheme is valid in the sense of Theorem 1:
 

@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-04-20"><meta name="citation_date" content="2026/04/20"><meta name="citation_publication_date" content="2026/04/20"><meta name="citation_online_date" content="2026/04/20"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-04-21"><meta name="citation_date" content="2026/04/21"><meta name="citation_publication_date" content="2026/04/21"><meta name="citation_online_date" content="2026/04/21"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-04-20.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-04-21.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -1287,9 +1287,9 @@
 
 <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality—</p>
 
-\[W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^k W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}\]
+\[W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^n W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}\]
 
-\[\text{or }\sum_{i=0}^k \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},\]
+\[\text{or }\sum_{i=0}^n \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},\]
 
 <p>holds true for each integer $n\ge 1$ that’s a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
 
@@ -1351,11 +1351,11 @@
 
 <p>The following results on hypergeometric random variables are useful.  Denote the $s$-th central absolute moment of a random variable $Y$ as $\tau_s(Y)$.</p>
 
-<p><strong>Lemma C1.</strong> Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable, where $n$ and $k$ are integers satisfying $n\ge 1$ and $0\le k\le 2n$.  Then, for every even integer $s\ge 0$:</p>
+<p><strong>Lemma C1.</strong> <em>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable, where $n$ and $k$ are integers satisfying $n\ge 1$ and $0\le k\le 2n$.  Then, for every even integer $s\ge 0$:</em></p>
 
 \[\tau_s(X) \le \frac{s!}{8^{s/2}((s/2)!)}n^{s/2} = \sigma(s, n).\]
 
-<p>For every odd integer $s\ge 1$:</p>
+<p><em>For every odd integer $s\ge 1$:</em></p>
 
 \[\tau_s(X) \le \sqrt{\tau_{s-1}(X)\tau_{s+1}(X)}\le \sqrt{\sigma(s-1,n)\sigma(s+1,n)}.\]
 
@@ -1528,7 +1528,7 @@
 
 <h4 id="example-of-polynomial-building-scheme">Example of Polynomial-Building Scheme</h4>
 
-<p>The following example uses the results above to build a polynomial-building scheme for a factory function.</p>
+<p>The following example uses the results earlier in this appendix to build a polynomial-building scheme for a factory function.</p>
 
 <p>Let <em>f</em>(<em>λ</em>) = 0 if <em>λ</em> is 0, and $1/(\ln(\lambda/\exp(3)))^2$ otherwise. (This function is not Hölder continuous; its slope is exponentially steep at the point 0.)  Then the following scheme is valid in the sense of Theorem 1:</p>
 
