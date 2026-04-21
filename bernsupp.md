@@ -984,7 +984,7 @@ where $n$, $k$, and $W_i$ are as in the conjecture.  Then, for each $n$ and $k$,
 
 To find $M_{\text{inf}}$, the following method is useful.
 
-Let $r$ be as in the conjecture, let $k\ge r$ be an integer, and take a set of $k+1$ point/value pairs $(0/k, f(0/k)$, $(1/k, f(1/k)$, ..., $(k/k, f(k/k)$.  Set $M$ to 0, then for each subset of this set of pairs (where the subset has from 1 to $r+1$ pairs), do the following.
+Let $r$ be as in the conjecture, let $k\ge r$ be an integer, and take a set of $k+1$ point/value pairs $(0/k, f(0/k))$, $(1/k, f(1/k))$, ..., $(k/k, f(k/k))$.  Set $M$ to 0, then for each subset of this set of pairs (where the subset has from 1 to $r+1$ pairs), do the following.
 
 1. Let $(q_0, f(q_0))$, $(q_1, f(q_1))$, and so on be the pairs in the subset, and let $n$ be the number of pairs in that subset.
 2. Calculate the divided difference for the pairs in this subset, call it $D$.  $D$ is also the value $c_{n-1}$ in the polynomial $c_0 x_0+c_1 x_1+...+c_{n-1} x^{n-1}$ that is the unique polynomial of degree up to $n-1$ that equals $f(q_0)$ at the point $q_0$, $f(q_1)$ at $q_1$, and so on.
