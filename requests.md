@@ -10,7 +10,6 @@ This page lists questions and issues relating to my articles posted on this site
 
 - [**Contents**](#Contents)
 - [**Summary**](#Summary)
-- [**My Probability Questions**](#My_Probability_Questions)
 - [**Randomization and Sampling Methods**](#Randomization_and_Sampling_Methods)
 - [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
 - [**Partially-Sampled Random Numbers**](#Partially_Sampled_Random_Numbers)
@@ -26,23 +25,15 @@ This page lists questions and issues relating to my articles posted on this site
 
 Listing of pages containing requests and open questions.
 
-* [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](https://peteroupc.github.io/bernreq.html).  For experts in mathematics and probability.
-* [**Other open questions on probability**](https://peteroupc.github.io/requestsother.html).    For experts in mathematics and probability.
-* [**The sampling problem**](https://peteroupc.github.io/sampling.html). For experts in mathematics and probability.
+* For experts in mathematics and probability. Many of the questions on the following pages were also posted by me on _MathOverflow_ and other _Stack Exchange_ sites.
+    * [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](https://peteroupc.github.io/bernreq.html).  For experts in mathematics and probability.
+    * [**Other open questions on probability**](https://peteroupc.github.io/requestsother.html).    For experts in mathematics and probability.
+    * [**The sampling problem**](https://peteroupc.github.io/sampling.html). For experts in mathematics and probability.
 * [**Graphics and Music Challenges for Classic-Style Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
 * [**Tileable wallpapers with limited colors and resolution**](https://peteroupc.github.io/classic-wallpaper).  For digital artists and graphics programmers.
 * [**Converting Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html). For graphics programmers.
 * [**A Wish for a New Atlas**](https://peteroupc.github.io/newatlas.html). To condense vast geographic knowledge into a compact book.
 * [**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html).  To improve education of children.
-
-<a id=My_Probability_Questions></a>
-
-## My Probability Questions
-
-The following two pages describe questions I have also posted on _MathOverflow_ and other _Stack Exchange_ sites.  Can you help answer any of these?  Answers to them will greatly improve my articles on this site.
-
-- [**Open Questions on the Bernoulli Factory Problem**](https://peteroupc.github.io/bernreq.html)
-- [**Other Open Questions on Probability**](https://peteroupc.github.io/requestsother.html)
 
 <a id=Randomization_and_Sampling_Methods></a>
 

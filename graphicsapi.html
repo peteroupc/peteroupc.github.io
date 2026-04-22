@@ -26,7 +26,7 @@
 
 <h2 id="d-graphics">2-D Graphics</h2>
 
-<p>The simplest way to proceed is to give the application a <em>frame buffer</em>, a block of memory consisting of a rectangular array of pixel samples.  The nature of each pixel sample depends on the game’s needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.<sup id="fnref:1:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
+<p>The simplest way to proceed is to give the application a <em>frame buffer</em>, a block of system memory consisting of a rectangular array of pixel samples.  The nature of each pixel sample depends on the game’s needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.<sup id="fnref:1:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <blockquote>
   <p><strong>Note:</strong> Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels.</p>
@@ -213,7 +213,7 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
       <p>A “monotone-vertical” polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of <em>Michael Abrash’s Graphics Programming Black Book Special Edition</em>, 1997. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>Elliptical arcs were not supported in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, “Microsoft Windows CE Graphics Features”. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, “Microsoft Windows CE Graphics Features”. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
       <p><a href="https://behdad.org/text2024"><strong>Text rendering</strong></a> is essentially the drawing of <em>glyphs</em> of text. A <em>glyph</em> is a writing element of a <em>font</em>; examples are letters, digits, the <em>i</em>’s dot, and the <em>f-f-l</em> combination. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts and (2) <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“subpixel” antialiasing</strong></a> of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
