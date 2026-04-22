@@ -51,7 +51,7 @@ Suppose $f:[0,1]\to [0,1]$ is continuous and belongs to a large class of functio
 2. (_Approximate Bernoulli factory_): Given $\epsilon > 0$, compute the Bernstein coefficients of a polynomial or rational function (of some degree $n$) that is within $\epsilon$ of $f$.
 3. (_Series expansion of simple functions_): Find a nonnegative random variable $X$ and a series $f(\lambda)=\sum_{a\ge 0}\gamma_a(\lambda)$ such that $\gamma_a(\lambda)/\mathbb{P}(X=a)$ (letting 0/0 equal 0) is a polynomial or rational function with rational Bernstein coefficients lying in $[0, 1]$.[^2]  Do the same for a function that is within $\epsilon$ of $f$, rather than $f$.
 
-The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
+The convergence rate must be $O(1/n^{r/2})$ if the class has only functions with Lipschitz-continuous $(r-1)$-th derivative.  (Emphasis is given to cases where $r\ge 3$.)  The method may not introduce transcendental or trigonometric functions (as with Chebyshev interpolants).
 
 <a id=Solving_the_Bernoulli_factory_problem_with_polynomials></a>
 
@@ -75,7 +75,7 @@ _For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _in Bernstein
 
 However, ordinary Bernstein polynomials converge to a function at the rate $\Omega(1/n)$ unless the function is linear, a result known since Voronovskaya (1932)[^7] and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
-But Lorentz (1966)[^8] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough).
+But Lorentz (1966)[^8] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough; for example, if the function's second or higher-order derivative is Lipschitz continuous).
 
 Thus, researchers have studied alternatives to Bernstein polynomials that improve the convergence rate for "smoother" functions.  See Holtz et al. (2011)[^5], Sevy (1991)[^9], Waldron (2009)[^10], Costabile et al. (2005)[^11], Han (2003)[^12], Khosravian-Arab et al. (2018)[^13], and references therein; see also Micchelli (1973)[^14], Güntürk and Li (2021a)[^15], (2021b)[^16], Draganov (2024)[^17], and Tachev (2022)[^18].
 
@@ -113,7 +113,7 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambd
 >
 > $$+ \frac{1}{r!} L((t-x)^r(f^{(r)}(x_1)-f^{(r)}(x)))(x),$$
 >
-> for some number $x_1$ between $t$ and $x$.  In this equation, the last term is the result of applying $L$ to the Taylor remainder of $f$ at $t$.  Thus, to find upper bounds for $L(f)$, it's enough to find&mdash;
+> for some number $x_1$ between $t$ and $x$.  In this equation, the last term is the result of applying $L$ to the Taylor remainder of $f$ at $t$.  Thus, to find upper bounds for $L(f)$, it's enough to find upper bounds for&mdash;
 >
 > - $L((t-x)^i)$ (the so-called _central moments_) for $i$ from 0 through $r$), and
 > - $L((t-x)^r(f^{(r)}(x_1)-f^{(r)}(x)))$, which is harder to find, especially if $L$ is not a _positive_ linear operator. (An example of a nonpositive linear operator is $L(f)=2f-B_n(f)$, where $B_n(f)$ is the degree-$n$ Bernstein polynomial of $f$.)

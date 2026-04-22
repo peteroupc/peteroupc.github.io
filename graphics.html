@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-03-27"><meta name="citation_date" content="2026/03/27"><meta name="citation_publication_date" content="2026/03/27"><meta name="citation_online_date" content="2026/03/27"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-04-22"><meta name="citation_date" content="2026/04/22"><meta name="citation_publication_date" content="2026/04/22"><meta name="citation_online_date" content="2026/04/22"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-03-27.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-04-22.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p>The following are challenges I make to the computer community, relating to:</p>
 
@@ -51,6 +51,7 @@
       <li><a href="#Guide_for_creating_3_D_models_in_the_pre_2000_style"><strong>Guide for creating 3-D models in the pre-2000 style</strong></a></li>
     </ul>
   </li>
+  <li><a href="#Book_form_tutorial_on_pre_2000_computer_graphics_programming"><strong>Book-form tutorial on pre-2000 computer graphics programming</strong></a></li>
   <li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
   <li><a href="#License"><strong>License</strong></a></li>
   <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -84,7 +85,7 @@
 <p>Limit 3-D graphics to the following:<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <ol>
-  <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> (See also survey project in “Other Challenges and Projects”, later.)
+  <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> (See also survey project in “<a href="#Other_Challenges_and_Projects"><strong>Other Challenges and Projects</strong></a>”, later.)
     <ul>
       <li>A <em>primitive</em> is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.</li>
       <li>Each vertex of the primitive points to a vertex from the vertex list described later.</li>
@@ -106,7 +107,7 @@
   <li>The width and height of each texture are each powers of 2.</li>
   <li>A texture’s maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.</li>
   <li>Textures may contain transparent pixels.</li>
-  <li>Textures should not be “pixelated” before the game uses them.  A “pixelated” image occurs when an image is enlarged with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
+  <li>Image files used by the game should not store “pre-pixelated” textures.  A “pre-pixelated” image occurs when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
   <li>For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>  Bilinear filtering and edge antialiasing (smoothing)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> are optional.</li>
   <li>3-D primitives should undergo perspective correction, but this is optional.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></li>
   <li>The 3-D graphics buffer’s resolution is the same as the “screen resolution”.</li>
@@ -140,7 +141,7 @@
       </li>
       <li>Each color in each color table used by tiles is of the vertex color format given earlier.</li>
       <li>Tiles may contain transparent, but not translucent, pixels.</li>
-      <li>Tiles should not be “pixelated” before the game uses them.</li>
+      <li>Image files used by the game should not store “pre-pixelated” tiles.</li>
       <li>When referenced in a 2-D layer, a tile can be horizontally flipped, vertically flipped, or both.</li>
     </ol>
   </li>
@@ -157,7 +158,7 @@
           <li>No affine transformation or flipping of sprites is allowed.</li>
         </ol>
       </li>
-      <li>Sprites should not be “pixelated” before the game uses them.</li>
+      <li>Image files used by the game should not store “pre-pixelated” sprites.</li>
       <li>Up to N sprites can be displayed at a time, where N is calculated as (screen width × screen height × 16) / (X × Y), rounded up, but not more than 512.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
     </ol>
   </li>
@@ -324,7 +325,7 @@
 <h4 id="d-graphics">3-D graphics</h4>
 
 <ul>
-  <li>The <em>PC 99 System Design Guide</em> sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of software that performs as well as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.</li>
+  <li>The <em>PC 99 System Design Guide</em> sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.</li>
   <li>An application may choose to support stencil buffers, bump mapping, environment mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.</li>
   <li>For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.</li>
   <li>This specification allows for:
@@ -494,7 +495,7 @@
 
 <h3 id="button-and-border-styles-for-classic-interfaces">Button and border styles for classic interfaces</h3>
 
-<p>See <a href="https://peteroupc.github.io/classic-wallpaper/docs/uielements.html"><strong>“Traditional User-Interface Graphics”</strong></a> for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.</p>
+<p>See <a href="https://peteroupc.github.io/classic-wallpaper/docs/uielements.html#Button_and_Border_Drawing_Challenge"><strong>“Traditional User-Interface Graphics”</strong></a> for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.</p>
 
 <p><a id="Sound_bank_development_guide"></a></p>
 
@@ -507,6 +508,21 @@
 <h3 id="guide-for-creating-3-d-models-in-the-pre-2000-style">Guide for creating 3-D models in the pre-2000 style</h3>
 
 <p>Develop a guide for creating 3-D models for use in modern video games that follow the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification</strong></a> given earlier on classic (pre-2000) 3-D graphics, in a similar vein to “<a href="https://threedium.io/3d-model/game-ready"><strong>Game-Ready 3D Models: Requirements, Creation, and Export</strong></a>” (which was designed for high-system-resource games from 2024 or so).  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today’s models.)</p>
+
+<p><a id="Book_form_tutorial_on_pre_2000_computer_graphics_programming"></a></p>
+
+<h2 id="book-form-tutorial-on-pre-2000-computer-graphics-programming">Book-form tutorial on pre-2000 computer graphics programming</h2>
+
+<p>Write a free and open-source tutorial on game graphics programming using the pre-2000 graphics style emphasized in the <a href="https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games"><strong>specification</strong></a> given earlier, with the following features:</p>
+
+<ol>
+  <li>The tutorial’s length is about that of a book and is designed to be printed.</li>
+  <li>The tutorial is programming-language neutral.</li>
+  <li>The tutorial should cover all 2-D and 3-D graphics concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and 3-D graphics features.</li>
+  <li>The tutorial explains math concepts to readers as necessary, without assuming prior knowledge of math higher than basic algebra.</li>
+  <li>The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.</li>
+  <li>As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer for pre-2000 2-D and 3-D computer graphics, without third-party software libraries.  (See definition of “rendered in software” in the specification.)</li>
+</ol>
 
 <p><a id="Acknowledgments"></a></p>
 

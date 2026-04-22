@@ -33,6 +33,7 @@ All may interest 1990s computer users.
     - [**Button and border styles for classic interfaces**](#Button_and_border_styles_for_classic_interfaces)
     - [**Sound bank development guide**](#Sound_bank_development_guide)
     - [**Guide for creating 3-D models in the pre-2000 style**](#Guide_for_creating_3_D_models_in_the_pre_2000_style)
+- [**Book-form tutorial on pre-2000 computer graphics programming**](#Book_form_tutorial_on_pre_2000_computer_graphics_programming)
 - [**Acknowledgments**](#Acknowledgments)
 - [**License**](#License)
 - [**Notes**](#Notes)
@@ -62,7 +63,7 @@ Define the _larger screen dimension_ as the larger of the screen width and the s
 
 Limit 3-D graphics to the following:[^3]
 
-1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4] \(See also survey project in "Other Challenges and Projects", later.)
+1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4] \(See also survey project in "[**Other Challenges and Projects**](#Other_Challenges_and_Projects)", later.)
     * A _primitive_ is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.
     * Each vertex of the primitive points to a vertex from the vertex list described later.
     * Each primitive can be translucent.
@@ -78,7 +79,7 @@ Limit 3-D graphics to the following:[^3]
 4. The width and height of each texture are each powers of 2.
 5. A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
 6. Textures may contain transparent pixels.
-7. Textures should not be "pixelated" before the game uses them.  A "pixelated" image occurs when an image is enlarged with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
+7. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image occurs when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 8. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering and edge antialiasing (smoothing)[^7] are optional.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^8]
 10. The 3-D graphics buffer's resolution is the same as the "screen resolution".
@@ -101,7 +102,7 @@ Limit 2-D graphics to the following: [^9]
         4. There is a single 256-color table for use by tiles.  Each tile is in an 8-bit-per-pixel format.
     3. Each color in each color table used by tiles is of the vertex color format given earlier.
     4. Tiles may contain transparent, but not translucent, pixels.
-    5. Tiles should not be "pixelated" before the game uses them.
+    5. Image files used by the game should not store "pre-pixelated" tiles.
     6. When referenced in a 2-D layer, a tile can be horizontally flipped, vertically flipped, or both.
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
     1. Each sprite has up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
@@ -112,7 +113,7 @@ Limit 2-D graphics to the following: [^9]
         1. Each sprite can undergo a 2-D affine transformation.
         2. Each sprite can be horizontally flipped, vertically flipped, or both.[^12]
         3. No affine transformation or flipping of sprites is allowed.
-    6. Sprites should not be "pixelated" before the game uses them.
+    6. Image files used by the game should not store "pre-pixelated" sprites.
     7. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^13]
 
 > **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
@@ -237,7 +238,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### 3-D graphics
 
-- The _PC 99 System Design Guide_ sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of software that performs as well as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.
+- The _PC 99 System Design Guide_ sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.
 - An application may choose to support stencil buffers, bump mapping, environment mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.
 - For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.
 - This specification allows for:
@@ -370,7 +371,7 @@ See the "[**peteroupc/classic-wallpaper**](https://peteroupc.github.io/classic-w
 
 ### Button and border styles for classic interfaces
 
-See [**"Traditional User-Interface Graphics"**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
+See [**"Traditional User-Interface Graphics"**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html#Button_and_Border_Drawing_Challenge) for a challenge on writing computer code (released to the public domain or under the Unlicense) to draw button and border styles for classic graphical user interfaces.
 
 <a id=Sound_bank_development_guide></a>
 
@@ -383,6 +384,19 @@ Write an open-source and detailed guide on using free-of-cost software to produc
 ### Guide for creating 3-D models in the pre-2000 style
 
 Develop a guide for creating 3-D models for use in modern video games that follow the [**specification**](#Graphics_Challenge_for_Classic_Style_Games) given earlier on classic (pre-2000) 3-D graphics, in a similar vein to "[**Game-Ready 3D Models: Requirements, Creation, and Export**](https://threedium.io/3d-model/game-ready)" (which was designed for high-system-resource games from 2024 or so).  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today's models.)
+
+<a id=Book_form_tutorial_on_pre_2000_computer_graphics_programming></a>
+
+## Book-form tutorial on pre-2000 computer graphics programming
+
+Write a free and open-source tutorial on game graphics programming using the pre-2000 graphics style emphasized in the [**specification**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games) given earlier, with the following features:
+
+1. The tutorial's length is about that of a book and is designed to be printed.
+2. The tutorial is programming-language neutral.
+3. The tutorial should cover all 2-D and 3-D graphics concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and 3-D graphics features.
+4. The tutorial explains math concepts to readers as necessary, without assuming prior knowledge of math higher than basic algebra.
+5. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
+6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer for pre-2000 2-D and 3-D computer graphics, without third-party software libraries.  (See definition of "rendered in software" in the specification.)
 
 <a id=Acknowledgments></a>
 
