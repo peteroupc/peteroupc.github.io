@@ -33,7 +33,7 @@ All may interest 1990s computer users.
     - [**Button and border styles for classic interfaces**](#Button_and_border_styles_for_classic_interfaces)
     - [**Sound bank development guide**](#Sound_bank_development_guide)
     - [**Guide for creating 3-D models in the pre-2000 style**](#Guide_for_creating_3_D_models_in_the_pre_2000_style)
-- [**Book-form tutorial on pre-2000 computer graphics programming**](#Book_form_tutorial_on_pre_2000_computer_graphics_programming)
+    - [**Book-form tutorial on pre-2000 computer graphics programming**](#Book_form_tutorial_on_pre_2000_computer_graphics_programming)
 - [**Acknowledgments**](#Acknowledgments)
 - [**License**](#License)
 - [**Notes**](#Notes)
@@ -387,7 +387,7 @@ Develop a guide for creating 3-D models for use in modern video games that follo
 
 <a id=Book_form_tutorial_on_pre_2000_computer_graphics_programming></a>
 
-## Book-form tutorial on pre-2000 computer graphics programming
+### Book-form tutorial on pre-2000 computer graphics programming
 
 Write a free and open-source tutorial on game graphics programming using the pre-2000 graphics style emphasized in the [**specification**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games) given earlier, with the following features:
 
