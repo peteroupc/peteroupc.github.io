@@ -400,6 +400,8 @@ Write a free and open-source tutorial on game graphics programming using the pre
 5. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
 6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
 
+A similar tutorial is [**_Computer Graphics from Scratch_**](https://gabrielgambetta.com/computer-graphics-from-scratch/) by Gabriel Gambetta, although it's not geared toward pre-2000 video-game graphics.  For example, it covers ray tracing (which is outside this specification's scope) but not sprites or other 2-D concepts.
+
 <a id=Acknowledgments></a>
 
 ## Acknowledgments
