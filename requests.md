@@ -26,9 +26,9 @@ This page lists questions and issues relating to my articles posted on this site
 Listing of pages containing requests and open questions.
 
 * For experts in mathematics and probability. Many of the questions on the following pages were also posted by me on _MathOverflow_ and other _Stack Exchange_ sites.
-    * [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](https://peteroupc.github.io/bernreq.html).  For experts in mathematics and probability.
-    * [**Other open questions on probability**](https://peteroupc.github.io/requestsother.html).    For experts in mathematics and probability.
-    * [**The sampling problem**](https://peteroupc.github.io/sampling.html). For experts in mathematics and probability.
+    * [**Open questions on the Bernoulli factory problem (the new-coins-from-old problem)**](https://peteroupc.github.io/bernreq.html).
+    * [**Other open questions on probability**](https://peteroupc.github.io/requestsother.html).
+    * [**The sampling problem**](https://peteroupc.github.io/sampling.html).
 * [**Graphics and Music Challenges for Classic-Style Computer Applications**](https://peteroupc.github.io/graphics.html). For anyone designing computer graphics or music, and for game programmers.
 * [**Tileable wallpapers with limited colors and resolution**](https://peteroupc.github.io/classic-wallpaper).  For digital artists and graphics programmers.
 * [**Converting Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html). For graphics programmers.
@@ -101,8 +101,8 @@ Should this document cover the following topics, and if so, how?
 
 Does any of the following exist?
 
-- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or pending patent applications.
-- Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card, provided that method is not covered by any active patents or patent applications.
+- Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or patent applications.
 
 <a id=Questions_on_Image_Formats></a>
 
