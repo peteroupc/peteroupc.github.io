@@ -1038,8 +1038,8 @@ The following claim is believed to be true.
 Then&mdash;
 
 $$h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
->
->**Note:** Because of the assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) or a _nonanalytic operator_ (so that $W_i$ can be nonanalytic for some $i$) (Gavrea and Ivan 2018)[^54].
+
+Because of the assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) or a _nonanalytic operator_ (so that $W_i$ can be nonanalytic for some $i$) (Gavrea and Ivan 2018)[^54].
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 

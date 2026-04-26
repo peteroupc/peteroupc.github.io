@@ -112,7 +112,7 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 > for some number $x_1$ between $t$ and $x$.  In this equation, the last term is the result of applying $L$ to the Taylor remainder of $f$ at $t$.  Thus, to find upper bounds for $L(f)$, it's enough to find upper bounds for&mdash;
 >
 > - $L((t-x)^i)$ (the so-called _central moments_) for $i$ from 0 through $r$), and
-> - $L((t-x)^r(f^{(r)}(x_1)-f^{(r)}(x)))$, which is harder to find, especially if $L$ is not a _positive_ linear operator. (An example of a nonpositive linear operator is $L(f)=2f-B_n(f)$, where $B_n(f)$ is the degree-$n$ Bernstein polynomial of $f$.)
+> - $L((t-x)^r(f^{(r)}(x_1)-f^{(r)}(x)))$, which is harder to find, especially if $L$ is not a _positive_ linear operator.[^29] (An example of a nonpositive linear operator is $L(f)=2f-B_n(f)$, where $B_n(f)$ is the degree-$n$ Bernstein polynomial of $f$.)
 
 <a id=Strategies></a>
 
@@ -238,3 +238,5 @@ Prove or disprove:
 [^27]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 [^28]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+
+[^29]: If $L$ is not a positive linear operator, the inequality $\text{abs}(L(f))\le \text{abs}(L(\text{abs}(f)))$ is not true in general.
