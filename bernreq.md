@@ -23,6 +23,7 @@ This page contains several questions about the [**Bernoulli factory**](https://p
     - [**Solving the Bernoulli factory problem with polynomials**](#Solving_the_Bernoulli_factory_problem_with_polynomials)
     - [**A Matter of Efficiency**](#A_Matter_of_Efficiency)
     - [**A Conjecture on Polynomial Approximation**](#A_Conjecture_on_Polynomial_Approximation)
+        - [**Example**](#Example)
     - [**Strategies**](#Strategies)
 - [**Other Questions**](#Other_Questions)
 - [**Notes**](#Notes)
@@ -105,7 +106,36 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 >
 > 2. I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(f; \lambda); \lambda)=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. $W_n$ then maps to a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of operators that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to $f(\lambda)=1/2$, so that $M = 1/2$.  If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
 >
-> 3. If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le\lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. This may be achieved by rewriting $L_n$ as a difference between positive linear operators $LP_n$ and $LM_n$ such that $L_n=LP_n(f)-LM_n(f)$, and finding the values of $LP_n((t-x)^i)+LM_n((t-x)^i)$ (the so-called _central moments_) for $i$ from 0 through $r$.[^20]  See Gonska et al. (2006)[^27].
+> 3. If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le\lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. This may be achieved by rewriting $L_n$ as a difference between positive linear operators $LP_n$ and $LM_n$ such that $L_n=LP_n(f)-LM_n(f)$, and finding the values of $LP_n((t-x)^i)+LM_n((t-x)^i)$ (the so-called _central moments_) for $i$ from 0 through $r$.[^20]  See Gonska et al. (2006)[^21].
+
+<a id=Example></a>
+
+#### Example
+
+Take the example of the iterated Boolean sum of Bernstein polynomials, with one iteration.  This corresponds to the family of linear operators $W_n=2f-B_n(f)$; see Güntürk and Li (2021a)[^16].  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
+
+$$L_n(f)(\lambda) = \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) - B_{2n}(f)\left(\frac{k}{2n}\right)) - (2f\left(\frac{i}{n}\right) - B_n(f)\left(\frac{i}{n}\right))\right) \sigma_{n,k}$$
+
+$$= \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) + B_{n}(f)\left(\frac{i}{2n}\right))\right)\sigma_{n,k} - \sum_{i=0}^n \left((2f\left(\frac{i}{n}\right) + B_{2n}(f)\left(\frac{k}{n}\right))\right) \sigma_{n,k}$$
+
+$$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
+
+Then $L_n$ is a (nonpositive) linear operator corresponding to $W_n$, and $LA_n$ and $LB_n$ are positive linear operators.  Because the latter two operators are positive, it is easier to assess their approximation properties.
+
+The following are so-called "moments" of $L_n$ and of the sum $LA_n + LB_n$, where $e_1$ is a function that equals $x$:
+
+- $L_n((e_1-x)^0)(x) = 0$.
+- $L_n((e_1-x)^1)(x) = 0$.
+- $L_n((e_1-x)^2)(x) = 3x(x - 1)/(2n(2n - 1)) = O(1/n^2)$.
+- $LA_n((e_1-x)^2)(x) + LB_n((e_1-x)^2)(x) = LA_n(abs(e_1-x)^2)(x) + LB_n(abs(e_1-x)^2)(x) = -x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
+
+By corollary 2.3 of Gonska et al. (2006)[^21], $L_n$ can be bounded as follows, given that $LA_n$ and $LB_n$ are positive linear operators and $L_n((e_1-x)^0)(x)=L_n((e_1-x)^1)(x)=0$:
+
+$$abs(L_n(f)(\lambda))\le \frac{1}{2!} \max(abs(f^{(2)})) \frac{-\lambda(12n - 5)\cdot(\lambda - 1)}{2n(2n - 1)}$$
+
+$$\le \max(abs(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
+
+So, the rate of $abs(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
 
 <a id=Strategies></a>
 
@@ -114,7 +144,7 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 The following are some strategies for answering these questions:
 
 - Verify my proofs for the results on error bounds for certain polynomials in "[**Results Used in Approximations By Polynomials**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials)", including:
-    - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$:[^21] Propositions B10C and B10D.
+    - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$:[^22] Propositions B10C and B10D.
     - Linear combinations of Bernstein polynomials (see Costabile et al. (2005)[^12]): Proposition B10.
     - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5) (Holtz et al. 2011)[^6].
 - Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^6].
@@ -122,7 +152,7 @@ The following are some strategies for answering these questions:
     - Operators that produce a degree-$n$ polynomial in Bernstein form, or a ratio of two such polynomials, such that&mdash;
         - the operator preserves polynomials at a higher degree than linear functions, or
         - $O(n^2)$ sample points are required.
-    - Operators that produce polynomials from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^22] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
+    - Operators that produce polynomials from samples at _rational_ values of a function $f$ that cluster at a quadratic rate toward the endpoints (Adcock et al. 2019)[^23] \(for example, values that converge to Chebyshev points $\cos(j\pi/n)$ with increasing $n$, or to Legendre points).  See also 7, 8, and 12 of Trefethen, [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
 
 <a id=Other_Questions></a>
 
@@ -130,7 +160,7 @@ The following are some strategies for answering these questions:
 
 - Let $f(\lambda):[0,1]\to [0,1]$ be writable as $f(\lambda)=\sum_{n\ge 0} a_n \lambda^n,$ where $a_n\ge 0$ is rational, $a_n$ is nonzero infinitely often, and $f(1)$ is irrational.  Then what are simple criteria to determine whether there is $0\lt p\lt 1$ such that $0\le a_n\le p(1-p)^n$ and, if so, to find such $p$?  Obviously, if $(a_n)$ is nowhere increasing then $1\gt p\ge a_0$.
 - For each $r>0$, characterize the functions $f(\lambda)$ that admit a Bernoulli factory where the expected number of coin flips, raised to the power of $r$, is finite.
-- [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let** $f(\lambda):[a, b] \to (0, 1)$ **be continuous, where** $0\lt a$, $a\lt b$, $b\lt 1$.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^23].
+- [**Multiple-output Bernoulli factories**](https://mathoverflow.net/questions/412772/from-biased-coins-to-biased-coins-as-efficiently-as-possible): **Let** $f(\lambda):[a, b] \to (0, 1)$ **be continuous, where** $0\lt a$, $a\lt b$, $b\lt 1$.  Define the entropy bound as $h(f(\lambda))/h(\lambda),$ where $h(x)=-x \ln(x)-(1-x) \ln(1-x)$ is related to the Shannon entropy function. Then there is an algorithm that tosses heads with probability $f(\lambda)$ given a coin that shows heads with probability $\lambda$ and no other source of randomness (Keane and O'Brien 1994)[^24].
 
     But, **is there an algorithm for $f$ that produces multiple independent outputs rather than one and has an expected number of coin flips per output that is arbitrarily close to the entropy bound, uniformly for every $\lambda$ in $f$'s domain**? Call such an algorithm an _optimal factory_.  (See Nacu and Peres (2005, Question 1)[^5].)  And, does the answer change if the algorithm has access to a fair coin in addition to the biased coin?
 
@@ -138,14 +168,14 @@ The following are some strategies for answering these questions:
 
 - [**Pushdown automata and algebraic functions**](https://cstheory.stackexchange.com/questions/50853/from-coin-flips-to-algebraic-functions-via-pushdown-automata): A _pushdown automaton_ is a finite state machine with an unbounded stack, driven by a biased coin with an unknown probability of heads, $\lambda$. Its stack starts with a single symbol.  On each step, the machine flips the coin, then, based on the coin flip, the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero or more symbols. When the stack is empty, the machine stops and returns either 0 or 1 depending on the state it ends up at.
 
-    Let $f(\lambda)$ be continuous and map the open interval (0, 1) to itself. Mossel and Peres (2005)[^24] showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is _algebraic over the rational numbers_ (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions) for more information on my progress on the problem.
+    Let $f(\lambda)$ be continuous and map the open interval (0, 1) to itself. Mossel and Peres (2005)[^25] showed that a pushdown automaton can output 1 with probability $f(\lambda)$ only if $f$ is _algebraic over the rational numbers_ (there is a nonzero polynomial $P(x, y)$ in two variables and whose coefficients are rational numbers, such that $P(x, f(x)) = 0$ for every $x$ in the domain of $f$).  See an [**appendix in one of my articles**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions) for more information on my progress on the problem.
 
     Prove or disprove:
 
     1. If $f$ is algebraic over rational numbers it can be simulated by a pushdown automaton.
     2. min($\lambda$, $1-\lambda$) and $\lambda^{1/p}$, for every prime $p\ge 3$, can be simulated by a pushdown automaton.
-    3. Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its "critical exponent" is a dyadic number greater than $-1$ or has the form $-1-1/2^k$ for some integer $k\ge 1$.[^25]
-- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps $[0, 1]$ to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^26] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in $[0, 1]$.  Given that a polynomial's degree is $m$ and its "standard" coefficients are integers, what are upper bounds (or even exact maximums) on its coin-flipping degree?
+    3. Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its "critical exponent" is a dyadic number greater than $-1$ or has the form $-1-1/2^k$ for some integer $k\ge 1$.[^26]
+- [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps $[0, 1]$ to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^27] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in $[0, 1]$.  Given that a polynomial's degree is $m$ and its "standard" coefficients are integers, what are upper bounds (or even exact maximums) on its coin-flipping degree?
 - [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute _p_-adic digit expansions.
     - Simulation experiments that succeed with an irrational probability.
     - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions of irrational constants.
@@ -165,7 +195,7 @@ Prove or disprove:
 - Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max_{0\le\lambda\le 1}\text{abs}(B_n(f)(\lambda)-f(\lambda)))$ (where $n$ is a positive integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - \text{abs}(B_n(f)(1/2)-f(1/2)))$, if $f$ is also symmetric about 1/2.
 - Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is possible to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness (and, thus, $f$ is [**_strongly simulable_**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)) **if and only if**&mdash;
 
-    - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^23]), and
+    - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are bounded below by min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^24]), and
     - $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
     - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
     - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $h(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
@@ -216,16 +246,16 @@ Prove or disprove:
 
 [^20]: Working with linear operators is easier if the operators are positive.  Indeed, if $L$ is not a positive linear operator, the inequality $\text{abs}(L(f))\le \text{abs}(L(\text{abs}(f)))$ (for somewhere negative $f$) is not true in general, and neither is it easy to upper-bound $\text{abs}(L(fg))$ if $f$ or $g$ is somewhere negative.
 
-[^21]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$ (where the $^k$ indicates $k$-fold nesting), which don't reproduce polynomials of higher degree than linear functions, making it hard to find a bound better than $O(1/n)$ that satisfies the conjecture when $r\ge 3$.
+[^21]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
 
-[^22]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples", IMA Journal of Numerical Analysis 39(3), July 2019.
+[^22]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$ (where the $^k$ indicates $k$-fold nesting), which don't reproduce polynomials of higher degree than linear functions, making it hard to find a bound better than $O(1/n)$ that satisfies the conjecture when $r\ge 3$.
 
-[^23]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^23]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples", IMA Journal of Numerical Analysis 39(3), July 2019. [https://doi.org/10.1093/imanum/dry024](https://doi.org/10.1093/imanum/dry024)
 
-[^24]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
+[^24]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^25]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
+[^25]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
 
-[^26]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+[^26]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
-[^27]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
+[^27]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
