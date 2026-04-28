@@ -112,7 +112,7 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 
 #### Example
 
-Take the example of the iterated Boolean sum of Bernstein polynomials, with one iteration.  This corresponds to the family of linear operators $W_n=2f-B_n(f)$; see Güntürk and Li (2021a)[^16].  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
+Take the example of the iterated Boolean sum of Bernstein polynomials, with one iteration.  This corresponds to the family of linear operators $W_n=2f-B_n(f)$; see Güntürk and Li (2021a)[^16].  Moreover, $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
 
 $$L_n(f)(\lambda) = \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) - B_{2n}(f)\left(\frac{k}{2n}\right)) - (2f\left(\frac{i}{n}\right) - B_n(f)\left(\frac{i}{n}\right))\right) \sigma_{n,k}$$
 
@@ -127,7 +127,7 @@ The following are so-called "moments" of $L_n$ and of the sum $LA_n + LB_n$, whe
 - $L_n((e_1-x)^0)(x) = 0$.
 - $L_n((e_1-x)^1)(x) = 0$.
 - $L_n((e_1-x)^2)(x) = 3x(x - 1)/(2n(2n - 1)) = O(1/n^2)$.
-- $LA_n((e_1-x)^2)(x) + LB_n((e_1-x)^2)(x) = LA_n(abs(e_1-x)^2)(x) + LB_n(abs(e_1-x)^2)(x) = -x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
+- $LA_n((e_1-x)^2)(x) + LB_n((e_1-x)^2)(x)$ = $LA_n(abs(e_1-x)^2)(x) + LB_n(abs(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
 By corollary 2.3 of Gonska et al. (2006)[^21], $L_n$ can be bounded as follows, given that $LA_n$ and $LB_n$ are positive linear operators and $L_n((e_1-x)^0)(x)=L_n((e_1-x)^1)(x)=0$:
 
@@ -135,7 +135,7 @@ $$abs(L_n(f)(\lambda))\le \frac{1}{2!} \max(abs(f^{(2)})) \frac{-\lambda(12n - 5
 
 $$\le \max(abs(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
 
-So, the rate of $abs(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
+So, if $f$ has a continuous third derivative, the rate of $abs(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate with that assumption on $f$ is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
 
 <a id=Strategies></a>
 
@@ -250,7 +250,7 @@ Prove or disprove:
 
 [^22]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$ (where the $^k$ indicates $k$-fold nesting), which don't reproduce polynomials of higher degree than linear functions, making it hard to find a bound better than $O(1/n)$ that satisfies the conjecture when $r\ge 3$.
 
-[^23]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples", IMA Journal of Numerical Analysis 39(3), July 2019. [https://doi.org/10.1093/imanum/dry024](https://doi.org/10.1093/imanum/dry024)
+[^23]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples", IMA Journal of Numerical Analysis 39(3), July 2019. [**https://doi.org/10.1093/imanum/dry024**](https://doi.org/10.1093/imanum/dry024)
 
 [^24]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
