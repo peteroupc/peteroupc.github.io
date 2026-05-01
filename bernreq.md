@@ -116,19 +116,21 @@ Take the example of the iterated Boolean sum of Bernstein polynomials, with one 
 
 $$L_n(f)(\lambda) = \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) - B_{2n}(f)\left(\frac{k}{2n}\right)) - (2f\left(\frac{i}{n}\right) - B_n(f)\left(\frac{i}{n}\right))\right) \sigma_{n,k,i}$$
 
+$$= \mathbb{E}\left[(2f\left(\frac{k}{2n}\right) - B_{2n}(f)\left(\frac{k}{2n}\right)) - (2f\left(\frac{X_k}{n}\right) - B_n(f)\left(\frac{i}{n}\right))\right]$$
+
 $$= \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) + B_{n}(f)\left(\frac{i}{n}\right))\right)\sigma_{n,k,i} - \sum_{i=0}^n \left((2f\left(\frac{i}{n}\right) + B_{2n}(f)\left(\frac{k}{n}\right))\right) \sigma_{n,k,i}$$
 
 $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
 Then $L_n$ is a (nonpositive) linear operator corresponding to $W_n$, and $LA_n$ and $LB_n$ are positive linear operators.  Because the latter two operators are positive, it is easier to assess their approximation properties.
 
-The following are so-called "moments" of $L_n$ and related operators, where $e_1$ is a function that equals $x$:
+The following are so-called "moments" of $L_n$ and related operators ($e_1$ is a function such that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$):
 
 - $L_n((e_1-x)^0)(x) = 0$.
 - $L_n((e_1-x)^1)(x) = 0$.
-- $L_n((e_1-x)^2)(x) = 3x(x - 1)/(2n(2n - 1)) = O(1/n^2)$.
-- $LA_n((e_1-x)^2)(x) = -x(3n - 2)\cdot(x - 1)/(n(2n-1)) = O(1/n)$.
-- $LB_n((e_1-x)^2)(x) = -x(6n - 1)\cdot(x - 1)/(2n(2n-1)) = O(1/n)$.
+- $L_n((e_1-x)^2)(x) = 3x(x - 1)/(2n(2n-1)) = O(1/n^2)$.
+- $LA_n((e_1-x)^2)(x)$ = $-x(3n - 2)\cdot(x - 1)/(n(2n-1))$ = $O(1/n)$.
+- $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $LA_n((e_1-x)^2)(x) + LB_n((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
 By corollary 2.3 of Gonska et al. (2006)[^21], $L_n$ can be bounded as follows, given that $LA_n$ and $LB_n$ are positive linear operators and $L_n((e_1-x)^0)(x)=L_n((e_1-x)^1)(x)=0$:
