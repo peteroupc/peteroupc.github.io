@@ -519,6 +519,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^75]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^76]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://epubs.siam.org/doi/abs/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _closed_ one, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -748,7 +750,7 @@ _and where&mdash;_
 - _$\omega(f^{(k)}, h)$ is the smallest modulus of continuity of $f$'s $k$-th derivative, and_
 - _$\tilde\omega(f^{(k)}, h)$ is the smallest concave modulus of continuity of that derivative, both with parameter $h$._
 
-_Proof:_  Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)[^35]; the second bound comes from corollary 3.2 of Dimitriu (2010)[^36] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)[^37], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^38], Piţul (2007)[^39].  See also Anastassiou (1985, theorem 2.31)[^40].&#x25a1;
+_Proof:_  Because the central moments of order 0 and 1 ($\sigma_0(X)$ and $\sigma_1(X)$, respectively) are always 1 and 0, respectively, for any bounded random variable $X$, $i$ starts at 2 rather than 0 in the bound given in the lemma.  For $R(f,Y)$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)[^35]; the second bound comes from corollary 3.2 of Dimitriu (2010)[^36] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}(Y)/(2\tau_k(Y)(k+1))$ and comes from Gonska et al. (2006)[^37], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^38], Piţul (2007)[^39].  See also Anastassiou (1985, theorem 2.31)[^40].[^76]&#x25a1;
 
 **Lemma 2C.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $Y$ be a random variable taking only values in that interval.  Then_ $\text{abs}(R(f,Y))\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
 
