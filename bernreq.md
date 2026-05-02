@@ -144,6 +144,8 @@ $$\le \max(\text{abs}(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
 
 So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate with that assumption on $f$ is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
 
+It is also useful to calculate raw moments (Wang et al. 2023)[^28] and central moments (Weisstein)[^29] of hypergeometric random variables.
+
 <a id=Strategies></a>
 
 ### Strategies
@@ -221,7 +223,7 @@ Prove or disprove:
 
 [^4]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
 
-[^5]: Nacu, Şerban, and Yuval Peres. "Fast simulation of new coins from old", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
+[^5]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://doi.org/10.1214/105051604000000549)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
 [^6]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/article/10.1007/s00365-010-9108-5)", Constructive Approximation 33 (2011).
 
@@ -266,3 +268,7 @@ Prove or disprove:
 [^26]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 [^27]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+
+[^28]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023.
+
+[^29]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [https://mathworld.wolfram.com/CentralMoment.html](https://mathworld.wolfram.com/CentralMoment.html)
