@@ -280,7 +280,7 @@ This section has notes on this specification, such as how its requirements corre
 
 As with the rest of this open-source article, [**comments on this specification**](https://www.reddit.com/r/retrogamedev/comments/1rl36fo/pre2000_computer_graphics_for_modern_video_games/) are welcome.  But most useful would be comments that improve or refine the specification to fit the graphics abilities of pre-2000 video games.
 
-Examples are comments that give _measurements_ (or references to other works that make such measurements) on the graphics capabilities actually achieved by video games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.  (I repeat: _measurements_, not inferences or guesses from screenshots or videos.)
+Examples are comments that give _measurements_ (or references to other works that make such measurements) on the graphics capabilities actually achieved by video games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.  (It bears repeating: _measurements_, not inferences or guesses from screenshots or videos.)
 
 This includes statements like the following, with references or measurements:
 
