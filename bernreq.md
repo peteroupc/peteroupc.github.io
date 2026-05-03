@@ -160,23 +160,25 @@ where $R(f,\lambda)$ is the Taylor remainder of $f$.  Given that $L_n((e_1-x)^0)
 
 $$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
-$$\text{abs}(L_n(f)(\lambda)) \le L_n(R(f, \lambda))+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
 
 $$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
 The moment $L_n((e_1-x)^3)(x)$ has its maximum at $x=1/2-\sqrt{3}/6$; and the moment $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
-$$\text{abs}(L_n(f)(\lambda)) \le L_n(R(f, \lambda)) + \frac{3\lambda(\lambda - 1)}{2n(2n-1)}\|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
 
 $$ + \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
-$$ \le L_n(R(f, \lambda)) + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+$$ \le \|L_n(R(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
 $$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
 
 Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^21]:
 
-$$L_n(R(f, \lambda))\le \frac{1}{6!} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
+$$\|L_n(R(f, \lambda))\|\le \frac{1}{6!} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
+
+Simplifying that expression further is complicated because $LA_n(e_0)\ne 1 \ne LB_n(e_0)$.
 
 <a id=Strategies></a>
 
