@@ -124,7 +124,7 @@ $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
 Then $L_n$ is a (nonpositive) linear operator corresponding to $W_n$, and $LA_n$ and $LB_n$ are positive linear operators.  Because the latter two operators are positive, it is easier to assess their approximation properties.
 
-The following are so-called "moments" of $L_n$ and related operators ($e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$):
+The following are some of the so-called "moments" of $L_n$ and related operators ($e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$):
 
 - $L_n(e_0)(x) = L_n((e_1-x)^0)(x) = 0$.
 - $L_n(e_1)(x) = L_n((e_1-x)^1)(x) = 0$.
@@ -132,7 +132,7 @@ The following are so-called "moments" of $L_n$ and related operators ($e_i$ is a
 - $L_n(e_3)(x)$ = $n^3 x^2(2nx - 4x + 3)/(2n - 1)$.
 - $LA_n((e_1-x)^2)(x)$ = $-x(3n - 2)\cdot(x - 1)/(n(2n-1))$ = $O(1/n)$.
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
-- $LA_n((e_1-x)^2)(x) + LB_n((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
+- $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
 (If $L$ is a linear operator and $L(e_0)$, ..., $L(e_i)$ are known, then $L((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^21].)
 
@@ -142,7 +142,7 @@ $$\text{abs}(L_n(f)(\lambda))\le \frac{1}{2!} \max(\text{abs}(f^{(2)})) \frac{-\
 
 $$\le \max(\text{abs}(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
 
-So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate with that assumption on $f$ is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
+So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.  But it will be shown that the rate with that assumption on $f$ (and $n\ge 3$) is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
 
 It is also useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a degree-$r$ polynomial in $x$, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
@@ -150,7 +150,7 @@ $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))
 
 where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
 
-In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
+In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$. The proof relies on exact expressions of the moments $L_n((e_1-x)^i)$ (or $L_n(e_i)$) and $(LA_n+LB_n)((e_1-x)^i)$, for $0\le i\le 4$.
 
 For any $f$ with a continuous third derivative, $L_n(f)$ is&mdash;
 
@@ -168,7 +168,7 @@ The moment $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$
 
 $$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, x_0, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
 
-$$ + \|L_n((e_1-x_0)^3)\| \|f^{(3)}\|/6.$$
+$$ + \|L_n((e_1-x_0)^3)\| \|f^{(3)}\|/6$$
 
 $$ \le \|L_n(R(f, x_0, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
@@ -178,7 +178,19 @@ Meanwhile the remainder is estimated as follows, using the proof of corollary 2.
 
 $$\|L_n(R(f, x_0, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|.$$
 
-Simplifying that expression further is complicated because 3 is odd and $LA_n(e_0)\ne 1 \ne LB_n(e_0)$.
+In turn, for $n\ge 3$, using Schwarz's inequality (see proof of the same paper's corollary 2.1):
+
+$$\|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|\le (\|(LA_n+LB_n)((e_1-x_0)^4)\|)^{1/2}(\|(LA_n+LB_n)((e_1-x_0)^2)\|)^{1/2}$$
+
+$$\le \frac{3\sqrt{3}}{8n^{3/2}}.$$
+
+Altogether:
+
+$$\|(L_n(f)\| \le \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+
+$$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\)\|f^{(3)}\|/6$$
+
+$$ = O(1/n^{3/2}).$$
 
 <a id=Strategies></a>
 
@@ -295,7 +307,7 @@ Prove or disprove:
 
 [^23]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
-[^24]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$ (where the $^k$ indicates $k$-fold nesting), which don't reproduce polynomials of higher degree than linear functions, making it hard to find a bound better than $O(1/n)$ that satisfies the conjecture when $r\ge 3$.
+[^24]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$ (where the $^k$ indicates $k$-fold nesting).
 
 [^25]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples", IMA Journal of Numerical Analysis 39(3), July 2019. [**https://doi.org/10.1093/imanum/dry024**](https://doi.org/10.1093/imanum/dry024)
 
