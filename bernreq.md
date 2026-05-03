@@ -134,7 +134,7 @@ The following are so-called "moments" of $L_n$ and related operators ($e_i$ is a
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $LA_n((e_1-x)^2)(x) + LB_n((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-(If $L$ is a linear operator and $L(e_0)$, ..., $L(e_i)$ are known, then $L_n((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^21].)
+(If $L$ is a linear operator and $L(e_0)$, ..., $L(e_i)$ are known, then $L((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^21].)
 
 By corollary 2.3 of Gonska et al. (2006)[^21], $L_n$ can be bounded as follows, given that $LA_n$ and $LB_n$ are positive linear operators and $L_n((e_1-x)^0)(x)=L_n((e_1-x)^1)(x)=0$:
 
@@ -144,11 +144,11 @@ $$\le \max(\text{abs}(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
 
 So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate with that assumption on $f$ is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
 
-It is also useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(f;k/(2n))-W_n(f;x)$ is a degree-$r$ polynomial in $x$, $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+It is also useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a degree-$r$ polynomial in $x$, $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
-$$L(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))}{i!},$$
+$$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))}{i!},$$
 
-where the derivatives are taken with respect to $x$, and $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
+where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
 
 <a id=Strategies></a>
 
