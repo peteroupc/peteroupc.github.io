@@ -150,7 +150,7 @@ $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))
 
 where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
 
-In the following, the notation $\\text{abs}(f\)$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
+In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
 For any $f$ with a continuous third derivative, $L_n(f)$ is&mdash;
 
@@ -160,23 +160,23 @@ where $R(f,\lambda)$ is the Taylor remainder of $f$.  Given that $L_n((e_1-x)^0)
 
 $$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
-$$\text{abs}(L_n(f)(\lambda)) \le L_n(R(f, \lambda))+ \\text{abs}(L_n((e_1-\lambda)^2)\) \\text{abs}(f^{(2)}\)/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le L_n(R(f, \lambda))+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
 
-$$+ \\text{abs}(L_n((e_1-\lambda)^3)\) \\text{abs}(f^{(3)}\)/6.$$
+$$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
 The moment $L_n((e_1-x)^3)(x)$ has its maximum at $x=1/2-\sqrt{3}/6$; and the moment $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
-$$\text{abs}(L_n(f)(\lambda)) \le L_n(R(f, \lambda)) + \frac{3\lambda(\lambda - 1)}{2n(2n-1)}\\text{abs}(f^{(2)}\)/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le L_n(R(f, \lambda)) + \frac{3\lambda(\lambda - 1)}{2n(2n-1)}\|f^{(2)}\|/2$$
 
-$$ + \\text{abs}(L_n((e_1-\lambda)^3)\) \\text{abs}(f^{(3)}\)/6.$$
+$$ + \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
-$$ \le L_n(R(f, \lambda)) + \frac{3}{8n(2n-1)}\\text{abs}(f^{(2)}\)/2$$
+$$ \le L_n(R(f, \lambda)) + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
-$$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\\text{abs}(f^{(3)}\)/6.$$
+$$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
 
 Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^21]:
 
-$$L_n(R(f, \lambda))\le \frac{1}{6!} \\text{abs}(f^{(3)}\) \\text{abs}((LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\).$$
+$$L_n(R(f, \lambda))\le \frac{1}{6!} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
 
 <a id=Strategies></a>
 
