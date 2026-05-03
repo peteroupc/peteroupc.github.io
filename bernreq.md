@@ -144,7 +144,7 @@ $$\le \max(\text{abs}(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
 
 So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.  However, there is empirical evidence that the rate with that assumption on $f$ is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
 
-It is also useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a degree-$r$ polynomial in $x$, $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+It is also useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a degree-$r$ polynomial in $x$, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))}{i!},$$
 
@@ -154,31 +154,31 @@ In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{
 
 For any $f$ with a continuous third derivative, $L_n(f)$ is&mdash;
 
-$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
+$$L_n(f)(\lambda) = L_n(R(f, x_0, \lambda)) + \sum_{i=0}^3 L_n((e_1-x_0)^i)(x_0)\frac{f^{(i)}(x_0)}{i!},$$
 
 where $R(f,\lambda)$ is the Taylor remainder of $f$.  Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
 
-$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
+$$L_n(f)(\lambda) = L_n(R(f, x_0, \lambda)) + \sum_{i=2}^3 L_n((e_1-x_0)^i)(x_0)\frac{f^{(i)}(x_0)}{i!},$$
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, x_0, \lambda))\|+ \|L_n((e_1-x_0)^2)\| \|f^{(2)}\|/2$$
 
-$$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
+$$+ \|L_n((e_1-x_0)^3)\| \|f^{(3)}\|/6.$$
 
-The moment $L_n((e_1-x)^3)(x)$ has its maximum at $x=1/2-\sqrt{3}/6$; and the moment $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
+The moment $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$; and the moment $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, x_0, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
 
-$$ + \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
+$$ + \|L_n((e_1-x_0)^3)\| \|f^{(3)}\|/6.$$
 
-$$ \le \|L_n(R(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+$$ \le \|L_n(R(f, x_0, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
 $$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
 
 Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^21]:
 
-$$\|L_n(R(f, \lambda))\|\le \frac{1}{6!} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
+$$\|L_n(R(f, x_0, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|.$$
 
-Simplifying that expression further is complicated because $LA_n(e_0)\ne 1 \ne LB_n(e_0)$.
+Simplifying that expression further is complicated because 3 is odd and $LA_n(e_0)\ne 1 \ne LB_n(e_0)$.
 
 <a id=Strategies></a>
 
