@@ -9,7 +9,7 @@ def prepareMarkdown(data)
   # being misinterpreted as table notation
   data=data.gsub(/\$([^\n\$]+)\$/){
     next $& if !$1.include?("|")
-    next "$"+($1.gsub(/\|(?!\|)([^\|]+)\|/){ "\\text{abs}("+$1+")" })+"$"
+    next "$"+($1.gsub(/(^|[^\\\|])\|(?!\|)([^\|]+)\|/){ $1+"\\text{abs}("+$2+")" })+"$"
   }
   notetexts={}
   textstorefs={} # to help remove duplicate note texts
