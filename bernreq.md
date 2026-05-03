@@ -180,15 +180,15 @@ $$\|L_n(R(f, x_0, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs
 
 In turn, for $n\ge 3$, using Schwarz's inequality (see proof of the same paper's corollary 2.1):
 
-$$\|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|\le (\|(LA_n+LB_n)((e_1-x_0)^4)\|)^{1/2}(\|(LA_n+LB_n)((e_1-x_0)^2)\|)^{1/2}$$
+$$\|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|\le (\|(LA_n+LB_n)((e_1-x_0)^4)\|)^{1/2}$$
 
-$$\le \frac{3\sqrt{3}}{8n^{3/2}}.$$
+$$\times (\|(LA_n+LB_n)((e_1-x_0)^2)\|)^{1/2} \le \frac{3\sqrt{3}}{8n^{3/2}}.$$
 
 Altogether:
 
-$$\|(L_n(f)\| \le \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+$$\|L_n(f)\| \le \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
-$$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\)\|f^{(3)}\|/6$$
+$$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\right)\|f^{(3)}\|/6$$
 
 $$ = O(1/n^{3/2}).$$
 
