@@ -142,55 +142,57 @@ $$\text{abs}(L_n(f)(\lambda))\le \frac{1}{2!} \max(\text{abs}(f^{(2)})) \frac{-\
 
 $$\le \max(\text{abs}(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
 
-So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.  But it will be shown that the rate with that assumption on $f$ (and $n\ge 3$) is as fast as $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.
+So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.
 
-It is also useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a degree-$r$ polynomial in $x$, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+But it will be shown that the rate with that assumption on $f$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative, but no counterexample against this rate is known.  The proof of this relies on exact expressions of the moments $L_n((e_1-x)^i)$ (or $L_n(e_i)$) and $(LA_n+LB_n)((e_1-x)^i)$ (or $(LA_n+LB_n)(e_i)$, for $0\le i\le 4$.
+
+To find those moments, it is useful to calculate raw moments (Wang et al. 2023)[^22] and central moments (Weisstein)[^23] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a degree-$r$ polynomial in $x$, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))}{i!},$$
 
 where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
 
-In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$. The proof relies on exact expressions of the moments $L_n((e_1-x)^i)$ (or $L_n(e_i)$) and $(LA_n+LB_n)((e_1-x)^i)$, for $0\le i\le 4$.
+In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
 For any $f$ with a continuous third derivative, $L_n(f)$ is&mdash;
 
-$$L_n(f)(\lambda) = L_n(R(f, x_0, \lambda)) + \sum_{i=0}^3 L_n((e_1-x_0)^i)(x_0)\frac{f^{(i)}(x_0)}{i!},$$
+$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
-where $R(f,\lambda)$ is the Taylor remainder of $f$.  Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
+where $R(f,\lambda)$ is the Taylor remainder of $f$. (See also Piţul (2007, proof of theorem 5.8)[^30].)  Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
 
-$$L_n(f)(\lambda) = L_n(R(f, x_0, \lambda)) + \sum_{i=2}^3 L_n((e_1-x_0)^i)(x_0)\frac{f^{(i)}(x_0)}{i!},$$
+$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, x_0, \lambda))\|+ \|L_n((e_1-x_0)^2)\| \|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
 
-$$+ \|L_n((e_1-x_0)^3)\| \|f^{(3)}\|/6.$$
+$$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
 The moment $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$; and the moment $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, x_0, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
 
-$$ + \|L_n((e_1-x_0)^3)\| \|f^{(3)}\|/6$$
+$$ + \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6$$
 
-$$ \le \|L_n(R(f, x_0, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+$$ \le \|L_n(R(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
 $$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
 
 Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^21]:
 
-$$\|L_n(R(f, x_0, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|.$$
+$$\|L_n(R(f, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
 
-In turn, for $n\ge 3$, using Schwarz's inequality (see proof of the same paper's corollary 2.1):
+In turn, using Schwarz's inequality (see proof of the same paper's corollary 2.1):
 
-$$\|(LA_n+LB_n)(\text{abs}(e_1-x_0)^3)\|\le (\|(LA_n+LB_n)((e_1-x_0)^4)\|)^{1/2}$$
+$$\|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|\le (\|(LA_n+LB_n)((e_1-\lambda)^4)\|)^{1/2}$$
 
-$$\times (\|(LA_n+LB_n)((e_1-x_0)^2)\|)^{1/2} \le \frac{3\sqrt{3}}{8n^{3/2}}.$$
+$$\times (\|(LA_n+LB_n)((e_1-\lambda)^2)\|)^{1/2} \le \frac{3\sqrt{3}}{8n^{3/2}}.$$
 
-Altogether:
+(The expression in the middle takes its maximum at $\lambda = 1/2$; the right-hand side is an upper bound of that expression for all integers $n$.) Altogether:
 
 $$\|L_n(f)\| \le \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
 $$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\right)\|f^{(3)}\|/6$$
 
-$$\le 0.0596 \|f^{(2)}\|/n^{3/2} + 0.1281 \|f^{(3)}\|/n^{3/2} \le \frac{0.1877 M}{n^{3/2}} = O(1/n^{3/2}).$$
+$$\le 0.0596 \frac{\|f^{(2)}\|}{n^{3/2}} + 0.1281 \frac{\|f^{(3)}\|}{n^{3/2}} \le \frac{0.1877 M}{n^{3/2}} = O(1/n^{3/2}).$$
 
 <a id=Strategies></a>
 
@@ -318,3 +320,5 @@ Prove or disprove:
 [^28]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 [^29]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+
+[^30]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
