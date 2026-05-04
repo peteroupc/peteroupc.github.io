@@ -178,7 +178,7 @@
 
 <p>To find those moments, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup> and central moments (Weisstein)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup> of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a polynomial in $x$ of degree $r$ or less, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
 
-\[L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))}{i!},\]
+\[L_n(e_r) = \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}X_k)^i]}{n^r}\frac{g^{(i)}(k/(2n))}{i!},\]
 
 <p>where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.</p>
 

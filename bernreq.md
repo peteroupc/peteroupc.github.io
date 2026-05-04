@@ -148,7 +148,7 @@ But it will be shown that the rate with that assumption on $f$ is $O(M/n^{3/2})$
 
 To find those moments, it is useful to calculate raw moments (Wang et al. 2023)[^21] and central moments (Weisstein)[^22] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a polynomial in $x$ of degree $r$ or less, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
-$$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k-\mathbb{E}X_k)^i]\frac{g^{(i)}(k/(2n))}{i!},$$
+$$L_n(e_r) = \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}X_k)^i]}{n^r}\frac{g^{(i)}(k/(2n))}{i!},$$
 
 where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
 
