@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-05-02"><meta name="citation_date" content="2026/05/02"><meta name="citation_publication_date" content="2026/05/02"><meta name="citation_online_date" content="2026/05/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-05-03"><meta name="citation_date" content="2026/05/03"><meta name="citation_publication_date" content="2026/05/03"><meta name="citation_online_date" content="2026/05/03"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-05-02.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-05-03.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -1311,6 +1311,7 @@
         <li>$W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)<sup id="fnref:1:21"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>. <sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup></li>
       </ul>
     </li>
+    <li>For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2})$.  See Theorem 1.</li>
   </ol>
 </blockquote>
 
@@ -1426,102 +1427,6 @@
 \[\frac{EM\sqrt{3}}{48 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.\]
 
 <hr />
-
-<p>The following lower bounds on $C_0$, given certain polynomials, can be shown.  In the table:</p>
-
-<ul>
-  <li>$M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.</li>
-  <li>The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.</li>
-</ul>
-
-<p>For a description of the polynomials in the third column, see <a href="https://peteroupc.github.io/bernapprox.html"><strong>“Approximations in Bernstein Form”</strong></a>.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>If $r$ is…</th>
-      <th>And…</th>
-      <th>With the following polynomial’s Bernstein coefficients:</th>
-      <th>Then $C_0$ must be greater than:</th>
-      <th>And $C_0$ is conjectured to be:</th>
-      <th>Because of this counterexample:</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>3</td>
-      <td>$M=M_{3}$</td>
-      <td>$U_{n,2}$</td>
-      <td>0.29004</td>
-      <td>$\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005.</td>
-      <td>$2 \lambda \left(1 - \lambda\right)$</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>$M=M_{3}$, $n\ge 4$</td>
-      <td>$U_{n,2}$</td>
-      <td>0.08287</td>
-      <td>0.09</td>
-      <td>$2 \lambda \left(1 - \lambda\right)$</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>$M=M_{4}$</td>
-      <td>$U_{n,2}$</td>
-      <td>0.24999</td>
-      <td>0.25</td>
-      <td>$2 \lambda \left(1 - \lambda\right)$</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>$M=M_{4}$, $n\ge 4$</td>
-      <td>$U_{n,2}$</td>
-      <td>0.14</td>
-      <td>0.15</td>
-      <td>$2 \lambda \left(1 - \lambda\right)$</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>$M=M_{5}$</td>
-      <td>$U_{n,3}$</td>
-      <td>0.26</td>
-      <td>0.27</td>
-      <td>$2 \lambda \left(1 - \lambda\right)$</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>$M=M_{5}$, $n\ge 4$</td>
-      <td>$U_{n,3}$</td>
-      <td>0.1226</td>
-      <td>0.13</td>
-      <td>$\lambda^{3}$</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>$M=M_{6}$</td>
-      <td>$U_{n,3}$</td>
-      <td>0.25</td>
-      <td>0.26</td>
-      <td>$\lambda^{3}$</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>$M=M_{6}$, $n\ge 4$</td>
-      <td>$U_{n,3}$</td>
-      <td>0.25</td>
-      <td>0.26</td>
-      <td>$\lambda^{3}$</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>$M=M_{3}$, $n\ge 8$</td>
-      <td>$L_{2,n/2}$</td>
-      <td>0.0414</td>
-      <td>0.08</td>
-      <td>$\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if <em>λ</em> &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise.</td>
-    </tr>
-  </tbody>
-</table>
 
 <p><a id="Example_of_Polynomial_Building_Scheme"></a></p>
 

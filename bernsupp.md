@@ -977,6 +977,7 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambd
 >
 >     - $W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or
 >     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^47]
+> 4. For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2})$.  See Theorem 1.
 
 This problem can be tackled as follows.  Let&mdash;
 
@@ -1081,26 +1082,7 @@ so the left-hand side of (PB) is not greater than&mdash;
 
 $$\frac{EM\sqrt{3}}{48 n^{3/2}}+\frac{DM(2^{3/2}+1)}{2^{3/2}}\frac{1}{n^{3/2}} \le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
 
---------------------
-
-The following lower bounds on $C_0$, given certain polynomials, can be shown.  In the table:
-
-- $M_{r}$ is the maximum of the absolute value of $f(\lambda)$ and its derivatives up to the $r$-th derivative.
-- The bounds are valid only if $n$ is a power-of-two integer and, unless otherwise specified, only if $n\ge 1$.
-
-For a description of the polynomials in the third column, see [**"Approximations in Bernstein Form"**](https://peteroupc.github.io/bernapprox.html).
-
-| If $r$ is... | And... | With the following polynomial's Bernstein coefficients: | Then $C_0$ must be greater than: | And $C_0$ is conjectured to be: | Because of this counterexample: |
- --- | --- | --- | --- | --- | --- |
-| 3 | $M=M_{3}$ | $U_{n,2}$ | 0.29004 | $\frac{3}{16-4 \sqrt{2}}$ &lt; 0.29005. | $2 \lambda \left(1 - \lambda\right)$ |
-| 3 | $M=M_{3}$, $n\ge 4$ | $U_{n,2}$ | 0.08287 | 0.09 | $2 \lambda \left(1 - \lambda\right)$ |
-| 4 | $M=M_{4}$ | $U_{n,2}$ | 0.24999 | 0.25 | $2 \lambda \left(1 - \lambda\right)$ |
-| 4 | $M=M_{4}$, $n\ge 4$ | $U_{n,2}$ | 0.14 | 0.15 | $2 \lambda \left(1 - \lambda\right)$ |
-| 5 | $M=M_{5}$ | $U_{n,3}$ | 0.26 | 0.27 | $2 \lambda \left(1 - \lambda\right)$ |
-| 5 | $M=M_{5}$, $n\ge 4$ | $U_{n,3}$ | 0.1226 | 0.13 | $\lambda^{3}$ |
-| 6 | $M=M_{6}$ | $U_{n,3}$ | 0.25 | 0.26 | $\lambda^{3}$ |
-| 6 | $M=M_{6}$, $n\ge 4$ | $U_{n,3}$ | 0.25 | 0.26 | $\lambda^{3}$ |
-| 3 | $M=M_{3}$, $n\ge 8$ | $L_{2,n/2}$ | 0.0414 | 0.08 | $\frac{1}{2} - \left(1 - 2 \lambda\right)^{3.00001}/2$ if _&lambda;_ &lt; 1/2; $\frac{1}{2} - \left(2 \lambda - 1\right)^{3.00001}/2$ otherwise. |
+-----------
 
 <a id=Example_of_Polynomial_Building_Scheme></a>
 
