@@ -1047,7 +1047,7 @@ where:
 
 The method uses **Algorithm CC**, where step 1 is done as follows: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^45]  Optionally, step 2 can be done as described in Flajolet et al., (2010\)[^1]: generate an _X_-letter word uniformly at random and "parse" that word using a stochastic grammar to determine whether that word can be produced by that grammar.
 
-> **Note:** The _radius of convergence_ of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987\)[^49].  For example, the OGF involved in the square root construction given in the following examples has radius of convergence 1/2.
+> **Note:** The _radius of convergence_ (at the origin) of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987\)[^49].  For example, the OGF involved in the square root construction given in the following examples has radius of convergence 1/2.
 >
 > **Examples:**
 >
