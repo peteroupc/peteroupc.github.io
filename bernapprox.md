@@ -410,7 +410,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^29]: Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant." Calcolo 59.1 (2022): 10.
 
-[^30]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor 100, 729–744 (2025). [https://doi.org/10.1007/s11075-024-01933-6](https://doi.org/10.1007/s11075-024-01933-6)
+[^30]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor 100, 729–744 (2025). [**https://doi.org/10.1007/s11075-024-01933-6**](https://doi.org/10.1007/s11075-024-01933-6)
 
 [^31]: Farouki, Rida T. "Convergent inversion approximations for polynomials in Bernstein form." Computer Aided Geometric Design 17.2 (2000): 179-196.
 

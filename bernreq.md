@@ -124,7 +124,9 @@ $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
 Then $L_n$ is a (nonpositive) linear operator corresponding to $W_n$, and $LA_n$ and $LB_n$ are positive linear operators.  Because the latter two operators are positive, it is easier to assess their approximation properties.
 
-The following are some of the so-called "moments" of $L_n$ and related operators ($e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$):
+It will be shown that, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of the values $L_n((e_1-x)^i)$ (or $L_n(e_i)$) and $(LA_n+LB_n)((e_1-x)^i)$ (or $(LA_n+LB_n)(e_i)$), for $0\le i\le 4$. ($e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.)
+
+The following are some of these values and those for related operators:
 
 - $L_n(e_0)(x) = L_n((e_1-x)^0)(x) = 0$.
 - $L_n(e_1)(x) = L_n((e_1-x)^1)(x) = 0$.
@@ -134,23 +136,14 @@ The following are some of the so-called "moments" of $L_n$ and related operators
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-(If $L$ is a linear operator and $L(e_0)$, ..., $L(e_i)$ are known, then $L((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^20].)
+To find values like those just listed, the following is useful:
 
-By corollary 2.3 of Gonska et al. (2006)[^20], $L_n$ can be bounded as follows, given that $LA_n$ and $LB_n$ are positive linear operators and $L_n((e_1-x)^0)(x)=L_n((e_1-x)^1)(x)=0$:
-
-$$\text{abs}(L_n(f)(\lambda))\le \frac{1}{2!} \max(\text{abs}(f^{(2)})) \frac{-\lambda(12n - 5)\cdot(\lambda - 1)}{2n(2n - 1)}$$
-
-$$\le \max(\text{abs}(f^{(2)}))\frac{12n-5}{16n(2n-1)} = O(1/n).$$
-
-So, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(1/n)$.
-
-But it will be shown that the rate with that assumption on $f$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of the moments $L_n((e_1-x)^i)$ (or $L_n(e_i)$) and $(LA_n+LB_n)((e_1-x)^i)$ (or $(LA_n+LB_n)(e_i)$), for $0\le i\le 4$.
-
-To find those moments, it is useful to calculate raw moments (Wang et al. 2023)[^21] and central moments (Weisstein)[^22] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture).  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a polynomial in $x$ of degree $r$ or less, the moment $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+1. The calculation of raw moments (Wang et al. 2023)[^20] and central moments (Weisstein)[^21] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture) is useful.  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a polynomial in $x$ of degree $r$ or less, the function $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}X_k)^i]}{n^r}\frac{g^{(i)}(k/(2n))}{i!},$$
 
 where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
+2. Let $L(e_r) be a linear operator.  Then, if $L(e_0), ..., L(e_i)$ is known, then $L((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^22].
 
 In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
@@ -166,7 +159,7 @@ $$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)
 
 $$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
-The moment $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$; and the moment $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
+The function $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$; and $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
 $$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
 
@@ -176,7 +169,7 @@ $$ \le \|L_n(R(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
 $$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
 
-Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^21]:
+Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^22]\:
 
 $$\|L_n(R(f, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
 
@@ -303,11 +296,11 @@ Prove or disprove:
 
 [^19]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
-[^20]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
+[^20]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
-[^21]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^21]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
-[^22]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+[^22]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
 
 [^23]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
 
