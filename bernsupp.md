@@ -413,7 +413,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^22]: Leroy, Richard. "Certificats de positivité et minimisation polynomiale dans la base de Bernstein multivariée." PhD diss., Université Rennes 1, 2008
 
-[^23]: Chok, James, and Geoffrey Vasil. "Rational function approximation with normalized positive denominators." SIAM Journal on Scientific Computing 47.5 (2025): A2699-A2721. [https://doi.org/10.1137/24M1632139](https://doi.org/10.1137/24M1632139)
+[^23]: Chok, James, and Geoffrey Vasil. "Rational function approximation with normalized positive denominators." SIAM Journal on Scientific Computing 47.5 (2025): A2699-A2721. [**https://doi.org/10.1137/24M1632139**](https://doi.org/10.1137/24M1632139)
 
 [^24]: S. Ray, P.S.V. Nataraj, "[**A Matrix Method for Efficient Computation of Bernstein Coefficients**](https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf)", Reliable Computing 17(1), 2012.
 
@@ -655,7 +655,7 @@ In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + ... + a_n \lambda^n$ be
 
 **Lemma** (Chok and Vasil 2025, theorem 3)[^23]\: Suppose $p$ is positive on the closed unit interval.  Then the Bernstein coefficients of $p$ (once $p$ is written in Bernstein form of degree $m$) will all be positive as soon as&mdash;
 
-$$m\gt\max\left(r,\text{ceil}\left(\frac{2154 n^2}{15625} \frac{\max(a_0, ..., a_n)}{\text{Pmin}}\right)\right),$$
+$$m\gt\max\left(n,\text{ceil}\left(\frac{2154 n^2}{15625} \frac{\max(a_0, ..., a_n)}{\texttt{Pmin}}\right)\right),$$
 
 where `Pmin` is the minimum of $p(\lambda)$ on the closed unit interval.
 

@@ -138,12 +138,14 @@ The following are some of these values and those for related operators:
 
 To find values like those just listed, the following is useful:
 
-1. The calculation of raw moments (Wang et al. 2023)[^20] and central moments (Weisstein)[^21] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture) is useful.  Indeed, if $g(x)=W_{2n}(e_r;k/(2n))-W_n(e_r;x)$ is a polynomial in $x$ of degree $r$ or less, the function $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+1. The calculation of raw moments (Wang et al. 2023)[^20] and central moments (Weisstein)[^21] of hypergeometric random variables (for example, $X_k$ as defined in the conjecture) is useful.  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
-$$L_n(e_r) = \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}X_k)^i]}{n^r}\frac{g^{(i)}(k/(2n))}{i!},$$
+    $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
-where the derivatives are taken with respect to $x$, and where $\mathbb{E}[(X_k-\mathbb{E}X_k)^i]$ is the $i$-th central moment of $X_k$.
-2. Let $L(e_r) be a linear operator.  Then, if $L(e_0), ..., L(e_i)$ is known, then $L((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^22].
+    $$= \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}X_k)^i]}{n^i}\frac{g^{(i)}(k/(2n))}{i!},$$
+
+    where the derivatives are taken with respect to $y$, and where $\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]$ is the $i$-th central moment of $X_k$.
+2. Let $L(e_r)$ be a linear operator.  Then, if $L(e_0), ..., L(e_i)$ is known, then $L((e_1-x)^i)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^22].
 
 In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
