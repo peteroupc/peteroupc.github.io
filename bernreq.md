@@ -107,12 +107,14 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 > 2. I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(f; \lambda); \lambda)=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. $W_n$ then maps to a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of operators that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to $f(\lambda)=1/2$, so that $M = 1/2$.  If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
 >
 > 3. If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le\lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. See the example given next.
+>
+> 4. For every integer $i\ge 1$ and every $r\ge 2$, if $B_i(W_i(f))$ preserves all polynomials of degree $r$ or less, it must be nonlinear, nonpositive, or nonanalytic (Gavrea and Ivan 2018)[^30], so that, for example, there is no linear positive operator $W_i(f)$ such that $B_i(W_i(f))$ preserves all polynomials of degree $r$ or less (Finta 2013)[^31].
 
 <a id=Example></a>
 
 #### Example
 
-Take the example of the iterated Boolean sum of Bernstein polynomials, with one iteration.  This corresponds to the family of linear operators $W_n=2f-B_n(f)$; see Güntürk and Li (2021a)[^16].  Moreover, $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
+Take the example of the iterated Boolean sum of Bernstein polynomials, with one iteration.  This corresponds to the family of linear operators $W_n=2f-B_n(f)$; see Güntürk and Li (2021a, Theorem 5)[^16].  Moreover, $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
 
 $$L_n(f)(\lambda) = \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) - B_{2n}(f)\left(\frac{k}{2n}\right)) - (2f\left(\frac{i}{n}\right) - B_n(f)\left(\frac{i}{n}\right))\right) \sigma_{n,k,i}$$
 
@@ -149,7 +151,7 @@ To find values like those just listed, the following is useful:
 
 In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
-For any $f$ with a continuous third derivative, $L_n(f)$ is&mdash;
+For any $f$ with a continuous third derivative on the closed unit interval, $L_n(f)$ is&mdash;
 
 $$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
@@ -317,3 +319,7 @@ Prove or disprove:
 [^28]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 [^29]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+
+[^30]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001.)
+
+[^31]: Finta Z., "Bernstein type operators having 1 and $x^j$ as fixed points", Cent. Eur. J. Math., 11 (2013), pp. 2257-2261.

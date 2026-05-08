@@ -1047,7 +1047,7 @@ The following claim is believed to be true.
 
 1. is a linear operator,
 2. satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$ for some $D>0$,
-3. preserves polynomials of degree $(r-1)$ or less, so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less, and
+3. preserves polynomials of degree $(r-1)$ or less (so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less and $n$ is greater than or equal to $f$'s degree).
 4. has a continuous $r$-th derivative that satisfies $\text{abs}(W_n^{(r)}(\lambda))\le EM$ for some $E>0$.
 
 Then&mdash;
