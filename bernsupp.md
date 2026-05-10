@@ -519,6 +519,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^75]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
 
+[^76]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [https://doi.org/10.1007/s11117-008-2253-4](https://doi.org/10.1007/s11117-008-2253-4)
+
+[^77]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [https://doi.org/10.1007/s11117-008-2253-4](https://doi.org/10.1007/s11117-008-2253-4)
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -1043,18 +1047,18 @@ I acknowledge the user "Barbab" on _Cross Validated_ for giving me useful insigh
 
 The following claim is believed to be true.
 
-**Claim.** Suppose $r$ is 3, suppose $f$ is a function satisfying the conjecture's hypothesis, suppose $W_n$ is a sequence meeting that hypothesis, and suppose further that $W_n$&mdash;
+**Claim.** Suppose $r$ is 3, suppose $f$ is a function satisfying the conjecture's hypothesis, suppose $W_n$ is a sequence meeting that hypothesis, and suppose further that, for each $n$, $W_n$&mdash;
 
 1. is a linear operator,
 2. satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$ for some $D>0$,
-3. preserves polynomials of degree $(r-1)$ or less (so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less and $n$ is greater than or equal to $f$'s degree).
+3. preserves all polynomials of degree $(r-1)$ or less (so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less and $n$ is greater than or equal to $f$'s degree).
 4. has a continuous $r$-th derivative that satisfies $\text{abs}(W_n^{(r)}(\lambda))\le EM$ for some $E>0$.
 
 Then&mdash;
 
 $$h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
 
-_Remark_: Because of the assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) or a _nonanalytic operator_ (so that $W_i$ can be nonanalytic for some $i$) (Gavrea and Ivan 2018)[^54].
+_Remark_: Because of this claim's assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018[^54], Guessab et al. 2009[^76]); moreover, $W_n = f$ doesn't meet the conjecture's hypothesis (for $r\ge 3$) and is the only positive linear operator that can preserve all polynomials of degree 2 or less (Guessab et al. 2009)[^77].
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 

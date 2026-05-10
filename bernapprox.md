@@ -344,7 +344,7 @@ The following references discuss schemes that&mdash;
 - at a rate no slower than a constant times $1/n^{r/2}$, and
 - without introducing transcendental or trigonometric functions.
 
-Holtz et al. (2011)[^33]; Sevy (1991)[^34] and references there; Waldron (2009)[^35]; Costabile et al. (2005)[^36]; Han (2003)[^37].  Excluded from this list are schemes that employ _splines_ (piecewise polynomials), or sequences of nonpolynomial functions.
+Holtz et al. (2011)[^33]; Sevy (1991)[^34] and references there; Waldron (2009)[^35]; Costabile et al. (2005)[^36]; Han (2003)[^37]; Guessab et al. (2009)[^58].  Excluded from this list are schemes that employ _splines_ (piecewise polynomials), or sequences of nonpolynomial functions.
 
 There may be other useful schemes for polynomials not mentioned in this document or in the references just given.  There may also be schemes that do not converge to the target function but can be made to achieve an approximation error of $\epsilon$ or less (where $\epsilon$ is a user-defined positive value).
 
@@ -465,6 +465,8 @@ There may be other useful schemes for polynomials not mentioned in this document
 [^56]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
 [^57]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+
+[^58]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [https://doi.org/10.1007/s11117-008-2253-4](https://doi.org/10.1007/s11117-008-2253-4)
 
 <a id=Appendix></a>
 
