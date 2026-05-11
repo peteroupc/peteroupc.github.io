@@ -110,11 +110,7 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 >
 > 4. For every $s\ge 2$, if the sequence $(W_n)$ is such that $B_n(W_n(f))$ preserves all polynomials of degree $s$ or less, then $B_n(W_n(f))$ must be nonlinear, nonpositive, or equal to $f$ (Gavrea and Ivan 2018[^20], Guessab et al. 2009[^21]), so that, for example, $(W_n)$ cannot be a sequence of linear positive operators (Finta 2013)[^22].
 >
-> 5. For any sequence of linear operators $(L_n)$ that map continuous functions to polynomials and reproduce all polynomials up to degree $m(n)$ (which depends on $n$), the following error bound (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) holds true for each $n$:
->
-> $$\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(f,m(n))(t))),$$
->
-> where $\|L_n\|$ is the operator norm of $L_n$, and $P(f,m(n))$ is a polynomial of degree up to $m(n)$ that best approximates $f$ (see also DeVore and Lorentz (1993)[^33], Cheney (1996, chapter 6)[^34]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.
+> 5. For more useful notes on finding error bounds, see "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html).
 
 <a id=Example></a>
 
@@ -331,7 +327,3 @@ Prove or disprove:
 [^31]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 
 [^32]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
-
-[^33]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993.
-
-[^34]: E. W. Cheney, _Introduction to Approximation Theory_, 1998.

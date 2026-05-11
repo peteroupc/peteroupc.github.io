@@ -1,0 +1,109 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+            <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
+                    tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
+            </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1>
+
+<p>Some notes that may be useful when finding approximation error bounds that are explicit (with no hidden constants).</p>
+
+<p><a id="Definitions"></a></p>
+
+<h2 id="definitions">Definitions</h2>
+
+<p>The <em>closed unit interval</em> (written as [0, 1]) means the set consisting of 0, 1, and every real number in between.</p>
+
+<p>For definitions of <em>continuous</em>, <em>derivative</em>, <em>convex</em>, <em>concave</em>, <em>Hölder continuous</em>, and <em>Lipschitz continuous</em>, see the definitions section in “<a href="https://peteroupc.github.io/bernsupp.html#Definitions"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a>”.</p>
+
+<p>For definitions of <em>Bernstein form</em> and <em>Bernstein coefficients</em>, see the definitions section in “<a href="https://peteroupc.github.io/bernapprox.html#Definitions"><strong>Approximations in Bernstein form</strong></a>”.</p>
+
+<ul>
+  <li>An <em>operator</em> is a mapping from functions to functions.</li>
+  <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every real number $a$.</li>
+  <li>An operator $L$ is <em>positive</em> if it has the property that, if $f$ is everywhere nonnegative, so is $L(f)$, for every input function $f$.</li>
+  <li>The <em>operator norm</em> of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.</li>
+</ul>
+
+<p><a id="Results_on_Error_Bounds"></a></p>
+
+<h2 id="results-on-error-bounds">Results on Error Bounds</h2>
+
+<p>Some results on error bounds for certain classes of operators.</p>
+
+<p><a id="Lebesgue_Inequality_for_Certain_Linear_Operators"></a></p>
+
+<h3 id="lebesgue-inequality-for-certain-linear-operators">Lebesgue Inequality for Certain Linear Operators</h3>
+
+<p>For any sequence of linear operators $(L_n)$ that map continuous functions to polynomials and reproduce all polynomials up to degree $m(n)$ (which depends on $n$), the following error bound (also known as <em>Lebesgue’s lemma</em> or the <em>Lebesgue inequality</em>) holds true for each $n$:</p>
+
+\[\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(t))),\]
+
+<p>where $|L_n|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator that reproduces all polynomials up to degree 2 is the identity operator $L_n=f$ <sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.</p>
+
+<p><a id="Whitney_s_Inequality"></a></p>
+
+<h3 id="whitneys-inequality">Whitney’s Inequality</h3>
+
+<p>Let $n$ be zero or a positive integer, let $f$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>):</p>
+
+\[\|f-P\|\_\infty\le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),\]
+
+<p>where—</p>
+
+<ul>
+  <li>$W$ is 1 if $n\le 7$; otherwise, $W$ is $(2+\exp(-2)) &lt; 2.13534$,</li>
+  <li>$|g|_\infty$ is the maximum of the absolute value of (the continuous function) $g$ on $[a, b]$, and</li>
+  <li>$\omega_{n}(f, h)$ is the modulus of continuity of $f$ of order $n$, with parameter $h$.</li>
+</ul>
+
+<p>Using properties of the modulus of continuity (see Sevy 1991<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:</p>
+
+\[\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\|f^{(n+1)}\|\_\infty,\]
+
+<p>and if $f$ has a continuous $n$-th derivative on that interval:</p>
+
+\[\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).\]
+
+<p><a id="License"></a></p>
+
+<h2 id="license">License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.
+<a id="Notes"></a></p>
+
+<h2 id="notes">Notes</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>E. W. Cheney, <em>Introduction to Approximation Theory</em>, 1998. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>Babenko, Alexander G., and Yuriy V. Kryakin. “Special difference operators and the constants in the classical Jackson-type theorems.” Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:6">
+      <p>H. H. Gonska, <em>Quantitative Approximation in C(X)</em>, Habilitationschrift, Universität Duisburg, 1985. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+
+<div class="noprint">
+<p>
+<a href="//x.com/intent/post?text=Notes+on+Approximation+Theory&url=https%3A%2F%2Fpeteroupc.github.io%2Fapproxtheory.html">Share via X (Twitter)</a>, <a href="//www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpeteroupc.github.io%2Fapproxtheory.html">Share via Facebook</a>, <a href="//news.ycombinator.com/submitlink?u=https%3A%2F%2Fpeteroupc.github.io%2Fapproxtheory.html&t=Notes+on+Approximation+Theory">Share via Hacker News</a>, <a href="//www.reddit.com/submit?url=https%3A%2F%2Fpeteroupc.github.io%2Fapproxtheory.html&title=Notes+on+Approximation+Theory">Share via Reddit</a>
+</p>
+</div>
+<p>Of interest to the computer graphics and music community:</p><ul><li><a href='https://peteroupc.github.io/graphics.html'><b>Graphics for classic-style game development</b></a>.<li><a href='https://peteroupc.github.io/graphics.html#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks'><b>MIDI music synthesis for classic-style games and apps</b></a>.<li><a href='https://peteroupc.github.io/classic-wallpaper'><b>Tileable wallpapers with limited colors and resolution</b></a>.<li><a href='https://peteroupc.github.io/graphicsapi.html'><b>Lean programming interfaces for classic graphics</b></a>.<li><a href='https://peteroupc.github.io/classic-wallpaper/docs/uielements.html'><b>Traditional user-interface graphics</b></a>.<li><a href='https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html'><b>Converting images to vector graphics</b></a>.</ul><p>Open questions for math and probability experts:</p><ul><li><a href='https://peteroupc.github.io/requests.html'><b>Requests and open questions</b></a>.<li><a href='https://peteroupc.github.io/bernreq.html'><b>Open questions on the Bernoulli factory problem (the new-coins-from-old problem)</b></a>.<li><a href='https://peteroupc.github.io/requestsother.html'><b>Other open questions on probability</b></a>.<li><a href='https://peteroupc.github.io/sampling.html'><b>The sampling problem</b></a>.</ul></nav></body></html>
