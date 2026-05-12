@@ -133,13 +133,13 @@
 
 <p>where the real numbers $a_0, …, a_n$ are the polynomial’s <em>Bernstein coefficients</em>.</p>
 
-<p>The degree-$n$ <em>Bernstein polynomial</em> of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this section, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$.</p>
+<p>The degree-$n$ <em>Bernstein polynomial</em> of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this section, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$. $B_n(f)$ is a positive linear operator.</p>
 
 <hr />
 
-<p>Let $L_n(f)$ be a (nonpositive) linear operator described as follows.</p>
+<p>Let $L_n(f)$ be a (nonpositive) linear operator described as follows.  The functions it maps to and from lie on the closed unit interval.</p>
 
-<p>Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>.  That paper, among others, showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($O(1/n^{3/2})$ means a function no greater than a constant times $1/n^{3/2}$ for all sufficiently large values of $n$.)</p>
+<p>Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>), showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($O(1/n^{3/2})$ means a function no greater than a constant times $1/n^{3/2}$ for all sufficiently large values of $n$.)</p>
 
 <p>$L_n(f)$ is then based on $W_n(f)$ and is a special case of <a href="https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation"><strong>a conjecture I have</strong></a> on polynomial approximation.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let—</p>
 
@@ -167,7 +167,7 @@
   <li>$(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.</li>
 </ul>
 
-<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup> and central moments (Weisstein)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup> of hypergeometric random variables.  Let $X_k$ be a hypergeometric random variable.  If $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
+<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">12</a></sup> and central moments (Weisstein)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">13</a></sup> of hypergeometric random variables.  Let $X_k$ be a hypergeometric random variable.  If $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
 
 \[L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}\]
 
@@ -255,6 +255,9 @@
     </li>
     <li id="fn:10">
       <p>Güntürk, C. Sinan, and Weilin Li. “<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>”, arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022). <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:13">
+      <p>Micchelli, Charles. “<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>”, Journal of Approximation Theory 8, no. 1 (1973): 1-18. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:11">
       <p>Wang, Y.Q., Zhang, Y.Y, Liu, J.L., “Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments”,Communications in Statistics–Theory and Methods 52(17), 2023. <a href="https://doi.org/10.1080/03610926.2021.2024235"><strong>https://doi.org/10.1080/03610926.2021.2024235</strong></a> <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
