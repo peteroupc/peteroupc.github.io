@@ -8,7 +8,7 @@
 
 <p>Some notes that may be useful when finding approximation error bounds that are explicit (with no hidden constants).</p>
 
-<p>The notes generally relate to error bounds on how close a polynomial is to a single-variable function on a closed interval.</p>
+<p>The notes generally relate to error bounds on how close a polynomial is to a single-variable function on a closed interval.  The mapping from a function to a function (in this case, from a single-variable function to a polynomial “close” to it) is called an <em>operator</em>, and operators involved in these error bounds are often linear operators, whose behavior is relatively simple to examine.</p>
 
 <p><a id="Definitions"></a></p>
 
@@ -21,9 +21,9 @@
 <ul>
   <li>An <em>operator</em> is a mapping from functions to functions.</li>
   <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every real number $a$.</li>
-  <li>An operator $L$ is <em>positive</em> if it has the property that, if $f$ is everywhere nonnegative, so is $L(f)$, for every input function $f$.</li>
+  <li>An operator $L$ is <em>positive</em> if it has the property that, if $f$ is nonnegative on its domain, so is $L(f)$, for every input function $f$.</li>
   <li>The <em>operator norm</em> of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.  This assumes $L$ takes only continuous functions.</li>
-  <li>In this page, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.</li>
+  <li>In this document, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.</li>
 </ul>
 
 <p><a id="Moments_of_Linear_Operators"></a></p>
@@ -36,8 +36,8 @@
 
 <ul>
   <li>“Raw moments”: The values of $L(e_i)(x)$ for each integer $i\ge 0$.</li>
-  <li>“Central moments”: The values of $L((e_1-x)^i)$ for each integer $i\ge 0$.  If raw moments $L(e_0), …, L(e_j)$ are known, then $L((e_1-x)^j)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
-  <li>“Absolute moments”: The values of $L(\abs(e_1-x)^i)(x)$ for each integer $i\ge 0$.  When $i$ is even, $L(\text{abs}(e_1-x)^i)$ = $L((e_1-x)^i)$.</li>
+  <li>“Central moments”: The values of $L((e_1-x)^i)$ for each integer $i\ge 0$.  If the “raw moments” $L(e_0), …, L(e_j)$ are known, then $L((e_1-x)^j)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
+  <li>“Absolute moments”: The values of $L(\text{abs}(e_1-x)^i)(x)$ for each integer $i\ge 0$.  When $i$ is even, $L(\text{abs}(e_1-x)^i)$ = $L((e_1-x)^i)$.</li>
 </ul>
 
 <p><a id="Taylor_Expansion_of_Linear_Operators"></a></p>
@@ -48,7 +48,7 @@
 
 \[L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},\]
 
-<p>where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>.)</p>
+<p>where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>.)</p>
 
 <p><a id="Results_on_Error_Bounds"></a></p>
 
@@ -60,7 +60,7 @@
 
 <h3 id="whitneys-inequality">Whitney’s Inequality</h3>
 
-<p>Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>):</p>
+<p>Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>):</p>
 
 \[\|f-P\|\_\infty\le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),\]
 
@@ -71,15 +71,15 @@
     <ul>
       <li>1 if $n\le 7$.</li>
       <li>$(2+\exp(-2)) (&lt; 2.13534)$ if $n\ge 8$.</li>
-      <li>$3/4$ if $n=1$ and $f$ is convex (Singh Kaire and Prymak 2023/2025)<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
-      <li>$1/2$ if $n=1$, $f$ is convex, and $a=-b$ (Singh Kaire and Prymak 2023/2025)<sup id="fnref:2:1"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
+      <li>$3/4$ if $n=1$ and $f$ is convex (Singh Kaire and Prymak 2023/2025)<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
+      <li>$1/2$ if $n=1$, $f$ is convex, and $a=-b$ (Singh Kaire and Prymak 2023/2025)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.</li>
     </ul>
   </li>
   <li>$|g|_\infty$ is the maximum of the absolute value of (the continuous function) $g$ on $[a, b]$, and</li>
   <li>$\omega_{n}(f, h)$ is the modulus of continuity of $f$ of order $n$, with parameter $h$.</li>
 </ul>
 
-<p>Using properties of the modulus of continuity (see Sevy 1991<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:</p>
+<p>Using properties of the modulus of continuity (see Sevy 1991<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:</p>
 
 \[\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\|f^{(n+1)}\|_\infty,\]
 
@@ -95,7 +95,7 @@
 
 \[\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(t))),\]
 
-<p>where $||L_n||$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></p>
+<p>where $||L_n||$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></p>
 
 <p>Now let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities in the previous section leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:</p>
 
@@ -114,32 +114,32 @@
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:8">
-      <p>Gonska, Heiner, Paula Piƫul, and Ioan Raşa. “On differences of positive linear operators.” Carpathian Journal of Mathematics (2006): 65-78. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:9">
-      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:1">
-      <p>Babenko, Alexander G., and Yuriy V. Kryakin. “Special difference operators and the constants in the classical Jackson-type theorems.” Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gonska, Heiner, Paula Piƫul, and Ioan Raşa. “On differences of positive linear operators.” Carpathian Journal of Mathematics (2006): 65-78. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>Jaskaran Singh Kaire and Andriy Prymak. “Whitney-type estimates for convex functions.” arXiv preprint arXiv:2311.00912 (2023). <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:2:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Babenko, Alexander G., and Yuriy V. Kryakin. “Special difference operators and the constants in the classical Jackson-type theorems.” Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>H. H. Gonska, <em>Quantitative Approximation in C(X)</em>, Habilitationschrift, Universität Duisburg, 1985. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Jaskaran Singh Kaire and Andriy Prymak. “Whitney-type estimates for convex functions.” arXiv preprint arXiv:2311.00912 (2023). <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:4:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:5">
-      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>E. W. Cheney, <em>Introduction to Approximation Theory</em>, 1998. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>H. H. Gonska, <em>Quantitative Approximation in C(X)</em>, Habilitationschrift, Universität Duisburg, 1985. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
-      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a> <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:8">
+      <p>E. W. Cheney, <em>Introduction to Approximation Theory</em>, 1998. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:9">
+      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a> <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
