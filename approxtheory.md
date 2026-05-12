@@ -2,6 +2,8 @@
 
 Some notes that may be useful when finding approximation error bounds that are explicit (with no hidden constants).
 
+The notes generally relate to error bounds on how close a polynomial is to a single-variable function on a closed interval.
+
 <a id=Definitions></a>
 
 ## Definitions
@@ -13,7 +15,30 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - An _operator_ is a mapping from functions to functions.
 - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every real number $a$.
 - An operator $L$ is _positive_ if it has the property that, if $f$ is everywhere nonnegative, so is $L(f)$, for every input function $f$.
-- The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.
+- The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.  This assumes $L$ takes only continuous functions.
+- In this page, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
+
+<a id=Moments_of_Linear_Operators></a>
+
+## "Moments" of Linear Operators
+
+To examine the approximation behavior of linear operators, it is helpful to find the so-called "moments" of those operators, that is, the functions they map certain polynomials to.
+
+For a linear operator $L$, they are:
+
+- "Raw moments": The values of $L(e_i)(x)$ for each integer $i\ge 0$.
+- "Central moments": The values of $L((e_1-x)^i)$ for each integer $i\ge 0$.  If raw moments $L(e_0), ..., L(e_j)$ are known, then $L((e_1-x)^j)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^8].
+- "Absolute moments": The values of $L(\abs(e_1-x)^i)(x)$ for each integer $i\ge 0$.  When $i$ is even, $L(\text{abs}(e_1-x)^i)$ = $L((e_1-x)^i)$.
+
+<a id=Taylor_Expansion_of_Linear_Operators></a>
+
+## Taylor Expansion of Linear Operators
+
+Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator.  Then:
+
+$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
+
+where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^9].)
 
 <a id=Results_on_Error_Bounds></a>
 
@@ -41,7 +66,7 @@ where&mdash;
 
 Using properties of the modulus of continuity (see Sevy 1991[^3], sec. 2.0.2; Gonska 1985[^4]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
-$$\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\|f^{(n+1)}\|\_\infty,$$
+$$\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\|f^{(n+1)}\|_\infty,$$
 
 and if $f$ has a continuous $n$-th derivative on that interval:
 
@@ -55,7 +80,7 @@ Let $f(\lambda)$ be a continuous function.  For any sequence of linear operators
 
 $$\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(t))),$$
 
-where $\|L_n\|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^5], Cheney (1996, chapter 6)[^6]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^7]
+where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^5], Cheney (1996, chapter 6)[^6]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^7]
 
 Now let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities in the previous section leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
 
@@ -85,3 +110,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^6]: E. W. Cheney, _Introduction to Approximation Theory_, 1998.
 
 [^7]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4)
+
+[^8]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
+
+[^9]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
