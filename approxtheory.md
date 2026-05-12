@@ -10,6 +10,7 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
 
 - [**Contents**](#Contents)
 - [**Definitions**](#Definitions)
+- [**Bernstein Form and Bernstein Polynomials**](#Bernstein_Form_and_Bernstein_Polynomials)
 - [**"Moments" of Linear Operators**](#Moments_of_Linear_Operators)
 - [**Taylor Expansion of Linear Operators**](#Taylor_Expansion_of_Linear_Operators)
 - [**Results on Error Bounds**](#Results_on_Error_Bounds)
@@ -32,6 +33,18 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - An operator $L$ is _positive_ if it has the property that, if $f$ is nonnegative on its domain, so is $L(f)$, for every input function $f$.
 - The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.  This assumes $L$ takes only continuous functions.
 - In this document, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
+
+<a id=Bernstein_Form_and_Bernstein_Polynomials></a>
+
+## Bernstein Form and Bernstein Polynomials
+
+In this document, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash;
+
+$$P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},$$
+
+where the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.[^14]
+
+The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this section, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$. $B_n(f)$ is a positive linear operator.
 
 <a id=Moments_of_Linear_Operators></a>
 
@@ -107,21 +120,25 @@ $$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
 
 ## Example
 
-In this section, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash;
+This example shows how to find a linear operator's bounds.
 
-$$P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},$$
+Let $L_n(f)$ be a linear operator inspired by a [**a conjecture I have**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) on polynomial approximation.  It is described as follows:
 
-where the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.
+$$L_n(f)(\lambda) = \sum_{i=0}^n \left( W_{2n}\left(f)(\frac{k}{2n}\right) - W_n\left(f)(\frac{i}{n}\right)\right)\sigma_{n,k,i}$$
 
-The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this section, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$. $B_n(f)$ is a positive linear operator.
+$$=\mathbb{E}[W_{2n}\left(f)(\frac{k}{2n}\right) - W_n\left(f)(\frac{X_k}{n}\right)\right)],$$
 
------------
+where:
 
-Let $L_n(f)$ be a (nonpositive) linear operator described as follows.  The functions it maps to and from lie on the closed unit interval.
+- $k = 2n\lambda$, where $0\le\lambda\le 1$.
+- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^15]
+- $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
+- $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.
+- $\mathbb{E}[Y]$ is the expected value (or mean or “long-run average”) of the random variable $Y$.
 
-Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^10].  That paper, among others (for example, Micchelli 1973[^11]), showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($=O(1/n^{3/2})$ means the absolute value is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
+$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^10].  That paper, among others (for example, Micchelli 1973[^11]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
 
-$L_n(f)$ is then based on $W_n(f)$ and is a special case of [**a conjecture I have**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) on polynomial approximation.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
+With this choice of $W_n$, $L_n$ becomes:
 
 $$L_n(f)(\lambda) = \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) - B_{2n}(f)\left(\frac{k}{2n}\right)) - (2f\left(\frac{i}{n}\right) - B_n(f)\left(\frac{i}{n}\right))\right) \sigma_{n,k,i}$$
 
@@ -131,9 +148,9 @@ $$= \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) + B_{n}(f)\left(\frac{i}{n}\r
 
 $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
-Here, $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability of getting $i$.  (This is the probability that a hypergeometric($2n$, $k$, $n$) random variable equals $i$.) Meanwhile, $LA_n$ and $LB_n$ are positive linear operators, making it easier to assess their approximation properties.
+Here, $LA_n$ and $LB_n$ are positive linear operators, making it easier to assess their approximation properties.
 
-It will be shown that, if $f$ has a continuous third derivative, the rate of $L_n$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_Operators), and those for the combined operator $(LA_n+LB_n)$.
+It will be shown that, if $f$ has a continuous third derivative, the rate of $L_n$ towards zero is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_Operators), and those for the combined operator $(LA_n+LB_n)$.
 
 The following are some of these values and those for related operators:
 
@@ -145,7 +162,7 @@ The following are some of these values and those for related operators:
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^12] and central moments (Weisstein)[^13] of hypergeometric random variables.  Let $X_k$ be a hypergeometric($2n$, $k$, $n$) random variable.  If $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less (which, in this case, it is), then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^12] and central moments (Weisstein)[^13] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
@@ -227,3 +244,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^12]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
 [^13]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+
+[^14]: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
+
+[^15]: $W_n$ can, in principle, be nonlinear instead, this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
