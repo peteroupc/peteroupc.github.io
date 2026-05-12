@@ -73,6 +73,7 @@ In the articles above, I put an emphasis on random variate generation that:
 
 * [**Approximations in Bernstein Form**](./bernapprox.html)
     - Used above all in the supplemental notes for Bernoulli factories.
+* [**Notes on Approximation Theory**](./approxtheory.html)
 * [**A Note on Hash Functions**](./hash.html)
 * [**Pseudocode Conventions**](./pseudocode.html)
 * [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
