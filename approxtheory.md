@@ -119,7 +119,7 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 
 Let $L_n(f)$ be a (nonpositive) linear operator described as follows.  The functions it maps to and from lie on the closed unit interval.
 
-Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^10].  That paper, among others (for example, Micchelli 1973[^11]), showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($O(1/n^{3/2})$ means a function no greater than a constant times $1/n^{3/2}$ for all sufficiently large values of $n$.)
+Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^10].  That paper, among others (for example, Micchelli 1973[^11]), showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($=O(1/n^{3/2})$ means the absolute value is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
 
 $L_n(f)$ is then based on $W_n(f)$ and is a special case of [**a conjecture I have**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) on polynomial approximation.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
 
