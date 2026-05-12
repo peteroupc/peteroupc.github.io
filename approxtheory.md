@@ -133,7 +133,7 @@ $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
 Here, $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability of getting $i$.  (This is the probability that a hypergeometric($2n$, $k$, $n$) random variable equals $i$.) Meanwhile, $LA_n$ and $LB_n$ are positive linear operators, making it easier to assess their approximation properties.
 
-It will be shown that, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_Operators), and those for the combined operator $(LA_n+LB_n)$.
+It will be shown that, if $f$ has a continuous third derivative, the rate of $L_n$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_Operators), and those for the combined operator $(LA_n+LB_n)$.
 
 The following are some of these values and those for related operators:
 
