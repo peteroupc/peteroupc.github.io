@@ -110,7 +110,7 @@ holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le
 >
 > 4. For every $s\ge 2$, if the sequence $(W_n)$ is such that $B_n(W_n(f))$ preserves all polynomials of degree $s$ or less, then $B_n(W_n(f))$ must be nonlinear, nonpositive, or equal to $f$ (Gavrea and Ivan 2018[^20], Guessab et al. 2009[^21]), so that, for example, $(W_n)$ cannot be a sequence of linear positive operators (Finta 2013)[^22].
 >
-> 5. For more useful notes on finding error bounds, see "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html).
+> 5. For more notes on finding error bounds, see "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html).
 
 <a id=Example></a>
 
