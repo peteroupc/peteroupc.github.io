@@ -99,9 +99,9 @@ where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of de
 
 Now let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities in the previous section leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
 
-$$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|\_\infty$$
+$$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|_\infty$$
 
-$$ = (1+\|L\|)\|f^{(3)}\|\_\infty/27.$$
+$$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
 
 <a id=Example></a>
 
@@ -119,7 +119,7 @@ The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernst
 
 Let $L_n(f)$ be a (nonpositive) linear operator described as follows.  The functions it maps to and from lie on the closed unit interval.
 
-Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^10].  That paper, among others (for example, Micchelli 1973[^13]), showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($O(1/n^{3/2})$ means a function no greater than a constant times $1/n^{3/2}$ for all sufficiently large values of $n$.)
+Let $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a (nonpositive) linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^10].  That paper, among others (for example, Micchelli 1973[^11]), showed that $B_n(W_n(f))=O(1/n^{3/2})$ if $f$ has a continuous third derivative. ($O(1/n^{3/2})$ means a function no greater than a constant times $1/n^{3/2}$ for all sufficiently large values of $n$.)
 
 $L_n(f)$ is then based on $W_n(f)$ and is a special case of [**a conjecture I have**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) on polynomial approximation.  Let $k=2n\lambda$, where $0\le\lambda\le 1$.  Let&mdash;
 
@@ -131,9 +131,9 @@ $$= \sum_{i=0}^n\left((2f\left(\frac{k}{2n}\right) + B_{n}(f)\left(\frac{i}{n}\r
 
 $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
-Here, $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability of getting $i$.  (This is the probability of a hypergeometric($2n$, $k$, $n$) random variable.) Meanwhile, $LA_n$ and $LB_n$ are positive linear operators, making it easier to assess their approximation properties.
+Here, $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability of getting $i$.  (This is the probability that a hypergeometric($2n$, $k$, $n$) random variable equals $i$.) Meanwhile, $LA_n$ and $LB_n$ are positive linear operators, making it easier to assess their approximation properties.
 
-It will be shown that, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of the values $L_n((e_1-x)^i)$ (or $L_n(e_i)$) and $(LA_n+LB_n)((e_1-x)^i)$ (or $(LA_n+LB_n)(e_i)$), for $0\le i\le 4$.
+It will be shown that, if $f$ has a continuous third derivative, the rate of $\text{abs}(L_n)$ is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_Operators), and those for the combined operator $(LA_n+LB_n)$.
 
 The following are some of these values and those for related operators:
 
@@ -145,17 +145,17 @@ The following are some of these values and those for related operators:
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^11] and central moments (Weisstein)[^12] of hypergeometric random variables.  Let $X_k$ be a hypergeometric random variable.  If $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^12] and central moments (Weisstein)[^13] of hypergeometric random variables.  Let $X_k$ be a hypergeometric($2n$, $k$, $n$) random variable.  If $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less (which, in this case, it is), then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
-$$= \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}X_k)^i]}{n^i}\frac{g^{(i)}(k/(2n))}{i!},$$
+$$= \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]}{n^i}\frac{g^{(i)}(k/(2n))}{i!},$$
 
 where the derivatives are taken with respect to $y$, and where $\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]$ is the $i$-th central moment of $X_k$.
 
 In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
-The first step is to find the Taylor expansion of $L_n(f)(\lambda)$. Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
+The first step is to [**find the Taylor expansion**](#Taylor_Expansion_of_Linear_Operators) of $L_n(f)(\lambda)$. Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
 
 $$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
@@ -222,8 +222,8 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^10]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
 
-[^11]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^11]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^12]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+[^12]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
-[^13]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^13]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
