@@ -12,9 +12,9 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
 - [**Definitions**](#Definitions)
 - [**Bernstein Form and Bernstein Polynomials**](#Bernstein_Form_and_Bernstein_Polynomials)
 - [**"Moments" of Linear Operators**](#Moments_of_Linear_Operators)
+    - [**"Moments" of Bernstein Polynomials**](#Moments_of_Bernstein_Polynomials)
 - [**Taylor Expansion of Linear Operators**](#Taylor_Expansion_of_Linear_Operators)
 - [**Results on Error Bounds**](#Results_on_Error_Bounds)
-    - [**"Moments" of Bernstein Polynomials**](#Moments_of_Bernstein_Polynomials)
     - [**Whitney's Inequality**](#Whitney_s_Inequality)
     - [**Lebesgue Inequality for Certain Linear Operators**](#Lebesgue_Inequality_for_Certain_Linear_Operators)
 - [**Example**](#Example)
@@ -29,7 +29,7 @@ The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 
 
 For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
-- An _operator_ is a mapping from functions to functions.
+- An _operator_ is a mapping from a function to a function.
 - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every real number $a$.
 - An operator $L$ is _positive_ if it has the property that, if $f$ is nonnegative on its domain, so is $L(f)$, for every input function $f$.[^1]
 - The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.  This assumes $L$ takes only continuous functions.
@@ -47,7 +47,7 @@ $$P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},$$
 
 where the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.[^2]
 
-The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this section, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$. $B_n(f)$ is a positive linear operator.
+The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this document, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$. $B_n(f)$ is a positive linear operator.
 
 <a id=Moments_of_Linear_Operators></a>
 
@@ -63,42 +63,17 @@ For a linear operator $L$, they are:
 
 Because $L$ is linear, if $L(e_i) = e_i$ for each $i$ from 0 through $j$, then $L$ _reproduces all polynomials_ up to degree $j$ (that is, $L(f) = f$ whenever $f$ is a polynomial of degree $j$ or less).
 
-<a id=Taylor_Expansion_of_Linear_Operators></a>
-
-## Taylor Expansion of Linear Operators
-
-Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator.  Then:
-
-$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
-
-where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^4].)
-
-In the case that $L$ is positive, upper bounds for $L_n(R(f,\lambda))$ are given by Păltănea and Smuc (2019)[^5].
-
-Finding such upper bounds is harder if $L$ is not positive.  This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.  See the "Example" section later in this document.
-
-<a id=Results_on_Error_Bounds></a>
-
-## Results on Error Bounds
-
-Some results on error bounds for certain classes of operators.
-
 <a id=Moments_of_Bernstein_Polynomials></a>
 
 ### "Moments" of Bernstein Polynomials
 
 The following results deal with useful quantities when discussing the error in approximating a function by Bernstein polynomials.
 
-Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made, where $n$ is 1 or greater.  Then the total number of heads $X$ follows a _binomial distribution_, and one useful quantity of that distribution, the $r$-th _central moment_, is as follows:
+Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made, where $n$ is 1 or greater.  Then the total number of heads $X$ follows a _binomial distribution_.  The following are useful quantities of this distribution.
 
-$$T_{n,r}(p) = \mathbb{E}[(X-\mathbb{E}[X])^r] = \sum_{k=0}^n (k-np)^r{n \choose k}p^k (1-p)^{n-k}$$
-
-$$= B_n((e_1-p)^r)(p) n^r,$$
-
-where $\mathbb{E}[Y]$ is the expected value (or mean or “long-run average”) of the random variable $Y$.
-
-- Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)$ = $T_{n,r}(p)/n^r$ = $\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$ = $B_n((e_1-p)^r)(p)$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) $S_{n,r}$ is thus the $r$-th "central moment" of degree-$n$ Bernstein polynomials.
-- The $r$-th _central absolute moment_ of $X/n$ is denoted $M_{n,r}(p)$ = $\mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r]$ = $B_n(\text{abs}(e_1-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$. $M_{n,r}$ is thus the $r$-th "absolute moment" of degree-$n$ Bernstein polynomials.
+- $T_{n,r}$: The _central moment_ of $X$ is denoted $T_{n,r}(p)$ = $\mathbb{E}[(X-\mathbb{E}[X])^r]$ = $B_n((e_1-p)^r)(p)\cdot n^r$. (In this section, $\mathbb{E}[Y]$ is the expected value [or mean or “long-run average”] of the random variable $Y$.)  Formulas for computing this central moment are given in Skorski (2024)[^23].
+- $S_{n,r}$: Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)$ = $T_{n,r}(p)/n^r$ = $\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$ = $B_n((e_1-p)^r)(p)$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) $S_{n,r}$ is thus the $r$-th "central moment" of degree-$n$ Bernstein polynomials.
+- $M_{n,r}$: The $r$-th _central absolute moment_ of $X/n$ is denoted $M_{n,r}(p)$ = $\mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r]$ = $B_n(\text{abs}(e_1-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$. $M_{n,r}$ is thus the $r$-th "absolute moment" of degree-$n$ Bernstein polynomials.
 
 The following gives bounds on $M_{n,r}$; some results in approximation theory rely on bounds like these.
 
@@ -112,7 +87,27 @@ The following gives bounds on $M_{n,r}$; some results in approximation theory re
 | Is odd, and $3\le r\le 43$. | $\sqrt{\sigma(r-1,8)\sigma(r+1,8)} = r^{1/2}(r-1)! / (2\cdot 8^{(r-1)/2}((r-1)/2)!)$, for every integer $n\ge 2$. |
 | Is odd and greater than 43. | $\sqrt{\sigma(r-1,6)\sigma(r+1,6)}$, for every integer $n\ge 2$. |
 
-_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^6].  The second row is an improved result of the first, from Molteni (2022)[^7].  The third row follows from Cheng (1983)[^8].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using Schwarz's inequality (Weisstein)[^9] \(see also Bojanić and Shisha 1975[^10] for the case $r=4$). &#x25a1;
+_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^4].  The second row is an improved result of the first, from Molteni (2022)[^5].  The third row follows from Cheng (1983)[^6].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using Schwarz's inequality (Weisstein)[^7] \(see also Bojanić and Shisha 1975[^8] for the case $r=4$). &#x25a1;
+
+<a id=Taylor_Expansion_of_Linear_Operators></a>
+
+## Taylor Expansion of Linear Operators
+
+Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator.  Then:
+
+$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
+
+where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^9].)
+
+In the case that $L$ is positive, upper bounds for $L_n(R(f,\lambda))$ are given by Păltănea and Smuc (2019)[^10].
+
+Finding such upper bounds is harder if $L$ is not positive.  This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.  See the "Example" section later in this document.
+
+<a id=Results_on_Error_Bounds></a>
+
+## Results on Error Bounds
+
+Some results on error bounds for certain classes of operators.
 
 <a id=Whitney_s_Inequality></a>
 
@@ -265,19 +260,19 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^3]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
 
-[^4]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
+[^4]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
 
-[^5]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
+[^5]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
 
-[^6]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
+[^6]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983).
 
-[^7]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
+[^7]: Weisstein, Eric W. "Schwarz's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/SchwarzsInequality.html**](https://mathworld.wolfram.com/SchwarzsInequality.html)
 
-[^8]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983).
+[^8]: R. Bojanic, O. Shisha, "Degree of $L^1$ approximation to integrable functions by modified Bernstein polynomials", Journal of Approximation Theory 13, 66–72 (1975).
 
-[^9]: Weisstein, Eric W. "Schwarz's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/SchwarzsInequality.html**](https://mathworld.wolfram.com/SchwarzsInequality.html)
+[^9]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
 
-[^10]: R. Bojanic, O. Shisha, "Degree of $L^1$ approximation to integrable functions by modified Bernstein polynomials", Journal of Approximation Theory 13, 66–72 (1975).
+[^10]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
 
 [^11]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
 
@@ -302,3 +297,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^21]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
 [^22]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+
+[^23]: Skorski, Maciej. "Handy formulas for binomial moments." _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41.
