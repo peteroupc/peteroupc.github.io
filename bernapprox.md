@@ -522,7 +522,7 @@ Taylor polynomials and Taylor remainders were discussed in the section "Taylor P
 
 **Lemma B9**: Let $r$ be zero or a positive integer, and let $x_0$ satisfy $0\le x_0\le 1$.  Let $f(\lambda)$ have a Lipschitz-continuous $r$-th derivative on the closed unit interval (see "[**Definitions**](#Definitions)"), with Lipschitz constant $M$ or less.  Denote $B_n(f)$ as the Bernstein polynomial of $f$ of degree $n$.  Then the following bound holds true: $\text{abs}(B_n(R_{f,r}(\lambda, x_0))(x_0)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where $\mu_r$ is as defined in Proposition 1 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)".
 
-_Proof_: This result relies on Lemma 2C in the article "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)", with $Y=X/n$, where $X$ is a binomial random variable with $n$ tosses and heads probability $x_0$; $Y$ takes only values on the closed unit interval. &#x25a1;
+_Proof_: This result relies on Lemma 5 in the article "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)", with $L(f)=B_n(f)$. &#x25a1;
 
 > **Note:** It would be interesting to strengthen this lemma, at least for $r\le 10$, with a bound of the form $MC\cdot\max(1/n, (x_0(1-x_0)/n)^{1/2})^{r+1}$, where $C$ is an explicitly given constant depending on $r$, which is possible because the Bernstein polynomial of $\text{abs}(\lambda-x_0)^{r+1}$ can be bounded in this way (Lorentz 1966)[^10].
 
