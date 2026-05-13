@@ -30,13 +30,15 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 
 - An _operator_ is a mapping from functions to functions.
 - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every real number $a$.
-- An operator $L$ is _positive_ if it has the property that, if $f$ is nonnegative on its domain, so is $L(f)$, for every input function $f$.
+- An operator $L$ is _positive_ if it has the property that, if $f$ is nonnegative on its domain, so is $L(f)$, for every input function $f$.[^16]
 - The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.  This assumes $L$ takes only continuous functions.
 - In this document, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
 
 <a id=Bernstein_Form_and_Bernstein_Polynomials></a>
 
 ## Bernstein Form and Bernstein Polynomials
+
+Among the best known examples of linear operators are the Bernstein polynomials.
 
 In this document, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash;
 
@@ -64,9 +66,13 @@ For a linear operator $L$, they are:
 
 Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator.  Then:
 
-$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
+$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{(1)}$$
 
 where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^3].)
+
+In the case that $L$ is positive, upper bounds for $L_n(R(f,\lambda))$ are given by Păltănea and Smuc (2019)[^17].
+
+Finding such upper bounds is harder if $L$ is not positive.  This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.  See the "Example" section later in this document.
 
 <a id=Results_on_Error_Bounds></a>
 
@@ -248,3 +254,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^14]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
 [^15]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+
+[^16]: A better term for positive operators is probably nonnegativity-preserving operators.
+
+[^17]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
