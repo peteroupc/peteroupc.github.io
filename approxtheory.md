@@ -18,8 +18,8 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
     - [**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_Operators)
     - [**Whitney's Inequality**](#Whitney_s_Inequality)
     - [**Lebesgue Inequality for Certain Linear Operators**](#Lebesgue_Inequality_for_Certain_Linear_Operators)
-- [**An Interesting Linear Operator**](#An_Interesting_Linear_Operator)
 - [**Example**](#Example)
+- [**Example: An Interesting Linear Operator**](#Example_An_Interesting_Linear_Operator)
 - [**License**](#License)
 - [**Notes**](#Notes)
 
@@ -67,6 +67,12 @@ For a linear operator $L$, they are:
 
 Because $L$ is linear, if $L(e_i) = e_i$ for each $i$ from 0 through $j$, then $L$ _reproduces all polynomials_ up to degree $j$ (that is, $L(f) = f$ whenever $f$ is a polynomial of degree $j$ or less).
 
+Also, because $L$ is linear, the "moments" of degree up to $m$, say, lead to easy ways to find the mapping by $L$ of any polynomial of degree up to $m$, when the polynomial is written in "power" form.
+
+> **Example:** Let $f(x)$ be the polynomial $4x^3 - 6x^2 + 8x^1 - 10$.  Then:
+>
+> $$L(f) = 4L(e_3) - 6L(e_2) + 8L(e_1) - 10L(e_0).$$
+
 <a id=Moments_of_Bernstein_Polynomials></a>
 
 ### "Moments" of Bernstein Polynomials
@@ -101,15 +107,22 @@ Continuous functions can be "unwrapped" into a Taylor expansion.  The linear map
 
 Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator that maps continuous functions on that interval to functions of that kind.  Then:
 
-$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
+$$L_n(f)(\lambda) = L_n(R_s(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
 
-where $R(f,\lambda)$ is the remainder of $f$ after subtracting the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^11].)
+where $R_s(f,\lambda)$ is the remainder after subtracting from $f$ the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^11].)
 
-In the case that $L$ is positive, upper bounds for $L_n(R(f,\lambda))$ are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)".
+If $L$ reproduces constants, so that $L(e_0)=1$, this becomes:
 
-Finding such upper bounds is harder if $L$ is not positive.  This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.  See the "Example" section later in this document.
+$$L_n(f)(\lambda) - f(\lambda) = L_n(R_s(f, \lambda)) + \sum_{i=1}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}.\tag{2}$$
 
-It can be seen from the expansion $(1)$ that finding upper bounds for $L_n(f)(\lambda)$ involves finding upper bounds for $L_n$'s "central moments" up to the $s$-th order.  Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
+It can be seen from the expansions $(1)$ and $(2)$ that finding upper bounds for $L_n(f)(\lambda)$ involves:
+
+- Finding upper bounds for $L_n$'s "central moments" up to the $s$-th order.
+- Finding upper bounds for $L_n(R_s(f,\lambda))$.
+    - If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)".
+    - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.  See the "[**Example**](#Example)" section later in this document.
+
+Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
 <a id=Results_on_Error_Bounds></a>
 
@@ -151,26 +164,26 @@ _Proof:_ Inequality 1 follows from a special case of a theorem on positive linea
 
 Inequality 5 follows from inequality 4 using properties of Hölder-continuous functions; by assumption, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta>0$.  Inequality 9 follows from inequality 8 in the same manner.  Inequalities 6 and 10 follow from inequalities 5 and 9, respectively, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1. &#x25a1;
 
-**Lemma 3**. _Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Let $h>0$ be a real number. Then $L(f)(\lambda) = L(Q(f,\lambda))(\lambda) + L(R(f,\lambda))(\lambda)$, where:_
+**Lemma 3**. _Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Let $h>0$ be a real number. Then $L(f)(\lambda) = L(Q_k(f,\lambda))(\lambda) + L(R_k(f,\lambda))(\lambda)$, where:_
 
-$$\text{abs}(L(Q(f,\lambda)) - f(\lambda))\le \left(\sum_{i=0}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i)}{i!}\right),$$
+$$\text{abs}(L(Q_k(f,\lambda)) - f(\lambda))\le \left(\sum_{i=0}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i)}{i!}\right),$$
 
-$$\text{abs}(L(R(f,\lambda)))\le\left(\frac{\tau_k}{k!}+\frac{\tau_{k+1}}{(k+1)!\cdot h}\right)\cdot\omega_1(f^{(k)}, h),$$
+$$\text{abs}(L(R_k(f,\lambda)))\le\left(\frac{\tau_k}{k!}+\frac{\tau_{k+1}}{(k+1)!\cdot h}\right)\cdot\omega_1(f^{(k)}, h),$$
 
-$$\text{and }\text{abs}(L(R(f,\lambda)))\le\max\left(\frac{\tau_k}{k!}, \frac{\tau_{k+1}}{(k+1)!\cdot 2h}\right)\cdot\tilde\omega_1(f^{(k)}, 2h),$$
+$$\text{and }\text{abs}(L(R_k(f,\lambda)))\le\max\left(\frac{\tau_k}{k!}, \frac{\tau_{k+1}}{(k+1)!\cdot 2h}\right)\cdot\tilde\omega_1(f^{(k)}, 2h),$$
 
-$$\text{and }\text{abs}(L(R(f,\lambda)))\le\frac{\tau_k}{k!}\cdot\tilde\omega_1(f^{(k)}, \frac{\tau_{k+1}}{(k+1)\tau_k}),$$
+$$\text{and }\text{abs}(L(R_k(f,\lambda)))\le\frac{\tau_k}{k!}\cdot\tilde\omega_1(f^{(k)}, \frac{\tau_{k+1}}{(k+1)\tau_k}),$$
 
 _and where:_
 
-- $Q(f,\lambda)=$ $\sum_{i=0}^k f^{(i)}(\lambda)\cdot(e_0-\lambda)^i/(i!)$ _is the degree-$k$_ Taylor polynomial _of $f$ centered at $\lambda$._
-- $R(f,\lambda)$ _is the_ Taylor remainder _that results from subtracting $Q(f,\lambda)$ from $f$._
+- $Q_k(f,\lambda)=$ $\sum_{i=0}^k f^{(i)}(\lambda)\cdot(e_0-\lambda)^i/(i!)$ _is the degree-$k$_ Taylor polynomial _of $f$ centered at $\lambda$._
+- $R_k(f,\lambda)$ _is the_ Taylor remainder _that results from subtracting $Q(f,\lambda)$ from $f$._
 
-_Proof:_  For $L(R(f,\lambda))$, the first bound comes from Păltănea and Smuc (2019, Theorem 1)[^18]; the second bound comes from corollary 3.2 of Dimitriu (2010)[^19] and Brudnyĭ's lemma; and the third bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^20], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^21], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^22].[^23]&#x25a1;
+_Proof:_  The second to fourth bounds given relate to the Taylor remainder.  The second bound comes from Păltănea and Smuc (2019, Theorem 1)[^18]; the third bound comes from corollary 3.2 of Dimitriu (2010)[^19] and Brudnyĭ's lemma; and the fourth bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^20], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^21], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^22].[^23]&#x25a1;
 
-**Lemma 4.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Then_ $\text{abs}(L(R(f,Y)))\le M \tau_{k+1}(Y)/((k+1)!)$, _where_ $R(f,Y)$ _is as in Lemma 2B._
+**Lemma 4.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Then_ $\text{abs}(L(R_k(f,\lambda)))\le M \tau_{k+1}/((k+1)!)$, _where_ $R_k(f,\lambda)$ _is as in Lemma 3._
 
-_Proof:_  Follows from the third bound for $R(f,Y)$ in Lemma 3 in the same manner as inequality 10 of Lemma 2. &#x25a1;
+_Proof:_  Follows from the third bound for $L(R_k(f,\lambda))$ in Lemma 3 in the same manner as inequality 10 of Lemma 2. &#x25a1;
 
 The following lemma adapts the previous lemmas to the setting of random variables.
 
@@ -220,18 +233,6 @@ $$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3
 
 $$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
 
-<a id=An_Interesting_Linear_Operator></a>
-
-## An Interesting Linear Operator
-
-For a continuous function $f$ on the closed unit interval and for nonnegative integers $m$ and $n$, let $H_{n,m}$ be a linear operator as follows:
-
-$$H_{n,m}=B_n(f) + L_m(f) - B_n(L_m(f)),$$
-
-where $B_n$ is the degree-$n$ Bernstein polynomial and $L_m$ is the polynomial of degree up to $m$ that equals $f$ at "m+1 distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^32], but appears not to have been studied elsewhere.
-
-It would be interesting to find error bounds for $H_{n,m}$ depending on how many derivatives $f$ has (up to $m$ derivatives).
-
 <a id=Example></a>
 
 ## Example
@@ -247,12 +248,12 @@ $$=\mathbb{E}\left[W_{2n}\left(f\right)\left(\frac{k}{2n}\right) - W_n\left(f\ri
 where:
 
 - $k = 2n\lambda$, where $0\le\lambda\le 1$.
-- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^33]
+- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^32]
 - $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
 - $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.
 - $\mathbb{E}[Y]$ is the expected value (or mean or “long-run average”) of the random variable $Y$.
 
-$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^34].  That paper, among others (for example, Micchelli 1973[^35]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
+$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^33].  That paper, among others (for example, Micchelli 1973[^34]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
 
 With this choice of $W_n$, $L_n$ becomes:
 
@@ -278,7 +279,7 @@ The following are some of these values and those for related operators:
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^36] and central moments (Weisstein)[^37] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^35] and central moments (Weisstein)[^36] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
@@ -290,19 +291,19 @@ In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{
 
 The first step is to [**find the Taylor expansion**](#Taylor_Expansion_of_Linear_Operators) of $L_n(f)(\lambda)$. Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
 
-$$L_n(f)(\lambda) = L_n(R(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
+$$L_n(f)(\lambda) = L_n(R_3(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R_3(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
 
 $$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
 
 The function $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$; and $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R_3(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
 
 $$ + \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6$$
 
-$$ \le \|L_n(R(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+$$ \le \|L_n(R_3(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
 
 $$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
 
@@ -325,6 +326,24 @@ $$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n 
 $$\le 0.1875 \frac{\|f^{(2)}\|}{n^{3/2}} + \frac{5\sqrt{3}}{72} \frac{\|f^{(3)}\|}{n^{3/2}} \le \frac{0.3078 M}{n^{3/2}} = O(1/n^{3/2}).$$
 
 If $n\ge 2$ is an integer, $LC_n(f)\le 0.2165 M/n^{3/2}$.
+
+<a id=Example_An_Interesting_Linear_Operator></a>
+
+## Example: An Interesting Linear Operator
+
+For a continuous function $f$ on the closed unit interval and for nonnegative integers $m$ and $n$, let $H_{n,m}$ be a linear operator as follows:
+
+$$H_{n,m}=B_n(f) + L_m(f) - B_n(L_m(f)),$$
+
+where $B_n$ is the degree-$n$ Bernstein polynomial and $L_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^37], but appears not to have been studied elsewhere.
+
+It is known that $L_m$ reproduces polynomials of degree $m$ or less, so that $L_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(L_m(f))$ and therefore $H_{n,m}=L_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
+
+Because $H_{n,m}$ reproduces polynomials up to degree $m$, its "central moments" are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:
+
+$$H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda).$$
+
+Unfortunately, because $H_{n,m}$ is not positive, finding further bounds for this operator is quite hard.
 
 <a id=License></a>
 
@@ -397,14 +416,14 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^31]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. _Positivity_ 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4). However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
-[^32]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
+[^32]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
-[^33]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
+[^33]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
 
-[^34]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
+[^34]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^35]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^35]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
-[^36]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^36]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
-[^37]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+[^37]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
