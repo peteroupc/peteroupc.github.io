@@ -678,9 +678,8 @@ In the following results:
 Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
 
 - $\mathbb{E}[Y]$ as the _mean_ (or expected value or “long-run average”) of $Y$,
-- $\sigma_r(Y)$ as the $r$-th _central moment_ (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$,
-- $\tau_r(Y)$ as the $r$-th _central absolute moment_ of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$, and
-- $\text{Var}[Y]$ as the _variance_ (or second central moment) of $Y$, that is, $\text{Var}[Y]=\sigma_2(Y)=\tau_2(Y)$.
+- $\sigma_r(Y)$ as the $r$-th _central moment_ (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$, and
+- $\tau_r(Y)$ as the $r$-th _central absolute moment_ of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$.
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric random variables that is essential in polynomial-building schemes.  This part of the lemma can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder-continuous_ functions (see "[**Definitions**](#Definitions)").
 
@@ -704,7 +703,7 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric 
     - _(M/2)\*(1/(7\*n))$^{(1+\alpha)/2}$ if n&ge;4, and_
     - _(M/2)\*(1/(8\*n&minus;4))$^{(1+\alpha)/2}$._
 
-_Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\sigma_2[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Through Lemma 4 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html), there is a positive linear operator $L(f)(\lambda) = $\mathbb{E}[f(X/n)]$ with $\lambda=\mathbb{E}[X/n]=k/(2n)$.  Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2 of that article, using more or less tight bounds for $\sigma_2[X/n]$.  Part 3 follows from inequality 6 of the same lemma, plugging in estimates for the variance of $X/n$ found in part 1. &#x25a1;
+_Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\sigma_2[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Through Lemma 5 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html), there is a positive linear operator $L(f)(\lambda)$ = $\mathbb{E}[f(X/n)]$ with $\lambda=\mathbb{E}[X/n]=k/(2n)$.  Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2 of that article, using more or less tight bounds for $\sigma_2[X/n]$.  Part 3 follows from inequality 6 of the same lemma, plugging in estimates for the variance of $X/n$ found in part 1. &#x25a1;
 
 > **Notes:**
 >
@@ -895,13 +894,12 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambd
 
 > **Notes:**
 >
-> 1. If $W_n(0)=f(0)$ and $W_n(1)=f(1)$ for every $n$, then (PB) is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(\lambda)=W_n(1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).
-> 2. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
-> 3. This conjecture is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:
+> 1. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
+> 2. This conjecture is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:
 >
 >     - $W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or
 >     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^34]
-> 4. For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.
+> 3. For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.
 
 <!--
 This problem can be tackled as follows.  Let&mdash;
@@ -1346,11 +1344,7 @@ Because of Lemma 1A, it's possible to label each left-hand side of a pushdown au
 
 (START, 1/2, EMPTY) &rarr; ..., (START, sqrt(_&lambda;_)/2, EMPTY) &rarr; ..., (START, (1 &minus; sqrt(_&lambda;_))/2, EMPTY) &rarr; ....
 
-**Proposition 1A:** _If f(&lambda;) is in the class **PDA**, then so is every polynomial written as&mdash;_
-
-$${n\choose 0}f(\lambda)^0 (1-f(\lambda))^{n-0} a[0] + {n\choose 1}f(\lambda)^1 (1-f(\lambda))^{n-1} a[1] + ... + {n\choose n}f(\lambda)^n (1-f(\lambda))^{n-n} a[n],$$
-
-_where n is the polynomial's degree and a\[0], a\[1], ..., a\[n] are functions in the class **PDA**._
+**Proposition 1A:** _If f(&lambda;) is in the class **PDA**, then so is every polynomial in Bernstein form of degree $n$, where $n\ge 0$ is integer, with Bernstein coefficients a\[0], a\[1], ..., a\[n] that are functions in the class **PDA**._
 
 _Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^7]\: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
 
