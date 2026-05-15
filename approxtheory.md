@@ -189,7 +189,7 @@ The following lemma adapts the previous lemmas to the setting of random variable
 
 **Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4 apply as appropriate to $f$ with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
 
-_Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^24], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces polynomials of degree up to 1. &#x25a1;
+_Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^24], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
 
 <a id=Whitney_s_Inequality></a>
 
@@ -333,13 +333,13 @@ If $n\ge 2$ is an integer, $LC_n(f)\le 0.2165 M/n^{3/2}$.
 
 For a continuous function $f$ on the closed unit interval and for nonnegative integers $m$ and $n$, let $H_{n,m}$ be a linear operator as follows:
 
-$$H_{n,m}=B_n(f) + L_m(f) - B_n(L_m(f)),$$
+$$H_{n,m}=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),$$
 
-where $B_n$ is the degree-$n$ Bernstein polynomial and $L_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^37], but appears not to have been studied elsewhere.
+where $B_n$ is the degree-$n$ Bernstein polynomial and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^37], but appears not to have been studied elsewhere.
 
-It is known that $L_m$ reproduces polynomials of degree $m$ or less, so that $L_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(L_m(f))$ and therefore $H_{n,m}=L_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
+It is known that $\text{Lag}_m$ reproduces all polynomials of degree $m$ or less, so that $\text{Lag}_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(\text{Lag}_m(f))$ and therefore $H_{n,m}(f)=\text{Lag}_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
 
-Because $H_{n,m}$ reproduces polynomials up to degree $m$, its "central moments" are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:
+Because $H_{n,m}$ reproduces all polynomials up to degree $m$, its "central moments" are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:
 
 $$H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda).$$
 

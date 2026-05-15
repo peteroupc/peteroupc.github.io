@@ -1,10 +1,10 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-05-15"><meta name="citation_date" content="2026/05/15"><meta name="citation_publication_date" content="2026/05/15"><meta name="citation_online_date" content="2026/05/15"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-05-15.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p>Some notes that may be useful when finding approximation error bounds that are explicit, with no hidden constants and without introducing transcendental or trigonometric functions.</p>
 
@@ -292,7 +292,7 @@
 
 <p><strong>Lemma 5.</strong> <em>Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4 apply as appropriate to $f$ with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$.</em></p>
 
-<p><em>Proof</em>: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>, letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces polynomials of degree up to 1. □</p>
+<p><em>Proof</em>: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>, letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. □</p>
 
 <p><a id="Whitney_s_Inequality"></a></p>
 
@@ -445,13 +445,13 @@
 
 <p>For a continuous function $f$ on the closed unit interval and for nonnegative integers $m$ and $n$, let $H_{n,m}$ be a linear operator as follows:</p>
 
-\[H_{n,m}=B_n(f) + L_m(f) - B_n(L_m(f)),\]
+\[H_{n,m}=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),\]
 
-<p>where $B_n$ is the degree-$n$ Bernstein polynomial and $L_m$ is the polynomial of degree up to $m$ that equals $f$ at “$m+1$ distinct points on” the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>, but appears not to have been studied elsewhere.</p>
+<p>where $B_n$ is the degree-$n$ Bernstein polynomial and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at “$m+1$ distinct points on” the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>, but appears not to have been studied elsewhere.</p>
 
-<p>It is known that $L_m$ reproduces polynomials of degree $m$ or less, so that $L_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(L_m(f))$ and therefore $H_{n,m}=L_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)</p>
+<p>It is known that $\text{Lag}<em>m$ reproduces all polynomials of degree $m$ or less, so that $\text{Lag}_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(\text{Lag}_m(f))$ and therefore $H</em>{n,m}(f)=\text{Lag}<em>m(f)=f$, and therefore $H</em>{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)</p>
 
-<p>Because $H_{n,m}$ reproduces polynomials up to degree $m$, its “central moments” are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:</p>
+<p>Because $H_{n,m}$ reproduces all polynomials up to degree $m$, its “central moments” are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:</p>
 
 \[H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda).\]
 
