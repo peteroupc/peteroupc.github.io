@@ -120,7 +120,7 @@ It can be seen from the expansions $(1)$ and $(2)$ that finding upper bounds for
 - Finding upper bounds for $L_n$'s "central moments" up to the $s$-th order.
 - Finding upper bounds for $L_n(R_s(f,\lambda))$.
     - If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)".
-    - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.  See the "[**Example**](#Example)" section later in this document.
+    - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^38]  See the "[**Example**](#Example)" section later in this document.
 
 Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
@@ -158,7 +158,7 @@ _Proof:_ Follows from a result of Gonska and Meier (1985, theorem 3.1)[^12]. &#x
 | 7 | Has a continuous derivative. | $((h+2)^2/(8h))\cdot \omega_1(f^{(1)}, h\cdot\sqrt{\sigma_2}) \cdot\sqrt{\sigma_2}$. |
 | 8 | Has a continuous derivative. | $\frac{1}{2}(\sigma_2)^{1/2} \tilde\omega_1(f^{(1)}, (\sigma_2)^{1/2})$. |
 | 9 | Has a Hölder-continuous derivative with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less. | $\frac{M}{2}(\sigma_2)^{(1+\alpha)/2}$. |
-| 10 | Is Lipschitz continuous with Lipschitz constant $M$ or less. | $\frac{M}{2} (\sigma_2)$. |
+| 10 | Has a Lipschitz-continuous derivative with Lipschitz constant $M$ or less. | $\frac{M}{2} (\sigma_2)$. |
 
 _Proof:_ Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^13]; inequality 2 follows from a result of Mond (1978)[^14]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^15]; and inequality 4, a result of Peetre (1969)[^16].  Inequality 8 follows from a result of Gonska and Meier (1985, theorem 4.1)[^12]; see also Păltănea and Dimitriu (2016, remark 3)[^17].  Inequality 7 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985), with the interval $[a, b]$, $m=1$ (since the function is defined on all of $[a, b]$), $r=h$, and $x_0$ equal to $\lambda$.
 
@@ -333,17 +333,71 @@ If $n\ge 2$ is an integer, $LC_n(f)\le 0.2165 M/n^{3/2}$.
 
 For a continuous function $f$ on the closed unit interval and for nonnegative integers $m$ and $n$, let $H_{n,m}$ be a linear operator as follows:
 
-$$H_{n,m}=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),$$
+$$H_{n,m}(f)=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),$$
 
 where $B_n$ is the degree-$n$ Bernstein polynomial and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^37], but appears not to have been studied elsewhere.
 
-It is known that $\text{Lag}_m$ reproduces all polynomials of degree $m$ or less, so that $\text{Lag}_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(\text{Lag}_m(f))$ and therefore $H_{n,m}(f)=\text{Lag}_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
+It is known that $\text{Lag}_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $\text{Lag}_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(\text{Lag}_m(f))$ and therefore $H_{n,m}(f)=\text{Lag}_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
 
 Because $H_{n,m}$ reproduces all polynomials up to degree $m$, its "central moments" are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:
 
 $$H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda).$$
 
-Unfortunately, because $H_{n,m}$ is not positive, finding further bounds for this operator is quite hard.
+Finding further bounds for $H_{n,m}$ is made difficult by that operator's nonpositivity.  To solve this, $\text{Lag}_m$ is decomposed into two positive operators $\text{LagA}_m$ and $\text{LagB}_m$ such that $\text{Lag}_m=\text{LagA}_m+\text{LagB}_m$.
+
+$\text{Lag}_m$ is an operator written as&mdash;
+
+$$\text{Lag}_m(f)(\lambda)=\sum_{i=0}^m f(x_i) l(i, \lambda, x_0, ..., x_m),$$
+
+where $l(...)$ is a function that is not necessarily negative everywhere.  This operator is decomposed into two positive linear operators as follows:
+
+$$\text{LagA}_m(f)(\lambda)=\sum_{i=0}^m f(x_i) (l(i, \lambda, x_0, ..., x_m)+M),$$
+
+$$\text{LagB}_m(f)(\lambda)=\sum_{i=0}^m f(x_i) M,$$
+
+where $M$ is greater than or equal to the operator norm of $\text{Lag}_m$, that is:
+
+$$M\ge\sum_{i=0}^m \max_\lambda\text{abs}(l(i, \lambda, x_0, ..., x_m)).$$
+
+Now with these two new operators, $H_{n,m}$ is rewritten as:
+
+$$H_{n,m}(f)=B_n(f) + (\text{LagA}_m(f) - \text{LagB}_m(f)) - B_n(\text{LagA}_m(f) - \text{LagB}_m(f))$$
+
+$$=B_n(f) + \text{LagA}_m(f) - \text{LagB}_m(f) - B_n(\text{LagA}_m(f)) + B_n(\text{LagB}_m(f))$$
+
+$$=\left(B_n(f) + \text{LagA}_m(f) + B_n(\text{LagB}_m(f))\right) - \left(\text{LagB}_m(f) + B_n(\text{LagA}_m(f))\right)$$
+
+(and because $B_n$ preserves constants:)
+
+$$=\left(B_n(f) + \text{LagA}_m(f)\right) - \left(B_n(\text{LagA}_m(f))\right)$$
+
+$$=HA_{n,m}(f) - HB_{n,m}(f),$$
+
+where $HA_{n,m}$ and $HB_{n,m}$ are positive linear operators.
+
+But this approach ultimately leads to a dead end, notably because the $i$-th "absolute moments" of the operator $(HA_{n,m} + HB_{n,m})$, for fixed $m$, do not generally converge to 0 as $n$ increases.
+
+Alternatively, to find the approximation error of $H_{n,m}$, write:
+
+$$H_{n,m}(f) - f=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)) - f$$
+
+$$=(B_n(f) - f) + (\text{Lag}_m(f) - B_n(\text{Lag}_m(f))),$$
+
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le\text{abs}(B_n(f) - f) + \text{abs}(B_n(\text{Lag}_m(f)) - \text{Lag}_m(f)),$$
+
+so now there are two error bounds to find: one for $f$ and the other for $\text{Lag}_m(f)$.  And, if $f$ has a continuous second derivative, both have the same form:
+
+$$B_n(g)\le M_2(g)/(8n),$$
+
+where $M_i(g)$ is the maximum absolute value of $g$'s $i$-th derivative. (This follows from Lorentz (1963)[^39] and the well-known fact that $M$ is an upper bound of $g$'s first derivative's smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:
+
+$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \|\text{Lag}_m\| M_0(f) m^2,$$
+
+where $\|\|\text{Lag}_m\|\|$ is the operator norm of $\text{Lag}_m$, also known as its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein's inequality for the derivatives of polynomials.
+
+Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
+
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag}_m\| M_0(f) m^2}{8n},$$
 
 <a id=License></a>
 
@@ -427,3 +481,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^36]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
 [^37]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
+
+[^38]: I suspect that, whenever $L$ is a linear operator that maps continuous functions on a closed interval to functions of that kind, $L$ can be written as a difference between two positive linear operators.  But I have not seen a proof of that statement; Acu et al. ("[**Grüss-type and Ostrowski-type inequalities in approximation theory**](https://doi.org/10.1007/s11253-011-0548-2)", Ukr Math J 63, 843–864, 2011) give a similar statement but without proof.
+
+[^39]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
