@@ -9,7 +9,7 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
 ## Contents
 
 - [**Contents**](#Contents)
-- [**Definitions**](#Definitions)
+- [**Notation and Definitions**](#Notation_and_Definitions)
 - [**Bernstein Form and Bernstein Polynomials**](#Bernstein_Form_and_Bernstein_Polynomials)
 - [**"Moments" of Linear Operators**](#Moments_of_Linear_Operators)
     - [**"Moments" of Bernstein Polynomials**](#Moments_of_Bernstein_Polynomials)
@@ -23,17 +23,16 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
 - [**License**](#License)
 - [**Notes**](#Notes)
 
-<a id=Definitions></a>
+<a id=Notation_and_Definitions></a>
 
-## Definitions
-
-The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
+## Notation and Definitions
 
 For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
+- The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
 - An _operator_ is a mapping from a function to a function.
 - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every number $a$.
-- An operator $L$ is _positive_ if it has the property that, if $f$ is nonnegative on its domain, so is $L(f)$, for every input function $f$.[^1]
+- An operator $L$ is _positive_ if it has the property that, if an input function $f$ is nonnegative on its domain, so is $L(f)$.[^1]
 - The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with maximum absolute value 1 or less.  This assumes $L$ takes only continuous functions on a closed interval.
 - In this document, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
@@ -120,7 +119,7 @@ It can be seen from the expansions $(1)$ and $(2)$ that finding upper bounds for
 - Finding upper bounds for $L_n$'s "central moments" up to the $s$-th order.
 - Finding upper bounds for $L_n(R_s(f,\lambda))$.
     - If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)".
-    - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^38]  See the "[**Example**](#Example)" section later in this document.
+    - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^12]  See the "[**Example**](#Example)" section later in this document.
 
 Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
@@ -143,7 +142,7 @@ The following results give bounds that apply to large classes of positive linear
 
 **Lemma 1**. _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all constants (so that_ $L(e_0) = 1$ _).  Then_ $\text{abs}(L(f)(\lambda)-f(\lambda))\le\tilde\omega_1(f, \tau_1)$.
 
-_Proof:_ Follows from a result of Gonska and Meier (1985, theorem 3.1)[^12]. &#x25a1;
+_Proof:_ Follows from a result of Gonska and Meier (1985, theorem 3.1)[^13]. &#x25a1;
 
 **Lemma 2**. _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all polynomials up to degree 1 (constants and linear functions).  Let $h>0$ be a real number. Then:_
 
@@ -160,7 +159,7 @@ _Proof:_ Follows from a result of Gonska and Meier (1985, theorem 3.1)[^12]. &#x
 | 9 | Has a Hölder-continuous derivative with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less. | $\frac{M}{2}(\sigma_2)^{(1+\alpha)/2}$. |
 | 10 | Has a Lipschitz-continuous derivative with Lipschitz constant $M$ or less. | $\frac{M}{2} (\sigma_2)$. |
 
-_Proof:_ Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^13]; inequality 2 follows from a result of Mond (1978)[^14]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^15]; and inequality 4, a result of Peetre (1969)[^16].  Inequality 8 follows from a result of Gonska and Meier (1985, theorem 4.1)[^12]; see also Păltănea and Dimitriu (2016, remark 3)[^17].  Inequality 7 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985), with the interval $[a, b]$, $m=1$ (since the function is defined on all of $[a, b]$), $r=h$, and $x_0$ equal to $\lambda$.
+_Proof:_ Inequality 1 follows from a special case of a theorem on positive linear operators from Shisha and Mond (1968)[^14]; inequality 2 follows from a result of Mond (1978)[^15]; inequality 3, a result of Păltănea (2004, corollary 1.2.2)[^16]; and inequality 4, a result of Peetre (1969)[^17].  Inequality 8 follows from a result of Gonska and Meier (1985, theorem 4.1)[^13]; see also Păltănea and Dimitriu (2016, remark 3)[^18].  Inequality 7 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985), with the interval $[a, b]$, $m=1$ (since the function is defined on all of $[a, b]$), $r=h$, and $x_0$ equal to $\lambda$.
 
 Inequality 5 follows from inequality 4 using properties of Hölder-continuous functions; by assumption, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta>0$.  Inequality 9 follows from inequality 8 in the same manner.  Inequalities 6 and 10 follow from inequalities 5 and 9, respectively, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1. &#x25a1;
 
@@ -179,7 +178,7 @@ _and where:_
 - $Q_k(f,\lambda)=$ $\sum_{i=0}^k f^{(i)}(\lambda)\cdot(e_0-\lambda)^i/(i!)$ _is the degree-$k$_ Taylor polynomial _of $f$ centered at $\lambda$._
 - $R_k(f,\lambda)$ _is the_ Taylor remainder _that results from subtracting $Q(f,\lambda)$ from $f$._
 
-_Proof:_  The second to fourth bounds given relate to the Taylor remainder.  The second bound comes from Păltănea and Smuc (2019, Theorem 1)[^18]; the third bound comes from corollary 3.2 of Dimitriu (2010)[^19] and Brudnyĭ's lemma; and the fourth bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^20], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^21], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^22].[^23]&#x25a1;
+_Proof:_  The second to fourth bounds given relate to the Taylor remainder.  The second bound comes from Păltănea and Smuc (2019, Theorem 1)[^19]; the third bound comes from corollary 3.2 of Dimitriu (2010)[^20] and Brudnyĭ's lemma; and the fourth bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^21], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^22], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^23].[^24]&#x25a1;
 
 **Lemma 4.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Then_ $\text{abs}(L(R_k(f,\lambda)))\le M \tau_{k+1}/((k+1)!)$, _where_ $R_k(f,\lambda)$ _is as in Lemma 3._
 
@@ -189,13 +188,13 @@ The following lemma adapts the previous lemmas to the setting of random variable
 
 **Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4 apply as appropriate to $f$ with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
 
-_Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^24], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
+_Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^25], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
 
 <a id=Whitney_s_Inequality></a>
 
 ### Whitney's Inequality
 
-Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^25]):
+Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^26]):
 
 $$\|f-P\|_\infty\le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),$$
 
@@ -204,12 +203,12 @@ where&mdash;
 - $W$ is:
     - 1 if $n\le 7$.
     - $(2+\exp(-2)) (< 2.13534)$ if $n\ge 8$.
-    - $3/4$ if $n=1$ and $f$ is convex (Singh Kaire and Prymak 2023/2025)[^26].
-    - $1/2$ if $n=1$, $f$ is convex, and $a=-b$ (Singh Kaire and Prymak 2023/2025)[^26].
+    - $3/4$ if $n=1$ and $f$ is convex (Singh Kaire and Prymak 2023/2025)[^27].
+    - $1/2$ if $n=1$, $f$ is convex, and $a=-b$ (Singh Kaire and Prymak 2023/2025)[^27].
 - $\|\|g\|\|_\infty$ is the maximum of the absolute value of (the continuous function) $g$ on $[a, b]$, and
 - $\omega_{n}(f, h)$ is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$.
 
-Using properties of moduli of continuity (see Sevy 1991[^27], sec. 2.0.2; Gonska 1985[^28]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
+Using properties of moduli of continuity (see Sevy 1991[^28], sec. 2.0.2; Gonska 1985[^29]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
 $$\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\|f^{(n+1)}\|_\infty,$$
 
@@ -225,13 +224,13 @@ Let $f(\lambda)$ be a continuous function on a closed interval.  For any sequenc
 
 $$\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(t))),$$
 
-where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^29], Cheney (1996, chapter 6)[^30]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^31]
+where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^30], Cheney (1996, chapter 6)[^31]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^32]
 
-Now let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities in the previous section leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
-
-$$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|_\infty$$
-
-$$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
+> **Example:** Let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities in the previous section leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
+>
+> $$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|_\infty$$
+>
+> $$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
 
 <a id=Example></a>
 
@@ -248,12 +247,12 @@ $$=\mathbb{E}\left[W_{2n}\left(f\right)\left(\frac{k}{2n}\right) - W_n\left(f\ri
 where:
 
 - $k = 2n\lambda$, where $0\le\lambda\le 1$.
-- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^32]
+- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^33]
 - $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
 - $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.
 - $\mathbb{E}[Y]$ is the expected value (or mean or “long-run average”) of the random variable $Y$.
 
-$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^33].  That paper, among others (for example, Micchelli 1973[^34]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
+$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^34].  That paper, among others (for example, Micchelli 1973[^35]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
 
 With this choice of $W_n$, $L_n$ becomes:
 
@@ -279,7 +278,7 @@ The following are some of these values and those for related operators:
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^35] and central moments (Weisstein)[^36] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^36] and central moments (Weisstein)[^37] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
@@ -335,15 +334,17 @@ For a continuous function $f$ on the closed unit interval and for nonnegative in
 
 $$H_{n,m}(f)=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),$$
 
-where $B_n$ is the degree-$n$ Bernstein polynomial and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^37], but appears not to have been studied elsewhere.
+where $B_n$ is the degree-$n$ Bernstein polynomial and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^38], but appears not to have been studied elsewhere.
 
-It is known that $\text{Lag}_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $\text{Lag}_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer.  Thus, if $f$ is such a polynomial, $B_n(f)=B_n(\text{Lag}_m(f))$ and therefore $H_{n,m}(f)=\text{Lag}_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer. (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
+It is known that $Lag_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $Lag_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer. Thus, if $f$ is such a polynomial, $B_n(f)=B_n(Lag_m(f))$ and therefore $H_{n,m}(f)$ = $Lag_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer.
+
+(The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
 
 Because $H_{n,m}$ reproduces all polynomials up to degree $m$, its "central moments" are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:
 
 $$H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda).$$
 
-Finding further bounds for $H_{n,m}$ is made difficult by that operator's nonpositivity.  To solve this, $\text{Lag}_m$ is decomposed into two positive operators $\text{LagA}_m$ and $\text{LagB}_m$ such that $\text{Lag}_m=\text{LagA}_m+\text{LagB}_m$.
+Finding further bounds for $H_{n,m}$ is made difficult by that operator's nonpositivity.  To try to solve this, $\text{Lag}_m$ is decomposed into two positive operators $\text{LagA}_m$ and $\text{LagB}_m$ such that $\text{Lag}_m=\text{LagA}_m+\text{LagB}_m$.
 
 $\text{Lag}_m$ is an operator written as&mdash;
 
@@ -367,7 +368,7 @@ $$=B_n(f) + \text{LagA}_m(f) - \text{LagB}_m(f) - B_n(\text{LagA}_m(f)) + B_n(\t
 
 $$=\left(B_n(f) + \text{LagA}_m(f) + B_n(\text{LagB}_m(f))\right) - \left(\text{LagB}_m(f) + B_n(\text{LagA}_m(f))\right)$$
 
-(and because $B_n$ preserves constants:)
+(and because $B_n$ reproduces all constants:)
 
 $$=\left(B_n(f) + \text{LagA}_m(f)\right) - \left(B_n(\text{LagA}_m(f))\right)$$
 
@@ -389,15 +390,21 @@ so now there are two error bounds to find: one for $f$ and the other for $\text{
 
 $$B_n(g)\le M_2(g)/(8n),$$
 
-where $M_i(g)$ is the maximum absolute value of $g$'s $i$-th derivative. (This follows from Lorentz (1963)[^39] and the well-known fact that $M$ is an upper bound of $g$'s first derivative's smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:
+where $M_i(g)$ is the maximum absolute value of $g$'s $i$-th derivative. (This follows from Lorentz (1963)[^39] and the well-known fact that $M_2$ is an upper bound of $g$'s first derivative's smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:
 
-$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \|\text{Lag}_m\| M_0(f) m^2,$$
+$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2,$$
 
-where $\|\|\text{Lag}_m\|\|$ is the operator norm of $\text{Lag}_m$, also known as its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein's inequality for the derivatives of polynomials.
+where $\|\|Lag_m\|\|$ is the operator norm of $Lag_m$, also known as its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein's inequality for the derivatives of polynomials (Weisstein)[^40].
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
-$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag}_m\| M_0(f) m^2}{8n},$$
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2}{8n},$$
+>
+>**Example:** If $m$ is 3, and the polynomial generated by $Lag_m$ interpolates $f$ at the points 0, 1/3, 2/3, and 1, the inequality just shown becomes:
+>
+> $$\text{abs}((H_{n,3}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{1.64\cdot M_0(f)\cdot 9}{8n},$$
+>
+> using an upper bound for $\|\|Lag_3\|\|$.
 
 <a id=License></a>
 
@@ -430,58 +437,60 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^11]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
 
-[^12]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
+[^12]: I suspect that, whenever $L$ is a linear operator that maps continuous functions on a closed interval to functions of that kind, $L$ can be written as a difference between two positive linear operators.  But I have not seen a proof of that statement; Acu et al. ("[**Grüss-type and Ostrowski-type inequalities in approximation theory**](https://doi.org/10.1007/s11253-011-0548-2)", Ukr Math J 63, 843–864, 2011) give a similar statement but without proof.
 
-[^13]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
+[^13]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
 
-[^14]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
+[^14]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
 
-[^15]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004.
+[^15]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
 
-[^16]: Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory", in _Approximation Theory_, 1969.
+[^16]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004.
 
-[^17]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
+[^17]: Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory", in _Approximation Theory_, 1969.
 
-[^18]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
+[^18]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
 
-[^19]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
+[^19]: Păltănea, R., Smuc, M., "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74 (2019).
 
-[^20]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", 2006.
+[^20]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
 
-[^21]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
+[^21]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators", 2006.
 
-[^22]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
+[^22]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
 
-[^23]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _closed_ one, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
+[^23]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
 
-[^24]: Frantz, Deborah A. Summability methods, probability distributions, and associated positive linear operators. Lehigh University, 1984.
+[^24]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _closed_ one, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
 
-[^25]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
+[^25]: Frantz, Deborah A. Summability methods, probability distributions, and associated positive linear operators. Lehigh University, 1984.
 
-[^26]: Jaskaran Singh Kaire and Andriy Prymak. "Whitney-type estimates for convex functions." arXiv preprint arXiv:2311.00912 (2023).
+[^26]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
 
-[^27]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
+[^27]: Jaskaran Singh Kaire and Andriy Prymak. "Whitney-type estimates for convex functions." arXiv preprint arXiv:2311.00912 (2023).
 
-[^28]: H. H. Gonska, _Quantitative Approximation in C(X)_, Habilitationschrift, Universität Duisburg, 1985.
+[^28]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
 
-[^29]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993.
+[^29]: H. H. Gonska, _Quantitative Approximation in C(X)_, Habilitationschrift, Universität Duisburg, 1985.
 
-[^30]: E. W. Cheney, _Introduction to Approximation Theory_, 1998.
+[^30]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993.
 
-[^31]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. _Positivity_ 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4). However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
+[^31]: E. W. Cheney, _Introduction to Approximation Theory_, 1998.
 
-[^32]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
+[^32]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. _Positivity_ 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4). However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
-[^33]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
+[^33]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
-[^34]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^34]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
 
-[^35]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^35]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^36]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+[^36]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
-[^37]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
+[^37]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
-[^38]: I suspect that, whenever $L$ is a linear operator that maps continuous functions on a closed interval to functions of that kind, $L$ can be written as a difference between two positive linear operators.  But I have not seen a proof of that statement; Acu et al. ("[**Grüss-type and Ostrowski-type inequalities in approximation theory**](https://doi.org/10.1007/s11253-011-0548-2)", Ukr Math J 63, 843–864, 2011) give a similar statement but without proof.
+[^38]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
 
 [^39]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+
+[^40]:  Weisstein, Eric W. "Bernstein's Inequality." From MathWorld--A Wolfram Resource. [https://mathworld.wolfram.com/BernsteinsInequality.html](https://mathworld.wolfram.com/BernsteinsInequality.html)
