@@ -275,7 +275,7 @@ In the following table:
 
 | If _f_(_&lambda;_): |  Then the following polynomial: |  Has an _r_-th derivative that is close to _f_ with the following error bound: | And a value of _n_ that achieves the bound is:  | Notes |
  --- | --- | --- | --- | --- |
-| Has Hölder continuous $r$-th derivative. | $B_n(f)$. | $\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$. | $n=\text{ceil}(\max(r+1,\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$. | Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative's Hölder exponent. |
+| Has Hölder continuous $r$-th derivative. | $B_n(f)$. | $\epsilon=rM_r(r-1)/(2n)$ + $5H_r/(4n^{\alpha/2})$ &le; $(rM_r(r-1)/2 + 5H_r/4)/n^{\alpha/2}$. | $n=\text{ceil}(\max(r+1$, $\left(\frac{\left(5 H_r + 2 M_r (r^{2} - r)\right)^{2}}{16 \epsilon^{2}}\right)^{1/\alpha}))$. | Knoop and Pottinger (1976)[^23]. $0\lt\alpha\le 1$ is $r$-th derivative's Hölder exponent. |
 
 > **Note:** In general, it is not possible to approximate a continuous function's derivative unless upper and lower bounds on the derivative are known (Konečný and Neumann (2019)[^21]).
 
@@ -563,13 +563,13 @@ The following error bounds, which make use of Corollary B9A and the proof techni
 
 | Property of $f$ on the closed unit interval | $\alpha_0$, $\alpha_1$, ... | $n(0)$, $n(1)$, ... | Upper bound of error |
   --- | -- | -- | ----- |
-| Has a Lipschitz-continuous second derivative. | $-1$, $2$ | $\frac{n}{2}$, $n$ | $\frac{\sqrt{3} + \sqrt{6}}{24 n^{3 / 2}}$ &lt; $\frac{0.1743}{n^{3/2}}$ |
-| Has a Lipschitz-continuous third derivative. | $\frac{1}{3}$, $-2$, $\frac{8}{3}$ | $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{1}{8 n^{2}}$ = $\frac{0.125}{n^{2}}$ |
-| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{21}$, $\frac{2}{3}$, $- \frac{8}{3}$, $\frac{64}{21}$ | $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{11 \sqrt{10} + 16 \sqrt{5}}{840 n^{5 / 2}}$ &lt; $\frac{0.08401}{n^{5/2}}$ |
-| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{315}$, $- \frac{2}{21}$, $\frac{8}{9}$, $- \frac{64}{21}$, $\frac{1024}{315}$ | $\frac{n}{16}$, $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\frac{1}{21 n^{3}}$ &lt; $\frac{0.04762}{n^{3}}$ |
-| Has a Lipschitz-continuous third derivative. | $\frac{1}{2}$, $-4$, $\frac{9}{2}$ | $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{25}{128 n^{2}}$ = $0.1953125/n^{2}$  |
-| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{8 \sqrt{5} + 18 \sqrt{15} + 27 \sqrt{10}}{640 n^{5 / 2}}$ &lt; $\frac{0.2703}{n^{2.5}}$ |
-| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\frac{545}{1536 n^{3}}$ &lt; $\frac{0.3549}{n^{3}}$ |
+| Has a Lipschitz-continuous second derivative. | $-1$, $2$ | $\frac{n}{2}$, $n$ | $\Lambda_2\frac{\sqrt{3} + \sqrt{6}}{24 n^{3 / 2}}$ &lt; $\Lambda_2\frac{0.1743}{n^{3/2}}$ |
+| Has a Lipschitz-continuous third derivative. | $\frac{1}{3}$, $-2$, $\frac{8}{3}$ | $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\Lambda_3\frac{1}{8 n^{2}}$ = $\Lambda_3\frac{0.125}{n^{2}}$ |
+| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{21}$, $\frac{2}{3}$, $- \frac{8}{3}$, $\frac{64}{21}$ | $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\Lambda_4\frac{11 \sqrt{10} + 16 \sqrt{5}}{840 n^{5 / 2}}$ &lt; $\Lambda_4\frac{0.08401}{n^{5/2}}$ |
+| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{315}$, $- \frac{2}{21}$, $\frac{8}{9}$, $- \frac{64}{21}$, $\frac{1024}{315}$ | $\frac{n}{16}$, $\frac{n}{8}$, $\frac{n}{4}$, $\frac{n}{2}$, $n$ | $\Lambda_5\frac{1}{21 n^{3}}$ &lt; $\Lambda_5\frac{0.04762}{n^{3}}$ |
+| Has a Lipschitz-continuous third derivative. | $\frac{1}{2}$, $-4$, $\frac{9}{2}$ | $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_3\frac{25}{128 n^{2}}$ = $\Lambda_3 0.1953125/n^{2}$  |
+| Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_4\frac{8 \sqrt{5} + 18 \sqrt{15} + 27 \sqrt{10}}{640 n^{5 / 2}}$ &lt; $\Lambda_4\frac{0.2703}{n^{2.5}}$ |
+| Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_5\frac{545}{1536 n^{3}}$ &lt; $\Lambda_5\frac{0.3549}{n^{3}}$ |
 
 The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^8], (Lorentz 1966)[^10].  This operator is a polynomial in Bernstein form of degree $n+2$.
 

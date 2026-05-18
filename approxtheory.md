@@ -106,20 +106,21 @@ Continuous functions can be "unwrapped" into a Taylor expansion.  The linear map
 
 Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator that maps continuous functions on that interval to functions of that kind.  Then:
 
-$$L_n(f)(\lambda) = L_n(R_s(f, \lambda)) + \sum_{i=0}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
+$$L(f)(\lambda) = L(R_s(f, \lambda)) + \sum_{i=0}^s L((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
 
 where $R_s(f,\lambda)$ is the remainder after subtracting from $f$ the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)[^11].)
 
 If $L$ reproduces constants, so that $L(e_0)=1$, this becomes:
 
-$$L_n(f)(\lambda) - f(\lambda) = L_n(R_s(f, \lambda)) + \sum_{i=1}^s L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}.\tag{2}$$
+$$L(f)(\lambda) - f(\lambda) = L(R_s(f, \lambda)) + \sum_{i=1}^s L((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}.\tag{2}$$
 
 It can be seen from the expansions $(1)$ and $(2)$ that finding upper bounds for $L_n(f)(\lambda)$ involves:
 
-- Finding upper bounds for $L_n$'s "central moments" up to the $s$-th order.
-- Finding upper bounds for $L_n(R_s(f,\lambda))$.
+- Finding upper bounds for $L$'s "central moments" up to the $s$-th order.
+- Finding upper bounds for $L(R_s(f,\lambda))$.
     - If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)".
     - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^12]  See the "[**Example**](#Example)" section later in this document.
+    - If $L$ is bounded, $L$ reproduces all polynomials up to degree $s$, and $f$ has a continuous $(s+1)$-th derivative, the so-called _Peano kernel theorem_ can help, but it's difficult to apply generally to nonpositive linear operators.  See (Waldron 1999)[^41]; see also (Brass and Förster 1998)[^42].
 
 Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
@@ -493,4 +494,8 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^39]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
-[^40]:  Weisstein, Eric W. "Bernstein's Inequality." From MathWorld--A Wolfram Resource. [https://mathworld.wolfram.com/BernsteinsInequality.html](https://mathworld.wolfram.com/BernsteinsInequality.html)
+[^40]: Weisstein, Eric W. "Bernstein's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/BernsteinsInequality.html**](https://mathworld.wolfram.com/BernsteinsInequality.html)
+
+[^41]: Waldron, Shayne. "Refinements of the Peano kernel theorem." Numerical functional analysis and optimization 20.1-2 (1999): 147-161.
+
+[^42]: Brass, Helmut, and Klaus-Jürgen Förster. "On the application of the Peano representation of linear functionals in numerical analysis." Recent progress in inequalities. Dordrecht: Springer Netherlands, 1998. 175-202.
