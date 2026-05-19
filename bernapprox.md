@@ -85,7 +85,7 @@ Then, a polynomial of a high enough degree (called $n$) can be used to approxima
 
 | Name |  Polynomial | Its Bernstein coefficients are found as follows: | Notes |
  --- | --- | --- | --- |
-| Bernstein polynomial. | $B_n(f)$.  | $f(j/n)$, where $0\le j\le n$. | Originated with S.N. Bernstein (1912).  Evaluates $f$ at $n+1$ evenly spaced points. |
+| Bernstein polynomial. | $B_n(f)$.  | $f(j/n)$, where $0\le j\le n$. | Originated with S.N. Bernstein (1912)[^56].  Evaluates $f$ at $n+1$ evenly spaced points. |
 | Order-2 iterated Boolean sum. | $U_{n,2} = B_n(W_{n,2})$. | $W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$. | Micchelli (1973)[^3], Guan (2009)[^4], Güntürk and Li (2021, sec. 3.3)[^5].  Evaluates $f$ at $n+1$ evenly spaced points. |
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | $W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f)(\lambda))$ + $3 (f(\lambda)$ &minus; $B_n(f)(\lambda))$. | Same. |
 | Butzer's linear combination (order 2). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see "[**Computational Issues**](#Computational_Issues)"), then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^6], Butzer (1955)[^7].  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly spaced points.|
@@ -461,6 +461,8 @@ There may be other useful schemes for polynomials not mentioned in this document
 [^54]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
 [^55]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+
+[^56]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
 <a id=Appendix></a>
 

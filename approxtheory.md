@@ -17,7 +17,8 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
 - [**Results on Error Bounds**](#Results_on_Error_Bounds)
     - [**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_Operators)
     - [**Bounds for Remainder of Bernstein Polynomials**](#Bounds_for_Remainder_of_Bernstein_Polynomials)
-    - [**Whitney's Inequality**](#Whitney_s_Inequality)
+    - [**Whitney's Inequality on Polynomial Errors**](#Whitney_s_Inequality_on_Polynomial_Errors)
+    - [**Another Inequality on Polynomial Errors**](#Another_Inequality_on_Polynomial_Errors)
     - [**Lebesgue Inequality for Certain Linear Operators**](#Lebesgue_Inequality_for_Certain_Linear_Operators)
 - [**Example**](#Example)
 - [**Example: An Interesting Linear Operator**](#Example_An_Interesting_Linear_Operator)
@@ -85,7 +86,7 @@ The following results deal with useful quantities when discussing the error in a
 
 Suppose a coin shows heads with probability $p$, and $n$ independent tosses of the coin are made, where $n$ is 1 or greater.  Then the total number of heads $X$ follows a _binomial distribution_.  The following are useful quantities of this distribution.
 
-- $T_{n,r}$: The _central moment_ of $X$ is denoted $T_{n,r}(p)$ = $\mathbb{E}[(X-\mathbb{E}[X])^r]$ = $B_n((e_1-p)^r)(p)\cdot n^r$. Formulas for computing this central moment are given in Skorski (2024)[^4].
+- $T_{n,r}$: The _central moment_ (moment about the mean) of $X$ is denoted $T_{n,r}(p)$ = $\mathbb{E}[(X-\mathbb{E}[X])^r]$ = $B_n((e_1-p)^r)(p)\cdot n^r$. Formulas for computing this central moment are given in Skorski (2024)[^4].
 - $S_{n,r}$: Traditionally, the central moment of $X/n$ or the ratio of heads to tosses is denoted $S_{n,r}(p)$ = $T_{n,r}(p)/n^r$ = $\mathbb{E}[(X/n-\mathbb{E}[X/n])^r]$ = $B_n((e_1-p)^r)(p)$.  ($T$ and $S$ are notations of S.N. Bernstein, known for Bernstein polynomials.) $S_{n,r}$ is thus the $r$-th "central moment" of degree-$n$ Bernstein polynomials.
 - $M_{n,r}$: The $r$-th _central absolute moment_ of $X/n$ is denoted $M_{n,r}(p)$ = $\mathbb{E}[\text{abs}(X/n-\mathbb{E}[X/n])^r]$ = $B_n(\text{abs}(e_1-p)^r)(p)$.  If $r$ is even, $M_{n,r}(p) = S_{n,r}(p)$. $M_{n,r}$ is thus the $r$-th "absolute moment" of degree-$n$ Bernstein polynomials.
 
@@ -127,7 +128,7 @@ It can be seen from the expansions just given that finding upper bounds for $L_n
 - Finding upper bounds for $L(R_s(f,\lambda))$.
     - If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)".
     - If $L$ is not positive, finding such bounds is harder. This situation can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^12]  See the "[**Example**](#Example)" section later in this document.
-    - If $L$ is linear and reproduces all polynomials up to degree $s$, and $f$ has a continuous $(s+1)$-th derivative, the so-called _Peano kernel theorem_ can help, but it's difficult to apply generally to such an operator.  See (Waldron 1999)[^13]; see also (Brass and Förster 1998)[^14].
+    - If $L$ is linear and reproduces all polynomials up to degree $s$, and $f$ has a continuous $(s+1)$-th derivative, the so-called _Peano kernel theorem_ can help, but it's difficult to apply generically to such an operator.[^45] See (Waldron 1999)[^13]; see also (Brass and Förster 1998)[^14].
 
 Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
@@ -209,18 +210,18 @@ _Proof_: With these assumptions there is a positive linear operator $L(f) = \mat
 
 The following results specialize the previous ones to the case of [**Bernstein polynomials**](#Bernstein_Form_and_Bernstein_Polynomials) $B_n$.  They apply to the Bernstein polynomial of the result of subtracting a Taylor polynomial from a function, and are useful when a linear operator contains $B_n(f)$ in its definition and reproduces all polynomials of degree $r$ or less.
 
-**Lemma 6**: _Let $r$ be zero or a positive integer.  Let $f(\lambda)$&mdash;_
+**Lemma 6**: _Let $k$ be zero or a positive integer.  Let $f(\lambda)$&mdash;_
 
-1. _have a Lipschitz-continuous $r$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, or_
-2. _have a continuous $(r+1)$-th derivative on that interval, with maximum absolute value $M$ or less._
+1. _have a Lipschitz-continuous $k$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, or_
+2. _have a continuous $(k+1)$-th derivative on that interval, with maximum absolute value $M$ or less._
 
-_Then the following bound holds true:_ $\text{abs}(B_n(R_r(f, \lambda)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ _for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where_ $\mu_r$ _is as defined in Proposition 1._
+_Then the following bound holds true:_ $\text{abs}(B_n(R_k(f, \lambda)) \le (M \mu_{k+1})/ ( ((k+1)!) n^{(k+1)/2})$ _for every integer $n\ge 2$ (and also for $n=1$ if $k$ is odd), where_ $\mu_k$ _is as defined in Proposition 1._
 
 _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25a1;
 
-**Corollary 1**: Let $f(\lambda)$, $r$, and $M$ be as in Lemma 6.  Then, for every $0\le\lambda\le 1$:
+**Corollary 1**: Let $f(\lambda)$, $k$, and $M$ be as in Lemma 6.  Then, for every $0\le\lambda\le 1$:
 
-| If $r$ is: | Then $\text{abs}(B_n(R_r(f, \lambda))) \le$ ... |
+| If $k$ is: | Then $\text{abs}(B_n(R_k(f, \lambda))) \le$ ... |
  - | ------ |
 | 0. | $M(1/2)/n^{1/2}$ for every integer $n\ge 1$. |
 | 1. | $M(1/8)/n = 0.125M/n$ for every integer $n\ge 1$. |
@@ -229,9 +230,11 @@ _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25
 | 4. | $M(\sqrt{5}/1280)/n^{5/2} < 0.001747/n^{5/2}$ for every integer $n\ge 2$. |
 | 5. | $M(1/3072)/n^{3} < 0.0003256/n^{3}$ for every integer $n\ge 1$. |
 
-<a id=Whitney_s_Inequality></a>
+<a id=Whitney_s_Inequality_on_Polynomial_Errors></a>
 
-### Whitney's Inequality
+### Whitney's Inequality on Polynomial Errors
+
+The following inequality gives a bound on the "best possible" error that a polynomial of degree $n$ can achieve in approximating a function.
 
 Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^28]):
 
@@ -255,6 +258,16 @@ and if $f$ has a continuous $n$-th derivative on that interval:
 
 $$\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
 
+<a id=Another_Inequality_on_Polynomial_Errors></a>
+
+### Another Inequality on Polynomial Errors
+
+Like Whitney's inequality, the following gives a bound on the "best possible" error between a polynomial and a function.
+
+Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the closed interval $[-1, 1]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Phillips 2003, theorem 2.4.6)[^46]:
+
+$$\|f-P\|_\infty\le\frac{1}{2^n}\frac{\|f^{(n+1)}\|_\infty}{(n+1)!}.$$
+
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
 
 ### Lebesgue Inequality for Certain Linear Operators
@@ -265,7 +278,7 @@ $$\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(t))),$
 
 where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^32], Cheney (1996, chapter 6)[^33]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^34]
 
-> **Example:** Let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities in the previous section leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
+> **Example:** Let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities given earlier leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
 >
 > $$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|_\infty$$
 >
@@ -379,15 +392,15 @@ It is known that $Lag_m$ is a linear operator and reproduces all polynomials of 
 
 (The foregoing sentence would remain true if $B_n$ were replaced with any other operator mapping to and from the same functions.)
 
-Because $H_{n,m}$ reproduces all polynomials up to degree $m$, its "central moments" are $H_{n,m}((e_0-x)^0)=1$ and $H_{n,m}((e_i-x)^i)=0$ whenever $0\lt i\le m$ is an integer.  Thus, according to the expansion $(2)$, the following holds if $f$ has a continuous $m$-th derivative:
+Because $H_{n,m}$ is linear and reproduces all polynomials up to degree $m$, the following holds if $f$ has a continuous $m$-th derivative:
 
 $$H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda)$$
 
 $$=B_n(R_m(f,\lambda)) + \text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda))).$$
 
-With the help of Lemma 6 and the properties of Lipschitz-continuous functions, the following holds if $n$ is also 2 or greater:
+With the help of Lemma 6, the following holds if $n$ is also 2 or greater:
 
-$$H_{n,m}(f)(\lambda) \le \frac{\|f^{(m)}\| \mu_{r})}{ (r!) n^{r/2}} + \|\text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda)))\|,$$
+$$\|H_{n,m}(f)(\lambda)\| \le \frac{\|f^{(m)}\| \mu_{r}}{ (r!) n^{r/2}} + \|\text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda)))\|,$$
 
 where $\mu_r$ is as in Proposition 1 and the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
@@ -426,7 +439,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials were invented to prove a result that any continuous function on a closed interval can be approximated as well as desired by polynomials. The original proof from 1912 used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials: (Adell and De la Cal 1996)[^43], (Adell and De la Cal 1995)[^44].
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a closed interval can be approximated as well as desired by polynomials (Bernstein 1912)[^47]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^43], 1995[^44]).
 
 <a id=License></a>
 
@@ -524,3 +537,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^43]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
 [^44]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221(95**](https://doi.org/10.1016/0898-1221(95))00081-X
+
+[^45]: For example, if $L$ is linear but not positive, applying the theorem may require calculating mappings of truncated power functions, which are generally not polynomials (for example $L(\max(0,e_0-x)^i)$ for some $i>0$).
+
+[^46]: Phillips, G.M., _Interpolation and Approximation by Polynomials_, Springer, 2003. [https://doi.org/10.1007/b97417](https://doi.org/10.1007/b97417)
+
+[^47]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
