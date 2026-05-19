@@ -677,8 +677,7 @@ In the following results:
 
 Some of the results rely on properties of random variables.  For a random variable $Y$, define&mdash;
 
-- $\mathbb{E}[Y]$ as the _mean_ (or expected value or “long-run average”) of $Y$,
-- $\sigma_r(Y)$ as the $r$-th _central moment_ (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$, and
+- $\mathbb{E}[Y]$ as the _mean_ (or expected value or “long-run average”) of $Y$, and
 - $\tau_r(Y)$ as the $r$-th _central absolute moment_ of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$.
 
 Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric random variables that is essential in polynomial-building schemes.  This part of the lemma can be applied to continuous functions beyond just Lipschitz-continuous functions.  This includes the larger class of _Hölder-continuous_ functions (see "[**Definitions**](#Definitions)").
@@ -703,7 +702,7 @@ Lemma 6(i) of Nacu and Peres (2005\)[^1] finds a bound involving hypergeometric 
     - _(M/2)\*(1/(7\*n))$^{(1+\alpha)/2}$ if n&ge;4, and_
     - _(M/2)\*(1/(8\*n&minus;4))$^{(1+\alpha)/2}$._
 
-_Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\sigma_2[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Through Lemma 5 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html), there is a positive linear operator $L(f)(\lambda)$ = $\mathbb{E}[f(X/n)]$ with $\lambda=\mathbb{E}[X/n]=k/(2n)$.  Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2 of that article, using more or less tight bounds for $\sigma_2[X/n]$.  Part 3 follows from inequality 6 of the same lemma, plugging in estimates for the variance of $X/n$ found in part 1. &#x25a1;
+_Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\tau_2[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Through Lemma 5 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html), there is a positive linear operator $L(f)(\lambda)$ = $\mathbb{E}[f(X/n)]$ with $\lambda=\mathbb{E}[X/n]=k/(2n)$.  Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2 of that article, using more or less tight bounds for $\tau_2[X/n]$.  Part 3 follows from inequality 6 of the same lemma, plugging in estimates for the variance of $X/n$ found in part 1. &#x25a1;
 
 > **Notes:**
 >

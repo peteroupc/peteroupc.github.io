@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-05-14"><meta name="citation_date" content="2026/05/14"><meta name="citation_publication_date" content="2026/05/14"><meta name="citation_online_date" content="2026/05/14"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-05-19"><meta name="citation_date" content="2026/05/19"><meta name="citation_publication_date" content="2026/05/19"><meta name="citation_online_date" content="2026/05/19"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-05-14.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-05-19.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -926,8 +926,7 @@
 <p>Some of the results rely on properties of random variables.  For a random variable $Y$, define—</p>
 
 <ul>
-  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “long-run average”) of $Y$,</li>
-  <li>$\sigma_r(Y)$ as the $r$-th <em>central moment</em> (moment around the mean) of $Y$, that is, $\sigma_r(Y)=\mathbb{E}[(Y-\mathbb{E}[Y])^r]$, and</li>
+  <li>$\mathbb{E}[Y]$ as the <em>mean</em> (or expected value or “long-run average”) of $Y$, and</li>
   <li>$\tau_r(Y)$ as the $r$-th <em>central absolute moment</em> of $Y$, that is, $\tau_r(Y)=\mathbb{E}[\text{abs}(Y-\mathbb{E}[Y])^r]$.</li>
 </ul>
 
@@ -965,7 +964,7 @@
   </li>
 </ol>
 
-<p><em>Proof.</em> Note that $\mathbb{E}[X/n] = k/(2n)$, and $\sigma_2[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Through Lemma 5 of “<a href="https://peteroupc.github.io/approxtheory.html"><strong>Notes on Approximation Theory</strong></a>, there is a positive linear operator $L(f)(\lambda)$ = $\mathbb{E}[f(X/n)]$ with $\lambda=\mathbb{E}[X/n]=k/(2n)$.  Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2 of that article, using more or less tight bounds for $\sigma_2[X/n]$.  Part 3 follows from inequality 6 of the same lemma, plugging in estimates for the variance of $X/n$ found in part 1. □</p>
+<p><em>Proof.</em> Note that $\mathbb{E}[X/n] = k/(2n)$, and $\tau_2[X/n]\le (k/(2n))\cdot(1-k/(2n))/(2n-1)))\le 1/(8n-4)$.   Through Lemma 5 of “<a href="https://peteroupc.github.io/approxtheory.html"><strong>Notes on Approximation Theory</strong></a>, there is a positive linear operator $L(f)(\lambda)$ = $\mathbb{E}[f(X/n)]$ with $\lambda=\mathbb{E}[X/n]=k/(2n)$.  Parts 1 and 2 then follow from inequalities 2 and 3 of Lemma 2 of that article, using more or less tight bounds for $\tau_2[X/n]$.  Part 3 follows from inequality 6 of the same lemma, plugging in estimates for the variance of $X/n$ found in part 1. □</p>
 
 <blockquote>
   <p><strong>Notes:</strong></p>

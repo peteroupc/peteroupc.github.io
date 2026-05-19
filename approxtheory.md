@@ -16,10 +16,12 @@ The notes generally relate to error bounds on how close a polynomial is to a sin
 - [**Taylor Expansion of Linear Operators**](#Taylor_Expansion_of_Linear_Operators)
 - [**Results on Error Bounds**](#Results_on_Error_Bounds)
     - [**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_Operators)
+    - [**Bounds for Remainder of Bernstein Polynomials**](#Bounds_for_Remainder_of_Bernstein_Polynomials)
     - [**Whitney's Inequality**](#Whitney_s_Inequality)
     - [**Lebesgue Inequality for Certain Linear Operators**](#Lebesgue_Inequality_for_Certain_Linear_Operators)
 - [**Example**](#Example)
 - [**Example: An Interesting Linear Operator**](#Example_An_Interesting_Linear_Operator)
+- [**Probabilistic Interpretations of Linear Operators**](#Probabilistic_Interpretations_of_Linear_Operators)
 - [**License**](#License)
 - [**Notes**](#Notes)
 
@@ -64,7 +66,10 @@ For a linear operator $L$, they are:
 - "Central moments": The values of $L((e_1-x)^i)$ for each integer $i\ge 0$.  If the "raw moments" $L(e_0), ..., L(e_j)$ are known, then $L((e_1-x)^j)$ is also known, thanks to proposition 5.6 of Gonska et al. (2006)[^3].
 - "Absolute moments": The values of $L(\text{abs}(e_1-x)^i)(x)$ for each integer $i\ge 0$.  When $i$ is even, $L(\text{abs}(e_1-x)^i)$ = $L((e_1-x)^i)$.
 
-Because $L$ is linear, if $L(e_i) = e_i$ for each $i$ from 0 through $j$, then $L$ _reproduces all polynomials_ up to degree $j$ (that is, $L(f) = f$ whenever $f$ is a polynomial of degree $j$ or less).
+Because $L$ is linear, if $L(e_i) = e_i$ for each $i$ from 0 through $j$ ($j$ is zero or a positive integer), then:
+
+- $L$ _reproduces all polynomials_ up to degree $j$ (that is, $L(f) = f$ whenever $f$ is a polynomial of degree $j$ or less).
+- The $0$-th "central moment" is $L(e_0)$ = $L((e_1-x)^0)$ = 1, and for each $i$ from 1 through $j$, $L((e_1-x)^j) = 0$.
 
 Also, because $L$ is linear, the "moments" of degree up to $m$, say, lead to easy ways to find the mapping by $L$ of any polynomial of degree up to $m$, when the polynomial is written in "power" form.
 
@@ -114,7 +119,9 @@ If $L$ reproduces constants, so that $L(e_0)=1$, this becomes:
 
 $$L(f)(\lambda) - f(\lambda) = L(R_s(f, \lambda)) + \sum_{i=1}^s L((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}.\tag{2}$$
 
-It can be seen from the expansions $(1)$ and $(2)$ that finding upper bounds for $L_n(f)(\lambda)$ involves:
+If $L$ reproduces polynomials up to degree $s$, this even reduces to $L(f)(\lambda) - f(\lambda) = L(R_s(f, \lambda))$.
+
+It can be seen from the expansions just given that finding upper bounds for $L_n(f)(\lambda)$ involves:
 
 - Finding upper bounds for $L$'s "central moments" up to the $s$-th order.
 - Finding upper bounds for $L(R_s(f,\lambda))$.
@@ -181,15 +188,46 @@ _and where:_
 
 _Proof:_  The second to fourth bounds given relate to the Taylor remainder.  The second bound comes from Păltănea and Smuc (2019, Theorem 1)[^21]; the third bound comes from corollary 3.2 of Dimitriu (2010)[^22] and Brudnyĭ's lemma; and the fourth bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^23], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^24], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^25].[^26]&#x25a1;
 
-**Lemma 4.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$ have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Then_ $\text{abs}(L(R_k(f,\lambda)))\le M \tau_{k+1}/((k+1)!)$, _where_ $R_k(f,\lambda)$ _is as in Lemma 3._
+**Lemma 4.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$&mdash;_
 
-_Proof:_  Follows from the third bound for $L(R_k(f,\lambda))$ in Lemma 3 in the same manner as inequality 10 of Lemma 2. &#x25a1;
+1. _have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, or_
+2. _have a continuous $(k+1)$-th derivative on that interval, with maximum absolute value $M$ or less,_
+
+_and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Then_ $\text{abs}(L(R_k(f,\lambda)))\le M \tau_{k+1}/((k+1)!)$, _where_ $R_k(f,\lambda)$ _is as in Lemma 3._
+
+_Proof:_  Follows from the third bound for $L(R_k(f,\lambda))$ in Lemma 3 in the same manner as inequality 10 of Lemma 2, assuming $f$ has property 1 listed on the present lemma.  This lemma remains true if $f$ has property 2 instead of property 1 because, by the so-called Hardy&ndash;Littlewood lemma, every function with property 2 has property 1 (but not vice versa). &#x25a1;
 
 The following lemma adapts the previous lemmas to the setting of random variables.
 
-**Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4 apply as appropriate to $f$ with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
+**Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4 apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
 
 _Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^27], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
+
+<a id=Bounds_for_Remainder_of_Bernstein_Polynomials></a>
+
+### Bounds for Remainder of Bernstein Polynomials
+
+The following results specialize the previous ones to the case of [**Bernstein polynomials**](#Bernstein_Form_and_Bernstein_Polynomials) $B_n$.  They apply to the Bernstein polynomial of the result of subtracting a Taylor polynomial from a function, and are useful when a linear operator contains $B_n(f)$ in its definition and reproduces all polynomials of degree $r$ or less.
+
+**Lemma 6**: _Let $r$ be zero or a positive integer.  Let $f(\lambda)$&mdash;_
+
+1. _have a Lipschitz-continuous $r$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, or_
+2. _have a continuous $(r+1)$-th derivative on that interval, with maximum absolute value $M$ or less._
+
+_Then the following bound holds true:_ $\text{abs}(B_n(R_r(f, \lambda)) \le (M \mu_{r+1})/ ( ((r+1)!) n^{(r+1)/2})$ _for every integer $n\ge 2$ (and also for $n=1$ if $r$ is odd), where_ $\mu_r$ _is as defined in Proposition 1._
+
+_Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25a1;
+
+**Corollary 1**: Let $f(\lambda)$, $r$, and $M$ be as in Lemma 6.  Then, for every $0\le\lambda\le 1$:
+
+| If $r$ is: | Then $\text{abs}(B_n(R_r(f, \lambda))) \le$ ... |
+ - | ------ |
+| 0. | $M(1/2)/n^{1/2}$ for every integer $n\ge 1$. |
+| 1. | $M(1/8)/n = 0.125M/n$ for every integer $n\ge 1$. |
+| 2. | $M(\sqrt{3}/48)/n^{3/2} < 0.3609M/n^{3/2}$ for every integer $n\ge 2$. |
+| 3. | $M(1/128)/n^{2} = 0.0078125M/n^{2}$ for every integer $n\ge 1$. |
+| 4. | $M(\sqrt{5}/1280)/n^{5/2} < 0.001747/n^{5/2}$ for every integer $n\ge 2$. |
+| 5. | $M(1/3072)/n^{3} < 0.0003256/n^{3}$ for every integer $n\ge 1$. |
 
 <a id=Whitney_s_Inequality></a>
 
@@ -347,6 +385,12 @@ $$H_{n,m}(f)(\lambda) - f(\lambda) = H_{n,m}(R_m(f, \lambda))(\lambda)$$
 
 $$=B_n(R_m(f,\lambda)) + \text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda))).$$
 
+With the help of Lemma 6 and the properties of Lipschitz-continuous functions, the following holds if $n$ is also 2 or greater:
+
+$$H_{n,m}(f)(\lambda) \le \frac{\|f^{(m)}\| \mu_{r})}{ (r!) n^{r/2}} + \|\text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda)))\|,$$
+
+where $\mu_r$ is as in Proposition 1 and the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
+
 Alternatively, write:
 
 $$H_{n,m}(f) - f=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)) - f$$
@@ -367,13 +411,22 @@ where $\|\|Lag_m\|\|$ is the operator norm of $Lag_m$, also known as its _Lebesg
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
-$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2}{8n},$$
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2}{8n}.$$
+
+----
+
 >
 >**Example:** If $m$ is 3, and the polynomial generated by $Lag_m$ interpolates $f$ at the points 0, 1/3, 2/3, and 1, the inequality just shown becomes:
 >
 > $$\text{abs}((H_{n,3}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{1.64\cdot M_0(f)\cdot 9}{8n},$$
 >
 > using an upper bound for $\|\|Lag_3\|\|$.
+
+<a id=Probabilistic_Interpretations_of_Linear_Operators></a>
+
+## Probabilistic Interpretations of Linear Operators
+
+The Bernstein polynomials were invented to prove a result that any continuous function on a closed interval can be approximated as well as desired by polynomials. The original proof from 1912 used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials: (Adell and De la Cal 1996)[^43], (Adell and De la Cal 1995)[^44].
 
 <a id=License></a>
 
@@ -467,3 +520,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^41]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
 [^42]: Weisstein, Eric W. "Bernstein's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/BernsteinsInequality.html**](https://mathworld.wolfram.com/BernsteinsInequality.html)
+
+[^43]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+
+[^44]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221(95**](https://doi.org/10.1016/0898-1221(95))00081-X
