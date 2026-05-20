@@ -160,7 +160,7 @@ The following results give bounds that apply to large classes of positive linear
 | 5 | (Use ineq. 3 if $h<(\sigma_2)^{1/2}$, or ineq. 4 otherwise.) |
 | 6 | $\tilde\omega_1(f, (\sigma_2)^{1/2})$. |
 
-_Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)[^16]. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)[^17]; inequality 4 comes from another result in the same paper (see also Mamedov (1959)[^18]); inequality 3 follows from a result of Mond (1978)[^19]; inequality 5, a result of Păltănea (2004, corollary 1.2.2)[^20]; inequality 6, a result of Peetre (1969)[^21] \(also mentioned in Gonska (1998/2023)[^22], which has an extensive discussion on bounds for general positive linear operators). &#x25a1;
+_Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)[^16]. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)[^17]; inequality 4 comes from another result in the same paper (see also Mamedov (1959)[^18]); inequality 3 follows from a result of Mond (1978)[^19]; inequality 5, a result of Păltănea (2004, corollary 1.2.2)[^20]; inequality 6, a result of Peetre (1969)[^21] \(also mentioned in Gonska (1998/2023)[^22], which has an extensive discussion on error bounds for linear operators). &#x25a1;
 
 **Remark 1:** The moduli of continuity $\omega_1(f, \delta)$ and $\tilde\omega_1(f, \delta)$ offer concise ways to express different error bounds depending on how "regular" $f$ is.  Properties of these moduli are given in Sevy 1991[^23], sec. 2.0.2; Gonska 1985[^24]. For example, let $f$ be continuous on a closed interval.  Then:
 
@@ -175,7 +175,7 @@ _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3
 **Lemma 2**. _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all polynomials up to degree 1 (constants and linear functions).  Let $h>0$ be a real number. Then:_
 
 | No. | If $f$ ... |  Then $\text{abs}(L(f)(\lambda)-f(\lambda))\le ... $ |
- - | ----- | ----- |
+ - | --- | ----- |
 | 1 | Has a continuous derivative. | $((h+2)^2/(8h))\cdot \omega_1(f^{(1)}, h\cdot\sqrt{\sigma_2}) \cdot\sqrt{\sigma_2}$. |
 | 2 | Has a continuous derivative. | $\frac{1}{2}(\sigma_2)^{1/2} \tilde\omega_1(f^{(1)}, (\sigma_2)^{1/2})$. |
 | 3 | Has a Hölder-continuous derivative with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less. | $\frac{M}{2}(\sigma_2)^{(1+\alpha)/2}$. |
@@ -471,7 +471,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: It is also possible to bound the "absolute moment" as $M_{n,r}(p)\le C(r)(\max(1/n, (p(1-p)/n)^{1/2})^r$ or $M_{n,r}(p)\le D(r)(1/n + (p(1-p)/n)^{1/2})^r$ (G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966), but the constants $C(r)$ and $D(r)$ seem to be higher (and less favorable) than the $E(r)$ in $M_{n,r}(p)\le E(r)/n^{r/2}$.
 
-[^6]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
+[^6]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018. [https://doi.org/10.1016/j.jat.2018.04.007](https://doi.org/10.1016/j.jat.2018.04.007)
 
 [^7]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
 
@@ -487,7 +487,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^13]: For example, if $L$ is linear but not positive, applying the theorem may require calculating mappings of truncated power functions, which are generally not polynomials (for example $L(\max(0,e_0-x)^i)$ for some $i>0$).
 
-[^14]: Waldron, Shayne. "Refinements of the Peano kernel theorem." Numerical functional analysis and optimization 20.1-2 (1999): 147-161.
+[^14]: Waldron, Shayne. "Refinements of the Peano kernel theorem." Numerical functional analysis and optimization 20.1-2 (1999): 147-161. [https://doi.org/10.1080/01630569908816885](https://doi.org/10.1080/01630569908816885)
 
 [^15]: Brass, Helmut, and Klaus-Jürgen Förster. "On the application of the Peano representation of linear functionals in numerical analysis." Recent progress in inequalities. Dordrecht: Springer Netherlands, 1998. 175-202.
 
@@ -499,13 +499,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^19]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
 
-[^20]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004.
+[^20]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004. [https://doi.org/10.1007/978-1-4612-2058-9](https://doi.org/10.1007/978-1-4612-2058-9)
 
 [^21]: Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory", in _Approximation Theory_, 1969.
 
-[^22]: Gonska, Heiner. "The rate of convergence of bounded linear processes on spaces of continuous functions." Journal of Numerical Analysis and Approximation Theory 52.2 (2023): 182-232. [https://doi.org/10.33993/jnaat522-1326](https://doi.org/10.33993/jnaat522-1326)
+[^22]: Gonska, Heiner. "The rate of convergence of bounded linear processes on spaces of continuous functions." Journal of Numerical Analysis and Approximation Theory 52.2 (2023): 182-232. [**https://doi.org/10.33993/jnaat522-1326**](https://doi.org/10.33993/jnaat522-1326)
 
-[^23]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
+[^23]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [https://doi.org/10.17918/00010296](https://doi.org/10.17918/00010296)
 
 [^24]: H. H. Gonska, _Quantitative Approximation in C(X)_, Habilitationschrift, Universität Duisburg, 1985.
 
@@ -525,7 +525,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^32]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _closed_ one, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
 
-[^33]: Frantz, Deborah A. Summability methods, probability distributions, and associated positive linear operators. Lehigh University, 1984.
+[^33]: Frantz, Deborah A. [**Summability methods, probability distributions, and associated positive linear operators**](https://preserve.lehigh.edu/lehigh-scholarship/graduate-publications-theses-dissertations/theses-dissertations/summability). Lehigh University, 1984.
 
 [^34]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
 
@@ -533,7 +533,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^36]: It would be interesting to find a version of this inequality that works for any closed interval $[a, b]$.
 
-[^37]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993.
+[^37]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [https://link.springer.com/book/9783540506270](https://link.springer.com/book/9783540506270)
 
 [^38]: E. W. Cheney, _Introduction to Approximation Theory_, 1998.
 
@@ -541,7 +541,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^40]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
-[^41]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
+[^41]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [https://doi.org/10.1007/s00365-022-09608-y](https://doi.org/10.1007/s00365-022-09608-y)
 
 [^42]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
@@ -559,4 +559,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^49]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^50]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221(95**](https://doi.org/10.1016/0898-1221(95))00081-X
+[^50]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)

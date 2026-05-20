@@ -75,7 +75,7 @@ _For $f(\lambda)$ there must be a sequence of polynomials_ ($g_n$) _in Bernstein
 
 However, ordinary Bernstein polynomials converge to a function at the rate $\Omega(1/n)$ unless the function is linear, a result known since Voronovskaya (1932)[^8] and a rate that will lead to an **infinite expected number of coin flips in general**.  (See also my [**supplemental notes**](https://peteroupc.github.io/bernsupp.html).)
 
-But Lorentz (1966)[^9] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough; for example, if the function's second or higher-order derivative is Lipschitz continuous).
+But Lorentz (1963)[^9] showed that if the function is positive and has a continuous $k$-th derivative, there are polynomials with nonnegative Bernstein coefficients that converge at the rate $O(1/n^{k/2})$ (and thus can enable a **finite expected number of coin flips** if the function is "smooth" enough; for example, if the function's second or higher-order derivative is Lipschitz continuous).
 
 Thus, researchers have studied alternatives to Bernstein polynomials that improve the convergence rate for "smoother" functions.  See Holtz et al. (2011)[^6], Sevy (1991)[^10], Waldron (2009)[^11], Costabile et al. (2005)[^12], Han (2003)[^13], Khosravian-Arab et al. (2018)[^14], and references therein; see also Micchelli (1973)[^15], Güntürk and Li (2021a)[^16], (2021b)[^17], Draganov (2024)[^18], and Tachev (2022)[^19].
 
@@ -188,15 +188,15 @@ Prove or disprove:
 
 [^5]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://doi.org/10.1214/105051604000000549)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
-[^6]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/article/10.1007/s00365-010-9108-5)", Constructive Approximation 33 (2011).
+[^6]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://doi.org/10.1007/s00365-010-9108-5)", Constructive Approximation 33 (2011).
 
 [^7]: The condition on nonnegative Bernstein coefficients ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are "good".
 
 [^8]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
 
-[^9]: G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
+[^9]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [https://doi.org/10.1007/BF01398235](https://doi.org/10.1007/BF01398235)
 
-[^10]: Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991.
+[^10]: Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. [https://doi.org/10.17918/00010296](https://doi.org/10.17918/00010296)
 
 [^11]: Waldron, S., "[**Increasing the polynomial reproduction of a quasi-interpolation operator**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)", Journal of Approximation Theory 161 (2009).
 
@@ -208,7 +208,7 @@ Prove or disprove:
 
 [^15]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^16]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constructive Approximation, pp.1-30 (2022).
+[^16]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [https://doi.org/10.1007/s00365-022-09608-y](https://doi.org/10.1007/s00365-022-09608-y)
 
 [^17]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 (2021).
 

@@ -877,7 +877,7 @@ $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
 whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
 
-Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. there are polynomials $g_n$ (for each $n\ge 1$) as follows.
+Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
 
 Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality&mdash;
 

@@ -372,7 +372,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^10]: Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya." CR Acad. URSS, 86-92.
 
-[^11]: G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966.
+[^11]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [https://doi.org/10.1007/BF01398235](https://doi.org/10.1007/BF01398235)
 
 [^12]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
@@ -446,7 +446,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^47]: Kacsó, D.P., "Simultaneous approximation by almost convex operators", 2002.
 
-[^48]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991.
+[^48]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [https://doi.org/10.17918/00010296](https://doi.org/10.17918/00010296)
 
 [^49]: Berens, H., Lorentz, G.G., "Inverse theorems for Bernstein polynomials", Indiana University Mathematics Journal 21 (1972).
 
@@ -554,7 +554,7 @@ The following error bounds, which make use of Corollary 1 in the article "[**Not
 | Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_4\frac{8 \sqrt{5} + 18 \sqrt{15} + 27 \sqrt{10}}{640 n^{5 / 2}}$ &lt; $\Lambda_4\frac{0.2703}{n^{2.5}}$ |
 | Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_5\frac{545}{1536 n^{3}}$ &lt; $\Lambda_5\frac{0.3549}{n^{3}}$ |
 
-The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^9], (Lorentz 1966)[^11].  This operator is a polynomial in Bernstein form of degree $n+2$.
+The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^9], (Lorentz 1963)[^11].  This operator is a polynomial in Bernstein form of degree $n+2$.
 
 **Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
 
