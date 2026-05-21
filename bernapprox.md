@@ -372,7 +372,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^10]: Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya." CR Acad. URSS, 86-92.
 
-[^11]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [https://doi.org/10.1007/BF01398235](https://doi.org/10.1007/BF01398235)
+[^11]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
 [^12]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
@@ -446,7 +446,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^47]: Kacsó, D.P., "Simultaneous approximation by almost convex operators", 2002.
 
-[^48]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [https://doi.org/10.17918/00010296](https://doi.org/10.17918/00010296)
+[^48]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
 
 [^49]: Berens, H., Lorentz, G.G., "Inverse theorems for Bernstein polynomials", Indiana University Mathematics Journal 21 (1972).
 
