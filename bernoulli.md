@@ -752,6 +752,7 @@ In the algorithm (see also (Brassard et al., 2019\)[^29], (Devroye 1986, p. 769\
 A _simple continued fraction_ is a way to write a real number between 0 and 1. A simple continued fraction has the form&mdash;
 
 $$0 + 1 / (a[1] + 1 / (a[2] + 1 / (a[3] + ... ))),$$
+
 where the _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.
 
 Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions"\)[^2], I developed the following algorithm.
@@ -767,7 +768,11 @@ Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational 
 
 **Algorithm 2.**
 
-A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
+A _generalized continued fraction_ has the form&mdash;
+
+$$0 + b[1] / (a[1] + b[2] / (a[2] + b[3] / (a[3] + ... ))).$$
+
+The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
 The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative, be a noninteger, or both.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
@@ -779,7 +784,7 @@ The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an ab
     1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the separate run returns _s_, return 0.
 
-**Algorithm 3.** This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a noninteger.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+**Algorithm 3.** This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a noninteger. (If each _b_\[_i_\] and each _a_\[_i_\] is an integer, the resulting continued fraction is also called a _proper continued fraction_ (Leighton 1940)[^77].)  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -2584,6 +2589,8 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^75]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.
 
 [^76]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+
+[^77]: Leighton, W., "Proper continued fractions", _Amer. Math. Monthly_ 47 (1940).
 
 <a id=Appendix></a>
 

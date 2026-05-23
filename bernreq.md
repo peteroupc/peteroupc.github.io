@@ -148,14 +148,14 @@ The following are some strategies for answering these questions:
     2. min($\lambda$, $1-\lambda$) and $\lambda^{1/p}$, for every prime $p\ge 3$, can be simulated by a pushdown automaton.
     3. Given that $f$ is algebraic over rational numbers, it can be simulated by a pushdown automaton if and only if its "critical exponent" is a dyadic number greater than $-1$ or has the form $-1-1/2^k$ for some integer $k\ge 1$.[^27]
 - [**Coin-flipping degree**](https://mathoverflow.net/questions/448538/bounds-on-the-coin-flipping-degree): Let $p(\lambda)$ be a polynomial that maps $[0, 1]$ to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.  Then its _coin-flipping degree_ (Wästlund 1999)[^28] is the smallest value of $n$ such that $p$'s _Bernstein_ coefficients of degree $n$ lie in $[0, 1]$.  Given that a polynomial's degree is $m$ and its "standard" coefficients are integers, what are upper bounds (or even exact maximums) on its coin-flipping degree?
-- [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute _p_-adic digit expansions.
+- [**Simple simulation algorithms**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili): References are sought to papers and books that describe irrational constants in the interval (0, 1) or Bernoulli factory functions (continuous functions mapping (0,1) to itself) in any of the following ways.  Ideally they should involve only rational numbers and should not compute _p_-adic digit expansions.
     - Simulation experiments that succeed with an irrational probability.
     - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions of irrational constants.
     - Functions written as infinite power series with rational coefficients (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
     - Irrational numbers written as series expansions with rational coefficients (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
     - Functions whose integral is an irrational number.
     - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/bernoulli.html#pi___4)
-    - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/bernsupp.html#4_3___pi).
+    - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/bernoulli.html#4_3___pi)
 - Given integer _m_&ge;0, rational number 0&lt;_k_&lt;exp(1) (and especially $k=1$ or $k=2$), and unknown heads probability 0&le;_&lambda;_&le;1, find a [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) for&mdash;
 
     $$f(\lambda)=\exp(-(\exp(m+\lambda)-(k(m+\lambda)))) = \frac{\exp(-\exp(m+\lambda))}{\exp(-(k(m+\lambda)))},\tag{PD}$$
@@ -184,7 +184,7 @@ Prove or disprove:
 
 [^3]: An example of $X$ is $\mathbb{P}(X=a) = p (1-p)^a$ where $0 < p < 1$ is a known rational.  This question's requirements imply that $\sum_{a\ge 0}\max_\lambda \text{abs}(\gamma_a(\lambda)) \le 1$.  The proof of Keane and O'Brien (1994) produces a convex combination of polynomials with 0 and 1 as Bernstein coefficients, but the combination is difficult to construct (it requires finding maximums, for example) and so this proof does not appropriately answer this question.
 
-[^4]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
+[^4]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011; Random Struct. Alg., 38: 441-452 (2011). [https://doi.org/10.1002/rsa.20333](https://doi.org/10.1002/rsa.20333)
 
 [^5]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://doi.org/10.1214/105051604000000549)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
@@ -198,15 +198,15 @@ Prove or disprove:
 
 [^10]: Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
 
-[^11]: Waldron, S., "[**Increasing the polynomial reproduction of a quasi-interpolation operator**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)", Journal of Approximation Theory 161 (2009).
+[^11]: Waldron, S., "[**Increasing the polynomial reproduction of a quasi-interpolation operator**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)", Journal of Approximation Theory 161 (2009). [https://doi.org/10.1016/j.jat.2008.08.011](https://doi.org/10.1016/j.jat.2008.08.011)
 
-[^12]: Costabile, F., Gualtieri, M.I., Serra, S., “Asymptotic expansion and extrapolation for Bernstein polynomials with applications”, BIT 36 (1996)
+[^12]: Costabile, F., Gualtieri, M.I., Serra, S., “Asymptotic expansion and extrapolation for Bernstein polynomials with applications”, BIT 36 (1996). [https://doi.org/10.1007/BF01733787](https://doi.org/10.1007/BF01733787)
 
 [^13]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
 [^14]: Khosravian-Arab, H., Dehghan, M. & Eslahchi, M.R. A new approach to improve the order of approximation of the Bernstein operators: theory and applications. _Numerical Algorithms_ 77, 111–150 (2018). [**https://doi.org/10.1007/s11075-017-0307-z**](https://doi.org/10.1007/s11075-017-0307-z).
 
-[^15]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^15]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18. [https://doi.org/10.1016/0021-9045%2873%2990028-2](https://doi.org/10.1016/0021-9045%2873%2990028-2)
 
 [^16]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [**https://doi.org/10.1007/s00365-022-09608-y**](https://doi.org/10.1007/s00365-022-09608-y)
 
@@ -220,7 +220,7 @@ Prove or disprove:
 
 [^21]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4)
 
-[^22]: Finta Z., "Bernstein type operators having 1 and $x^j$ as fixed points", Cent. Eur. J. Math., 11 (2013), pp. 2257-2261.
+[^22]: Finta Z., "Bernstein type operators having 1 and $x^j$ as fixed points", Cent. Eur. J. Math., 11 (2013), pp. 2257-2261. [https://doi.org/10.2478/s11533-013-0310-0](https://doi.org/10.2478/s11533-013-0310-0)
 
 [^23]: If $W_n(f; 0)=f(0)$ and $W_n(f; 1)=f(1)$ for every $n$, then the inequality $(PB)$ is automatically true when $k=0$ and $k=2n$, so that the statement has to be checked only for $0\lt k\lt 2n$.  If, in addition, $W_n$ is symmetric about 1/2, so that $W_n(f; \lambda)=W_n(f; 1-\lambda)$ whenever $0\le \lambda\le 1$, then the statement has to be checked only for $0\lt k\le n$ (since the values $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ are symmetric in that they satisfy $\sigma_{n,k,i}=\sigma_{n,k,k-i}$).<br>Special cases for this question are if $W_n = 2 f - B_n(f)$ and $r$ is 3 or 4, or $W_n = B_n(B_n(f))+3(f-B_n(f))$ and $r$ is 5 or 6; these cases correspond to the iterated Boolean sum of Bernstein polynomials: $B_n(W_n)=f-(f-B_n(f))^k$ (where the $^k$ indicates $k$-fold nesting).
 
@@ -228,7 +228,7 @@ Prove or disprove:
 
 [^25]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
-[^26]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
+[^26]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [https://doi.org/10.1007/s00493-005-0043-1](https://doi.org/10.1007/s00493-005-0043-1)
 
 [^27]: On pushdown automata: Etessami and Yannakakis ("Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009) showed that pushdown automata with rational probabilities are equivalent to recursive Markov chains (with rational transition probabilities), and that for every recursive Markov chain, the system of polynomial equations has nonnegative coefficients. But this paper doesn't deal with the case of recursive Markov chains where the transition probabilities cannot just be rational, but can also be $\lambda$ and $1-\lambda$ where $\lambda$ is an unknown rational or irrational probability of heads.  Also, Banderier and Drmota ("Formulae and asymptotics for coefficients of algebraic functions", _Combinatorics, Probability and Computing_ 24(1), pp.1-53., 2014) showed the asymptotic behavior of power series solutions $f(\lambda)$ of a polynomial system, where both the series and the system have nonnegative real coefficients. Notably, functions of the form $\lambda^{1/p}$ where $p\ge 3$ is not a power of 2, are not possible solutions, because their so-called "critical exponent" is not dyadic. But the result seems not to apply to _piecewise_ power series such as $\min(\lambda,1-\lambda)$, which are likewise algebraic functions.
 

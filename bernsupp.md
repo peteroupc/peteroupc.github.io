@@ -900,34 +900,6 @@ $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambd
 >     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^34]
 > 3. For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.
 
-<!--
-This problem can be tackled as follows.  Let&mdash;
-
-$$A(k,n)=\sum_{i=0}^k \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i},$$
-
-where $n$, $k$, and $W_i$ are as in the conjecture.  Then, for each $n$ and $k$, find $C_2 = A(k,n)\frac{n^{r/2}}{M_{\text{inf}}}$, where $M_{\text{inf}}$ is the smallest $M$ among all functions meeting the requirements for $f(\lambda)$.  The aim is to find the smallest $C_2$ for each $n$, and negative values of $C_2$ are particularly important here.  If $C_2$ doesn't grow without bound as $n$ increases, then take the smallest $C_2$ and find its absolute value, resulting in $C_1$. (Taking a larger $C_1$ is harmless.)
-
-> **Example:** Suppose $W_i(\lambda) = 2f(\lambda) - B_i(f)(\lambda)$, and $r=3$.  Then, the smallest values of $A(k,i)$ for certain values of $i$ are: for $i=1$, $-3/2=-1.5$; for $i=2$, $-435/256\gt -1.7$; for $i=4$, a lower bound of $-1.837$; for $i=8$, a lower bound of $-1.956$.
-
-To find $M_{\text{inf}}$, the following method is useful.
-
-Let $r$ be as in the conjecture, let $k\ge r$ be an integer, and take a set of $k+1$ point/value pairs $(0/k, f(0/k))$, $(1/k, f(1/k))$, ..., $(k/k, f(k/k))$.  Set $M$ to 0, then for each subset of this set of pairs (where the subset has from 1 to $r+1$ pairs), do the following.
-
-1. Let $(q_0, f(q_0))$, $(q_1, f(q_1))$, and so on be the pairs in the subset, and let $n$ be the number of pairs in that subset.
-2. Calculate the divided difference for the pairs in this subset, call it $D$.  $D$ is also the value $c_{n-1}$ in the polynomial $c_0 x_0+c_1 x_1+...+c_{n-1} x^{n-1}$ that is the unique polynomial of degree up to $n-1$ that equals $f(q_0)$ at the point $q_0$, $f(q_1)$ at $q_1$, and so on.
-3. Set $M$ to max($M$, $((n-1)!)\cdot\text{abs}(D)$).
-
-Then the resulting $M_{\text{inf}}$ is the smallest norm for a function with a continuous $r$-th derivative on the closed unit interval and the specified uniformly spaced values, where the norm is the maximum absolute value of $f$ and its derivatives up to the $k$-th derivative.  This method is a result of lemmas 6.4 to 6.7 of Shvartsman (2018), and the paper's results in turn date from a line of work including the results of Favard (1940) \(see also De Boor (1976)).
-
-Shvartsman, Pavel. "[**Sobolev functions on closed subsets of the real line: long version**](https://arxiv.org/pdf/1808.01467)", arXiv:1808.01467 (2018)
-
-Favard J., "Sur l’interpolation", _J. Math. Pures Appl._ 19 (1940).
-
-De Boor, C., "On 'Best' Interpolation", _Journal of Approximation Theory_ 16 (1976).
-
-> **Example:** For the points $(0, 0), (1/2, 1), (1, 0)$ and $k=2$, $M_{\text{inf}}$ is 8, given the example $f(\lambda)=4\lambda(1-\lambda)$.  But, for the points $(0, 0), (1/2, 1/2), (1, 1)$ and $k=2$, $M_{\text{inf}}$ is equal to 1, with the function $f(\lambda)=\lambda$.
--->
-
 ----------
 
 The following results on hypergeometric random variables are useful.  Denote the $s$-th central absolute moment of a random variable $Y$ as $\tau_s(Y)$.
