@@ -34,6 +34,7 @@
       <li><a href="#Whitney_s_Inequality_on_Polynomial_Errors"><strong>Whitney’s Inequality on Polynomial Errors</strong></a></li>
       <li><a href="#Another_Inequality_on_Polynomial_Errors"><strong>Another Inequality on Polynomial Errors</strong></a></li>
       <li><a href="#Lebesgue_Inequality_for_Certain_Linear_Operators"><strong>Lebesgue Inequality for Certain Linear Operators</strong></a></li>
+      <li><a href="#Bounds_for_Certain_Nonlinear_Operators"><strong>Bounds for Certain Nonlinear Operators</strong></a></li>
     </ul>
   </li>
   <li><a href="#Example"><strong>Example</strong></a></li>
@@ -52,9 +53,9 @@
 <ul>
   <li>The <em>closed unit interval</em> (written as [0, 1]) means the set consisting of 0, 1, and every real number in between.</li>
   <li>An <em>operator</em> is a mapping from a function to a function.</li>
-  <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every number $a$.</li>
-  <li>An operator $L$ is <em>positive</em> if it has the property that, if an input function $f$ is nonnegative on its domain, so is $L(f)$.<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></li>
-  <li>The <em>operator norm</em> of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with a maximum absolute value 1 or less.  This assumes $L$ maps continuous functions on a closed interval to functions of that kind.</li>
+  <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.</li>
+  <li>An operator $L$ is <em>positive</em> if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></li>
+  <li>The <em>operator norm</em> of an operator $L$ is the maximum absolute value of $L(f)$ over all allowed functions $f$ with a maximum absolute value 1 or less.  This assumes $L$ maps continuous functions on a closed interval to functions of that kind.</li>
   <li>In this document, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.</li>
   <li>The <em>expected value</em> (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.</li>
   <li>A <em>modulus of continuity of order 1</em> of a function <em>f</em>, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$’s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the “regularity” of $f$; generally, the smaller it is, the more “regular”.</li>
@@ -385,6 +386,14 @@
 
 <h3 id="bounds-for-general-linear-operators">Bounds for General Linear Operators</h3>
 
+<p>Roughly speaking, the <em>integral</em> of $f(\lambda)$ on an interval $[a,b]$ is the “area under the graph” of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that—</p>
+
+\[\frac{1}{n} \sum_{i=1}^n f(a+(b-a)(i-\frac{1}{2})/n),\]
+
+<p>approaches as $n$ gets larger and larger.  The integral of $f(\lambda)$ on $[a,b]$ is denoted $\int_a^b f(\lambda) d\lambda$.</p>
+
+<p>The following results rely on the so-called <em>Peano kernel theorem</em>, which was originally developed to assess the error in approximating the integral of a function from samples of it (for more on this theory, see Brass and Förster 1998<sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup>; Waldron 1999<sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup>).</p>
+
 <p>Let $k$ be a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the closed interval $[a, b]$, let $M$ be its maximum absolute value, and let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval.</p>
 
 <p>Let $L$ be a bounded linear operator that—</p>
@@ -411,13 +420,11 @@
   <li>If $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise.</li>
 </ul>
 
-<p>Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 on every polynomial of degree $k$ or less, so that $LF(e_i)=0$ whenever $0\le i\le k$, so that $LF$ satisfies theorem 3 of Gavrea and Ivan (2015)<sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup>. Formula (5) is an easy consequence of (4); see also Brass and Förster (1998, theorem 5)<sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup>.<sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup></p>
+<p>Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 on every polynomial of degree $k$ or less, so that $LF(e_i)=0$ whenever $0\le i\le k$, so that $LF$ satisfies theorem 3 of Gavrea and Ivan (2015)<sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup>. Formula (5) is an easy consequence of (4); see also Brass and Förster (1998, theorem 5)<sup id="fnref:31:1"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup>.<sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup></p>
 
 <p>In addition, due to the same paper’s theorem 4, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:</p>
 
 \[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)) \le\frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).\]
-
-<p>Both results rely on the so-called <em>Peano kernel theorem</em> (for additional results, see Brass and Förster 1998<sup id="fnref:32:1"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup>; see also Waldron 1999<sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup>).</p>
 
 <p><a id="Whitney_s_Inequality_on_Polynomial_Errors"></a></p>
 
@@ -479,6 +486,30 @@
 \[= (1+\|L\|)\|f^{(3)}\|_\infty/27.\]
 </blockquote>
 
+<p><a id="Bounds_for_Certain_Nonlinear_Operators"></a></p>
+
+<h3 id="bounds-for-certain-nonlinear-operators">Bounds for Certain Nonlinear Operators</h3>
+
+<p>The following comes from a result in Bede and Gal (2010)<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>; see also Bede et al. (2009)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>.</p>
+
+<p>Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:</p>
+
+<ol>
+  <li>(Monotone.) For every pair of allowed functions $g$ and $h$, if $g\le h$, then $L(g)\le L(h)$.</li>
+  <li>(Subadditive.) For every pair of allowed functions $g$ and $h$, $L(g+h)\le L(g)+L(h)$.</li>
+  <li>(Positively homogeneous.) $xL(g)=L(xg)$ for every allowed function $g$ and every $x\ge 0$.</li>
+</ol>
+
+<p>If $L(e_0)=1$, then for every $h&gt;0$:</p>
+
+\[\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),\]
+
+<p>provided $(\text{abs}(e_0-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
+
+<blockquote>
+  <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">44</a></sup></p>
+</blockquote>
+
 <p><a id="Example"></a></p>
 
 <h2 id="example">Example</h2>
@@ -495,13 +526,13 @@
 
 <ul>
   <li>$k = 2n\lambda$, where $0\le\lambda\le 1$.</li>
-  <li>$W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">42</a></sup></li>
+  <li>$W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">45</a></sup></li>
   <li>$X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.</li>
   <li>$\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.</li>
   <li>$\mathbb{E}[Y]$ is the expected value (or mean or “long-run average”) of the random variable $Y$.</li>
 </ul>
 
-<p>$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. (“$O(1/n^{3/2})$” means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)</p>
+<p>$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. (“$O(1/n^{3/2})$” means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)</p>
 
 <p>With this choice of $W_n$, $L_n$ becomes:</p>
 
@@ -529,7 +560,7 @@
   <li>$(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.</li>
 </ul>
 
-<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> and central moments (Weisstein)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
+<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> and central moments (Weisstein)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">49</a></sup> of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
 
 \[L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}\]
 
@@ -615,11 +646,11 @@
 
 \[B_n(g)\le M_2(g)/(8n),\]
 
-<p>where $M_i(g)$ is the maximum absolute value of $g$’s $i$-th derivative. (This follows from Lorentz (1963)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> and the well-known fact that $M_2$ is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:</p>
+<p>where $M_i(g)$ is the maximum absolute value of $g$’s $i$-th derivative. (This follows from Lorentz (1963)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">50</a></sup> and the well-known fact that $M_2$ is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:</p>
 
 \[\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2,\]
 
-<p>where $||Lag_m||$ is the operator norm of $Lag_m$, also known as its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein’s inequality for the derivatives of polynomials (Weisstein)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>.</p>
+<p>where $||Lag_m||$ is the operator norm of $Lag_m$, also known as its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein’s inequality for the derivatives of polynomials (Weisstein)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>.</p>
 
 <p>Altogether, if $f$ has a continuous second derivative and $m$ is fixed:</p>
 
@@ -640,7 +671,7 @@
 
 <h2 id="probabilistic-interpretations-of-linear-operators">Probabilistic Interpretations of Linear Operators</h2>
 
-<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a closed interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>, 1995<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>).</p>
+<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a closed interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, 1995<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>).</p>
 
 <p><a id="License"></a></p>
 
@@ -744,16 +775,16 @@
       <p>Frantz, Deborah A. <a href="https://preserve.lehigh.edu/lehigh-scholarship/graduate-publications-theses-dissertations/theses-dissertations/summability"><strong>Summability methods, probability distributions, and associated positive linear operators</strong></a>. Lehigh University, 1984. <a href="#fnref:30" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:31">
-      <p>Gavrea, I., Ivan, M., “A sharp estimate for the Peano error representation”, <em>Applied Mathematics and Computation</em> 252 (2015). <a href="https://doi.org/10.1016/j.amc.2014.12.017"><strong>https://doi.org/10.1016/j.amc.2014.12.017</strong></a> <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Brass, Helmut, and Klaus-Jürgen Förster. “On the application of the Peano representation of linear functionals in numerical analysis.” Recent progress in inequalities. Dordrecht: Springer Netherlands, 1998. 175-202. <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:31:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:32">
-      <p>Brass, Helmut, and Klaus-Jürgen Förster. “On the application of the Peano representation of linear functionals in numerical analysis.” Recent progress in inequalities. Dordrecht: Springer Netherlands, 1998. 175-202. <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:32:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Waldron, Shayne. “Refinements of the Peano kernel theorem.” Numerical functional analysis and optimization 20.1-2 (1999): 147-161. <a href="https://doi.org/10.1080/01630569908816885"><strong>https://doi.org/10.1080/01630569908816885</strong></a> <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:33">
-      <p>Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ or $L$; thus the results in this section exclude $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gavrea, I., Ivan, M., “A sharp estimate for the Peano error representation”, <em>Applied Mathematics and Computation</em> 252 (2015). <a href="https://doi.org/10.1016/j.amc.2014.12.017"><strong>https://doi.org/10.1016/j.amc.2014.12.017</strong></a> <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:34">
-      <p>Waldron, Shayne. “Refinements of the Peano kernel theorem.” Numerical functional analysis and optimization 20.1-2 (1999): 147-161. <a href="https://doi.org/10.1080/01630569908816885"><strong>https://doi.org/10.1080/01630569908816885</strong></a> <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ or $L$; thus the results in this section exclude $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately. <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:35">
       <p>Babenko, Alexander G., and Yuriy V. Kryakin. “Special difference operators and the constants in the classical Jackson-type theorems.” Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -775,6 +806,15 @@
     </li>
     <li id="fn:40">
       <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. <em>Positivity</em> 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a>. However, Gavrea and Ivan (“<a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>A note on the fixed points of positive linear operators</strong></a>”, <em>Journal of Approximation Theory</em> (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i&gt;0$. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:52">
+      <p>Bede, Barnabás, and Sorin G. Gal. “Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind.” Journal of Concrete &amp; Applicable Mathematics 8.1 (2010). <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:53">
+      <p>Bede, Barnabas, Lucian Coroianu, and Sorin G. Gal. “Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind.” International journal of mathematics and mathematical sciences 2009.1 (2009): 590589. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:54">
+      <p>Gal, Sorin G., and Constantin P. Niculescu. “<a href="https://arxiv.org/abs/2206.14102v1">Korovkin-type theorems for weakly nonlinear and monotone operators</a>”, arXiv:2206.14102v1 [math.FA], also in <em>Mediterranean Journal of Mathematics</em> 20.2 (2023): 56. https://doi.org/10.1007/s00009-023-02271-y <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
       <p>$W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

@@ -23,6 +23,7 @@ The notes generally relate to finding bounds on how close a polynomial is to a s
     - [**Whitney's Inequality on Polynomial Errors**](#Whitney_s_Inequality_on_Polynomial_Errors)
     - [**Another Inequality on Polynomial Errors**](#Another_Inequality_on_Polynomial_Errors)
     - [**Lebesgue Inequality for Certain Linear Operators**](#Lebesgue_Inequality_for_Certain_Linear_Operators)
+    - [**Bounds for Certain Nonlinear Operators**](#Bounds_for_Certain_Nonlinear_Operators)
 - [**Example**](#Example)
 - [**Example: An Interesting Linear Operator**](#Example_An_Interesting_Linear_Operator)
 - [**Probabilistic Interpretations of Linear Operators**](#Probabilistic_Interpretations_of_Linear_Operators)
@@ -37,9 +38,9 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 
 - The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
 - An _operator_ is a mapping from a function to a function.
-- An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all input functions $f$ and $g$ and every number $a$.
-- An operator $L$ is _positive_ if it has the property that, if an input function $f$ is nonnegative on its domain, so is $L(f)$.[^1]
-- The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all input functions $f$ with a maximum absolute value 1 or less.  This assumes $L$ maps continuous functions on a closed interval to functions of that kind.
+- An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
+- An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^1]
+- The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all allowed functions $f$ with a maximum absolute value 1 or less.  This assumes $L$ maps continuous functions on a closed interval to functions of that kind.
 - In this document, $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
@@ -247,6 +248,14 @@ _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25
 
 ### Bounds for General Linear Operators
 
+Roughly speaking, the _integral_ of $f(\lambda)$ on an interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
+
+$$\frac{1}{n} \sum_{i=1}^n f(a+(b-a)(i-\frac{1}{2})/n),$$
+
+approaches as $n$ gets larger and larger.  The integral of $f(\lambda)$ on $[a,b]$ is denoted $\int_a^b f(\lambda) d\lambda$.
+
+The following results rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in approximating the integral of a function from samples of it (for more on this theory, see Brass and Förster 1998[^31]; Waldron 1999[^32]).
+
 Let $k$ be a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the closed interval $[a, b]$, let $M$ be its maximum absolute value, and let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval.
 
 Let $L$ be a bounded linear operator that&mdash;
@@ -269,13 +278,11 @@ where $LF(f) = f - L(f)$, and the notation $(x)_+^k$ is as follows:
 - If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$.
 - If $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise.
 
-Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 on every polynomial of degree $k$ or less, so that $LF(e_i)=0$ whenever $0\le i\le k$, so that $LF$ satisfies theorem 3 of Gavrea and Ivan (2015)[^31]. Formula (5) is an easy consequence of (4); see also Brass and Förster (1998, theorem 5)[^32].[^33]
+Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 on every polynomial of degree $k$ or less, so that $LF(e_i)=0$ whenever $0\le i\le k$, so that $LF$ satisfies theorem 3 of Gavrea and Ivan (2015)[^33]. Formula (5) is an easy consequence of (4); see also Brass and Förster (1998, theorem 5)[^31].[^34]
 
 In addition, due to the same paper's theorem 4, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:
 
 $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)) \le\frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
-
-Both results rely on the so-called _Peano kernel theorem_ (for additional results, see Brass and Förster 1998[^32]; see also Waldron 1999[^34]).
 
 <a id=Whitney_s_Inequality_on_Polynomial_Errors></a>
 
@@ -329,6 +336,26 @@ where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of de
 > $$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|_\infty$$
 >
 > $$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
+
+<a id=Bounds_for_Certain_Nonlinear_Operators></a>
+
+### Bounds for Certain Nonlinear Operators
+
+The following comes from a result in Bede and Gal (2010)[^52]; see also Bede et al. (2009)[^53].
+
+Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:
+
+1. (Monotone.) For every pair of allowed functions $g$ and $h$, if $g\le h$, then $L(g)\le L(h)$.
+2. (Subadditive.) For every pair of allowed functions $g$ and $h$, $L(g+h)\le L(g)+L(h)$.
+3. (Positively homogeneous.) $xL(g)=L(xg)$ for every allowed function $g$ and every $x\ge 0$.
+
+If $L(e_0)=1$, then for every $h>0$:
+
+$$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),$$
+
+provided $(\text{abs}(e_0-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
+
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^54]
 
 <a id=Example></a>
 
@@ -556,13 +583,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^30]: Frantz, Deborah A. [**Summability methods, probability distributions, and associated positive linear operators**](https://preserve.lehigh.edu/lehigh-scholarship/graduate-publications-theses-dissertations/theses-dissertations/summability). Lehigh University, 1984.
 
-[^31]: Gavrea, I., Ivan, M., "A sharp estimate for the Peano error representation", _Applied Mathematics and Computation_ 252 (2015). [**https://doi.org/10.1016/j.amc.2014.12.017**](https://doi.org/10.1016/j.amc.2014.12.017)
+[^31]: Brass, Helmut, and Klaus-Jürgen Förster. "On the application of the Peano representation of linear functionals in numerical analysis." Recent progress in inequalities. Dordrecht: Springer Netherlands, 1998. 175-202.
 
-[^32]: Brass, Helmut, and Klaus-Jürgen Förster. "On the application of the Peano representation of linear functionals in numerical analysis." Recent progress in inequalities. Dordrecht: Springer Netherlands, 1998. 175-202.
+[^32]: Waldron, Shayne. "Refinements of the Peano kernel theorem." Numerical functional analysis and optimization 20.1-2 (1999): 147-161. [**https://doi.org/10.1080/01630569908816885**](https://doi.org/10.1080/01630569908816885)
 
-[^33]: Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ or $L$; thus the results in this section exclude $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately.
+[^33]: Gavrea, I., Ivan, M., "A sharp estimate for the Peano error representation", _Applied Mathematics and Computation_ 252 (2015). [**https://doi.org/10.1016/j.amc.2014.12.017**](https://doi.org/10.1016/j.amc.2014.12.017)
 
-[^34]: Waldron, Shayne. "Refinements of the Peano kernel theorem." Numerical functional analysis and optimization 20.1-2 (1999): 147-161. [**https://doi.org/10.1080/01630569908816885**](https://doi.org/10.1080/01630569908816885)
+[^34]: Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ or $L$; thus the results in this section exclude $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately.
 
 [^35]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
 
@@ -597,3 +624,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^50]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
 [^51]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^52]: Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind." Journal of Concrete & Applicable Mathematics 8.1 (2010).
+
+[^53]: Bede, Barnabas, Lucian Coroianu, and Sorin G. Gal. "Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind." International journal of mathematics and mathematical sciences 2009.1 (2009): 590589.
+
+[^54]: Gal, Sorin G., and Constantin P. Niculescu. "[Korovkin-type theorems for weakly nonlinear and monotone operators](https://arxiv.org/abs/2206.14102v1)", arXiv:2206.14102v1 [math.FA], also in _Mediterranean Journal of Mathematics_ 20.2 (2023): 56. [https://doi.org/10.1007/s00009-023-02271-y](https://doi.org/10.1007/s00009-023-02271-y)
