@@ -248,9 +248,9 @@ _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25
 
 ### Bounds for General Linear Operators
 
-Roughly speaking, the _integral_ of $f(\lambda)$ on an interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
+Roughly speaking, the _integral_ of $f(\lambda)$ on the closed interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
 
-$$\frac{1}{n} \sum_{i=1}^n f(a+(b-a)(i-\frac{1}{2})/n),$$
+$$\frac{1}{n} \sum_{i=1}^n f\left(a+(b-a)(i-\frac{1}{2})/n\right),$$
 
 approaches as $n$ gets larger and larger.  The integral of $f(\lambda)$ on $[a,b]$ is denoted $\int_a^b f(\lambda) d\lambda$.
 
@@ -569,7 +569,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^23]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
 
-[^24]: Păltănea, R., Smuc, M. "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74, 70 (2019). [https://doi.org/10.1007/s00025-019-0997-8](https://doi.org/10.1007/s00025-019-0997-8)
+[^24]: Păltănea, R., Smuc, M. "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74, 70 (2019). [**https://doi.org/10.1007/s00025-019-0997-8**](https://doi.org/10.1007/s00025-019-0997-8)
 
 [^25]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
 
@@ -583,7 +583,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^30]: Frantz, Deborah A. [**Summability methods, probability distributions, and associated positive linear operators**](https://preserve.lehigh.edu/lehigh-scholarship/graduate-publications-theses-dissertations/theses-dissertations/summability). Lehigh University, 1984.
 
-[^31]: Brass, H., Förster, KJ. (1998). On the Application of the Peano Representation of Linear Functionals in Numerical Analysis. In: Milovanović, G.V. (eds) Recent Progress in Inequalities. Mathematics and Its Applications, vol 430. Springer, Dordrecht. [https://doi.org/10.1007/978-94-015-9086-0_10](https://doi.org/10.1007/978-94-015-9086-0_10)
+[^31]: Brass, H., Förster, KJ. (1998). On the Application of the Peano Representation of Linear Functionals in Numerical Analysis. In: Milovanović, G.V. (eds) Recent Progress in Inequalities. Mathematics and Its Applications, vol 430. Springer, Dordrecht. [**https://doi.org/10.1007/978-94-015-9086-0_10**](https://doi.org/10.1007/978-94-015-9086-0_10)
 
 [^32]: Waldron, Shayne. "Refinements of the Peano kernel theorem." Numerical functional analysis and optimization 20.1-2 (1999): 147-161. [**https://doi.org/10.1080/01630569908816885**](https://doi.org/10.1080/01630569908816885)
 
@@ -593,7 +593,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^35]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
 
-[^36]: Jaskaran Singh Kaire and Andriy Prymak, "[Whitney-type estimates for convex functions](https://arxiv.org/abs/2311.00912)", arXiv:2311.00912 (2023).
+[^36]: Jaskaran Singh Kaire and Andriy Prymak, "[**Whitney-type estimates for convex functions**](https://arxiv.org/abs/2311.00912)", arXiv:2311.00912 (2023).
 
 [^37]: It would be interesting to find a version of this inequality that works for any closed interval $[a, b]$.
 
@@ -605,7 +605,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^41]: Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind." Journal of Concrete & Applicable Mathematics 8.1 (2010).
 
-[^42]: Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. [https://doi.org/10.1155/2009/590589](https://doi.org/10.1155/2009/590589)
+[^42]: Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. [**https://doi.org/10.1155/2009/590589**](https://doi.org/10.1155/2009/590589)
 
 [^43]: Gal, Sorin G., and Constantin P. Niculescu. "[**Korovkin-type theorems for weakly nonlinear and monotone operators**](https://arxiv.org/abs/2206.14102v1)", arXiv:2206.14102v1 [math.FA], also in _Mediterranean Journal of Mathematics_ 20.2 (2023): 56. [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
 
@@ -615,7 +615,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^46]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^47]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments",Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^47]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments", Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
 [^48]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
