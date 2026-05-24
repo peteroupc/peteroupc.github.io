@@ -34,7 +34,7 @@ The notes generally relate to finding bounds on how close a polynomial is to a s
 
 ## Notation and Definitions
 
-For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
+For definitions of _continuous_, _derivative_, _convex_, _concave_, _bounded_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
 - The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
 - An _operator_ is a mapping from a function to a function.
@@ -129,7 +129,7 @@ If $L$ reproduces polynomials up to degree $s$, this even reduces to $L(f)(\lamb
 It can be seen from the expansions just given that finding upper bounds for $L_n(f)(\lambda)$ involves:
 
 - Finding upper bounds for $L$'s "central moments" up to the $s$-th order.
-- Finding upper bounds for $L(R_s(f,\lambda))$. If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive Linear_Operators)". If $L$ is nonpositive linear, bounds are given in the section "[**Bounds for General Linear Operators**](#Bounds_for_General Linear_Operators)", and this can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^12]  See the "[**Example**](#Example)" section later in this document.
+- Finding upper bounds for $L(R_s(f,\lambda))$. If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_Operators)". If $L$ is nonpositive linear, bounds are given in the section "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)", and this can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^12]  See the "[**Example**](#Example)" section later in this document.
 
 Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
@@ -139,7 +139,7 @@ Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed
 
 Some results on error bounds for certain classes of operators.
 
-In this section, $\|\|g\|\|_\infty$ is the maximum of the absolute value of (the continuous function) $g$ on its domain.
+In this section, $\Vert g\Vert _\infty$ is the maximum of the absolute value of (the continuous function) $g$ on its domain.
 
 <a id=Bounds_for_General_Positive_Linear_Operators></a>
 
@@ -212,9 +212,33 @@ _and let $L$ be a positive linear operator that maps continuous functions on tha
 
 _Proof:_  Follows from the third bound for $L(R_k(f,\lambda))$ in Lemma 3 in the same manner as inequality 10 of Lemma 2, using Remark 1. &#x25a1;
 
+The following two lemmas are more general, but not as easy to use.  In both, $\Vert L\Vert$ is the operator norm of $L$.
+
+**Lemma 4A** (special case of Theorem 3.4 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval or a closed subset thereof, and let $L$ be a positive linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L\Vert ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)$$
+
+$$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))$$
+
+$$\le(\Vert L\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_(f,h)+\text{abs}(L(e_0)(\lambda)-f(\lambda))\cdot\text{abs}(f(\lambda)),$$
+
+**Lemma 4B** (special case of Theorem 4.7 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps bounded functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{ceil}((e_0-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)$$
+
+$$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),$$
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{abs}(e_0-\lambda))(\lambda)/h)\cdot\omega_1(f,h)$$
+
+$$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)).$$
+
+_The second inequality also works if $L$ maps from continuous functions instead of from bounded functions._
+
+> **Note:** Unlike Lemma 4A, Lemma 4B doesn't work for arbitrary closed subsets of $f$'s domain (see Remark 2.5 in Gonska (1998/2023)[^19].
+
 The following lemma adapts the previous lemmas to the setting of random variables.
 
-**Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4 apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
+**Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4B apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
 
 _Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^30], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
 
@@ -250,39 +274,62 @@ _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25
 
 Roughly speaking, the _integral_ of $f(\lambda)$ on the closed interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
 
-$$\frac{1}{n} \sum_{i=1}^n f\left(a+(b-a)(i-\frac{1}{2})/n\right),$$
+$$\frac{1}{n} \sum_{i=1}^n f\left(a+(b-a)(i-\frac{1}{2})/n\right),\tag{2A}$$
 
 approaches as $n$ gets larger and larger.  The integral of $f(\lambda)$ on $[a,b]$ is denoted $\int_a^b f(\lambda) d\lambda$.
 
-The following results, which give error bounds for important classes of linear operators (not necessarily positive ones), rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in approximating the integral of a function from samples of it (for more on this theory, see Brass and Förster 1998[^31]; Waldron 1999[^32]).
+Lemmas 7 and 8, which give error bounds for important classes of linear operators (not necessarily positive ones), rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in estimating the integral of a function from samples of it[^55] (for more on this theory, see Brass and Förster 1998[^31]; Waldron 1999[^32]).
 
-Let $k$ be a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the closed interval $[a, b]$, let $M$ be its maximum absolute value, and let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval.
+**Lemma 7.** _Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the closed interval $[a, b]$, let $M$ be its maximum absolute value, and let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that&mdash;_
 
-Let $L$ be a bounded linear operator that&mdash;
+- _reproduces all polynomials of degree $k$ or less, and_
+- _maps continuous functions (or, if $k=0$, bounded functions) on the interval $[a, b]$ to continuous functions on that interval._
 
-- reproduces all polynomials of degree $k$ or less, and
-- maps continuous functions on the interval $[a, b]$ to functions of that kind.
-
-Then:
+_Then:_
 
 $$\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))$$
 
-$$\le \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda))\right) dt\tag{3}$$
+$$\le \frac{C - c}{2} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda))\right) dt\tag{3}$$
 
 $$= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left((\lambda-t)_+^k-L((e_1-t)_+^k)(\lambda)\right) dt\tag{4}$$
 
 $$\le \frac{M}{k!} \int_a^b \text{abs}\left((\lambda-t)_+^k-L((e_1-t)_+^k)(\lambda)\right) dt,\tag{5}$$
 
-where $LF(f) = f - L(f)$, and the notation $(x)_+^k$ is as follows:
-
-- If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$.
-- If $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise.
+_where $LF(f) = f - L(f)$, and the notation_ $(x)_+^k$ _is as follows. If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$, and $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise._
 
 Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 on every polynomial of degree $k$ or less, so that $LF(e_i)=0$ whenever $0\le i\le k$, so that $LF$ satisfies theorem 3 of Gavrea and Ivan (2015)[^33]. Formula (5) is an easy consequence of (4); see also Brass and Förster (1998, theorem 5)[^31].[^34]
 
-In addition, due to the same paper's theorem 4, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:
+**Lemma 8** (see Theorem 4 of Gavrea and Ivan (2015)[^33]). _With the assumptions in Lemma 7, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:_
 
 $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)) \le\frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
+
+**Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)$$
+
+$$\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),$$
+
+_where $\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$'s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$'s domain._
+
+**Lemma 10.** _With the assumptions in Lemma 9, if $L$ reproduces constants, so that_ $L(e_0)=1$, _the inequality in that lemma becomes:_
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((1+\Vert L\Vert)/2, (\gamma(\beta(\lambda)-1)+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\cdot\tilde\omega_1(f,h).$$
+
+**Lemma 11** (special case of Theorem 4.4 and Corollary 4.5 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-\text{abs}(L(e_0)(\lambda)))\cdot(1+(b-a)/h)$$
+
+$$+\text{abs}(L(e_0)(\lambda))+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)$$
+
+$$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),$$
+
+_where $\beta(\lambda)$ is as in Lemma 9._
+
+**Lemma 12.** _With the assumptions in Lemma 11, if $L$ reproduces constants, so that_ $L(e_0)=1$, _the inequality in that lemma becomes:_
+
+$$\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)\cdot(1+(b-a)/h)$$
+
+$$+1+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)$$
 
 <a id=Whitney_s_Inequality_on_Polynomial_Errors></a>
 
@@ -292,7 +339,7 @@ The following inequality gives a bound on the "best possible" error that a polyn
 
 Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^35]):
 
-$$\|f-P\|_\infty\le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),$$
+$$\Vert f-P\Vert _\infty\le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),$$
 
 where&mdash;
 
@@ -305,11 +352,11 @@ where&mdash;
 
 Using properties of moduli of continuity (see Sevy 1991[^20], sec. 2.0.2; Gonska 1985[^21]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
-$$\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\|f^{(n+1)}\|_\infty,$$
+$$\Vert f-P\Vert _\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\Vert f^{(n+1)}\Vert _\infty,$$
 
 and if $f$ has a continuous $n$-th derivative on that interval:
 
-$$\|f-P\|_\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
+$$\Vert f-P\Vert _\infty\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
 
 <a id=Another_Inequality_on_Polynomial_Errors></a>
 
@@ -319,7 +366,7 @@ Like Whitney's inequality, the following gives a bound on the "best possible" er
 
 Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the closed interval $[-1, 1]$,[^37] and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Phillips 2003, theorem 2.4.6)[^46]:
 
-$$\|f-P\|_\infty\le\frac{1}{2^n}\frac{\|f^{(n+1)}\|_\infty}{(n+1)!}.$$
+$$\Vert f-P\Vert _\infty\le\frac{1}{2^n}\frac{\Vert f^{(n+1)}\Vert _\infty}{(n+1)!}.$$
 
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
 
@@ -327,15 +374,15 @@ $$\|f-P\|_\infty\le\frac{1}{2^n}\frac{\|f^{(n+1)}\|_\infty}{(n+1)!}.$$
 
 Let $f(\lambda)$ be a continuous function on a closed interval.  For any sequence of linear operators $(L_n)$ that map continuous functions to polynomials and reproduce all polynomials up to degree $m(n)$ (which depends on $n$), the following error bound (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) holds true for each $n$:
 
-$$\text{abs}(L_n(f)(x) - f(x))\le(1+\|L_n\|)\cdot\max_t(\text{abs}(f(t)-P(t))),$$
+$$\text{abs}(L_n(f)(x) - f(x))\le(1+\Vert L_n\Vert )\cdot\max_t(\text{abs}(f(t)-P(t))),$$
 
-where $\|\|L_n\|\|$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^38], Cheney (1996, chapter 6)[^39]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^40]
+where $\Vert L_n\Vert$ is the operator norm of $L_n$, and $P$ is a polynomial of degree up to $m(n)$ with the least maximum absolute difference between $f$ and the polynomial (see also DeVore and Lorentz (1993)[^38], Cheney (1996, chapter 6)[^39]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^40]
 
 > **Example:** Let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities given earlier leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
 >
-> $$\text{abs}(L(f)(x) - f(x))\le(1+\|L\|)\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\|f^{(3)}\|_\infty$$
+> $$\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert _\infty$$
 >
-> $$ = (1+\|L\|)\|f^{(3)}\|_\infty/27.$$
+> $$ = (1+\Vert L\Vert )\Vert f^{(3)}\Vert _\infty/27.$$
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
@@ -411,43 +458,43 @@ $$= \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]}{n^i}\frac{g^{(i)}(k/
 
 where the derivatives are taken with respect to $y$, and where $\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]$ is the $i$-th central moment of $X_k$.
 
-In the following, the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
+In the following, the notation $\Vert f\Vert$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
 The first step is to [**find the Taylor expansion**](#Taylor_Expansion_of_Linear_Operators) of $L_n(f)(\lambda)$. Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
 
 $$L_n(f)(\lambda) = L_n(R_3(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R_3(f, \lambda))\|+ \|L_n((e_1-\lambda)^2)\| \|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \Vert L_n(R_3(f, \lambda))\Vert + \Vert L_n((e_1-\lambda)^2)\Vert  \Vert f^{(2)}\Vert /2$$
 
-$$+ \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6.$$
+$$+ \Vert L_n((e_1-\lambda)^3)\Vert  \Vert f^{(3)}\Vert /6.$$
 
 The function $\text{abs}(L_n((e_1-x)^3)(x))$ has its maximum at $x=1/2-\sqrt{3}/6$; and $\text{abs}(L_n((e_1-x)^2)(x))$ has its maximum at $x=1/2$, so:
 
-$$\text{abs}(L_n(f)(\lambda)) \le \|L_n(R_3(f, \lambda))\| + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\|f^{(2)}\|/2$$
+$$\text{abs}(L_n(f)(\lambda)) \le \Vert L_n(R_3(f, \lambda))\Vert  + \text{abs}(\frac{3\lambda(\lambda - 1)}{2n(2n-1)})\Vert f^{(2)}\Vert /2$$
 
-$$ + \|L_n((e_1-\lambda)^3)\| \|f^{(3)}\|/6$$
+$$ + \Vert L_n((e_1-\lambda)^3)\Vert  \Vert f^{(3)}\Vert /6$$
 
-$$ \le \|L_n(R_3(f, \lambda))\| + \frac{3}{8n(2n-1)}\|f^{(2)}\|/2$$
+$$ \le \Vert L_n(R_3(f, \lambda))\Vert  + \frac{3}{8n(2n-1)}\Vert f^{(2)}\Vert /2$$
 
-$$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\|f^{(3)}\|/6.$$
+$$ + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\Vert f^{(3)}\Vert /6.$$
 
 Meanwhile the remainder is estimated as follows, using the proof of corollary 2.3 of Gonska et al. (2006)[^3]\:
 
-$$\|L_n(R(f, \lambda))\|\le \frac{1}{6} \|f^{(3)}\| \|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|.$$
+$$\Vert L_n(R(f, \lambda))\Vert \le \frac{1}{6} \Vert f^{(3)}\Vert  \Vert (LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\Vert .$$
 
 In turn, using Schwarz's inequality (see proof of the same paper's corollary 2.1):
 
-$$\|(LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\|\le (\|(LA_n+LB_n)((e_1-\lambda)^4)\|)^{1/2}$$
+$$\Vert (LA_n+LB_n)(\text{abs}(e_1-\lambda)^3)\Vert \le (\Vert (LA_n+LB_n)((e_1-\lambda)^4)\Vert )^{1/2}$$
 
-$$\times (\|(LA_n+LB_n)((e_1-\lambda)^2)\|)^{1/2} \le \frac{3\sqrt{3}}{8n^{3/2}}.$$
+$$\times (\Vert (LA_n+LB_n)((e_1-\lambda)^2)\Vert )^{1/2} \le \frac{3\sqrt{3}}{8n^{3/2}}.$$
 
 (The expression in the middle takes its maximum at $\lambda = 1/2$; the right-hand side is an upper bound of that expression for all positive integers $n$.) Altogether:
 
-$$\|L_n(f)\| \le \frac{3}{8n(2n-1)}\frac{1}{2}\|f^{(2)}\|$$
+$$\Vert L_n(f)\Vert  \le \frac{3}{8n(2n-1)}\frac{1}{2}\Vert f^{(2)}\Vert$$
 
-$$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\right)\frac{1}{6}\|f^{(3)}\| = LC_n(f)$$
+$$ + \left(\frac{3\sqrt{3}}{8n^{3/2}} + \frac{\sqrt{3} (6 n - 5)}{24 n^{2} (2 n - 1)}\right)\frac{1}{6}\Vert f^{(3)}\Vert  = LC_n(f)$$
 
-$$\le 0.1875 \frac{\|f^{(2)}\|}{n^{3/2}} + \frac{5\sqrt{3}}{72} \frac{\|f^{(3)}\|}{n^{3/2}} \le \frac{0.3078 M}{n^{3/2}} = O(1/n^{3/2}).$$
+$$\le 0.1875 \frac{\Vert f^{(2)}\Vert }{n^{3/2}} + \frac{5\sqrt{3}}{72} \frac{\Vert f^{(3)}\Vert }{n^{3/2}} \le \frac{0.3078 M}{n^{3/2}} = O(1/n^{3/2}).$$
 
 If $n\ge 2$ is an integer, $LC_n(f)\le 0.2165 M/n^{3/2}$.
 
@@ -473,9 +520,9 @@ $$=B_n(R_m(f,\lambda)) + \text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\
 
 With the help of Lemma 6, the following holds if $n$ is also 2 or greater:
 
-$$\|H_{n,m}(f)(\lambda)\| \le \frac{\|f^{(m)}\| \mu_{r}}{ (r!) n^{r/2}} + \|\text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda)))\|,$$
+$$\Vert H_{n,m}(f)(\lambda)\Vert  \le \frac{\Vert f^{(m)}\Vert  \mu_{r}}{ (r!) n^{r/2}} + \Vert \text{Lag}_m(R_m(f,\lambda)) - B_n(\text{Lag}_m(R_m(f,\lambda)))\Vert ,$$
 
-where $\mu_r$ is as in Proposition 1 and the notation $\|\|f\|\|$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
+where $\mu_r$ is as in Proposition 1 and the notation $\Vert f\Vert$ means $\max_{0\le\lambda\le 1}(\text{abs}(f(\lambda)))$.
 
 Alternatively, write:
 
@@ -491,13 +538,13 @@ $$B_n(g)\le M_2(g)/(8n),$$
 
 where $M_i(g)$ is the maximum absolute value of $g$'s $i$-th derivative. (This follows from Lorentz (1963)[^50] and the well-known fact that $M_2$ is an upper bound of $g$'s first derivative's smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:
 
-$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2,$$
+$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert  M_0(f)\cdot \max(1,m)^2,$$
 
-where $\|\|Lag_m\|\|$ is the operator norm of $Lag_m$, also known as its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein's inequality for the derivatives of polynomials (Weisstein)[^51].
+where $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, also known as its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein's inequality for the derivatives of polynomials (Weisstein)[^51].
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
-$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag}_m\| M_0(f)\cdot \max(1,m)^2}{8n}.$$
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\Vert \text{Lag}_m\Vert  M_0(f)\cdot \max(1,m)^2}{8n}.$$
 
 ----
 
@@ -506,7 +553,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{\|\text{Lag
 >
 > $$\text{abs}((H_{n,3}(f) - f)(\lambda))\le \frac{M_2(f)}{8n} + \frac{1.64\cdot M_0(f)\cdot 9}{8n},$$
 >
-> using an upper bound for $\|\|Lag_3\|\|$.
+> using an upper bound for $\Vert Lag_3\Vert$.
 
 <a id=Probabilistic_Interpretations_of_Linear_Operators></a>
 
@@ -589,7 +636,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^33]: Gavrea, I., Ivan, M., "A sharp estimate for the Peano error representation", _Applied Mathematics and Computation_ 252 (2015). [**https://doi.org/10.1016/j.amc.2014.12.017**](https://doi.org/10.1016/j.amc.2014.12.017)
 
-[^34]: Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ or $L$; thus the results in this section exclude $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately.
+[^34]: Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ and $L$ if they map from only continuous functions; thus the results in this section suppose both operators map from bounded functions for $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately.
 
 [^35]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
 
@@ -630,3 +677,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^53]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
 [^54]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^55]: This kind of estimation is called _quadrature_ or _numerical integration_, and methods for such estimation, such as the one given in (2A), are called _quadrature rules_.
