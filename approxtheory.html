@@ -457,14 +457,16 @@
 <blockquote>
   <p><strong>Note:</strong> The operator—</p>
 
-\[\frac{LF(\lgroup e_1-t\rgroup_+^k)}{k!} = \frac{(e_1-t_+^k - L(\lgroup e_1-t\rgroup_+^k)}{k!},\]
+\[\frac{LF(\lgroup e_1-t\rgroup_+^k)}{k!} = \frac{\lgroup e_1-t\rgroup_+^k - L(\lgroup e_1-t\rgroup_+^k)}{k!},\]
 
-  <p>where $k\ge 0$, is called the <em>Peano kernel of order $k+1$</em> of $LF$ (Brass and Förster 1998)<sup id="fnref:32:2"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup>).  But Peano kernels are relatively hard to compute compared to “raw moments” and “central moments”.</p>
+  <p>where $k\ge 0$, is called the <em>Peano kernel of order $k+1$</em> of $LF$ (Brass and Förster 1998)<sup id="fnref:32:2"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup>).  But Peano kernels are relatively hard to compute compared to “raw moments” and “central moments”.  Luckily, only an upper bound of the Peano kernel is needed to use the formulas in this lemma.</p>
 </blockquote>
 
 <p><strong>Lemma 8</strong> (see Theorem 4 of Gavrea and Ivan (2015)<sup id="fnref:34:1"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup>). <em>With the assumptions in Lemma 7, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:</em></p>
 
-\[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)) \le\frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).\]
+\[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)),\]
+
+\[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2\Vert f^{(k+1)}\Vert}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).\]
 
 <p><strong>Lemma 9</strong> (special case of Theorem 3.2 in Gonska (1998/2023)<sup id="fnref:19:4"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>). <em>Let $f(\lambda)$ be continuous on a closed interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then for each $\lambda$ in $f$’s domain:</em></p>
 

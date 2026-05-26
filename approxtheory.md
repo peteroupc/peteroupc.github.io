@@ -309,13 +309,15 @@ Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 for e
 
 > **Note:** The operator&mdash;
 >
-> $$\frac{LF(\lgroup e_1-t\rgroup_+^k)}{k!} = \frac{(e_1-t_+^k - L(\lgroup e_1-t\rgroup_+^k)}{k!},$$
+> $$\frac{LF(\lgroup e_1-t\rgroup_+^k)}{k!} = \frac{\lgroup e_1-t\rgroup_+^k - L(\lgroup e_1-t\rgroup_+^k)}{k!},$$
 >
-> where $k\ge 0$, is called the _Peano kernel of order $k+1$_ of $LF$ (Brass and Förster 1998)[^32]).  But Peano kernels are relatively hard to compute compared to "raw moments" and "central moments".
+> where $k\ge 0$, is called the _Peano kernel of order $k+1$_ of $LF$ (Brass and Förster 1998)[^32]).  But Peano kernels are relatively hard to compute compared to "raw moments" and "central moments".  Luckily, only an upper bound of the Peano kernel is needed to use the formulas in this lemma.
 
 **Lemma 8** (see Theorem 4 of Gavrea and Ivan (2015)[^34]). _With the assumptions in Lemma 7, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:_
 
-$$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)) \le\frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
+$$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)),$$
+
+$$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2\Vert f^{(k+1)}\Vert}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
 
 **Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
