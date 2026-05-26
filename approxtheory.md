@@ -2,9 +2,11 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Some notes that may be useful when finding approximation error bounds that are explicit, with no hidden constants and without introducing transcendental or trigonometric functions.
+The notes in this page generally relate to finding bounds on how close a polynomial is to a single-variable function on a closed interval.
 
-The notes generally relate to finding bounds on how close a polynomial is to a single-variable function on a closed interval.  The mapping from a function to a function (in this case, from a single-variable function to a polynomial "close" to it) is called an _operator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
+The aim is to help find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation.
+
+The mapping from a function to a function (in this case, from a single-variable function to a polynomial "close" to it) is called an _operator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
 
 <a id=Contents></a>
 
@@ -280,13 +282,15 @@ _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25
 
 ### Bounds for General Linear Operators
 
+The results in this section give error bounds for important classes of linear operators (not necessarily positive ones).  But, in general, they are harder to use than the ones for positive linear operators, because more has to be computed for nonpositive operators than just the "moments".
+
 Roughly speaking, the _integral_ of $f(\lambda)$ on the closed interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
 
 $$\frac{1}{n} \sum_{i=1}^n f\left(a+(b-a)(i-\frac{1}{2})/n\right),\tag{2A}$$
 
 approaches as $n$ gets larger and larger.  The integral of $f(\lambda)$ on $[a,b]$ is denoted $\int_a^b f(\lambda) d\lambda$.
 
-Lemmas 7 and 8, which give error bounds for important classes of linear operators (not necessarily positive ones), rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in estimating the integral of a function from samples of it[^31] \(for more on this theory, see Brass and Förster 1998[^32]; Waldron 1999[^33]).
+The next two lemmas rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in estimating the integral of a function from samples of it[^31] \(for more on this theory, see Brass and Förster 1998[^32]; Waldron 1999[^33]).
 
 **Lemma 7.** _Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the closed interval $[a, b]$.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that&mdash;_
 
@@ -311,7 +315,7 @@ Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 for e
 >
 > $$\frac{LF(\lgroup e_1-t\rgroup_+^k)}{k!} = \frac{\lgroup e_1-t\rgroup_+^k - L(\lgroup e_1-t\rgroup_+^k)}{k!},$$
 >
-> where $k\ge 0$, is called the _Peano kernel of order $k+1$_ of $LF$ (Brass and Förster 1998)[^32]).  But Peano kernels are relatively hard to compute compared to "raw moments" and "central moments".  Luckily, only an upper bound of the Peano kernel is needed to use the formulas in this lemma.
+> where $k\ge 0$, is called the _Peano kernel of order $k+1$_ of $LF$ (Brass and Förster 1998)[^32]).  But finding a "closed form" of Peano kernels is relatively hard compared to "raw moments" and "central moments".  Luckily, only an upper bound of the Peano kernel is needed to use the formulas in this lemma.
 
 **Lemma 8** (see Theorem 4 of Gavrea and Ivan (2015)[^34]). _With the assumptions in Lemma 7, if $LF$ is the difference of two positive linear operators $LA$ and $LB$, so that $LF(f)=LA(f)-LB(f)$ (or $L(f)=f-LA(f)+LB(f)$), and $LA$ and $LB$ both map continuous functions on that interval to functions of that kind, then:_
 
@@ -551,13 +555,13 @@ $$B_n(g)\le \Vert f^{(2)}\Vert/(8n).$$
 
 (This follows from Lorentz (1963)[^51] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.) Thus what is left is to estimate the second derivative of $\text{Lag}_m(f)$.  Given that that function is a polynomial of degree $m$ or less, this can be estimated as:
 
-$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert  M_0(f)\cdot \max(1,m)^2,$$
+$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Vert f\Vert\cdot \max(1,m)^2,$$
 
 where $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.  The inequality just shown relies on Bernstein's inequality for the derivatives of polynomials (Weisstein)[^52].
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
-$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(2)}\Vert}{8n} + \frac{\Vert \text{Lag}_m\Vert  \Vert f\Vert\cdot \max(1,m)^2}{8n}.$$
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(2)}\Vert}{8n} + \frac{\Vert \text{Lag}_m\Vert\cdot\Vert f\Vert\cdot \max(1,m)^2}{8n}.$$
 
 ----
 
