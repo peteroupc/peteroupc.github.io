@@ -721,9 +721,9 @@ Another algorithm, given in Thomas and Blanchet (2012\)[^13], was based on the o
 
 > **Notes:**
 >
-> 1. The efficiency of this algorithm depends on many things, including how "smooth" _f_ is (Holtz et al. 2011)[^29] and how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** for a given function _f_ will require a deep mathematical analysis of that function.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 1. The efficiency of this algorithm depends on many things, including how "smooth" _f_ is (Holtz et al. 2011\)[^78] and how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** for a given function _f_ will require a deep mathematical analysis of that function.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 > 2. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not "smooth" enough.  An intriguing suggestion from Thomas and Blanchet (2012\)[^13] is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
-> 3. Normally, the algorithm works only if 0 &lt; _&lambda;_ &lt; 1. If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011\)[^29], the _c_ in **FA** and **FB** can be multiplied by 2<sup>_a_</sup> (as shown in step 6) to ensure correctness for every value of _&lambda;_.
+> 3. Normally, the algorithm works only if 0 &lt; _&lambda;_ &lt; 1. If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011\)[^79], the _c_ in **FA** and **FB** can be multiplied by 2<sup>_a_</sup> (as shown in step 6) to ensure correctness for every value of _&lambda;_.
 
 <a id=Algorithms_for_General_Irrational_Constants></a>
 
@@ -2452,7 +2452,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^7]: Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168).
 
-[^8]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^8]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [https://doi.org/10.1145/2133390.2133396](https://doi.org/10.1145/2133390.2133396)
 
 [^9]: Weikang Qian, Marc D. Riedel, Ivo Rosenberg, "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_ 32(3), 2011, [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004) [**http://www.sciencedirect.com/science/article/pii/S0195669810001666**](http://www.sciencedirect.com/science/article/pii/S0195669810001666)
 
@@ -2470,7 +2470,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^16]: Niazadeh, R., Paes Leme, R., Schneider, J., "[**Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes**](https://dl.acm.org/doi/10.1145/3406325.3451072)", in _Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory of Computing_, pp. 833-846, June 2021; also at [**https://arxiv.org/abs/2011.03865.pdf**](https://arxiv.org/abs/2011.03865).
 
-[^17]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
+[^17]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [**https://doi.org/10.1007/s00493-005-0043-1**](https://doi.org/10.1007/s00493-005-0043-1)
 
 [^18]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
@@ -2591,6 +2591,10 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^76]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.
 
 [^77]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+
+[^78]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
+
+[^79]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
 <a id=Appendix></a>
 

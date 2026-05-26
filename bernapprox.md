@@ -418,7 +418,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^33]: Thus, Taylor polynomials won't work, for example.
 
-[^34]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/article/10.1007/s00365-010-9108-5)", Constructive Approximation 33 (2011).
+[^34]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
 
 [^35]: Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991.
 
@@ -555,16 +555,6 @@ The following error bounds, which make use of Corollary 1 in the article "[**Not
 | Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_5\frac{545}{1536 n^{3}}$ &lt; $\Lambda_5\frac{0.3549}{n^{3}}$ |
 
 The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^9], (Lorentz 1963)[^11].  This operator is a polynomial in Bernstein form of degree $n+2$.
-
-**Proposition B10A:** <s>Let $f(\lambda)$ have a Lipschitz-continuous second derivative on the closed unit interval.  If $n\ge 2$ is an integer, $Q_{n,2}(f)$ is within $\frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2})$ of $f$, where $L_2$ is the maximum of that second derivative's Lipschitz constant or greater.</s>
-
-<s>_Proof_: Since $Q_{n,2}(f)$ preserves polynomials of degree 2 or less (quadratic, linear, and constant functions) (Holtz et al. 2011, Lemma 14\)[^9] and since $f$ has a Lipschitz-continuous second derivative, $f$ has the Taylor remainder $R_{f,2}(\lambda, x_0)$ given in Lemma B9, and $f^{(2)}$, the second derivative of $f$, has the Taylor remainder $R_{f^{(2)},0}(\lambda, x_0)$.  Thus, using Corollary B9A, the error bound can be written as&mdash;</s>
-
-<s>$$\text{abs}(Q_{n,2}(f(\lambda))(x_0) - f(x_0))\le\text{abs}(B_n(R_{f,2}(\lambda, x_0))) + \frac{x_0(1-x_0)}{2n} \text{abs}(B_n(R_{f^{(2)},0}(\lambda,x_0)))$$</s>
-
-<s>$$\le \frac{\sqrt{3}L_2}{48 n^{3/2}} + \frac{1}{8n} \frac{L_2}{2 n^{1/2}} = \frac{L_2(\sqrt{3}+3)}{48 n^{3/2}} \lt 0.098585 L_2/(n^{3/2}).$$</s>
-
-&#x25a1;
 
 **Corollary B10B:** Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M_2}{8n}$ of $f$, where $M_2$ is the maximum of that second derivative's absolute value or greater.
 

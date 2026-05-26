@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-05-23"><meta name="citation_date" content="2026/05/23"><meta name="citation_publication_date" content="2026/05/23"><meta name="citation_online_date" content="2026/05/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-05-26"><meta name="citation_date" content="2026/05/26"><meta name="citation_publication_date" content="2026/05/26"><meta name="citation_online_date" content="2026/05/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-05-23.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-05-26.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -396,7 +396,7 @@
   <li>Generate <em>X</em> at random with the probabilities given earlier.</li>
   <li>If <em>X</em> is 0, return 0.  Otherwise, if <em>X</em> is 1, find the <strong>starting polynomial</strong> and its Bernstein coefficients.  Otherwise (if <em>X</em> is 2 or greater), find the <strong>difference polynomial</strong> of order <em>m</em> and its Bernstein coefficients, where <em>m</em> = (<em>X</em>−2) + <strong>StartOrder</strong>.</li>
   <li>Flip the input coin (with probability of heads $\lambda$), $n - 1$ times, where $n$ is the number of Bernstein coefficients in the polynomial found in step 2 (its degree plus one), and let $j$ be the number of heads.</li>
-  <li>Return 1 with probability equal to the polynomial’s $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).</li>
+  <li>Return 1 with probability equal to the polynomial’s $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> for an algorithm to simulate polynomials).</li>
 </ol>
 
 <p>If <em>T</em> turns out to be greater than 1 in this algorithm, but still finite, one way to simulate $f$ is to create a coin that simulates $f(\lambda)/T$ instead, and use that coin as the input to a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong><em>linear Bernoulli factory</em></strong></a> that simulates $T\cdot (f(\lambda)/T)$.  (This is possible especially because $f(\lambda)$ is assumed to have a maximum of less than 1.)</p>
@@ -406,9 +406,9 @@
 
   <ul>
     <li>The family of polynomials $L_n(f)$ is simply the family of Bernstein polynomials of $f$.  The Bernstein coefficients of $L_n(f)$ are $f(0/n), f(1/n), …, f(n/n)$.</li>
-    <li>The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>.</li>
+    <li>The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>.</li>
     <li>The <strong>starting polynomial</strong> is found as follows. Let <em>c</em> = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; <strong>StartWidth</strong> is equal to ceil($c\cdot 65536$)/65536, and <strong>StartOrder</strong> is equal to 0.</li>
-    <li>ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally “increase” with increasing degree (Temple 1954)<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>, (Moldovan 1962)<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>.</li>
+    <li>ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally “increase” with increasing degree (Temple 1954)<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>, (Moldovan 1962)<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>.</li>
     <li>DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always “below” $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate <em>T</em>, later.</li>
     <li><em>T</em> is calculated as <strong>StartWidth</strong> + $1.01\cdot M/4$.</li>
   </ul>
@@ -452,7 +452,7 @@
 
     <p>Whatever polynomial is used, the polynomial’s Bernstein coefficients must all lie on the closed unit interval.</p>
 
-    <p>The polynomial can be in <em>homogeneous form</em> (also known as <em>scaled Bernstein</em> form (Farouki and Rajan 1988)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>) instead of in Bernstein form, with <em>scaled Bernstein coefficients</em> $s_0, …, s_n$, as long as $0\le s_i\le{n\choose i}$ where $0\le i\le n$.</p>
+    <p>The polynomial can be in <em>homogeneous form</em> (also known as <em>scaled Bernstein</em> form (Farouki and Rajan 1988)<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">12</a></sup>) instead of in Bernstein form, with <em>scaled Bernstein coefficients</em> $s_0, …, s_n$, as long as $0\le s_i\le{n\choose i}$ where $0\le i\le n$.</p>
   </li>
   <li>
     <p>The rest of the process is to toss heads with probability equal to that polynomial, given its Bernstein coefficients.  To do this, first flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</p>
@@ -480,7 +480,7 @@
     <li>Bias and variance are the two sources of error in a randomized estimation algorithm.  Let <em>g</em>(<em>λ</em>) be an approximation of <em>f</em>(<em>λ</em>). The original Bernoulli factory for <em>f</em>, if it exists, has bias 0 and variance <em>f</em>(<em>λ</em>)*(1−<em>f</em>(<em>λ</em>)), but the approximate Bernoulli factory has bias <em>g</em>(<em>λ</em>) − <em>f</em>(<em>λ</em>) and variance <em>g</em>(<em>λ</em>)*(1−<em>g</em>(<em>λ</em>)). (“Variance reduction” methods are outside the scope of this document.)  An estimation algorithm’s <em>mean squared error</em> equals variance plus square of bias.</li>
     <li>There are two known approximations to the linear function $f(\lambda) = 2\lambda$ using a polynomial in Bernstein form of degree $n$ that maps the open interval (0, 1) to itself.  In each case, if <em>g</em>(<em>λ</em>) is that polynomial and if $0\le\lambda\le 1/2$, then the error in approximating <em>f</em>(<em>λ</em>) is no greater than 1−<em>g</em>(1/2).
       <ul>
-        <li>In Henderson and Glynn (2003, Remark 4)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup>, the polynomial’s <em>j</em><sup>th</sup> Bernstein coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1−1/<em>n</em>).  The polynomial <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</li>
+        <li>In Henderson and Glynn (2003, Remark 4)<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>, the polynomial’s <em>j</em><sup>th</sup> Bernstein coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1−1/<em>n</em>).  The polynomial <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</li>
         <li>In Nacu and Peres (2005, section 6)<sup id="fnref:1:3"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, the polynomial’s <em>j</em><sup>th</sup> Bernstein coefficient (starting at 0) is min((<em>j</em>/<em>i</em>)*2, 1). It corresponds to the following algorithm: Flip the input coin <em>n</em> times or until the ratio of “heads” to “flips” becomes at least 1/2, whichever comes first, then if <em>n</em> flips were made without the ratio becoming at least 1/2, return 0; otherwise, return 1.</li>
       </ul>
     </li>
@@ -514,8 +514,8 @@
       <td>If and only if <em>f</em> can be written as a polynomial of degree <em>n</em> with Bernstein coefficients in the closed unit interval (Goyal and Sigman 2012)<sup id="fnref:7:1"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>.</td>
     </tr>
     <tr>
-      <td>Requires a finite number of flips on average. Also known as “realizable” by Flajolet et al. (2010)<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>.</td>
-      <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup id="fnref:1:4"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.<br />Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>.</td>
+      <td>Requires a finite number of flips on average. Also known as “realizable” by Flajolet et al. (2010)<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>.</td>
+      <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup id="fnref:1:4"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.<br />Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>.</td>
     </tr>
     <tr>
       <td>Number of flips required, raised to power of <em>r</em>, is bounded by a finite number on average and has a tail that drops off uniformly over <em>f</em>’s domain.</td>
@@ -523,19 +523,19 @@
     </tr>
     <tr>
       <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>Δ</em>(<em>n</em>, <em>r</em> + 1, <em>λ</em>), for integer <em>r</em> ≥ 0 and every <em>λ</em>, and for large enough <em>n</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
-      <td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note later) (Holtz et al. 2011, Theorem 13)<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>.</td>
+      <td>Only if <em>f</em> has an <em>r</em>-th derivative that is continuous and in the Zygmund class (see note later) (Holtz et al. 2011, Theorem 13)<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>.</td>
     </tr>
     <tr>
       <td>Requires more than <em>n</em> flips with at most a probability proportional to <em>Δ</em>(<em>n</em>, <em>α</em>, <em>λ</em>), for noninteger <em>α</em> &gt; 0 and every <em>λ</em>, and for large enough <em>n</em>. (The greater <em>α</em> is, the faster the simulation.)</td>
-      <td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>α</em> − <em>r</em>) or greater, where <em>r</em> = floor(<em>α</em>) (Holtz et al. 2011, Theorem 8)<sup id="fnref:15:1"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>. Assumes <em>f</em> is bounded away from 0 and 1.</td>
+      <td>If and only if <em>f</em> has an <em>r</em>-th derivative that is Hölder continuous with Hölder exponent (<em>α</em> − <em>r</em>) or greater, where <em>r</em> = floor(<em>α</em>) (Holtz et al. 2011, Theorem 8)<sup id="fnref:15:1"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>. Assumes <em>f</em> is bounded away from 0 and 1.</td>
     </tr>
     <tr>
-      <td>“Fast simulation” (requires more than <em>n</em> flips with a probability that decays exponentially or faster as <em>n</em> gets large).  Also known as “strongly realizable” by Flajolet et al. (2010)<sup id="fnref:13:1"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>.</td>
+      <td>“Fast simulation” (requires more than <em>n</em> flips with a probability that decays exponentially or faster as <em>n</em> gets large).  Also known as “strongly realizable” by Flajolet et al. (2010)<sup id="fnref:13:1"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>.</td>
       <td>If and only if <em>f</em> is analytic at every point in its domain (see note later) (Nacu and Peres 2005)<sup id="fnref:1:6"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</td>
     </tr>
     <tr>
       <td>Average number of flips greater than or equal to (<em>f′</em>(<em>λ</em>))<sup>2</sup>*<em>λ</em>*(1−<em>λ</em>)/(<em>f</em>(<em>λ</em>)*(1−<em>f</em>(<em>λ</em>))), where <em>f′</em> is the first derivative of <em>f</em>.</td>
-      <td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup id="fnref:14:1"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>.</td>
+      <td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup id="fnref:14:1"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>.</td>
     </tr>
   </tbody>
 </table>
@@ -734,7 +734,7 @@
     <tr>
       <td>exp(−<em>λ</em>).</td>
       <td><em>α</em>=1.<br /><em>L</em> = 1.</td>
-      <td>Lipschitz-continuous derivative, with Lipschitz constant 1.<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup></td>
+      <td>Lipschitz-continuous derivative, with Lipschitz constant 1.<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">17</a></sup></td>
     </tr>
     <tr>
       <td><em>λ</em>/2 if <em>λ</em> ≤ 1/2; (4*<em>λ</em> − 1)/(8*<em>λ</em>) otherwise.</td>
@@ -756,7 +756,7 @@
 
 <p>Let $p(\lambda)$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
 
-<p>Then $p$’s <em>coin-flipping degree</em> (Wästlund 1999)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup> is the smallest value of $n$ such that $p$’s Bernstein coefficients of degree $n$ lie in the closed unit interval. <sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>  (This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its “power” coefficients are integers.)  The coin-flipping degree is the smallest value of $n$ such that the algorithm of Goyal and Sigman (2012)<sup id="fnref:7:2"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> can toss heads with probability $p(\lambda)$ using exactly $n$ biased coin flips (in addition to a fair coin).</p>
+<p>Then $p$’s <em>coin-flipping degree</em> (Wästlund 1999)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">18</a></sup> is the smallest value of $n$ such that $p$’s Bernstein coefficients of degree $n$ lie in the closed unit interval. <sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>  (This is broader than the use of the term in Wästlund, where a polynomial can have a coin-flipping degree only if its “power” coefficients are integers.)  The coin-flipping degree is the smallest value of $n$ such that the algorithm of Goyal and Sigman (2012)<sup id="fnref:7:2"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> can toss heads with probability $p(\lambda)$ using exactly $n$ biased coin flips (in addition to a fair coin).</p>
 
 <p>The following results give upper bounds on $p$’s coin-flipping degree.</p>
 
@@ -769,17 +769,17 @@
 
 \[\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}}\right),\]
 
-    <p>where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>; see also Boudaoud et al. (2007)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup></p>
+    <p>where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; see also Boudaoud et al. (2007)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">21</a></sup></p>
   </li>
   <li>
     <p>If $\min(b_0, …, b_m)\lt 0$ and $\max(b_0, …, b_m)\le 1$, then the coin-flipping degree is bounded above by—</p>
 
 \[\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} \right),\]
 
-    <p>where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19:1"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>; see also Boudaoud et al. (2007)<sup id="fnref:20:1"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup></p>
+    <p>where $\text{Pmin}$ is the <em>minimum</em> value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)<sup id="fnref:19:1"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; see also Boudaoud et al. (2007)<sup id="fnref:20:1"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">21</a></sup></p>
   </li>
   <li>
-    <p>Suppose $m\ge 2$, that $b_0=0$ or $b_m=0$ or both, and that the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>:</p>
+    <p>Suppose $m\ge 2$, that $b_0=0$ or $b_m=0$ or both, and that the following necessary conditions are satisfied (Mok and To 2008; Theorem 1 and Corollary 3)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>:</p>
 
     <ul>
       <li>For every $i$ such that $b_i\lt 0$, if $b_m=0$, there must be $j\gt i$ such that $b_j\gt 0$.</li>
@@ -808,9 +808,9 @@
       <li>$FN(\lambda) = \sum_{k=0}^m -\min(0,\beta_k){m\choose k}\lambda^k(1-\lambda)^{m-k}$.</li>
     </ul>
 
-    <p>(Mok and To 2008; Theorem 2 and remark 1.5(v))<sup id="fnref:21:1"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.</p>
+    <p>(Mok and To 2008; Theorem 2 and remark 1.5(v))<sup id="fnref:21:1"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>.</p>
 
-    <p>Additional results are found in Leroy (2008)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>.</p>
+    <p>Additional results are found in Leroy (2008)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>.</p>
   </li>
 </ul>
 
@@ -818,7 +818,7 @@
   <p><strong>Examples:</strong></p>
 
   <ol>
-    <li>Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$’s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)<sup id="fnref:17:1"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>.</li>
+    <li>Let $p(\lambda)=1 -8\lambda +20\lambda^2 -13\lambda^3$, a polynomial of degree $m=3$.  $p$’s Bernstein coefficients are $b_0=1, b_1=-5/3, b_2=7/3, b_3=0$, and its coin-flipping degree is 46 (Wästlund 1999, Example 4.4)<sup id="fnref:17:1"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>.</li>
     <li>An exhaustive search shows that 46 is the highest possible coin-flipping degree for a degree-3 polynomial whose “power” coefficients are integers.</li>
     <li>The degree-4 polynomial $-43\lambda^4 + 81\lambda^3 - 47\lambda^2 + 9\lambda$ has a coin-flipping degree of 5284.</li>
   </ol>
@@ -832,7 +832,7 @@
 
 <p>In the following lemmas, let $p(\lambda)=a_0 \lambda^0 + … + a_n \lambda^n$ be a polynomial that maps the closed unit interval to itself and satisfies $0\lt p(\lambda)\lt 1$ whenever $0\lt\lambda\lt 1$.</p>
 
-<p><strong>Lemma</strong> (Chok and Vasil 2025, theorem 3)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>: Suppose $p$ is positive on the closed unit interval.  Then the Bernstein coefficients of $p$ (once $p$ is written in Bernstein form of degree $m$) will all be positive as soon as—</p>
+<p><strong>Lemma</strong> (Chok and Vasil 2025, theorem 3)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>: Suppose $p$ is positive on the closed unit interval.  Then the Bernstein coefficients of $p$ (once $p$ is written in Bernstein form of degree $m$) will all be positive as soon as—</p>
 
 \[m\gt\max\left(n,\text{ceil}\left(\frac{2154 n^2}{15625} \frac{\max(a_0, ..., a_n)}{\texttt{Pmin}}\right)\right),\]
 
@@ -840,19 +840,19 @@
 
 <p><strong>Lemma:</strong> If $p$’s coin-flipping degree is $n$, then $\text{abs}(a_i)\le 2^i {n\choose i}$.</p>
 
-<p><em>Proof</em>: Consider the matrix that transforms a polynomial’s Bernstein coefficients to “power” coefficients, which is $n\times n$ if the polynomial’s degree is $n$ (Ray and Nataraj 2012, eq. (8))<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>.  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$’s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding “power” coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  □</p>
+<p><em>Proof</em>: Consider the matrix that transforms a polynomial’s Bernstein coefficients to “power” coefficients, which is $n\times n$ if the polynomial’s degree is $n$ (Ray and Nataraj 2012, eq. (8))<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>.  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$’s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding “power” coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  □</p>
 
 <p><strong>Lemma:</strong>  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial:</p>
 
 \[q_n(\lambda) = b_0 \lambda^0 + ... + b_n\lambda^n = (T_n(1-2\lambda)+1)/2,\]
 
-<p>and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.<sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup></p>
+<p>and where $T_n(x)$ is the <a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html"><strong>Chebyshev polynomial of the first kind</strong></a> of degree $n$.<sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">26</a></sup></p>
 
-<p><em>Proof</em>: For any $q_n$, the coefficient $b_0$ is 1. Combined with Lemma A, the proof is done for that coefficient.  Now for the remaining coefficients $a_1, …, a_n$  and $b_1, …, b_n$.  Given that adding 1 to $q_n$ doesn’t change these coefficients, simplify $q_n$ to $(T_n(1-2\lambda))/2$. Given that $T_n(1-2\lambda)/2 = (-1)^n T_n(2\lambda-1)/2$, these coefficients have the same absolute value on both sides, so rewrite $q_n$ again to $(T_n(2\lambda-1))/2$. Finally, even after doubling $a_1, …, a_n$ and $b_1, …, b_n$ they still remain comparable, so rewrite $q_n$ to $(T_n(2\lambda-1))$.  Then the result follows from lemma 4 of Dubickas (2021)<sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>.</p>
+<p><em>Proof</em>: For any $q_n$, the coefficient $b_0$ is 1. Combined with Lemma A, the proof is done for that coefficient.  Now for the remaining coefficients $a_1, …, a_n$  and $b_1, …, b_n$.  Given that adding 1 to $q_n$ doesn’t change these coefficients, simplify $q_n$ to $(T_n(1-2\lambda))/2$. Given that $T_n(1-2\lambda)/2 = (-1)^n T_n(2\lambda-1)/2$, these coefficients have the same absolute value on both sides, so rewrite $q_n$ again to $(T_n(2\lambda-1))/2$. Finally, even after doubling $a_1, …, a_n$ and $b_1, …, b_n$ they still remain comparable, so rewrite $q_n$ to $(T_n(2\lambda-1))$.  Then the result follows from lemma 4 of Dubickas (2021)<sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>.</p>
 
 <p><strong>Lemma:</strong> When $p$ is written in Bernstein form with coefficients $\beta_1, \beta_2, …, \beta_n$, then $\text{abs}(2\beta_i-1)\le \text{abs}(d_i) = {2n \choose 2i}/{n\choose i}$, where $d_i$ is the corresponding Bernstein coefficient of the polynomial $T_n(2\lambda-1)$.</p>
 
-<p>The proof follows from Theorem 3 of Lubinsky and Ziegler (1990)<sup id="fnref:27"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> and the proof of Theorem 3.3 of Popa and Raşa (2013)<sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>.   As a result, the polynomials $q_n(\lambda)$ exhibit the highest possible <em>offshoot</em> for a $p$ within the lemma’s scope.  The <em>offshoot</em> is the farthest away a polynomial’s Bernstein coefficients ($\beta_0, …, \beta_n$) are from the closed unit interval, calculated as $\max(\max(-\beta_0, \beta_0-1,0), …, \max(-\beta_n, \beta_n-1,0))$.  (For example, $q_3$ has Bernstein coefficients $[1, -2, 3, 0]$ and an offshoot of 2, because the coefficient 3 is 2 away from the closed unit interval.) The following table shows the offshoot for degrees from 2 through 12:</p>
+<p>The proof follows from Theorem 3 of Lubinsky and Ziegler (1990)<sup id="fnref:27"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">28</a></sup> and the proof of Theorem 3.3 of Popa and Raşa (2013)<sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">29</a></sup>.   As a result, the polynomials $q_n(\lambda)$ exhibit the highest possible <em>offshoot</em> for a $p$ within the lemma’s scope.  The <em>offshoot</em> is the farthest away a polynomial’s Bernstein coefficients ($\beta_0, …, \beta_n$) are from the closed unit interval, calculated as $\max(\max(-\beta_0, \beta_0-1,0), …, \max(-\beta_n, \beta_n-1,0))$.  (For example, $q_3$ has Bernstein coefficients $[1, -2, 3, 0]$ and an offshoot of 2, because the coefficient 3 is 2 away from the closed unit interval.) The following table shows the offshoot for degrees from 2 through 12:</p>
 
 <table>
   <thead>
@@ -974,11 +974,11 @@
     <li>Parts 1 through 3 exploit a tighter bound on the variance of $X/n$ than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup id="fnref:1:8"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
     <li>All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>ω</em>(0) &gt; 0, because the bounds proved remain correct even if <em>ω</em> is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
       <ol>
-        <li>If <em>f</em> is nowhere decreasing and convex, <em>ω</em>(<em>x</em>) can equal <em>f</em>(1) − <em>f</em>(1−<em>x</em>) (Gal 1990)<sup id="fnref:29"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">29</a></sup>; (Gal 1995)<sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>.</li>
-        <li>If <em>f</em> is nowhere increasing and convex, <em>ω</em>(<em>x</em>) can equal <em>f</em>(0) − <em>f</em>(<em>x</em>) (Gal 1990)<sup id="fnref:29:1"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">29</a></sup>; (Gal 1995)<sup id="fnref:30:1"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>.</li>
+        <li>If <em>f</em> is nowhere decreasing and convex, <em>ω</em>(<em>x</em>) can equal <em>f</em>(1) − <em>f</em>(1−<em>x</em>) (Gal 1990)<sup id="fnref:29"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>; (Gal 1995)<sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">31</a></sup>.</li>
+        <li>If <em>f</em> is nowhere increasing and convex, <em>ω</em>(<em>x</em>) can equal <em>f</em>(0) − <em>f</em>(<em>x</em>) (Gal 1990)<sup id="fnref:29:1"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>; (Gal 1995)<sup id="fnref:30:1"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">31</a></sup>.</li>
         <li>If <em>f</em> is nowhere decreasing and concave, <em>ω</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) − <em>f</em>(0) (by symmetry with 2).</li>
         <li>If <em>f</em> is nowhere increasing and concave, <em>ω</em>(<em>x</em>) can equal <em>f</em>(1−<em>x</em>) − <em>f</em>(1) (by symmetry with 1).</li>
-        <li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>ω</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>σ</em>))+(<em>f</em>(1−min(<em>h</em>, 1−<em>σ</em>))−<em>f</em>(1)), where <em>σ</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup>.</li>
+        <li>If <em>f</em> is concave and is strictly increasing then strictly decreasing, then <em>ω</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>σ</em>))+(<em>f</em>(1−min(<em>h</em>, 1−<em>σ</em>))−<em>f</em>(1)), where <em>σ</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">32</a></sup>.</li>
       </ol>
     </li>
   </ol>
@@ -1067,7 +1067,7 @@
 <p>Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For <em>n</em>=<em>n</em><sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial’s Bernstein coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their Bernstein coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)<sup id="fnref:1:14"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.  □</p>
 
 <blockquote>
-  <p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers. <sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup> But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn’t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)<sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup>; see also Remark C of Nacu and Peres (2005)<sup id="fnref:1:15"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
+  <p><strong>Note:</strong> The last condition of Proposition 3, condition (ii), says <strong>fabove</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) and <strong>fbelow</strong>(<em>n</em>, <em>k</em>)*choose(<em>n</em>,<em>k</em>) must be integers. <sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">33</a></sup> But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn’t show heads every time or tails every time.  Therefore, <em>f</em>(0), if it exists, must be an integer, and the same is true for <em>f</em>(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)<sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">34</a></sup>; see also Remark C of Nacu and Peres (2005)<sup id="fnref:1:15"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
 </blockquote>
 
 <p><strong>Corollary 1.</strong> <em>Let f(λ) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1. If that function is Hölder continuous with Hölder constant M or less and Hölder exponent $\alpha$, then each of the following schemes is valid in the sense of Theorem 1:</em></p>
@@ -1208,7 +1208,7 @@
 
       <ul>
         <li>$W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or</li>
-        <li>$W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)<sup id="fnref:1:21"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>. <sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup></li>
+        <li>$W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)<sup id="fnref:1:21"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>. <sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">35</a></sup></li>
       </ul>
     </li>
     <li>For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.</li>
@@ -1219,7 +1219,7 @@
 
 <p>The following results on hypergeometric random variables are useful.  Denote the $s$-th central absolute moment of a random variable $Y$ as $\tau_s(Y)$.</p>
 
-<p><strong>Lemma C1.</strong><sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup> <em>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable, where $n$ and $k$ are integers satisfying $n\ge 1$ and $0\le k\le 2n$.  Then, for every even integer $s\ge 0$:</em></p>
+<p><strong>Lemma C1.</strong><sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> <em>Let $X$ be a hypergeometric($2n$,$k$,$n$) random variable, where $n$ and $k$ are integers satisfying $n\ge 1$ and $0\le k\le 2n$.  Then, for every even integer $s\ge 0$:</em></p>
 
 \[\tau_s(X) \le \frac{s!}{8^{s/2}((s/2)!)}n^{s/2} = \sigma(s, n).\]
 
@@ -1227,13 +1227,13 @@
 
 \[\tau_s(X) \le \sqrt{\tau_{s-1}(X)\tau_{s+1}(X)}\le \sqrt{\sigma(s-1,n)\sigma(s+1,n)}.\]
 
-<p><em>Proof</em>: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random variable, which has the same distribution as the original, and set $k = n$, since the sample size is now $n$. (See also Johnson et al. (2005)<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup>.)  Now it can be assumed without loss of generality that $0\gt n\gt k$.</p>
+<p><em>Proof</em>: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random variable, which has the same distribution as the original, and set $k = n$, since the sample size is now $n$. (See also Johnson et al. (2005)<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>.)  Now it can be assumed without loss of generality that $0\gt n\gt k$.</p>
 
 <p>It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.</p>
 
-<p>The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called <em>Poisson binomial</em> random variables (they are sums of independent coin flip results with possibly different probabilities of “success”, where 1 marks a “success” and 0 marks a “failure”) (Vatutin and Mikhaĭlov 1982)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>, so by Hoeffding (1963)<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>, when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of “successful” samples among $k$ independent samples with “success” probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.</p>
+<p>The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called <em>Poisson binomial</em> random variables (they are sums of independent coin flip results with possibly different probabilities of “success”, where 1 marks a “success” and 0 marks a “failure”) (Vatutin and Mikhaĭlov 1982)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>, so by Hoeffding (1963)<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>, when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of “successful” samples among $k$ independent samples with “success” probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.</p>
 
-<p>In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup> gives an upper bound of binomial central moments for even $s$ when the “success” probability is 1/2.</p>
+<p>In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">40</a></sup> gives an upper bound of binomial central moments for even $s$ when the “success” probability is 1/2.</p>
 
 <p>By that result, if $s$ is an even integer then—</p>
 
@@ -1262,7 +1262,7 @@
 
 \[h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.\]
 
-<p><em>Remark</em>: Because of this claim’s assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a <em>nonpositive operator</em> (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>, Guessab et al. 2009<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>); moreover, $W_n = f$ doesn’t meet the conjecture’s hypothesis (for $r\ge 3$) and is the only positive linear operator that can preserve all polynomials of degree 2 or less (Guessab et al. 2009)<sup id="fnref:41:1"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>.</p>
+<p><em>Remark</em>: Because of this claim’s assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a <em>nonpositive operator</em> (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>, Guessab et al. 2009<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>); moreover, $W_n = f$ doesn’t meet the conjecture’s hypothesis (for $r\ge 3$) and is the only positive linear operator that can preserve all polynomials of degree 2 or less (Guessab et al. 2009)<sup id="fnref:41:1"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>.</p>
 
 <p><em>Provisional proof</em>: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than—</p>
 
@@ -1356,7 +1356,7 @@ for i in range(20):
 
 <h3 id="which-functions-dont-require-outside-randomness-to-simulate">Which functions don’t require outside randomness to simulate?</h3>
 
-<p>The function <em>f</em>(<em>λ</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O’Brien 1994)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>.  See “<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>”.</p>
+<p>The function <em>f</em>(<em>λ</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O’Brien 1994)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>.  See “<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>”.</p>
 
 <p><strong>Strong Simulability Statement.</strong> A function <em>f</em>(<em>λ</em>) is strongly simulable only if—</p>
 
@@ -1370,7 +1370,7 @@ for i in range(20):
 <hr />
 
 <blockquote>
-  <p><strong>Note:</strong> A function <em>f</em>(<em>λ</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>λ</em>) and 1−<em>f</em>(<em>λ</em>) are greater than or equal to min(<em>λ</em><sup><em>n</em></sup>, (1−<em>λ</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O’Brien 1994)<sup id="fnref:42:1"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>.  For examples, see “<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>”.</p>
+  <p><strong>Note:</strong> A function <em>f</em>(<em>λ</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>λ</em>) and 1−<em>f</em>(<em>λ</em>) are greater than or equal to min(<em>λ</em><sup><em>n</em></sup>, (1−<em>λ</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O’Brien 1994)<sup id="fnref:42:1"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>.  For examples, see “<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>”.</p>
 </blockquote>
 
 <hr />
@@ -1394,7 +1394,7 @@ for i in range(20):
 
 <p>(By the properties of the Bernstein form, <em>a</em>[0] will equal <em>f</em>(0) and <em>a</em>[<em>n</em>] will equal <em>f</em>(1) whenever 0 or 1 is in the domain of <em>f</em>, respectively.)</p>
 
-<p>Step 4 is done by first generating fair coin flips (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>), then using the algorithm in “<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>” to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn’t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. □</p>
+<p>Step 4 is done by first generating fair coin flips (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>), then using the algorithm in “<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>” to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn’t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. □</p>
 
 <p><strong>Proposition 2.</strong> <em>If f(λ) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable.</em></p>
 
@@ -1518,14 +1518,14 @@ for i in range(20):
 
 <ul>
   <li>The functions <em>λ</em> and 1 − <em>λ</em>.</li>
-  <li>Constants <em>c</em> satisfying 0 ≤ <em>c</em> ≤ 1.  As Nacu and Peres (2005)<sup id="fnref:1:23"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> already showed, any such constant admits an optimal factory: turn flips of the input coin into <em>fair coin flips</em> (numbers that each equal 1 or 0 with equal probability) using Peres’s iterated von Neumann extractor (Peres 1992)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>.</li>
+  <li>Constants <em>c</em> satisfying 0 ≤ <em>c</em> ≤ 1.  As Nacu and Peres (2005)<sup id="fnref:1:23"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> already showed, any such constant admits an optimal factory: turn flips of the input coin into <em>fair coin flips</em> (numbers that each equal 1 or 0 with equal probability) using Peres’s iterated von Neumann extractor (Peres 1992)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>.</li>
 </ul>
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>λ</em>), then one also exists for 1 − <em>f</em>(<em>λ</em>): simply change all ones returned by the <em>f</em>(<em>λ</em>) factory into zeros and vice versa.</p>
 
-<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>λ</em>) = <em>λ</em>/2: the key is to flip the input coin enough times to produce fair coin flips using his extractor (Peres 1992)<sup id="fnref:14:2"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>, then multiply each fair coin flip with another input coin flip to get a sample from <em>λ</em>/2.  Given that the sample is equal to 0, there are three possibilities that can “be extracted to produce more fair bits”: either the fair coin flip is 0, or the coin flip is 0, or both are 0.</p>
+<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>λ</em>) = <em>λ</em>/2: the key is to flip the input coin enough times to produce fair coin flips using his extractor (Peres 1992)<sup id="fnref:14:2"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">15</a></sup>, then multiply each fair coin flip with another input coin flip to get a sample from <em>λ</em>/2.  Given that the sample is equal to 0, there are three possibilities that can “be extracted to produce more fair bits”: either the fair coin flip is 0, or the coin flip is 0, or both are 0.</p>
 
-<p>This algorithm, though, doesn’t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce fair coin flips from bits that are not necessarily from fair coin flips (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)<sup id="fnref:44:1"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>.  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
+<p>This algorithm, though, doesn’t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce fair coin flips from bits that are not necessarily from fair coin flips (which is done using a method given later in this section).  The extractors must be asymptotically optimal (they must approach the entropy limit as closely as desired); one example is the iterated von Neumann construction in Peres (1992)<sup id="fnref:44:1"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>.  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
 
 <ol>
   <li>If the number of outputs generated so far is divisible by 20, do the following:
@@ -1553,7 +1553,7 @@ for i in range(20):
   <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is a nonnegative integer.</li>
 </ul>
 
-<p>The algorithm is a modified version of the “block simulation” in Mossel and Peres (2005, Proposition 2.5)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>, which also “extracts” residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
+<p>The algorithm is a modified version of the “block simulation” in Mossel and Peres (2005, Proposition 2.5)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>, which also “extracts” residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
 
 <ol>
   <li>Set <em>iter</em> to 0.</li>
@@ -1599,7 +1599,7 @@ for i in range(20):
 
 <p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>λ</em>) maps each value <em>a</em> or greater and <em>b</em> or less to a small range of values, so that the algorithm could, for example, generate a uniform random variate between 0 and 1 using fair coin flips and see whether that variate lies outside that range of values — and thus produce a sample from <em>f</em>(<em>λ</em>) without flipping the input coin again.</p>
 
-<p><small>(†) For example, by translating the number to input bits via Pae’s entropy-preserving binarization (Pae 2018)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>λ</em>.</small></p>
+<p><small>(†) For example, by translating the number to input bits via Pae’s entropy-preserving binarization (Pae 2018)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>λ</em>.</small></p>
 
 <p><a id="Pushdown_Automata_and_Algebraic_Functions"></a></p>
 
@@ -1622,7 +1622,7 @@ for i in range(20):
 <p>It is not yet known whether the following functions can be simulated:</p>
 
 <ul>
-  <li><em>λ</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose “power” coefficients are nonnegative real numbers.</li>
+  <li><em>λ</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2. The answer may be no; Banderier and Drmota (2015)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">49</a></sup> proved results that show, among other things, that $\lambda^{1/p}$, where $p$ is not a power of 2, is not a possible solution to $P(\lambda) = 0$, where $P(\lambda)$ is a polynomial whose “power” coefficients are nonnegative real numbers.</li>
   <li>min(<em>λ</em>, 1−<em>λ</em>).</li>
 </ul>
 
@@ -1655,12 +1655,12 @@ for i in range(20):
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>Mossel and Peres (2005)<sup id="fnref:46:1"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> defined pushdown automata to start with a nonempty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
-    <li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup> and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)<sup id="fnref:49:1"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
+    <li>Mossel and Peres (2005)<sup id="fnref:46:1"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> defined pushdown automata to start with a nonempty stack of <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.</li>
+    <li>Pushdown automata, as defined here, are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">50</a></sup> and can be translated to those grammars as well as to <em>probabilistic pushdown systems</em> (Etessami and Yannakakis 2009)<sup id="fnref:49:1"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.</li>
   </ol>
 </blockquote>
 
-<p><strong>Proposition 0</strong> (Mossel and Peres 2005<sup id="fnref:46:2"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>, Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
+<p><strong>Proposition 0</strong> (Mossel and Peres 2005<sup id="fnref:46:2"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>, Theorem 1.2): <em>A full-domain pushdown automaton can simulate a function that maps (0, 1) to itself only if the function is in class <strong>ALGRAT</strong>.</em></p>
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
@@ -1717,11 +1717,11 @@ for i in range(20):
 
 <p><strong>Proposition 2:</strong> <em>If f(λ) and g(λ) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(λ)) or (f∘g)(λ).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>’s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>λ</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>λ</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup id="fnref:46:3"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> because the machine is a full-domain pushdown automaton.  □</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>’s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>λ</em> greater than 0 and less than 1, and because the automaton for <em>g</em> never outputs the same value with probability 0 or 1 for any <em>λ</em> greater than 0 or less than 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup id="fnref:46:3"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> because the machine is a full-domain pushdown automaton.  □</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational Bernstein coefficients that maps the open interval (0, 1) to itself is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup id="fnref:46:4"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>.  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. □</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup id="fnref:46:4"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. □</p>
 
 <blockquote>
   <p><strong>Note:</strong> An unbounded stack size is necessary for a pushdown automaton to simulate functions that a finite-state machine can’t.  With a bounded stack size, there is a finite-state machine where each state not only holds the pushdown automaton’s original state, but also encodes the contents of the stack (which is possible because the stack’s size is bounded); each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.</p>
@@ -1743,9 +1743,9 @@ for i in range(20):
 (S′, HEADS, <em>stacksymbol</em>) → (T, <em>newstack</em>), and<br />
 (S′, TAILS, <em>stacksymbol</em>) → (FAILURE, {}).</p>
 
-<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>, the machine now simulates the distribution’s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)<sup id="fnref:46:5"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> because the machine is a full-domain pushdown automaton.  □</p>
+<p>Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By Dughmi et al. (2021)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>, the machine now simulates the distribution’s probability generating function.  Moreover, the function is in class <strong>PDA</strong> by Theorem 1.2 of Mossel and Peres (2005)<sup id="fnref:46:5"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> because the machine is a full-domain pushdown automaton.  □</p>
 
-<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky normal form (Etessami and Yannakakis 2009)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>):</p>
+<p>Define a <em>stochastic context-free grammar</em> as follows.  The grammar consists of a finite set of <em>nonterminals</em> and a finite set of <em>letters</em>, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky normal form (Etessami and Yannakakis 2009)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>):</p>
 
 <ul>
   <li><em>X</em> → <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
@@ -1761,7 +1761,7 @@ for i in range(20):
 
 <ul>
   <li><em>X</em> → <em>a</em> becomes the two rules—<br />(START, HEADS, <em>X</em>) → (<em>letter</em>, {}), and<br />(START, TAILS, <em>X</em>) → (<em>letter</em>, {}).<br />Here, <em>letter</em> is either START or a unique state in <em>F</em> that “detours” to a letter-generating operation for <em>a</em> and sets the state back to START when finished (see Proposition 4).  If <em>a</em> is <em>ε</em>, <em>letter</em> is START and no letter-generating operation is done.</li>
-  <li><em>X</em> →<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)<sup id="fnref:46:6"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>.  If <em>a</em><sub><em>i</em></sub> is <em>ε</em>, no letter-generating operation is done.</li>
+  <li><em>X</em> →<sub><em>p</em><sub><em>i</em></sub></sub> (<em>a</em><sub><em>i</em></sub>, <em>Y</em><sub><em>i</em></sub>) (all rules with the same nonterminal <em>X</em>) are rewritten to enough rules to transition to a letter-generating operation for <em>a</em><sub><em>i</em></sub>, and swap the top stack symbol with <em>Y</em><sub><em>i</em></sub>, with probability <em>p</em><sub><em>i</em></sub>, which is possible with just a finite-state machine (see Proposition 4) because all the probabilities are rational numbers (Mossel and Peres 2005)<sup id="fnref:46:6"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.  If <em>a</em><sub><em>i</em></sub> is <em>ε</em>, no letter-generating operation is done.</li>
   <li><em>X</em> → (<em>Y</em>, <em>Z</em>) becomes the two rules—<br />(START, HEADS, <em>X</em>) → (START, {<em>Z</em>, <em>Y</em>}), and<br />(START, TAILS, <em>X</em>) → (START, {<em>Z</em>, <em>Y</em>}).</li>
 </ul>
 
@@ -1773,19 +1773,19 @@ for i in range(20):
   <li><em>X</em> → (<em>Y</em>, <em>Z</em>) becomes <em>X</em> = <em>Y</em>*<em>Z</em>.</li>
 </ul>
 
-<p>Solving this system for the grammar’s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar’s word distribution.  (See also Flajolet et al. 2010<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>, Icard 2020<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.) □</p>
+<p>Solving this system for the grammar’s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar’s word distribution.  (See also Flajolet et al. 2010<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, Icard 2020<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>.) □</p>
 
 <blockquote>
-  <p><strong>Example:</strong> The stochastic context-free grammar—<br /><em>X</em> →<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br /><em>X1</em> → (<em>X</em>, <em>X2</em>),<br /><em>X2</em> → (<em>X</em>, <em>X</em>),<br /><em>X</em> →<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br /><em>X3</em> → <em>ε</em>,<br />which encodes ternary trees (Flajolet et al. 2010)<sup id="fnref:52:1"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>, corresponds to the equation <em>X</em> = (1/2) * <em>λ</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>λ</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+  <p><strong>Example:</strong> The stochastic context-free grammar—<br /><em>X</em> →<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br /><em>X1</em> → (<em>X</em>, <em>X2</em>),<br /><em>X2</em> → (<em>X</em>, <em>X</em>),<br /><em>X</em> →<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br /><em>X3</em> → <em>ε</em>,<br />which encodes ternary trees (Flajolet et al. 2010)<sup id="fnref:52:1"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, corresponds to the equation <em>X</em> = (1/2) * <em>λ</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>λ</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
 
   <p><strong>Notes:</strong></p>
 
   <ol>
     <li>
-      <p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)<sup id="fnref:52:2"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>.  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an “<em>n</em>-ary stochastic grammar”.  It is even possible for a nonterminal to have two rules of probability <em>λ</em> and (1− <em>λ</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p>
+      <p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010)<sup id="fnref:52:2"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.  If every probability is a multiple of 1/<em>n</em>, then the grammar can be called an “<em>n</em>-ary stochastic grammar”.  It is even possible for a nonterminal to have two rules of probability <em>λ</em> and (1− <em>λ</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p>
     </li>
     <li>
-      <p>If a pushdown automaton simulates the function <em>f</em>(<em>λ</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup id="fnref:46:7"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>; see also Esparza et al. (2004)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>.  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton’s transition rules:</p>
+      <p>If a pushdown automaton simulates the function <em>f</em>(<em>λ</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup id="fnref:46:7"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>; see also Esparza et al. (2004)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>.  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton’s transition rules:</p>
 
       <ul>
         <li>(<em>st</em>, <em>p</em>, <em>sy</em>) → (<em>s2</em>, {}) becomes either <em>α</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em> if <em>s2</em> is <em>en</em>, or <em>α</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = 0 otherwise.</li>
@@ -1803,7 +1803,7 @@ for i in range(20):
         <li>When the stack is empty, output 0 if <em>G</em> is in the FAILURE state, or 1 otherwise.</li>
       </ol>
 
-      <p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called “end-of-string” symbol, so that a pushdown automaton can be built that accepts “empty strings”; an example is Elder et al. (2015)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>.</p>
+      <p>Then <em>G</em> returns 1 with the same probability as <em>F</em> accepts an input word with letters randomly generated as in the second step.  Also, one of the <em>N</em> letters can be a so-called “end-of-string” symbol, so that a pushdown automaton can be built that accepts “empty strings”; an example is Elder et al. (2015)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>.</p>
     </li>
   </ol>
 </blockquote>
@@ -1834,7 +1834,7 @@ for i in range(20):
 
 <p><em>Proof:</em>  By Lagrange’s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last “few” of which repeat forever.  The following example describes a periodic continued fraction expansion: [0; 1, 2, (5, 4, 3)], which is the same as [0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, …].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (<code>(5, 4, 3)</code>) is 3; and the size of the nonperiod (<code>1, 2</code>) is 2.</p>
 
-<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup id="fnref:51:1"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> can be described as follows.  The chain’s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
+<p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup id="fnref:51:1"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup> can be described as follows.  The chain’s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
 <ul>
   <li>From E: Go to N with probability <em>x</em>, or to the box’s call port with probability 1 − <em>x</em>.</li>
@@ -1849,11 +1849,11 @@ for i in range(20):
   <li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component’s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component’s single box goes to the component labeled <em>n</em>+1.</li>
 </ul>
 
-<p>According to Etessami and Yannakakis (2009)<sup id="fnref:51:2"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that’s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. □</p>
+<p>According to Etessami and Yannakakis (2009)<sup id="fnref:51:2"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that’s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component recurses with no greater probability than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. □</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(λ) is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> See Mossel and Peres (2005)<sup id="fnref:46:8"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>. □</p>
+<p><em>Proof:</em> See Mossel and Peres (2005)<sup id="fnref:46:8"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>. □</p>
 
 <p><strong>Corollary 1:</strong> <em>The function f(λ) = λ<sup>m/(2<sup>n</sup>)</sup>, where $n$ and $m$ are positive integers, is in class <strong>PDA</strong>.</em></p>
 
@@ -1861,7 +1861,7 @@ for i in range(20):
 
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as ((sqrt∘sqrt∘…∘sqrt)(<em>λ</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt∘sqrt∘…∘sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup id="fnref:46:9"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> because the machine is a full-domain pushdown automaton. □</p>
+<p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup id="fnref:46:9"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> because the machine is a full-domain pushdown automaton. □</p>
 
 <p><a id="Finite_State_and_Pushdown_Generators"></a></p>
 
@@ -1882,7 +1882,7 @@ for i in range(20):
   <li><code>PDF(z)</code> is the probability density function of <em>X</em>, or the derivative of <code>CDF(z)</code>, or the relative probability of choosing a number “close” to <em>z</em> at random.</li>
 </ul>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:45:1"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 ≤ <code>z</code> ≤ 1 is irrational (Vatan 2001)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>, (Kindler and Romik 2004)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>, and it can be shown that the expected value (mean or “long-run average”) of <em>X</em> must be a rational number. <sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">58</a></sup></p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup id="fnref:45:1"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can’t push stack symbols, and only one stack symbol is used.  Then if <code>PDF(z)</code> has infinitely many derivatives on the open interval (0, 1), it must be a polynomial with rational Bernstein coefficients and satisfy <code>PDF(z) &gt; 0</code> whenever 0 ≤ <code>z</code> ≤ 1 is irrational (Vatan 2001)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>, (Kindler and Romik 2004)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">58</a></sup>, and it can be shown that the expected value (mean or “long-run average”) of <em>X</em> must be a rational number. <sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">59</a></sup></p>
 
 <p><strong>Proposition 8.</strong> <em>Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:</em></p>
 
@@ -1895,7 +1895,7 @@ for i in range(20):
 
 <p>Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:</p>
 
-<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">59</a></sup> section 5.3), for some k equal to 2 or greater.</em></p>
+<p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">60</a></sup> section 5.3), for some k equal to 2 or greater.</em></p>
 
 <p><em>Proof Sketch:</em> There are two cases.</p>
 
@@ -1906,15 +1906,15 @@ for i in range(20):
   <li>The <em>output function</em> takes a configuration described earlier and returns a digit.  If the coin wasn’t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not give out a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)<sup id="fnref:56:1"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>.  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator’s rules output only one digit as desired.  Now at this point the generator’s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the number of unique probabilities, by adding additional rules as desired.  □</p>
+<p>Case 2: If at least one transition rule does not give out a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)<sup id="fnref:56:1"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>.  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator’s rules output only one digit as desired.  Now at this point the generator’s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the number of unique probabilities, by adding additional rules as desired.  □</p>
 
-<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (subgenerators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup id="fnref:49:2"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>.  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)<sup id="fnref:49:3"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>.  The <em>n</em> subgenerators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
+<p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (subgenerators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup id="fnref:49:2"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>.  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)<sup id="fnref:49:3"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>.  The <em>n</em> subgenerators are special; each of them generates the binary expansion of a single real number in the closed unit interval with probability 1.</p>
 
-<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different nonempty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup id="fnref:59:1"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">59</a></sup>, the generator can generate a real number’s binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>; Adamczewski and Bugeaud (2007)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>).  □</p>
+<p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different nonempty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup id="fnref:59:1"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>, the generator can generate a real number’s binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>; Adamczewski and Bugeaud (2007)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">62</a></sup>).  □</p>
 
 <p><strong>Proposition 9.</strong> <em>If the distribution function generated by a finite-state generator is continuous and algebraic on the open interval (0, 1), then that function is a piecewise polynomial function on that interval.</em></p>
 
-<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)<sup id="fnref:57:1"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup> and Knuth and Yao (1976)<sup id="fnref:45:2"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> with Richman (2012)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup>, who proved that a continuous algebraic function on an open interval is piecewise analytic, so that each piece is analytic at every point except possibly at the endpoints.</p>
+<p>The proof follows from combining Kindler and Romik (2004, Theorem 2)<sup id="fnref:57:1"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">58</a></sup> and Knuth and Yao (1976)<sup id="fnref:45:2"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> with Richman (2012)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>, who proved that a continuous algebraic function on an open interval is piecewise analytic, so that each piece is analytic at every point except possibly at the endpoints.</p>
 
 <p><a id="License"></a></p>
 
@@ -1942,7 +1942,10 @@ for i in range(20):
       <p>With this infinite sum and these upper bounds, Lemma 4 of Holtz et al. (2011) says that a Bernoulli factory algorithm for $f(\lambda)$ is possible. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
-      <p>Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:7:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:7:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:7:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a></p>
+      <p>Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. https://doi.org/10.1145/2133390.2133396 <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:7:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:7:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:7:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a></p>
+    </li>
+    <li id="fn:63">
+      <p>Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. https://doi.org/10.1145/2133390.2133396 <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
       <p>G.G. Lorentz, “Inequalities and saturation classes for Bernstein polynomials”, 1963. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2059,7 +2062,7 @@ for i in range(20):
       <p>Knuth, Donald E. and Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976. <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:45:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:45:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:46">
-      <p>Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:46:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:46:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:46:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:46:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a> <a href="#fnref:46:5" class="reversefootnote" role="doc-backlink">&#8617;<sup>6</sup></a> <a href="#fnref:46:6" class="reversefootnote" role="doc-backlink">&#8617;<sup>7</sup></a> <a href="#fnref:46:7" class="reversefootnote" role="doc-backlink">&#8617;<sup>8</sup></a> <a href="#fnref:46:8" class="reversefootnote" role="doc-backlink">&#8617;<sup>9</sup></a> <a href="#fnref:46:9" class="reversefootnote" role="doc-backlink">&#8617;<sup>10</sup></a></p>
+      <p>Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. <a href="https://doi.org/10.1007/s00493-005-0043-1"><strong>https://doi.org/10.1007/s00493-005-0043-1</strong></a> <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:46:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:46:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:46:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:46:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a> <a href="#fnref:46:5" class="reversefootnote" role="doc-backlink">&#8617;<sup>6</sup></a> <a href="#fnref:46:6" class="reversefootnote" role="doc-backlink">&#8617;<sup>7</sup></a> <a href="#fnref:46:7" class="reversefootnote" role="doc-backlink">&#8617;<sup>8</sup></a> <a href="#fnref:46:8" class="reversefootnote" role="doc-backlink">&#8617;<sup>9</sup></a> <a href="#fnref:46:9" class="reversefootnote" role="doc-backlink">&#8617;<sup>10</sup></a></p>
     </li>
     <li id="fn:47">
       <p>S. Pae, “<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>”, arXiv:1602.06058v2 [cs.DS], 2018. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

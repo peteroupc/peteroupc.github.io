@@ -74,7 +74,7 @@ The [**classic-graphics specification**](https://peteroupc.github.io/graphics.ht
 - MIP mapping.
 - Source and destination alpha blending.
 
-The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
+These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
 
 Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
 

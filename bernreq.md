@@ -118,7 +118,7 @@ The following are some strategies for answering these questions:
 - Verify my proofs for the results on error bounds for certain polynomials in "[**Results Used in Approximations By Polynomials**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials)", including:
     - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$:[^23] Propositions B10C and B10D.
     - Linear combinations of Bernstein polynomials (see Costabile et al. (2005)[^12]): Proposition B10.
-    - The [**Lorentz operator**](https://link.springer.com/article/10.1007/s00365-010-9108-5) (Holtz et al. 2011)[^6].
+    - The [**Lorentz operator**](https://doi.org/10.1007/s00365-010-9108-5) (Holtz et al. 2011)[^6].
 - Find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in Holtz et al. (2011)[^6].
 - Find operators or functions of the following kinds and find explicit bounds, with no hidden constants, on the approximation error:
     - Operators that produce a degree-$n$ polynomial in Bernstein form, or a ratio of two such polynomials, such that&mdash;
@@ -188,7 +188,7 @@ Prove or disprove:
 
 [^5]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://doi.org/10.1214/105051604000000549)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
-[^6]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://doi.org/10.1007/s00365-010-9108-5)", Constructive Approximation 33 (2011).
+[^6]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
 
 [^7]: The condition on nonnegative Bernstein coefficients ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are "good".
 

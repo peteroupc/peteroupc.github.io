@@ -263,7 +263,7 @@ Then an algorithm to toss heads with probability equal to $f$ would be:
 1. Generate _X_ at random with the probabilities given earlier.
 2. If _X_ is 0, return 0.  Otherwise, if _X_ is 1, find the **starting polynomial** and its Bernstein coefficients.  Otherwise (if _X_ is 2 or greater), find the **difference polynomial** of order _m_ and its Bernstein coefficients, where _m_ = (_X_&minus;2) + **StartOrder**.
 3. Flip the input coin (with probability of heads $\lambda$), $n - 1$ times, where $n$ is the number of Bernstein coefficients in the polynomial found in step 2 (its degree plus one), and let $j$ be the number of heads.
-4. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012 for an algorithm to simulate polynomials).
+4. Return 1 with probability equal to the polynomial's $j$th Bernstein coefficient ($j$ starts at 0), or 0 otherwise (see also Goyal and Sigman 2012[^63] for an algorithm to simulate polynomials).
 
 If _T_ turns out to be greater than 1 in this algorithm, but still finite, one way to simulate $f$ is to create a coin that simulates $f(\lambda)/T$ instead, and use that coin as the input to a [**_linear Bernoulli factory_**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories) that simulates $T\cdot (f(\lambda)/T)$.  (This is possible especially because $f(\lambda)$ is assumed to have a maximum of less than 1.)
 
@@ -381,7 +381,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^6]: With this infinite sum and these upper bounds, Lemma 4 of Holtz et al. (2011\) says that a Bernoulli factory algorithm for $f(\lambda)$ is possible.
 
-[^7]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
+[^7]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [https://doi.org/10.1145/2133390.2133396](https://doi.org/10.1145/2133390.2133396)
 
 [^8]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
@@ -459,7 +459,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^45]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^46]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.
+[^46]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [**https://doi.org/10.1007/s00493-005-0043-1**](https://doi.org/10.1007/s00493-005-0043-1)
 
 [^47]: S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.
 
@@ -492,6 +492,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 [^61]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^63]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [https://doi.org/10.1145/2133390.2133396](https://doi.org/10.1145/2133390.2133396)
 
 <a id=Appendix></a>
 
