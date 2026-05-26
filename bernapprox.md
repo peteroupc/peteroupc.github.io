@@ -418,7 +418,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^33]: Thus, Taylor polynomials won't work, for example.
 
-[^34]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
+[^34]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
 [^35]: Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991.
 

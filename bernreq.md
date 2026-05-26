@@ -188,7 +188,7 @@ Prove or disprove:
 
 [^5]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://doi.org/10.1214/105051604000000549)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.
 
-[^6]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
+[^6]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
 [^7]: The condition on nonnegative Bernstein coefficients ensures that not only the polynomials "increase" to $f(\lambda)$, but also their Bernstein coefficients.  This condition is equivalent in practice to the following statement (Nacu & Peres 2005). For every integer $n\ge 1$ that's a power of 2, $a(2n, k)\ge\mathbb{E}[a(n, X_{n,k})]= \left(\sum_{i=0}^k a(n,i) {n\choose i}{n\choose {k-i}}/{2n\choose k}\right)$, where $a(n,k)$ is the degree-$n$ polynomial's $k$-th Bernstein coefficient, where $0\le k\le 2n$ is an integer, and where $X_{n,k}$ is a hypergeometric($2n$, $k$, $n$) random variable.  A hypergeometric($2n$, $k$, $n$) random variable is the number of "good" balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are "good".
 

@@ -570,7 +570,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(2)}\Vert}{8n} + \frac
 
 ## Example: The Lorentz Operators
 
-The _Lorentz operators_ were introduced by Lorentz (1963)[^56] and studied by Holtz et al. (2011)[^57].
+The _Lorentz operators_ were introduced by Lorentz (1963)[^53] and studied by Holtz et al. (2011)[^54].
 
 This section touches on the Lorentz operators of order 2, defined as&mdash;
 
@@ -578,7 +578,7 @@ $$Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})
 
 $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)(e_1)}\right)(\lambda).$$
 
-This operator is a nonpositive linear operator.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^58]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+This operator is a nonpositive linear operator.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^54]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
@@ -595,7 +595,7 @@ Some of the "moments" of this operator are:
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a closed interval can be approximated as well as desired by polynomials (Bernstein 1912)[^53]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^54], 1995[^55]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a closed interval can be approximated as well as desired by polynomials (Bernstein 1912)[^55]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^56], 1995[^57]).
 
 <a id=License></a>
 
@@ -710,14 +710,12 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^52]: Weisstein, Eric W. "Bernstein's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/BernsteinsInequality.html**](https://mathworld.wolfram.com/BernsteinsInequality.html)
 
-[^53]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^53]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^54]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+[^54]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^55]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+[^55]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^56]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [https://doi.org/10.1007/BF01398235](https://doi.org/10.1007/BF01398235)
+[^56]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^57]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
-
-[^58]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
+[^57]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
