@@ -245,7 +245,7 @@ The algorithm, called **Algorithm D** in this document, follows.
 1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or an _inverse modulus of continuity_, which is found by taking a so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_h_), and solving the equation _&omega;_(_h_) = _&epsilon;_ for _h_.
     - Loosely speaking, a modulus of continuity _&omega;_(_h_) for a function $f$ gives the maximum range of _f_ in a window of size _h_.
     - For example, if _f_ is _Lipschitz continuous_ with Lipschitz constant _M_ or less[^13], it admits a modulus of continuity equal to _&omega;_(_h_) = _M_\*_h_. The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
-    - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
+    - Because _f_ is continuous on an interval $[a,b]$, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 2. Run _Algorithm C_ with the specified parameters _p_, _q_, $\kappa$, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
@@ -261,13 +261,13 @@ Then the following table shows how the necessary sample size _n_ can be determin
   ---- | ---- | ---- |
 | Bounded; lies in the closed unit interval.[^14] | Continuous; maps the closed unit interval to itself. | _n_ = ceil(ln(2/_&delta;_)/(2\*_&gamma;_<sup>2</sup>)). |
 | Bernoulli (that is, 1 or 0 with unknown probability). | Continuous; maps the closed unit interval to itself. | _n_ can be computed by a method given in Chen (2011)[^15], letting the _&epsilon;_ in that paper equal _&gamma;_.  See also Table 1 in that paper.  For example, _n_=101 if _&gamma;_=1/10 and _&delta;_=1/20. |
-| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^16] | Bounded and continuous on every closed interval of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
+| Unbounded (can take on any real number) and has a known upper bound on the standard deviation _&sigma;_ (or the variance _&sigma;_<sup>2</sup>).[^16] | Bounded and continuous on every interval $[a, b]$ of the real line. | _n_ = ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)). |
 | Unbounded and subgaussian[^17]; known upper bound on standard deviation _&sigma;_ (Wainwright 2019)[^18] | _f_(_x_) = _x_. | _n_ = $(2 \sigma^{2} \ln{\left(\frac{2}{\delta} \right)})/(\epsilon^{2})$. |
 
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this can happen when _f_ is only piecewise continuous, or made up of independent continuous pieces that cover _f_'s whole domain), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 3. If the input stream outputs numbers in a closed interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and if _f_ is a continuous function that maps the interval [_a_, _b_] to itself, then _Algorithm D_ and _Algorithm E_ can be used as follows:
+> 3. If the input stream outputs numbers in an interval $[a,b]$ (where _a_ and _b_ are known rational numbers), but with unknown mean, and if _f_ is a continuous function that maps the interval [_a_, _b_] to itself, then _Algorithm D_ and _Algorithm E_ can be used as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
@@ -408,7 +408,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^16]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
-[^17]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
+[^17]: Roughly speaking, a distribution is _subgaussian_ if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in an interval \[_a_, _b_\] is subgaussian.  See section 2.5 of R. Vershynin, _High-Dimensional Probability_, 2020.
 
 [^18]: Wainwright, M.J., High-dimensional statistics: A nonasymptotic viewpoint, 2019.
 

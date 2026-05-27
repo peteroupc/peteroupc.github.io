@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="dc.date" content="2025-09-30"><meta name="citation_date" content="2025/09/30"><meta name="citation_publication_date" content="2025/09/30"><meta name="citation_online_date" content="2025/09/30"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Randomized Estimation Algorithms"><meta name="dc.title" content="Randomized Estimation Algorithms"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="dc.date" content="2026-05-27"><meta name="citation_date" content="2026/05/27"><meta name="citation_publication_date" content="2026/05/27"><meta name="citation_online_date" content="2026/05/27"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Randomized Estimation Algorithms"><meta name="dc.title" content="Randomized Estimation Algorithms"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="randomized-estimation-algorithms">Randomized Estimation Algorithms</h1><p>This version of the document is dated 2025-09-30.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="randomized-estimation-algorithms">Randomized Estimation Algorithms</h1><p>This version of the document is dated 2026-05-27.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -332,7 +332,7 @@
     <ul>
       <li>Loosely speaking, a modulus of continuity <em>ω</em>(<em>h</em>) for a function $f$ gives the maximum range of <em>f</em> in a window of size <em>h</em>.</li>
       <li>For example, if <em>f</em> is <em>Lipschitz continuous</em> with Lipschitz constant <em>M</em> or less<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>, it admits a modulus of continuity equal to <em>ω</em>(<em>h</em>) = <em>M</em>*<em>h</em>. The solution for <em>ψ</em> is then <em>ψ</em>(<em>ε</em>) = <em>ε</em>/<em>M</em>.</li>
-      <li>Because <em>f</em> is continuous on a closed interval, it’s guaranteed to have a modulus of continuity (by the Heine–Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
+      <li>Because <em>f</em> is continuous on an interval $[a,b]$, it’s guaranteed to have a modulus of continuity (by the Heine–Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
     </ul>
   </li>
   <li>Run <em>Algorithm C</em> with the specified parameters <em>p</em>, <em>q</em>, $\kappa$, and <em>δ</em>, but with <em>ε</em> = <em>γ</em>.  Let <em>μ</em> be the result.</li>
@@ -370,7 +370,7 @@
     </tr>
     <tr>
       <td>Unbounded (can take on any real number) and has a known upper bound on the standard deviation <em>σ</em> (or the variance <em>σ</em><sup>2</sup>).<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup></td>
-      <td>Bounded and continuous on every closed interval of the real line.</td>
+      <td>Bounded and continuous on every interval $[a, b]$ of the real line.</td>
       <td><em>n</em> = ceil(<em>σ</em><sup>2</sup>/(<em>δ</em>*<em>γ</em><sup>2</sup>)).</td>
     </tr>
     <tr>
@@ -387,7 +387,7 @@
   <ol>
     <li><em>Algorithm D</em> and <em>Algorithm E</em> won’t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this can happen when <em>f</em> is only piecewise continuous, or made up of independent continuous pieces that cover <em>f</em>’s whole domain), at least when <em>ε</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
     <li>
-      <p>If the input stream outputs numbers in a closed interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and if <em>f</em> is a continuous function that maps the interval [<em>a</em>, <em>b</em>] to itself, then <em>Algorithm D</em> and <em>Algorithm E</em> can be used as follows:</p>
+      <p>If the input stream outputs numbers in an interval $[a,b]$ (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and if <em>f</em> is a continuous function that maps the interval [<em>a</em>, <em>b</em>] to itself, then <em>Algorithm D</em> and <em>Algorithm E</em> can be used as follows:</p>
 
       <ul>
         <li>For each number in the stream, subtract <em>a</em> from it, then divide it by (<em>b</em> − <em>a</em>).</li>
@@ -586,7 +586,7 @@ pprint(Max(1,kappa))
       <p>Follows from Chebyshev’s inequality.  The case of <em>f</em>(<em>x</em>)=<em>x</em> was mentioned as Equation 14 in Hickernell et al. (2012/2013). <a href="#fnref:16" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:17">
-      <p>Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in a closed interval [<em>a</em>, <em>b</em>] is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Roughly speaking, a distribution is <em>subgaussian</em> if the probability of taking on high values decays at least as fast as the normal distribution.  In addition, every distribution taking on only values in an interval [<em>a</em>, <em>b</em>] is subgaussian.  See section 2.5 of R. Vershynin, <em>High-Dimensional Probability</em>, 2020. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:18">
       <p>Wainwright, M.J., High-dimensional statistics: A nonasymptotic viewpoint, 2019. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>

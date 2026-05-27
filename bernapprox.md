@@ -32,7 +32,7 @@ The goal of these approximations is to avoid introducing transcendental and trig
 - [**Approximations by Polynomials**](#Approximations_by_Polynomials)
     - [**Approximations on the Closed Unit Interval**](#Approximations_on_the_Closed_Unit_Interval)
     - [**Taylor Polynomials for "Smooth" Functions**](#Taylor_Polynomials_for_Smooth_Functions)
-    - [**Approximations on Any Closed Interval**](#Approximations_on_Any_Closed_Interval)
+    - [**Approximations Beyond the Closed Unit Interval**](#Approximations_Beyond_the_Closed_Unit_Interval)
     - [**Approximating an Integral**](#Approximating_an_Integral)
     - [**Approximating a Derivative**](#Approximating_a_Derivative)
     - [**Computational Issues**](#Computational_Issues)
@@ -73,7 +73,7 @@ where _n_ is the polynomial's _degree_ and _a_[0], _a_[1], ..., _a_\[_n_\] are i
 
 ## Approximations by Polynomials
 
-This section first shows how to approximate a function on the closed unit interval, then shows how to approximate a function on _any_ closed interval.
+This section first shows how to approximate a function on the closed unit interval, then shows how to approximate a function on an arbitrary interval of the form $[a,b]$.
 
 <a id=Approximations_on_the_Closed_Unit_Interval></a>
 
@@ -146,7 +146,7 @@ The resulting polynomial of degree $n$ will be within $\epsilon$ of $f(\lambda)$
 
 ### Taylor Polynomials for "Smooth" Functions
 
-Every continuous function defined on the closed interval $[a, b]$ can be written as&mdash;
+Every continuous function defined on the interval $[a, b]$ can be written as&mdash;
 
 $$f(\lambda) = R_r(f, x_0) + f(x_0) + f^{(1)}(x_0)\frac{(\lambda-x_0)^1}{1!} + ... + f^{(r)}(x_0)\frac{(\lambda-x_0)^r}{r!}$$
 
@@ -192,11 +192,11 @@ until none of the Bernstein coefficients is less than 0 or greater than 1.
 
 The result will be a polynomial of degree $n$ with $(n+1)$ Bernstein coefficients.
 
-<a id=Approximations_on_Any_Closed_Interval></a>
+<a id=Approximations_Beyond_the_Closed_Unit_Interval></a>
 
-### Approximations on Any Closed Interval
+### Approximations Beyond the Closed Unit Interval
 
-Now, let $g(\lambda)$ be continuous on the closed interval $[a, b]$.  This section shows how to adapt the previous two sections to approximate $g$ on the interval, to the user-defined error tolerance $\epsilon$, by a polynomial in Bernstein form on the interval $[a, b]$.
+Now, let $g(\lambda)$ be continuous on the interval $[a, b]$.  This section shows how to adapt the previous two sections to approximate $g$ on the interval, to the user-defined error tolerance $\epsilon$, by a polynomial in Bernstein form on the interval $[a, b]$.
 
 Any polynomial $p(\lambda)$ can be written in _Bernstein form on the interval $[a,b]$_ as&mdash;
 
@@ -254,7 +254,7 @@ Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval
 
 ### Approximating a Derivative
 
-For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary closed interval.
+For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary interval.
 
 If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it's possible to approximate $f$'s $r$-th derivative as follows:
 
@@ -283,7 +283,7 @@ In the following table:
 
 ### Computational Issues
 
-Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as _degree elevation_.  This rewriting works for polynomials in Bernstein form on any closed interval.
+Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as _degree elevation_.  This rewriting works for polynomials in Bernstein form on any interval of the form $[a,b]$.
 
 - This rewriting can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)[^20].
 - This rewriting can also be done through an intermediate form called the _scaled Bernstein form_ (Farouki and Rajan 1988)[^25], as described in Sánchez-Reyes (2003)[^26].  (A polynomial in scaled Bernstein form is also known as a _homogeneous polynomial_.)

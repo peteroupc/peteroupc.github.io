@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="dc.date" content="2026-05-26"><meta name="citation_date" content="2026/05/26"><meta name="citation_publication_date" content="2026/05/26"><meta name="citation_online_date" content="2026/05/26"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Approximations in Bernstein Form"><meta name="dc.title" content="Approximations in Bernstein Form"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="dc.date" content="2026-05-27"><meta name="citation_date" content="2026/05/27"><meta name="citation_publication_date" content="2026/05/27"><meta name="citation_online_date" content="2026/05/27"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Approximations in Bernstein Form"><meta name="dc.title" content="Approximations in Bernstein Form"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1><p>This version of the document is dated 2026-05-26.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1><p>This version of the document is dated 2026-05-27.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -48,7 +48,7 @@
     <ul>
       <li><a href="#Approximations_on_the_Closed_Unit_Interval"><strong>Approximations on the Closed Unit Interval</strong></a></li>
       <li><a href="#Taylor_Polynomials_for_Smooth_Functions"><strong>Taylor Polynomials for “Smooth” Functions</strong></a></li>
-      <li><a href="#Approximations_on_Any_Closed_Interval"><strong>Approximations on Any Closed Interval</strong></a></li>
+      <li><a href="#Approximations_Beyond_the_Closed_Unit_Interval"><strong>Approximations Beyond the Closed Unit Interval</strong></a></li>
       <li><a href="#Approximating_an_Integral"><strong>Approximating an Integral</strong></a></li>
       <li><a href="#Approximating_a_Derivative"><strong>Approximating a Derivative</strong></a></li>
       <li><a href="#Computational_Issues"><strong>Computational Issues</strong></a></li>
@@ -95,7 +95,7 @@
 
 <h2 id="approximations-by-polynomials">Approximations by Polynomials</h2>
 
-<p>This section first shows how to approximate a function on the closed unit interval, then shows how to approximate a function on <em>any</em> closed interval.</p>
+<p>This section first shows how to approximate a function on the closed unit interval, then shows how to approximate a function on an arbitrary interval of the form $[a,b]$.</p>
 
 <p><a id="Approximations_on_the_Closed_Unit_Interval"></a></p>
 
@@ -303,7 +303,7 @@
 
 <h3 id="taylor-polynomials-for-smooth-functions">Taylor Polynomials for “Smooth” Functions</h3>
 
-<p>Every continuous function defined on the closed interval $[a, b]$ can be written as—</p>
+<p>Every continuous function defined on the interval $[a, b]$ can be written as—</p>
 
 \[f(\lambda) = R_r(f, x_0) + f(x_0) + f^{(1)}(x_0)\frac{(\lambda-x_0)^1}{1!} + ... + f^{(r)}(x_0)\frac{(\lambda-x_0)^r}{r!}\]
 
@@ -359,11 +359,11 @@
 
 <p>The result will be a polynomial of degree $n$ with $(n+1)$ Bernstein coefficients.</p>
 
-<p><a id="Approximations_on_Any_Closed_Interval"></a></p>
+<p><a id="Approximations_Beyond_the_Closed_Unit_Interval"></a></p>
 
-<h3 id="approximations-on-any-closed-interval">Approximations on Any Closed Interval</h3>
+<h3 id="approximations-beyond-the-closed-unit-interval">Approximations Beyond the Closed Unit Interval</h3>
 
-<p>Now, let $g(\lambda)$ be continuous on the closed interval $[a, b]$.  This section shows how to adapt the previous two sections to approximate $g$ on the interval, to the user-defined error tolerance $\epsilon$, by a polynomial in Bernstein form on the interval $[a, b]$.</p>
+<p>Now, let $g(\lambda)$ be continuous on the interval $[a, b]$.  This section shows how to adapt the previous two sections to approximate $g$ on the interval, to the user-defined error tolerance $\epsilon$, by a polynomial in Bernstein form on the interval $[a, b]$.</p>
 
 <p>Any polynomial $p(\lambda)$ can be written in <em>Bernstein form on the interval $[a,b]$</em> as—</p>
 
@@ -438,7 +438,7 @@
 
 <h3 id="approximating-a-derivative">Approximating a Derivative</h3>
 
-<p>For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary closed interval.</p>
+<p>For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary interval.</p>
 
 <p>If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it’s possible to approximate $f$’s $r$-th derivative as follows:</p>
 
@@ -493,7 +493,7 @@
 
 <h3 id="computational-issues">Computational Issues</h3>
 
-<p>Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as <em>degree elevation</em>.  This rewriting works for polynomials in Bernstein form on any closed interval.</p>
+<p>Some methods in this document require rewriting a polynomial in Bernstein form of degree $m$ to one of a higher degree $n$.  This is also known as <em>degree elevation</em>.  This rewriting works for polynomials in Bernstein form on any interval of the form $[a,b]$.</p>
 
 <ul>
   <li>This rewriting can be done directly in the Bernstein form, as described in Tsai and Farouki (2001, section 3.2)<sup id="fnref:20:5"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>.</li>

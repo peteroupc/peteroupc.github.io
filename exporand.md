@@ -1623,7 +1623,7 @@ This new algorithm samples the sum of uniform random variates between 0 and 1 an
 
 1. The distribution is divided into pieces that are each 1 unit long (thus, for example, if _n_ is 4, there will be four pieces).
 2. An integer in \[0, _n_\) is chosen uniformly at random, call it _i_, then the piece identified by _i_ is chosen.  There are [**many algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N) this way, but an algorithm that is "optimal" in terms of the number of bits it uses, as well as exact, should be chosen.
-3. The PDF at \[_i_, _i_ + 1\] is shifted so the desired piece of the PDF is at the closed interval \[0, 1\] rather than its usual place.  More specifically, the PDF is now as follows: $$\mathtt{ShiftedF}(x)=\left(p(x+i,n,0) + p(x+i,n,1) + ... + p(x+i,n,n)\right)/(2(n-1)!),$$
+3. The PDF at \[_i_, _i_ + 1\] is shifted so the desired piece of the PDF is at the interval \[0, 1\] rather than its usual place.  More specifically, the PDF is now as follows: $$\mathtt{ShiftedF}(x)=\left(p(x+i,n,0) + p(x+i,n,1) + ... + p(x+i,n,n)\right)/(2(n-1)!),$$
 
 where 0 &le; _x_ &le; 1.  Since `ShiftedF` is a polynomial, it can be rewritten in Bernstein form, so that it has _Bernstein coefficients_, which are equivalent to control points describing the shape of the curve drawn out by `ShiftedF`. (The Bernstein coefficients are the backbone of the well-known Bézier curve.) A polynomial can be written in _Bernstein form_ as&mdash;
 
@@ -2011,7 +2011,7 @@ The first subalgorithm samples the probability 1/_x_, where _x_&ge;1 is a unifor
 1. Set _c_ to _x_'s integer part.  With probability _c_ / (1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
 2. Run **SampleGeometricBag** on _x_ (which ignores _x_'s integer part and sign).  If the run returns 1, return 0.  Otherwise, go to step 1.
 
-The second subalgorithm samples the probability (_x_&minus;2<sup>_b_</sup>)/2<sup>_b_</sup>, where _x_&ge;1 is a uniform PSRN and _b_&ge;0 is an integer:
+The second subalgorithm samples the probability (_x_&minus;2<sup>_b_</sup>)/2<sup>_b_</sup>, where _x_&ge;1 is a uniform PSRN and $b$ is zero or a positive integer:
 
 1. Subtract 2<sup>_b_</sup> from _x_'s integer part, then create _y_ as **RandUniformFromReal**(2<sup>_b_</sup>), then run **URandLessThanReal**(_x_, _y_), then add 2<sup>_b_</sup> back to _x_'s integer part.
 2. Return the result of **URandLessThanReal** from step 1.
@@ -2116,7 +2116,7 @@ The algorithm below samples a variate from the Tulap(_m_, _b_, _q_) distribution
 
 The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^52] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including "almost-binary" image data.
 
-The continous Bernoulli distribution takes one parameter `lamda` (where 0 &le; `lamda` &le; 1), and takes on values in the closed interval [0, 1] with a probability proportional to&mdash;
+The continous Bernoulli distribution takes one parameter `lamda` (where 0 &le; `lamda` &le; 1), and takes on values in the interval [0, 1] with a probability proportional to&mdash;
 
     pow(lamda, x) * pow(1 - lamda, 1 - x).
 

@@ -253,7 +253,7 @@ Huijben et al. (2022)[^15] reviews the Gumbel max trick and Gumbel softmax distr
 
 - a vector of the form [_p_<sub>0</sub>, _p_<sub>1</sub>, ..., _p_<sub>_n_</sub>], where _p_<sub>_i_</sub> is a so-called "unnormalized log probability" of the form ln(_x_)+_C_ (where _C_ is a constant and _x_ is the probability of getting _i_),
 
-an integer in the closed interval [0, _n_] can be sampled as follows:
+an integer in the interval [0, _n_] can be sampled as follows:
 
 1. ("Gumbel".) For each _p_<sub>_i_</sub>, generate a "Gumbel variate" _G_, then set _q_<sub>_i_</sub> to _p_<sub>_i_</sub>+_G_.  (A so-called "Gumbel variate" is distributed as &minus;ln(&minus;ln(_U_)), where _U_ is a uniform random variate greater than 0 and less than 1.[^16])
 2. ("Max".) Return the integer _i_ corresponding to the highest _q_<sub>_i_</sub> value.
@@ -311,17 +311,17 @@ The paper describes two ways to establish the weights for _c_ in step 1 (there a
 
 Samples from the so-called "log uniform distribution" as used by the Abseil programming library.  This algorithm takes a maximum _mx_ and a logarithmic base _b_, and chooses an integer in \[0, _mx_\] such that two values are chosen with the same probability if their base-_b_ logarithms are equal in their integer parts (which roughly means that lower numbers occur with an exponentially greater probability).  Although this algorithm works, in principle, for every _b_ > 0, Abseil supports only integer bases _b_.
 
-1. Let _L_ be ceil(ln(_mx_+1)/ln(_b_)). Choose a uniform random integer in the closed interval \[0, _L_\], call it _u_.
+1. Let _L_ be ceil(ln(_mx_+1)/ln(_b_)). Choose a uniform random integer in the interval \[0, _L_\], call it _u_.
 2. If _u_ is 0, return 0.
 3. Set _st_ to min(_mx_, ceil(_b_<sup>_u_&minus;1</sup>)).
 4. Set _en_ to min(_mx_, ceil(_b_<sup>_u_</sup>) &minus; 1).
-5. Choose a uniform random integer in the closed interval [_st_, _en_], and return it.
+5. Choose a uniform random integer greater than or equal to _st_ and less than or equal to _en_, and return it.
 
 <a id=Sampling_Unbounded_Monotone_Density_Functions></a>
 
 ## Sampling Unbounded Monotone Density Functions
 
-This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)&mdash;
+This section shows a preprocessing algorithm to generate a random variate in the interval [0, 1] from a distribution whose probability density function (PDF)&mdash;
 
 - is continuous in the interval [0, 1],
 - is strictly decreasing in \[0, 1], and
@@ -351,12 +351,12 @@ This section is a note on certain families of univariate (one-variable) probabil
 The following mathematical definitions are used:
 
 - A probability distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nowhere decreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.
-- A probability distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the closed interval [0, 1], and the normal distribution's support is the entire real line.
+- A probability distribution's _support_ is the set of values the distribution can take on, plus that set's endpoints.  For example, the beta distribution's support is the interval $[0, 1]$, and the normal distribution's support is the entire real line.
 - The _zero-truncated Poisson_ distribution: To generate a random variate that follows this distribution (with parameter _&lambda;_ > 0), generate random variates from the [**Poisson distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution) with parameter _&lambda;_ until a variate other than 0 is generated this way, then take the last generated variate.
 
 **G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002\)[^21]) use two distributions, X and G, where&mdash;
 
-- X is a probability distribution whose support is the closed interval \[0, 1\], and
+- X is a probability distribution whose support is the interval $[0, 1]$, and
 - G is a probability distribution that should have an easy-to-compute quantile function.
 
 The following algorithm samples a random variate following a distribution from this kind of family:
@@ -372,7 +372,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^29] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates between 0 and 1, then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 - Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in \[0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
 
-**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^30] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a probability density function; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in the closed interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
+**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^30] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a probability density function; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in the interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. Calculate _w_ = _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), then calculate the quantile for G of _w_ and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
@@ -515,7 +515,7 @@ Take the following situation:
 
 - Let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
 - Let _Q_(_z_) be the quantile function for the desired distribution.
-- Let _x_ be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval \[_a_, _b_\].  If _f_(_t_) = _t_ (the identity function), the PSRN _x_ must have a positive sign and an integer part of 0, so that the interval \[_a_, _b_\] is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.  For example, if the PSRN is 2.147..., then the interval is \[2.147, 2.148\].
+- Let _x_ be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval \[_a_, _b_\].  If _f_(_t_) = _t_ (the identity function), the PSRN _x_ must have a positive sign and an integer part of 0, so that the interval \[_a_, _b_\] is either the interval \[0, 1\] or another interval in \[0, 1\] containing its endpoints, depending on the PSRN's fractional part.  For example, if the PSRN is 2.147..., then the interval is \[2.147, 2.148\].
 - Let _&beta;_ be the digit base of digits in _x_'s fractional part (such as 2 for binary).
 - Suppose _Q_(_z_) is continuous on the open interval (_a_, _b_).
 
@@ -593,14 +593,14 @@ In this section:
 
 The rest of this section deals with oracles that go beyond coins.
 
-**Algorithm 1.** Suppose the oracle produces random variates on a closed interval \[_a_, _b_\], with an unknown mean (or expected value or “long-run average”) of _&mu;_. The goal is now to produce nonnegative random variates whose mean is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
+**Algorithm 1.** Suppose the oracle produces random variates on an interval \[_a_, _b_\], with an unknown mean (or expected value or “long-run average”) of _&mu;_. The goal is now to produce nonnegative random variates whose mean is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
-- _f_ is continuous on the closed interval, and
+- _f_ is continuous on the interval, and
 - _f_(_&mu;_) is greater than or equal to _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)
 
 (Jacob and Thiery 2015\)[^84]. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
-In the algorithm below, let _K_ be a rational number greater than the maximum value of _f_ on the closed interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_K_.
+In the algorithm below, let _K_ be a rational number greater than the maximum value of _f_ on the interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_K_.
 
 1. Create a _&lambda;_ input coin that does the following: "Take a number from the oracle, call it _x_.  With probability (_x_&minus;_a_)/(_b_&minus;_a_) (see note later), return 1.  Otherwise, return 0."
 2. Run a Bernoulli factory algorithm for _g_(_&lambda;_), using the _&lambda;_ input coin.  Then return _K_ times the result.
@@ -883,7 +883,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^80]: Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.
 
-[^81]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  That's why there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_), for every _&epsilon;_&gt;0, whenever _x_ and _y_ lie in that interval and whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
+[^81]: Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on an interval of the form $[a,b]$, it's uniformly continuous there.  That's why there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from _Q_(_y_), for every _&epsilon;_&gt;0, whenever _x_ and _y_ lie in that interval and whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.
 
 [^82]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 

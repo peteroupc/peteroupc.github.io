@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="dc.date" content="2026-04-12"><meta name="citation_date" content="2026/04/12"><meta name="citation_publication_date" content="2026/04/12"><meta name="citation_online_date" content="2026/04/12"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Miscellaneous Observations on Randomization"><meta name="dc.title" content="Miscellaneous Observations on Randomization"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="dc.date" content="2026-05-27"><meta name="citation_date" content="2026/05/27"><meta name="citation_publication_date" content="2026/05/27"><meta name="citation_online_date" content="2026/05/27"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Miscellaneous Observations on Randomization"><meta name="dc.title" content="Miscellaneous Observations on Randomization"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="miscellaneous-observations-on-randomization">Miscellaneous Observations on Randomization</h1><p>This version of the document is dated 2026-04-12.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="miscellaneous-observations-on-randomization">Miscellaneous Observations on Randomization</h1><p>This version of the document is dated 2026-05-27.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -344,7 +344,7 @@
   <li>a vector of the form [<em>p</em><sub>0</sub>, <em>p</em><sub>1</sub>, …, <em>p</em><sub><em>n</em></sub>], where <em>p</em><sub><em>i</em></sub> is a so-called “unnormalized log probability” of the form ln(<em>x</em>)+<em>C</em> (where <em>C</em> is a constant and <em>x</em> is the probability of getting <em>i</em>),</li>
 </ul>
 
-<p>an integer in the closed interval [0, <em>n</em>] can be sampled as follows:</p>
+<p>an integer in the interval [0, <em>n</em>] can be sampled as follows:</p>
 
 <ol>
   <li>(“Gumbel”.) For each <em>p</em><sub><em>i</em></sub>, generate a “Gumbel variate” <em>G</em>, then set <em>q</em><sub><em>i</em></sub> to <em>p</em><sub><em>i</em></sub>+<em>G</em>.  (A so-called “Gumbel variate” is distributed as −ln(−ln(<em>U</em>)), where <em>U</em> is a uniform random variate greater than 0 and less than 1.<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>)</li>
@@ -421,18 +421,18 @@
 <p>Samples from the so-called “log uniform distribution” as used by the Abseil programming library.  This algorithm takes a maximum <em>mx</em> and a logarithmic base <em>b</em>, and chooses an integer in [0, <em>mx</em>] such that two values are chosen with the same probability if their base-_b_ logarithms are equal in their integer parts (which roughly means that lower numbers occur with an exponentially greater probability).  Although this algorithm works, in principle, for every <em>b</em> &gt; 0, Abseil supports only integer bases <em>b</em>.</p>
 
 <ol>
-  <li>Let <em>L</em> be ceil(ln(<em>mx</em>+1)/ln(<em>b</em>)). Choose a uniform random integer in the closed interval [0, <em>L</em>], call it <em>u</em>.</li>
+  <li>Let <em>L</em> be ceil(ln(<em>mx</em>+1)/ln(<em>b</em>)). Choose a uniform random integer in the interval [0, <em>L</em>], call it <em>u</em>.</li>
   <li>If <em>u</em> is 0, return 0.</li>
   <li>Set <em>st</em> to min(<em>mx</em>, ceil(<em>b</em><sup><em>u</em>−1</sup>)).</li>
   <li>Set <em>en</em> to min(<em>mx</em>, ceil(<em>b</em><sup><em>u</em></sup>) − 1).</li>
-  <li>Choose a uniform random integer in the closed interval [<em>st</em>, <em>en</em>], and return it.</li>
+  <li>Choose a uniform random integer greater than or equal to <em>st</em> and less than or equal to <em>en</em>, and return it.</li>
 </ol>
 
 <p><a id="Sampling_Unbounded_Monotone_Density_Functions"></a></p>
 
 <h2 id="sampling-unbounded-monotone-density-functions">Sampling Unbounded Monotone Density Functions</h2>
 
-<p>This section shows a preprocessing algorithm to generate a random variate in the closed interval [0, 1] from a distribution whose probability density function (PDF)—</p>
+<p>This section shows a preprocessing algorithm to generate a random variate in the interval [0, 1] from a distribution whose probability density function (PDF)—</p>
 
 <ul>
   <li>is continuous in the interval [0, 1],</li>
@@ -467,14 +467,14 @@
 
 <ul>
   <li>A probability distribution’s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nowhere decreasing function that maps uniform random variates greater than 0 and less than 1 to numbers that follow the distribution.</li>
-  <li>A probability distribution’s <em>support</em> is the set of values the distribution can take on, plus that set’s endpoints.  For example, the beta distribution’s support is the closed interval [0, 1], and the normal distribution’s support is the entire real line.</li>
+  <li>A probability distribution’s <em>support</em> is the set of values the distribution can take on, plus that set’s endpoints.  For example, the beta distribution’s support is the interval $[0, 1]$, and the normal distribution’s support is the entire real line.</li>
   <li>The <em>zero-truncated Poisson</em> distribution: To generate a random variate that follows this distribution (with parameter <em>λ</em> &gt; 0), generate random variates from the <a href="https://peteroupc.github.io/randomfunc.html#Poisson_Distribution"><strong>Poisson distribution</strong></a> with parameter <em>λ</em> until a variate other than 0 is generated this way, then take the last generated variate.</li>
 </ul>
 
 <p><strong>G families.</strong> In general, families of the form “X-G” (such as “beta-G” (Eugene et al., 2002)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>) use two distributions, X and G, where—</p>
 
 <ul>
-  <li>X is a probability distribution whose support is the closed interval [0, 1], and</li>
+  <li>X is a probability distribution whose support is the interval $[0, 1]$, and</li>
   <li>G is a probability distribution that should have an easy-to-compute quantile function.</li>
 </ul>
 
@@ -495,7 +495,7 @@
   <li>Biweight distribution (Al-Khazaleh and Alzoubi 2021)<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">30</a></sup>: Step 1 is modified to read: “Generate a uniform random variate <em>x</em> in [0, 1], then with probability (1−<em>x</em><sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process.”; or “Create a uniform PSRN <em>x</em> with positive sign and integer part 0, then run <strong>SampleGeometricBag</strong> on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process.”</li>
 </ul>
 
-<p><strong>Transformed–transformer family.</strong> In fact, the “X-G” families are a special case of the so-called “transformed–transformer” family of distributions introduced by Alzaatreh et al. (2013)<sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">31</a></sup> that uses two distributions, X and G, where X (the “transformed”) is an arbitrary distribution with a probability density function; G (the “transformer”) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nowhere decreasing function that, among other conditions, maps a number in the closed interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
+<p><strong>Transformed–transformer family.</strong> In fact, the “X-G” families are a special case of the so-called “transformed–transformer” family of distributions introduced by Alzaatreh et al. (2013)<sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">31</a></sup> that uses two distributions, X and G, where X (the “transformed”) is an arbitrary distribution with a probability density function; G (the “transformer”) is a distribution with an easy-to-compute quantile function; and <em>W</em> is a nowhere decreasing function that, among other conditions, maps a number in the interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:</p>
 
 <ol>
   <li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
@@ -836,7 +836,7 @@
 <ul>
   <li>Let <em>f</em>(.) be a function applied to <em>a</em> or <em>b</em> before calculating the quantile.</li>
   <li>Let <em>Q</em>(<em>z</em>) be the quantile function for the desired distribution.</li>
-  <li>Let <em>x</em> be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval [<em>a</em>, <em>b</em>].  If <em>f</em>(<em>t</em>) = <em>t</em> (the identity function), the PSRN <em>x</em> must have a positive sign and an integer part of 0, so that the interval [<em>a</em>, <em>b</em>] is either the interval [0, 1] or a closed interval in [0, 1], depending on the PSRN’s fractional part.  For example, if the PSRN is 2.147…, then the interval is [2.147, 2.148].</li>
+  <li>Let <em>x</em> be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval [<em>a</em>, <em>b</em>].  If <em>f</em>(<em>t</em>) = <em>t</em> (the identity function), the PSRN <em>x</em> must have a positive sign and an integer part of 0, so that the interval [<em>a</em>, <em>b</em>] is either the interval [0, 1] or another interval in [0, 1] containing its endpoints, depending on the PSRN’s fractional part.  For example, if the PSRN is 2.147…, then the interval is [2.147, 2.148].</li>
   <li>Let <em>β</em> be the digit base of digits in <em>x</em>’s fractional part (such as 2 for binary).</li>
   <li>Suppose <em>Q</em>(<em>z</em>) is continuous on the open interval (<em>a</em>, <em>b</em>).</li>
 </ul>
@@ -933,16 +933,16 @@
 
 <p>The rest of this section deals with oracles that go beyond coins.</p>
 
-<p><strong>Algorithm 1.</strong> Suppose the oracle produces random variates on a closed interval [<em>a</em>, <em>b</em>], with an unknown mean (or expected value or “long-run average”) of <em>μ</em>. The goal is now to produce nonnegative random variates whose mean is <em>f</em>(<em>μ</em>).  Unless <em>f</em> is constant, this is possible if and only if—</p>
+<p><strong>Algorithm 1.</strong> Suppose the oracle produces random variates on an interval [<em>a</em>, <em>b</em>], with an unknown mean (or expected value or “long-run average”) of <em>μ</em>. The goal is now to produce nonnegative random variates whose mean is <em>f</em>(<em>μ</em>).  Unless <em>f</em> is constant, this is possible if and only if—</p>
 
 <ul>
-  <li><em>f</em> is continuous on the closed interval, and</li>
+  <li><em>f</em> is continuous on the interval, and</li>
   <li><em>f</em>(<em>μ</em>) is greater than or equal to <em>ε</em>*min((<em>μ</em> − <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> − <em>μ</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>ε</em> greater than 0 (loosely speaking, <em>f</em> is nonnegative and neither touches 0 in the interior of the interval nor moves away from 0 more slowly than a polynomial)</li>
 </ul>
 
 <p>(Jacob and Thiery 2015)<sup id="fnref:84"><a href="#fn:84" class="footnote" rel="footnote" role="doc-noteref">84</a></sup>. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
 
-<p>In the algorithm below, let <em>K</em> be a rational number greater than the maximum value of <em>f</em> on the closed interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>λ</em>) = <em>f</em>(<em>a</em> + (<em>b</em>−<em>a</em>)*<em>λ</em>)/<em>K</em>.</p>
+<p>In the algorithm below, let <em>K</em> be a rational number greater than the maximum value of <em>f</em> on the interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>λ</em>) = <em>f</em>(<em>a</em> + (<em>b</em>−<em>a</em>)*<em>λ</em>)/<em>K</em>.</p>
 
 <ol>
   <li>Create a <em>λ</em> input coin that does the following: “Take a number from the oracle, call it <em>x</em>.  With probability (<em>x</em>−<em>a</em>)/(<em>b</em>−<em>a</em>) (see note later), return 1.  Otherwise, return 0.”</li>
@@ -1359,7 +1359,7 @@
       <p>Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, for example, “Computational complexity of roots of real functions.” In <em>30th Annual Symposium on Foundations of Computer Science</em>, pp. 204-209. IEEE Computer Society, 1989. <a href="#fnref:80" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:81">
-      <p>Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on a closed interval, it’s uniformly continuous there.  That’s why there is a positive function <em>ω</em><sup>−1</sup>(<em>ε</em>) such that <em>Q</em>(<em>x</em>) is less than <em>ε</em>-away from <em>Q</em>(<em>y</em>), for every <em>ε</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>ω</em><sup>−1</sup>(<em>ε</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(−ln(<em>z</em>)/ln(<em>β</em>))) is an upper bound on the number of base-_β_ fractional digits needed to store 1/<em>z</em> with an error of at most <em>ε</em>. <a href="#fnref:81" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Here is a sketch of the proof: Because the quantile function <em>Q</em>(<em>x</em>) is continuous on an interval of the form $[a,b]$, it’s uniformly continuous there.  That’s why there is a positive function <em>ω</em><sup>−1</sup>(<em>ε</em>) such that <em>Q</em>(<em>x</em>) is less than <em>ε</em>-away from <em>Q</em>(<em>y</em>), for every <em>ε</em>&gt;0, whenever <em>x</em> and <em>y</em> lie in that interval and whenever <em>x</em> is less than <em>ω</em><sup>−1</sup>(<em>ε</em>)-away from <em>y</em>.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by <em>Q</em>, as long as that modulus is continuous and strictly increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(−ln(<em>z</em>)/ln(<em>β</em>))) is an upper bound on the number of base-_β_ fractional digits needed to store 1/<em>z</em> with an error of at most <em>ε</em>. <a href="#fnref:81" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:82">
       <p>A <a href="https://en.wikipedia.org/wiki/Hölder_condition"><strong><em>Hölder continuous</em></strong></a> function  (with <em>M</em> being the <em>Hölder constant</em> and <em>α</em> being the <em>Hölder exponent</em>) is a continuous function <em>f</em> such that <em>f</em>(<em>x</em>) and <em>f</em>(<em>y</em>) are no more than <em>M</em>*<em>δ</em><sup><em>α</em></sup> apart whenever <em>x</em> and <em>y</em> are in the function’s domain and no more than <em>δ</em> apart.<br />Here, <em>α</em> satisfies 0 &lt; <em>α</em> ≤ 1.<br />Roughly speaking, the function’s “steepness” is no greater than that of <em>M</em>*<em>x</em><sup><em>α</em></sup>. <a href="#fnref:82" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

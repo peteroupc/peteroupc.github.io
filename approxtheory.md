@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-The notes in this page generally relate to finding bounds on how close a polynomial is to a single-variable function on a closed interval.
+The notes in this page generally relate to finding bounds on how close a polynomial is to a single-variable function on a compact interval.
 
 The aim is to help find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation.
 
@@ -40,10 +40,11 @@ The mapping from a function to a function (in this case, from a single-variable 
 For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
 - The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
+- A _compact interval_ (written as $[a, b]$), means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.[^58]  The closed unit interval is one example of a compact interval.
 - An _operator_ is a mapping from a function to a function.
 - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
 - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^1]
-- The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all allowed functions $f$ with a maximum absolute value 1 or less.  This assumes $L$ maps continuous functions on a closed interval to functions of that kind.
+- The _operator norm_ of an operator $L$ is the maximum absolute value of $L(f)$ over all allowed functions $f$ with a maximum absolute value 1 or less.  This assumes $L$ maps continuous functions on a compact interval to functions of that kind.
 - An operator is _bounded_ if its operator norm is finite.  A function $f(\lambda)$ is _bounded_ if there are two real numbers $a$ and $b$ such that $a\lt f(\lambda) \lt b$ over the domain of $f$.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
@@ -63,7 +64,9 @@ $$P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},$$
 
 where the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.[^2]
 
-The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this document, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$. $B_n(f)$ is a positive linear operator.
+The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this document, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$.
+
+$B_n(f)$ is a positive linear operator. It maps a bounded function on the closed unit interval to a polynomial of degree $n$ or less on that interval.
 
 <a id=Moments_of_Linear_Operators></a>
 
@@ -120,7 +123,7 @@ _Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)
 
 Continuous functions can be "unwrapped" into a Taylor expansion.  The linear mapping of those functions also has a Taylor expansion of sorts, which is described next.
 
-Let $f(\lambda)$ have a continuous $s$-th derivative on a closed interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator that maps continuous functions on that interval to functions of that kind.  Then:
+Let $f(\lambda)$ have a continuous $s$-th derivative on a compact interval, where $s$ is zero or a positive integer, and let $L(f)$ be a linear operator that maps continuous functions on that interval to functions of that kind.  Then:
 
 $$L(f)(\lambda) = L(R_s(f, \lambda)) + \sum_{i=0}^s L((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}$$
 
@@ -156,7 +159,7 @@ The following results give bounds that apply to large classes of positive linear
 - $\omega_1(f, \delta)$ is the smallest modulus of continuity of a function $f$ of order 1, with parameter $\delta$.
 - $\tilde\omega_1(f, \delta)$ is the smallest concave modulus of continuity of $f$ of order 1, both with parameter $\delta$.
 
-**Lemma 1**. _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all constants (so that_ $L(e_0) = 1$ _).  Then:_
+**Lemma 1**. _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all constants (so that_ $L(e_0) = 1$ _).  Then:_
 
 | No. | $\text{abs}(L(f)(\lambda)-f(\lambda))\le ...$ |
  - | ----- |
@@ -169,7 +172,7 @@ The following results give bounds that apply to large classes of positive linear
 
 _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)[^13]. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)[^14]; inequality 4 comes from another result in the same paper (see also Mamedov (1959)[^15]); inequality 3 follows from a result of Mond (1978)[^16]; inequality 5, a result of Păltănea (2004, corollary 1.2.2)[^17]; inequality 6, a result of Peetre (1969)[^18] \(also mentioned in Gonska (1998/2023)[^19], which has an extensive discussion on error bounds for linear operators). &#x25a1;
 
-**Remark 1:** The moduli of continuity $\omega_1(f, \delta)$ and $\tilde\omega_1(f, \delta)$ offer concise ways to express different error bounds depending on how "regular" $f$ is.  Properties of these moduli are given in Sevy 1991[^20], sec. 2.0.2; Gonska 1985[^21]. For example, let $f$ be continuous on a closed interval.  Then:
+**Remark 1:** The moduli of continuity $\omega_1(f, \delta)$ and $\tilde\omega_1(f, \delta)$ offer concise ways to express different error bounds depending on how "regular" $f$ is.  Properties of these moduli are given in Sevy 1991[^20], sec. 2.0.2; Gonska 1985[^21]. For example, let $f$ be continuous on a compact interval.  Then:
 
 - $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)$ (Peetre 1969)[^22].
 - If $f$ is Hölder continuous with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta^\alpha$.  Indeed, in this case, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta>0$.
@@ -179,7 +182,7 @@ _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3
 
 > **Example:** Let $f$ and $L$ be as in Lemma 1. If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, or has a continuous derivative with maximum absolute value $M$ or less, $\text{abs}(L(f)(\lambda)-f(\lambda))\le M (\sigma_2)^{1/2}$; this follows from the combination of Remark 1 and inequality 6 of Lemma 1.
 
-**Lemma 2**. _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all polynomials up to degree 1 (constants and linear functions).  Let $h>0$ be a real number. Then:_
+**Lemma 2**. _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all polynomials up to degree 1 (constants and linear functions).  Let $h>0$ be a real number. Then:_
 
 | No. | If $f$ ... |  Then $\text{abs}(L(f)(\lambda)-f(\lambda))\le ... $ |
  - | --- | ----- |
@@ -190,7 +193,7 @@ _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3
 
 _Proof:_  Inequality 1 is a special case of Theorem 2.19 (in conjunction with Remark 2.21) of Anastassiou (1985), with the interval $[a, b]$, $m=1$ (since the function is defined on all of $[a, b]$), $r=h$, and $x_0$ equal to $\lambda$.  Inequality 2 follows from a result of Gonska and Meier (1985, theorem 4.1)[^13]; see also Păltănea and Dimitriu (2016, remark 3)[^23]. Inequalities 3 and 4 follow from inequality 2 because of Remark 1. &#x25a1;
 
-**Lemma 3**. _Let $f(\lambda)$ have a continuous $k$-th derivative on a closed interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Let $h>0$ be a real number. Then $L(f)(\lambda) = L(Q_k(f,\lambda))(\lambda) + L(R_k(f,\lambda))(\lambda)$, where:_
+**Lemma 3**. _Let $f(\lambda)$ have a continuous $k$-th derivative on a compact interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Let $h>0$ be a real number. Then $L(f)(\lambda) = L(Q_k(f,\lambda))(\lambda) + L(R_k(f,\lambda))(\lambda)$, where:_
 
 $$\text{abs}(L(Q_k(f,\lambda)) - f(\lambda))\le \left(\sum_{i=0}^k \frac{\max(\text{abs}(f^{(i)})) \text{abs}(\sigma_i)}{i!}\right),$$
 
@@ -205,11 +208,11 @@ _and where:_
 - $Q_k(f,\lambda)=$ $\sum_{i=0}^k f^{(i)}(\lambda)\cdot(e_0-\lambda)^i/(i!)$ _is the degree-$k$_ Taylor polynomial _of $f$ centered at $\lambda$._
 - $R_k(f,\lambda)$ _is the_ Taylor remainder _that results from subtracting $Q(f,\lambda)$ from $f$._
 
-_Proof:_  The second to fourth bounds given relate to the Taylor remainder.  The second bound comes from Păltănea and Smuc (2019, Theorem 1)[^24]; the third bound comes from corollary 3.2 of Dimitriu (2010)[^25] and Brudnyĭ's lemma; and the fourth bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^26], where the closed interval assumed was the closed unit interval; see also Gonska (2007)[^27], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^28].[^29]&#x25a1;
+_Proof:_  The second to fourth bounds given relate to the Taylor remainder.  The second bound comes from Păltănea and Smuc (2019, Theorem 1)[^24]; the third bound comes from corollary 3.2 of Dimitriu (2010)[^25] and Brudnyĭ's lemma; and the fourth bound follows from the second with $h=\tau_{k+1}/(2(k+1)\tau_k)$ and comes from Gonska et al. (2006)[^26], where the compact interval assumed was the closed unit interval; see also Gonska (2007)[^27], Piţul (2007)[^11].  See also Anastassiou (1985, theorem 2.31)[^28].[^29]&#x25a1;
 
 **Lemma 4.** _Let $k$ be zero or a positive integer. Let $f(\lambda)$&mdash;_
 
-1. _have a Lipschitz-continuous $k$-th derivative on a closed interval, with Lipschitz constant $M$ or less, or_
+1. _have a Lipschitz-continuous $k$-th derivative on a compact interval, with Lipschitz constant $M$ or less, or_
 2. _have a continuous $(k+1)$-th derivative on that interval, with maximum absolute value $M$ or less,_
 
 _and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind.  Then_ $\text{abs}(L(R_k(f,\lambda)))\le M \tau_{k+1}/((k+1)!)$, _where_ $R_k(f,\lambda)$ _is as in Lemma 3._
@@ -218,7 +221,7 @@ _Proof:_  Follows from the third bound for $L(R_k(f,\lambda))$ in Lemma 3 in the
 
 The following two lemmas are more general, but not as easy to use.
 
-**Lemma 4A** (special case of Theorem 3.4 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval or a closed subset thereof, and let $L$ be a positive linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
+**Lemma 4A** (special case of Theorem 3.4 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a positive linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
 $$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L(e_0)\Vert ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)$$
 
@@ -228,7 +231,7 @@ $$\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_(
 
 _where_ $\Vert L(e_0)\Vert$ _is the maximum of $L$ over $f$'s domain._
 
-**Lemma 4B** (special case of Theorem 4.7 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval, and let $L$ be a positive linear operator that maps bounded functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
+**Lemma 4B** (special case of Theorem 4.7 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
 $$\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{ceil}((e_1-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)$$
 
@@ -248,7 +251,7 @@ _The second inequality also works if $L$ maps from continuous functions instead 
 
 The following lemma adapts the previous lemmas to the setting of random variables.
 
-**Lemma 5.** _Let $f(\lambda)$ be continuous on a closed interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4A apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
+**Lemma 5.** _Let $f(\lambda)$ be continuous on a compact interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4A apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
 
 _Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^30], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
 
@@ -284,7 +287,7 @@ _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25
 
 The results in this section give error bounds for important classes of linear operators (not necessarily positive ones).  But, in general, they are harder to use than the ones for positive linear operators, because more has to be computed for nonpositive operators than just the "moments".
 
-Roughly speaking, the _integral_ of $f(\lambda)$ on the closed interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
+Roughly speaking, the _integral_ of $f(\lambda)$ on the compact interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If $f$ is continuous there, this is the value that&mdash;
 
 $$\frac{1}{n} \sum_{i=1}^n f\left(a+(b-a)(i-\frac{1}{2})/n\right),\tag{2A}$$
 
@@ -292,7 +295,7 @@ approaches as $n$ gets larger and larger.  The integral of $f(\lambda)$ on $[a,b
 
 The next two lemmas rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in estimating the integral of a function from samples of it[^31] \(for more on this theory, see Brass and Förster 1998[^32]; Waldron 1999[^33]).
 
-**Lemma 7.** _Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the closed interval $[a, b]$.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that&mdash;_
+**Lemma 7.** _Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the compact interval $[a, b]$.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that&mdash;_
 
 - _reproduces all polynomials of degree $k$ or less, and_
 - _maps continuous functions (or, if $k=0$, bounded functions) on the interval $[a, b]$ to continuous functions on that interval._
@@ -323,7 +326,7 @@ $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e
 
 $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2\Vert f^{(k+1)}\Vert}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
 
-**Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
+**Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
 $$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)$$
 
@@ -335,7 +338,7 @@ _where $\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain; $\be
 
 $$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((1+\Vert L\Vert)/2, (\gamma(\beta(\lambda)-1)+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\cdot\tilde\omega_1(f,h).$$
 
-**Lemma 11** (special case of Theorem 4.4 and Corollary 4.5 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
+**Lemma 11** (special case of Theorem 4.4 and Corollary 4.5 in Gonska (1998/2023)[^19]). _Let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
 $$\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-\text{abs}(L(e_0)(\lambda)))\cdot(1+(b-a)/h)$$
 
@@ -357,7 +360,7 @@ $$+1+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)$$
 
 The following inequality gives a bound on the "best possible" error that a polynomial of degree $n$ can achieve in approximating a function.
 
-Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a closed interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^36]):
+Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^36]):
 
 $$\Vert f-P\Vert \le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),$$
 
@@ -384,7 +387,7 @@ $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \fr
 
 Like Whitney's inequality, the following gives a bound on the "best possible" error between a polynomial and a function.
 
-Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the closed interval $[-1, 1]$,[^38] and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Phillips 2003, theorem 2.4.6)[^46]:
+Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the compact interval $[-1, 1]$,[^38] and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Phillips 2003, theorem 2.4.6)[^46]:
 
 $$\Vert f-P\Vert \le\frac{1}{2^n}\frac{\Vert f^{(n+1)}\Vert }{(n+1)!}.$$
 
@@ -392,7 +395,7 @@ $$\Vert f-P\Vert \le\frac{1}{2^n}\frac{\Vert f^{(n+1)}\Vert }{(n+1)!}.$$
 
 ### Lebesgue Inequality for Certain Linear Operators
 
-Let $f(\lambda)$ be a continuous function on a closed interval.  For any sequence of linear operators $(L_n)$ that map continuous functions to polynomials and reproduce all polynomials up to degree $m(n)$ (which depends on $n$), the following error bound (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) holds true for each $n$:
+Let $f(\lambda)$ be a continuous function on a compact interval.  For any sequence of linear operators $(L_n)$ that map continuous functions to polynomials and reproduce all polynomials up to degree $m(n)$ (which depends on $n$), the following error bound (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) holds true for each $n$:
 
 $$\text{abs}(L_n(f)(x) - f(x))\le(1+\Vert L_n\Vert )\cdot\max_t(\text{abs}(f(t)-P(t))),$$
 
@@ -601,7 +604,7 @@ Some of the "moments" of this operator are:
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a closed interval can be approximated as well as desired by polynomials (Bernstein 1912)[^55]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^56], 1995[^57]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^55]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^56], 1995[^57]).
 
 <a id=License></a>
 
@@ -634,7 +637,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^11]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
 
-[^12]: I suspect that, whenever $L$ is a bounded linear operator that maps continuous functions on a closed interval to functions of that kind, $L$ can be written as a difference between two positive linear operators.  But I have not seen a proof of that statement; Acu et al. ("[**Grüss-type and Ostrowski-type inequalities in approximation theory**](https://doi.org/10.1007/s11253-011-0548-2)", Ukr Math J 63, 843–864, 2011) give a similar statement but without proof.
+[^12]: I suspect that, whenever $L$ is a bounded linear operator that maps continuous functions on a compact interval to functions of that kind, $L$ can be written as a difference between two positive linear operators.  But I have not seen a proof of that statement; Acu et al. ("[**Grüss-type and Ostrowski-type inequalities in approximation theory**](https://doi.org/10.1007/s11253-011-0548-2)", Ukr Math J 63, 843–864, 2011) give a similar statement but without proof.
 
 [^13]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
 
@@ -668,7 +671,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^28]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
 
-[^29]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _closed_ one, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
+[^29]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _compact_ interval, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
 
 [^30]: Frantz, Deborah A. [**Summability methods, probability distributions, and associated positive linear operators**](https://preserve.lehigh.edu/lehigh-scholarship/graduate-publications-theses-dissertations/theses-dissertations/summability). Lehigh University, 1984.
 
@@ -686,7 +689,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^37]: Jaskaran Singh Kaire and Andriy Prymak, "[**Whitney-type estimates for convex functions**](https://arxiv.org/abs/2311.00912)", arXiv:2311.00912 (2023).
 
-[^38]: It would be interesting to find a version of this inequality that works for any closed interval $[a, b]$.
+[^38]: It would be interesting to find a version of this inequality that works for any compact interval $[a, b]$.
 
 [^39]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
 
@@ -725,3 +728,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^56]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
 [^57]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^58]: This term is used instead of "closed interval", a term which can also encompass intervals bounded by infinity, which is not the intent of this document.
