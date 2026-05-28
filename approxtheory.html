@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-05-27"><meta name="citation_date" content="2026/05/27"><meta name="citation_publication_date" content="2026/05/27"><meta name="citation_online_date" content="2026/05/27"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-05-28"><meta name="citation_date" content="2026/05/28"><meta name="citation_publication_date" content="2026/05/28"><meta name="citation_online_date" content="2026/05/28"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-05-27.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-05-28.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -340,9 +340,9 @@
 
 \[+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\]
 
-\[\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\]
+\[\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\]
 
-<p><em>where</em> $\Vert L(e_0)\Vert$ <em>is the maximum of $L$ over $f$’s domain.</em></p>
+<p><em>where</em> $\Vert L(e_0)\Vert$ <em>is the maximum of $L(e_0)$ over $f$’s domain.</em></p>
 
 <p><strong>Lemma 4B</strong> (special case of Theorem 4.7 in Gonska (1998/2023)<sup id="fnref:20:2"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then:</em></p>
 
@@ -751,7 +751,7 @@
 
 \[Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})(\lambda)\]
 
-\[=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)(e_1)}\right)(\lambda),\]
+\[=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),\]
 
 <p>where $0\le\lambda\le 1$.</p>
 
@@ -773,7 +773,7 @@
 <p>Let $LF = f - Q_{n,2}(f)$ be the error in approximating $f$ with $Q_{n,2}(f)$.  Because the operator $Q_{n,2}$ is linear and reproduces all polynomials up to degree 2, its error can, in theory, be assessed by finding an upper bound of $LF$’s Peano kernel of order 3 (see “<a href="#Bounds_for_General_Linear_Operators"><strong>Bounds for General Linear Operators</strong></a>”).  But finding this Peano kernel is difficult:</p>
 
 <ul>
-  <li>The kernel is discontinuous when $n$ and $\lambda$ are fixed and $t$ varies.  ($n$, $\lambda$, and $t$ are the variables used by the function mapped to by the Peano kernel.) But the discontinuous points appear to have the form $i/n$ for $0\le i\le n$.</li>
+  <li>The kernel is discontinuous when $n$ and $\lambda$ are fixed and $t$ varies.  ($n$, $\lambda$, and $t$ are the variables used by the function mapped to by the Peano kernel.) But the discontinuous points appear to have the form $i/n$ for $0\lt i\lt n$.</li>
   <li>The kernel appears to be continuous when $n$ and $t$ are fixed and $\lambda$ varies.</li>
 </ul>
 

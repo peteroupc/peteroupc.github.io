@@ -227,9 +227,9 @@ $$\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L(e_0)\Vert ,L(\text{abs}(e_
 
 $$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))$$
 
-$$\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),$$
+$$\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),$$
 
-_where_ $\Vert L(e_0)\Vert$ _is the maximum of $L$ over $f$'s domain._
+_where_ $\Vert L(e_0)\Vert$ _is the maximum of $L(e_0)$ over $f$'s domain._
 
 **Lemma 4B** (special case of Theorem 4.7 in Gonska (1998/2023)[^20]). _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
@@ -585,7 +585,7 @@ This section touches on the Lorentz operators of order 2, defined as&mdash;
 
 $$Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})(\lambda)$$
 
-$$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)(e_1)}\right)(\lambda),$$
+$$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
 where $0\le\lambda\le 1$.
 
@@ -604,7 +604,7 @@ Some of the "moments" of this operator are:
 
 Let $LF = f - Q_{n,2}(f)$ be the error in approximating $f$ with $Q_{n,2}(f)$.  Because the operator $Q_{n,2}$ is linear and reproduces all polynomials up to degree 2, its error can, in theory, be assessed by finding an upper bound of $LF$'s Peano kernel of order 3 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)").  But finding this Peano kernel is difficult:
 
-- The kernel is discontinuous when $n$ and $\lambda$ are fixed and $t$ varies.  ($n$, $\lambda$, and $t$ are the variables used by the function mapped to by the Peano kernel.) But the discontinuous points appear to have the form $i/n$ for $0\le i\le n$.
+- The kernel is discontinuous when $n$ and $\lambda$ are fixed and $t$ varies.  ($n$, $\lambda$, and $t$ are the variables used by the function mapped to by the Peano kernel.) But the discontinuous points appear to have the form $i/n$ for $0\lt i\lt n$.
 - The kernel appears to be continuous when $n$ and $t$ are fixed and $\lambda$ varies.
 
 <a id=Probabilistic_Interpretations_of_Linear_Operators></a>
