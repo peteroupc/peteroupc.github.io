@@ -2607,7 +2607,7 @@ def example_4_2_1(rg, bern, precision=53):
   <li>Run <strong>SampleGeometricBag</strong> on <em>x</em> (which ignores <em>x</em>’s integer part and sign).  If the run returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>The second subalgorithm samples the probability (<em>x</em>−2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>, where <em>x</em>≥1 is a uniform PSRN and <em>b</em>≥0 is an integer:</p>
+<p>The second subalgorithm samples the probability (<em>x</em>−2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>, where <em>x</em>≥1 is a uniform PSRN and $b$ is zero or a positive integer:</p>
 
 <ol>
   <li>Subtract 2<sup><em>b</em></sup> from <em>x</em>’s integer part, then create <em>y</em> as <strong>RandUniformFromReal</strong>(2<sup><em>b</em></sup>), then run <strong>URandLessThanReal</strong>(<em>x</em>, <em>y</em>), then add 2<sup><em>b</em></sup> back to <em>x</em>’s integer part.</li>
