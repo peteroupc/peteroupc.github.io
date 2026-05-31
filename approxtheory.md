@@ -62,11 +62,13 @@ In this document, a polynomial $P(x)$ is written in _Bernstein form of degree $n
 
 $$P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},$$
 
-where the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.[^3]
+where $0\le x\le 1$ and the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.[^3]
 
 The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this document, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$.
 
 $B_n(f)$ is a positive linear operator. It maps a bounded function on the closed unit interval to a polynomial of degree $n$ or less on that interval.
+
+This page's emphasis is on methods that produce polynomials in Bernstein form, ratios of such polynomials, or functions like $f(g(x))$ where $f$ and $g$ are such polynomials or ratios.
 
 <a id=Moments_of_Linear_Operators></a>
 
@@ -377,7 +379,7 @@ where&mdash;
 
 Using properties of moduli of continuity (see Sevy 1991[^21], sec. 2.0.2; Gonska 1985[^22]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
-$$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\Vert f^{(n+1)}\Vert ,$$
+$$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\Vert f^{(n+1)}\Vert,$$
 
 and if $f$ has a continuous $n$-th derivative on that interval:
 
@@ -397,17 +399,41 @@ $$\Vert f-P\Vert \le\frac{1}{2^n}\frac{\Vert f^{(n+1)}\Vert }{(n+1)!}.$$
 
 ### Lebesgue Inequality for Certain Linear Operators
 
-Let $f(\lambda)$ be a continuous function on a compact interval.  For any sequence of linear operators $(L_n)$ that map continuous functions to polynomials and reproduce all polynomials up to degree $m(n)$ (which depends on $n$), the following error bound (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) holds true for each $n$:
+Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that&mdash;
 
-$$\text{abs}(L_n(f)(x) - f(x))\le(1+\Vert L_n\Vert )\cdot\max_t(\text{abs}(f(t)-P(t))),$$
+- maps continuous functions on that interval to functions in a linear subspace of continuous functions (such as polynomials of degree 5 or less) on that interval[^62], and
+- reproduces all functions in that linear subspace (so that $L(g)=g$ whenever $g$ is in that linear subspace).
 
-where $\Vert L_n\Vert$ is the operator norm of $L_n$, and $P$ is any polynomial of degree $m(n)$ or less (see also DeVore and Lorentz (1993)[^40], Cheney (1996, chapter 6)[^41]).  But this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $L=f$.[^42]
+Then the following error bound (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) holds true for every function $P$ in the linear subspace:
 
-> **Example:** Let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities given earlier leads to the following error bound for linear operators $L$ that map continuous functions to polynomials and reproduce all polynomials up to degree 2:
+$$\text{abs}(L(f)(x) - f(x))\le(1+\Vert L_n\Vert )\cdot\max_t(\text{abs}(f(t)-P(t))),$$
+
+where $\Vert L\Vert$ is the operator norm of $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^40], Cheney (1996, chapter 6)[^41]).
+
+If the linear subspace has only polynomials, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator $I(f)=f$.[^42]
+
+> **Examples:**
 >
-> $$\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert $$
+> 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the previous inequality with the Whitney-type inequalities given earlier leads to the following error bound for linear operators $L$ that map continuous functions on that interval to polynomials up to degree 2 and reproduce all polynomials up to degree 2:
 >
-> $$ = (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.$$
+>     $$\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert $$
+>
+>     $$ = (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.$$
+>
+> 2. Let $f$ again have a continuous third derivative on the closed unit interval.  Suppose $L_n$ is a _spline operator_ that maps to a continuous function (a _spline_) that equals a degree-2 polynomial at each of the subintervals $[0,1/n]$, $[1/n, 2/n]$, ..., $[(n-1)/n, n/n]$ (for example, Sablonnière 2007[^63]).  On each of these subintervals, $L_n(f)$ is always a polynomial up to degree 2 and $L_n$ reproduces each polynomial up to degree 2. By contrast, on the whole closed unit interval, $L_n(f)$ is generally not a polynomial.  Thus, the inequality in this section holds true for every degree-2 polynomial on each subinterval (as opposed to the whole closed unit interval).  In turn, for each subinterval the Whitney-type inequality reads the following, since each subinterval has the same length:
+>
+>     $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{3}\right)^{3}\max(\text{abs}(f^{(3)}))$$
+>
+>     $$ = 1\cdot\left(\frac{1}{n}\frac{1}{3}\right)^3\max(\text{abs}(f^{(3)}))=\frac{1}{27n^3}\max(\text{abs}(f^{(3)})),$$
+>
+>     where the maximums are taken over the corresponding subinterval.  Thus, the error bound for $L_n$ reads $\text{abs}(L_n(f)(x) - f(x))$ $\le (1+\Vert L_n\Vert )\frac{1}{27n^3}\Vert f^{(3)}\Vert$.
+>
+> 4. The Bernstein polynomial $B_n$ maps continuous functions to polynomials up to degree $n$, but does _not_ reproduce all polynomials up to degree $n$ if $n$ is 2 or greater.  Thus, this inequality does not apply to Bernstein polynomials of degree 2 or greater.
+>
+> 3. The _identity operator_ $I(f)=f$ has operator norm 1 and maps every function to itself, so it reproduces all functions.  For this operator, the inequality becomes:
+>
+>     $$\text{abs}(I(f)(x) - f(x))\le(1+\Vert I\Vert)\cdot 0 = (1 + 1)\cdot 0 = 0.$$
+>
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
@@ -555,13 +581,13 @@ $$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Ver
 where:
 
 - $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.
-- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^61]).
+- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^52]).
 
 **Lemma**: _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.
 
 result of A.A. Markov.
 
-**Lemma** (A.A. Markov (1889)[^52]): _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(1)}\Vert\le 2n^2/(b-a)$.
+**Lemma** (A.A. Markov (1889)[^53]): _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(1)}\Vert\le 2n^2/(b-a)$.
 
 An error bound for $H_{n,m}$ can also be written as:
 
@@ -575,7 +601,7 @@ so now there are two error bounds to find: one for $f$ and the other for $\text{
 
 $$B_n(g)\le \Vert f^{(2)}\Vert/(8n).$$
 
-(This follows from Lorentz (1963)[^53] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
+(This follows from Lorentz (1963)[^54] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
@@ -593,7 +619,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (
 
 ## Example: The Lorentz Operators
 
-The _Lorentz operators_ were introduced by Lorentz (1963)[^54] and studied by Holtz et al. (2011)[^55].
+The _Lorentz operators_ were introduced by Lorentz (1963)[^55] and studied by Holtz et al. (2011)[^56].
 
 This section touches on the Lorentz operator of order 2, defined as&mdash;
 
@@ -601,9 +627,9 @@ $$Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})
 
 $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
-where $0\le\lambda\le 1$.[^56]
+where $0\le\lambda\le 1$.[^57]
 
-This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^55]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^56]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
@@ -613,7 +639,7 @@ where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.
 
 However, this operator has an infinite operator norm and so is unbounded. Indeed, a function can have a maximum absolute value of 1 or less yet have an arbitrarily large and continuous second derivative.  Take, for example, the family of functions $g_m(\lambda)=\cos(m\cos(\lambda\pi))$: as $m$ goes to infinity, $g_m^{(2)}(1/2)$ diverges; in turn, the expression $(B_n(g_m^{(2)})(1/2))\frac{1}{8n}$, based on a degree-$n$ Bernstein polynomial, likewise diverges, at least if $n$ is 7 or less.
 
-Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^57].
+Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^58].
 
 Some of the "moments" of this operator are:
 
@@ -632,7 +658,7 @@ for some $C>0$, and it is of interest to find an explicit upper bound for $C$, e
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^58]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^59], 1995[^60]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^59]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^60], 1995[^61]).
 
 <a id=License></a>
 
@@ -745,22 +771,26 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^51]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
 
-[^52]: A. A. Markov, "On a problem of D. I. Mendeleev", Izv. Akad. Nauk 62 (1889), 1-24.
+[^52]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
 
-[^53]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+[^53]: A. A. Markov, "On a problem of D. I. Mendeleev", Izv. Akad. Nauk 62 (1889), 1-24.
 
-[^54]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
+[^54]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
-[^55]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
+[^55]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^56]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
+[^56]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^57]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
+[^57]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^58]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^58]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
 
-[^59]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+[^59]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^60]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+[^60]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^61]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
+[^61]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^62]: A _linear subspace_ of functions has the following property. If functions $f$ and $g$ are in the family, so is $f+g$, and if $f$ is in the family, so is $f\cdot\alpha$ for every real number $\alpha$.
+
+[^63]: Sablonniere, Paul. "A quadrature formula associated with a univariate spline quasi interpolant." BIT Numerical Mathematics 47.4 (2007): 825-837. [https://doi.org/10.1007/s10543-007-0146-8](https://doi.org/10.1007/s10543-007-0146-8)
