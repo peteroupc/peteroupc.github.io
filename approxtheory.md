@@ -4,7 +4,7 @@
 
 The notes in this page generally relate to finding bounds on how close a polynomial is to a single-variable function on a compact interval.
 
-The aim is to help find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial will come close to a function with a given accuracy.
+The aim is to help find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.
 
 The mapping from a function to a function (in this case, from a single-variable function to a polynomial "close" to it) is called an _operator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
 
@@ -152,7 +152,9 @@ Some results on error bounds for certain classes of operators.
 
 ### Bounds for General Positive Linear Operators
 
-The following results give bounds that apply to large classes of positive linear operators.  In this section:
+The following results give bounds that apply to large classes of positive linear operators.  While these operators have relatively simple approximation behavior, in general they do not approximate functions with more than two continuous derivatives "better" than functions with only two.
+
+In this section:
 
 - $\sigma_i = L((e_i-\lambda)^i)(\lambda)$ (the $i$-th "central moment" of the linear operator $L$ in question).
 - $\tau_i = L(\text{abs}(e_i-\lambda)^i)(\lambda)$  (the $i$-th "absolute moment" of the linear operator $L$ in question).
@@ -553,9 +555,13 @@ $$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Ver
 where:
 
 - $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.
-- $M(m) = (2(2\max(1,m)^2))^2$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following result of A.A. Markov.
+- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^61]).
 
-**Lemma** (A.A. Markov (1889)[^58]): _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ... $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(1)}\Vert\le 2n^2/(b-a)$.
+**Lemma**: _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.
+
+result of A.A. Markov.
+
+**Lemma** (A.A. Markov (1889)[^52]): _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(1)}\Vert\le 2n^2/(b-a)$.
 
 An error bound for $H_{n,m}$ can also be written as:
 
@@ -569,7 +575,7 @@ so now there are two error bounds to find: one for $f$ and the other for $\text{
 
 $$B_n(g)\le \Vert f^{(2)}\Vert/(8n).$$
 
-(This follows from Lorentz (1963)[^52] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
+(This follows from Lorentz (1963)[^53] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
@@ -587,7 +593,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (
 
 ## Example: The Lorentz Operators
 
-The _Lorentz operators_ were introduced by Lorentz (1963)[^53] and studied by Holtz et al. (2011)[^54].
+The _Lorentz operators_ were introduced by Lorentz (1963)[^54] and studied by Holtz et al. (2011)[^55].
 
 This section touches on the Lorentz operator of order 2, defined as&mdash;
 
@@ -595,9 +601,9 @@ $$Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})
 
 $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
-where $0\le\lambda\le 1$ [^59]
+where $0\le\lambda\le 1$.[^56]
 
-This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^54]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^55]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
@@ -607,7 +613,7 @@ where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.
 
 However, this operator has an infinite operator norm and so is unbounded. Indeed, a function can have a maximum absolute value of 1 or less yet have an arbitrarily large and continuous second derivative.  Take, for example, the family of functions $g_m(\lambda)=\cos(m\cos(\lambda\pi))$: as $m$ goes to infinity, $g_m^{(2)}(1/2)$ diverges; in turn, the expression $(B_n(g_m^{(2)})(1/2))\frac{1}{8n}$, based on a degree-$n$ Bernstein polynomial, likewise diverges, at least if $n$ is 7 or less.
 
-Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^60].
+Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^57].
 
 Some of the "moments" of this operator are:
 
@@ -626,7 +632,7 @@ for some $C>0$, and it is of interest to find an explicit upper bound for $C$, e
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^55]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^56], 1995[^57]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^58]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^59], 1995[^60]).
 
 <a id=License></a>
 
@@ -637,7 +643,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Notes
 
-[^1]: This term is used instead of "closed interval", a term which can also encompass infinitely long intervals, which is not the intent of this document (Weisstein, Eric W. "Closed Interval." From MathWorld--A Wolfram Resource. [https://mathworld.wolfram.com/ClosedInterval.html](https://mathworld.wolfram.com/ClosedInterval.html)).
+[^1]: This term is used instead of "closed interval", a term which can also encompass infinitely long intervals, which is not the intent of this document (Weisstein, Eric W. "Closed Interval." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/ClosedInterval.html**](https://mathworld.wolfram.com/ClosedInterval.html)).
 
 [^2]: A better term for positive operators is probably nonnegativity-preserving operators.
 
@@ -739,20 +745,22 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^51]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
 
-[^52]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+[^52]: A. A. Markov, "On a problem of D. I. Mendeleev", Izv. Akad. Nauk 62 (1889), 1-24.
 
-[^53]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
+[^53]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
-[^54]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
+[^54]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^55]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^55]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^56]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+[^56]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^57]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+[^57]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
 
-[^58]: A. A. Markov, "On a problem of D. I. Mendeleev", Izv. Akad. Nauk 62 (1889), 1-24.
+[^58]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul de probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^59]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
+[^59]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^60]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
+[^60]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^61]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
