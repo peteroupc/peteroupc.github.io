@@ -1184,7 +1184,7 @@ and both schemes implement step 1 of the algorithm in the same way.  However, di
 
 #### Integrals
 
-Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the "area under the graph" of that function when the function is restricted to that interval.  If _f_ is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.
+Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the "area under the graph" of that function when the function is restricted to that interval.  If _f_ is continuous there, this is the value that $\frac{b-a}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.
 
 **Algorithm 1.** (Flajolet et al., 2010\)[^2] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
 
@@ -1281,7 +1281,7 @@ The **ExpMinus** algorithm is as follows.  To flip a coin with probability of he
 This is the probability that the binary digit at _prec_ (the _prec_<sup>th</sup> binary digit after the point, where _prec_ is greater than 0) is set for an exponential random variate with rate _z_.  In this document, the **LogisticExp** algorithm is a Bernoulli factory taking the following parameters in this order:
 
 1. _z_ is 0 or greater, and written in one of the ways described in the [**"ExpMinus" section**](#ExpMinus_exp_minus__z).
-2. _prec_ is an integer 0 or greater.
+2. _prec_ is zero or a positive integer.
 
 The **LogisticExp** algorithm is as follows.  To flip a coin with probability of heads of 1/(1+exp(_z_/2<sup>_prec_</sup>)) = 1 &minus; expit(_&lambda;_/2<sup>_prec_</sup>):
 
@@ -1322,7 +1322,7 @@ The algorithm follows.
 
 #### exp(&minus;exp(_m_ + _&lambda;_))
 
-In the following algorithm, _m_ is an integer 0 or greater.
+In the following algorithm, _m_ is zero or a positive integer.
 
 1. Generate _n_, a Poisson random variate with mean 3<sup>_m_+1</sup>.  (See "[**Poisson Distribution**](https://peteroupc.github.io/randomfunc.html#Poisson_Distribution)" for one way to do this.)
 2. If _n_ is greater than 0, do the following _n_ times or until this algorithm returns a value:
@@ -1884,7 +1884,7 @@ The algorithm follows.
 (Huber 2019\)[^68].  This algorithm uses four parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _i_ is an integer 0 or greater.
+- _i_ is zero or a positive integer.
 - _&#x03F5;_ is a rational number such that 0 &lt; _&#x03F5;_ &lt; 1.  If _x_/_y_ is greater than 1, _&#x03F5;_ must be such that 0 &lt; _&#x03F5;_ &le;1 &minus; _&lambda;_ * _x_/_y_.
 
 The algorithm also has special cases not mentioned in Huber 2019.

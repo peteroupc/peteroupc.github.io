@@ -15,7 +15,7 @@ The goal of these approximations is to avoid introducing transcendental and trig
 > 1. This page was originally developed as part of a section on _approximate Bernoulli factories_, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function, $f(\lambda)$, where $\lambda$ is unknown.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.
 > 2. In practice, the level at which the function $f(\lambda)$ is known may vary:
 >
->     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).  Or...
+>     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).[^56]  Or...
 >     2. $f$ may be given as a "black box", but it's possible to find the exact value of $f(\lambda)$ for any $\lambda$ (or at least any rational $\lambda$) in $f$'s domain.  Or...
 >     3. Only the values of $f$ at a finite number of points (such as equally spaced points) may be known.
 >
@@ -461,6 +461,8 @@ There may be other useful schemes for polynomials not mentioned in this document
 [^54]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
 [^55]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+
+[^56]: Properties of the function $f$ in this sense, such as the maximum absolute value allowed for $f$'s second derivative, are called _co-observations_ in Brass, H., Petras, K., _Quadrature Theory: The Theory of Numerical Integration on a Compact Interval_, American Mathematical Society, 2011. ISBN 978-1-4704-1405-4.
 
 <a id=Appendix></a>
 
