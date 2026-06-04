@@ -335,7 +335,7 @@ The **UniformComplement** algorithm generates 1 minus the value of a uniform PSR
 **Sampling an e-rand** (a exponential PSRN) makes use of two observations, based on the parameter _&lambda;_ of the exponential distribution (with _&lambda;_ greater than 0):
 
 - While a coin flip with probability of heads of exp(&minus;_&lambda;_) is heads, the exponential random variate is increased by 1.
-- If a coin flip with probability of heads of 1/(1+exp(_&lambda;_/2<sup>_prec_</sup>)) is heads, the exponential random variate is increased by 2<sup>&minus;_prec_</sup>, where _prec_ > 0 is an integer.
+- If a coin flip with probability of heads of 1/(1+exp(_&lambda;_/2<sup>_prec_</sup>)) is heads, the exponential random variate is increased by 2<sup>&minus;_prec_</sup>, where $prec$ is a positive integer.
 
 Devroye and Gravel (2020, sec. 3.8\)[^3] already made these observations, but only for _&lambda;_ = 1.
 
@@ -382,7 +382,7 @@ The following algorithm (**UniformAdd**) shows how to add two uniform PSRNs (**a
 The following algorithm (**UniformAddRational**) shows how to add a uniform PSRN (**a**) and a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. Similarly, the rational number may be positive, negative, or zero.  _Python code implementing this algorithm is given later in this document._
 
 1. Let _ai_ be **a**'s integer part.  Special cases:
-    - If **a**'s sign is positive and has no sampled digits in its fractional part, and if **b** is an integer 0 or greater, return a uniform PSRN with a positive sign, an integer part equal to _ai_ + **b**, and an empty fractional part.
+    - If **a**'s sign is positive and has no sampled digits in its fractional part, and if **b** is zero or a positive integer, return a uniform PSRN with a positive sign, an integer part equal to _ai_ + **b**, and an empty fractional part.
     - If **a**'s sign is negative and has no sampled digits in its fractional part, and if **b** is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to _ai_ + abs(**b**), and an empty fractional part.
     - If **a**'s sign is positive, has an integer part of 0, and has no sampled digits in its fractional part, and if **b** is an integer, return a uniform PSRN with an empty fractional part.  If **b** is less than 0, the PSRN's sign is negative and its integer part is abs(**b**)&minus;1.  If **b** is 0 or greater, the PSRN's sign is positive and its integer part is abs(**b**).
     - If **b** is 0, return a copy of **a**.
@@ -1574,7 +1574,7 @@ The following is an arbitrary-precision sampler for the Rayleigh distribution wi
 5. (Now simulating exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.) Call the **ExpMinus** algorithm with parameter _k\*y_, then call the **exp(&minus;(_&lambda;_\*_z_))** with _z_ = 1/_y_ and _&lambda;_ representing a coin that does: "Run **SampleGeometricBag** on the uniform PSRN twice, and return 1 if both flips return 1, or 0 otherwise", then run the **algorithm for exp(&minus;(_&lambda;_\* _z_))** with _z_= floor(_k_ * 2 / _y_), and _&lambda;_ being a coin that does: "Run **SampleGeometricBag** on the uniform PSRN once, then return the result", then call the **subalgorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN's fractional part and go to step 4.
 7. If the uniform PSRN, call it _ret_, was accepted by step 5, set _ret_'s integer part to _k_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
 
-The subalgorithm below simulates a probability equal to (_U_+_k_)/_base_<sup>_z_</sup>, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is an integer 0 or greater, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
+The subalgorithm below simulates a probability equal to (_U_+_k_)/_base_<sup>_z_</sup>, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is zero or a positive integer, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
 
 For base 2:
 
