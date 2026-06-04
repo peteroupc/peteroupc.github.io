@@ -48,7 +48,7 @@
 
 <p>When an arithmetic operation signals the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an exception too, unless the flag&#39;s trap is enabled in the precision context (see EContext&#39;s Traps property).</p>
 
-<p>If an operation requires creating an intermediate value that might be too big to fit in memory (or might require more than 2 gigabytes of memory to store -- due to the current use of a 32-bit integer internally as a length), the operation may signal an invalid-operation flag and return not-a-number (NaN). In certain rare cases, the CompareTo method may throw OutOfMemoryException (called OutOfMemoryError in Java) in the same circumstances.</p>
+<p>If an operation requires creating an intermediate value that might be too big to fit in system memory (or might require more than 2 gigabytes of system memory to store -- due to the current use of a 32-bit integer internally as a length), the operation may signal an invalid-operation flag and return not-a-number (NaN). In certain rare cases, the CompareTo method may throw OutOfMemoryException (called OutOfMemoryError in Java) in the same circumstances.</p>
 
 <p><b>Serialization </b></p>
 
