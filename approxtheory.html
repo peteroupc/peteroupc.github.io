@@ -545,7 +545,7 @@
 
 <p>Like Whitney’s inequality, the following gives a bound on the “best possible” error between a polynomial and a function.</p>
 
-<p>Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Brass and Petras 2011<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>, example 3.1.2; Phillips 2003 <sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>, theorem 2.4.6):</p>
+<p>Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Brass and Petras 2011<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>, example 3.1.2; Phillips 2003 <sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>, theorem 2.4.6):</p>
 
 \[\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\frac{\Vert f^{(n+1)}\Vert.\]
 
@@ -556,8 +556,8 @@
 <p>Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that—</p>
 
 <ol>
-  <li>maps continuous or bounded functions on that interval to functions in a finite-dimensional subspace of continuous or bounded functions (such as polynomials up to degree 5)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>, and</li>
-  <li>is <em>idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">42</a></sup></li>
+  <li>maps continuous or bounded functions on that interval to functions in a finite-dimensional subspace of continuous or bounded functions (such as polynomials up to degree 5)<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>, and</li>
+  <li>is <em>idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup></li>
 </ol>
 
 <p>Also, let $I$ be the identity operator $I(f)=f$.</p>
@@ -568,9 +568,9 @@
 
 \[\text{abs}(f(x)-L(f)(x))\le\Vert I - L\Vert \cdot\max_t(\text{abs}(f(t)-P(t))),\tag{Leb2}\]
 
-<p>where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, (De Villiers 2012, theorem 5.3.2)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>; for the second inequality see De Boor (1982, chapter 2)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>).</p>
+<p>where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, (De Villiers 2012, theorem 5.3.2)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>; for the second inequality see De Boor (1982, chapter 2)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>).</p>
 
-<p>If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator.<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">48</a></sup></p>
+<p>If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator.<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup></p>
 
 <blockquote>
   <p><strong>Examples:</strong></p>
@@ -592,13 +592,13 @@
 \[\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.\]
     </li>
     <li>
-      <p>Let $f$ again have a continuous third derivative on the closed unit interval.  Suppose $L_n$ is a <em>spline operator</em> that maps to a continuous function (a <em>spline</em>) that equals a degree-2 polynomial at each of the subintervals $[0,1/n]$, $[1/n, 2/n]$, …, $[(n-1)/n, n/n]$ (for example, Sablonnière 2007<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>).  On each of these subintervals, $L_n(f)$ is always a polynomial up to degree 2 and $L_n$ reproduces each polynomial up to degree 2. By contrast, on the whole closed unit interval, $L_n(f)$ is generally not a polynomial.  Thus, the inequality (Leb) holds true for every degree-2 polynomial on each subinterval (as opposed to the whole closed unit interval).  In turn, for each subinterval the Whitney-type inequality reads the following, since each subinterval has the same length:</p>
+      <p>Let $f$ again have a continuous third derivative on the closed unit interval.  Suppose $L_n$ is a <em>spline operator</em> that maps to a continuous function (a <em>spline</em>) that equals a degree-2 polynomial at each of the subintervals $[0,1/n]$, $[1/n, 2/n]$, …, $[(n-1)/n, n/n]$ (for example, Sablonnière 2007<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>).  On each of these subintervals, $L_n(f)$ is always a polynomial up to degree 2 and $L_n$ reproduces each polynomial up to degree 2. By contrast, on the whole closed unit interval, $L_n(f)$ is generally not a polynomial.  Thus, the inequality (Leb) holds true for every degree-2 polynomial on each subinterval (as opposed to the whole closed unit interval).  In turn, for each subinterval the Whitney-type inequality reads the following, since each subinterval has the same length:</p>
 
 \[\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{3}\right)^{3}\max(\text{abs}(f^{(3)}))\]
 
 \[= 1\cdot\left(\frac{1}{n}\frac{1}{3}\right)^3\max(\text{abs}(f^{(3)}))=\frac{1}{27n^3}\max(\text{abs}(f^{(3)})),\]
 
-      <p>where the maximums are taken over the corresponding subinterval.  Thus, the error bound for $L_n$ reads $\text{abs}(L_n(f)(x) - f(x))$ $\le (1+\Vert L_n\Vert )\frac{1}{27n^3}\Vert f^{(3)}\Vert$.<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
+      <p>where the maximums are taken over the corresponding subinterval.  Thus, the error bound for $L_n$ reads $\text{abs}(L_n(f)(x) - f(x))$ $\le (1+\Vert L_n\Vert )\frac{1}{27n^3}\Vert f^{(3)}\Vert$.<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
     </li>
   </ol>
 </blockquote>
@@ -607,7 +607,7 @@
 
 <h3 id="bounds-for-certain-nonlinear-operators">Bounds for Certain Nonlinear Operators</h3>
 
-<p>The following comes from a result in Bede and Gal (2010)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>; see also Bede et al. (2009)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>.</p>
+<p>The following comes from a result in Bede and Gal (2010)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>; see also Bede et al. (2009)<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>.</p>
 
 <p>Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:</p>
 
@@ -624,7 +624,7 @@
 <p>provided $L(\text{abs}(e_0-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
 
 <blockquote>
-  <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.</p>
+  <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.</p>
 </blockquote>
 
 <p><a id="Example"></a></p>
@@ -643,12 +643,12 @@
 
 <ul>
   <li>$k = 2n\lambda$, where $0\le\lambda\le 1$.</li>
-  <li>$W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">54</a></sup></li>
+  <li>$W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup></li>
   <li>$X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.</li>
   <li>$\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.</li>
 </ul>
 
-<p>$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. (“$O(1/n^{3/2})$” means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)</p>
+<p>$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. (“$O(1/n^{3/2})$” means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)</p>
 
 <p>With this choice of $W_n$, $L_n$ becomes:</p>
 
@@ -676,7 +676,7 @@
   <li>$(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.</li>
 </ul>
 
-<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">57</a></sup> and central moments (Weisstein)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">58</a></sup> of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
+<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup> and central moments (Weisstein)<sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">58</a></sup> of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
 
 \[L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}\]
 
@@ -730,7 +730,7 @@
 
 \[H_{n,m}(f)=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),\]
 
-<p>where $B_n$ is the degree-$n$ Bernstein polynomial (see “Bernstein Form and Bernstein Polynomials”, earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at “$m+1$ distinct points on” the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)<sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">59</a></sup>, but appears not to have been studied elsewhere.</p>
+<p>where $B_n$ is the degree-$n$ Bernstein polynomial (see “Bernstein Form and Bernstein Polynomials”, earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at “$m+1$ distinct points on” the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">59</a></sup>, but appears not to have been studied elsewhere.</p>
 
 <p>It is known that $Lag_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $Lag_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer. Thus, if $f$ is such a polynomial, $B_n(f)=B_n(Lag_m(f))$ and therefore $H_{n,m}(f)$ = $Lag_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer.</p>
 
@@ -758,7 +758,7 @@
 
 <ul>
   <li>$\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.</li>
-  <li>$M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial’s second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 <sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>).</li>
+  <li>$M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial’s second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 <sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>).</li>
 </ul>
 
 <p><strong>Lemma</strong>: <em>Let</em> $p(\lambda)=c_0 \lambda^0 + … + c_n \lambda^n$ <em>be a polynomial on the interval</em> $[a,b]$, <em>where</em> $c_0$, …, $c_n$ <em>are real numbers and</em> $c_n$ <em>is not zero. If</em> $\Vert p\Vert\le 1$, <em>then</em> $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.</p>
@@ -775,7 +775,7 @@
 
 \[B_n(g)\le \Vert f^{(2)}\Vert/(8n).\]
 
-<p>(This follows from Lorentz (1963)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">61</a></sup> and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$’s second derivative, is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.)</p>
+<p>(This follows from Lorentz (1963)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">61</a></sup> and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$’s second derivative, is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.)</p>
 
 <p>Altogether, if $f$ has a continuous second derivative and $m$ is fixed:</p>
 
@@ -793,7 +793,7 @@
 
 <h2 id="example-the-lorentz-operators">Example: The Lorentz Operators</h2>
 
-<p>The <em>Lorentz operators</em> were introduced by Lorentz (1963)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">62</a></sup> and studied by Holtz et al. (2011)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>.</p>
+<p>The <em>Lorentz operators</em> were introduced by Lorentz (1963)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup> and studied by Holtz et al. (2011)<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>.</p>
 
 <p>This section touches on the Lorentz operator of order 2, defined as—</p>
 
@@ -801,9 +801,9 @@
 
 \[=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),\]
 
-<p>where $0\le\lambda\le 1$.<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">64</a></sup></p>
+<p>where $0\le\lambda\le 1$.<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup></p>
 
-<p>This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011<sup id="fnref:62:1"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)</p>
+<p>This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011<sup id="fnref:63:1"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)</p>
 
 <p>$Q_{n,2}$ can be bounded as follows:</p>
 
@@ -813,7 +813,7 @@
 
 <p>However, this operator has an infinite operator norm and so is unbounded. Indeed, a function can have a maximum absolute value of 1 or less yet have an arbitrarily large and continuous second derivative.  Take, for example, the family of functions $g_m(\lambda)=\cos(m\cos(\lambda\pi))$: as $m$ goes to infinity, $g_m^{(2)}(1/2)$ diverges; in turn, the expression $(B_n(g_m^{(2)})(1/2))\frac{1}{8n}$, based on a degree-$n$ Bernstein polynomial, likewise diverges, at least if $n$ is 7 or less.</p>
 
-<p>Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see “<a href="#Bounds_for_General_Linear_Operators"><strong>Bounds for General Linear Operators</strong></a>”), both of which relate to Peano kernels and apply only to bounded operators, can’t be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">65</a></sup>.</p>
+<p>Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see “<a href="#Bounds_for_General_Linear_Operators"><strong>Bounds for General Linear Operators</strong></a>”), both of which relate to Peano kernels and apply only to bounded operators, can’t be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup>.</p>
 
 <p>Some of the “moments” of this operator are:</p>
 
@@ -834,7 +834,7 @@
 
 <h2 id="probabilistic-interpretations-of-linear-operators">Probabilistic Interpretations of Linear Operators</h2>
 
-<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>, 1995<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>).</p>
+<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>, 1995<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>).</p>
 
 <p><a id="License"></a></p>
 
@@ -961,95 +961,95 @@
     <li id="fn:38">
       <p>Jaskaran Singh Kaire and Andriy Prymak, “<a href="https://arxiv.org/abs/2311.00912"><strong>Whitney-type estimates for convex functions</strong></a>”, arXiv:2311.00912 (2023). <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:38:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:68">
-      <p>Brass, H., Petras, K., <em>Quadrature Theory: The Theory of Numerical Integration on a Compact Interval</em>, American Mathematical Society, 2011 <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:39">
-      <p>Phillips, G.M., <em>Interpolation and Approximation by Polynomials</em>, Springer New York, NY, 2003. <a href="https://doi.org/10.1007/b97417"><strong>https://doi.org/10.1007/b97417</strong></a> <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Brass, H., Petras, K., <em>Quadrature Theory: The Theory of Numerical Integration on a Compact Interval</em>, American Mathematical Society, 2011 <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:40">
-      <p>A subset of functions is a <em>subspace</em> if it has the following property: if functions $f$ and $g$ are in the family, so are $f+g$, $f+\alpha$, and $g+\alpha$ for every real number $\alpha$ (Weisstein, Eric W. “Subspace.” From MathWorld–A Wolfram Resource. <a href="https://mathworld.wolfram.com/Subspace.html"><strong>https://mathworld.wolfram.com/Subspace.html</strong></a>).  The subspace is also <em>finite-dimensional</em> if it is the smallest subspace that contains a given finite set of functions.  One example of a finite-dimensional subspace of continuous functions is the polynomials up to degree 2, which are the smallest subspace containing $e_0$, $e_1$, and $e_2$. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Phillips, G.M., <em>Interpolation and Approximation by Polynomials</em>, Springer New York, NY, 2003. <a href="https://doi.org/10.1007/b97417"><strong>https://doi.org/10.1007/b97417</strong></a> <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
-      <p>This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials). <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A subset of functions is a <em>subspace</em> if it has the following property: if functions $f$ and $g$ are in the family, so are $f+g$, $f+\alpha$, and $g+\alpha$ for every real number $\alpha$ (Weisstein, Eric W. “Subspace.” From MathWorld–A Wolfram Resource. <a href="https://mathworld.wolfram.com/Subspace.html"><strong>https://mathworld.wolfram.com/Subspace.html</strong></a>).  The subspace is also <em>finite-dimensional</em> if it is the smallest subspace that contains a given finite set of functions.  One example of a finite-dimensional subspace of continuous functions is the polynomials up to degree 2, which are the smallest subspace containing $e_0$, $e_1$, and $e_2$. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:42">
-      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="https://link.springer.com/book/9783540506270"><strong>https://link.springer.com/book/9783540506270</strong></a> <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials). <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:43">
-      <p>E. W. Cheney, <em>Introduction to Approximation Theory</em>, 1998. <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="https://link.springer.com/book/9783540506270"><strong>https://link.springer.com/book/9783540506270</strong></a> <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:44">
-      <p>Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>E. W. Cheney, <em>Introduction to Approximation Theory</em>, 1998. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:45">
-      <p>De Villiers, J., <em>Mathematics of Approximation</em>, Atlantis Press, 2012. <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981. <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:46">
-      <p>De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/BFb0063200"><strong>https://doi.org/10.1007/BFb0063200</strong></a> <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>De Villiers, J., <em>Mathematics of Approximation</em>, Atlantis Press, 2012. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:47">
-      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. <em>Positivity</em> 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a>. However, Gavrea and Ivan (“<a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>A note on the fixed points of positive linear operators</strong></a>”, <em>Journal of Approximation Theory</em> (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i&gt;0$. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/BFb0063200"><strong>https://doi.org/10.1007/BFb0063200</strong></a> <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:48">
-      <p>Sablonniere, Paul. “A quadrature formula associated with a univariate spline quasi interpolant.” BIT Numerical Mathematics 47.4 (2007): 825-837. <a href="https://doi.org/10.1007/s10543-007-0146-8"><strong>https://doi.org/10.1007/s10543-007-0146-8</strong></a> <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. <em>Positivity</em> 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a>. However, Gavrea and Ivan (“<a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>A note on the fixed points of positive linear operators</strong></a>”, <em>Journal of Approximation Theory</em> (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i&gt;0$. <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:49">
-      <p>It has been argued that the inequality in this section applies to spline operators that reproduce every polynomial up to degree $d$, say, on <em>subintervals</em> of their domain even though they map to more functions than polynomials on the <em>whole</em> domain. For example, compare—<br />Sablonnière, P. “Univariate spline quasi-interpolants and applications to numerical analysis.” Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br />Sablonnière, P. “Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3.” Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br />with the operators in Lee, B-G., et al., “Some examples of quasi-interpolants constructed from local spline projectors”, Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br />But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Sablonniere, Paul. “A quadrature formula associated with a univariate spline quasi interpolant.” BIT Numerical Mathematics 47.4 (2007): 825-837. <a href="https://doi.org/10.1007/s10543-007-0146-8"><strong>https://doi.org/10.1007/s10543-007-0146-8</strong></a> <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:50">
-      <p>Bede, Barnabás, and Sorin G. Gal. “Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind.” Journal of Concrete &amp; Applicable Mathematics 8.1 (2010). <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>It has been argued that the inequality in this section applies to spline operators that reproduce every polynomial up to degree $d$, say, on <em>subintervals</em> of their domain even though they map to more functions than polynomials on the <em>whole</em> domain. For example, compare—<br />Sablonnière, P. “Univariate spline quasi-interpolants and applications to numerical analysis.” Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br />Sablonnière, P. “Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3.” Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br />with the operators in Lee, B-G., et al., “Some examples of quasi-interpolants constructed from local spline projectors”, Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br />But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:51">
-      <p>Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. <a href="https://doi.org/10.1155/2009/590589"><strong>https://doi.org/10.1155/2009/590589</strong></a> <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Bede, Barnabás, and Sorin G. Gal. “Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind.” Journal of Concrete &amp; Applicable Mathematics 8.1 (2010). <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:52">
-      <p>Gal, Sorin G., and Constantin P. Niculescu. “<a href="https://arxiv.org/abs/2206.14102v1"><strong>Korovkin-type theorems for weakly nonlinear and monotone operators</strong></a>”, arXiv:2206.14102v1 [math.FA], also in <em>Mediterranean Journal of Mathematics</em> 20.2 (2023): 56. <a href="https://doi.org/10.1007/s00009-023-02271-y"><strong>https://doi.org/10.1007/s00009-023-02271-y</strong></a> <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. <a href="https://doi.org/10.1155/2009/590589"><strong>https://doi.org/10.1155/2009/590589</strong></a> <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:53">
-      <p>$W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gal, Sorin G., and Constantin P. Niculescu. “<a href="https://arxiv.org/abs/2206.14102v1"><strong>Korovkin-type theorems for weakly nonlinear and monotone operators</strong></a>”, arXiv:2206.14102v1 [math.FA], also in <em>Mediterranean Journal of Mathematics</em> 20.2 (2023): 56. <a href="https://doi.org/10.1007/s00009-023-02271-y"><strong>https://doi.org/10.1007/s00009-023-02271-y</strong></a> <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:54">
-      <p>Güntürk, C. Sinan, and Weilin Li. “<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>”, arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). <a href="https://doi.org/10.1007/s00365-022-09608-y"><strong>https://doi.org/10.1007/s00365-022-09608-y</strong></a> <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>$W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:55">
-      <p>Micchelli, Charles. “<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>”, Journal of Approximation Theory 8, no. 1 (1973): 1-18. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Güntürk, C. Sinan, and Weilin Li. “<a href="https://arxiv.org/pdf/2112.09183"><strong>Approximation with one-bit polynomials in Bernstein form</strong></a>”, arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). <a href="https://doi.org/10.1007/s00365-022-09608-y"><strong>https://doi.org/10.1007/s00365-022-09608-y</strong></a> <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:56">
-      <p>Wang, Y.Q., Zhang, Y.Y, Liu, J.L., “Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments”, Communications in Statistics–Theory and Methods 52(17), 2023. <a href="https://doi.org/10.1080/03610926.2021.2024235"><strong>https://doi.org/10.1080/03610926.2021.2024235</strong></a> <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Micchelli, Charles. “<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>”, Journal of Approximation Theory 8, no. 1 (1973): 1-18. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:57">
-      <p>Weisstein, Eric W. “Central Moment.” From MathWorld–A Wolfram Resource. <a href="https://mathworld.wolfram.com/CentralMoment.html"><strong>https://mathworld.wolfram.com/CentralMoment.html</strong></a> <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Wang, Y.Q., Zhang, Y.Y, Liu, J.L., “Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments”, Communications in Statistics–Theory and Methods 52(17), 2023. <a href="https://doi.org/10.1080/03610926.2021.2024235"><strong>https://doi.org/10.1080/03610926.2021.2024235</strong></a> <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:58">
-      <p>Ioan Gavrea, Mircea Ivan, “A note on the fixed points of positive linear operators”, Journal of Approximation Theory (227), 2018, <a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>https://doi.org/10.1016/j.jat.2017.12.001.</strong></a>. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Weisstein, Eric W. “Central Moment.” From MathWorld–A Wolfram Resource. <a href="https://mathworld.wolfram.com/CentralMoment.html"><strong>https://mathworld.wolfram.com/CentralMoment.html</strong></a> <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:59">
-      <p>Schaeffer, A. C., and R. J. Duffin. “On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials.” Bulletin of the American Mathematical Society 44.4 (1938): 289-297. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Ioan Gavrea, Mircea Ivan, “A note on the fixed points of positive linear operators”, Journal of Approximation Theory (227), 2018, <a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>https://doi.org/10.1016/j.jat.2017.12.001.</strong></a>. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:60">
-      <p>G.G. Lorentz, “Inequalities and saturation classes for Bernstein polynomials”, 1963. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Schaeffer, A. C., and R. J. Duffin. “On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials.” Bulletin of the American Mathematical Society 44.4 (1938): 289-297. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:61">
-      <p>Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). <a href="https://doi.org/10.1007/BF01398235"><strong>https://doi.org/10.1007/BF01398235</strong></a> <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>G.G. Lorentz, “Inequalities and saturation classes for Bernstein polynomials”, 1963. <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:62">
-      <p>Holtz, O., Nazarov, F. &amp; Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). <a href="https://doi.org/10.1007/s00365-010-9108-5"><strong>https://doi.org/10.1007/s00365-010-9108-5</strong></a> <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:62:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). <a href="https://doi.org/10.1007/BF01398235"><strong>https://doi.org/10.1007/BF01398235</strong></a> <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:63">
-      <p>$Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called <em>linear differential operator</em>: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Holtz, O., Nazarov, F. &amp; Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). <a href="https://doi.org/10.1007/s00365-010-9108-5"><strong>https://doi.org/10.1007/s00365-010-9108-5</strong></a> <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:63:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:64">
-      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007 <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>$Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called <em>linear differential operator</em>: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$. <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:65">
-      <p>S.N. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”, Comm. Kharkov Math. Soc. 13, 1-2, 1912. <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007 <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:66">
-      <p>Adell, J. A., and J. De la Cal. “Bernstein-type operators diminish the φ-variation.” Constructive Approximation 12.4 (1996): 489-507. <a href="https://doi.org/10.1007/BF02437505"><strong>https://doi.org/10.1007/BF02437505</strong></a> <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>S.N. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”, Comm. Kharkov Math. Soc. 13, 1-2, 1912. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:67">
-      <p>Adell, J. A., and J. De la Cal. “Bernstein-Durrmeyer operators.” Computers &amp; Mathematics with Applications 30.3-6 (1995): 1-14. <a href="https://doi.org/10.1016/0898-1221%2895%2900081-X"><strong>https://doi.org/10.1016/0898-1221%2895%2900081-X</strong></a> <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Adell, J. A., and J. De la Cal. “Bernstein-type operators diminish the φ-variation.” Constructive Approximation 12.4 (1996): 489-507. <a href="https://doi.org/10.1007/BF02437505"><strong>https://doi.org/10.1007/BF02437505</strong></a> <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:68">
+      <p>Adell, J. A., and J. De la Cal. “Bernstein-Durrmeyer operators.” Computers &amp; Mathematics with Applications 30.3-6 (1995): 1-14. <a href="https://doi.org/10.1016/0898-1221%2895%2900081-X"><strong>https://doi.org/10.1016/0898-1221%2895%2900081-X</strong></a> <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
