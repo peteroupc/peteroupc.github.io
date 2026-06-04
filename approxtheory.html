@@ -547,7 +547,7 @@
 
 <p>Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Brass and Petras 2011<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>, example 3.1.2; Phillips 2003 <sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>, theorem 2.4.6):</p>
 
-\[\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\frac{\Vert f^{(n+1)}\Vert.\]
+\[\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert.\]
 
 <p><a id="Lebesgue_Inequality_for_Certain_Linear_Operators"></a></p>
 
@@ -592,13 +592,7 @@
 \[\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.\]
     </li>
     <li>
-      <p>Let $f$ again have a continuous third derivative on the closed unit interval.  Suppose $L_n$ is a <em>spline operator</em> that maps to a continuous function (a <em>spline</em>) that equals a degree-2 polynomial at each of the subintervals $[0,1/n]$, $[1/n, 2/n]$, …, $[(n-1)/n, n/n]$ (for example, Sablonnière 2007<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>).  On each of these subintervals, $L_n(f)$ is always a polynomial up to degree 2 and $L_n$ reproduces each polynomial up to degree 2. By contrast, on the whole closed unit interval, $L_n(f)$ is generally not a polynomial.  Thus, the inequality (Leb) holds true for every degree-2 polynomial on each subinterval (as opposed to the whole closed unit interval).  In turn, for each subinterval the Whitney-type inequality reads the following, since each subinterval has the same length:</p>
-
-\[\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{3}\right)^{3}\max(\text{abs}(f^{(3)}))\]
-
-\[= 1\cdot\left(\frac{1}{n}\frac{1}{3}\right)^3\max(\text{abs}(f^{(3)}))=\frac{1}{27n^3}\max(\text{abs}(f^{(3)})),\]
-
-      <p>where the maximums are taken over the corresponding subinterval.  Thus, the error bound for $L_n$ reads $\text{abs}(L_n(f)(x) - f(x))$ $\le (1+\Vert L_n\Vert )\frac{1}{27n^3}\Vert f^{(3)}\Vert$.<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
+      <p>Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a degree-2 polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
     </li>
   </ol>
 </blockquote>
@@ -995,7 +989,7 @@
       <p>Sablonniere, Paul. “A quadrature formula associated with a univariate spline quasi interpolant.” BIT Numerical Mathematics 47.4 (2007): 825-837. <a href="https://doi.org/10.1007/s10543-007-0146-8"><strong>https://doi.org/10.1007/s10543-007-0146-8</strong></a> <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:50">
-      <p>It has been argued that the inequality in this section applies to spline operators that reproduce every polynomial up to degree $d$, say, on <em>subintervals</em> of their domain even though they map to more functions than polynomials on the <em>whole</em> domain. For example, compare—<br />Sablonnière, P. “Univariate spline quasi-interpolants and applications to numerical analysis.” Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br />Sablonnière, P. “Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3.” Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br />with the operators in Lee, B-G., et al., “Some examples of quasi-interpolants constructed from local spline projectors”, Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br />But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>It has been argued that the inequalities in this section apply to spline operators that reproduce every polynomial up to degree $d$, say, on <em>subintervals</em> of their domain even though they map to more functions than polynomials on the <em>whole</em> domain. For example, compare—<br />Sablonnière, P. “Univariate spline quasi-interpolants and applications to numerical analysis.” Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br />Sablonnière, P. “Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3.” Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br />with the operators in Lee, B-G., et al., “Some examples of quasi-interpolants constructed from local spline projectors”, Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br />But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them. <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:51">
       <p>Bede, Barnabás, and Sorin G. Gal. “Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind.” Journal of Concrete &amp; Applicable Mathematics 8.1 (2010). <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

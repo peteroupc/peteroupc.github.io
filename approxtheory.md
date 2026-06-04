@@ -393,7 +393,7 @@ Like Whitney's inequality, the following gives a bound on the "best possible" er
 
 Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Brass and Petras 2011[^39], example 3.1.2; Phillips 2003 [^40], theorem 2.4.6\):
 
-$$\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\frac{\Vert f^{(n+1)}\Vert.$$
+$$\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert.$$
 
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
 
@@ -430,13 +430,7 @@ If every function mapped to by $L$ is a polynomial, though, this error bound wil
 >
 >     $$\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.$$
 >
-> 4. Let $f$ again have a continuous third derivative on the closed unit interval.  Suppose $L_n$ is a _spline operator_ that maps to a continuous function (a _spline_) that equals a degree-2 polynomial at each of the subintervals $[0,1/n]$, $[1/n, 2/n]$, ..., $[(n-1)/n, n/n]$ (for example, Sablonnière 2007[^49]).  On each of these subintervals, $L_n(f)$ is always a polynomial up to degree 2 and $L_n$ reproduces each polynomial up to degree 2. By contrast, on the whole closed unit interval, $L_n(f)$ is generally not a polynomial.  Thus, the inequality (Leb) holds true for every degree-2 polynomial on each subinterval (as opposed to the whole closed unit interval).  In turn, for each subinterval the Whitney-type inequality reads the following, since each subinterval has the same length:
->
->     $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{3}\right)^{3}\max(\text{abs}(f^{(3)}))$$
->
->     $$ = 1\cdot\left(\frac{1}{n}\frac{1}{3}\right)^3\max(\text{abs}(f^{(3)}))=\frac{1}{27n^3}\max(\text{abs}(f^{(3)})),$$
->
->     where the maximums are taken over the corresponding subinterval.  Thus, the error bound for $L_n$ reads $\text{abs}(L_n(f)(x) - f(x))$ $\le (1+\Vert L_n\Vert )\frac{1}{27n^3}\Vert f^{(3)}\Vert$.[^50]
+> 4. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a degree-2 polynomial at subintervals of its domain (for example, Sablonnière 2007[^49]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^50]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
@@ -766,7 +760,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^49]: Sablonniere, Paul. "A quadrature formula associated with a univariate spline quasi interpolant." BIT Numerical Mathematics 47.4 (2007): 825-837. [**https://doi.org/10.1007/s10543-007-0146-8**](https://doi.org/10.1007/s10543-007-0146-8)
 
-[^50]: It has been argued that the inequality in this section applies to spline operators that reproduce every polynomial up to degree $d$, say, on _subintervals_ of their domain even though they map to more functions than polynomials on the _whole_ domain. For example, compare&mdash;<br>Sablonnière, P. "Univariate spline quasi-interpolants and applications to numerical analysis." Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br>Sablonnière, P. "Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3." Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br>with the operators in Lee, B-G., et al., "Some examples of quasi-interpolants constructed from local spline projectors", Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br>But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them.
+[^50]: It has been argued that the inequalities in this section apply to spline operators that reproduce every polynomial up to degree $d$, say, on _subintervals_ of their domain even though they map to more functions than polynomials on the _whole_ domain. For example, compare&mdash;<br>Sablonnière, P. "Univariate spline quasi-interpolants and applications to numerical analysis." Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br>Sablonnière, P. "Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3." Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br>with the operators in Lee, B-G., et al., "Some examples of quasi-interpolants constructed from local spline projectors", Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br>But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them.
 
 [^51]: Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind." Journal of Concrete & Applicable Mathematics 8.1 (2010).
 
