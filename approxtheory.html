@@ -8,11 +8,11 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>The notes in this page generally relate to finding bounds on how close a polynomial is to a single-variable function on a compact interval.</p>
+<p>The notes in this page catalog results that may be useful in finding bounds on how close a polynomial (or another simple function) is to a single-variable function on a compact interval.</p>
 
-<p>The aim is to help find error bounds that are <em>explicit</em>, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed <em>offline</em>, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.</p>
+<p>The aim is to find error bounds that are <em>explicit</em>, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed <em>offline</em>, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.</p>
 
-<p>The mapping from a function to a function (in this case, from a single-variable function to a polynomial “close” to it) is called an <em>operator</em>, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.</p>
+<p>The mapping from a function to a function (for example, from a single-variable function to a polynomial “close” to it) is called an <em>operator</em>, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.</p>
 
 <p><a id="Contents"></a></p>
 
@@ -20,6 +20,7 @@
 
 <ul>
   <li><a href="#Contents"><strong>Contents</strong></a></li>
+  <li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
   <li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
   <li><a href="#Bernstein_Form_and_Bernstein_Polynomials"><strong>Bernstein Form and Bernstein Polynomials</strong></a></li>
   <li><a href="#Moments_of_Linear_Operators"><strong>“Moments” of Linear Operators</strong></a>
@@ -46,6 +47,12 @@
   <li><a href="#License"><strong>License</strong></a></li>
   <li><a href="#Notes"><strong>Notes</strong></a></li>
 </ul>
+
+<p><a id="About_This_Document"></a></p>
+
+<h2 id="about-this-document">About This Document</h2>
+
+<p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/approxtheory.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxtheory.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a>, especially if you find any errors on this page.</p>
 
 <p><a id="Notation_and_Definitions"></a></p>
 
@@ -568,7 +575,7 @@
 
 \[\text{abs}(f(x)-L(f)(x))\le\Vert I - L\Vert \cdot\max_t(\text{abs}(f(t)-P(t))),\tag{Leb2}\]
 
-<p>where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, (De Villiers 2012, theorem 5.3.2)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>; for the second inequality see De Boor (1982, chapter 2)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>).</p>
+<p>where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>; for the second inequality see De Boor (1982, chapter 2)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>).</p>
 
 <p>If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator.<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup></p>
 
@@ -591,10 +598,9 @@
 
 \[\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.\]
     </li>
-    <li>
-      <p>Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a degree-2 polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
-    </li>
   </ol>
+
+  <p><strong>Note:</strong> Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup></p>
 </blockquote>
 
 <p><a id="Bounds_for_Certain_Nonlinear_Operators"></a></p>
@@ -618,7 +624,7 @@
 <p>provided $L(\text{abs}(e_0-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
 
 <blockquote>
-  <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.</p>
+  <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>; on nonlinear approximation, see DeVore «1998DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. https://doi.org/10.1017/S0962492900002816».</p>
 </blockquote>
 
 <p><a id="Example"></a></p>

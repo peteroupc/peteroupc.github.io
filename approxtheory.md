@@ -2,17 +2,18 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-The notes in this page generally relate to finding bounds on how close a polynomial is to a single-variable function on a compact interval.
+The notes in this page catalog results that may be useful in finding bounds on how close a polynomial (or another simple function) is to a single-variable function on a compact interval.
 
-The aim is to help find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.
+The aim is to find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.
 
-The mapping from a function to a function (in this case, from a single-variable function to a polynomial "close" to it) is called an _operator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
+The mapping from a function to a function (for example, from a single-variable function to a polynomial "close" to it) is called an _operator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
 
 <a id=Contents></a>
 
 ## Contents
 
 - [**Contents**](#Contents)
+- [**About This Document**](#About_This_Document)
 - [**Notation and Definitions**](#Notation_and_Definitions)
 - [**Bernstein Form and Bernstein Polynomials**](#Bernstein_Form_and_Bernstein_Polynomials)
 - [**"Moments" of Linear Operators**](#Moments_of_Linear_Operators)
@@ -32,6 +33,12 @@ The mapping from a function to a function (in this case, from a single-variable 
 - [**Probabilistic Interpretations of Linear Operators**](#Probabilistic_Interpretations_of_Linear_Operators)
 - [**License**](#License)
 - [**Notes**](#Notes)
+
+<a id=About_This_Document></a>
+
+## About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/approxtheory.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxtheory.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues), especially if you find any errors on this page.
 
 <a id=Notation_and_Definitions></a>
 
@@ -412,7 +419,7 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+\Vert L\Vert )\cdot\max_t(\text{abs}(f(t)-P(t)))
 
 $$\text{abs}(f(x)-L(f)(x))\le\Vert I - L\Vert \cdot\max_t(\text{abs}(f(t)-P(t))),\tag{Leb2}$$
 
-where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^43], Cheney (1996, chapter 6)[^44], Powell (1981, theorem 3.1)[^45], (De Villiers 2012, theorem 5.3.2)[^46]; for the second inequality see De Boor (1982, chapter 2)[^47]).
+where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^43], Cheney (1996, chapter 6)[^44], Powell (1981, theorem 3.1)[^45], De Villiers (2012, theorem 5.3.2)[^46]; for the second inequality see De Boor (1982, chapter 2)[^47]).
 
 If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator.[^48]
 
@@ -430,7 +437,7 @@ If every function mapped to by $L$ is a polynomial, though, this error bound wil
 >
 >     $$\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.$$
 >
-> 4. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a degree-2 polynomial at subintervals of its domain (for example, Sablonnière 2007[^49]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^50]
+> **Note:** Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^49]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^50]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
@@ -450,7 +457,7 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),$$
 
 provided $L(\text{abs}(e_0-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
-> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53].
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore <<1998DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [https://doi.org/10.1017/S0962492900002816>>.](https://doi.org/10.1017/S0962492900002816>>.)
 
 <a id=Example></a>
 
