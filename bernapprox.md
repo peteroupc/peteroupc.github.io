@@ -15,11 +15,11 @@ The goal of these approximations is to avoid introducing transcendental and trig
 > 1. This page was originally developed as part of a section on _approximate Bernoulli factories_, or algorithms that toss heads with probability equal to a polynomial that comes close to a continuous function, $f(\lambda)$, where $\lambda$ is unknown.  However, the information in this page is of much broader interest than the approximate Bernoulli factory problem.
 > 2. In practice, the level at which the function $f(\lambda)$ is known may vary:
 >
->     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$).[^1]  Or...
+>     1. $f(\lambda)$ may be known so completely that any property of $f$ that is needed can be computed (for example, $f(\lambda)$ is given in a symbolic form such as $\sin(\lambda)/3$ or $\exp(-\lambda/4)$). Or...
 >     2. $f$ may be given as a "black box", but it's possible to find the exact value of $f(\lambda)$ for any $\lambda$ (or at least any rational $\lambda$) in $f$'s domain.  Or...
 >     3. Only the values of $f$ at a finite number of points (such as equally spaced points) may be known.
 >
->     In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$'s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see "Definitions").  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.[^2]
+>     In the last two cases, additional assumptions on $f$ may have to be made in practice, such as upper bounds on $f$'s first or second derivative, or whether $f$ has a continuous $r$-th derivative for every $r$ (see "Definitions").[^1]  If $f$ does not meet those assumptions, the polynomial that approximates $f$ will not necessarily achieve the desired accuracy.[^2]
 
 <a id=Contents></a>
 
@@ -352,7 +352,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 ## Notes
 
-[^1]: Properties of the function $f$ in this sense, such as the maximum absolute value allowed for $f$'s second derivative, are called _co-observations_ in Brass, H., Petras, K., _Quadrature Theory: The Theory of Numerical Integration on a Compact Interval_, American Mathematical Society, 2011. ISBN 978-1-4704-1405-4.
+[^1]: Assumptions of this kind are called _co-observations_ in Brass, H., Petras, K., _Quadrature Theory: The Theory of Numerical Integration on a Compact Interval_, American Mathematical Society, 2011. ISBN 978-1-4704-1405-4.
 
 [^2]: In case 3 in general, if $f$ is analytic at every point on an interval, the "most stable" approximation occurs when the sample points are clustered at a quadratic rate toward the endpoints. Adcock, B., Platte, R.B., Shadrin, A., "[**Optimal sampling rates for approximating analytic functions from pointwise samples**](https://doi.org/10.1093/imanum/dry024), _IMA Journal of Numerical Analysis_ 39(3), July 2019.
 

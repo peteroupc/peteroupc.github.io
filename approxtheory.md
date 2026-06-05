@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-The notes in this page catalog results that may be useful in finding bounds on how close a polynomial (or another simple function) is to a single-variable function on a compact interval.
+The notes in this page catalog results that may be useful in finding bounds on how close a polynomial or rational function is to a single-variable function on a compact interval.
 
 The aim is to find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.
 
@@ -315,9 +315,13 @@ _Then:_
 
 $$\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))$$
 
-$$\le \frac{C - c}{2} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda))/(k!)\right) dt\tag{3}$$
+$$\le \frac{C - c}{2} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda)/(k!)\right) dt\tag{3}$$
 
-$$= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda))\right) dt,\tag{4}$$
+$$= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda)\right) dt\tag{4}$$
+
+$$= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt + \int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup$$
+
+$$= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left((\lambda-t)^k - L(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt + \int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,$$
 
 $$\text{abs}(LF(f)(\lambda))\le \frac{\Vert f^{(k+1)}\Vert}{k!} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda))\right) dt,\tag{5}$$
 
@@ -457,7 +461,7 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),$$
 
 provided $L(\text{abs}(e_0-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
-> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore <<1998DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [https://doi.org/10.1017/S0962492900002816>>.](https://doi.org/10.1017/S0962492900002816>>.)
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore (1998)[^69].](https://doi.org/10.1017/S0962492900002816>>.)
 
 <a id=Example></a>
 
@@ -804,3 +808,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^67]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
 [^68]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^69]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [https://doi.org/10.1017/S0962492900002816
