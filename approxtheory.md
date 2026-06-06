@@ -31,6 +31,7 @@ The mapping from a function to a function (for example, from a single-variable f
 - [**Example: An Interesting Linear Operator**](#Example_An_Interesting_Linear_Operator)
 - [**Example: The Lorentz Operators**](#Example_The_Lorentz_Operators)
 - [**Probabilistic Interpretations of Linear Operators**](#Probabilistic_Interpretations_of_Linear_Operators)
+- [**Conclusion: Ways to Improve This Article**](#Conclusion_Ways_to_Improve_This_Article)
 - [**License**](#License)
 - [**Notes**](#Notes)
 
@@ -461,7 +462,7 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),$$
 
 provided $L(\text{abs}(e_0-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
-> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore (1998)[^69].](https://doi.org/10.1017/S0962492900002816>>.)
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore (1998)[^54].](https://doi.org/10.1017/S0962492900002816>>.)
 
 <a id=Example></a>
 
@@ -478,11 +479,11 @@ $$=\mathbb{E}\left[W_{2n}\left(f\right)\left(\frac{k}{2n}\right) - W_n\left(f\ri
 where:
 
 - $k = 2n\lambda$, where $0\le\lambda\le 1$.
-- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^54]
+- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^55]
 - $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.
 - $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.
 
-$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^55].  That paper, among others (for example, Micchelli 1973[^56]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
+$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^56].  That paper, among others (for example, Micchelli 1973[^57]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
 
 With this choice of $W_n$, $L_n$ becomes:
 
@@ -508,7 +509,7 @@ The following are some of these values and those for related operators:
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^57] and central moments (Weisstein)[^58] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^58] and central moments (Weisstein)[^59] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
@@ -562,7 +563,7 @@ For a continuous function $f$ on the closed unit interval and for nonnegative in
 
 $$H_{n,m}(f)=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),$$
 
-where $B_n$ is the degree-$n$ Bernstein polynomial (see "Bernstein Form and Bernstein Polynomials", earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^59], but appears not to have been studied elsewhere.
+where $B_n$ is the degree-$n$ Bernstein polynomial (see "Bernstein Form and Bernstein Polynomials", earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^60], but appears not to have been studied elsewhere.
 
 It is known that $Lag_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $Lag_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer. Thus, if $f$ is such a polynomial, $B_n(f)=B_n(Lag_m(f))$ and therefore $H_{n,m}(f)$ = $Lag_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer.
 
@@ -589,7 +590,7 @@ $$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Ver
 where:
 
 - $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.
-- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^60]).
+- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^61]).
 
 **Lemma**: _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.
 
@@ -605,7 +606,7 @@ so now there are two error bounds to find: one for $f$ and the other for $\text{
 
 $$B_n(g)\le \Vert f^{(2)}\Vert/(8n).$$
 
-(This follows from Lorentz (1963)[^61] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
+(This follows from Lorentz (1963)[^62] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
@@ -623,7 +624,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (
 
 ## Example: The Lorentz Operators
 
-The _Lorentz operators_ were introduced by Lorentz (1963)[^62] and studied by Holtz et al. (2011)[^63].
+The _Lorentz operators_ were introduced by Lorentz (1963)[^63] and studied by Holtz et al. (2011)[^64].
 
 This section touches on the Lorentz operator of order 2, defined as&mdash;
 
@@ -631,9 +632,9 @@ $$Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})
 
 $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
-where $0\le\lambda\le 1$.[^64]
+where $0\le\lambda\le 1$.[^65]
 
-This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^63]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^64]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
@@ -643,7 +644,7 @@ where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.
 
 However, this operator has an infinite operator norm and so is unbounded. Indeed, a function can have a maximum absolute value of 1 or less yet have an arbitrarily large and continuous second derivative.  Take, for example, the family of functions $g_m(\lambda)=\cos(m\cos(\lambda\pi))$: as $m$ goes to infinity, $g_m^{(2)}(1/2)$ diverges; in turn, the expression $(B_n(g_m^{(2)})(1/2))\frac{1}{8n}$, based on a degree-$n$ Bernstein polynomial, likewise diverges, at least if $n$ is 7 or less.
 
-Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^65].
+Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^66].
 
 Some of the "moments" of this operator are:
 
@@ -662,7 +663,35 @@ for some $C>0$, and it is of interest to find an explicit upper bound for $C$, e
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^66]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^67], 1995[^68]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^67]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^68], 1995[^69]).
+
+<a id=Conclusion_Ways_to_Improve_This_Article></a>
+
+## Conclusion: Ways to Improve This Article
+
+To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
+
+- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).
+- General-purpose upper bounds on the error when approximating a function with:
+    1. Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.
+    2. Ratios of polynomials described in (1).
+    3. Convex combinations of functions described in (1) or (2).  A convex combination has the form $c_0 f_0(\lambda) + c_1 f_1(\lambda) + ...$ where $c_i$ are nonnegative and sum to 1.
+    4. Compositions of functions described in (1), (2), or (3).  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.
+- Easy-to-use upper bounds for [**estimating Peano kernels**](#Bounds_for_General_Linear_Operators), such as the Peano kernels corresponding to the [**Lorentz operators**](#Example_The_Lorentz_Operators).
+- Additional error bounds for [**nonlinear operators**](#Bounds_for_Certain_Nonlinear_Operators).
+- Error bounds that are sharper than those in Lemmas 9 to 12 for functions with a $k$-th continuous derivative for some $k\ge 2$.
+
+In addition, the following will be helpful.
+
+- Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.
+- A cleaner way to prove a linear operator is unbounded.  For example, the Lorentz operator is unbounded largely because it requires the values of second derivatives.
+- Does Lemma 7 also work for unbounded linear operators, such as the [**Lorentz operator**](#Example_The_Lorentz_Operators)?
+
+Also:
+
+- Is it helpful to introduce the concept of functions of bounded variation here?
+
+Those are not all the possible ways this article can be improved.
 
 <a id=License></a>
 
@@ -779,34 +808,34 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^53]: Gal, Sorin G., and Constantin P. Niculescu. "[**Korovkin-type theorems for weakly nonlinear and monotone operators**](https://arxiv.org/abs/2206.14102v1)", arXiv:2206.14102v1 [math.FA], also in _Mediterranean Journal of Mathematics_ 20.2 (2023): 56. [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
 
-[^54]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
+[^54]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [https://doi.org/10.1017/S0962492900002816
 
-[^55]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [**https://doi.org/10.1007/s00365-022-09608-y**](https://doi.org/10.1007/s00365-022-09608-y)
+[^55]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
-[^56]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^56]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [**https://doi.org/10.1007/s00365-022-09608-y**](https://doi.org/10.1007/s00365-022-09608-y)
 
-[^57]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments", Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^57]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^58]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+[^58]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments", Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
-[^59]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
+[^59]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
-[^60]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
+[^60]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
 
-[^61]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+[^61]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
 
-[^62]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
+[^62]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
 
-[^63]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
+[^63]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^64]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
+[^64]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^65]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
+[^65]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^66]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^66]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
 
-[^67]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+[^67]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^68]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+[^68]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^69]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [https://doi.org/10.1017/S0962492900002816
+[^69]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
