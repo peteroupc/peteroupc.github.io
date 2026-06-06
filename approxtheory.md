@@ -679,7 +679,7 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function bounded above by an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^21] with Gonska and Zhou 1994[^70] and Holtz et al. 2011[^64].)
+where $O(1/n^{1/2})$ is a function whose absolute value is bounded above by an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^21] with Gonska and Zhou 1994[^70] and Holtz et al. 2011[^64].)
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
@@ -854,4 +854,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^69]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
 
-[^70]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [https://doi.org/10.1016/0377-0427(92](https://doi.org/10.1016/0377-0427(92))00133-T
+[^70]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [https://doi.org/10.1016/0377-0427%02892%02900133-T
