@@ -248,7 +248,7 @@ Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval
 
 > **Note:** A pair of articles by Konečný and Neumann discuss approximating the integral (and maximum) of a class of functions efficiently using polynomials or piecewise functions with polynomials as the pieces: Konečný and Neumann (2021)[^22]; Konečný and Neumann (2019)[^23].
 >
-> Muñoz and Narkawicz (2013)[^24] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is bounded above by its highest Bernstein coefficient and below by its lowest.
+> Muñoz and Narkawicz (2013)[^24] also discuss finding the minimum and maximum of a polynomial in Bernstein form &mdash; indeed, a polynomial is not greater than its highest Bernstein coefficient and not less than its lowest.
 
 <a id=Approximating_a_Derivative></a>
 

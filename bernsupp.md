@@ -532,7 +532,7 @@ Functions continuous except possibly at one point &rarr; Continuous functions &r
 | min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). | _&alpha;_=1.<br>_L_ = _mult_. | _mult_ &gt; 0, _&epsilon;_ &gt; 0.  Piecewise linear; equals 0 at 0, 1&minus;_&epsilon;_ at (1&minus;_&epsilon;_)/_mult_, and 1&minus;_&epsilon;_ at 1.<br>_L_=max(_mult_, 0).<br>Concave. |
 | 1/10 if _&lambda;_ is 0; &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise. | Not Hölder continuous. | Has a slope near 0 that's steeper than every "nth" root. |
 
-> **Note:** A Hölder-continuous function with Hölder exponent _&alpha;_ and Hölder constant _L_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant bounded above by _L_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
+> **Note:** A Hölder-continuous function with Hölder exponent _&alpha;_ and Hölder constant _L_ is also Hölder continuous with Hölder exponent _&beta;_ and Hölder constant no more than _L_, where 0 &lt; _&beta;_ &lt; _&alpha;_.
 
 **Finding parameters _&alpha;_ and _L_ for Hölder-continuous functions.** If $f(\lambda)$ is continuous, the following is one way to find the Hölder exponent (_&alpha;_) and Hölder constant (_L_) of $f$, to determine whether $f$ is Hölder continuous, not just continuous.
 
@@ -573,13 +573,13 @@ The following results give upper bounds on $p$'s coin-flipping degree.
 
 Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0, ..., b_m$:
 
-- If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by $m$.
-- If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is bounded above by&mdash;
+- If $0\le\min(b_0, ..., b_m)\le\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is no more than $m$.
+- If $0\le\min(b_0, ..., b_m)$ and $\max(b_0, ..., b_m)\gt 1$, then the coin-flipping degree is no more than&mdash;
 
     $$\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(1-b_0, ..., 1-b_m)}{1-\text{Pmax}}\right),$$
 
     where iceil($x$) is $x+1$ if $x$ is an integer, or ceil($x$) otherwise, and where $\text{Pmax}$ is the maximum value of $p(\lambda)$ on the closed unit interval (Powers and Reznick 2001)[^19]; see also Boudaoud et al. (2007)[^20]
-- If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is bounded above by&mdash;
+- If $\min(b_0, ..., b_m)\lt 0$ and $\max(b_0, ..., b_m)\le 1$, then the coin-flipping degree is no more than&mdash;
 
     $$\text{iceil}\left(\frac{m(m-1)}{2}\frac{\max(b_0, ..., b_m)}{\text{Pmin}} \right),$$
 
@@ -591,7 +591,7 @@ Suppose $p$ is in Bernstein form of degree $m$ with Bernstein coefficients $b_0,
     - For every $i$ such that $b_i\gt 1$, if $b_m=1$, there must be $j\gt i$ such that $b_j\lt 1$.
     - For every $i$ such that $b_i\gt 1$, if $b_0=1$, there must be $j\lt i$ such that $b_j\lt 1$.
 
-    Then the coin-flipping degree is bounded above by&mdash;
+    Then the coin-flipping degree is no more than&mdash;
 
     $$ \max(M(b_0, ..., b_m), M(1-b_0, ..., 1-b_m)),$$
 
@@ -635,7 +635,7 @@ where `Pmin` is the minimum of $p(\lambda)$ on the closed unit interval.
 
 **Lemma:** If $p$'s coin-flipping degree is $n$, then $\text{abs}(a_i)\le 2^i {n\choose i}$.
 
-_Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^24].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is bounded above by $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
+_Proof_: Consider the matrix that transforms a polynomial's Bernstein coefficients to "power" coefficients, which is $n\times n$ if the polynomial's degree is $n$ (Ray and Nataraj 2012, eq. (8))[^24].  Given the hypothesis of the lemma, each Bernstein coefficient must lie in the closed unit interval and the required matrix size is $n$, which is $p$'s coin-flipping degree.  For each row of the matrix ($0\le i\le n$), the corresponding "power" coefficient of the polynomial equals a linear combination of that row with a vector of Bernstein coefficients.  Thus, the $i$-th power coefficient equals $a_i$ and its absolute value is no more than $\sum_{m=0}^i {n\choose m}{n-m\choose i-m} = 2^i {n\choose i}$.  &#x25a1;
 
 **Lemma:**  $\text{abs}(a_i)\le \text{abs}(b_i)$, where $b_i$ is the corresponding power coefficient of the following polynomial:
 
@@ -916,7 +916,7 @@ _Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random var
 
 It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.
 
-The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^37], so by Hoeffding (1963)[^38], when $s$ is even, this central moment is bounded above by the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
+The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^37], so by Hoeffding (1963)[^38], when $s$ is even, this central moment is no more than the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
 
 In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^39] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
 

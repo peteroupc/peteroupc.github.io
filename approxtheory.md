@@ -679,7 +679,7 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function whose absolute value is bounded above by an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^21] with Gonska and Zhou 1994[^70] and Holtz et al. 2011[^64].)
+where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^21] with Gonska and Zhou 1994[^70] and Holtz et al. 2011[^64].)
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
