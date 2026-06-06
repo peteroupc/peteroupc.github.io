@@ -31,7 +31,7 @@ The mapping from a function to a function (for example, from a single-variable f
 - [**Example: An Interesting Linear Operator**](#Example_An_Interesting_Linear_Operator)
 - [**Example: The Lorentz Operators**](#Example_The_Lorentz_Operators)
 - [**Probabilistic Interpretations of Linear Operators**](#Probabilistic_Interpretations_of_Linear_Operators)
-- [**Conclusion: Ways to Improve This Article**](#Conclusion_Ways_to_Improve_This_Article)
+- [**Conclusion and Ways to Improve This Article**](#Conclusion_and_Ways_to_Improve_This_Article)
 - [**License**](#License)
 - [**Notes**](#Notes)
 
@@ -665,9 +665,23 @@ for some $C>0$, and it is of interest to find an explicit upper bound for $C$, e
 
 The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^67]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^68], 1995[^69]).
 
-<a id=Conclusion_Ways_to_Improve_This_Article></a>
+<a id=Conclusion_and_Ways_to_Improve_This_Article></a>
 
-## Conclusion: Ways to Improve This Article
+## Conclusion and Ways to Improve This Article
+
+Many academic papers and books present results in approximation theory, especially error bounds, with hidden constants and without giving upper bounds for such constants.  For example, a result may say the following about an operator (approximation scheme) $L$ and a function $f(\lambda)$.  If certain conditions are met, then:
+
+$$\text{abs}(f(\lambda) - L(\lambda)) \le C\omega_1(f, 1/n^{1/2}),\text{ or }$$
+
+$$\text{abs}(f(\lambda) - L(\lambda)) \le D\Vert f^{(3)}\Vert/n^{3/2},$$
+
+where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
+
+$$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
+
+where $O(1/n^{1/2})$ is a function bounded above by an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^21] with Gonska and Zhou 1994[^70] and Holtz et al. 2011[^64].)
+
+It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
@@ -689,7 +703,7 @@ In addition, the following will be helpful.
 
 Also:
 
-- Is it helpful to introduce the concept of functions of bounded variation here?
+- Is it helpful to introduce the concept of functions of bounded variation in this article?
 
 Those are not all the possible ways this article can be improved.
 
@@ -839,3 +853,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^68]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
 [^69]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+
+[^70]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [https://doi.org/10.1016/0377-0427(92](https://doi.org/10.1016/0377-0427(92))00133-T

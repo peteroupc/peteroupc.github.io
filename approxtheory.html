@@ -44,7 +44,7 @@
   <li><a href="#Example_An_Interesting_Linear_Operator"><strong>Example: An Interesting Linear Operator</strong></a></li>
   <li><a href="#Example_The_Lorentz_Operators"><strong>Example: The Lorentz Operators</strong></a></li>
   <li><a href="#Probabilistic_Interpretations_of_Linear_Operators"><strong>Probabilistic Interpretations of Linear Operators</strong></a></li>
-  <li><a href="#Conclusion_Ways_to_Improve_This_Article"><strong>Conclusion: Ways to Improve This Article</strong></a></li>
+  <li><a href="#Conclusion_and_Ways_to_Improve_This_Article"><strong>Conclusion and Ways to Improve This Article</strong></a></li>
   <li><a href="#License"><strong>License</strong></a></li>
   <li><a href="#Notes"><strong>Notes</strong></a></li>
 </ul>
@@ -841,9 +841,23 @@
 
 <p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>, 1995<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>).</p>
 
-<p><a id="Conclusion_Ways_to_Improve_This_Article"></a></p>
+<p><a id="Conclusion_and_Ways_to_Improve_This_Article"></a></p>
 
-<h2 id="conclusion-ways-to-improve-this-article">Conclusion: Ways to Improve This Article</h2>
+<h2 id="conclusion-and-ways-to-improve-this-article">Conclusion and Ways to Improve This Article</h2>
+
+<p>Many academic papers and books present results in approximation theory, especially error bounds, with hidden constants and without giving upper bounds for such constants.  For example, a result may say the following about an operator (approximation scheme) $L$ and a function $f(\lambda)$.  If certain conditions are met, then:</p>
+
+\[\text{abs}(f(\lambda) - L(\lambda)) \le C\omega_1(f, 1/n^{1/2}),\text{ or }\]
+
+\[\text{abs}(f(\lambda) - L(\lambda)) \le D\Vert f^{(3)}\Vert/n^{3/2},\]
+
+<p>where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:</p>
+
+\[\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),\]
+
+<p>where $O(1/n^{1/2})$ is a function bounded above by an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:21:2"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup> with Gonska and Zhou 1994<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">70</a></sup>.)</p>
+
+<p>It was a goal of this article to catalog general-purpose error bounds without such hidden constants.</p>
 
 <p>To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:</p>
 
@@ -873,7 +887,7 @@
 <p>Also:</p>
 
 <ul>
-  <li>Is it helpful to introduce the concept of functions of bounded variation here?</li>
+  <li>Is it helpful to introduce the concept of functions of bounded variation in this article?</li>
 </ul>
 
 <p>Those are not all the possible ways this article can be improved.</p>
@@ -950,7 +964,7 @@
       <p>Gonska, Heiner. “The rate of convergence of bounded linear processes on spaces of continuous functions.” Journal of Numerical Analysis and Approximation Theory 52.2 (2023): 182-232. <a href="https://doi.org/10.33993/jnaat522-1326"><strong>https://doi.org/10.33993/jnaat522-1326</strong></a> <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:20:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:20:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:20:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a> <a href="#fnref:20:5" class="reversefootnote" role="doc-backlink">&#8617;<sup>6</sup></a></p>
     </li>
     <li id="fn:21">
-      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="https://doi.org/10.17918/00010296"><strong>https://doi.org/10.17918/00010296</strong></a> <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:21:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="https://doi.org/10.17918/00010296"><strong>https://doi.org/10.17918/00010296</strong></a> <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:21:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:21:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:22">
       <p>H. H. Gonska, <em>Quantitative Approximation in C(X)</em>, Habilitationschrift, Universität Duisburg, 1985. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:22:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
@@ -1095,6 +1109,9 @@
     </li>
     <li id="fn:69">
       <p>Adell, J. A., and J. De la Cal. “Bernstein-Durrmeyer operators.” Computers &amp; Mathematics with Applications 30.3-6 (1995): 1-14. <a href="https://doi.org/10.1016/0898-1221%2895%2900081-X"><strong>https://doi.org/10.1016/0898-1221%2895%2900081-X</strong></a> <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:70">
+      <p>Gonska, Heinz H., and Xin-long Zhou. “Approximation theorems for the iterated Boolean sums of Bernstein operators.” Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. https://doi.org/10.1016/0377-0427(92)00133-T <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
