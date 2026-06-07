@@ -74,7 +74,7 @@ where $0\le x\le 1$ and the real numbers $a_0, ..., a_n$ are the polynomial's _B
 
 The degree-$n$ _Bernstein polynomial_ of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this document, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$.
 
-$B_n(f)$ is a positive linear operator. It maps a bounded function on the closed unit interval to a polynomial of degree $n$ or less on that interval.
+$B_n(f)$ is a positive linear operator. It maps a function like $f(x)$ on the closed unit interval to a polynomial of degree $n$ or less on that interval.
 
 This page's emphasis is on methods that produce polynomials in Bernstein form, ratios of such polynomials, or functions like $f(g(x))$ where $f$ and $g$ are such polynomials or ratios.
 
@@ -162,7 +162,9 @@ Some results on error bounds for certain classes of operators.
 
 ### Bounds for General Positive Linear Operators
 
-The following results give bounds that apply to large classes of positive linear operators.  While these operators have relatively simple approximation behavior, in general they do not approximate functions with more than two continuous derivatives "better" than functions with only two.
+The following results give bounds that apply to large classes of positive linear operators.
+
+But many classes of positive linear operators, including Bernstein polynomials, do not approximate functions with more than two continuous derivatives "better" than functions with only two (Voronovskaya 1932)[^71], (DeVore 1972/2006)[^72], (Cárdenas-Morales et al. 2012)[^73].
 
 In this section:
 
@@ -196,7 +198,7 @@ _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3
 
 **Lemma 2**. _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all polynomials up to degree 1 (constants and linear functions).  Let $h>0$ be a real number. Then:_
 
-| No. | If $f$ ... |  Then $\text{abs}(L(f)(\lambda)-f(\lambda))\le ... $ |
+| No. | If $f$ ... |  Then abs($(L(f)(\lambda)-f(\lambda))$ &le; ... |
  - | --- | ----- |
 | 1 | Has a continuous derivative. | $((h+2)^2/(8h))\cdot \omega_1(f^{(1)}, h\cdot\sqrt{\sigma_2}) \cdot\sqrt{\sigma_2}$. |
 | 2 | Has a continuous derivative. | $\frac{1}{2}(\sigma_2)^{1/2} \tilde\omega_1(f^{(1)}, (\sigma_2)^{1/2})$. |
@@ -259,7 +261,7 @@ _The second inequality also works if $L$ maps from continuous functions instead 
 >
 > 1. Using Lemma 4A requires calculating $L(e_0)$, $\Vert L(e_0)\Vert$, and $L(\text{abs}(e_1-\lambda))$, or finding upper bounds for these.
 > 2. Using Lemma 4B requires calculating $L(e_0)$ and either $L(\text{abs}(e_1-\lambda))$ or $L(\text{ceil}((e_1-\lambda)/h-1))$, or finding upper bounds for these values.
-> 3. Unlike Lemma 4A, Lemma 4B is not guaranteed to work if $f$'s domain is a closed subset of an interval (see Remark 2.5 in Gonska (1998/2023)[^20].
+> 3. Unlike Lemma 4A, Lemma 4B is not guaranteed to work if $f$'s domain is a closed subset of a compact interval (see Remark 2.5 in Gonska (1998/2023)[^20]).
 
 The following lemma adapts the previous lemmas to the setting of random variables.
 
@@ -312,7 +314,7 @@ The next two lemmas rely on the so-called _Peano kernel theorem_, which was orig
 - _reproduces all polynomials of degree $k$ or less, and_
 - _maps continuous functions (or, if $k=0$, bounded functions) on the interval $[a, b]$ to continuous functions on that interval._
 
-_Then:_
+_Let $LF(f) = f - L(f)$.  Then, whenever $a\le\lambda\le b$:_
 
 $$\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))$$
 
@@ -320,13 +322,13 @@ $$\le \frac{C - c}{2} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda)/(k!)\rig
 
 $$= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda)\right) dt\tag{4}$$
 
-$$= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt + \int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup$$
+$$= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt + \int_\lambda^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup$$
 
 $$= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left((\lambda-t)^k - L(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt + \int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,$$
 
 $$\text{abs}(LF(f)(\lambda))\le \frac{\Vert f^{(k+1)}\Vert}{k!} \int_a^b \text{abs}\left(LF((e_1-t)_+^k)(\lambda))\right) dt,\tag{5}$$
 
-_where $LF(f) = f - L(f)$, and the notation_ $\lgroup x\rgroup^k_+$ _is as follows. If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$, and if $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise._
+_where the notation_ $\lgroup x\rgroup^k_+$ _is as follows. If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$, and if $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise._
 
 Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 for every polynomial of degree $k$ or less, so that $LF(e_i)=0$ whenever $0\le i\le k$, so that $LF$ satisfies theorem 3 of Gavrea and Ivan (2015)[^35]. Formula (5) is an easy consequence of (4); see also Brass and Förster (1998, theorem 5)[^33].[^36]
 
@@ -413,7 +415,7 @@ $$\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert.$
 
 Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that&mdash;
 
-1. maps continuous or bounded functions on that interval to functions in a finite-dimensional subspace of continuous or bounded functions (such as polynomials up to degree 5)[^41], and
+1. maps continuous or bounded functions on that interval to functions in a finite-dimensional linear subspace of continuous or bounded functions (such as polynomials up to degree 5)[^41], and
 2. is _idempotent_, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.[^42]
 
 Also, let $I$ be the identity operator $I(f)=f$.
@@ -426,7 +428,7 @@ $$\text{abs}(f(x)-L(f)(x))\le\Vert I - L\Vert \cdot\max_t(\text{abs}(f(t)-P(t)))
 
 where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^43], Cheney (1996, chapter 6)[^44], Powell (1981, theorem 3.1)[^45], De Villiers (2012, theorem 5.3.2)[^46]; for the second inequality see De Boor (1982, chapter 2)[^47]).
 
-If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator.[^48]
+If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator (Păltănea (2004, corollary 1.1.2)[^18].[^48]
 
 > **Examples:**
 >
@@ -462,8 +464,7 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),$$
 
 provided $L(\text{abs}(e_0-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
-> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore (1998)[^54].](https://doi.org/10.1017/S0962492900002816>>.)
-
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^53]; on nonlinear approximation, see DeVore (1998)[^54].)
 <a id=Example></a>
 
 ## Example
@@ -634,7 +635,7 @@ $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
 where $0\le\lambda\le 1$.[^65]
 
-This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^64]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree up to $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^64]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
@@ -726,11 +727,11 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: Skorski, Maciej. "Handy formulas for binomial moments." _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41.
 
-[^6]: It is also possible to bound the "absolute moment" as $M_{n,r}(p)\le C(r)(\max(1/n, (p(1-p)/n)^{1/2})^r$ or $M_{n,r}(p)\le D(r)(1/n + (p(1-p)/n)^{1/2})^r$ (G.G. Lorentz, "The degree of approximation by polynomials with positive coefficients", 1966), but the constants $C(r)$ and $D(r)$ seem to be higher (and less favorable) than the $E(r)$ in $M_{n,r}(p)\le E(r)/n^{r/2}$.
+[^6]: It is also possible to bound the "absolute moment" as $M_{n,r}(p)\le C(r)(\max(1/n, (p(1-p)/n)^{1/2})^r$ or $M_{n,r}(p)\le D(r)(1/n + (p(1-p)/n)^{1/2})^r$ (Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)), but the constants $C(r)$ and $D(r)$ seem to be higher (and less favorable) than the $E(r)$ in $M_{n,r}(p)\le E(r)/n^{r/2}$.
 
-[^7]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018. [**https://doi.org/10.1016/j.jat.2018.04.007**](https://doi.org/10.1016/j.jat.2018.04.007)
+[^7]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalizedVoronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018. [**https://doi.org/10.1016/j.jat.2018.04.007**](https://doi.org/10.1016/j.jat.2018.04.007)
 
-[^8]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658.
+[^8]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658. [https://doi.org/10.1016/j.jat.2021.105658](https://doi.org/10.1016/j.jat.2021.105658)
 
 [^9]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983).
 
@@ -786,9 +787,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^35]: Gavrea, I., Ivan, M., "A sharp estimate for the Peano error representation", _Applied Mathematics and Computation_ 252 (2015). [**https://doi.org/10.1016/j.amc.2014.12.017**](https://doi.org/10.1016/j.amc.2014.12.017)
 
-[^36]: Note that for formulas (3) to (5), $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ and $L$ if they map from only continuous functions; thus the results in this section suppose both operators map from bounded functions for $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately.
+[^36]: Note that for the bounds in Lemma 7, $(e_1-t)_+^0$ is discontinuous and so is not accepted by $LF$ and $L$ if they map from only continuous functions; thus the results in this section suppose both operators map from bounded functions for $k=0$.  Brass and Förster 1998 adequately provides for the case $k=0$, but not Gavrea and Ivan 2015, unfortunately.
 
-[^37]: Babenko, Alexander G., and Yuriy V. Kryakin. "Special difference operators and the constants in the classical Jackson-type theorems." Topics in Classical and Modern Analysis: In Memory of Yingkang Hu. Cham: Springer International Publishing, 2019. 35-46.
+[^37]: Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. [https://doi.org/10.1007/978-3-030-12277-5_2](https://doi.org/10.1007/978-3-030-12277-5_2)
 
 [^38]: Jaskaran Singh Kaire and Andriy Prymak, "[**Whitney-type estimates for convex functions**](https://arxiv.org/abs/2311.00912)", arXiv:2311.00912 (2023).
 
@@ -796,7 +797,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^40]: Phillips, G.M., _Interpolation and Approximation by Polynomials_, Springer New York, NY, 2003. [**https://doi.org/10.1007/b97417**](https://doi.org/10.1007/b97417)
 
-[^41]: A subset of functions is a _subspace_ if it has the following property: if functions $f$ and $g$ are in the family, so are $f+g$, $f+\alpha$, and $g+\alpha$ for every real number $\alpha$ (Weisstein, Eric W. "Subspace." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/Subspace.html**](https://mathworld.wolfram.com/Subspace.html)).  The subspace is also _finite-dimensional_ if it is the smallest subspace that contains a given finite set of functions.  One example of a finite-dimensional subspace of continuous functions is the polynomials up to degree 2, which are the smallest subspace containing $e_0$, $e_1$, and $e_2$.
+[^41]: A subset of functions is a _linear subspace_ if it has the following property: if functions $f$ and $g$ are in the family, so is $f+g$, and if $f$ is in the family, so is $f+\alpha$ for every real number $\alpha$ (Weisstein, Eric W. "Subspace." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/Subspace.html**](https://mathworld.wolfram.com/Subspace.html)).  The subspace is also _finite-dimensional_ if it is the smallest linear subspace that contains a given finite set of functions.  One example of a finite-dimensional linear subspace of continuous functions is the polynomials up to degree 2, which are the smallest linear subspace containing $e_0$, $e_1$, and $e_2$.
 
 [^42]: This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials).
 
@@ -810,7 +811,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^47]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 
-[^48]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. _Positivity_ 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4). However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
+[^48]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
 [^49]: Sablonniere, Paul. "A quadrature formula associated with a univariate spline quasi interpolant." BIT Numerical Mathematics 47.4 (2007): 825-837. [**https://doi.org/10.1007/s10543-007-0146-8**](https://doi.org/10.1007/s10543-007-0146-8)
 
@@ -822,7 +823,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^53]: Gal, Sorin G., and Constantin P. Niculescu. "[**Korovkin-type theorems for weakly nonlinear and monotone operators**](https://arxiv.org/abs/2206.14102v1)", arXiv:2206.14102v1 [math.FA], also in _Mediterranean Journal of Mathematics_ 20.2 (2023): 56. [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
 
-[^54]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [https://doi.org/10.1017/S0962492900002816
+[^54]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [**https://doi.org/10.1017/S0962492900002816**](https://doi.org/10.1017/S0962492900002816).
 
 [^55]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
@@ -854,4 +855,10 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^69]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
 
-[^70]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [https://doi.org/10.1016/0377-0427%02892%02900133-T
+[^70]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [https://doi.org/10.1016/0377-0427%02892%02900133-T](https://doi.org/10.1016/0377-0427%02892%02900133-T)
+
+[^71]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
+
+[^72]: De Vore, Ronald A. The approximation of continuous functions by positive linear operators. Springer, 2006. [https://doi.org/10.1007/BFb0059493](https://doi.org/10.1007/BFb0059493)
+
+[^73]: Cárdenas-Morales, Daniel, Pedro Garrancho, and Ioan Rasa. "Asymptotic formulae via a Korovkin-type result." Abstract and Applied Analysis. Vol. 2012. John Wiley & Sons, Inc., 2012. [https://doi.org/10.1155/2012/217464](https://doi.org/10.1155/2012/217464)

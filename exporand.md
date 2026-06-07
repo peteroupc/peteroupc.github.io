@@ -2291,7 +2291,7 @@ The following are some additional articles I have written on the topic of random
 
 [^10]: As noted by von Neumann (1951), a uniform random variate bounded by 0 and 1 can be produced by "juxtapos[ing] enough random binary digits".  In this sense, the variate is _X1_/`B`<sup>1</sup> + _X2_/`B`<sup>2</sup> + ..., (where `B` is the digit base 2, and _X1_, _X2_, etc. are independent uniform random integers in the interval \[0, `B`\)), perhaps "forc[ing] the last [random bit] to be 1" "[t]o avoid any bias".  It is not hard to see that this approach can be applied to generate any digit expansion of any base, not just 2.
 
-[^11]: Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.
+[^11]: Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020; also in _Computational Statistics_ 37, 721–737 (2022). [https://doi.org/10.1007/s00180-021-01136-w](https://doi.org/10.1007/s00180-021-01136-w)
 
 [^12]: This means that every zero-volume (Lebesgue measure zero) subset of the distribution's domain (such as a finite set of points) has zero probability.  Equivalently, it means the distribution has a probability density function.
 
@@ -2387,7 +2387,7 @@ The following are some additional articles I have written on the topic of random
 
 [^58]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092)
 
-[^59]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
+[^59]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011; also in Random Struct. Alg., 38: 441-452 (2011). [https://doi.org/10.1002/rsa.20333](https://doi.org/10.1002/rsa.20333)
 
 [^60]: Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
 
