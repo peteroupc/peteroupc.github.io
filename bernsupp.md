@@ -871,7 +871,7 @@ Let $r$ be a positive integer, and let $f(\lambda)$ be a function that&mdash;
 
 Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be bounded functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
-For each integer $n\ge 1$ that's a power of 2, suppose that there is $D>0$ such that&mdash;
+Suppose that there is $D>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
 
 $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
 
