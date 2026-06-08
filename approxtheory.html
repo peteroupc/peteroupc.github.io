@@ -275,7 +275,7 @@
 <ul>
   <li>$\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)$ (Peetre 1969)<sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>.</li>
   <li>If $f$ is Hölder continuous with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta^\alpha$.  Indeed, in this case, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta&gt;0$.</li>
-  <li>If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1.  The same bound holds true if $f$ instead has a continuous derivative with maximum absolute value $M$ or less, since in this case (by a result of Hardy and Littlewood) $f$ is Lipschitz continuous with Lipschitz constant $M$ or less.</li>
+  <li>If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1.  The same bound applies if $f$ instead has a continuous derivative with maximum absolute value $M$ or less, since in this case (by a result of Hardy and Littlewood) $f$ is Lipschitz continuous with Lipschitz constant $M$ or less.</li>
 </ul>
 
 <p>□</p>
@@ -588,8 +588,6 @@
 
 <p>where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>, Cheney (1996, chapter 6)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>; for the second inequality see De Boor (1982, chapter 2)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>).</p>
 
-<p>If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator (Păltănea (2004, corollary 1.1.2)<sup id="fnref:21:1"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup></p>
-
 <blockquote>
   <p><strong>Examples:</strong></p>
 
@@ -611,7 +609,12 @@
     </li>
   </ol>
 
-  <p><strong>Note:</strong> Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup></p>
+  <p><strong>Notes:</strong></p>
+
+  <ol>
+    <li>The only positive linear operator that reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)<sup id="fnref:21:1"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup></li>
+    <li>Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup></li>
+  </ol>
 </blockquote>
 
 <p><a id="Bounds_for_Certain_Nonlinear_Operators"></a></p>
@@ -767,8 +770,8 @@
 <p>where:</p>
 
 <ul>
-  <li>$\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.</li>
-  <li>$M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial’s second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 <sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup>).</li>
+  <li>$\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">64</a></sup>.</li>
+  <li>$M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial’s second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 <sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">65</a></sup>).</li>
 </ul>
 
 <p><strong>Lemma</strong>: <em>Let</em> $p(\lambda)=c_0 \lambda^0 + … + c_n \lambda^n$ <em>be a polynomial on the interval</em> $[a,b]$, <em>where</em> $c_0$, …, $c_n$ <em>are real numbers and</em> $c_n$ <em>is not zero. If</em> $\Vert p\Vert\le 1$, <em>then</em> $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.</p>
@@ -785,7 +788,7 @@
 
 \[B_n(g)\le \Vert f^{(2)}\Vert/(8n).\]
 
-<p>(This follows from Lorentz (1963)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup> and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$’s second derivative, is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.)</p>
+<p>(This follows from Lorentz (1963)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">66</a></sup> and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$’s second derivative, is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.)</p>
 
 <p>Altogether, if $f$ has a continuous second derivative and $m$ is fixed:</p>
 
@@ -795,7 +798,7 @@
 
 \[H_{n,m}(f)(\lambda) - f(\lambda) = B_n(R_m(f,\lambda)) + \lgroup\text{Lag}_m(f) - B_n(\text{Lag}_m(f))\rgroup,\]
 
-<p>so that, using Lemma 6 again, there is a better error bound:</p>
+<p>so that, using Lemma 6 again, there is a better error bound if $n$ is 2 or greater:</p>
 
 \[\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (m!) n^{m/2}} + (\Vert Lag_m\Vert\cdot\Vert f\Vert\cdot M(m)) \frac{\mu_{m}}{ (m!) n^{m/2}}.\]
 
@@ -803,7 +806,7 @@
 
 <h2 id="example-the-lorentz-operators">Example: The Lorentz Operators</h2>
 
-<p>The <em>Lorentz operators</em> were introduced by Lorentz (1963)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup> and studied by Holtz et al. (2011)<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>.</p>
+<p>The <em>Lorentz operators</em> were introduced by Lorentz (1963)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">67</a></sup> and studied by Holtz et al. (2011)<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>.</p>
 
 <p>This section touches on the Lorentz operator of order 2, defined as—</p>
 
@@ -811,7 +814,7 @@
 
 \[=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),\]
 
-<p>where $0\le\lambda\le 1$.<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">68</a></sup></p>
+<p>where $0\le\lambda\le 1$.<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">69</a></sup></p>
 
 <p>This operator is a nonpositive linear operator.</p>
 
@@ -820,23 +823,13 @@
   <li>The operator maps those functions to polynomials of degree up to $n+2$.</li>
 </ul>
 
-<p>Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011<sup id="fnref:67:1"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)</p>
+<p>Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011<sup id="fnref:67:1"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)</p>
 
 <p>$Q_{n,2}$ can be bounded as follows:</p>
 
 \[\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),\]
 
 <p>where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.</p>
-
-<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>:</p>
-
-\[\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert\]
-
-<p>Using this norm, the operator $Q_{n,2}$ can be bounded as follows:</p>
-
-\[\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},\]
-
-<p>so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.</p>
 
 <p>Some of the “moments” of this operator are:</p>
 
@@ -856,6 +849,16 @@
 <p>It is suspected further, using Lemma 6 and Corollary 1, that—</p>
 
 \[\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},\]
+
+<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:73:1"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">64</a></sup>:</p>
+
+\[\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert\]
+
+<p>Using this norm, the operator $Q_{n,2}$ can be bounded as follows:</p>
+
+\[\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},\]
+
+<p>so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.</p>
 
 <p><a id="Probabilistic_Interpretations_of_Linear_Operators"></a></p>
 
@@ -877,7 +880,7 @@
 
 \[\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),\]
 
-<p>where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:24:2"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> with Gonska and Zhou 1994<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">73</a></sup> and Holtz et al. 2011<sup id="fnref:67:2"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>.)</p>
+<p>where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:24:2"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> with Gonska and Zhou 1994<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">73</a></sup> and Holtz et al. 2011<sup id="fnref:67:2"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>.)</p>
 
 <p>It was a goal of this article to catalog general-purpose error bounds without such hidden constants.</p>
 
@@ -1114,6 +1117,9 @@
     <li id="fn:63">
       <p>Ioan Gavrea, Mircea Ivan, “A note on the fixed points of positive linear operators”, Journal of Approximation Theory (227), 2018, <a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>https://doi.org/10.1016/j.jat.2017.12.001.</strong></a>. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
+    <li id="fn:73">
+      <p>Ibrahimoglu, B.A. Lebesgue functions and Lebesgue constants in polynomial interpolation. J Inequal Appl 2016, 93 (2016). https://doi.org/10.1186/s13660-016-1030-3 <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:73:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
     <li id="fn:64">
       <p>Schaeffer, A. C., and R. J. Duffin. “On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials.” Bulletin of the American Mathematical Society 44.4 (1938): 289-297. <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
@@ -1128,9 +1134,6 @@
     </li>
     <li id="fn:68">
       <p>$Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called <em>linear differential operator</em>: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:73">
-      <p>A space of functions with this property is also called a <em>Banach space</em> (Axler, S, <em>Measure, Integration &amp; Real Analysis</em>, 2020). Another example of a Banach space is the space of continuous functions on a compact interval with the “norm” being the maximum absolute value. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:69">
       <p>S.N. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”, Comm. Kharkov Math. Soc. 13, 1-2, 1912. <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

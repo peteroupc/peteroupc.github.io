@@ -191,7 +191,7 @@ _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3
 
 - $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)$ (Peetre 1969)[^26].
 - If $f$ is Hölder continuous with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta^\alpha$.  Indeed, in this case, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta>0$.
-- If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1.  The same bound holds true if $f$ instead has a continuous derivative with maximum absolute value $M$ or less, since in this case (by a result of Hardy and Littlewood) $f$ is Lipschitz continuous with Lipschitz constant $M$ or less.
+- If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1.  The same bound applies if $f$ instead has a continuous derivative with maximum absolute value $M$ or less, since in this case (by a result of Hardy and Littlewood) $f$ is Lipschitz continuous with Lipschitz constant $M$ or less.
 
 &#x25a1;
 
@@ -429,8 +429,6 @@ $$\text{abs}(f(x)-L(f)(x))\le\Vert I - L\Vert \cdot\max_t(\text{abs}(f(t)-P(t)))
 
 where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^46], Cheney (1996, chapter 6)[^47], Powell (1981, theorem 3.1)[^48], De Villiers (2012, theorem 5.3.2)[^49]; for the second inequality see De Boor (1982, chapter 2)[^50]).
 
-If every function mapped to by $L$ is a polynomial, though, this error bound will generally be crude or trivial unless $L_n$ are nonpositive operators.  Indeed, the only positive linear operator $L$ that reproduces all polynomials up to degree 2 is the identity operator (Păltănea (2004, corollary 1.1.2)[^21].[^51]
-
 > **Examples:**
 >
 > 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequality (Leb) with the Whitney-type inequalities given earlier leads to the following error bound for idempotent linear operators $L$ that map continuous functions on that interval to polynomials up to degree 2:
@@ -445,7 +443,10 @@ If every function mapped to by $L$ is a polynomial, though, this error bound wil
 >
 >     $$\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.$$
 >
-> **Note:** Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^52]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^53]
+> **Notes:**
+>
+> 1. The only positive linear operator that reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)[^21].[^51]
+> 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^52]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^53]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
@@ -591,7 +592,7 @@ $$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Ver
 
 where:
 
-- $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$.
+- $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)[^73].
 - $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^64]).
 
 **Lemma**: _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.
@@ -618,7 +619,7 @@ It is suspected that, using $(E)$, the following is true if $f$ has a continuous
 
 $$H_{n,m}(f)(\lambda) - f(\lambda) = B_n(R_m(f,\lambda)) + \lgroup\text{Lag}_m(f) - B_n(\text{Lag}_m(f))\rgroup,$$
 
-so that, using Lemma 6 again, there is a better error bound:
+so that, using Lemma 6 again, there is a better error bound if $n$ is 2 or greater:
 
 $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (m!) n^{m/2}} + (\Vert Lag_m\Vert\cdot\Vert f\Vert\cdot M(m)) \frac{\mu_{m}}{ (m!) n^{m/2}}.$$
 
@@ -649,16 +650,6 @@ $$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert
 
 where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.
 
-The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^73]:
-
-$$\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert$$
-
-Using this norm, the operator $Q_{n,2}$ can be bounded as follows:
-
-$$\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},$$
-
-so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.
-
 Some of the "moments" of this operator are:
 
 - $Q_{n,2}(e_3)=\frac{x \left(n^{2} x^{2} + 2 x^{2} - 3 x + 1\right)}{n^{2}}.$
@@ -675,6 +666,16 @@ for some $C>0$, and it is of interest to find an explicit upper bound for $C$, e
 It is suspected further, using Lemma 6 and Corollary 1, that&mdash;
 
 $$\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},$$
+
+The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^73]:
+
+$$\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert$$
+
+Using this norm, the operator $Q_{n,2}$ can be bounded as follows:
+
+$$\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},$$
+
+so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.
 
 <a id=Probabilistic_Interpretations_of_Linear_Operators></a>
 
@@ -877,4 +878,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^72]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
 
-[^73]: A space of functions with this property is also called a _Banach space_ (Axler, S, _Measure, Integration & Real Analysis_, 2020). Another example of a Banach space is the space of continuous functions on a compact interval with the "norm" being the maximum absolute value.
+[^73]: Ibrahimoglu, B.A. Lebesgue functions and Lebesgue constants in polynomial interpolation. J Inequal Appl 2016, 93 (2016). [https://doi.org/10.1186/s13660-016-1030-3](https://doi.org/10.1186/s13660-016-1030-3)

@@ -160,7 +160,7 @@ The algorithm is now described.
 
 Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/`High`(_&nu;_) (roughly speaking, the value that _f_(_&nu;_)/`High`(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
-- _f_(0) = 0 and _f_(1) < 1, and
+- $f(0)$ = 0 and _f_(1) < 1, and
 - _g_(_&lambda;_) is continuous on the closed unit interval and belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated using the following algorithm:
@@ -182,7 +182,7 @@ then _f_ can be simulated using the following algorithm:
 >     2. (Simulate `High`.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
 >     3. Run a Bernoulli factory algorithm for _G_ (which might involve building polynomials that converge to _G_, noticing that _G_'s derivative is Lipschitz continuous) and return the result of that algorithm.
 
-**Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and `High` be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
+**Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and `High` be functions as defined earlier, except that $f(0)$ = 0 and _f_(1) = 1.  Define the following additional functions:
 
 - `Low`(_&lambda;_) is a function that meets the following requirements:
     - `Low`(_&lambda;_) is continuous on the closed unit interval.
@@ -208,7 +208,7 @@ Now, if _r_(_&lambda;_) is continuous on the closed unit interval, then _f_ can 
 
 **Other functions that equal 0 or 1 at the endpoint 0, 1, or both.** The table below accounts for these Bernoulli factory functions:
 
-| If _f_(0) = | And _f_(1) = |      Method |
+| If $f(0)$ = | And _f_(1) = |      Method |
  -- | -- | -------- |
 | > 0 and < 1 | 1 | Use the algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1 &minus; _f_(1&minus;_&lambda;_).<br/>_Inverted coin_: Instead of the usual input coin, use a coin that does the following: "Flip the input coin and return 1 minus the result."<br/>_Inverted result:_ If the overall algorithm would return 0, it returns 1 instead, and vice versa. |
 | > 0 and < 1 | 0 | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = _f_(1&minus;_&lambda;_).  (For example, cosh(_&lambda;_)&minus;1 becomes cosh(1&minus;_&lambda;_)&minus;1.)<br/>Inverted coin. |
@@ -710,8 +710,8 @@ _Proof._ Note that $\mathbb{E}[X/n] = k/(2n)$, and $\tau_2[X/n]\le (k/(2n))\cdot
 > 2. Parts 1 through 3 exploit a tighter bound on the variance of $X/n$ than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively\)[^1].
 > 3. All continuous functions that map the closed unit interval to itself, including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple modulus of continuity that satisfies the lemma:
 >     1. If _f_ is nowhere decreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
->     2. If _f_ is nowhere increasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
->     3. If _f_ is nowhere decreasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
+>     2. If _f_ is nowhere increasing and convex, _&omega;_(_x_) can equal $f(0)$ &minus; _f_(_x_) (Gal 1990\)[^29]; (Gal 1995\)[^30].
+>     3. If _f_ is nowhere decreasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; $f(0)$ (by symmetry with 2).
 >     4. If _f_ is nowhere increasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 >     5. If _f_ is concave and is strictly increasing then strictly decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012\)[^31].
 
@@ -779,7 +779,7 @@ Condition (iii) of Proposition 3 is mostly ensured by item 2 of Theorem 1.  The 
 
 Condition (iv) of Proposition 3 is mostly ensured by item 3 of Theorem 1.  For _n_=_n_<sub>1</sub>, condition (iv) is maintained by noting that the degree-_n_<sub>1</sub> polynomial's Bernstein coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>1</sub>, and those polynomials are the constant 0 and the constant 1, respectively, as are their Bernstein coefficients. Finally, for $n$ other than a power of 2, defining $g_n = g_{n-1}$ and $h_n = h_{n-1}$ maintains condition (iv) by Remark B of Nacu and Peres (2005)[^1].  &#x25a1;
 
-> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^32] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, _f_(0), if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^33]; see also Remark C of Nacu and Peres (2005)[^1].
+> **Note:** The last condition of Proposition 3, condition (ii), says **fabove**(_n_, _k_)\*choose(_n_,_k_) and **fbelow**(_n_, _k_)\*choose(_n_,_k_) must be integers. [^32] But Proposition 3 assumes only the biased coin and no other randomness is used, and that the coin doesn't show heads every time or tails every time.  Therefore, $f(0)$, if it exists, must be an integer, and the same is true for _f_(1), so that condition (ii) is redundant with condition (iii) due to a result that goes back to Kantorovich (1931)[^33]; see also Remark C of Nacu and Peres (2005)[^1].
 
 **Corollary 1.** _Let f(&lambda;) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1. If that function is Hölder continuous with Hölder constant M or less and Hölder exponent $\alpha$, then each of the following schemes is valid in the sense of Theorem 1:_
 
@@ -809,7 +809,7 @@ The first and second schemes then follow from Theorem 1. The third and fourth sc
 
 _Proof._ By part 3 of lemma 2, for each integer $n\ge 4$ that's a power of 2 ($n_0=4$ in Theorem 1), $\phi(n)=(L/2) (1/(7n))$ can be taken for each such integer $n$, and thus $\eta(n)=L/(7n)$ (where $\eta(n)$ is as in Theorem 1). $\eta(n)$ is finite and converges to 0 as $n$ increases. The result then follows from Theorem 1. &#x25a1;
 
-> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval that is not greater than a constant \(a slightly stronger condition than having a Lipschitz-continuous derivative on that domain).
+> **Note:** Nacu and Peres (2005\)[^1] already proved a looser scheme in the case when $f$ has a second derivative on the closed unit interval whose maximum absolute value is finite \(a slightly stronger condition than having a Lipschitz-continuous derivative on that domain).
 
 **Theorem 2.** _Let f(&lambda;) be continuous on the closed unit interval and have a minimum greater than 0 and a maximum less than 1.  If that function is convex and nowhere decreasing, then Theorem 1 remains valid with $\phi(n)=\mathbb{E}[f(Y/n)]$ (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
@@ -945,7 +945,7 @@ Then&mdash;
 
 $$h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
 
-_Remark_: Because of this claim's assumptions, if $W_n$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018[^40], Guessab et al. 2009[^41]); moreover, $W_n = f$ doesn't meet the conjecture's hypothesis (for $r\ge 3$) and is the only positive linear operator that can preserve all polynomials of degree 2 or less (Guessab et al. 2009)[^41].
+_Remark_: Because of this claim's assumptions, if $W_n(f)$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i(f)$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018[^40], Guessab et al. 2009[^41]); moreover, $W_n = f$ doesn't meet the conjecture's hypothesis (for $r\ge 3$).
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 
@@ -988,12 +988,12 @@ The following example uses the results earlier in this appendix to build a polyn
 Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and $1/(\ln(\lambda/\exp(3)))^2$ otherwise. (This function is not Hölder continuous; its slope is exponentially steep at the point 0.)  Then the following scheme is valid in the sense of Theorem 1:
 
 - _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>.
-- **fbelow**(n, k) = f(_k_/_n_).
+- **fbelow**(n, k) = $f(k/n)$
 - **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
 
 Where &Phi;(.) is a function called the _Lerch transcendent_.
 
-The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)).  Because _f_ is strictly increasing and concave, and because _f_(0) = 0, _&omega;_(_h_) = _f_(_h_) can be taken for _&omega;_.
+The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)).  Because _f_ is strictly increasing and concave, and because $f(0)$ = 0, _&omega;_(_h_) = _f_(_h_) can be taken for _&omega;_.
 
 Now, plugging sqrt(1/(7\*_n_)) into _&omega;_ leads to the following for Theorem 2 (assuming _n_&ge;0):
 
@@ -1039,7 +1039,7 @@ The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli fa
 
 1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
 2. _f_ maps the closed unit interval or a subset of it to the closed unit interval, and
-3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
+3. $f(0)$ equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_.
 
 ---
@@ -1059,11 +1059,11 @@ _Proof:_ If _f_ is the constant 0 or 1, the proof is trivial: simply return 0 or
 Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> Bernstein coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012\)[^7].
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
+2. If 0 is in the domain of _f_ and if _j_ is 0, return $f(0)$. (By condition 3, $f(0)$ must be either 0 or 1.)
 3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1). (By condition 4, _f_(1) must be either 0 or 1.)
 4. With probability _a_\[_j_\], return 1.  Otherwise, return 0. (For example, generate a uniformly distributed random variate, greater than 0 and less than 1, then return 1 if that variate is less than _a_\[_j_\], or 0 otherwise.  _a_\[_j_\] is the Bernstein coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
-(By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
+(By the properties of the Bernstein form, _a_\[0\] will equal $f(0)$ and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
 
 Step 4 is done by first generating fair coin flips (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951\)[^43]), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  The algorithm computes _a_\[_j_\] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
 
@@ -1121,12 +1121,12 @@ _Proof of Proposition 2:_  The following cases can occur:
 
 1. If neither 0 nor 1 are in the domain of _f_, then _f_ is strongly simulable by the discussion above.
 2. If _f_ is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.
-3. If 0 but not 1 is in the domain of _f_: If _f_(0) = 0, apply Lemma 1.  If _f_(0) = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(0) = 0 and satisfy the lemma.)
+3. If 0 but not 1 is in the domain of _f_: If $f(0)$ = 0, apply Lemma 1.  If $f(0)$ = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring $f(0)$ = 0 and satisfy the lemma.)
 4. If 1 but not 0 is in the domain of _f_: If _f_(1) = 0, apply Lemma 1.  If _f_(1) = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(1) = 0 and satisfy the lemma.)
-5. _f_(0) = _f_(1) = 0: Apply Lemma 1.
-6. _f_(0) = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
-7. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 2.
-8. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+5. $f(0)$ = _f_(1) = 0: Apply Lemma 1.
+6. $f(0)$ = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+7. $f(0)$ = 0 and _f_(1) = 1: Apply Lemma 2.
+8. $f(0)$ = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
 
 &#x25a1;
 
