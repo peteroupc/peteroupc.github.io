@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-07"><meta name="citation_date" content="2026/06/07"><meta name="citation_publication_date" content="2026/06/07"><meta name="citation_online_date" content="2026/06/07"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-08"><meta name="citation_date" content="2026/06/08"><meta name="citation_publication_date" content="2026/06/08"><meta name="citation_online_date" content="2026/06/08"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-07.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-08.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -69,7 +69,7 @@
     <ul>
       <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.</li>
       <li>An operator $L$ is <em>positive</em> if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
-      <li>The <em>operator norm</em> of an operator $L$ is the maximum “norm” of $L(f)$ over all allowed functions $f$ with a “norm” of 1 or less.  The “norm” depends on the families of functions that $L$ maps to and from.  For example, if $L$ maps continuous or bounded functions on a compact interval to functions of that kind, the “norm” is the maximum absolute value.</li>
+      <li>The <em>operator norm</em> of an operator $L$ is the maximum “norm” of $L(f)$ over all allowed functions $f$ with a “norm” of 1 or less.  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the “norm” is the maximum absolute value unless noted otherwise.</li>
       <li>An operator is <em>bounded</em> if its operator norm is finite.</li>
     </ul>
   </li>
@@ -574,7 +574,7 @@
 <p>Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that—</p>
 
 <ol>
-  <li>maps continuous or bounded functions on that interval to functions in a finite-dimensional linear subspace of continuous or bounded functions (such as polynomials up to degree 5)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, and</li>
+  <li>maps continuous or bounded functions on that interval to functions in a finite-dimensional subspace of continuous or bounded functions (such as polynomials up to degree 5)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, and</li>
   <li>is <em>idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup></li>
 </ol>
 
@@ -630,9 +630,9 @@
 
 <p>If $L(e_0)=1$, then for every $h&gt;0$:</p>
 
-\[\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),\]
+\[\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),\]
 
-<p>provided $L(\text{abs}(e_0-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
+<p>provided $L(\text{abs}(e_1-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
 
 <blockquote>
   <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>; on nonlinear approximation, see DeVore (1998)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>.)
@@ -813,17 +813,30 @@
 
 <p>where $0\le\lambda\le 1$.<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">68</a></sup></p>
 
-<p>This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree up to $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011<sup id="fnref:67:1"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)</p>
+<p>This operator is a nonpositive linear operator.</p>
+
+<ul>
+  <li>Unlike in the previous examples, this operator takes in only continuous functions with a second derivative.</li>
+  <li>The operator maps those functions to polynomials of degree up to $n+2$.</li>
+</ul>
+
+<p>Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011<sup id="fnref:67:1"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)</p>
 
 <p>$Q_{n,2}$ can be bounded as follows:</p>
 
-\[\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = 1+\Vert f^{(2)}\Vert/(8n),\]
+\[\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),\]
 
 <p>where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.</p>
 
-<p>However, this operator has an infinite operator norm and so is unbounded. Indeed, a function can have a maximum absolute value of 1 or less yet have an arbitrarily large and continuous second derivative.  Take, for example, the family of functions $g_m(\lambda)=\cos(m\cos(\lambda\pi))$: as $m$ goes to infinity, $g_m^{(2)}(1/2)$ diverges; in turn, the expression $(B_n(g_m^{(2)})(1/2))\frac{1}{8n}$, based on a degree-$n$ Bernstein polynomial, likewise diverges, at least if $n$ is 7 or less.</p>
+<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>:</p>
 
-<p>Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see “<a href="#Bounds_for_General_Linear_Operators"><strong>Bounds for General Linear Operators</strong></a>”), both of which relate to Peano kernels and apply only to bounded operators, can’t be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>.</p>
+\[\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert\]
+
+<p>Using this norm, the operator $Q_{n,2}$ can be bounded as follows:</p>
+
+\[\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},\]
+
+<p>so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.</p>
 
 <p>Some of the “moments” of this operator are:</p>
 
@@ -840,11 +853,15 @@
 
 <p>for some $C&gt;0$, and it is of interest to find an explicit upper bound for $C$, especially a tight one.</p>
 
+<p>It is suspected further, using Lemma 6 and Corollary 1, that—</p>
+
+\[\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},\]
+
 <p><a id="Probabilistic_Interpretations_of_Linear_Operators"></a></p>
 
 <h2 id="probabilistic-interpretations-of-linear-operators">Probabilistic Interpretations of Linear Operators</h2>
 
-<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">70</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">71</a></sup>, 1995<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>).</p>
+<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">70</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">71</a></sup>, 1995<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>).</p>
 
 <p><a id="Conclusion_and_Ways_to_Improve_This_Article"></a></p>
 
@@ -860,7 +877,7 @@
 
 \[\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),\]
 
-<p>where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:24:2"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> with Gonska and Zhou 1994<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">73</a></sup> and Holtz et al. 2011<sup id="fnref:67:2"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>.)</p>
+<p>where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:24:2"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> with Gonska and Zhou 1994<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">73</a></sup> and Holtz et al. 2011<sup id="fnref:67:2"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>.)</p>
 
 <p>It was a goal of this article to catalog general-purpose error bounds without such hidden constants.</p>
 
@@ -1038,7 +1055,7 @@
       <p>Phillips, G.M., <em>Interpolation and Approximation by Polynomials</em>, Springer New York, NY, 2003. <a href="https://doi.org/10.1007/b97417"><strong>https://doi.org/10.1007/b97417</strong></a> <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:44">
-      <p>A subset of functions is a <em>linear subspace</em> if it has the following property: if functions $f$ and $g$ are in the family, so is $f+g$, and if $f$ is in the family, so is $f+\alpha$ for every real number $\alpha$ (Weisstein, Eric W. “Subspace.” From MathWorld–A Wolfram Resource. <a href="https://mathworld.wolfram.com/Subspace.html"><strong>https://mathworld.wolfram.com/Subspace.html</strong></a>).  The subspace is also <em>finite-dimensional</em> if it is the smallest linear subspace that contains a given finite set of functions.  One example of a finite-dimensional linear subspace of continuous functions is the polynomials up to degree 2, which are the smallest linear subspace containing $e_0$, $e_1$, and $e_2$. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A subset of functions is a <em>subspace</em> if it has the following properties: if functions $f$ and $g$ are in the family, so is $f+g$, and if $f$ is in the family, so is $f+\alpha$ for every number $\alpha$ (Weisstein, Eric W. “Subspace.” From MathWorld–A Wolfram Resource. <a href="https://mathworld.wolfram.com/Subspace.html"><strong>https://mathworld.wolfram.com/Subspace.html</strong></a>).  The subspace is also <em>finite-dimensional</em> if it is the smallest subspace that contains a given finite set of functions.  One example of a finite-dimensional subspace of continuous functions is the polynomials up to degree 2, which are the smallest subspace containing $e_0$, $e_1$, and $e_2$. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:45">
       <p>This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials). <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -1112,20 +1129,20 @@
     <li id="fn:68">
       <p>$Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called <em>linear differential operator</em>: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
+    <li id="fn:73">
+      <p>A space of functions with this property is also called a <em>Banach space</em> (Axler, S, <em>Measure, Integration &amp; Real Analysis</em>, 2020). Another example of a Banach space is the space of continuous functions on a compact interval with the “norm” being the maximum absolute value. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
     <li id="fn:69">
-      <p>Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007 <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>S.N. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”, Comm. Kharkov Math. Soc. 13, 1-2, 1912. <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:70">
-      <p>S.N. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”, Comm. Kharkov Math. Soc. 13, 1-2, 1912. <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Adell, J. A., and J. De la Cal. “Bernstein-type operators diminish the φ-variation.” Constructive Approximation 12.4 (1996): 489-507. <a href="https://doi.org/10.1007/BF02437505"><strong>https://doi.org/10.1007/BF02437505</strong></a> <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:71">
-      <p>Adell, J. A., and J. De la Cal. “Bernstein-type operators diminish the φ-variation.” Constructive Approximation 12.4 (1996): 489-507. <a href="https://doi.org/10.1007/BF02437505"><strong>https://doi.org/10.1007/BF02437505</strong></a> <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Adell, J. A., and J. De la Cal. “Bernstein-Durrmeyer operators.” Computers &amp; Mathematics with Applications 30.3-6 (1995): 1-14. <a href="https://doi.org/10.1016/0898-1221%2895%2900081-X"><strong>https://doi.org/10.1016/0898-1221%2895%2900081-X</strong></a> <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:72">
-      <p>Adell, J. A., and J. De la Cal. “Bernstein-Durrmeyer operators.” Computers &amp; Mathematics with Applications 30.3-6 (1995): 1-14. <a href="https://doi.org/10.1016/0898-1221%2895%2900081-X"><strong>https://doi.org/10.1016/0898-1221%2895%2900081-X</strong></a> <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:73">
-      <p>Gonska, Heinz H., and Xin-long Zhou. “Approximation theorems for the iterated Boolean sums of Bernstein operators.” Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. <a href="https://doi.org/10.1016/0377-0427%02892%02900133-T"><strong>https://doi.org/10.1016/0377-0427%02892%02900133-T</strong></a> <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gonska, Heinz H., and Xin-long Zhou. “Approximation theorems for the iterated Boolean sums of Bernstein operators.” Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. <a href="https://doi.org/10.1016/0377-0427%02892%02900133-T"><strong>https://doi.org/10.1016/0377-0427%02892%02900133-T</strong></a> <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

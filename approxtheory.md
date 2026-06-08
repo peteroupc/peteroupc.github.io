@@ -53,7 +53,7 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - An _operator_ is a mapping from a function to a function.
     - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^2]
-    - The _operator norm_ of an operator $L$ is the maximum "norm" of $L(f)$ over all allowed functions $f$ with a "norm" of 1 or less.  The "norm" depends on the families of functions that $L$ maps to and from.  For example, if $L$ maps continuous or bounded functions on a compact interval to functions of that kind, the "norm" is the maximum absolute value.
+    - The _operator norm_ of an operator $L$ is the maximum "norm" of $L(f)$ over all allowed functions $f$ with a "norm" of 1 or less.  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the "norm" is the maximum absolute value unless noted otherwise.
     - An operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
@@ -416,7 +416,7 @@ $$\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert.$
 
 Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that&mdash;
 
-1. maps continuous or bounded functions on that interval to functions in a finite-dimensional linear subspace of continuous or bounded functions (such as polynomials up to degree 5)[^44], and
+1. maps continuous or bounded functions on that interval to functions in a finite-dimensional subspace of continuous or bounded functions (such as polynomials up to degree 5)[^44], and
 2. is _idempotent_, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.[^45]
 
 Also, let $I$ be the identity operator $I(f)=f$.
@@ -461,9 +461,9 @@ Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L
 
 If $L(e_0)=1$, then for every $h>0$:
 
-$$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_0-x))(x)/h)\cdot\omega_1(f, h),$$
+$$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),$$
 
-provided $L(\text{abs}(e_0-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
+provided $L(\text{abs}(e_1-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
 > **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^56]; on nonlinear approximation, see DeVore (1998)[^57].)
 <a id=Example></a>
@@ -636,17 +636,28 @@ $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
 where $0\le\lambda\le 1$.[^68]
 
-This operator is a nonpositive linear operator that maps continuous functions to polynomials of degree up to $n+2$.  Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^67]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+This operator is a nonpositive linear operator.
+
+- Unlike in the previous examples, this operator takes in only continuous functions with a second derivative.
+- The operator maps those functions to polynomials of degree up to $n+2$.
+
+Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^67]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
-$$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = 1+\Vert f^{(2)}\Vert/(8n),$$
+$$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),$$
 
 where $\Vert B\Vert$ is the operator norm of the Bernstein polynomials.
 
-However, this operator has an infinite operator norm and so is unbounded. Indeed, a function can have a maximum absolute value of 1 or less yet have an arbitrarily large and continuous second derivative.  Take, for example, the family of functions $g_m(\lambda)=\cos(m\cos(\lambda\pi))$: as $m$ goes to infinity, $g_m^{(2)}(1/2)$ diverges; in turn, the expression $(B_n(g_m^{(2)})(1/2))\frac{1}{8n}$, based on a degree-$n$ Bernstein polynomial, likewise diverges, at least if $n$ is 7 or less.
+The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^73]:
 
-Because $Q_{n,2}$ is unbounded, lemmas 7 and 8 (see "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)"), both of which relate to Peano kernels and apply only to bounded operators, can't be used.  For the same reason, $Q_{n,2}$ cannot be written as a difference of two positive linear operators that map continuous functions to continuous functions; every positive operator of that kind is bounded (Piţul 2007, Corollary 1.5)[^69].
+$$\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert$$
+
+Using this norm, the operator $Q_{n,2}$ can be bounded as follows:
+
+$$\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},$$
+
+so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.
 
 Some of the "moments" of this operator are:
 
@@ -661,11 +672,15 @@ $$\Vert LF(f)\Vert \le \frac{C \Vert f^{(3)}\Vert}{n^{3/2}},$$
 
 for some $C>0$, and it is of interest to find an explicit upper bound for $C$, especially a tight one.
 
+It is suspected further, using Lemma 6 and Corollary 1, that&mdash;
+
+$$\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},$$
+
 <a id=Probabilistic_Interpretations_of_Linear_Operators></a>
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^70]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^71], 1995[^72]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^69]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^70], 1995[^71]).
 
 <a id=Conclusion_and_Ways_to_Improve_This_Article></a>
 
@@ -681,7 +696,7 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^24] with Gonska and Zhou 1994[^73] and Holtz et al. 2011[^67].)
+where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^24] with Gonska and Zhou 1994[^72] and Holtz et al. 2011[^67].)
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
@@ -804,7 +819,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^43]: Phillips, G.M., _Interpolation and Approximation by Polynomials_, Springer New York, NY, 2003. [**https://doi.org/10.1007/b97417**](https://doi.org/10.1007/b97417)
 
-[^44]: A subset of functions is a _linear subspace_ if it has the following property: if functions $f$ and $g$ are in the family, so is $f+g$, and if $f$ is in the family, so is $f+\alpha$ for every real number $\alpha$ (Weisstein, Eric W. "Subspace." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/Subspace.html**](https://mathworld.wolfram.com/Subspace.html)).  The subspace is also _finite-dimensional_ if it is the smallest linear subspace that contains a given finite set of functions.  One example of a finite-dimensional linear subspace of continuous functions is the polynomials up to degree 2, which are the smallest linear subspace containing $e_0$, $e_1$, and $e_2$.
+[^44]: A subset of functions is a _subspace_ if it has the following properties: if functions $f$ and $g$ are in the family, so is $f+g$, and if $f$ is in the family, so is $f+\alpha$ for every number $\alpha$ (Weisstein, Eric W. "Subspace." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/Subspace.html**](https://mathworld.wolfram.com/Subspace.html)).  The subspace is also _finite-dimensional_ if it is the smallest subspace that contains a given finite set of functions.  One example of a finite-dimensional subspace of continuous functions is the polynomials up to degree 2, which are the smallest subspace containing $e_0$, $e_1$, and $e_2$.
 
 [^45]: This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials).
 
@@ -854,12 +869,12 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^68]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^69]: Piţul, P., “Evaluation of the Approximation Order by Positive Linear Operators”, dissertation, Universität Duisberg-Essen, 2007
+[^69]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^70]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^70]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^71]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+[^71]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
 
-[^72]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+[^72]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
 
-[^73]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
+[^73]: A space of functions with this property is also called a _Banach space_ (Axler, S, _Measure, Integration & Real Analysis_, 2020). Another example of a Banach space is the space of continuous functions on a compact interval with the "norm" being the maximum absolute value.
