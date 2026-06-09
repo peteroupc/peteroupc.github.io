@@ -91,17 +91,16 @@ Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 
 
 Prove or disprove the following statement. If there is $D>0$ such that $\vert f(\lambda)-B_n(W_n(f; \lambda); \lambda)\vert \le DM/n^{r/2}$ for each integer $n\ge 1$ and each $0\le \lambda\le 1$, then there is $C_1>0$ depending only on $r$ and $\lgroup W_n\rgroup_n$ such that the inequality $\sum_{i=0}^n \left( W_{2n}\left(f; \frac{k}{2n}\right) - W_n\left(f; \frac{i}{n}\right)\right)\sigma_{n,k,i}$ $\ge -C_1 M/n^{r/2}$ holds true for each integer $n\ge 1$ and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$. Call the latter inequality (PB).[^20]
 
-Also, prove or disprove the same statement with the assumption that $n$ is a power of 2. When $C_0$ exists, find a good upper bound for it.
+Also, prove or disprove the same statement with the assumption that $n$ is a power of 2. When $C_1$ exists, find a good upper bound for it.
 
 > **Notes:**
 >
 > 1. I believe there is a counterexample to this conjecture, namely the sequence $B_n(W_n(f; \lambda); \lambda)=\frac{(T_n(1-2\lambda)+1)\varphi_n}{2 \mu_n} + 1/2$, where $\varphi_n$ is a decreasing sequence of positive numbers that tends slowly enough to 0, $\mu_n$ is the maximum Bernstein coefficient (in absolute value) of the degree-$n$ polynomial $(T_n(1-2\lambda)+1)/2$, and $T_n(x)$ is the Chebyshev polynomial of the first kind of degree $n$. $W_n$ then maps to a piecewise linear function that connects the Bernstein coefficients of $B_n(W_n(\lambda))$, so that $(W_n)$ is a sequence of operators that converges at an arbitrarily slow rate (depending on $\varphi_n$) to the constant 1/2. $B_n(W_n(\lambda))$ converges uniformly, at an exponential rate, to $f(\lambda)=1/2$, so that $M = 1/2$.  If this counterexample is valid, the conjecture may still be true with an additional assumption on the convergence rate of $W_n$, say, $O(1/n)$ or $O(1/n^{r/2})$ or $O(1/n^{(r-1)/2})$.
 >
-> 2. If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le\lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. See the example given in "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html).
+> 2. If $W_n(f)$ is a linear operator, the left-hand side of $(PB)$ can be treated as a linear operator, too, after a change of variables from $k$ to $2n\lambda$, with $0\le\lambda\le 1$.  Call the new operator $L_n(f)$.  The goal is then to find an upper bound for $L_n$ that is $O(1/n^{r/2})$. See the [**example given in "Notes on Approximation Theory"**](https://peteroupc.github.io/approxtheory.html#Example).
 >
 > 3. For every $s\ge 2$, if the sequence $(W_n)$ is such that $B_n(W_n(f))$ preserves all polynomials of degree $s$ or less, then $B_n(W_n(f))$ must be nonlinear, nonpositive, or equal to $f$ (Gavrea and Ivan 2018[^21], Păltănea 2004[^22], so that, for example, $(W_n)$ cannot be a sequence of linear positive operators (Finta 2013)[^23].
 >
-> 4. For more notes on finding error bounds, see "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html).  That page also has an example of finding error bounds in the case $W_n=2f-B_n(f)$, which corresponds to the iterated Boolean sum of Bernstein polynomials, with one iteration (Güntürk and Li 2021a, Theorem 5)[^16].
 
 <a id=Strategies></a>
 
@@ -162,7 +161,7 @@ Prove or disprove:
 
     - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are not less than min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^26]), and
     - $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
-    - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of f, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
+    - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
     - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $h(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
 
     A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz-continuous function on $[0, \epsilon)$ for some $\epsilon>0$" does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)  Keane and O'Brien already showed strong simulability when $D$ contains neither 0 nor 1.
