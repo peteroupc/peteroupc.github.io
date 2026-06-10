@@ -23,8 +23,7 @@ The mapping from a function to a function (for example, from a single-variable f
     - [**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_Operators)
     - [**Bounds for Remainder of Bernstein Polynomials**](#Bounds_for_Remainder_of_Bernstein_Polynomials)
     - [**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)
-    - [**Whitney's Inequality on Polynomial Errors**](#Whitney_s_Inequality_on_Polynomial_Errors)
-    - [**Another Inequality on Polynomial Errors**](#Another_Inequality_on_Polynomial_Errors)
+    - [**Inequalities on Polynomial Errors**](#Inequalities_on_Polynomial_Errors)
     - [**Lebesgue Inequality for Certain Linear Operators**](#Lebesgue_Inequality_for_Certain_Linear_Operators)
     - [**Bounds for Certain Nonlinear Operators**](#Bounds_for_Certain_Nonlinear_Operators)
 - [**Example**](#Example)
@@ -373,24 +372,42 @@ $$\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)\cdot(1+(b-a)/h)
 
 $$+1+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)$$
 
-<a id=Whitney_s_Inequality_on_Polynomial_Errors></a>
+<a id=Inequalities_on_Polynomial_Errors></a>
 
-### Whitney's Inequality on Polynomial Errors
+### Inequalities on Polynomial Errors
 
-The following inequality gives a bound on the "best possible" error that a polynomial of degree $n$ can achieve in approximating a function.
+The following inequalities give bounds on the "best possible" error that a polynomial of degree $n$ can achieve in approximating a function.
 
-Let $n$ be zero or a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^40]):
+**Lemma 13**. _Let $n$ be zero or a positive integer, let $k$ be a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^40], Babenko and Kryakin 2018[^74]):_
 
-$$\Vert f-P\Vert \le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),$$
+$$\Vert f-P\Vert \le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),\tag{Wh}$$
 
-where&mdash;
+$$\Vert f-P\Vert \le J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}),\tag{JS}$$
 
-- $W$ is:
-    - 1 if $n\le 7$.
-    - $(2+\exp(-2)) (< 2.13534)$ if $n\ge 8$.
-    - $3/4$ if $n=1$ and $f$ is convex (Singh Kaire and Prymak 2023/2025)[^41].
-    - $1/2$ if $n=1$, $f$ is convex, and $a=-b$ (Singh Kaire and Prymak 2023/2025)[^41].
-- $\omega_{n}(f, h)$ is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$.
+$$\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert,\tag{Ph}$$
+
+_where:_
+
+- _$W$ is:_
+    - 1/2 _if $n$ is 0 or 1 (Whitney 1957)[^75]._
+    - 1 _if $2\le n\le 7$._
+    - 2 _if $8\le n\lt 81999$._
+    - $(2+\exp(-2)) (< 2.13534)$ _if_ $n\ge 81999$.
+    - _$3/4$ if $n=1$ and $f$ is convex (Singh Kaire and Prymak 2023/2025)[^41]._
+    - _$1/2$ if $n=1$, $f$ is convex, and $a=-b$ (Singh Kaire and Prymak 2023/2025)[^41]._
+- _$J$ is (Babenko and Kryakin 2018[^76]):_
+    - 1 _if $k=1$ and $\alpha=1$._
+    - _$3/4+3/(16\alpha^2)$ if $k=2$ and $n\ge 1$._
+    - 4.38 _if $k=4$, $\alpha=1$, and $n\ge 11$._
+    - 2.59 _if $k=4$, $\alpha=2$, and $n\ge 11$._
+    - 8.9 _if $n\ge k(k-1)-1$, $k$ is 2, 4, 6, or 8, and $\alpha$ is 1 or 2._
+    - 9.74 _if $n\ge k(k-1)-1$, $k\ge 10$, $k$ is even, and $\alpha=2$._
+- $\alpha\ge 0$.
+- $\omega_{n}(f, h)$ _is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$._
+- _The inequality (JS) is valid only for the compact interval $[-1,1]$._
+- _The inequality (Ph) is valid only if $f$ has a continuous $(n+1)$-th derivative._
+
+> **Note:** The inequality (Wh) is also known as Whitney's inequality; the inequality (JS), the Jackson&ndash;Stechkin inequality. is valid only for the compact interval $[-1,1]$. The following are references on the inequality (Ph): Brass and Petras 2011[^42], example 3.1.2; Phillips 2003 [^43], theorem 2.4.6\).
 
 Using properties of moduli of continuity (see Sevy 1991[^24], sec. 2.0.2; Gonska 1985[^25]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
@@ -399,16 +416,6 @@ $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\Vert f^{(n+1)}\V
 and if $f$ has a continuous $n$-th derivative on that interval:
 
 $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
-
-<a id=Another_Inequality_on_Polynomial_Errors></a>
-
-### Another Inequality on Polynomial Errors
-
-Like Whitney's inequality, the following gives a bound on the "best possible" error between a polynomial and a function.
-
-Let $n$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(n+1)$-th derivative on the compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval. Then the error of $P$ in approximating $f$ is bounded as follows (Brass and Petras 2011[^42], example 3.1.2; Phillips 2003 [^43], theorem 2.4.6\):
-
-$$\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert.$$
 
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
 
@@ -431,7 +438,7 @@ where $\Vert L\Vert$ is the operator norm of $L$, and $\Vert I-L\Vert$ is the op
 
 > **Examples:**
 >
-> 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequality (Leb) with the Whitney-type inequalities given earlier leads to the following error bound for idempotent linear operators $L$ that map continuous functions on that interval to polynomials up to degree 2:
+> 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequality (Leb) with the inequality (Wh) given earlier leads to the following error bound for idempotent linear operators $L$ that map continuous functions on that interval to polynomials up to degree 2:
 >
 >     $$\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert $$
 >
@@ -879,3 +886,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^72]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
 
 [^73]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
+
+[^74]: Babenko, A.G., Kryakin, Y.V. On Constants in the Jackson Stechkin Theorem in the Case of Approximation by Algebraic Polynomials. Proc. Steklov Inst. Math. 303, 18–30 (2018). [https://doi.org/10.1134/S0081543818080035](https://doi.org/10.1134/S0081543818080035)
+
+[^75]: Whitney, H. “On functions with bounded n-th differences”, _J. Math. Pures Appl._, Sér. 9, 36, 67–95 (1957).
+
+[^76]: Babenko, A.G., Kryakin, Y.V. On Constants in the Jackson Stechkin Theorem in the Case of Approximation by Algebraic Polynomials. Proc. Steklov Inst. Math. 303, 18–30 (2018). [https://doi.org/10.1134/S0081543818080035](https://doi.org/10.1134/S0081543818080035)
