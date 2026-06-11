@@ -674,7 +674,7 @@ It is suspected further, using Lemma 6 and Corollary 1, that&mdash;
 
 $$\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},$$
 
-The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^76]\:
+The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed.  Denote $C^k$ as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^72]\:
 
 $$\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert$$
 
@@ -688,7 +688,7 @@ so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.
 
 ## Probabilistic Interpretations of Linear Operators
 
-The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^72]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^73], 1995[^74]).
+The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)[^73]. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996[^74], 1995[^75]).
 
 <a id=Conclusion_and_Ways_to_Improve_This_Article></a>
 
@@ -704,13 +704,18 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^24] with Gonska and Zhou 1994[^75] and Holtz et al. 2011[^70].)
+where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^24] with Gonska and Zhou 1994[^76] and Holtz et al. 2011[^70].)
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
-- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).
+- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C>0$ is an explicitly given constant:
+    - $\Vert f-L(f)\Vert \le (C \Vert L\Vert)\Vert f-P\Vert$ for every $P$ mapped to by $L$.
+    - $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert)\Vert f-P\Vert$ for every $P$ mapped to by $L$.
+    - $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert)\Vert f-P\Vert$ for every $P$ in some subset of functions mapped to by $L$.
+    - $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert)\Vert f^{(k)}-P^{(k)}\Vert$ for some $k\ge 1$ and every $P$ in some subset of functions mapped to by $L$ (for example, De Boor 1975[^77]).
+    - Inequalities of the foregoing kinds where $L$ and $f$ are restricted to some compact subinterval.
 - General-purpose upper bounds on the error when approximating a function with:
     1. Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.
     2. Ratios of polynomials described in (1).
@@ -882,12 +887,15 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^71]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^72]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^72]: A linear space of functions with this property is also called a _Banach space_ (Axler, S., _Measure, Integration & Real Analysis_, 2020).
 
-[^73]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
+[^73]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^74]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
+[^74]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
-[^75]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
+[^75]: Adell, J. A., and J. De la Cal. "Bernstein-Durrmeyer operators." Computers & Mathematics with Applications 30.3-6 (1995): 1-14. [**https://doi.org/10.1016/0898-1221%2895%2900081-X**](https://doi.org/10.1016/0898-1221%2895%2900081-X)
 
-[^76]: A linear space of functions with this property is also called a _Banach space_ (Axler, S., _Measure, Integration & Real Analysis_, 2020).
+[^76]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
+
+[^77]: Carl de Boor, "Quadratic spline interpolation and the sharpness of Lebesgue's inequality", _Journal of Approximation Theory_ 17(4), August 1976.
+[https://doi.org/10.1016/0021-9045(76](https://doi.org/10.1016/0021-9045(76))90079-4 [https://www.sciencedirect.com/science/article/pii/0021904576900794](https://www.sciencedirect.com/science/article/pii/0021904576900794)
