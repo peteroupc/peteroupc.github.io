@@ -264,10 +264,14 @@
       <td>6</td>
       <td>$\tilde\omega_1(f, (\sigma_2)^{1/2})$.</td>
     </tr>
+    <tr>
+      <td>7</td>
+      <td>$(1 + 1/h^2) \omega_1(f, h\cdot\Vert\sigma_2\Vert^{1/2})$.</td>
+    </tr>
   </tbody>
 </table>
 
-<p><em>Proof:</em> Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)<sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>; inequality 4 comes from another result in the same paper (see also Mamedov (1959)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>); inequality 3 follows from a result of Mond (1978)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; inequality 5, a result of Păltănea (2004, corollary 1.2.2)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>; inequality 6, a result of Peetre (1969)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup> (also mentioned in Gonska (1998/2023)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>, which has an extensive discussion on error bounds for linear operators). □</p>
+<p><em>Proof:</em> Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)<sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>; inequality 4 comes from another result in the same paper (see also Mamedov (1959)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>); inequality 7 follows from a result of Mond (1978)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup> (where $\Vert\sigma_2\Vert$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval); inequality 3 is a special case of Remark 1.2.5 of Păltănea (2004)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>; inequality 5 is from corollary 1.2.2 of the same book; inequality 6, a result of Peetre (1969)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup> (also mentioned in Gonska (1998/2023)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>, which has an extensive discussion on error bounds for linear operators). □</p>
 
 <p><strong>Remark 1:</strong> The moduli of continuity $\omega_1(f, \delta)$ and $\tilde\omega_1(f, \delta)$ offer concise ways to express different error bounds depending on how “regular” $f$ is.  Properties of these moduli are given in Sevy 1991<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>. For example, let $f$ be continuous on a compact interval.  Then:</p>
 
@@ -577,9 +581,13 @@
 
 <p>and if $f$ has a continuous $n$-th derivative on that interval:</p>
 
-<p>\(\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).\)
-&gt;
-&gt;<strong>Note:</strong> Upper bounds similar to those in this section can be found by considering an operator $L$ that maps continuous functions to all functions in a certain family (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the “best approximation” to $f$.  As one example, Marsden (1972)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> (see also Beutel et al. 2002<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>) proved an upper bound of this kind using an operator that maps to a family of <em>splines</em>, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>.</p>
+\[\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).\]
+
+<p> </p>
+
+<blockquote>
+  <p><strong>Note:</strong> Upper bounds similar to those in this section can be found by considering an operator $L$ that maps continuous functions to all functions in a certain family (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the “best approximation” to $f$.  As one example, Marsden (1972)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> (see also Beutel et al. 2002<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>) proved an upper bound of this kind using an operator that maps to a family of <em>splines</em>, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>.</p>
+</blockquote>
 
 <p><a id="Lebesgue_Inequality_for_Certain_Linear_Operators"></a></p>
 
@@ -1010,7 +1018,7 @@
       <p>R. G. Mamedov, “On the order of approximation of functions by linear positive operators” (Russian), Dokl. Akad. Nauk SSSR 128 (1959). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:20">
-      <p>Mond, B., “On the degree of approximation by linear positive operators”, <em>Journal of Approximation Theory</em> 18 (1976). <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Mond, B., “On the degree of approximation by linear positive operators”, <em>Journal of Approximation Theory</em> 18 (1976). https://doi.org/10.1016/0021-9045%2876%2990022-8 https://www.sciencedirect.com/science/article/pii/0021904576900228 <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:21">
       <p>Păltănea, R., <em>Approximation Theory Using Positive Linear Operators</em>, Birkhäuser, 2004. <a href="https://doi.org/10.1007/978-1-4612-2058-9"><strong>https://doi.org/10.1007/978-1-4612-2058-9</strong></a> <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:21:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>

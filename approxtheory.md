@@ -183,8 +183,9 @@ In this section:
 | 4 | $(1 + (\sigma_2)/h^2) \omega_1(f, h)$. |
 | 5 | (Use ineq. 3 if $h<(\sigma_2)^{1/2}$, or ineq. 4 otherwise.) |
 | 6 | $\tilde\omega_1(f, (\sigma_2)^{1/2})$. |
+| 7 | $(1 + 1/h^2) \omega_1(f, h\cdot\Vert\sigma_2\Vert^{1/2})$. |
 
-_Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)[^17]. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)[^18]; inequality 4 comes from another result in the same paper (see also Mamedov (1959)[^19]); inequality 3 follows from a result of Mond (1978)[^20]; inequality 5, a result of Păltănea (2004, corollary 1.2.2)[^21]; inequality 6, a result of Peetre (1969)[^22] \(also mentioned in Gonska (1998/2023)[^23], which has an extensive discussion on error bounds for linear operators). &#x25a1;
+_Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)[^17]. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)[^18]; inequality 4 comes from another result in the same paper (see also Mamedov (1959)[^19]); inequality 7 follows from a result of Mond (1978)[^20] \(where $\Vert\sigma_2\Vert$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval); inequality 3 is a special case of Remark 1.2.5 of Păltănea (2004)[^21]; inequality 5 is from corollary 1.2.2 of the same book; inequality 6, a result of Peetre (1969)[^22] \(also mentioned in Gonska (1998/2023)[^23], which has an extensive discussion on error bounds for linear operators). &#x25a1;
 
 **Remark 1:** The moduli of continuity $\omega_1(f, \delta)$ and $\tilde\omega_1(f, \delta)$ offer concise ways to express different error bounds depending on how "regular" $f$ is.  Properties of these moduli are given in Sevy 1991[^24], sec. 2.0.2; Gonska 1985[^25]. For example, let $f$ be continuous on a compact interval.  Then:
 
@@ -416,7 +417,9 @@ $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\Vert f^{(n+1)}\V
 and if $f$ has a continuous $n$-th derivative on that interval:
 
 $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
->
+
+&nbsp;
+
 >**Note:** Upper bounds similar to those in this section can be found by considering an operator $L$ that maps continuous functions to all functions in a certain family (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the "best approximation" to $f$.  As one example, Marsden (1972)[^46] \(see also Beutel et al. 2002[^47]) proved an upper bound of this kind using an operator that maps to a family of _splines_, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)[^48].
 
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
@@ -787,7 +790,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^19]: R. G. Mamedov, "On the order of approximation of functions by linear positive operators" (Russian), Dokl. Akad. Nauk SSSR 128 (1959).
 
-[^20]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976).
+[^20]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976). [https://doi.org/10.1016/0021-9045%2876%2990022-8](https://doi.org/10.1016/0021-9045%2876%2990022-8) [https://www.sciencedirect.com/science/article/pii/0021904576900228](https://www.sciencedirect.com/science/article/pii/0021904576900228)
 
 [^21]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004. [**https://doi.org/10.1007/978-1-4612-2058-9**](https://doi.org/10.1007/978-1-4612-2058-9)
 
