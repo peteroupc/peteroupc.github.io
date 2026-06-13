@@ -938,14 +938,14 @@ The following claim is believed to be true.
 
 1. is a linear operator,
 2. satisfies $\text{abs}(f(\lambda)-W_n(\lambda))\le DM/n^{r/2}$ for some $D>0$,
-3. preserves all polynomials of degree $(r-1)$ or less (so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less and $n$ is greater than or equal to $f$'s degree).
+3. preserves all polynomials of degree $(r-1)$ or less (so that $W_n(x) = f(x)$ whenever $f$ is a polynomial of degree $(r-1)$ or less and $n$ is greater than or equal to $f$'s degree), and
 4. has a continuous $r$-th derivative that satisfies $\text{abs}(W_n^{(r)}(\lambda))\le EM$ for some $E>0$.
 
 Then&mdash;
 
 $$h(n, k)\le\frac{\sqrt{2} DM \left(1 + 2 \sqrt{2}\right)}{4 n^{\frac{3}{2}}} + \frac{\sqrt{3} EM}{48 n^{\frac{3}{2}}}.$$
 
-_Remark_: Because of this claim's assumptions, if $W_n(f)$ and $f$ are continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i(f)$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018[^40], Guessab et al. 2009[^41]); moreover, $W_n = f$ doesn't meet the conjecture's hypothesis (for $r\ge 3$).
+_Remark_: Because of this claim's assumptions, if $W_n(f)$ is continuous, $W_n$ must be a _nonpositive operator_ (so that, for some $i$, $W_i(f)$ can be somewhere negative even if $f$ is nowhere negative) (Gavrea and Ivan 2018[^40], Guessab et al. 2009[^41]); moreover, $W_n = f$ doesn't meet the conjecture's hypothesis (for $r\ge 3$).
 
 _Provisional proof_: Because $W_n$ is a linear operator, the left-hand side of (PB) is not greater than&mdash;
 
