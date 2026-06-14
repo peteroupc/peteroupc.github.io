@@ -376,7 +376,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^12]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^13]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+[^13]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
 
 [^14]: Qian et al. suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., & Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).
 

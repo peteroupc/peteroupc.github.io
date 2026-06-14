@@ -383,7 +383,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^7]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [**https://doi.org/10.1145/2133390.2133396**](https://doi.org/10.1145/2133390.2133396)
 
-[^8]: G.G. Lorentz, "Inequalities and saturation classes for Bernstein polynomials", 1963.
+[^8]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
 
 [^9]: Temple, W.B., "Steltjes integral representation of convex functions", 1954.
 
