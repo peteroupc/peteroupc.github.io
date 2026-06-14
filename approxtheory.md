@@ -53,7 +53,7 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
     - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^2]
     - The _operator norm_ of an operator $L$ is the maximum "norm" of $L(f)$ over all allowed functions $f$ with a "norm" of 1 or less.  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the "norm" is the maximum absolute value unless noted otherwise.
-    - An operator is _bounded_ if its operator norm is finite.
+    - A linear operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
 - In this document:
@@ -482,10 +482,13 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),$$
 
 provided $L(\text{abs}(e_1-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
+|L(f)-L(g)|
+|Lf-Lg| = |L(f-g)|<=|L||f-g|
+
 > **Notes:**
 >
 > 1. An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^61]; on nonlinear approximation, see DeVore (1998)[^62].)
-> 2. An operator $L$ is _Lipschitz continuous_ if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M>0$ and all allowed functions $f$ and $g$. (The left-hand side is a "norm" that depends on the space of functions $L$ maps _to_; the right-hand "norm", on the functions $L$ maps _from_.)  Every positive linear operator and every monotone and sublinear operator is Lipschitz continuous with $M$ equal to its operator norm (Gal and Niculescu (2023)[^61]).
+> 2. An operator $L$ is _Lipschitz continuous_ if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M>0$ and all allowed functions $f$ and $g$. (The left-hand side is a "norm" that depends on the space of functions $L$ maps _to_; the right-hand "norm", on the functions $L$ maps _from_.)  Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)[^81].
 
 <a id=Example></a>
 
@@ -916,3 +919,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^79]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
 
 [^80]: Carl de Boor, "Quadratic spline interpolation and the sharpness of Lebesgue's inequality", _Journal of Approximation Theory_ 17(4), August 1976. [**https://doi.org/10.1016/0021-9045%2876%2990079-4**](https://doi.org/10.1016/0021-9045%2876%2990079-4) [**https://www.sciencedirect.com/science/article/pii/0021904576900794**](https://www.sciencedirect.com/science/article/pii/0021904576900794)
+
+[^81]: Gal, S.G., Niculescu, C.P. Korovkin-Type Theorems for Weakly Nonlinear and Monotone Operators. Mediterr. J. Math. 20, 56 (2023). [https://doi.org/10.1007/s00009-023-02271-y](https://doi.org/10.1007/s00009-023-02271-y)
