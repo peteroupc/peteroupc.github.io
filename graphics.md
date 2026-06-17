@@ -394,7 +394,7 @@ Develop a guide for creating 3-D models for use in modern video games that follo
 Write a free and open-source tutorial on game graphics programming using the pre-2000 graphics style emphasized in the [**specification**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games) given earlier, with the following features:
 
 1. The tutorial is book-length, printable, and programming-language neutral.
-2. The tutorial should cover all 2-D and 3-D graphics concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and 3-D graphics features.
+2. The tutorial should cover all 2-D and 3-D graphics concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and 3-D graphics features. Coverage of graphics programming with a limited-color frame buffer (such as 16 colors or 256 colors) is recommended.
 3. The tutorial explains math concepts to readers as necessary, without assuming prior knowledge of math higher than basic algebra.
 4. The tutorial does not require the use of hardware-accelerated graphics, OpenGL, or Direct3D in the practice exercises.  (See definition of "rendered in software" in the specification.)
 5. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.

@@ -53,7 +53,7 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - An _operator_ is a mapping from a function to a function.
     - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^2]
-    - The _operator norm_ of an operator $L$ is the maximum of the following value over all allowed functions of $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^3].[^4]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the "norm" is the maximum absolute value unless noted otherwise.
+    - The _operator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^3].[^4]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the "norm" is the maximum absolute value unless noted otherwise.
     - An operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
@@ -249,13 +249,9 @@ _where_ $\Vert L(e_0)\Vert$ _is the maximum of $L(e_0)$ over $f$'s domain._
 
 **Lemma 4B** (special case of Theorem 4.7 in Gonska (1998/2023)[^25]). _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
-$$\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{ceil}((e_1-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)$$
+$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{ceil}((e_1-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 
-$$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),$$
-
-$$\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{abs}(e_1-\lambda))(\lambda)/h)\cdot\omega_1(f,h)$$
-
-$$+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)).$$
+$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{abs}(e_1-\lambda))(\lambda)/h)\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\end{multline}$$
 
 _The second inequality also works if $L$ maps from continuous functions instead of from bounded functions._
 
@@ -318,14 +314,8 @@ The next two lemmas rely on the so-called _Peano kernel theorem_, which was orig
 
 _Let $LF(f) = f - L(f)$.  Then, whenever $a\le\lambda\le b$:_
 
-$$\begin{multline}\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))\\\\
-\le \frac{C - c}{2}\int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)/(k!)\right) dt\quad\quad\mbox{(3)}\\\\
-= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\quad\quad\mbox{(4)}\\\\
-= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\
-\int_\lambda^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\right\rgroup\\\\
-= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left((\lambda-t)^k - L(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\
-\int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,\\\\
-\end{multline}$$
+$$\begin{multline}\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))\\\\\le \frac{C - c}{2}\int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)/(k!)\right) dt\quad\quad\mbox{(3)}\\\\= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\quad\quad\mbox{(4)}\\\\= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\\int_\lambda^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\right\rgroup\\\\= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left((\lambda-t)^k - L(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\
+\int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,\\\\\end{multline}$$
 
 $$\begin{multline}
 \text{abs}(LF(f)(\lambda))\le \frac{\Vert f^{(k+1)}\Vert}{k!} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda))\right) dt,\quad\quad\mbox{(5)}
@@ -430,12 +420,12 @@ $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \fr
 
 For certain operators, the approximation error of a function under that operator can be related to the "best approximation" error between that function and every function the operator maps to.
 
-In the following, given a set $S$ of functions, a subset of $S$ has a "best approximation" to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)[^3].[^84]
+In the following, given a set $S$ of functions, a subset of $S$ has a "best approximation" to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)[^3].[^51]
 
 Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that&mdash;
 
-- maps to a subset of continuous functions on that interval with a "best approximation" to $f$ (such as polynomials of degree 5 or less on that interval), and
-- is _idempotent_, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.[^51]
+- maps to a subspace[^51] of continuous functions on that interval with a "best approximation" to $f$ (such as polynomials of degree 5 or less on that interval), and
+- is _idempotent_, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.[^52]
 
 Also, let $I$ be the identity operator $I(f)=f$.  Then the following error bounds (also known as _Lebesgue's lemma_ or the _Lebesgue inequality_) apply:
 
@@ -445,9 +435,7 @@ $$\le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)$$
 
 $$\le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\tag{Leb}$$
 
-<!-- $$\text{abs}(L(f)(x))\le\Vert L\Vert\cdot\text{Dist}(f,P),\tag{Leb3}$$ -->
-
-where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^52], Powell (1981, theorem 3.1)[^53], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^54]).[^55] <!--The inequality (Leb3) follows because, if $L$ is linear and idempotent, so is $I - L$ (Rohwer 2005)[^56], and because $f - (f - L(f)) = L(f)$.-->
+where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^53], Powell (1981, theorem 3.1)[^54], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^55]).[^56]
 
 > **Examples:**
 >
@@ -480,29 +468,26 @@ Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L
 2. (Subadditive.) For every pair of allowed functions $g$ and $h$, $L(g+h)\le L(g)+L(h)$.
 3. (Positively homogeneous.) $xL(g)=L(xg)$ for every allowed function $g$ and every $x\ge 0$.
 
-Then for every $h>0$:
+Finally, let $h>0$ be a real number.  Then:
 
 $$\begin{multline}
-\text{abs}(f(x)-L(f)(x))\le(L(e_0)(x)+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h)\\\\
-+f(x)\cdot\text{abs}(L(e_0)(x)-1),\end{multline}$$
+\text{abs}(f(x)-L(f)(x))\le(L(e_0)(x)+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h)\\\\+f(x)\cdot\text{abs}(L(e_0)(x)-1),\end{multline}$$
 
 provided $L(\text{abs}(e_1-x))(x)$ (the "absolute moment" of $L$) exists (and is finite or infinite).
 
-Moreover, if $L(e_0)=1$, then for every $h>0$:
+Moreover, if $L(e_0)=1$:
 
 $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),$$
 
 provided that "moment" exists.
 
-> **Notes:**
->
-> 1. An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^62]; on nonlinear approximation, see DeVore (1998)[^63].)
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^62]; on nonlinear approximation, see DeVore (1998)[^63].)
 
 <a id=Lipschitz_Continuous_Operators></a>
 
 ### Lipschitz-Continuous Operators
 
-An operator $L$ is _Lipschitz continuous_ if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M>0$ and all allowed functions $f$ and $g$. (The left-hand side is a "norm" that depends on the space of functions $L$ maps _to_; the right-hand "norm", on the functions $L$ maps _from_.)
+An operator $L$ is _Lipschitz continuous_ if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M\ge 0$ and all allowed functions $f$ and $g$. (The left-hand side is a "norm" that depends on the space of functions $L$ maps _to_; the right-hand "norm", on the functions $L$ maps _from_.)
 
 Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)[^64].
 
@@ -695,7 +680,7 @@ $Q_{n,2}$ can be bounded as follows:
 
 $$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),$$
 
-where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)[^51] is the operator norm of the Bernstein polynomials.
+where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)[^52] is the operator norm of the Bernstein polynomials.
 
 Some of the "moments" of this operator are:
 
@@ -751,7 +736,7 @@ It was a goal of this article to catalog general-purpose error bounds without su
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
 - Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C>0$ is an explicitly given constant:
-    - $\Vert L(f)\Vert$ or $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.
+    - $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.
     - $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert)$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
     - $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert)$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^82]).
     - Inequalities of the foregoing kinds where $L$ and $f$ are restricted to some compact subinterval.
@@ -768,7 +753,8 @@ In addition, the following will be helpful.
 
 - Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.
 - Does Lemma 7 also work for linear operators, such as the [**Lorentz operator**](#Example_The_Lorentz_Operators), whose norm is not based on the maximum absolute value?
-- Given the work by Rohwer (2005)[^56], are the inequalities (Leb) and (Leb3) true when&mdash;
+- In which cases are the [**Lebesgue inequalities**](#Lebesgue_Inequality_for_Certain_Linear_Operators) (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?
+- Given the work by Rohwer (2005)[^84], are the inequalities (Leb) and (Leb2) true when&mdash;
     - $L$ is nonlinear,
     - $L$ is Lipschitz continuous, replacing $\Vert L\Vert$ with the Lipschitz constant of $L$, and
     - both $L$ and $I-L$ are idempotent?
@@ -888,17 +874,17 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^50]: De Boor, C., "On Uniform Approximation by Splines", _Journal of Approximation Theory_ 1 (1968). [**https://doi.org/10.1016/0021-9045%2868%2990026-9**](https://doi.org/10.1016/0021-9045%2868%2990026-9) [**https://www.sciencedirect.com/science/article/pii/0021904568900269**](https://www.sciencedirect.com/science/article/pii/0021904568900269)
 
-[^51]: This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials).
+[^51]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
 
-[^52]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
+[^52]: This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials).
 
-[^53]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
+[^53]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
 
-[^54]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
+[^54]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
 
-[^55]: In addition, chapter 5 of Rohwer's _Nonlinear Smoothing and Multiresolution Analysis_ discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section "Bounds for Certain Nonlinear Operators" in this page).
+[^55]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 
-[^56]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
+[^56]: In addition, chapter 5 of Rohwer's _Nonlinear Smoothing and Multiresolution Analysis_ discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section "Bounds for Certain Nonlinear Operators" in this page).
 
 [^57]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
@@ -954,4 +940,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^83]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
 
-[^84]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
+[^84]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)

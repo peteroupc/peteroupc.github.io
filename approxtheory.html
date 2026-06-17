@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-16"><meta name="citation_date" content="2026/06/16"><meta name="citation_publication_date" content="2026/06/16"><meta name="citation_online_date" content="2026/06/16"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-17"><meta name="citation_date" content="2026/06/17"><meta name="citation_publication_date" content="2026/06/17"><meta name="citation_online_date" content="2026/06/17"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-16.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-17.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -69,7 +69,7 @@
     <ul>
       <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.</li>
       <li>An operator $L$ is <em>positive</em> if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
-      <li>The <em>operator norm</em> of an operator $L$ is the maximum of the following value over all allowed functions of $f$ other than 0: the “norm” of $L(f)$ divided by the “norm” of $f$ (De Villiers 2012, (5.2.2))<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the “norm” is the maximum absolute value unless noted otherwise.</li>
+      <li>The <em>operator norm</em> of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the “norm” of $L(f)$ divided by the “norm” of $f$ (De Villiers 2012, (5.2.2))<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the “norm” is the maximum absolute value unless noted otherwise.</li>
       <li>An operator is <em>bounded</em> if its operator norm is finite.</li>
     </ul>
   </li>
@@ -368,13 +368,9 @@
 
 <p><strong>Lemma 4B</strong> (special case of Theorem 4.7 in Gonska (1998/2023)<sup id="fnref:25:2"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then:</em></p>
 
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{ceil}((e_1-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{ceil}((e_1-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
-\[+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\]
-
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)+L(\text{abs}(e_1-\lambda))(\lambda)/h)\cdot\omega_1(f,h)\]
-
-\[+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)).\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{abs}(e_1-\lambda))(\lambda)/h)\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\end{multline}\]
 
 <p><em>The second inequality also works if $L$ maps from continuous functions instead of from bounded functions.</em></p>
 
@@ -471,14 +467,8 @@
 
 <p><em>Let $LF(f) = f - L(f)$.  Then, whenever $a\le\lambda\le b$:</em></p>
 
-\[\begin{multline}\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))\\\\
-\le \frac{C - c}{2}\int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)/(k!)\right) dt\quad\quad\mbox{(3)}\\\\
-= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\quad\quad\mbox{(4)}\\\\
-= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\
-\int_\lambda^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\right\rgroup\\\\
-= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left((\lambda-t)^k - L(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\
-\int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,\\\\
-\end{multline}\]
+\[\begin{multline}\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lambda))\\\\\le \frac{C - c}{2}\int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)/(k!)\right) dt\quad\quad\mbox{(3)}\\\\= \frac{C - c}{2(k!)} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\quad\quad\mbox{(4)}\\\\= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\\int_\lambda^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt\right\rgroup\\\\= \frac{C - c}{2(k!)} \left\lgroup\int_a^\lambda \text{abs}\left((\lambda-t)^k - L(\lgroup e_1-t\rgroup_+^k)(\lambda)\right) dt +\\\\
+\int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,\\\\\end{multline}\]
 
 \[\begin{multline}
 \text{abs}(LF(f)(\lambda))\le \frac{\Vert f^{(k+1)}\Vert}{k!} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda))\right) dt,\quad\quad\mbox{(5)}
@@ -597,13 +587,13 @@
 
 <p>For certain operators, the approximation error of a function under that operator can be related to the “best approximation” error between that function and every function the operator maps to.</p>
 
-<p>In the following, given a set $S$ of functions, a subset of $S$ has a “best approximation” to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)<sup id="fnref:3:1"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:84"><a href="#fn:84" class="footnote" rel="footnote" role="doc-noteref">51</a></sup></p>
+<p>In the following, given a set $S$ of functions, a subset of $S$ has a “best approximation” to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)<sup id="fnref:3:1"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup></p>
 
 <p>Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that—</p>
 
 <ul>
-  <li>maps to a subset of continuous functions on that interval with a “best approximation” to $f$ (such as polynomials of degree 5 or less on that interval), and</li>
-  <li>is <em>idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup></li>
+  <li>maps to a subspace<sup id="fnref:51:1"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> of continuous functions on that interval with a “best approximation” to $f$ (such as polynomials of degree 5 or less on that interval), and</li>
+  <li>is <em>idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup></li>
 </ul>
 
 <p>Also, let $I$ be the identity operator $I(f)=f$.  Then the following error bounds (also known as <em>Lebesgue’s lemma</em> or the <em>Lebesgue inequality</em>) apply:</p>
@@ -614,9 +604,7 @@
 
 \[\le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\tag{Leb}\]
 
-<!-- $$\text{abs}(L(f)(x))\le\Vert L\Vert\cdot\text{Dist}(f,P),\tag{Leb3}$$ -->
-
-<p>where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:3:2"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>; for (Leb2) see De Boor (1982, chapter 2)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>).<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">56</a></sup> <!--The inequality (Leb3) follows because, if $L$ is linear and idempotent, so is $I - L$ (Rohwer 2005)[^56], and because $f - (f - L(f)) = L(f)$.--></p>
+<p>where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:3:2"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>; for (Leb2) see De Boor (1982, chapter 2)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>).<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup></p>
 
 <blockquote>
   <p><strong>Examples:</strong></p>
@@ -661,33 +649,28 @@
   <li>(Positively homogeneous.) $xL(g)=L(xg)$ for every allowed function $g$ and every $x\ge 0$.</li>
 </ol>
 
-<p>Then for every $h&gt;0$:</p>
+<p>Finally, let $h&gt;0$ be a real number.  Then:</p>
 
 \[\begin{multline}
-\text{abs}(f(x)-L(f)(x))\le(L(e_0)(x)+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h)\\\\
-+f(x)\cdot\text{abs}(L(e_0)(x)-1),\end{multline}\]
+\text{abs}(f(x)-L(f)(x))\le(L(e_0)(x)+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h)\\\\+f(x)\cdot\text{abs}(L(e_0)(x)-1),\end{multline}\]
 
 <p>provided $L(\text{abs}(e_1-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
 
-<p>Moreover, if $L(e_0)=1$, then for every $h&gt;0$:</p>
+<p>Moreover, if $L(e_0)=1$:</p>
 
 \[\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),\]
 
 <p>provided that “moment” exists.</p>
 
 <blockquote>
-  <p><strong>Notes:</strong></p>
-
-  <ol>
-    <li>An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup>; on nonlinear approximation, see DeVore (1998)<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>.)</li>
-  </ol>
+  <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup>; on nonlinear approximation, see DeVore (1998)<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>.)</p>
 </blockquote>
 
 <p><a id="Lipschitz_Continuous_Operators"></a></p>
 
 <h3 id="lipschitz-continuous-operators">Lipschitz-Continuous Operators</h3>
 
-<p>An operator $L$ is <em>Lipschitz continuous</em> if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M&gt;0$ and all allowed functions $f$ and $g$. (The left-hand side is a “norm” that depends on the space of functions $L$ maps <em>to</em>; the right-hand “norm”, on the functions $L$ maps <em>from</em>.)</p>
+<p>An operator $L$ is <em>Lipschitz continuous</em> if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M\ge 0$ and all allowed functions $f$ and $g$. (The left-hand side is a “norm” that depends on the space of functions $L$ maps <em>to</em>; the right-hand “norm”, on the functions $L$ maps <em>from</em>.)</p>
 
 <p>Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup>.</p>
 
@@ -888,7 +871,7 @@
 
 \[\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),\]
 
-<p>where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)<sup id="fnref:51:1"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup> is the operator norm of the Bernstein polynomials.</p>
+<p>where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)<sup id="fnref:52:1"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup> is the operator norm of the Bernstein polynomials.</p>
 
 <p>Some of the “moments” of this operator are:</p>
 
@@ -948,7 +931,7 @@
 <ul>
   <li>Inequalities similar to the <a href="#Lebesgue_Inequality_for_Certain_Linear_Operators"><strong>Lebesgue inequality</strong></a> for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn’t apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C&gt;0$ is an explicitly given constant:
     <ul>
-      <li>$\Vert L(f)\Vert$ or $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.</li>
+      <li>$\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.</li>
       <li>$\Vert f-L(f)\Vert \le (C \Vert I - L\Vert)$ times the smallest $\Vert f-P\Vert$ over <em>a subset</em> of functions $P$ mapped to by $L$.</li>
       <li>$\Vert f-L(f)\Vert \le (C\Vert I - L\Vert)$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over <em>a subset</em> of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975<sup id="fnref:82"><a href="#fn:82" class="footnote" rel="footnote" role="doc-noteref">82</a></sup>).</li>
       <li>Inequalities of the foregoing kinds where $L$ and $f$ are restricted to some compact subinterval.</li>
@@ -972,7 +955,8 @@
 <ul>
   <li>Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.</li>
   <li>Does Lemma 7 also work for linear operators, such as the <a href="#Example_The_Lorentz_Operators"><strong>Lorentz operator</strong></a>, whose norm is not based on the maximum absolute value?</li>
-  <li>Given the work by Rohwer (2005)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">84</a></sup>, are the inequalities (Leb) and (Leb3) true when—
+  <li>In which cases are the <a href="#Lebesgue_Inequality_for_Certain_Linear_Operators"><strong>Lebesgue inequalities</strong></a> (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?</li>
+  <li>Given the work by Rohwer (2005)<sup id="fnref:84"><a href="#fn:84" class="footnote" rel="footnote" role="doc-noteref">84</a></sup>, are the inequalities (Leb) and (Leb2) true when—
     <ul>
       <li>$L$ is nonlinear,</li>
       <li>$L$ is Lipschitz continuous, replacing $\Vert L\Vert$ with the Lipschitz constant of $L$, and</li>
@@ -1150,23 +1134,23 @@
     <li id="fn:50">
       <p>De Boor, C., “On Uniform Approximation by Splines”, <em>Journal of Approximation Theory</em> 1 (1968). <a href="https://doi.org/10.1016/0021-9045%2868%2990026-9"><strong>https://doi.org/10.1016/0021-9045%2868%2990026-9</strong></a> <a href="https://www.sciencedirect.com/science/article/pii/0021904568900269"><strong>https://www.sciencedirect.com/science/article/pii/0021904568900269</strong></a> <a href="#fnref:50" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:84">
-      <p>For example, if $f$ is continuous on a compact interval:<br />(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a “best approximation” to $f$ (De Villiers 2012, theorem 4.1.2).<br />(2) Any finite-dimensional subspace of continuous functions on that interval has a “best approximation” to $f$ (De Villiers 2012, theorem 4.1.1).<br />A <em>subspace</em> of a set of functions is a subset of that set with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is <em>finite-dimensional</em> if it is the smallest subspace that contains a finite set of functions. <a href="#fnref:84" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:51">
-      <p>This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials). <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:51:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>For example, if $f$ is continuous on a compact interval:<br />(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a “best approximation” to $f$ (De Villiers 2012, theorem 4.1.2).<br />(2) Any finite-dimensional subspace of continuous functions on that interval has a “best approximation” to $f$ (De Villiers 2012, theorem 4.1.1).<br />A <em>subspace</em> of a set of functions is a subset of that set with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is <em>finite-dimensional</em> if it is the smallest subspace that contains a finite set of functions. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:51:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:52">
-      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="https://link.springer.com/book/9783540506270"><strong>https://link.springer.com/book/9783540506270</strong></a> <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials). <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:52:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:53">
-      <p>Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>R.A. DeVore and G.G. Lorentz, <em>Constructive Approximation</em>, 1993. <a href="https://link.springer.com/book/9783540506270"><strong>https://link.springer.com/book/9783540506270</strong></a> <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:54">
-      <p>De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/BFb0063200"><strong>https://doi.org/10.1007/BFb0063200</strong></a> <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:55">
-      <p>In addition, chapter 5 of Rohwer’s <em>Nonlinear Smoothing and Multiresolution Analysis</em> discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section “Bounds for Certain Nonlinear Operators” in this page). <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/BFb0063200"><strong>https://doi.org/10.1007/BFb0063200</strong></a> <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:56">
+      <p>In addition, chapter 5 of Rohwer’s <em>Nonlinear Smoothing and Multiresolution Analysis</em> discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section “Bounds for Certain Nonlinear Operators” in this page). <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:57">
       <p>However, Gavrea and Ivan (“<a href="https://doi.org/10.1016/j.jat.2017.12.001"><strong>A note on the fixed points of positive linear operators</strong></a>”, <em>Journal of Approximation Theory</em> (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i&gt;0$. <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -1249,8 +1233,8 @@
     <li id="fn:83">
       <p>Yeon, K., “<a href="https://arxiv.org/abs/2503.00698"><strong>Deep Univariate Polynomial and Conformal Approximation</strong></a>”, arXiv:2503.00698 [math.NA], 2025. <a href="#fnref:83" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:56">
-      <p>Rohwer, C., <em>Nonlinear Smoothing and Multiresolution Analysis</em>, Birkhäuser, 2005. <a href="https://doi.org/10.1007/3-7643-7382-2"><strong>https://doi.org/10.1007/3-7643-7382-2</strong></a> <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    <li id="fn:84">
+      <p>Rohwer, C., <em>Nonlinear Smoothing and Multiresolution Analysis</em>, Birkhäuser, 2005. <a href="https://doi.org/10.1007/3-7643-7382-2"><strong>https://doi.org/10.1007/3-7643-7382-2</strong></a> <a href="#fnref:84" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
