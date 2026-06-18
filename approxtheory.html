@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-17"><meta name="citation_date" content="2026/06/17"><meta name="citation_publication_date" content="2026/06/17"><meta name="citation_online_date" content="2026/06/17"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-18"><meta name="citation_date" content="2026/06/18"><meta name="citation_publication_date" content="2026/06/18"><meta name="citation_online_date" content="2026/06/18"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-17.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-18.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -95,7 +95,7 @@
 
 <p>where $0\le x\le 1$ and the real numbers $a_0, …, a_n$ are the polynomial’s <em>Bernstein coefficients</em>.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
 
-<p>The degree-$n$ <em>Bernstein polynomial</em> of an arbitrary function $f(x)$ has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.  In this document, the degree-$n$ Bernstein polynomial of $f$ is denoted $B_n(f)$.</p>
+<p>The degree-$n$ <em>Bernstein polynomial</em> of a function $f(x)$, denoted $B_n(f)$ in this document, has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.</p>
 
 <p>$B_n(f)$ is a positive linear operator. It maps a function like $f(x)$ on the closed unit interval to a polynomial of degree $n$ or less on that interval.</p>
 
@@ -191,7 +191,7 @@
 
 \[L(f)(\lambda) = L(R_s(f, \lambda)) + \sum_{i=0}^s L((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!}, \tag{1}\]
 
-<p>where $R_s(f,\lambda)$ is the remainder after subtracting from $f$ the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>.)  $R_s(f,\lambda)$ is 0 if $f$ is a polynomial of degree $s$ or less.</p>
+<p>where $R_s(f,\lambda)$ is the “remainder” after subtracting from $f$ the degree-$s$ Taylor polynomial of $f$ centered at $\lambda$. (See also Piţul (2007, proof of theorem 5.8)<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>.)  $R_s(f,\lambda)$ is 0 if $f$ is a polynomial of degree $s$ or less.</p>
 
 <p>If $L$ reproduces constants, so that $L(e_0)=1$, this becomes:</p>
 
@@ -218,7 +218,7 @@
 
 <h3 id="bounds-for-general-positive-linear-operators">Bounds for General Positive Linear Operators</h3>
 
-<p>The following results give bounds that apply to large classes of positive linear operators.</p>
+<p>The results in this section give bounds that apply to large classes of positive linear operators.</p>
 
 <p>But many classes of positive linear operators, including Bernstein polynomials, do not approximate functions with more than two continuous derivatives “better” than functions with only two (Voronovskaya 1932)<sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>, (DeVore 1972/2006)<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>, (Cárdenas-Morales et al. 2012)<sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup>.</p>
 
@@ -272,17 +272,24 @@
   </tbody>
 </table>
 
-<p><em>Proof:</em> Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; inequality 4 comes from another result in the same paper (see also Mamedov (1959)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>); inequality 7 follows from a result of Mond (1978)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup> (where $\Vert\sigma_2\Vert$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval); inequality 3 is a special case of Remark 1.2.5 of Păltănea (2004)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>; inequality 5 is from corollary 1.2.2 of the same book; inequality 6, a result of Peetre (1969)<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> (also mentioned in Gonska (1998/2023)<sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, which has an extensive discussion on error bounds for linear operators). □</p>
+<p><em>In the table, $\Vert\sigma_2\Vert$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval.</em></p>
+
+<p><em>Proof:</em> Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; inequality 4 comes from another result in the same paper (see also Mamedov (1959)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>); inequality 7 follows from a result of Mond (1978)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>; inequality 3 is a special case of Remark 1.2.5 of Păltănea (2004)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>; inequality 5 is from corollary 1.2.2 of the same book; inequality 6, a result of Peetre (1969)<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> (also mentioned in Gonska (1998/2023)<sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, which has an extensive discussion on error bounds for linear operators). □</p>
 
 <p><strong>Remark 1:</strong> The moduli of continuity $\omega_1(f, \delta)$ and $\tilde\omega_1(f, \delta)$ offer concise ways to express different error bounds depending on how “regular” $f$ is.  Properties of these moduli are given in Sevy 1991<sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:27"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>. For example, let $f$ be continuous on a compact interval.  Then:</p>
 
 <ul>
   <li>$\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)$ (Peetre 1969)<sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>.</li>
-  <li>If $f$ is Hölder continuous with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$) and Hölder constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta^\alpha$.  Indeed, in this case, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta&gt;0$.</li>
-  <li>If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$, given that Lipschitz-continuous functions are Hölder continuous with Hölder exponent 1.  The same bound applies if $f$ instead has a continuous derivative with maximum absolute value $M$ or less, since in this case (by a result of Hardy and Littlewood) $f$ is Lipschitz continuous with Lipschitz constant $M$ or less.</li>
-</ul>
+  <li>If $f$ is Hölder continuous with exponent $\alpha$ ($0\lt\alpha\le 1$) and constant $M$ or less, $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta^\alpha$.  Indeed, in this case, $f$ admits the continuous and concave modulus of continuity $\omega_1(\delta)=M\delta^\alpha$, where $\delta&gt;0$.</li>
+  <li>If $f$:
+    <ol>
+      <li>is Lipschitz continuous with Lipschitz constant $M$ or less, or</li>
+      <li>has a continuous derivative with maximum absolute value $M$ or less,</li>
+    </ol>
 
-<p>□</p>
+    <p>then $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$; in case (1) because $f$ is Hölder continuous with Hölder exponent 1, and in case (2) because of a result of Hardy and Littlewood.</p>
+  </li>
+</ul>
 
 <blockquote>
   <p><strong>Example:</strong> Let $f$ and $L$ be as in Lemma 1. If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, or has a continuous derivative with maximum absolute value $M$ or less, $\text{abs}(L(f)(\lambda)-f(\lambda))\le M (\sigma_2)^{1/2}$; this follows from the combination of Remark 1 and inequality 6 of Lemma 1.</p>
@@ -358,11 +365,7 @@
 
 <p><strong>Lemma 4A</strong> (special case of Theorem 3.4 in Gonska (1998/2023)<sup id="fnref:25:1"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a positive linear operator that maps continuous functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then:</em></p>
 
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L(e_0)\Vert ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\]
-
-\[+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\]
-
-\[\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L(e_0)\Vert ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\\\\\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
 <p><em>where</em> $\Vert L(e_0)\Vert$ <em>is the maximum of $L(e_0)$ over $f$’s domain.</em></p>
 
@@ -370,7 +373,7 @@
 
 \[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{ceil}((e_1-\lambda)/h-1))(\lambda))\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
-\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{abs}(e_1-\lambda))(\lambda)/h)\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\end{multline}\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le(L(e_0)(\lambda)\\\\+L(\text{abs}(e_1-\lambda))(\lambda)/h)\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)).\end{multline}\]
 
 <p><em>The second inequality also works if $L$ maps from continuous functions instead of from bounded functions.</em></p>
 
@@ -494,31 +497,23 @@
 
 <p><strong>Lemma 9</strong> (special case of Theorem 3.2 in Gonska (1998/2023)<sup id="fnref:25:4"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then for each $\lambda$ in $f$’s domain:</em></p>
 
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\]
-
-\[\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
 <p><em>where $\Vert L\Vert$ is the operator norm of $L$, $\alpha$ is the maximum of</em> $\text{abs}(L(e_0))$ <em>over $f$’s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$’s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$’s domain.</em></p>
 
 <p><strong>Lemma 10.</strong> <em>With the assumptions in Lemma 9, if $L$ reproduces constants, so that</em> $L(e_0)=1$, <em>the inequality in that lemma becomes:</em></p>
 
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((1+\Vert L\Vert)/2, (\gamma(\beta(\lambda)-1)+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\cdot\tilde\omega_1(f,h).\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((1+\Vert L\Vert)/2, (\gamma(\beta(\lambda)-1)\\\\+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\cdot\tilde\omega_1(f,h).\end{multline}\]
 
 <p><strong>Lemma 11</strong> (special case of Theorem 4.4 and Corollary 4.5 in Gonska (1998/2023)<sup id="fnref:25:5"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $L$ be a bounded linear operator that maps continuous functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then for each $\lambda$ in $f$’s domain:</em></p>
 
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-\text{abs}(L(e_0)(\lambda)))\cdot(1+(b-a)/h)\]
-
-\[+\text{abs}(L(e_0)(\lambda))+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)\]
-
-\[+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-\text{abs}(L(e_0)(\lambda)))\cdot(1+(b-a)/h)\\\\+\text{abs}(L(e_0)(\lambda))+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
 <p><em>where $\beta(\lambda)$ is as in Lemma 9.</em></p>
 
 <p><strong>Lemma 12.</strong> <em>With the assumptions in Lemma 11, if $L$ reproduces constants, so that</em> $L(e_0)=1$, <em>the inequality in that lemma becomes:</em></p>
 
-\[\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)\cdot(1+(b-a)/h)\]
-
-\[+1+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)\cdot(1+(b-a)/h)\\\\+1+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)\end{multline}\]
 
 <p><a id="Inequalities_on_Polynomial_Errors"></a></p>
 
@@ -528,11 +523,7 @@
 
 <p><strong>Lemma 13</strong>. <em>Let $n$ be zero or a positive integer, let $k$ be a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>, Babenko and Kryakin 2018<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, and references therein):</em></p>
 
-\[\Vert f-P\Vert \le W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}),\tag{Wh}\]
-
-\[\Vert f-P\Vert \le J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}),\tag{JS}\]
-
-\[\Vert f-P\Vert \le\frac{(b-a)^r}{((n+1)!)\cdot 2^{2n+1}}\Vert f^{(n+1)}\Vert,\tag{Ph}\]
+\[\Vert f-P\Vert \le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) &amp; \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}) &amp; \textrm{(JS)}\\\\ (b-a)^r \Vert f^{(n+1)}\Vert/(((n+1)!)\cdot 2^{2n+1}) &amp; \textrm{(Ph),}\end{cases}\]
 
 <p><em>where:</em></p>
 
@@ -589,22 +580,18 @@
 
 <p>In the following, given a set $S$ of functions, a subset of $S$ has a “best approximation” to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)<sup id="fnref:3:1"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup></p>
 
-<p>Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that—</p>
+<p><strong>Lemma 14</strong> (Lebesgue’s lemma or Lebesgue inequality): <em>Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that—</em></p>
 
 <ul>
-  <li>maps to a subspace<sup id="fnref:51:1"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> of continuous functions on that interval with a “best approximation” to $f$ (such as polynomials of degree 5 or less on that interval), and</li>
-  <li>is <em>idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$.<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup></li>
+  <li><em>maps to a subspace<sup id="fnref:51:1"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> of continuous functions on that interval with a “best approximation” to $f$ (such as polynomials of degree 5 or less on that interval), and</em></li>
+  <li><em>is _idempotent</em>, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$._<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup></li>
 </ul>
 
-<p>Also, let $I$ be the identity operator $I(f)=f$.  Then the following error bounds (also known as <em>Lebesgue’s lemma</em> or the <em>Lebesgue inequality</em>) apply:</p>
+<p><em>Also, let $I$ be the identity operator $I(f)=f$.  Then:</em></p>
 
-\[\text{abs}(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\tag{Leb2}\]
+\[\begin{multline}\text{abs}(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}\]
 
-\[\le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\]
-
-\[\le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\tag{Leb}\]
-
-<p>where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:3:2"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>; for (Leb2) see De Boor (1982, chapter 2)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>).<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup></p>
+<p><em>where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:3:2"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>; for (Leb2) see De Boor (1982, chapter 2)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>).</em><sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup></p>
 
 <blockquote>
   <p><strong>Examples:</strong></p>
@@ -613,9 +600,7 @@
     <li>
       <p>Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequalities (Leb) and (Wh) leads to the following error bound for idempotent linear operators $L$ that map continuous functions on that interval to polynomials up to degree 2:</p>
 
-\[\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\]
-
-\[= (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.\]
+\[\begin{multline}\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.\end{multline}\]
     </li>
     <li>
       <p>The Bernstein polynomial $B_n$ maps continuous functions to polynomials up to degree $n$, but if $n$ is 2 or greater it is <em>not</em> idempotent because it does not reproduce all polynomials up to degree $n$.  For example, for $e_2(x)=x^2$, a degree-2 polynomial, $B_n(e_2)=x^2+x(1-x)/n\ne x^2$.  Thus, the inequalities (Leb) and (Leb2) do not apply to Bernstein polynomials of degree 2 or greater.</p>
@@ -641,26 +626,22 @@
 
 <p>The following comes from a result in Bede and Gal (2010)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>; see also Bede et al. (2009)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>.</p>
 
-<p>Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:</p>
+<p><strong>Lemma 15</strong>: <em>Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:</em></p>
 
 <ol>
-  <li>(Monotone.) For every pair of allowed functions $g$ and $h$, if $g\le h$, then $L(g)\le L(h)$.</li>
-  <li>(Subadditive.) For every pair of allowed functions $g$ and $h$, $L(g+h)\le L(g)+L(h)$.</li>
-  <li>(Positively homogeneous.) $xL(g)=L(xg)$ for every allowed function $g$ and every $x\ge 0$.</li>
+  <li><em>(Monotone.) For every pair of allowed functions $g$ and $h$, if $g\le h$, then $L(g)\le L(h)$.</em></li>
+  <li><em>(Subadditive.) For every pair of allowed functions $g$ and $h$, $L(g+h)\le L(g)+L(h)$.</em></li>
+  <li><em>(Positively homogeneous.) $xL(g)=L(xg)$ for every allowed function $g$ and every $x\ge 0$.</em></li>
 </ol>
 
-<p>Finally, let $h&gt;0$ be a real number.  Then:</p>
+<p><em>Finally, let $h&gt;0$ be a real number.  Then the first inequality applies, and the second one also applies if $L(e_0)=1$:</em></p>
 
 \[\begin{multline}
 \text{abs}(f(x)-L(f)(x))\le(L(e_0)(x)+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h)\\\\+f(x)\cdot\text{abs}(L(e_0)(x)-1),\end{multline}\]
 
-<p>provided $L(\text{abs}(e_1-x))(x)$ (the “absolute moment” of $L$) exists (and is finite or infinite).</p>
-
-<p>Moreover, if $L(e_0)=1$:</p>
-
 \[\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),\]
 
-<p>provided that “moment” exists.</p>
+<p><em>provided that, in either case,</em> $L(\text{abs}(e_1-x))(x)$ <em>(the “absolute moment” of $L$) exists (and is finite or infinite).</em></p>
 
 <blockquote>
   <p><strong>Notes:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup>; on nonlinear approximation, see DeVore (1998)<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>.)</p>
@@ -674,7 +655,7 @@
 
 <p>Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup>.</p>
 
-<p><strong>Lemma 14</strong>: <em>If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:</em></p>
+<p><strong>Lemma 16</strong>: <em>If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:</em></p>
 
 \[\Vert L(f)\Vert\le M\Vert f-P\Vert,\]
 
@@ -820,9 +801,7 @@
 
 <p>An error bound for $H_{n,m}$ can also be written as:</p>
 
-\[H_{n,m}(f) - f=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)) - f\]
-
-\[=(B_n(f) - f) + (\text{Lag}_m(f) - B_n(\text{Lag}_m(f))),\]
+\[\begin{multline}H_{n,m}(f) - f=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)) - f\\\\=(B_n(f) - f) + (\text{Lag}_m(f) - B_n(\text{Lag}_m(f))),\end{multline}\]
 
 \[\text{abs}((H_{n,m}(f) - f)(\lambda))\le\text{abs}(B_n(f) - f) + \text{abs}(B_n(\text{Lag}_m(f)) - \text{Lag}_m(f)),\]
 
