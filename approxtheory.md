@@ -165,7 +165,7 @@ Some results on error bounds for certain classes of operators.
 
 The results in this section give bounds that apply to large classes of positive linear operators.
 
-But many classes of positive linear operators, including Bernstein polynomials, do not approximate functions with more than two continuous derivatives "better" than functions with only two (Voronovskaya 1932)[^16], (DeVore 1972/2006)[^17], (Cárdenas-Morales et al. 2012)[^18].
+But many classes of positive linear operators, including Bernstein polynomials, generally do not approximate functions with more than two continuous derivatives "better" than functions with only two (Voronovskaya 1932)[^16], (DeVore 1972/2006)[^17], (Cárdenas-Morales et al. 2012)[^18].
 
 In this section:
 
@@ -413,11 +413,11 @@ In the following, given a set $S$ of functions, a subset of $S$ has a "best appr
 **Lemma 14** (Lebesgue's lemma or Lebesgue inequality): _Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that&mdash;_
 
 - _maps to a subspace[^51] of continuous functions on that interval with a "best approximation" to $f$ (such as polynomials of degree 5 or less on that interval), and_
-- _is _idempotent_, that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$._[^52]
+- _is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$._[^52]
 
 _Also, let $I$ be the identity operator $I(f)=f$.  Then:_
 
-$$\begin{multline}\text{abs}(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
+$$\begin{multline}\text{ab(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
 
 _where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^53], Powell (1981, theorem 3.1)[^54], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^55])._[^56]
 
@@ -435,7 +435,7 @@ _where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the o
 >
 > **Notes:**
 >
-> 1. The only positive linear operator that reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)[^23].[^57]
+> 1. The only positive linear operator that maps continuous to continuous functions and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)[^23].[^57]
 > 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^58]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^59]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
@@ -780,7 +780,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^16]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
 
-[^17]: De Vore, Ronald A. The approximation of continuous functions by positive linear operators. Springer, 2006. [**https://doi.org/10.1007/BFb0059493**](https://doi.org/10.1007/BFb0059493)
+[^17]: DeVore, Ronald A. The approximation of continuous functions by positive linear operators. Springer, 2006. [**https://doi.org/10.1007/BFb0059493**](https://doi.org/10.1007/BFb0059493)
 
 [^18]: Cárdenas-Morales, Daniel, Pedro Garrancho, and Ioan Rasa. "Asymptotic formulae via a Korovkin-type result." Abstract and Applied Analysis. Vol. 2012. John Wiley & Sons, Inc., 2012. [**https://doi.org/10.1155/2012/217464**](https://doi.org/10.1155/2012/217464)
 

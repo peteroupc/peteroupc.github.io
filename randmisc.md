@@ -891,7 +891,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^84]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
-[^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).
+[^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). [https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 
 [^86]: There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
