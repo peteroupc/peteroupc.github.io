@@ -748,13 +748,13 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^13]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
 
-[^14]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+[^14]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020. [https://doi.org/10.1145/3385412.3386037](https://doi.org/10.1145/3385412.3386037)
 
 [^15]: Huijben, I.A., Kool, W., Paulus, M.B. and Van Sloun, R.J., 2022. A Review of the Gumbel-max Trick and its Extensions for Discrete Stochasticity in Machine Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence.  Also in [**https://arxiv.org/pdf/2110.01515**](https://arxiv.org/pdf/2110.01515)
 
 [^16]: Or as &minus;ln(_E_), where _E_ is an exponential random variate with rate 1.
 
-[^17]: Tillé, Y., "Remarks on some misconceptions about unequal probability sampling without replacement", Computer Science Review 47 (Feb. 2023).
+[^17]: Tillé, Y., "Remarks on some misconceptions about unequal probability sampling without replacement", Computer Science Review 47 (Feb. 2023). [https://www.sciencedirect.com/science/article/pii/S1574013722000673](https://www.sciencedirect.com/science/article/pii/S1574013722000673) [https://doi.org/10.1016/j.cosrev.2022.100533](https://doi.org/10.1016/j.cosrev.2022.100533)
 
 [^18]: Chakraborty, A., Vardeman, S. B., Modeling and inference for mixtures of simple symmetric exponential families of p-dimensional distributions for vectors with binary coordinates, Stat Anal Data Min: The ASA Data Sci Journal. 2021; 14: 352– 365. [**https://doi.org/10.1002/sam.11528**](https://doi.org/10.1002/sam.11528)
 
@@ -782,7 +782,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^30]: Alzaatreh, A., Famoye, F., Lee, C., "A new method for generating families of continuous distributions", _Metron_ 71:63–79 (2013).
 
-[^31]: Aljarrah, M.A., Lee, C. and Famoye, F., "On generating T-X family of distributions using quantile functions", Journal of Statistical Distributions and Applications,1(2), 2014.
+[^31]: Aljarrah, M.A., Lee, C. and Famoye, F., "On generating T-X family of distributions using quantile functions", Journal of Statistical Distributions and Applications,1(2), 2014. [https://doi.org/10.1186/2195-5832-1-2](https://doi.org/10.1186/2195-5832-1-2)
 
 [^32]: Gleaton, J.U., Lynch, J. D., "Properties of generalized log-logistic families of lifetime distributions", _Journal of Probability and Statistical Science_ 4(1), 2006.
 
@@ -891,11 +891,11 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^84]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
-[^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). [https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
+[^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 
 [^86]: There are many distributions that can be sampled using the oracle, often with the help of randomness extraction methods, but then these distributions won't use the unknown number of faces in general.  Duvignau proved Theorem 5.2 for an oracle that outputs _arbitrary_ but still distinct items, as opposed to integers, but this case can be reduced to the integer case (see section 4.1.3).
 
-[^87]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^87]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [https://doi.org/10.1145/175007.175019](https://doi.org/10.1145/175007.175019)
 
 [^88]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 

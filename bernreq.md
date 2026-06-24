@@ -220,7 +220,7 @@ Prove or disprove:
 
 [^25]: Adcock, B., Platte, R.B., Shadrin, A., “Optimal sampling rates for approximating analytic functions from pointwise samples", IMA Journal of Numerical Analysis 39(3), July 2019. [**https://doi.org/10.1093/imanum/dry024**](https://doi.org/10.1093/imanum/dry024)
 
-[^26]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^26]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [https://doi.org/10.1145/175007.175019](https://doi.org/10.1145/175007.175019)
 
 [^27]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [**https://doi.org/10.1007/s00493-005-0043-1**](https://doi.org/10.1007/s00493-005-0043-1)
 

@@ -451,7 +451,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^41]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4)
 
-[^42]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^42]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [https://doi.org/10.1145/175007.175019](https://doi.org/10.1145/175007.175019)
 
 [^43]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
 
@@ -491,7 +491,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^61]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
-[^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+[^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683. [https://doi.org/10.1080/00927872.2011.584337](https://doi.org/10.1080/00927872.2011.584337)
 
 <a id=Appendix></a>
 
