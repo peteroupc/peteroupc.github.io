@@ -123,7 +123,7 @@ The following issues with Windows bitmap files give points that I also seek clar
 
 ## Notes
 
-[^1]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994. [https://doi.org/10.1145/175007.175019](https://doi.org/10.1145/175007.175019)
+[^1]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994. [**https://doi.org/10.1145/175007.175019**](https://doi.org/10.1145/175007.175019)
 
 <a id=License></a>
 
