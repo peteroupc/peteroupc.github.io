@@ -80,8 +80,6 @@
 
 <h3 id="the-specification">The Specification</h3>
 
-<p>Define the <em>larger screen dimension</em> as the larger of the screen width and the screen height.</p>
-
 <p>Limit 3-D graphics to the following:<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <ol>
@@ -105,7 +103,7 @@
     </ul>
   </li>
   <li>The width and height of each texture are each powers of 2.</li>
-  <li>A texture’s maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.</li>
+  <li>A texture’s maximum width, in pixels, is the larger of the screen width and the screen height, but not more than 256.  A texture’s maximum height is the same as the maximum texture width.</li>
   <li>Textures may contain transparent pixels.</li>
   <li>Image files used by the game should not store “pre-pixelated” textures.  A “pre-pixelated” image occurs when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
   <li>For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>  Bilinear filtering and edge antialiasing (smoothing)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> are optional.</li>
@@ -147,7 +145,7 @@
   </li>
   <li>Sprites.  A <em>sprite</em> is a rectangular array of either tiles or pixels.
     <ol>
-      <li>Each sprite has up to X × Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)</li>
+      <li>Each sprite’s maximum width, in pixels, is determined as follows: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.  A sprite’s maximum height is the same as the maximum sprite width.  (An alternative is that each sprite is no more than 64 × 64 pixels in size.)</li>
       <li>Besides the previous point, sprites can have any width and height.</li>
       <li>Each sprite made of pixels (rather than tiles) has a pixel format allowed for <em>3-D textures</em>, given earlier, and may contain transparent, but not translucent, pixels.</li>
       <li>Each sprite can be drawn above or below any of the 2-D or 3-D layers.</li>
@@ -159,7 +157,7 @@
         </ol>
       </li>
       <li>Image files used by the game should not store “pre-pixelated” sprites.</li>
-      <li>Up to N sprites can be displayed at a time, where N is calculated as (screen width × screen height × 16) / (X × Y), rounded up, but not more than 512.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
+      <li>Up to N sprites can be displayed at a time, where N is calculated as (screen width × screen height × 16) / (X × Y), rounded up, but not more than 512.  In this formula, X is the maximum sprite width and Y is the maximum sprite height.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
     </ol>
   </li>
 </ol>
@@ -238,7 +236,7 @@
       <li>730,112 bytes (the capacity of a FAT formatted normal-density 3.5-inch floppy disk), or</li>
       <li>362,496 bytes (the capacity of a FAT formatted double-density 5.25-inch floppy disk), or</li>
       <li>65,536 bytes,<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup> or</li>
-      <li>681 million bytes (slightly less than the maximum capacity of a formatted CD-ROM).</li>
+      <li>681 million bytes (slightly less than the maximum total size of files in a formatted CD-ROM).</li>
     </ul>
   </li>
   <li>The game uses no more than 16 million bytes of system memory at a time.</li>
@@ -370,7 +368,7 @@
 <h4 id="memory">Memory</h4>
 
 <ul>
-  <li>This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup></li>
+  <li>This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup></li>
   <li>According to “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”, the following ranges of system memory were typical for PCs sold in the specified years:<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>
     <ul>
       <li>1994: 4MB to 8 MB, with more expensive PCs having 16 MB.<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup></li>

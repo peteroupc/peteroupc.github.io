@@ -59,8 +59,6 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 
 ### The Specification
 
-Define the _larger screen dimension_ as the larger of the screen width and the screen height.
-
 Limit 3-D graphics to the following:[^3]
 
 1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4] \(See also survey project in "[**Other Challenges and Projects**](#Other_Challenges_and_Projects)", later.)
@@ -77,7 +75,7 @@ Limit 3-D graphics to the following:[^3]
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 
 4. The width and height of each texture are each powers of 2.
-5. A texture's maximum width and maximum height, in pixels, are each equal to 256 or the larger screen dimension, whichever is smaller.
+5. A texture's maximum width, in pixels, is the larger of the screen width and the screen height, but not more than 256.  A texture's maximum height is the same as the maximum texture width.
 6. Textures may contain transparent pixels.
 7. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image occurs when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 8. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering and edge antialiasing (smoothing)[^7] are optional.
@@ -105,7 +103,7 @@ Limit 2-D graphics to the following: [^9]
     5. Image files used by the game should not store "pre-pixelated" tiles.
     6. When referenced in a 2-D layer, a tile can be horizontally flipped, vertically flipped, or both.
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
-    1. Each sprite has up to X &times; Y pixels, where X and Y are each 1/4 the larger screen dimension, rounded up to the nearest power of 2. (An alternative limit is X = 64 and Y = 64.)
+    1. Each sprite's maximum width, in pixels, is determined as follows: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.  A sprite's maximum height is the same as the maximum sprite width.  (An alternative is that each sprite is no more than 64 &times; 64 pixels in size.)
     2. Besides the previous point, sprites can have any width and height.
     3. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier, and may contain transparent, but not translucent, pixels.
     4. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
@@ -114,7 +112,7 @@ Limit 2-D graphics to the following: [^9]
         2. Each sprite can be horizontally flipped, vertically flipped, or both.[^12]
         3. No affine transformation or flipping of sprites is allowed.
     6. Image files used by the game should not store "pre-pixelated" sprites.
-    7. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.[^13]
+    7. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.  In this formula, X is the maximum sprite width and Y is the maximum sprite height.[^13]
 
 > **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
 >
@@ -175,7 +173,7 @@ Examples of optional constraints are the following:
     - 730,112 bytes (the capacity of a FAT formatted normal-density 3.5-inch floppy disk), or
     - 362,496 bytes (the capacity of a FAT formatted double-density 5.25-inch floppy disk), or
     - 65,536 bytes,[^21] or
-    - 681 million bytes (slightly less than the maximum capacity of a formatted CD-ROM).
+    - 681 million bytes (slightly less than the maximum total size of files in a formatted CD-ROM).
 - The game uses no more than 16 million bytes of system memory at a time.
 - The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.[^22]
 - The game is a Win32 application compatible with Windows XP.
@@ -271,7 +269,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Memory
 
-- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^65]
+- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^65]
 - According to "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)", the following ranges of system memory were typical for PCs sold in the specified years:[^66]
     - 1994: 4MB to 8 MB, with more expensive PCs having 16 MB.[^67]
     - 1997: 8MB to 32MB.[^68]
