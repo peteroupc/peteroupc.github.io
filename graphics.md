@@ -470,7 +470,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^25]: Moreover, PC games before 2000 that required screen resolutions larger than 640 &times; 480 are rare, and according to PCGamingWiki they include the following games (most of which are 2-D): _Timon & Pumbaa's Jungle Games_ (1995); _Tequila & Boom Boom_ (1995); _Romance of the Three Kingdoms IV: Wall of Fire_ (1995/1996); _Joint Strike Fighter_ (1997), but only when run with the Glide graphics interface; _Links LS: 1998 Edition_ (1997); _Emergency: Fighters for Life_ (1998); _Championship Manager: Season 99/00_ (1999); _Heroes of Might and Magic III_ (1999); _Alien Nations_ (1999); _Pizza Syndicate_/_Fast Food Tycoon_ (1999); _Age of Empires II: The Age of Kings_ (1999).
 
-[^26]: In addition to the resolutions shown here, there are modern games that employ low resolutions with the same 16:9 aspect ratio as high-definition displays.  These include 640 &times; 360 (_Blasphemous_); 400 &times; 225 (_Unsighted_); 480 &times; 270 (_Enter the Gungeon_); 320 &times; 180 (_Celeste_).
+[^26]: In addition to the resolutions shown here, there are modern games that employ low resolutions with the same 16:9 aspect ratio as high-definition displays.  These include 640 &times; 360 (_Blasphemous_ [2019]); 400 &times; 225 (_Unsighted_); 480 &times; 270 (_Enter the Gungeon_); 320 &times; 180 (_Celeste_).
 
 [^27]: VGA mode 12h (16 colors).
 

@@ -1,6 +1,6 @@
 # Suggestions for Instructional Materials
 
-These are suggestions to improve core and supplemental instructional materials, for all school subjects, used in U.S. schools from kindergarten to twelfth grade. [^1]
+These are suggestions to improve core and supplemental instructional materials, for all school subjects, used in American schools from kindergarten to twelfth grade. [^1]
 
 1. Instructional materials should be open educational resources (OER) that anyone can access and use free, at least for noncommercial purposes (for example, CC-BY-NC-SA or Creative Commons Attribution-NonCommercial-ShareAlike).  There should be a GitHub or GitLab repository containing the source code of the materials. [^2]
 2. Instructional materials should:

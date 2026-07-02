@@ -1844,7 +1844,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^9]: B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".
 
-[^10]: "Standard dynamic range" is poorly defined; it typically refers to image content and displays that reach no more than the maximum luminance achievable by typical cathode-ray-tube monitors for consumer use.
+[^10]: "Standard dynamic range" is poorly defined; it typically refers to image content and displays up to the usual luminance limits of cathode-ray-tube monitors for consumer use.
 
 [^11]: Mano, Y., et al.  "Enhancing the Netflix UI Experience with HDR", Netflix Technology Blog, Medium.com, Sep. 24, 2018.
 

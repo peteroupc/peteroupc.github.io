@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-06-28"><meta name="citation_date" content="2026/06/28"><meta name="citation_publication_date" content="2026/06/28"><meta name="citation_online_date" content="2026/06/28"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-07-02"><meta name="citation_date" content="2026/07/02"><meta name="citation_publication_date" content="2026/07/02"><meta name="citation_online_date" content="2026/07/02"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-06-28.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-07-02.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -69,7 +69,7 @@
     <ul>
       <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.</li>
       <li>An operator $L$ is <em>positive</em> if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
-      <li>The <em>operator norm</em> of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the “norm” of $L(f)$ divided by the “norm” of $f$ (De Villiers 2012, (5.2.2))<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the “norm” is the maximum absolute value unless noted otherwise.</li>
+      <li>The <em>operator norm</em> of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the “norm” of $L(f)$ divided by the “norm” of $f$ (De Villiers 2012, (5.2.2))<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively. In this document, the “norm” is the maximum absolute value unless noted otherwise.</li>
       <li>An operator is <em>bounded</em> if its operator norm is finite.</li>
     </ul>
   </li>
@@ -78,7 +78,7 @@
   <li>In this document:
     <ul>
       <li>$e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.</li>
-      <li>The notation $\Vert f\Vert$, where $f$ is a function, means the maximum absolute value over the function’s domain unless noted otherwise (for example, where the notation means an operator norm instead).</li>
+      <li>The notation $\Vert F\Vert$, where $F$ is a function or operator, means the function’s “norm” or the operator’s operator norm.  The “norm” of a function is the maximum absolute value over its domain unless the context indicates otherwise.</li>
     </ul>
   </li>
 </ul>
@@ -91,9 +91,8 @@
 
 <p>In this document, a polynomial $P(x)$ is written in <em>Bernstein form of degree $n$</em> if it is written as—</p>
 
-\[P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},\]
-
-<p>where $0\le x\le 1$ and the real numbers $a_0, …, a_n$ are the polynomial’s <em>Bernstein coefficients</em>.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
+<p>\(P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},\)
+where $0\le x\le 1$ and the real numbers $a_0, …, a_n$ are the polynomial’s <em>Bernstein coefficients</em>.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
 
 <p>The degree-$n$ <em>Bernstein polynomial</em> of a function $f(x)$, denoted $B_n(f)$ in this document, has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.</p>
 
@@ -267,12 +266,12 @@
     </tr>
     <tr>
       <td>7</td>
-      <td>$(1 + 1/h^2) \omega_1(f, h\cdot\Vert\sigma_2\Vert^{1/2})$.</td>
+      <td>$(1 + 1/h^2) \omega_1(f, h\cdot\text{Max}(\sigma_2)^{1/2})$.</td>
     </tr>
   </tbody>
 </table>
 
-<p><em>In the table, $\Vert\sigma_2\Vert$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval.</em></p>
+<p><em>In the table, $\text{Max}(\sigma_2)$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval.</em></p>
 
 <p><em>Proof:</em> Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup>. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; inequality 4 comes from another result in the same paper (see also Mamedov (1959)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>); inequality 7 follows from a result of Mond (1978)<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>; inequality 3 is a special case of Remark 1.2.5 of Păltănea (2004)<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>; inequality 5 is from corollary 1.2.2 of the same book; inequality 6, a result of Peetre (1969)<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup> (also mentioned in Gonska (1998/2023)<sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, which has an extensive discussion on error bounds for linear operators). □</p>
 
@@ -365,9 +364,9 @@
 
 <p><strong>Lemma 4A</strong> (special case of Theorem 3.4 in Gonska (1998/2023)<sup id="fnref:25:1"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a positive linear operator that maps continuous functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then:</em></p>
 
-\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L(e_0)\Vert ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\\\\\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
+\[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\text{Max}(L(e_0)) ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\\\\\le(\text{Max}(L(e_0)) +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
-<p><em>where</em> $\Vert L(e_0)\Vert$ <em>is the maximum of $L(e_0)$ over $f$’s domain.</em></p>
+<p><em>where</em> $\text{Max}(L(e_0))$ <em>is the maximum of $L(e_0)$ over $f$’s domain.</em></p>
 
 <p><strong>Lemma 4B</strong> (special case of Theorem 4.7 in Gonska (1998/2023)<sup id="fnref:25:2"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then:</em></p>
 
@@ -381,7 +380,7 @@
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>Using Lemma 4A requires calculating $L(e_0)$, $\Vert L(e_0)\Vert$, and $L(\text{abs}(e_1-\lambda))$, or finding upper bounds for these.</li>
+    <li>Using Lemma 4A requires calculating $L(e_0)$, $\text{Max}(L(e_0))$, and $L(\text{abs}(e_1-\lambda))$, or finding upper bounds for these.</li>
     <li>Using Lemma 4B requires calculating $L(e_0)$ and either $L(\text{abs}(e_1-\lambda))$ or $L(\text{ceil}((e_1-\lambda)/h-1))$, or finding upper bounds for these values.</li>
     <li>Unlike Lemma 4A, Lemma 4B is not guaranteed to work if $f$’s domain is a closed subset of a compact interval (see Remark 2.5 in Gonska (1998/2023)<sup id="fnref:25:3"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>).</li>
   </ol>
@@ -461,7 +460,7 @@
 
 <p>The next two lemmas rely on the so-called <em>Peano kernel theorem</em>, which was originally developed to assess the error in estimating the integral of a function from samples of it<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup> (for more on this theory, see Brass and Förster 1998<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>; Waldron 1999<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>).</p>
 
-<p><strong>Lemma 7.</strong> <em>Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the compact interval $[a, b]$.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that—</em></p>
+<p><strong>Lemma 7.</strong> <em>Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the compact interval $[a, b]$, where that derivative has maximum absolute value $M$ or less.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that—</em></p>
 
 <ul>
   <li><em>reproduces all polynomials of degree $k$ or less, and</em></li>
@@ -474,7 +473,7 @@
 \int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,\\\\\end{multline}\]
 
 \[\begin{multline}
-\text{abs}(LF(f)(\lambda))\le \frac{\Vert f^{(k+1)}\Vert}{k!} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda))\right) dt,\quad\quad\mbox{(5)}
+\text{abs}(LF(f)(\lambda))\le \frac{M}{k!} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda))\right) dt,\quad\quad\mbox{(5)}
 \end{multline}\]
 
 <p><em>where the notation</em> $\lgroup x\rgroup^k_+$ <em>is as follows. If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$, and if $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise.</em></p>
@@ -493,13 +492,13 @@
 
 \[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)),\]
 
-\[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2\Vert f^{(k+1)}\Vert}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).\]
+\[\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).\]
 
 <p><strong>Lemma 9</strong> (special case of Theorem 3.2 in Gonska (1998/2023)<sup id="fnref:25:4"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>). <em>Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$’s domain to bounded functions on that domain.  Let $h&gt;0$ be a real number.  Then for each $\lambda$ in $f$’s domain:</em></p>
 
 \[\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}\]
 
-<p><em>where $\Vert L\Vert$ is the operator norm of $L$, $\alpha$ is the maximum of</em> $\text{abs}(L(e_0))$ <em>over $f$’s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$’s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$’s domain.</em></p>
+<p><em>where $\alpha$ is the maximum of</em> $\text{abs}(L(e_0))$ <em>over $f$’s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$’s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$’s domain.</em></p>
 
 <p><strong>Lemma 10.</strong> <em>With the assumptions in Lemma 9, if $L$ reproduces constants, so that</em> $L(e_0)=1$, <em>the inequality in that lemma becomes:</em></p>
 
@@ -591,7 +590,7 @@
 
 \[\begin{multline}\text{abs}(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}\]
 
-<p><em>where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:3:2"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>; for (Leb2) see De Boor (1982, chapter 2)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>).</em><sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup></p>
+<p><em>where $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, Powell (1981, theorem 3.1)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:3:2"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>; for (Leb2) see De Boor (1982, chapter 2)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>).</em><sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup></p>
 
 <blockquote>
   <p><strong>Examples:</strong></p>

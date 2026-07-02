@@ -53,13 +53,13 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - An _operator_ is a mapping from a function to a function.
     - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^2]
-    - The _operator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^3].[^4]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from. In this document, the "norm" is the maximum absolute value unless noted otherwise.
+    - The _operator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^3].[^4]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively. In this document, the "norm" is the maximum absolute value unless noted otherwise.
     - An operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
 - In this document:
     - $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
-    - The notation $\Vert f\Vert$, where $f$ is a function, means the maximum absolute value over the function's domain unless noted otherwise (for example, where the notation means an operator norm instead).
+    - The notation $\Vert F\Vert$, where $F$ is a function or operator, means the function's "norm" or the operator's operator norm.  The "norm" of a function is the maximum absolute value over its domain unless the context indicates otherwise.
 
 <a id=Bernstein_Form_and_Bernstein_Polynomials></a>
 
@@ -70,7 +70,6 @@ Among the best known examples of linear operators are the Bernstein polynomials.
 In this document, a polynomial $P(x)$ is written in _Bernstein form of degree $n$_ if it is written as&mdash;
 
 $$P(x)=\sum_{k=0}^n a_k \frac{n!}{(k!)((n-k)!)} x^k (1-x)^{n-k},$$
-
 where $0\le x\le 1$ and the real numbers $a_0, ..., a_n$ are the polynomial's _Bernstein coefficients_.[^5]
 
 The degree-$n$ _Bernstein polynomial_ of a function $f(x)$, denoted $B_n(f)$ in this document, has Bernstein coefficients $a_k = f(k/n)$.  In general, this Bernstein polynomial differs from $f$ even if $f$ is a polynomial.
@@ -184,9 +183,9 @@ In this section:
 | 4 | $(1 + (\sigma_2)/h^2) \omega_1(f, h)$. |
 | 5 | (Use ineq. 3 if $h<(\sigma_2)^{1/2}$, or ineq. 4 otherwise.) |
 | 6 | $\tilde\omega_1(f, (\sigma_2)^{1/2})$. |
-| 7 | $(1 + 1/h^2) \omega_1(f, h\cdot\Vert\sigma_2\Vert^{1/2})$. |
+| 7 | $(1 + 1/h^2) \omega_1(f, h\cdot\text{Max}(\sigma_2)^{1/2})$. |
 
-_In the table, $\Vert\sigma_2\Vert$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval._
+_In the table, $\text{Max}(\sigma_2)$ is the maximum of $\sigma_2$ over all values of $\lambda$ in the compact interval._
 
 _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3.1)[^19]. Inequality 2 follows from a result of Shisha and Mond (1968, theorem 1)[^20]; inequality 4 comes from another result in the same paper (see also Mamedov (1959)[^21]); inequality 7 follows from a result of Mond (1978)[^22]; inequality 3 is a special case of Remark 1.2.5 of Păltănea (2004)[^23]; inequality 5 is from corollary 1.2.2 of the same book; inequality 6, a result of Peetre (1969)[^24] \(also mentioned in Gonska (1998/2023)[^25], which has an extensive discussion on error bounds for linear operators). &#x25a1;
 
@@ -243,9 +242,9 @@ The following two lemmas are more general, but not as easy to use.
 
 **Lemma 4A** (special case of Theorem 3.4 in Gonska (1998/2023)[^25]). _Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a positive linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
-$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\Vert L(e_0)\Vert ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\\\\\le(\Vert L(e_0)\Vert +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
+$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\text{Max}(L(e_0)) ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\\\\\le(\text{Max}(L(e_0)) +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 
-_where_ $\Vert L(e_0)\Vert$ _is the maximum of $L(e_0)$ over $f$'s domain._
+_where_ $\text{Max}(L(e_0))$ _is the maximum of $L(e_0)$ over $f$'s domain._
 
 **Lemma 4B** (special case of Theorem 4.7 in Gonska (1998/2023)[^25]). _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps bounded functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
@@ -257,7 +256,7 @@ _The second inequality also works if $L$ maps from continuous functions instead 
 
 > **Notes:**
 >
-> 1. Using Lemma 4A requires calculating $L(e_0)$, $\Vert L(e_0)\Vert$, and $L(\text{abs}(e_1-\lambda))$, or finding upper bounds for these.
+> 1. Using Lemma 4A requires calculating $L(e_0)$, $\text{Max}(L(e_0))$, and $L(\text{abs}(e_1-\lambda))$, or finding upper bounds for these.
 > 2. Using Lemma 4B requires calculating $L(e_0)$ and either $L(\text{abs}(e_1-\lambda))$ or $L(\text{ceil}((e_1-\lambda)/h-1))$, or finding upper bounds for these values.
 > 3. Unlike Lemma 4A, Lemma 4B is not guaranteed to work if $f$'s domain is a closed subset of a compact interval (see Remark 2.5 in Gonska (1998/2023)[^25]).
 
@@ -307,7 +306,7 @@ approaches as $n$ gets larger and larger.[^37] The integral of $f(\lambda)$ on $
 
 The next two lemmas rely on the so-called _Peano kernel theorem_, which was originally developed to assess the error in estimating the integral of a function from samples of it[^38] \(for more on this theory, see Brass and Förster 1998[^39]; Waldron 1999[^40]).
 
-**Lemma 7.** _Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the compact interval $[a, b]$.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that&mdash;_
+**Lemma 7.** _Let $k$ be zero or a positive integer, let $f(\lambda)$ have a continuous $(k+1)$-th derivative on the compact interval $[a, b]$, where that derivative has maximum absolute value $M$ or less.  Let $C$ and $c$ be real numbers such that $c\le f^{(k+1)}\le C$ over that interval. Let $L$ be a bounded linear operator that&mdash;_
 
 - _reproduces all polynomials of degree $k$ or less, and_
 - _maps continuous functions (or, if $k=0$, bounded functions) on the interval $[a, b]$ to continuous functions on that interval._
@@ -318,7 +317,7 @@ $$\begin{multline}\text{abs}(LF(f)(\lambda)) = \text{abs}(f(\lambda) - L(f)(\lam
 \int_\lambda^b \text{abs}\left(L((e_1-t)_+^k)(\lambda)\right) dt\right\rgroup,\\\\\end{multline}$$
 
 $$\begin{multline}
-\text{abs}(LF(f)(\lambda))\le \frac{\Vert f^{(k+1)}\Vert}{k!} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda))\right) dt,\quad\quad\mbox{(5)}
+\text{abs}(LF(f)(\lambda))\le \frac{M}{k!} \int_a^b \text{abs}\left(LF(\lgroup e_1-t\rgroup_+^k)(\lambda))\right) dt,\quad\quad\mbox{(5)}
 \end{multline}$$
 
 _where the notation_ $\lgroup x\rgroup^k_+$ _is as follows. If $k\gt 0$, this equals $((x+\text{abs}(x))/2)^k$, or $\max(0, x)^k$, and if $k$ is 0, this equals either 1 if $x\ge 0$ or 0 otherwise._
@@ -335,13 +334,13 @@ Formulas (3) and (4) are because, in this case, the operator $LF$ equals 0 for e
 
 $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)),$$
 
-$$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2\Vert f^{(k+1)}\Vert}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
+$$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
 
 **Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^25]). _Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
 $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 
-_where $\Vert L\Vert$ is the operator norm of $L$, $\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$'s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$'s domain._
+_where $\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$'s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$'s domain._
 
 **Lemma 10.** _With the assumptions in Lemma 9, if $L$ reproduces constants, so that_ $L(e_0)=1$, _the inequality in that lemma becomes:_
 
@@ -419,7 +418,7 @@ _Also, let $I$ be the identity operator $I(f)=f$.  Then:_
 
 $$\begin{multline}\text{abs}(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
 
-_where $\Vert L\Vert$ is the operator norm of $L$; and $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^54], Powell (1981, theorem 3.1)[^55], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^56])._[^57]
+_where $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^54], Powell (1981, theorem 3.1)[^55], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^56])._[^57]
 
 > **Examples:**
 >
