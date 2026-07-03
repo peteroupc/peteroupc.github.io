@@ -50,8 +50,9 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
 - A _compact interval_ (written as $[a, b]$), means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.[^1]  The closed unit interval is one example of a compact interval.
 - A function $f(\lambda)$ is _bounded_ if there are two real numbers $a$ and $b$ such that $a\le f(\lambda) \le b$ over the domain of $f$.
+- The _least upper bound_ of a function $f(x)$ is the smallest number $b$ such that $f(x) \le b$ over the domain of $f$.  If $f$ is continuous, the least upper bound is the same as the maximum.
 - An _operator_ is a mapping from a function to a function.
-    - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.
+    - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.[^86].
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^2]
     - The _operator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^3].[^4]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively. In this document, the "norm" is the maximum absolute value unless noted otherwise.
     - An operator is _bounded_ if its operator norm is finite.
@@ -125,7 +126,7 @@ The following gives bounds on $M_{n,r}$; some results in approximation theory re
 | Is odd, and $3\le r\le 43$. | $\sqrt{\sigma(r-1,8)\sigma(r+1,8)} = r^{1/2}(r-1)! / (2\cdot 8^{(r-1)/2}((r-1)/2)!)$, for $n\ge 2$. |
 | Is odd and greater than 43. | $\sqrt{\sigma(r-1,6)\sigma(r+1,6)}$, for $n\ge 2$. |
 
-_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^9].  The second row is an improved result of the first, from Molteni (2022)[^10].  The third row follows from Cheng (1983)[^11].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be bounded for every integer $n\ge 2$, using Schwarz's inequality (Weisstein)[^12] \(see also Bojanić and Shisha 1975[^13] for the case $r=4$). &#x25a1;
+_Proof:_ The first row comes from a result of Adell and Cárdenas-Morales (2018)[^9].  The second row is an improved result of the first, from Molteni (2022)[^10].  The third row follows from Cheng (1983)[^11].  The fourth and fifth rows follow from the first and second as well as that the absolute central moment for odd $r$ can be overestimated for every integer $n\ge 2$, using Schwarz's inequality (Weisstein)[^12] \(see also Bojanić and Shisha 1975[^13] for the case $r=4$). &#x25a1;
 
 <a id=Taylor_Expansion_of_Linear_Operators></a>
 
@@ -170,8 +171,8 @@ In this section:
 
 - $\sigma_i = L((e_i-\lambda)^i)(\lambda)$ (the $i$-th "central moment" of the linear operator $L$ in question).
 - $\tau_i = L(\text{abs}(e_i-\lambda)^i)(\lambda)$  (the $i$-th "absolute moment" of the linear operator $L$ in question).
-- $\omega_1(f, \delta)$ is the smallest modulus of continuity of a function $f$ of order 1, with parameter $\delta$.
-- $\tilde\omega_1(f, \delta)$ is the smallest concave modulus of continuity of $f$ of order 1, both with parameter $\delta$.
+- $\omega_1(f, \cdot)$ is the smallest modulus of continuity of a function $f$ of order 1.
+- $\tilde\omega_1(f, \cdot)$ is the smallest concave modulus of continuity of $f$ of order 1.
 
 **Lemma 1**. _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all constants (so that_ $L(e_0) = 1$ _).  Then:_
 
@@ -340,7 +341,12 @@ $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2M}{(k+1)!} \text{abs}(LA(e_{k
 
 $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 
-_where $\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain; $\beta(\lambda)$ is the maximum of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$'s domain with a maximum absolute value of 1 or less; and $\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$'s domain._
+_where:_
+
+- _$\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain._
+- _$\Vert L\Vert$ is the operator norm of $L$, where the "norm" used to define the operator norm is the least upper bound on the absolute value._[^87]
+- _$\beta(\lambda)$ is the least upper bound of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$'s domain with a maximum absolute value of 1 or less._
+- _$\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$'s domain._
 
 **Lemma 10.** _With the assumptions in Lemma 9, if $L$ reproduces constants, so that_ $L(e_0)=1$, _the inequality in that lemma becomes:_
 
@@ -355,6 +361,8 @@ _where $\beta(\lambda)$ is as in Lemma 9._
 **Lemma 12.** _With the assumptions in Lemma 11, if $L$ reproduces constants, so that_ $L(e_0)=1$, _the inequality in that lemma becomes:_
 
 $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)\cdot(1+(b-a)/h)\\\\+1+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda))/h\big)\cdot\omega_1(f,h)\end{multline}$$
+>
+>**Note:** Lemmas 11 and 12 are not guaranteed to work if $f$'s domain is a closed subset of a compact interval, unlike Lemmas 9 and 10 (see Remark 2.5 in Gonska (1998/2023)[^25]).
 
 <a id=Inequalities_on_Polynomial_Errors></a>
 
@@ -364,7 +372,7 @@ The following inequalities give bounds on the "best possible" error that a polyn
 
 **Lemma 13**. _Let $n$ be zero or a positive integer, let $k$ be a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^43], Babenko and Kryakin 2018[^44], and references therein):_
 
-$$\Vert f-P\Vert \le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) & \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}) & \textrm{(JS)}\\\\ (b-a)^r \Vert f^{(n+1)}\Vert/(((n+1)!)\cdot 2^{2n+1}) & \textrm{(Ph),}\end{cases}$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) & \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}), & \textrm{(JS)}\end{cases}$$
 
 _where:_
 
@@ -385,17 +393,22 @@ _where:_
 - $\alpha\gt 0$.
 - $\omega_{n}(f, h)$ _is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$._
 - _The inequality (JS) is valid only for the compact interval $[-1,1]$._
-- _The inequality (Ph) is valid only if $f$ has a continuous $(n+1)$-th derivative._
 
-> **Note:** The inequality (Wh) is also known as Whitney's inequality; the inequality (JS), the Jackson&ndash;Stechkin inequality. The following are references on the inequality (Ph): Brass and Petras 2011[^47], example 3.1.2; Phillips 2003[^48], theorem 2.4.6.
+> **Note:** The inequality (Wh) is also known as Whitney's inequality; the inequality (JS), the Jackson&ndash;Stechkin inequality.
+
+**Lemma 13a**.  _With the assumptions in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:_
+
+$$\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^r}{((n+1)!)\cdot 2^{2n+1}}. \tag{(Ph)}$$
+>
+>**Note:** The following are references on the inequality (Ph): Brass and Petras 2011[^47], example 3.1.2; Phillips 2003[^48], theorem 2.4.6.
 
 Using properties of moduli of continuity (see Sevy 1991[^26], sec. 2.0.2; Gonska 1985[^27]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
-$$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\Vert f^{(n+1)}\Vert,$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1))),$$
 
 and if $f$ has a continuous $n$-th derivative on that interval:
 
-$$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
 
 &nbsp;
 
@@ -407,41 +420,42 @@ $$\Vert f-P\Vert \le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \fr
 
 For certain operators, the approximation error of a function under that operator can be related to the "best approximation" error between that function and every function the operator maps to.
 
-In the following, given a set $S$ of functions, a subset of $S$ has a "best approximation" to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)[^3].[^52]
+In the following, given a set $S$ of functions, a subset of $S$ (which can be $S$ itself) has a "best approximation" to a function $f$ in $S$ if there is a function $g$ in the subset such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in the subset (De Villiers 2012, theorem 5.3.2)[^3].[^52]
 
-**Lemma 14** (Lebesgue's lemma or Lebesgue inequality): _Let $f(\lambda)$ be a continuous function on a compact interval.  Let $L$ be a linear operator that&mdash;_
+**Lemma 14** (Lebesgue's lemma or Lebesgue inequality): _Let $f(\lambda)$ be a continuous function on a compact interval.  Let $T$ be a subspace[^52] of continuous functions on that interval with a "best approximation" to $f$ (such as polynomials of degree 5 or less on that interval).  Let $L$ be a linear operator such that&mdash;_
 
-- _maps to a subspace[^52] of continuous functions on that interval with a "best approximation" to $f$ (such as polynomials of degree 5 or less on that interval), and_
-- _is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$._[^53]
+- _$L$ maps continuous functions on that interval to functions of that kind,_
+- _$L(g)$ is a function in $T$ whenever $g$ is continuous on that interval, and_
+- _$L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$ (for example, $L$ reproduces all functions in $T$)._
 
 _Also, let $I$ be the identity operator $I(f)=f$.  Then:_
 
-$$\begin{multline}\text{abs}(f(x)-L(f)(x))\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
+$$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
 
-_where $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ mapped to by $L$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^54], Powell (1981, theorem 3.1)[^55], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^56])._[^57]
+_where $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ in $T$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^53], Powell (1981, theorem 3.1)[^54], De Villiers (2012, theorem 5.3.2)[^3]; for (Leb2) see De Boor (1982, chapter 2)[^55])._[^56]
 
 > **Examples:**
 >
-> 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequalities (Leb) and (Wh) leads to the following error bound for idempotent linear operators $L$ that map continuous functions on that interval to polynomials up to degree 2:
+> 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequalities (Leb) and (Wh) leads to the following error bound if $T$ is the set of polynomials up to degree 2:
 >
->     $$\begin{multline}\text{abs}(L(f)(x) - f(x))\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.\end{multline}$$
+>     $$\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.\end{multline}$$
 >
 > 2. The Bernstein polynomial $B_n$ maps continuous functions to polynomials up to degree $n$, but if $n$ is 2 or greater it is _not_ idempotent because it does not reproduce all polynomials up to degree $n$.  For example, for $e_2(x)=x^2$, a degree-2 polynomial, $B_n(e_2)=x^2+x(1-x)/n\ne x^2$.  Thus, the inequalities (Leb) and (Leb2) do not apply to Bernstein polynomials of degree 2 or greater.
 >
 > 3. The _identity operator_ $I(f)=f$ has operator norm 1 and maps every function to itself.  For this operator, the inequality (Leb2) becomes:
 >
->     $$\text{abs}(I(f)(x) - f(x))\le\Vert I - I\Vert\cdot 0 = 0.$$
+>     $$\Vert f - I(f)\Vert\le\Vert I - I\Vert\cdot 0 = 0.$$
 >
 > **Notes:**
 >
-> 1. The only positive linear operator that maps continuous to continuous functions and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)[^23].[^58]
-> 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^59]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^60]
+> 1. The only positive linear operator that maps continuous to continuous functions and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)[^23].[^57]
+> 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^58]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^59]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
 ### Bounds for Certain Nonlinear Operators
 
-The following comes from a result in Bede and Gal (2010)[^61]; see also Bede et al. (2009)[^62].
+The following comes from a result in Bede and Gal (2010)[^60]; see also Bede et al. (2009)[^61].
 
 **Lemma 15**: _Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:_
 
@@ -458,7 +472,7 @@ $$\text{abs}(f(x)-L(f)(x))\le(1+L(\text{abs}(e_1-x))(x)/h)\cdot\omega_1(f, h),$$
 
 _provided that, in either case,_ $L(\text{abs}(e_1-x))(x)$ _(the "absolute moment" of $L$) exists (and is finite or infinite)._
 
-> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^63]; on nonlinear approximation, see DeVore (1998)[^64].)
+> **Notes:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^62]; on nonlinear approximation, see DeVore (1998)[^63].)
 >
 > **Example**:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  And $L$ is unbounded because $L(z)/z=z^2$ grows without bound as $z$ increases.  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.
 
@@ -468,7 +482,7 @@ _provided that, in either case,_ $L(\text{abs}(e_1-x))(x)$ _(the "absolute momen
 
 An operator $L$ is _Lipschitz continuous_ if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M\ge 0$ and all allowed functions $f$ and $g$. (The left-hand side is a "norm" that depends on the space of functions $L$ maps _to_; the right-hand "norm", on the functions $L$ maps _from_.) When this is the case, $M$ is a _Lipschitz constant_ of that operator.
 
-Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)[^65].
+Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)[^64].
 
 **Lemma 16**: _If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:_
 
@@ -493,11 +507,11 @@ $$=\mathbb{E}\left[W_{2n}\left(f\right)\left(\frac{k}{2n}\right) - W_n\left(f\ri
 where:
 
 - $k = 2n\lambda$, where $0\le\lambda\le 1$.
-- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^66]
+- $W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.[^65]
 - $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.  This is the number of "good" balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are "good".
 - $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.
 
-$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^67].  That paper, among others (for example, Micchelli 1973[^68]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
+$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^66].  That paper, among others (for example, Micchelli 1973[^67]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
 
 With this choice of $W_n$, $L_n$ becomes:
 
@@ -523,7 +537,7 @@ The following are some of these values and those for related operators:
 - $LB_n((e_1-x)^2)(x)$ = $-x(6n - 1)\cdot(x - 1)/(2n(2n-1))$ = $O(1/n)$.
 - $(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.
 
-To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^69] and central moments (Weisstein)[^70] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
+To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)[^68] and central moments (Weisstein)[^69] of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as&mdash;
 
 $$L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}$$
 
@@ -577,7 +591,7 @@ For a continuous function $f$ on the closed unit interval and for nonnegative in
 
 $$H_{n,m}(f)=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),$$
 
-where $B_n$ is the degree-$n$ Bernstein polynomial (see "Bernstein Form and Bernstein Polynomials", earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^71], but appears not to have been studied elsewhere.
+where $B_n$ is the degree-$n$ Bernstein polynomial (see "Bernstein Form and Bernstein Polynomials", earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at "$m+1$ distinct points on" the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)[^70], but appears not to have been studied elsewhere.
 
 It is known that $Lag_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $Lag_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer. Thus, if $f$ is such a polynomial, $B_n(f)=B_n(Lag_m(f))$ and therefore $H_{n,m}(f)$ = $Lag_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer.
 
@@ -601,8 +615,8 @@ $$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Ver
 
 where:
 
-- $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)[^72].
-- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^73]).
+- $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)[^71].
+- $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^72]).
 
 **Lemma**: _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.
 
@@ -614,9 +628,9 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le\text{abs}(B_n(f) - f) + \text{abs}(B_
 
 so now there are two error bounds to find: one for $f$ and the other for $\text{Lag}_m(f)$.  And, if $f$ has a continuous second derivative, both have the same form:
 
-$$B_n(g)\le \Vert f^{(2)}\Vert/(8n).$$
+$$B_n(g)\le \Vert g^{(2)}\Vert/(8n).$$
 
-(This follows from Lorentz (1963)[^74] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
+(This follows from Lorentz (1963)[^73] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
@@ -634,7 +648,7 @@ $$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (
 
 ## Example: The Lorentz Operators
 
-The _Lorentz operators_ were introduced by Lorentz (1963)[^75] and studied by Holtz et al. (2011)[^76].
+The _Lorentz operators_ were introduced by Lorentz (1963)[^74] and studied by Holtz et al. (2011)[^75].
 
 This section touches on the Lorentz operator of order 2, defined as&mdash;
 
@@ -642,20 +656,20 @@ $$Q_{n,2}(f)(\lambda)=B_n(f)(\lambda)-\frac{\lambda(1-\lambda)}{2n} B_n(f^{(2)})
 
 $$=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),$$
 
-where $0\le\lambda\le 1$.[^77]
+where $0\le\lambda\le 1$.[^76]
 
 This operator is a nonpositive linear operator.
 
 - Unlike in the previous examples, this operator takes in only continuous functions with a second derivative.
 - The operator maps those functions to polynomials of degree up to $n+2$.
 
-Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^76]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
+Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^75]).  (The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials.)
 
 $Q_{n,2}$ can be bounded as follows:
 
 $$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),$$
 
-where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)[^53] is the operator norm of the Bernstein polynomials.
+where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)[^77] is the operator norm of the Bernstein polynomials.
 
 Some of the "moments" of this operator are:
 
@@ -704,7 +718,7 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^26] with Gonska and Zhou 1994[^82] and Holtz et al. 2011[^76].)
+where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^26] with Gonska and Zhou 1994[^82] and Holtz et al. 2011[^75].)
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
@@ -851,57 +865,57 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^51]: De Boor, C., "On Uniform Approximation by Splines", _Journal of Approximation Theory_ 1 (1968). [**https://doi.org/10.1016/0021-9045%2868%2990026-9**](https://doi.org/10.1016/0021-9045%2868%2990026-9) [**https://www.sciencedirect.com/science/article/pii/0021904568900269**](https://www.sciencedirect.com/science/article/pii/0021904568900269)
 
-[^52]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
+[^52]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
 
-[^53]: This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials).
+[^53]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
 
-[^54]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
+[^54]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
 
-[^55]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
+[^55]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 
-[^56]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
+[^56]: In addition, chapter 5 of Rohwer's _Nonlinear Smoothing and Multiresolution Analysis_ discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section "Bounds for Certain Nonlinear Operators" in this page).
 
-[^57]: In addition, chapter 5 of Rohwer's _Nonlinear Smoothing and Multiresolution Analysis_ discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section "Bounds for Certain Nonlinear Operators" in this page).
+[^57]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
-[^58]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
+[^58]: Sablonniere, Paul. "A quadrature formula associated with a univariate spline quasi interpolant." BIT Numerical Mathematics 47.4 (2007): 825-837. [**https://doi.org/10.1007/s10543-007-0146-8**](https://doi.org/10.1007/s10543-007-0146-8)
 
-[^59]: Sablonniere, Paul. "A quadrature formula associated with a univariate spline quasi interpolant." BIT Numerical Mathematics 47.4 (2007): 825-837. [**https://doi.org/10.1007/s10543-007-0146-8**](https://doi.org/10.1007/s10543-007-0146-8)
+[^59]: It has been argued that the inequalities in this section apply to spline operators that reproduce every polynomial up to degree $d$, say, on _subintervals_ of their domain even though they map to more functions than polynomials on the _whole_ domain. For example, compare&mdash;<br>Sablonnière, P. "Univariate spline quasi-interpolants and applications to numerical analysis." Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br>Sablonnière, P. "Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3." Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br>with the operators in Lee, B-G., et al., "Some examples of quasi-interpolants constructed from local spline projectors", Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br>But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them.
 
-[^60]: It has been argued that the inequalities in this section apply to spline operators that reproduce every polynomial up to degree $d$, say, on _subintervals_ of their domain even though they map to more functions than polynomials on the _whole_ domain. For example, compare&mdash;<br>Sablonnière, P. "Univariate spline quasi-interpolants and applications to numerical analysis." Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br>Sablonnière, P. "Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3." Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br>with the operators in Lee, B-G., et al., "Some examples of quasi-interpolants constructed from local spline projectors", Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br>But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them.
+[^60]: Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind." Journal of Concrete & Applicable Mathematics 8.1 (2010).
 
-[^61]: Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind." Journal of Concrete & Applicable Mathematics 8.1 (2010).
+[^61]: Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. [**https://doi.org/10.1155/2009/590589**](https://doi.org/10.1155/2009/590589)
 
-[^62]: Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. [**https://doi.org/10.1155/2009/590589**](https://doi.org/10.1155/2009/590589)
+[^62]: Gal, Sorin G., and Constantin P. Niculescu. "[**Korovkin-type theorems for weakly nonlinear and monotone operators**](https://arxiv.org/abs/2206.14102v1)", arXiv:2206.14102v1 [math.FA], also in _Mediterranean Journal of Mathematics_ 20.2 (2023): 56. [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
 
-[^63]: Gal, Sorin G., and Constantin P. Niculescu. "[**Korovkin-type theorems for weakly nonlinear and monotone operators**](https://arxiv.org/abs/2206.14102v1)", arXiv:2206.14102v1 [math.FA], also in _Mediterranean Journal of Mathematics_ 20.2 (2023): 56. [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
+[^63]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [**https://doi.org/10.1017/S0962492900002816**](https://doi.org/10.1017/S0962492900002816).
 
-[^64]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [**https://doi.org/10.1017/S0962492900002816**](https://doi.org/10.1017/S0962492900002816).
+[^64]: Gal, S.G., Niculescu, C.P. Korovkin-Type Theorems for Weakly Nonlinear and Monotone Operators. Mediterr. J. Math. 20, 56 (2023). [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
 
-[^65]: Gal, S.G., Niculescu, C.P. Korovkin-Type Theorems for Weakly Nonlinear and Monotone Operators. Mediterr. J. Math. 20, 56 (2023). [**https://doi.org/10.1007/s00009-023-02271-y**](https://doi.org/10.1007/s00009-023-02271-y)
+[^65]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
-[^66]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
+[^66]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [**https://doi.org/10.1007/s00365-022-09608-y**](https://doi.org/10.1007/s00365-022-09608-y)
 
-[^67]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [**https://doi.org/10.1007/s00365-022-09608-y**](https://doi.org/10.1007/s00365-022-09608-y)
+[^67]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
-[^68]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^68]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments", Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
-[^69]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments", Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
+[^69]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
 
-[^70]: Weisstein, Eric W. "Central Moment." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/CentralMoment.html**](https://mathworld.wolfram.com/CentralMoment.html)
+[^70]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
 
-[^71]: Ioan Gavrea, Mircea Ivan, "A note on the fixed points of positive linear operators", Journal of Approximation Theory (227), 2018, [**https://doi.org/10.1016/j.jat.2017.12.001.**](https://doi.org/10.1016/j.jat.2017.12.001).
+[^71]: Ibrahimoglu, B.A. Lebesgue functions and Lebesgue constants in polynomial interpolation. J Inequal Appl 2016, 93 (2016). [**https://doi.org/10.1186/s13660-016-1030-3**](https://doi.org/10.1186/s13660-016-1030-3)
 
-[^72]: Ibrahimoglu, B.A. Lebesgue functions and Lebesgue constants in polynomial interpolation. J Inequal Appl 2016, 93 (2016). [**https://doi.org/10.1186/s13660-016-1030-3**](https://doi.org/10.1186/s13660-016-1030-3)
+[^72]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
 
-[^73]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
+[^73]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
 
-[^74]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
+[^74]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^75]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
+[^75]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^76]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
+[^76]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^77]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
+[^77]: This includes the case that $L$ reproduces all functions it maps to (for example, if $L$ maps to polynomials up to degree 5, it reproduces all such polynomials).
 
 [^78]: A linear space of functions with this property is also called a _Banach space_ (Axler, S., _Measure, Integration & Real Analysis_, Springer, 2020. [**https://doi.org/10.1007/978-3-030-33143-6**](https://doi.org/10.1007/978-3-030-33143-6)).
 
@@ -918,3 +932,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^84]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
 
 [^85]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
+
+[^86]: A linear operator is also known as a _linear map_ (Axler 2020) or a _linear transformation_.
+
+[^87]: $L$ maps functions in set $A$ to functions in set $B$. In this case, $A$ is the set of continuous functions on $f$'s domain and $B$ is the set of bounded functions on that domain.  Both sets are equipped with a "norm" equal to the least upper bound on $g$'s absolute value, where $g$ is a function in $A$ or $B$. (As used in Gonska (1998/2023), the "norm" for $A$ is the maximum rather than the least upper bound, but the two are equivalent in this case.)
