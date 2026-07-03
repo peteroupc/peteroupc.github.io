@@ -66,11 +66,11 @@
   <li>A <em>compact interval</em> (written as $[a, b]$), means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>  The closed unit interval is one example of a compact interval.</li>
   <li>A function $f(\lambda)$ is <em>bounded</em> if there are two real numbers $a$ and $b$ such that $a\le f(\lambda) \le b$ over the domain of $f$.</li>
   <li>The <em>least upper bound</em> of a function $f(x)$ is the smallest number $b$ such that $f(x) \le b$ over the domain of $f$.  If $f$ is continuous, the least upper bound is the same as the maximum.</li>
-  <li>An <em>{op}erator</em> is a mapping from a function to a function.
+  <li>An <em>operator</em> is a mapping from a function to a function.
     <ul>
       <li>An operator $L$ is <em>linear</em> if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>.</li>
       <li>An operator $L$ is <em>positive</em> if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
-      <li>The <em>{op}erator norm</em> of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the “norm” of $L(f)$ divided by the “norm” of $f$ (De Villiers 2012, (5.2.2))<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively.</li>
+      <li>The <em>operator norm</em> of an operator $L$ is the least upper bound of the following value over all allowed functions $f$ other than 0: the “norm” of $L(f)$ divided by the “norm” of $f$ (De Villiers 2012, (5.2.2))<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>  The “norm” of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively.</li>
       <li>An operator is <em>bounded</em> if its operator norm is finite.</li>
     </ul>
   </li>
@@ -79,7 +79,7 @@
   <li>In this document:
     <ul>
       <li>$e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.</li>
-      <li>The notation $\Vert F\Vert$, where $F$ is a function, means the function’s “norm”, which is the maximum absolute value over its domain unless the context indicates otherwise.</li>
+      <li>The notation $\Vert f\Vert$, where $f$ is a function, means the function’s “norm”, which is the maximum absolute value over its domain unless the context indicates otherwise.</li>
       <li>The notation $\Vert L\Vert_{op}$, where $L$ is an operator, means its operator norm; the “norm” used to define the operator norm is the maximum absolute value unless noted otherwise.</li>
     </ul>
   </li>
@@ -569,9 +569,13 @@ where $0\le x\le 1$ and the real numbers $a_0, …, a_n$ are the polynomial’s 
 
 <p><strong>Lemma 13A</strong>.  <em>With the assumptions in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:</em></p>
 
-<p>\(\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+1}}. \tag{Ph}\)
-&gt;
-&gt;<strong>Note:</strong> The following are references on the inequality (Ph): Brass and Petras (2011, example 3.1.2)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>; Phillips (2003, theorem 2.4.6)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>.</p>
+\[\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+1}}. \tag{Ph}\]
+
+<p> </p>
+
+<blockquote>
+  <p><strong>Note:</strong> The following are references on the inequality (Ph): Brass and Petras (2011, example 3.1.2)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>; Phillips (2003, theorem 2.4.6)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>.</p>
+</blockquote>
 
 <p>Using properties of moduli of continuity (see Sevy 1991<sup id="fnref:27:1"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:28:1"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:</p>
 

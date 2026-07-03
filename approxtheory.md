@@ -51,16 +51,16 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - A _compact interval_ (written as $[a, b]$), means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.[^1]  The closed unit interval is one example of a compact interval.
 - A function $f(\lambda)$ is _bounded_ if there are two real numbers $a$ and $b$ such that $a\le f(\lambda) \le b$ over the domain of $f$.
 - The _least upper bound_ of a function $f(x)$ is the smallest number $b$ such that $f(x) \le b$ over the domain of $f$.  If $f$ is continuous, the least upper bound is the same as the maximum.
-- An _{op}erator_ is a mapping from a function to a function.
+- An _operator_ is a mapping from a function to a function.
     - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.[^2].
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^3]
-    - The _{op}erator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^4].[^5]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively.
+    - The _operator norm_ of an operator $L$ is the least upper bound of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^4].[^5]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively.
     - An operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
 - In this document:
     - $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
-    - The notation $\Vert F\Vert$, where $F$ is a function, means the function's "norm", which is the maximum absolute value over its domain unless the context indicates otherwise.
+    - The notation $\Vert f\Vert$, where $f$ is a function, means the function's "norm", which is the maximum absolute value over its domain unless the context indicates otherwise.
     - The notation $\Vert L\Vert_{op}$, where $L$ is an operator, means its operator norm; the "norm" used to define the operator norm is the maximum absolute value unless noted otherwise.
 
 <a id=Bernstein_Form_and_Bernstein_Polynomials></a>
@@ -400,7 +400,9 @@ _where:_
 **Lemma 13A**.  _With the assumptions in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:_
 
 $$\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+1}}. \tag{Ph}$$
->
+
+&nbsp;
+
 >**Note:** The following are references on the inequality (Ph): Brass and Petras (2011, example 3.1.2)[^49]; Phillips (2003, theorem 2.4.6)[^50].
 
 Using properties of moduli of continuity (see Sevy 1991[^27], sec. 2.0.2; Gonska 1985[^28]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
