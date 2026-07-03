@@ -6,7 +6,7 @@ The notes in this page catalog results that may be useful in finding bounds on h
 
 The aim is to find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.
 
-The mapping from a function to a function (for example, from a single-variable function to a polynomial "close" to it) is called an _operator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
+The mapping from a function to a function (for example, from a single-variable function to a polynomial "close" to it) is called an _{op}erator_, and operators involved in these bounds are often linear operators, whose behavior is relatively simple to examine.
 
 <a id=Contents></a>
 
@@ -51,16 +51,17 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
 - A _compact interval_ (written as $[a, b]$), means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.[^1]  The closed unit interval is one example of a compact interval.
 - A function $f(\lambda)$ is _bounded_ if there are two real numbers $a$ and $b$ such that $a\le f(\lambda) \le b$ over the domain of $f$.
 - The _least upper bound_ of a function $f(x)$ is the smallest number $b$ such that $f(x) \le b$ over the domain of $f$.  If $f$ is continuous, the least upper bound is the same as the maximum.
-- An _operator_ is a mapping from a function to a function.
+- An _{op}erator_ is a mapping from a function to a function.
     - An operator $L$ is _linear_ if it satisfies $L(af)=aL(f)$ and $L(f+g)=L(f)+L(g)$ for all allowed functions $f$ and $g$ and every number $a$.[^2].
     - An operator $L$ is _positive_ if it has the property that, if an allowed function $f$ is nonnegative on its domain, so is $L(f)$.[^3]
-    - The _operator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^4].[^5]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively.
+    - The _{op}erator norm_ of an operator $L$ is the maximum of the following value over all allowed functions $f$ other than 0: the "norm" of $L(f)$ divided by the "norm" of $f$ (De Villiers 2012, (5.2.2))[^4].[^5]  The "norm" of $L(f)$ and that of $f$ depend on the spaces of functions that $L$ maps to and from, respectively.
     - An operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
 - In this document:
     - $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
-    - The notation $\Vert F\Vert$, where $F$ is a function or operator, means the function's "norm" or the operator's operator norm.  Unless the context indicates otherwise, the "norm" of a function is the maximum absolute value over its domain, and the "norm" used to define operator norms is the maximum absolute value.
+    - The notation $\Vert F\Vert$, where $F$ is a function, means the function's "norm", which is the maximum absolute value over its domain unless the context indicates otherwise.
+    - The notation $\Vert L\Vert_{op}$, where $L$ is an operator, means its operator norm; the "norm" used to define the operator norm is the maximum absolute value unless noted otherwise.
 
 <a id=Bernstein_Form_and_Bernstein_Polynomials></a>
 
@@ -149,7 +150,7 @@ If $L$ reproduces polynomials up to degree $s$, this even reduces to $L(f)(\lamb
 It can be seen from the expansions just given that finding upper bounds for $L_n(f)(\lambda)$ involves:
 
 - Finding upper bounds for $L$'s "central moments" up to the $s$-th order.
-- Finding upper bounds for $L(R_s(f,\lambda))$. If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_Operators)". If $L$ is nonpositive linear, bounds are given in the section "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_Operators)", and this can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^16]  See the "[**Example**](#Example)" section later in this document.
+- Finding upper bounds for $L(R_s(f,\lambda))$. If $L$ is positive linear, such bounds are given in the section "[**Bounds for General Positive Linear Operators**](#Bounds_for_General_Positive_Linear_{op}erators)". If $L$ is nonpositive linear, bounds are given in the section "[**Bounds for General Linear Operators**](#Bounds_for_General_Linear_{op}erators)", and this can be helped if $L$ can be written as a difference between two positive linear operators $LA$ and $LB$, so that $L(f) = LA(f) - LB(f)$.[^16]  See the "[**Example**](#Example)" section later in this document.
 
 Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed to be known beforehand.
 
@@ -339,18 +340,18 @@ $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2M}{(k+1)!} \text{abs}(LA(e_{k
 
 **Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^26]). _Let $f(\lambda)$ be continuous on a compact interval or a closed subset thereof, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
-$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
+$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert_{op}+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 
 _where:_
 
 - _$\alpha$ is the maximum of_ $\text{abs}(L(e_0))$ _over $f$'s domain._
-- _$\Vert L\Vert$ is the operator norm of $L$, where the "norm" used to define the operator norm is the least upper bound on the absolute value._[^44]
+- _$\Vert L\Vert_{op}$ is the operator norm of $L$, where the "norm" used to define the operator norm is the least upper bound on the absolute value._[^44]
 - _$\beta(\lambda)$ is the least upper bound of $\text{abs}(L(g)(\lambda))$ over all continuous functions $g$ on $f$'s domain with a maximum absolute value of 1 or less._
 - _$\gamma$ is the difference between the highest and lowest value of $\lambda$ in $f$'s domain._
 
 **Lemma 10.** _With the assumptions in Lemma 9, if $L$ reproduces constants, so that_ $L(e_0)=1$, _the inequality in that lemma becomes:_
 
-$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((1+\Vert L\Vert)/2, (\gamma(\beta(\lambda)-1)\\\\+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\cdot\tilde\omega_1(f,h).\end{multline}$$
+$$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((1+\Vert L\Vert_{op})/2, (\gamma(\beta(\lambda)-1)\\\\+\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\cdot\tilde\omega_1(f,h).\end{multline}$$
 
 **Lemma 11** (special case of Theorem 4.4 and Corollary 4.5 in Gonska (1998/2023)[^26]). _Let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
@@ -430,21 +431,21 @@ In the following, given a set $S$ of functions, a subset of $S$ (which can be $S
 
 _Also, let $I$ be the identity operator $I(f)=f$.  Then:_
 
-$$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert)\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert + \Vert L\Vert) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
+$$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert_{op} + \Vert L\Vert_{op}) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert_{op}) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
 
-_where $\Vert I-L\Vert$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ in $T$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^55], Powell (1981, theorem 3.1)[^56], De Villiers (2012, theorem 5.3.2)[^4]; for (Leb2) see De Boor (1982, chapter 2)[^57])._[^58]
+_where $\Vert I-L\Vert_{op}$ is the operator norm for the difference between $f$ and $L(f)$; and $\text{Dist}(f,P)$ is the greatest lower bound of $max_t(\text{abs}(f(t)-P(t)))$ over all functions $P$ in $T$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^55], Powell (1981, theorem 3.1)[^56], De Villiers (2012, theorem 5.3.2)[^4]; for (Leb2) see De Boor (1982, chapter 2)[^57])._[^58]
 
 > **Examples:**
 >
 > 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequalities (Leb) and (Wh) leads to the following error bound if $T$ is the set of polynomials up to degree 2:
 >
->     $$\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert )\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert )\Vert f^{(3)}\Vert /27.\end{multline}$$
+>     $$\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert_{op})\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert_{op})\Vert f^{(3)}\Vert /27.\end{multline}$$
 >
 > 2. The Bernstein polynomial $B_n$ maps continuous functions to polynomials up to degree $n$, but if $n$ is 2 or greater it is _not_ idempotent because it does not reproduce all polynomials up to degree $n$.  For example, for $e_2(x)=x^2$, a degree-2 polynomial, $B_n(e_2)=x^2+x(1-x)/n\ne x^2$.  Thus, the inequalities (Leb) and (Leb2) do not apply to Bernstein polynomials of degree 2 or greater.
 >
 > 3. The _identity operator_ $I(f)=f$ has operator norm 1 and maps every function to itself.  For this operator, the inequality (Leb2) becomes:
 >
->     $$\Vert f - I(f)\Vert\le\Vert I - I\Vert\cdot 0 = 0.$$
+>     $$\Vert f - I(f)\Vert\le\Vert I - I\Vert_{op}\cdot 0 = 0.$$
 >
 > **Notes:**
 >
@@ -482,7 +483,7 @@ _provided that, in either case,_ $L(\text{abs}(e_1-x))(x)$ _(the "absolute momen
 
 An operator $L$ is _Lipschitz continuous_ if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M\ge 0$ and all allowed functions $f$ and $g$. (The left-hand side is a "norm" that depends on the space of functions $L$ maps _to_; the right-hand "norm", on the functions $L$ maps _from_.) When this is the case, $M$ is a _Lipschitz constant_ of that operator.
 
-Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)[^66].
+Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert_{op}\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023b)[^66].
 
 **Lemma 16**: _If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:_
 
@@ -525,7 +526,7 @@ $$= LA_n(f)(\lambda) - LB_n(f)(\lambda).$$
 
 Here, $LA_n$ and $LB_n$ are positive linear operators, making it easier to assess their approximation properties.
 
-It will be shown that, if $f$ has a continuous third derivative, the rate of $L_n$ towards zero is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_Operators), and those for the combined operator $(LA_n+LB_n)$.
+It will be shown that, if $f$ has a continuous third derivative, the rate of $L_n$ towards zero is $O(M/n^{3/2})$, where $M$ is the maximum absolute value of $f$ and its derivatives up to the third derivative.  The proof of this relies on exact expressions of $L_n$'s [**"raw moments" and "central moments"**](#Moments_of_Linear_{op}erators), and those for the combined operator $(LA_n+LB_n)$.
 
 The following are some of these values and those for related operators:
 
@@ -545,7 +546,7 @@ $$= \sum_{i=0}^r \frac{\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]}{n^i}\frac{g^{(i)}(k/
 
 where the derivatives are taken with respect to $y$, and where $\mathbb{E}[(X_k-\mathbb{E}[X_k])^i]$ is the $i$-th central moment of $X_k$.
 
-The first step is to [**find the Taylor expansion**](#Taylor_Expansion_of_Linear_Operators) of $L_n(f)(\lambda)$. Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
+The first step is to [**find the Taylor expansion**](#Taylor_Expansion_of_Linear_{op}erators) of $L_n(f)(\lambda)$. Given that $L_n((e_1-x)^0)(x)$ = $L_n((e_1-x)^1)(x)$ = 0, this becomes:
 
 $$L_n(f)(\lambda) = L_n(R_3(f, \lambda)) + \sum_{i=2}^3 L_n((e_1-\lambda)^i)(\lambda)\frac{f^{(i)}(\lambda)}{i!},$$
 
@@ -611,11 +612,11 @@ It will be helpful to estimate the second derivative of $\text{Lag}_m(f)$.
 
 Given that that function is a polynomial of degree $m$ or less, this can be estimated as:
 
-$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert\cdot\Vert f\Vert\cdot M(m),\tag{E}$$
+$$\text{abs}(\text{Lag}_m(f)^{(2)}(\lambda))\le \Vert \text{Lag}_m\Vert_{op}\cdot\Vert f\Vert\cdot M(m),\tag{E}$$
 
 where:
 
-- $\Vert Lag_m\Vert$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)[^73].
+- $\Vert Lag_m\Vert_{op}$ is the operator norm of $Lag_m$, which in this case equals its _Lebesgue constant_, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)[^73].
 - $M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial's second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 [^74]).
 
 **Lemma**: _Let_ $p(\lambda)=c_0 \lambda^0 + ... + c_n \lambda^n$ _be a polynomial on the interval_ $[a,b]$, _where_ $c_0$, ..., $c_n$ _are real numbers and_ $c_n$ _is not zero. If_ $\Vert p\Vert\le 1$, _then_ $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.
@@ -634,7 +635,7 @@ $$B_n(g)\le \Vert g^{(2)}\Vert/(8n).$$
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
-$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(2)}\Vert}{8n} + \frac{\Vert \text{Lag}_m\Vert\cdot\Vert f\Vert\cdot M(m)}{8n}.$$
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(2)}\Vert}{8n} + \frac{\Vert \text{Lag}_m\Vert_{op}\cdot\Vert f\Vert\cdot M(m)}{8n}.$$
 
 It is suspected that, using $(E)$, the following is true if $f$ has a continuous $m$-th derivative and $m$ is a positive integer:
 
@@ -642,7 +643,7 @@ $$H_{n,m}(f)(\lambda) - f(\lambda) = B_n(R_m(f,\lambda)) + \lgroup\text{Lag}_m(f
 
 so that, using Lemma 6 again, there is a better error bound if $n$ is 2 or greater:
 
-$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (m!) n^{m/2}} + (\Vert Lag_m\Vert\cdot\Vert f\Vert\cdot M(m)) \frac{\mu_{m}}{ (m!) n^{m/2}}.$$
+$$\text{abs}((H_{n,m}(f) - f)(\lambda))\le \frac{\Vert f^{(m)}\Vert  \mu_{m}}{ (m!) n^{m/2}} + (\Vert Lag_m\Vert_{op}\cdot\Vert f\Vert\cdot M(m)) \frac{\mu_{m}}{ (m!) n^{m/2}}.$$
 
 <a id=Example_The_Lorentz_Operators></a>
 
@@ -688,7 +689,7 @@ It is suspected further, using Lemma 6 and Corollary 1, that&mdash;
 
 $$\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},$$
 
-The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed.  Denote $C^k$, where $k>0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^79]\:
+The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k>0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^79]\:
 
 $$\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert$$
 
@@ -696,7 +697,7 @@ Using this norm, the operator $Q_{n,2}$ can be bounded as follows:
 
 $$\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},$$
 
-so the operator norm satisfies $\Vert Q_{n,2}\Vert_{C^2}\le 9/(8n)$.
+so the operator norm satisfies $\Vert Q_{n,2}\Vert_{op}\le 9/(8n)$.
 
 <a id=Probabilistic_Interpretations_of_Linear_Operators></a>
 
@@ -724,28 +725,28 @@ It was a goal of this article to catalog general-purpose error bounds without su
 
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
-- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C>0$ is an explicitly given constant:
+- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_{op}erators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C>0$ is an explicitly given constant:
     - $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.
-    - $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert)$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
-    - $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert)$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^84]).
+    - $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
+    - $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^84]).
     - Inequalities of the foregoing kinds where $L$ and $f$ are restricted to some compact subinterval.
 - General-purpose upper bounds on the error when approximating a function with:
     1. Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.
     2. Ratios of polynomials described in (1).
     3. Convex combinations of functions described in (1) or (2).  A convex combination has the form $c_0 f_0(\lambda) + c_1 f_1(\lambda) + ...$ where $c_i$ are nonnegative and sum to 1.
     4. Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)[^85].  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.
-- Easy-to-use upper bounds for [**estimating Peano kernels**](#Bounds_for_General_Linear_Operators), such as the Peano kernels corresponding to the [**Lorentz operators**](#Example_The_Lorentz_Operators).
-- Additional error bounds for [**nonlinear operators**](#Bounds_for_Certain_Nonlinear_Operators).
+- Easy-to-use upper bounds for [**estimating Peano kernels**](#Bounds_for_General_Linear_{op}erators), such as the Peano kernels corresponding to the [**Lorentz operators**](#Example_The_Lorentz_{op}erators).
+- Additional error bounds for [**nonlinear operators**](#Bounds_for_Certain_Nonlinear_{op}erators).
 - Error bounds that are sharper than those in Lemmas 9 to 12 for functions with a continuous $k$-th derivative for some $k\ge 2$.
 
 In addition, the following will be helpful.
 
 - Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.
-- Does Lemma 7 also work for linear operators, such as the [**Lorentz operator**](#Example_The_Lorentz_Operators), whose norm is not based on the maximum absolute value?
-- In which cases are the [**Lebesgue inequalities**](#Lebesgue_Inequality_for_Certain_Linear_Operators) (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?
+- Does Lemma 7 also work for linear operators, such as the [**Lorentz operator**](#Example_The_Lorentz_{op}erators), whose norm is not based on the maximum absolute value?
+- In which cases are the [**Lebesgue inequalities**](#Lebesgue_Inequality_for_Certain_Linear_{op}erators) (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?
 - Given the work by Rohwer (2005)[^86], are the inequalities (Leb) and (Leb2) true when&mdash;
     - $L$ is nonlinear,
-    - $L$ is Lipschitz continuous, replacing $\Vert L\Vert$ with the Lipschitz constant of $L$, and
+    - $L$ is Lipschitz continuous, replacing $\Vert L\Vert_{op}$ with the Lipschitz constant of $L$, and
     - both $L$ and $I-L$ are idempotent?
 
 Also:
@@ -769,7 +770,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^3]: A better term for positive operators is probably nonnegativity-preserving operators.
 
-[^4]: De Villiers, J., _Mathematics of Approximation_, Atlantis Press, 2012. [https://doi.org/10.2991/978-94-91216-50-3](https://doi.org/10.2991/978-94-91216-50-3)
+[^4]: De Villiers, J., _Mathematics of Approximation_, Atlantis Press, 2012. [**https://doi.org/10.2991/978-94-91216-50-3**](https://doi.org/10.2991/978-94-91216-50-3)
 
 [^5]: If $L$ is linear, the operator norm is the maximum "norm" of $L(f)$ over all allowed functions $f$ with a "norm" equal to 1 (De Villiers 2012, Theorem 5.2.3).
 
@@ -833,7 +834,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
 
-[^36]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _open_ interval (say, $0\lt\lambda\lt 1$), rather than a _compact_ interval, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
+[^36]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _{op}en_ interval (say, $0\lt\lambda\lt 1$), rather than a _compact_ interval, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
 
 [^37]: Frantz, Deborah A. [**Summability methods, probability distributions, and associated positive linear operators**](https://preserve.lehigh.edu/lehigh-scholarship/graduate-publications-theses-dissertations/theses-dissertations/summability). Lehigh University, 1984.
 
