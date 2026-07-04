@@ -202,7 +202,7 @@ _Proof:_ Inequality 1 follows from a result of Gonska and Meier (1985, theorem 3
 
     then $\omega_1(f,\delta)\le\tilde\omega_1(f,\delta)\le M\delta$; in case (1) because $f$ is Hölder continuous with Hölder exponent 1, and in case (2) because of a result of Hardy and Littlewood.
 
-> **Example:** Let $f$ and $L$ be as in Lemma 1. If $f$ is Lipschitz continuous with Lipschitz constant $M$ or less, or has a continuous derivative with maximum absolute value $M$ or less, $\text{abs}(L(f)(\lambda)-f(\lambda))\le M (\sigma_2)^{1/2}$; this follows from the combination of Remark 1 and inequality 6 of Lemma 1.
+> **Example:** Let $f$ and $L$ be as in Lemma 1. If $f$ has a continuous derivative with maximum absolute value $M$ or less, $\text{abs}(L(f)(\lambda)-f(\lambda))\le M (\sigma_2)^{1/2}$; this follows from the combination of Remark 1 and inequality 6 of Lemma 1.
 
 **Lemma 2**. _Let $f(\lambda)$ be continuous on a compact interval, and let $L$ be a positive linear operator that maps continuous functions on that interval to functions of that kind and reproduces all polynomials up to degree 1 (constants and linear functions).  Let $h>0$ be a real number. Then:_
 
@@ -494,7 +494,7 @@ Every bounded linear operator $L$ is Lipschitz continuous with $M$ equal to its 
 
 $$\Vert L(f)\Vert\le M\Vert f-P\Vert,$$
 
-_where $P$ is any function that $L$ maps to 0._
+_where $P$ is any function such that $L(P)=0$._
 
 _Proof:_ This follows easily from the definition of Lipschitz continuity.
 
