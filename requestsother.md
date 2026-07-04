@@ -279,23 +279,23 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
 ## Notes
 
-[^1]: Yao, Andrew C. "Context-free grammars and random number generation." In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985.
+[^1]: [**Yao, Andrew C. "Context-free grammars and random number generation."**](https://scholar.google.com/scholar?q=Yao,+Andrew+C.+Context-free+grammars+and+random+number+generation) In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985.
 
-[^2]: Knuth, Donald E. And Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in Algorithms and Complexity: New Directions and Recent Results, 1976.
+[^2]: [**Knuth, Donald E. And Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+And+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in Algorithms and Complexity: New Directions and Recent Results, 1976.
 
 [^3]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs, " SIAM Journal on Discrete Mathematics 17 (2004): 624-633.
 
 [^4]: Adamczewski, B., Cassaigne, J. And Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
 
-[^5]: Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.
+[^5]: [**Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions"**](https://scholar.google.com/scholar?q=Forsythe,+G.E.,+Von+Neumanns+Comparison+Method+for+Random+Sampling+from+the+Normal+and+Other+Distributions), _Mathematics of Computation_ 26(120), October 1972.
 
-[^6]: Monahan, J. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+[^6]: [**Monahan, J. "Extensions of von Neumann’s method for generating random variables."**](https://scholar.google.com/scholar?q=Monahan,+J.+Extensions+of+von+Neumanns+method+for+generating+random+variables) Mathematics of Computation 33 (1979): 1065-1069.
 
-[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.
+[^7]: [**Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection."**](https://scholar.google.com/scholar?q=Kunsch,+Robert+J.,+Erich+Novak,+and+Daniel+Rudolf.+Solvable+integration+problems+and+optimal+sample+size+selection) Journal of Complexity 53 (2019): 40-67.
 
 [^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
 
-[^9]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^9]: [**Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators"**](https://scholar.google.com/scholar?q=Jacob,+P.E.,+Thiery,+A.H.,+On+nonnegative+unbiased+estimators), Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
 <a id=License></a>
 

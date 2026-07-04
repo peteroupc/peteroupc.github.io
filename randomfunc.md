@@ -2222,7 +2222,7 @@ The following are some additional articles I have written on the topic of random
 
 [^56]: [**Johnson and Kotz, "Discrete Distributions"**](https://scholar.google.com/scholar?q=Johnson+and+Kotz,+Discrete+Distributions), 1969.
 
-[^57]: [**Smith, Noah A., and Roy W. Tromble. "[**Sampling uniformly from the unit simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)."](https://scholar.google.com/scholar?q=Smith,+Noah+A.,+and+Roy+W.+Tromble.+Sampling+uniformly+from+the+unit+simplexhttpwww.cs.cmu.edunasmithpaperssmithtromble.tr04.pdf) Johns Hopkins University, Tech. Rep 29 (2004).
+[^57]: [**Smith, Noah A., and Roy W. Tromble. "[**Sampling uniformly from the unit simplex**]()."](https://scholar.google.com/scholar?q=Smith,+Noah+A.,+and+Roy+W.+Tromble.+Sampling+uniformly+from+the+unit+simplex) Johns Hopkins University, Tech. Rep 29 (2004). [https://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf](https://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)
 
 [^58]: [**Durfee, et al., "l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent"**](https://scholar.google.com/scholar?q=Durfee,+et+al.,+l1+Regression+using+Lewis+Weights+Preconditioning+and+Stochastic+Gradient+Descent), _Proceedings of Machine Learning Research_ 75(1), 2018.
 
@@ -2234,13 +2234,13 @@ The following are some additional articles I have written on the topic of random
 
 [^62]: This includes integers if `e` is limited to 0, and fixed-point numbers if `e` is limited to a single exponent less than 0.
 
-[^63]: [**Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)"](https://scholar.google.com/scholar?q=Downey,+A.+B.+Generating+Pseudo-random+Floating+Point+Valueshttpallendowney.comresearchrand), 2007.
+[^63]: [**Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)"](https://scholar.google.com/scholar?q=Downey,+A.+B.+Generating+Pseu do-random+Floating+Point+Valueshttpallendowney.comresearchrand), 2007.
 
 [^64]: Ideally, `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example, `X` is 2^53 (9007199254740992) for binary64, and 2^24 (16777216) for binary32.
 
 [^65]: Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. [**https://doi.org/10.1007/978-3-030-50417-5_2**](https://doi.org/10.1007/978-3-030-50417-5_2)
 
-[^66]: [**Monahan, J.F., "Accuracy in Random Number Generation"**](https://scholar.google.com/scholar?q=Monahan,+J.F.,+Accuracy+in+Random+Number+Generation), _Mathematics of Computation_ 45(172), 1985.
+[^66]: Monahan, J.F., "Accuracy in Random Number Generation", _Mathematics of Computation_ 45(172), 1985. [https://doi.org/10.1090/S0025-5718-1985-0804945-X](https://doi.org/10.1090/S0025-5718-1985-0804945-X)
 
 [^67]: [**Halmos, P.R., "The theory of unbiased estimation"**](https://scholar.google.com/scholar?q=Halmos,+P.R.,+The+theory+of+unbiased+estimation), _Annals of Mathematical Statistics_ 17(1), 1946.
 
@@ -2274,7 +2274,7 @@ The following are some additional articles I have written on the topic of random
 
 [^81]: In floating-point arithmetic, finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019\)[^81].
 
-[^82]: [**Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, "Random variate generation by numerical inversion when only the density is known"**](https://scholar.google.com/scholar?q=Gerhard+Derflinger,+Wolfgang+Hörmann,+and+Josef+Leydold,+Random+variate+generation+by+numerical+inversion+when+only+the+density+), ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010.
+[^82]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold. 2010. Random variate generation by numerical inversion when only the density is known. ACM Trans. Model. Comput. Simul. 20, 4, Article 18 (October 2010), 25 pages. [https://doi.org/10.1145/1842722.1842723](https://doi.org/10.1145/1842722.1842723)
 
 [^83]: [**Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector"**](https://scholar.google.com/scholar?q=Part+of+numbers_from_u01+uses+algorithms+described+in+Arnas,+D.,+Leake,+C.,+Mortari,+D.,+Random+Sampling+using+k-vector), _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
 
@@ -2292,7 +2292,7 @@ The following are some additional articles I have written on the topic of random
 
 [^90]: [**Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates."**](https://scholar.google.com/scholar?q=Kschischang,+Frank+R.+A+Trapezoid-Ziggurat+Algorithm+for+Generating+Gaussian+Pseudorandom+Variates) (2019).
 
-[^91]: Devroye, L., 1996, December, "Random variate generation in one line of code" In _Proceedings Winter Simulation Conference_ (pp. 265-272). IEEE.
+[^91]: [**Devroye, L., 1996, December, "Random variate generation in one line of code."**](https://scholar.google.com/scholar?q=Devroye,+L.,+1996,+December,+Random+variate+generation+in+one+line+of+code) In _Proceedings Winter Simulation Conference_ (pp. 265-272). IEEE.
 
 [^92]: Crooks, G.E., [**_Field Guide to Continuous Probability Distributions_**](https://threeplusone.com/pubs/FieldGuide.pdf), 2019.
 
@@ -2304,9 +2304,9 @@ The following are some additional articles I have written on the topic of random
 
 [^96]: [**Devroye, L., "Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator"**](https://scholar.google.com/scholar?q=Devroye,+L.,+Expected+Time+Analysis+of+a+Simple+Recursive+Poisson+Random+Variate+Generator), _Computing_ 46, pp. 165-173, 1991.
 
-[^97]: [**Bailey, R.W., "Polar generation of random variates with the t distribution"**](https://scholar.google.com/scholar?q=Bailey,+R.W.,+Polar+generation+of+random+variates+with+the+t+distribution), _Mathematics of Computation_ 62 (1994).
+[^97]: Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation_ 62 (1994). [https://doi.org/10.1090/S0025-5718-1994-1219702-8](https://doi.org/10.1090/S0025-5718-1994-1219702-8)
 
-[^98]: [**Stein, W.E. and Keblis, M.F., "A new method to simulate the triangular distribution"**](https://scholar.google.com/scholar?q=Stein,+W.E.+and+Keblis,+M.F.,+A+new+method+to+simulate+the+triangular+distribution), _Mathematical and Computer Modelling_ 49(5-6), 2009, pp.1143-1147.
+[^98]: Stein, W.E. and Keblis, M.F., "A new method to simulate the triangular distribution", _Mathematical and Computer Modelling_ 49(5-6), 2009, pp.1143-1147. [https://doi.org/10.1016/j.mcm.2008.06.013](https://doi.org/10.1016/j.mcm.2008.06.013) [https://www.sciencedirect.com/science/article/pii/S0895717708002665](https://www.sciencedirect.com/science/article/pii/S0895717708002665)
 
 [^99]: [**Borel, E., "Sur l'emploi du théorème de Bernoulli pour faciliter le calcul d'un infinité de coefficients. Application au probleme de l'attente à un guichet"**](https://scholar.google.com/scholar?q=Borel,+E.,+Sur+lemploi+du+théorème+de+Bernoulli+pour+faciliter+le+calcul+dun+infinité+de+coefficients.+Application+au+probleme+d), 1942.
 
@@ -2322,7 +2322,7 @@ The following are some additional articles I have written on the topic of random
 
 [^105]: [**Osada, R., Funkhouser, T., et al., "Shape Distributions"**](https://scholar.google.com/scholar?q=Osada,+R.,+Funkhouser,+T.,+et+al.,+Shape+Distributions), _ACM Transactions on Graphics 21(4), Oct. 2002.
 
-[^106]: Schechtman, G., Zinn, J., On the volume of intersection of two Lp^n balls. 1990.
+[^106]: Schechtman, G., Zinn, J., "On the volume of intersection of two Lp^n balls". 1990.
 
 [^107]: [**Barthe, F., Guédon, O., et al., "A probabilistic approach to the geometry of the lP^N-ball"**](https://scholar.google.com/scholar?q=Barthe,+F.,+Guédon,+O.,+et+al.,+A+probabilistic+approach+to+the+geometry+of+the+lPN-ball), Annals of Probability 33(2), 2005.
 
@@ -2340,7 +2340,7 @@ The following are some additional articles I have written on the topic of random
 
 [^114]: In the privacy context, see, for example, Awan, J. and Rao, V., 2022. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965.
 
-[^115]: [**For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers"**](https://scholar.google.com/scholar?q=For+example,+see+Balcer,+V.,+Vadhan,+S.,+Differential+Privacy+on+Finite+Computers), Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+[^115]: For example, see [**Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers"**](https://scholar.google.com/scholar?q=Balcer,+V.,+Vadhan,+S.,+Differential+Privacy+on+Finite+Computers), Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
 
 <a id=Appendix></a>
 

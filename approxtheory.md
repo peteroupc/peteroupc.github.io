@@ -781,9 +781,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.<br>_Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 
-[^7]: [**Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators."**](https://scholar.google.com/scholar?q=Gonska,+Heiner,+Paula+Piƫul,+and+Ioan+Raşa.+On+differences+of+positive+linear+operators) Carpathian Journal of Mathematics (2006): 65-78.
+[^7]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On Differences of Positive Linear Operators." _Carpathian Journal of Mathematics_ 22, no. 1/2 (2006): 65–78. [http://www.jstor.org/stable/43998909](http://www.jstor.org/stable/43998909)
 
-[^8]: [**Skorski, Maciej. "Handy formulas for binomial moments."**](https://scholar.google.com/scholar?q=Skorski,+Maciej.+Handy+formulas+for+binomial+moments) _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41.
+[^8]: Skorski, Maciej. "Handy formulas for binomial moments." _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41. [https://doi.org/10.15559/24-VMSTA260](https://doi.org/10.15559/24-VMSTA260)
 
 [^9]: It is also possible to bound the "absolute moment" as $M_{n,r}(p)\le C(r)(\max(1/n, (p(1-p)/n)^{1/2})^r$ or $M_{n,r}(p)\le D(r)(1/n + (p(1-p)/n)^{1/2})^r$ (Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)), but the constants $C(r)$ and $D(r)$ seem to be higher (and less favorable) than the $E(r)$ in $M_{n,r}(p)\le E(r)/n^{r/2}$.
 
@@ -791,11 +791,11 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^11]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658. [**https://doi.org/10.1016/j.jat.2021.105658**](https://doi.org/10.1016/j.jat.2021.105658)
 
-[^12]: [**Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation"**](https://scholar.google.com/scholar?q=Cheng,+F.,+On+the+rate+of+convergence+of+Bernstein+polynomials+of+functions+of+bounded+variation), Journal of Approximation Theory 39 (1983).
+[^12]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983). [https://doi.org/10.1016/0021-9045%2883%2990098-9](https://doi.org/10.1016/0021-9045%2883%2990098-9) [https://www.sciencedirect.com/science/article/pii/0021904583900989](https://www.sciencedirect.com/science/article/pii/0021904583900989)
 
 [^13]: Weisstein, Eric W. "Schwarz's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/SchwarzsInequality.html**](https://mathworld.wolfram.com/SchwarzsInequality.html)
 
-[^14]: [**R. Bojanić, O. Shisha, "Degree of $L^1$ approximation to integrable functions by modified Bernstein polynomials"**](https://scholar.google.com/scholar?q=R.+Bojanić,+O.+Shisha,+Degree+of+L1+approximation+to+integrable+functions+by+modified+Bernstein+polynomials), Journal of Approximation Theory 13, 66–72 (1975).
+[^14]: R. Bojanić, O. Shisha, "Degree of $L^1$ approximation to integrable functions by modified Bernstein polynomials", Journal of Approximation Theory 13, 66–72 (1975). [https://doi.org/10.1016/0021-9045%2875%2990015-5](https://doi.org/10.1016/0021-9045%2875%2990015-5) [https://www.sciencedirect.com/science/article/pii/0021904575900155](https://www.sciencedirect.com/science/article/pii/0021904575900155)
 
 [^15]: [**Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators"**](https://scholar.google.com/scholar?q=Piţul,+P.,+Evaluation+of+the+Approximation+Order+by+Positive+Linear+Operators), dissertation, Universität Duisberg-Essen, 2007.
 
@@ -809,7 +809,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^20]: [**Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants"**](https://scholar.google.com/scholar?q=Gonska,+H.H.,+Meier,+J.,+On+approximation+by+Bernstein-type+operators+best+constants), Studia Sci. Math. Hungar. 22, 1987.
 
-[^21]: [**Shisha, O., Mond. B, "The degree of convergence of linear positive operators"**](https://scholar.google.com/scholar?q=Shisha,+O.,+Mond.+B,+The+degree+of+convergence+of+linear+positive+operators), 1968.
+[^21]: O. Shisha, & B. Mond,  "The degree of convergence of sequences of linear positive operators", Proc. Natl. Acad. Sci. U.S.A. 60 (4) 1196-1200, [https://doi.org/10.1073/pnas.60.4.1196](https://doi.org/10.1073/pnas.60.4.1196) (1968).
 
 [^22]: [**R. G. Mamedov, "On the order of approximation of functions by linear positive operators."**](https://scholar.google.com/scholar?q=R.+G.+Mamedov,+On+the+order+of+approximation+of+functions+by+linear+positive+operators) (Russian.) Dokl. Akad. Nauk SSSR 128 (1959).
 
@@ -915,9 +915,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^73]: Ibrahimoglu, B.A. Lebesgue functions and Lebesgue constants in polynomial interpolation. J Inequal Appl 2016, 93 (2016). [**https://doi.org/10.1186/s13660-016-1030-3**](https://doi.org/10.1186/s13660-016-1030-3)
 
-[^74]: [**Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials."**](https://scholar.google.com/scholar?q=Schaeffer,+A.+C.,+and+R.+J.+Duffin.+On+some+inequalities+of+S.+Bernstein+and+W.+Markoff+for+derivatives+of+polynomials) Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
+[^74]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297. [https://doi.org/10.1090/S0002-9904-1938-06747-X](https://doi.org/10.1090/S0002-9904-1938-06747-X)
 
-[^75]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [https://doi.org/10.1007/978-3-0348-4131-3_19](https://doi.org/10.1007/978-3-0348-4131-3_19)
+[^75]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [**https://doi.org/10.1007/978-3-0348-4131-3_19**](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
 [^76]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 

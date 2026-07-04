@@ -383,7 +383,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^7]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [**https://doi.org/10.1145/2133390.2133396**](https://doi.org/10.1145/2133390.2133396)
 
-[^8]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [https://doi.org/10.1007/978-3-0348-4131-3_19](https://doi.org/10.1007/978-3-0348-4131-3_19)
+[^8]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [**https://doi.org/10.1007/978-3-0348-4131-3_19**](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
 [^9]: [**Temple, W.B., "Steltjes integral representation of convex functions"**](https://scholar.google.com/scholar?q=Temple,+W.B.,+Steltjes+integral+representation+of+convex+functions), 1954.
 
@@ -395,7 +395,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^13]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
-[^14]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384. [https://doi.org/10.1016/j.spa.2018.11.017](https://doi.org/10.1016/j.spa.2018.11.017)  [https://www.sciencedirect.com/science/article/pii/S0304414918306768](https://www.sciencedirect.com/science/article/pii/S0304414918306768)
+[^14]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384. [**https://doi.org/10.1016/j.spa.2018.11.017**](https://doi.org/10.1016/j.spa.2018.11.017)  [**https://www.sciencedirect.com/science/article/pii/S0304414918306768**](https://www.sciencedirect.com/science/article/pii/S0304414918306768)
 
 [^15]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
@@ -443,7 +443,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^37]: No note text yet.
 
-[^38]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [https://doi.org/10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830)
+[^38]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [**https://doi.org/10.1080/01621459.1963.10500830**](https://doi.org/10.1080/01621459.1963.10500830)
 
 [^39]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
 
@@ -489,7 +489,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^60]: [**Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines"**](https://scholar.google.com/scholar?q=Cobham,+A.,+On+the+Hartmanis-Stearns+problem+for+a+class+of+tag+machines), in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
 
-[^61]: Adamczewski, Boris, and Yann Bugeaud. “On the Complexity of Algebraic Numbers I. Expansions in Integer Bases.” Annals of Mathematics 165, no. 2 (2007): 547–65. [http://www.jstor.org/stable/20160035.](http://www.jstor.org/stable/20160035.)
+[^61]: Adamczewski, Boris, and Yann Bugeaud. “On the Complexity of Algebraic Numbers I. Expansions in Integer Bases.” Annals of Mathematics 165, no. 2 (2007): 547–65. [**http://www.jstor.org/stable/20160035.**](http://www.jstor.org/stable/20160035.)
 
 [^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683. [**https://doi.org/10.1080/00927872.2011.584337**](https://doi.org/10.1080/00927872.2011.584337)
 

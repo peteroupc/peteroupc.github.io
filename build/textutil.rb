@@ -187,6 +187,7 @@ def preparePandoc(markdown)
     notetext=notetext.gsub(/\s+\z/,"")
     noteurls=[]
     notetext=notetext.gsub(/\[(?!\**https)([^\]]+)\]\((https[^\)]+)\)([\(\:]?)/) {
+      next $& if $2.include?("scholar.google.com")
       noteurls.append("[#{$2}](#{$2})")
       next $1+($3||"")
     }
@@ -195,6 +196,7 @@ def preparePandoc(markdown)
     next "[^#{noteref}]: #{notetext}\n\n"
   }
   markdown=markdown.gsub(/\[(?!\**https)([^\]]+)\]\((https[^\)]+)\)([\(\:]?)/) {
+     next $& if $2.include?("scholar.google.com")
      ret="[#{$1}](#{$2})[^URL_"+footindex.to_s+"]"+(($3||"").length>0 ? "\\"+$3 : "")
      footnotes+="[^URL_"+footindex.to_s+"]: "+$2+"\n\n"
      footindex+=1

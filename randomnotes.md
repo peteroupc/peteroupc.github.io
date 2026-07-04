@@ -568,31 +568,31 @@ END METHOD
 
 [^1]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
-[^2]: Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.
+[^2]: [**Thomas, D., et al., "Gaussian Random Number Generators"**](https://scholar.google.com/scholar?q=Thomas,+D.,+et+al.,+Gaussian+Random+Number+Generators), _ACM Computing Surveys_ 39(4), 2007.
 
-[^3]: Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.
+[^3]: [**Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures"**](https://scholar.google.com/scholar?q=Malik,+J.S.,+Hemani,+A.,+Gaussian+random+number+generation+A+survey+on+hardware+architectures), _ACM Computing Surveys_ 49(3), 2016.
 
-[^4]: Du, Yusong, Baoying Fan, and Baodian Wei. "An improved exact sampling algorithm for the standard normal distribution." Computational Statistics (2021): 1-17, also arXiv:2008.03855 [cs.DS].
+[^4]: [**Du, Yusong, Baoying Fan, and Baodian Wei. "An improved exact sampling algorithm for the standard normal distribution."**](https://scholar.google.com/scholar?q=Du,+Yusong,+Baoying+Fan,+and+Baodian+Wei.+An+improved+exact+sampling+algorithm+for+the+standard+normal+distribution) Computational Statistics (2021): 1-17, also arXiv:2008.03855 [cs.DS].
 
-[^5]: Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+[^5]: [**Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time"**](https://scholar.google.com/scholar?q=Micciancio,+D.+and+Walter,+M.,+Gaussian+sampling+over+the+integers+Efficient,+generic,+constant-time), in Annual International Cryptology Conference, August 2017 (pp. 455-485).
 
-[^6]: Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.
+[^6]: [**Kabal, P., "Generating Gaussian Pseudo-Random Variates"**](https://scholar.google.com/scholar?q=Kabal,+P.,+Generating+Gaussian+Pseudo-Random+Variates), McGill University, 2000/2019.
 
 [^7]: Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).
 
-[^8]: Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.
+[^8]: [**Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation"**](https://scholar.google.com/scholar?q=Luu,+T.,+Fast+and+Accurate+Parallel+Computation+of+Quantile+Functions+for+Random+Number+Generation), Dissertation, University College London, 2016.
 
-[^9]: Thistleton, W., Marsh, J., et al., "Generalized Box-Müller Method for Generating q-Gaussian Random Deviates", _IEEE Transactions on Information Theory_ 53(12), 2007.
+[^9]: [**Thistleton, W., Marsh, J., et al., "Generalized Box-Müller Method for Generating q-Gaussian Random Deviates"**](https://scholar.google.com/scholar?q=Thistleton,+W.,+Marsh,+J.,+et+al.,+Generalized+Box-Müller+Method+for+Generating+q-Gaussian+Random+Deviates), _IEEE Transactions on Information Theory_ 53(12), 2007.
 
-[^10]: Marsaglia, G., Tsang, W.W., "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.
+[^10]: [**Marsaglia, G., Tsang, W.W., "A simple method for generating gamma variables"**](https://scholar.google.com/scholar?q=Marsaglia,+G.,+Tsang,+W.W.,+A+simple+method+for+generating+gamma+variables), _ACM Transactions on Mathematical Software_ 26(3), 2000.
 
 [^11]: Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.
 
-[^12]: A. Stuart, "Gamma-distributed products of independent random variables", _Biometrika_ 49, 1962.
+[^12]: [**A. Stuart, "Gamma-distributed products of independent random variables"**](https://scholar.google.com/scholar?q=A.+Stuart,+Gamma-distributed+products+of+independent+random+variables), _Biometrika_ 49, 1962.
 
 [^13]: Luengo, E.A., "[**Gamma Pseudo Random Number Generators**](https://dl.acm.org/doi/abs/10.1145/3527157)", _ACM Computing Surveys_, 2022.
 
-[^14]: Bini, B., Buttazzo, G.C., "Measuring the Performance of Schedulability Tests", _Real-Time Systems_ 30, 129-154 (2005)
+[^14]: [**Bini, B., Buttazzo, G.C., "Measuring the Performance of Schedulability Tests"**](https://scholar.google.com/scholar?q=Bini,+B.,+Buttazzo,+G.C.,+Measuring+the+Performance+of+Schedulability+Tests), _Real-Time Systems_ 30, 129-154 (2005)
 
 [^15]: Mai, J., Craig, J.R., Tolson, B.A., "[**The pie-sharing problem: Unbiased sampling of N+1 summative weights**](https://www.sciencedirect.com/science/article/pii/S1364815221003248)", _Environmental Modelling & Software_ 148, February 2022.
 
@@ -600,31 +600,31 @@ END METHOD
 
 [^17]: Tomasz J. Kozubowski, "[**Computer simulation of geometric stable distributions**](https://www.sciencedirect.com/science/article/pii/S0377042799003180)", _Journal of Computational and Applied Mathematics_ 116(2), pp. 221-229, 2000. [**https://doi.org/10.1016/S0377-0427(99)00318-0**](https://doi.org/10.1016/S0377-0427%2899%2900318-0)
 
-[^18]: Bladt, Martin. "Phase-type distributions for claim severity regression modeling." ASTIN Bulletin: The Journal of the IAA (2021): 1-32.
+[^18]: [**Bladt, Martin. "Phase-type distributions for claim severity regression modeling."**](https://scholar.google.com/scholar?q=Bladt,+Martin.+Phase-type+distributions+for+claim+severity+regression+modeling) ASTIN Bulletin: The Journal of the IAA (2021): 1-32.
 
 [^19]: Fang et al., Symmetric multivariate and related distributions, 1990.
 
-[^20]: Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.
+[^20]: [**Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix"**](https://scholar.google.com/scholar?q=Cario,+M.+C.,+B.+L.+Nelson,+Modeling+and+generating+random+vectors+with+arbitrary+marginal+distributions+and+correlation+matrix), 1997.
 
-[^21]: Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data", _Journal of Statistical Distributions and Applications_ 8:6, 2021.
+[^21]: [**Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data"**](https://scholar.google.com/scholar?q=Knudson,+A.D.,+Kozubowski,+T.J.,+et+al.,+A+flexible+multivariate+model+for+high-dimensional+correlated+count+data), _Journal of Statistical Distributions and Applications_ 8:6, 2021.
 
 [^22]: Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.
 
-[^23]: Albrecher, Hansjörg, Mogens Bladt, and Jorge Yslas. "Fitting inhomogeneous phase‐type distributions to data: the univariate and the multivariate case." Scandinavian Journal of Statistics 49, no. 1 (2022): 44-77.
+[^23]: [**Albrecher, Hansjörg, Mogens Bladt, and Jorge Yslas. "Fitting inhomogeneous phase‐type distributions to data: the univariate and the multivariate case."**](https://scholar.google.com/scholar?q=Albrecher,+Hansjörg,+Mogens+Bladt,+and+Jorge+Yslas.+Fitting+inhomogeneous+phasetype+distributions+to+data+the+univariate+and+the) Scandinavian Journal of Statistics 49, no. 1 (2022): 44-77.
 
-[^24]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+[^24]: [**Boehm, Hans-J. "Towards an API for the real numbers."**](https://scholar.google.com/scholar?q=Boehm,+Hans-J.+Towards+an+API+for+the+real+numbers) In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 
 [^25]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
 [^26]: Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.
 
-[^27]: Giammatteo, P., and Di Mascio, T., "Wilson-Hilferty-type approximation for Poisson Random Variable", Advances in Science, Technology and Engineering Systems Journal 5(2), 2020.
+[^27]: [**Giammatteo, P., and Di Mascio, T., "Wilson-Hilferty-type approximation for Poisson Random Variable"**](https://scholar.google.com/scholar?q=Giammatteo,+P.,+and+Di+Mascio,+T.,+Wilson-Hilferty-type+approximation+for+Poisson+Random+Variable), Advances in Science, Technology and Engineering Systems Journal 5(2), 2020.
 
-[^28]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^28]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
 [^29]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555)", arXiv:2001.04555 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
-[^30]: Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy." Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
+[^30]: [**Baccetti, Valentina, and Matt Visser. "Infinite Shannon entropy."**](https://scholar.google.com/scholar?q=Baccetti,+Valentina,+and+Matt+Visser.+Infinite+Shannon+entropy) Journal of Statistical Mechanics: Theory and Experiment 2013, no. 04 (2013): P04010, also in arXiv:1212.5630.
 
 <a id=Appendix></a>
 
