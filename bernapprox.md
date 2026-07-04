@@ -358,7 +358,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^3]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, $m-1$) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as $n$ factorial; in this document, (0!) = 1.
 
-[^4]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^4]: [**S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités"**](https://scholar.google.com/scholar?q=S.N.+Bernstein,+Démonstration+du+théorème+de+Weierstrass+fondée+sur+le+calcul+des+probabilités), Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
 [^5]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
 
@@ -368,39 +368,39 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^8]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
-[^9]: Butzer, P.L., "Linear combinations of Bernstein polynomials", Canadian Journal of Mathematics 15 (1953).
+[^9]: [**Butzer, P.L., "Linear combinations of Bernstein polynomials"**](https://scholar.google.com/scholar?q=Butzer,+P.L.,+Linear+combinations+of+Bernstein+polynomials), Canadian Journal of Mathematics 15 (1953).
 
 [^10]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
-[^11]: Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya." CR Acad. URSS, 86-92.
+[^11]: [**Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya."**](https://scholar.google.com/scholar?q=Bernstein,+S.+N.+1932.+Complément+a+larticle+de+E.+Voronovskaya) CR Acad. URSS, 86-92.
 
 [^12]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^13]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
+[^13]: [**G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials"**](https://scholar.google.com/scholar?q=G.G.+Lorentz,+Inequalities+and+saturation+classes+of+Bernstein+polynomials), 1963.
 
 [^14]: Qian et al. suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., & Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).
 
-[^15]: Schurer and Steutel, "On an inequality of Lorentz in the theory of Bernstein polynomials", 1975.
+[^15]: [**Schurer and Steutel, "On an inequality of Lorentz in the theory of Bernstein polynomials"**](https://scholar.google.com/scholar?q=Schurer+and+Steutel,+On+an+inequality+of+Lorentz+in+the+theory+of+Bernstein+polynomials), 1975.
 
-[^16]: Kac, M., "Une remarque sur les polynômes de M. S. Bernstein", Studia Math. 7, 1938.
+[^16]: [**Kac, M., "Une remarque sur les polynômes de M. S. Bernstein"**](https://scholar.google.com/scholar?q=Kac,+M.,+Une+remarque+sur+les+polynômes+de+M.+S.+Bernstein), Studia Math. 7, 1938.
 
-[^17]: Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", 1961.
+[^17]: [**Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen"**](https://scholar.google.com/scholar?q=Sikkema,+P.C.,+Der+Wert+einiger+Konstanten+in+der+Theorie+der+Approximation+mit+Bernstein-Polynomen), 1961.
 
-[^18]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
+[^18]: [**E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein"**](https://scholar.google.com/scholar?q=E.+Voronovskaya,+Détermination+de+la+forme+asymptotique+dapproximation+des+fonctions+par+les+polynômes+de+M.+Bernstein), 1932.
 
 [^19]: Kawamura, Akitoshi, Norbert Müller, Carsten Rösnick, and Martin Ziegler. "[**Computational benefit of smoothness: Parameterized bit-complexity of numerical operators on analytic functions and Gevrey’s hierarchy**](https://doi.org/10.1016/j.jco.2015.05.001)." Journal of Complexity 31, no. 5 (2015): 689-714.
 
-[^20]: M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles", 1918.
+[^20]: [**M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles"**](https://scholar.google.com/scholar?q=M.+Gevrey,+Sur+la+nature+analytique+des+solutions+des+équations+aux+dérivées+partielles), 1918.
 
-[^21]: Tsai, Yi-Feng, and Rida T. Farouki. "Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form." ACM Transactions on Mathematical Software (TOMS) 27.2 (2001): 267-296.
+[^21]: [**Tsai, Yi-Feng, and Rida T. Farouki. "Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form."**](https://scholar.google.com/scholar?q=Tsai,+Yi-Feng,+and+Rida+T.+Farouki.+Algorithm+812+BPOLY+An+object-oriented+library+of+numerical+algorithms+for+polynomials+in+Be) ACM Transactions on Mathematical Software (TOMS) 27.2 (2001): 267-296.
 
 [^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
 [^23]: Konečný, Michal, and Eike Neumann. "[**Implementing evaluation strategies for continuous real functions**](https://arxiv.org/abs/1910.04891)", arXiv:1910.04891 (2019).
 
-[^24]: Muñoz, César, and Anthony Narkawicz. "Formalization of Bernstein polynomials and applications to global optimization." Journal of Automated Reasoning 51, no. 2 (2013): 151-196.
+[^24]: [**Muñoz, César, and Anthony Narkawicz. "Formalization of Bernstein polynomials and applications to global optimization."**](https://scholar.google.com/scholar?q=Muñoz,+César,+and+Anthony+Narkawicz.+Formalization+of+Bernstein+polynomials+and+applications+to+global+optimization) Journal of Automated Reasoning 51, no. 2 (2013): 151-196.
 
-[^25]: Knoop, H-B., Pottinger, P., "Ein Satz vom Korovkin-Typ für $C^k$-Räume", Math. Zeitschrift 148 (1976).
+[^25]: [**Knoop, H-B., Pottinger, P., "Ein Satz vom Korovkin-Typ für $C^k$-Räume"**](https://scholar.google.com/scholar?q=Knoop,+H-B.,+Pottinger,+P.,+Ein+Satz+vom+Korovkin-Typ+für+Ck-Räume), Math. Zeitschrift 148 (1976).
 
 [^26]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
@@ -410,59 +410,57 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^29]: Borwein, P. B. (1979). Restricted uniform rational approximations (Doctoral dissertation, University of British Columbia).
 
-[^30]: Borwein, Peter B. "Approximations by rational functions with positive coefficients." Journal of Mathematical Analysis and Applications 74, no. 1 (1980): 144-151.
+[^30]: [**Borwein, Peter B. "Approximations by rational functions with positive coefficients."**](https://scholar.google.com/scholar?q=Borwein,+Peter+B.+Approximations+by+rational+functions+with+positive+coefficients) Journal of Mathematical Analysis and Applications 74, no. 1 (1980): 144-151.
 
-[^31]: Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant." Calcolo 59.1 (2022): 10.
+[^31]: [**Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant."**](https://scholar.google.com/scholar?q=Zhang,+Ren-Jiang,+and+Xing+Liu.+Rational+interpolation+operator+with+finite+Lebesgue+constant) Calcolo 59.1 (2022): 10.
 
 [^32]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor 100, 729–744 (2025). [**https://doi.org/10.1007/s11075-024-01933-6**](https://doi.org/10.1007/s11075-024-01933-6)
 
-[^33]: Farouki, Rida T. "Convergent inversion approximations for polynomials in Bernstein form." Computer Aided Geometric Design 17.2 (2000): 179-196.
+[^33]: [**Farouki, Rida T. "Convergent inversion approximations for polynomials in Bernstein form."**](https://scholar.google.com/scholar?q=Farouki,+Rida+T.+Convergent+inversion+approximations+for+polynomials+in+Bernstein+form) Computer Aided Geometric Design 17.2 (2000): 179-196.
 
 [^34]: Thus, Taylor polynomials won't work, for example.
 
 [^35]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^36]: Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991.
+[^36]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
 
 [^37]: Waldron, S., "[**Increasing the polynomial reproduction of a quasi-interpolation operator**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)", Journal of Approximation Theory 161 (2009).
 
-[^38]: Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications", _BIT_ 36 (1996).
+[^38]: [**Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications"**](https://scholar.google.com/scholar?q=Costabile,+F.,+Gualtieri,+M.I.,+Serra,+S.,+Asymptotic+expansion+and+extrapolation+for+Bernstein+polynomials+with+applications), _BIT_ 36 (1996).
 
 [^39]: Han, Xuli. "Multi-node higher order expansions of a function." Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
 [^40]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4)
 
-[^41]: Kirov, G.H., "A generalization of the Bernstein polynomials", _Mathematica Balkanica_ (New Series), 6 (1992), no. 2, 147–153.
+[^41]: [**Kirov, G.H., "A generalization of the Bernstein polynomials"**](https://scholar.google.com/scholar?q=Kirov,+G.H.,+A+generalization+of+the+Bernstein+polynomials), _Mathematica Balkanica_ (New Series), 6 (1992), no. 2, 147–153.
 
-[^42]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval." European Journal of Combinatorics 32, no. 3 (2011): 448-463.
+[^42]: [**Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval."**](https://scholar.google.com/scholar?q=Qian,+Weikang,+Marc+D.+Riedel,+and+Ivo+Rosenberg.+Uniform+approximation+and+Bernstein+polynomials+with+coefficients+in+the+unit+) European Journal of Combinatorics 32, no. 3 (2011): 448-463.
 
-[^43]: Li, Zhongkai. "Bernstein polynomials and modulus of continuity." Journal of Approximation Theory 102, no. 1 (2000): 171-174.
+[^43]: [**Li, Zhongkai. "Bernstein polynomials and modulus of continuity."**](https://scholar.google.com/scholar?q=Li,+Zhongkai.+Bernstein+polynomials+and+modulus+of+continuity) Journal of Approximation Theory 102, no. 1 (2000): 171-174.
 
 [^44]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
 
-[^45]: May, C.P., "Saturation and inverse theorems for a class of exponential-type operators", Canadian Journal of Mathematics 28 (1976).
+[^45]: [**May, C.P., "Saturation and inverse theorems for a class of exponential-type operators"**](https://scholar.google.com/scholar?q=May,+C.P.,+Saturation+and+inverse+theorems+for+a+class+of+exponential-type+operators), Canadian Journal of Mathematics 28 (1976).
 
 [^46]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
 
-[^47]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." Results in Mathematics 66, no. 1 (2014): 21-41.
+[^47]: [**Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators."**](https://scholar.google.com/scholar?q=Draganov,+Borislav+R.+On+simultaneous+approximation+by+iterated+Boolean+sums+of+Bernstein+operators) Results in Mathematics 66, no. 1 (2014): 21-41.
 
-[^48]: Kacsó, D.P., "Simultaneous approximation by almost convex operators", 2002.
+[^48]: [**Kacsó, D.P., "Simultaneous approximation by almost convex operators"**](https://scholar.google.com/scholar?q=Kacsó,+D.P.,+Simultaneous+approximation+by+almost+convex+operators), 2002.
 
-[^49]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
+[^49]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
-[^50]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
+[^50]: _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 
-[^51]: _Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
+[^51]: G.H. Kirov ("A generalization of the Bernstein polynomials", _Mathematica Balkanica_ New Series, 6, 1992) defined, from a continuous function $f(\lambda)$, a sequence of polynomials in Bernstein form. Let $B_{n,r}$ be these polynomials.  The polynomials have $n+1$ Bernstein coefficients, and the $k$-th coefficient (starting at 0) is equal to the degree-$r$ Taylor polynomial of $f(\lambda)$ centered at $k/n$.  Thus, the coefficient is $\sum_{i=0}^r f^{(i)}(k/n)\cdot(\lambda-k/n)^i/(i!)$.  O. Agratini ("On a Class of Linear Approximating Operators", _Mathematica Balkanica_ New Series, 11, 1997) generalized this construction.  But the disadvantage is that $\lambda$ has to be known to calculate the Bernstein coefficients, which doesn't suit the original purpose of this article.<br>The following can be shown: _Let $r$ be a positive integer, and let $f(\lambda)$ have a Hölder-continuous $r$-th derivative on the closed unit interval, with Hölder exponent $\alpha$ and Hölder constant $H$ or less.  Then, for every $n\ge 1$, the following error bound applies, where_ $\mu_{n,r}$ _is as in Proposition 1 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)":_<br>$\text{abs}(B_{n,r}(f)(\lambda)-f(\lambda))$ $\le \frac{\mu_{n,2r}^{1/2}(n^{1/2}+r+1)}{((r+1)!)n^{r/2}}$ $\omega_1(f^{(r)},1/n^{1/2})$ $\le ((\mu_{n,2r}^{1/2}(n^{1/2}+3))/(6n))$ $\cdot H\cdot 1/n^{\alpha/2}$.<br>See section 4 of Agratini's paper (after correcting "$B_n$" to $L_{nr}$ in the formulas there); the constant $A$ in that section can be taken as $\mu_{n,2r}$.
 
-[^52]: G.H. Kirov ("A generalization of the Bernstein polynomials", _Mathematica Balkanica_ New Series, 6, 1992) defined, from a continuous function $f(\lambda)$, a sequence of polynomials in Bernstein form. Let $B_{n,r}$ be these polynomials.  The polynomials have $n+1$ Bernstein coefficients, and the $k$-th coefficient (starting at 0) is equal to the degree-$r$ Taylor polynomial of $f(\lambda)$ centered at $k/n$.  Thus, the coefficient is $\sum_{i=0}^r f^{(i)}(k/n)\cdot(\lambda-k/n)^i/(i!)$.  O. Agratini ("On a Class of Linear Approximating Operators", _Mathematica Balkanica_ New Series, 11, 1997) generalized this construction.  But the disadvantage is that $\lambda$ has to be known to calculate the Bernstein coefficients, which doesn't suit the original purpose of this article.<br>The following can be shown: _Let $r$ be a positive integer, and let $f(\lambda)$ have a Hölder-continuous $r$-th derivative on the closed unit interval, with Hölder exponent $\alpha$ and Hölder constant $H$ or less.  Then, for every $n\ge 1$, the following error bound applies, where_ $\mu_{n,r}$ _is as in Proposition 1 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)":_<br>$\text{abs}(B_{n,r}(f)(\lambda)-f(\lambda))$ $\le \frac{\mu_{n,2r}^{1/2}(n^{1/2}+r+1)}{((r+1)!)n^{r/2}}$ $\omega_1(f^{(r)},1/n^{1/2})$ $\le ((\mu_{n,2r}^{1/2}(n^{1/2}+3))/(6n))$ $\cdot H\cdot 1/n^{\alpha/2}$.<br>See section 4 of Agratini's paper (after correcting "$B_n$" to $L_{nr}$ in the formulas there); the constant $A$ in that section can be taken as $\mu_{n,2r}$.
+[^52]: H. Wang, "[**Analysis of error localization of Chebyshev spectral approximations**](https://arxiv.org/abs/2106.03456v3)", arXiv:2106.03456v3 [math.NA], 2023.
 
-[^53]: H. Wang, "[**Analysis of error localization of Chebyshev spectral approximations**](https://arxiv.org/abs/2106.03456v3)", arXiv:2106.03456v3 [math.NA], 2023.
+[^53]: Trefethen, L.N., [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
 
-[^54]: Trefethen, L.N., [**_Approximation Theory and Approximation Practice_**](https://www.chebfun.org/ATAP/), 2013.
+[^54]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
-[^55]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
-
-[^56]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+[^55]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
 
 <a id=Appendix></a>
 
@@ -600,7 +598,7 @@ $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+
 
 $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
 
-where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Sevy (1991)[^49] and Gonska (1985)[^59]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
+where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Sevy (1991)[^36] and Gonska (1985)[^59]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
 
 $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right) \tag{**}$$
 
@@ -608,7 +606,7 @@ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2
 
 &#x25a1;
 
-The following error bounds follow from results of Sevy (1991)[^49], especially theorems 3.1 and 3.7 there:
+The following error bounds follow from results of Sevy (1991)[^36], especially theorems 3.1 and 3.7 there:
 
 | If _f_(_&lambda;_) on the closed unit interval: |  Then the following polynomial: |  Is close to _f_ with the following error bound: |
  --- | - | --- |
@@ -617,13 +615,13 @@ The following error bounds follow from results of Sevy (1991)[^49], especially t
 | Has continuous fourth derivative. | $U_{n,2}.$ | $\frac{195 M_{2}}{32 n^{2}}$ + $\frac{45 M_{2}}{8 n^{\frac{5}{2}}}$ + $\frac{377 M_{4}}{128 n^{2}}$ + $\frac{9 M_{4}}{8 n^{3}}$ + $\frac{63 M_{4}}{16 n^{\frac{5}{2}}}$. |
 | Has continuous sixth derivative. | $U_{n,3}.$ | $\frac{8775 M_{2}}{32 n^{3}}$ + $\frac{2025 M_{2}}{8 n^{\frac{7}{2}}}$ + $\frac{21489 M_{4}}{128 n^{3}}$ + $\frac{513 M_{4}}{8 n^{4}}$ + $\frac{3591 M_{4}}{16 n^{\frac{7}{2}}}$ + $\frac{16965 M_{6}}{512 n^{3}}$ + $\frac{783 M_{6}}{32 n^{4}}$ + $\frac{6801 M_{6}}{128 n^{\frac{7}{2}}}$ + $\frac{27 M_{6}}{8 n^{\frac{9}{2}}}$. |
 
-Han's (2000)[^50] so-called "multi-node expansions" transform certain operations that preserve all polynomials of degree up to $m$ to those that do so up to $m+r$.  For the Bernstein polynomials, this expansion is $H_{n,r}(\lambda)=B_n(f)(\lambda) + \sum_{j=1}^{r} \frac{r+1-j}{(r+1)(j!)}B_n((\lambda-t)^j f^{(j)}(t))(\lambda)$, where $t$ is a variable that is sampled to form the Bernstein polynomial within the sum.[^51]  In this case, the expansion is a polynomial of degree $n+r$ and preserves all polynomials of degree up to $r+1$.  Using Theorem 3 of Han's paper for the Bernstein case of $H_{n,r}$ gives...
+Han's (2000)[^49] so-called "multi-node expansions" transform certain operations that preserve all polynomials of degree up to $m$ to those that do so up to $m+r$.  For the Bernstein polynomials, this expansion is $H_{n,r}(\lambda)=B_n(f)(\lambda) + \sum_{j=1}^{r} \frac{r+1-j}{(r+1)(j!)}B_n((\lambda-t)^j f^{(j)}(t))(\lambda)$, where $t$ is a variable that is sampled to form the Bernstein polynomial within the sum.[^50]  In this case, the expansion is a polynomial of degree $n+r$ and preserves all polynomials of degree up to $r+1$.  Using Theorem 3 of Han's paper for the Bernstein case of $H_{n,r}$ gives...
 
 **Proposition B12**: Let $f(\lambda)$ have a continuous $r$-th derivative on the closed unit interval, where $r\ge 3$ is an integer.  Then, for every $n\ge 1$, $H_{n,r-2}$ is within $\frac{(r-2)!}{((r-1)!)\cdot(r!)} M_r \mu_{n,r}/n^{r/2}$ of $f$, where $\mu_{n,r}$ is as in Proposition 1 of "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)".
 
 > **Note:** $\mu_{n,r}/n^{r/2}$ is an upper bound on the $r$-th central absolute moment of $X/n$, where $X$ is the number of heads shown, after $n$ independent tosses, by a coin with probability $\lambda$ of showing heads.  In the special case $n=1$ and $r=4$, Han proved the error bound $M_4/864$ relying on a tight bound on this moment.
 
-Another polynomial construction is given by Kirov.[^52]
+Another polynomial construction is given by Kirov.[^51]
 
 <a id=Chebyshev_Interpolants></a>
 
@@ -632,7 +630,7 @@ Another polynomial construction is given by Kirov.[^52]
 The following is a method that employs _Chebyshev interpolants_ to compute the Bernstein coefficients of a polynomial that comes within $\epsilon$ of $f(\lambda)$, as long as $f$ meets certain conditions.  Because the method introduces a trigonometric function (the cosine function), it appears here in the appendix and it runs too slowly for real-time or "online" use; rather, this method is more suitable for pregenerating ("offline") the approximate version of a function known in advance.
 
 - $f$ must be continuous on the interval $[a, b]$ and must have an $r$-th derivative of _bounded variation_, as described later.
-- Suppose $f$'s domain is the interval $[a, b]$.  Then the _Chebyshev interpolant_ of degree $n$ of $f$ (Wang 2023)[^53], (Trefethen 2013)[^54] is&mdash;
+- Suppose $f$'s domain is the interval $[a, b]$.  Then the _Chebyshev interpolant_ of degree $n$ of $f$ (Wang 2023)[^52], (Trefethen 2013)[^53] is&mdash;
 
     $$p(\lambda)=\sum_{k=0}^n c_k T_k(2\frac{\lambda-a}{b-a}-1),$$
 
@@ -642,17 +640,17 @@ The following is a method that employs _Chebyshev interpolants_ to compute the B
     - $\gamma(j,n) = a+(b-a)(\cos(j\pi/n)+1)/2$,
     - $\sigma(k,n)$ is 1/2 if $k$ is 0 or $n$, and 1 otherwise, and
     - $T_k(x)$ is the $k$-th [**Chebyshev polynomial of the first kind**](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html) (`chebyshevt(k,x)` in the SymPy computer algebra library).
-- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^54] as well as a statement in note 1 at the end of this section.
+- Let $r\ge 1$ and $n\gt r$ be integers. If $f$ is defined on the interval $[a, b]$, has a Lipschitz-continuous $(r-1)$-th derivative, and has an $r$-th derivative of _bounded variation_, then the degree-$n$ Chebyshev interpolant of $f$ is within $\left(\frac{(b-a)}{2}\right)^r\frac{4V}{\pi r(n-r)^r}$ of $f$, where $V$ is the $r$-th derivative's _total variation_ or greater.  This relies on a theorem in chapter 7 of Trefethen (2013)[^53] as well as a statement in note 1 at the end of this section.
     - If the $r$-th derivative is nowhere decreasing or nowhere increasing on the interval $[a, b]$, then $V$ can equal abs($f(b)-f(a)$).
-    - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^55].
+    - If the $r$-th derivative is Lipschitz continuous with Lipschitz constant $M$ or less, then $V$ can equal $M\cdot(b-a)$ (Kannan and Kreuger 1996)[^54].
     - The required degree is thus $n=\text{ceil}(r+\frac{(b-a)}{2}(4V/(\pi r\epsilon))^{1/r})$ &le; $\text{ceil}(r+\frac{(b-a)}{2}(1.2733 V/(r\epsilon))^{1/r})$, where $\epsilon>0$ is the desired error tolerance.
-- If $f$ is so "smooth" to be _analytic_ (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^54].
+- If $f$ is so "smooth" to be _analytic_ (see note 4 below) at every point in the interval $[a, b]$, a better error bound is possible, but describing it requires ideas from complex analysis that are too advanced for this article.  See chapter 8 of Trefethen (2013)[^53].
 
 -------------
 
 1. Compute the required degree $n$ as given earlier, with error tolerance $\epsilon/2$.
 2. Compute the values $c_k$ as given earlier, which relate to $f$'s Chebyshev interpolant of degree $n$.  There will be $n$ plus one of these values, labeled $c_0, ..., c_n$.
-3. Compute the (_n_+1)&times;(_n_+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^56].
+3. Compute the (_n_+1)&times;(_n_+1) matrix $M$ described in Theorem 1 of Rababah (2003)[^55].
 4. Multiply the matrix by the transposed vector of values $(c_0, ..., c_n)$ to get the polynomial's Bernstein coefficients $b_0, ..., b_n$.  (Transposing means turning columns to rows and vice versa.)
 5. (Rounding.) For each $i$, replace the Bernstein coefficient $b_i$ with $\text{floor}(b_i / (\epsilon/2) + 1/2) \cdot (\epsilon/2)$.
 6. Return the Bernstein coefficients $b_0, ..., b_n$.

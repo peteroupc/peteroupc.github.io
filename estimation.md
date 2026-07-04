@@ -384,7 +384,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli random variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
 
-[^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
+[^5]: [**Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables."**](https://scholar.google.com/scholar?q=Huber,+Mark,+and+Bo+Jones.+Faster+estimates+of+the+mean+of+bounded+random+variables) Mathematics and Computers in Simulation 161 (2019): 93-101.
 
 [^6]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
 
@@ -398,13 +398,13 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^11]: Lee, J.C. and Valiant, P., 2022. [**Optimal Sub-Gaussian Mean Estimation in Very High Dimensions**](https://drops.dagstuhl.de/opus/volltexte/2022/15694/). In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.
 
-[^12]: Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions." Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
+[^12]: [**Dutta, Santanu, and Alok Goswami. "Mode estimation for discrete distributions."**](https://scholar.google.com/scholar?q=Dutta,+Santanu,+and+Alok+Goswami.+Mode+estimation+for+discrete+distributions) Mathematical Methods of Statistics 19, no. 4 (2010): 374-384.
 
 [^13]: A _Lipschitz continuous_ function with Lipschitz constant _M_ is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_ apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_.
 
 [^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
 
-[^15]: Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters." Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.
+[^15]: [**Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters."**](https://scholar.google.com/scholar?q=Chen,+Xinjia.+Exact+computation+of+minimum+sample+size+for+estimation+of+binomial+parameters) Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.
 
 [^16]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
@@ -414,13 +414,13 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^19]: Deterministic (nonrandom) algorithms for integration or for finding the minimum or maximum value of a function are outside the scope of this article.  But there are recent exciting developments in this field &mdash; see the following works and works that cite them:<br>Y. Zhang, "Guaranteed, adaptive, automatic algorithms for univariate integration: methods, costs and implementations", dissertation, Illinois Institute of Technology, 2018.<br>N. Clancy, Y. Ding, et al., The cost of deterministic, adaptive, automatic algorithms: cones, not balls. Journal of Complexity, 30(1):21–45, 2014.<br>Mishchenko, Konstantin. "[**Regularized Newton Method with Global $ O (1/k^2) $ Convergence**](https://arxiv.org/abs/2112.02089)", arXiv:2112.02089 (2021).<br>Doikov, Nikita, K. Mishchenko, and Y. Nesterov. "[**Super-universal regularized Newton method**](https://arxiv.org/abs/2208.05888)", arXiv:2208.05888 (2022).
 
-[^20]: J.A. Tropp, "ACM 217: Probability in High Dimensions", Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
+[^20]: [**J.A. Tropp, "ACM 217: Probability in High Dimensions"**](https://scholar.google.com/scholar?q=J.A.+Tropp,+ACM+217+Probability+in+High+Dimensions), Caltech CMS Lecture Notes 2021-01, Pasadena, March 2021. Corrected March 2023.
 
 [^21]: Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.
 
 [^22]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
-[^23]: Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).
+[^23]: [**Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons"**](https://scholar.google.com/scholar?q=Agarwal,+A.,+Agarwal,+S.,+et+al.,+Learning+with+Limited+Rounds+of+Adaptivity+Coin+Tossing,+Multi-Armed+Bandits,+and+Ranking+from), _Proceedings of Machine Learning Research_ 65 (2017).
 
 <a id=License></a>
 

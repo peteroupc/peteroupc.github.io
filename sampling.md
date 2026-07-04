@@ -98,15 +98,15 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 ## Notes
 
-[^1]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^1]: No note text yet.
 
 [^2]: Duvignau, R., "Maintenance et simulation de graphes aléatoires dynamiques", Doctoral dissertation, Université de Bordeaux, 2015. [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 
 [^3]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^4]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
+[^4]: [**AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling"**](https://scholar.google.com/scholar?q=AKAHIRA,+Masafumi,+Kei+TAKEUCHI,+and+Ken-ichi+KOIKE.+Unbiased+estimation+in+sequential+binomial+sampling),  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
-[^5]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists for a more general class of `InDist` distributions than the Bernoulli distribution, as long as there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
+[^5]: [**Singh (1964, "Existence of unbiased estimates"**](https://scholar.google.com/scholar?q=Singh+1964,+Existence+of+unbiased+estimates), Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists for a more general class of `InDist` distributions than the Bernoulli distribution, as long as there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 [^6]: An algorithm that takes a finite number of inputs with probability 1 is also known as a _closed sampling plan_ in papers and books about sequential estimation.
 
@@ -122,23 +122,23 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^12]: Paninski, Liam. “Estimation of Entropy and Mutual Information.” Neural Computation 15 (2003): 1191-1253.
 
-[^13]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964.
+[^13]: [**R. Singh, "Existence of unbiased estimates"**](https://scholar.google.com/scholar?q=R.+Singh,+Existence+of+unbiased+estimates), Sankhyā A 26, 1964.
 
 [^14]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken.
 
-[^15]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
+[^15]: [**Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory"**](https://scholar.google.com/scholar?q=Keane,+M.+S.,+and+OBrien,+G.+L.,+A+Bernoulli+factory), _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.
 
 [^16]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^17]: Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems", Annals of Statistics 21(1), 1993.
+[^17]: [**Liu., R.C., Brown, L.D., "Nonexistence of informative unbiased estimators in singular problems"**](https://scholar.google.com/scholar?q=Liu.,+R.C.,+Brown,+L.D.,+Nonexistence+of+informative+unbiased+estimators+in+singular+problems), Annals of Statistics 21(1), 1993.
 
-[^18]: Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals." Econometrica 80, no. 4 (2012): 1769-1790.
+[^18]: [**Hirano, Keisuke, and Jack R. Porter. "Impossibility results for nondifferentiable functionals."**](https://scholar.google.com/scholar?q=Hirano,+Keisuke,+and+Jack+R.+Porter.+Impossibility+results+for+nondifferentiable+functionals) Econometrica 80, no. 4 (2012): 1769-1790.
 
 [^19]: P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [**https://doi.org/10.1214/aoms/1177697370**](https://doi.org/10.1214/aoms/1177697370)
 
 [^20]: Gajek, L. (1995). Note on unbiased estimability of the larger of two mean values. Applicationes Mathematicae, 23(2), 239-245.
 
-[^21]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22, no. 4 (1995): 485-497.
+[^21]: [**Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function."**](https://scholar.google.com/scholar?q=Rychlik,+Tomasz.+A+class+of+unbiased+kernel+estimates+of+a+probability+density+function) Applicationes Mathematicae 22, no. 4 (1995): 485-497.
 
 [^22]: Duncan, G. M. (2004). Unbiased Simulators for Analytic Functions and Maximum Unbiased Simulated Likelihood Estimation. Available at SSRN 692921
 

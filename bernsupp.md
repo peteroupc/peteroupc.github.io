@@ -383,25 +383,25 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^7]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [**https://doi.org/10.1145/2133390.2133396**](https://doi.org/10.1145/2133390.2133396)
 
-[^8]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
+[^8]: [**G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials"**](https://scholar.google.com/scholar?q=G.G.+Lorentz,+Inequalities+and+saturation+classes+of+Bernstein+polynomials), 1963.
 
-[^9]: Temple, W.B., "Steltjes integral representation of convex functions", 1954.
+[^9]: [**Temple, W.B., "Steltjes integral representation of convex functions"**](https://scholar.google.com/scholar?q=Temple,+W.B.,+Steltjes+integral+representation+of+convex+functions), 1954.
 
-[^10]: Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue", 1962.
+[^10]: [**Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue"**](https://scholar.google.com/scholar?q=Moldovan,+E.,+Observations+sur+la+suite+des+polynômes+de+S.+N.+Bernstein+dune+fonction+continue), 1962.
 
 [^11]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
-[^12]: Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).
+[^12]: [**Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes"**](https://scholar.google.com/scholar?q=Henderson,+S.G.,+Glynn,+P.W.,+Nonexistence+of+a+class+of+variate+generation+schemes), _Operations Research Letters_ 31 (2003).
 
 [^13]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
-[^14]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
+[^14]: [**Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series."**](https://scholar.google.com/scholar?q=Mendo,+Luis.+An+asymptotically+optimal+Bernoulli+factory+for+certain+functions+that+can+be+expressed+as+power+series) Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
 
 [^15]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
 [^16]: This function's second derivative's absolute value can be plotted using the SymPy library as follows: `plot(diff(Abs(exp(-x)),(x,2)),(x,0,1))`.  In this plot, the maximum is 1, the same as the first derivative's Lipschitz constant.
 
-[^17]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+[^17]: [**Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)"](https://scholar.google.com/scholar?q=Wästlund,+J.,+Functions+arising+by+coin+flippinghttpwww.math.chalmers.sewastlundcoinFlip.pdf), 1999.
 
 [^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative.  See, for example, Erdélyi, T., and J. Szabados. "On polynomials with positive coefficients." Journal of Approximation Theory 54.1 (1988): 107-122.
 
@@ -411,7 +411,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^21]: Mok, H-N., To, W-K., "[**Effective Pólya semi-positivity for nonnegative polynomials on the simplex**](https://doi.org/10.1016/j.jco.2008.01.003)", _Journal of Complexity_ 24 (2008).
 
-[^22]: Leroy, Richard. "Certificats de positivité et minimisation polynomiale dans la base de Bernstein multivariée." PhD diss., Université Rennes 1, 2008
+[^22]: [**Leroy, Richard. "Certificats de positivité et minimisation polynomiale dans la base de Bernstein multivariée."**](https://scholar.google.com/scholar?q=Leroy,+Richard.+Certificats+de+positivité+et+minimisation+polynomiale+dans+la+base+de+Bernstein+multivariée) PhD diss., Université Rennes 1, 2008
 
 [^23]: Chok, James, and Geoffrey Vasil. "Rational function approximation with normalized positive denominators." SIAM Journal on Scientific Computing 47.5 (2025): A2699-A2721. [**https://doi.org/10.1137/24M1632139**](https://doi.org/10.1137/24M1632139)
 
@@ -433,7 +433,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^32]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.
 
-[^33]: Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients", 1931.
+[^33]: [**Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients"**](https://scholar.google.com/scholar?q=Kantorovich,+L.V.,+Some+remarks+on+the+approximation+of+functions+by+means+of+polynomials+with+integer+coefficients), 1931.
 
 [^34]: When $r$ is 1 or 2, this case includes cases where $W_n$ equals $f$ at $0, 1/n, ..., n/n$ and converges uniformly to $f$.  One example is where $W_n$ is the Lagrange interpolating polynomial of degree $n$; given that $r$ is 1 or 2, $f$ is continuous and of bounded variation, so that $W_n$ converges uniformly to $f$ by a result of P. Vértesi, "[**Lagrange interpolation for continuous functions of bounded variation**](https://doi.org/10.1007/BF01896819)", _Acta Mathematica Hungarica_ 35(1), 1980. Another example is where $W_n$ is a rational interpolation described in Zhang and Liu, “Rational interpolation operator with finite Lebesgue constant.” _Calcolo_ 59.1 (2022).
 
@@ -441,9 +441,9 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^36]: Johnson, N.L., Kemp, A.W., Kotz, S., _Univariate Discrete Distributions, Third Edition_, Wiley, 2005.
 
-[^37]: Vatutin, V.A., Mikhaĭlov, V.G., "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles", Theory Probab. Appl. 27 (1982).
+[^37]: [**Vatutin, V.A., Mikhaĭlov, V.G., "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles"**](https://scholar.google.com/scholar?q=Vatutin,+V.A.,+Mikhaĭlov,+V.G.,+Limit+theorems+for+the+number+of+empty+cells+in+an+equiprobable+scheme+for+group+allocation+of+p), Theory Probab. Appl. 27 (1982).
 
-[^38]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963).
+[^38]: [**Hoeffding, W., "Probability inequalities for sums of bounded random variables"**](https://scholar.google.com/scholar?q=Hoeffding,+W.,+Probability+inequalities+for+sums+of+bounded+random+variables), Journal of the American Statistical Association 58 (1963).
 
 [^39]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
 
@@ -453,11 +453,11 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^42]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [**https://doi.org/10.1145/175007.175019**](https://doi.org/10.1145/175007.175019)
 
-[^43]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
+[^43]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
 
 [^44]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
 
-[^45]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^45]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
 [^46]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [**https://doi.org/10.1007/s00493-005-0043-1**](https://doi.org/10.1007/s00493-005-0043-1)
 
@@ -465,11 +465,11 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^48]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
 
-[^49]: Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308.
+[^49]: [**Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy"**](https://scholar.google.com/scholar?q=Icard,+Thomas+F.,+Calibrating+generative+models+The+probabilistic+ChomskySchützenberger+hierarchy), _Journal of Mathematical Psychology_ 95 (2020): 102308.
 
-[^50]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
+[^50]: [**Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design."**](https://scholar.google.com/scholar?q=Dughmi,+Shaddin,+Jason+Hartline,+Robert+D.+Kleinberg,+and+Rad+Niazadeh.+Bernoulli+Factories+and+Black-box+Reductions+in+Mechanis) Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
 
-[^51]: Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009.
+[^51]: [**Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations"**](https://scholar.google.com/scholar?q=Etessami,+K.+and+Yannakakis,+M.,+Recursive+Markov+chains,+stochastic+grammars,+and+monotone+systems+of+nonlinear+equations), _Journal of the ACM_ 56(1), pp.1-66, 2009.
 
 [^52]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010
 
@@ -477,9 +477,9 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^54]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In _Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science_, 2004. (pp. 12-21). IEEE.
 
-[^55]: Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. "Permutations generated by a depth 2 stack and an infinite stack in series are algebraic." _Electronic Journal of Combinatorics_ 22(1), 2015.
+[^55]: [**Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. "Permutations generated by a depth 2 stack and an infinite stack in series are algebraic."**](https://scholar.google.com/scholar?q=Elder,+Murray,+Geoffrey+Lee,+and+Andrew+Rechnitzer.+Permutations+generated+by+a+depth+2+stack+and+an+infinite+stack+in+series+ar) _Electronic Journal of Combinatorics_ 22(1), 2015.
 
-[^56]: Vatan, F., "Distribution functions of probabilistic automata", in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.
+[^56]: [**Vatan, F., "Distribution functions of probabilistic automata"**](https://scholar.google.com/scholar?q=Vatan,+F.,+Distribution+functions+of+probabilistic+automata), in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.
 
 [^57]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.
 
@@ -487,9 +487,9 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^59]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
 
-[^60]: Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
+[^60]: [**Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines"**](https://scholar.google.com/scholar?q=Cobham,+A.,+On+the+Hartmanis-Stearns+problem+for+a+class+of+tag+machines), in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
 
-[^61]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
+[^61]: [**Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases"**](https://scholar.google.com/scholar?q=Adamczewski,+B.,+Bugeaud,+Y.,+On+the+complexity+of+algebraic+numbers+I.+Expansions+in+integer+bases), _Annals of Mathematics_ 165 (2007).
 
 [^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683. [**https://doi.org/10.1080/00927872.2011.584337**](https://doi.org/10.1080/00927872.2011.584337)
 

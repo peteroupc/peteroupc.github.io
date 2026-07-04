@@ -2444,7 +2444,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^3]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [**https://doi.org/10.1145/175007.175019**](https://doi.org/10.1145/175007.175019)
 
-[^4]: Basu, D., "Statistical information and likelihood", Sankhyā A 37 (1975).
+[^4]: [**Basu, D., "Statistical information and likelihood"**](https://scholar.google.com/scholar?q=Basu,+D.,+Statistical+information+and+likelihood), Sankhyā A 37 (1975).
 
 [^5]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  That's why the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function whose domain is \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0, 1, or both at a finite number of points in the domain (Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4).
 
@@ -2456,7 +2456,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^9]: Weikang Qian, Marc D. Riedel, Ivo Rosenberg, "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_ 32(3), 2011, [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004) [**http://www.sciencedirect.com/science/article/pii/S0195669810001666**](http://www.sciencedirect.com/science/article/pii/S0195669810001666)
 
-[^10]: Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
+[^10]: [**Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)"](https://scholar.google.com/scholar?q=Wästlund,+J.,+Functions+arising+by+coin+flippinghttpwww.math.chalmers.sewastlundcoinFlip.pdf), 1999.
 
 [^11]: Then _j_ is a _binomial_ random variate expressing the number of successes in _n_ trials that each succeed with probability _&lambda;_.
 
@@ -2476,15 +2476,15 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^19]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "[**From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains**](https://doi.org/10.1214/21-AAP1679)", Ann. Appl. Probab. 32 (1) 327 - 359, February 2022.
 
-[^20]: Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics", 1996.
+[^20]: [**Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics"**](https://scholar.google.com/scholar?q=Propp,+J.G.,+Wilson,+D.B.,+Exact+sampling+with+coupled+Markov+chains+and+applications+to+statistical+mechanics), 1996.
 
 [^21]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
 
-[^22]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
+[^22]: [**Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design."**](https://scholar.google.com/scholar?q=Dughmi,+Shaddin,+Jason+Hartline,+Robert+D.+Kleinberg,+and+Rad+Niazadeh.+Bernoulli+Factories+and+Black-box+Reductions+in+Mechanis) Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
 
-[^23]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^23]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^24]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
+[^24]: [**Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series."**](https://scholar.google.com/scholar?q=Mendo,+Luis.+An+asymptotically+optimal+Bernoulli+factory+for+certain+functions+that+can+be+expressed+as+power+series) Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
 
 [^25]: "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
 
@@ -2492,7 +2492,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^27]: "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
 
-[^28]: Flegal, J.M., Herbei, R., "Exact sampling from intractible probability distributions via a Bernoulli factory", _Electronic Journal of Statistics_ 6, 10-37, 2012.
+[^28]: [**Flegal, J.M., Herbei, R., "Exact sampling from intractible probability distributions via a Bernoulli factory"**](https://scholar.google.com/scholar?q=Flegal,+J.M.,+Herbei,+R.,+Exact+sampling+from+intractible+probability+distributions+via+a+Bernoulli+factory), _Electronic Journal of Statistics_ 6, 10-37, 2012.
 
 [^29]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
@@ -2502,21 +2502,21 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^32]: Note that `u * BASE`<sup>&minus;`k`</sup> is not just within `BASE`<sup>&minus;`k`</sup> of its "true" result, but also not more than that result.  Hence `pk + 1 <= u` rather than `pk + 2 <= u`.
 
-[^33]: Leighton, W., "Proper continued fractions", _Amer. Math. Monthly_ 47 (1940).
+[^33]: [**Leighton, W., "Proper continued fractions"**](https://scholar.google.com/scholar?q=Leighton,+W.,+Proper+continued+fractions), _Amer. Math. Monthly_ 47 (1940).
 
 [^34]: The "even-parity" construction (Flajolet et al. 2010) is so called because it involves flipping the input coin repeatedly until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise. However, the number of flips needed by this method grows without bound as $\lambda$ (the probability the input coin returns 1) approaches 1. See also the note for **Algorithm CC**.
 
-[^35]: Bill Gosper, "Continued Fraction Arithmetic", 1978.
+[^35]: [**Bill Gosper, "Continued Fraction Arithmetic"**](https://scholar.google.com/scholar?q=Bill+Gosper,+Continued+Fraction+Arithmetic), 1978.
 
 [^36]: Borwein, J. et al. “Continued Logarithms and Associated Continued Fractions.” _Experimental Mathematics_ 26 (2017): 412 - 429.
 
-[^37]: Penaud, J.G., Roques, O., "Tirage à pile ou face de mots de Fibonacci", _Discrete Mathematics_ 256, 2002.
+[^37]: [**Penaud, J.G., Roques, O., "Tirage à pile ou face de mots de Fibonacci"**](https://scholar.google.com/scholar?q=Penaud,+J.G.,+Roques,+O.,+Tirage+à+pile+ou+face+de+mots+de+Fibonacci), _Discrete Mathematics_ 256, 2002.
 
 [^38]: Mendo, L. (2024). Simulating a coin with irrational bias using rational arithmetic. Communications in Statistics-Simulation and Computation, 1-17. Also: "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020/2021.
 
 [^39]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
 
-[^40]: Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", Mediterranean Journal of Mathematics 13 (2016).
+[^40]: [**Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number"**](https://scholar.google.com/scholar?q=Citterio,+M.,+Pavani,+R.,+A+Fast+Computation+of+the+Best+k-Digit+Rational+Approximation+to+a+Real+Number), Mediterranean Journal of Mathematics 13 (2016).
 
 [^41]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that _f_'s slope, slope-of-slope, etc. functions can achieve.
 
@@ -2526,9 +2526,9 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^44]: Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.
 
-[^45]: Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli factories and black-box reductions in mechanism design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
+[^45]: [**Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli factories and black-box reductions in mechanism design."**](https://scholar.google.com/scholar?q=Dughmi,+Shaddin,+Jason+Hartline,+Robert+D.+Kleinberg,+and+Rad+Niazadeh.+Bernoulli+factories+and+black-box+reductions+in+mechanis) Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
 
-[^46]: Szász, O., "Generalization of S. Bernstein's Polynomials to the Infinite Interval", Journal of Research of the National Bureau of Standards 45 (1950).
+[^46]: [**Szász, O., "Generalization of S. Bernstein's Polynomials to the Infinite Interval"**](https://scholar.google.com/scholar?q=Szász,+O.,+Generalization+of+S.+Bernsteins+Polynomials+to+the+Infinite+Interval), Journal of Research of the National Bureau of Standards 45 (1950).
 
 [^47]: However, the number of flips needed by this method will then grow without bound as $\lambda$ approaches 1.  Also, this article avoids calling the value _X_ produced this way a "geometric" random variate.  Indeed, there is no single way to give the probabilities of a "geometric" random variate; different academic works define the variate differently.
 
@@ -2538,7 +2538,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^50]: The [**appendix to the supplemental notes**](https://peteroupc.github.io/bernsupp.html#Pushdown_Automata_and_Algebraic_Functions) defines pushdown automata in more detail and has proofs on which algebraic functions are possible with these conceptual machines.
 
-[^51]: Flajolet, Ph., "Analytic models and ambiguity of context-free languages", _Theoretical Computer Science_ 49, pp. 283-309, 1987
+[^51]: [**Flajolet, Ph., "Analytic models and ambiguity of context-free languages"**](https://scholar.google.com/scholar?q=Flajolet,+Ph.,+Analytic+models+and+ambiguity+of+context-free+languages), _Theoretical Computer Science_ 49, pp. 283-309, 1987
 
 [^52]: Flajolet, P. and Sedgewick, R., _Analytic Combinatorics_, 2009.
 
@@ -2558,7 +2558,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^60]: Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.
 
-[^61]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors", _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]).
+[^61]: [**Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors"**](https://scholar.google.com/scholar?q=Vats,+D.,+Gonçalves,+F.+B.,+Łatuszyński,+K.+G.,+Roberts,+G.+O.,+Efficient+Bernoulli+factory+Markov+chain+Monte+Carlo+for+intract), _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]).
 
 [^62]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
@@ -2566,9 +2566,9 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^64]: There is another algorithm for tanh(_z_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _z_ &le; 1 and if _z_ is the probability of heads of an input coin.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate either 1 or 0 with equal probability, then if 1 was generated this way, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
-[^65]: Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.
+[^65]: [**Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing"**](https://scholar.google.com/scholar?q=Dale,+H.,+Jennings,+D.+and+Rudolph,+T.,+2015,+Provable+quantum+advantage+in+randomness+processing), _Nature communications_ 6(1), pp. 1-4.
 
-[^66]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+[^66]: [**Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form"**](https://scholar.google.com/scholar?q=Tsai,+Yi-Feng,+Farouki,+R.T.,+Algorithm+812+BPOLY+An+Object-Oriented+Library+of+Numerical+Algorithms+for+Polynomials+in+Bernstei), _ACM Trans. Math. Softw._ 27(2), 2001.
 
 [^67]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
@@ -2580,21 +2580,21 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^71]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$), but uses more bits on average as _&lambda;_ approaches 1.
 
-[^72]: Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.
+[^72]: [**Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions"**](https://scholar.google.com/scholar?q=Forsythe,+G.E.,+Von+Neumanns+Comparison+Method+for+Random+Sampling+from+the+Normal+and+Other+Distributions), _Mathematics of Computation_ 26(120), October 1972.
 
 [^73]: Sondow, Jonathan. “New Vacca-Type Rational Series for Euler's Constant and Its 'Alternating' Analog ln 4/_&pi;_.”, 2005.
 
 [^74]: It can also be said that the integral (see "[**Integrals**](#Integrals)") of _x_ &minus; floor(1/_x_), where _x_ is greater than 0 but not greater than 1, equals 1 minus _&gamma;_.  See, for example, Havil, J., _Gamma: Exploring Euler's Constant_, 2003.
 
-[^75]: Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).
+[^75]: [**Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals"**](https://scholar.google.com/scholar?q=Fishman,+D.,+Miller,+S.J.,+Closed+Form+Continued+Fraction+Expansions+of+Special+Quadratic+Irrationals), ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).
 
-[^76]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
+[^76]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
 
-[^77]: Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.
+[^77]: [**Pae, S., "Random number generation using a biased source"**](https://scholar.google.com/scholar?q=Pae,+S.,+Random+number+generation+using+a+biased+source), dissertation, University of Illinois at Urbana-Champaign, 2005.
 
-[^78]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.
+[^78]: [**Peres, Y., "Iterating von Neumann's procedure for extracting random bits"**](https://scholar.google.com/scholar?q=Peres,+Y.,+Iterating+von+Neumanns+procedure+for+extracting+random+bits), Annals of Statistics 1992,20,1, p. 590-597.
 
-[^79]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
+[^79]: [**Monahan, J.. "Extensions of von Neumann’s method for generating random variables."**](https://scholar.google.com/scholar?q=Monahan,+J..+Extensions+of+von+Neumanns+method+for+generating+random+variables) Mathematics of Computation 33 (1979): 1065-1069.
 
 <a id=Appendix></a>
 

@@ -781,9 +781,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.<br>_Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 
-[^7]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators." Carpathian Journal of Mathematics (2006): 65-78.
+[^7]: [**Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On differences of positive linear operators."**](https://scholar.google.com/scholar?q=Gonska,+Heiner,+Paula+Piƫul,+and+Ioan+Raşa.+On+differences+of+positive+linear+operators) Carpathian Journal of Mathematics (2006): 65-78.
 
-[^8]: Skorski, Maciej. "Handy formulas for binomial moments." _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41.
+[^8]: [**Skorski, Maciej. "Handy formulas for binomial moments."**](https://scholar.google.com/scholar?q=Skorski,+Maciej.+Handy+formulas+for+binomial+moments) _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41.
 
 [^9]: It is also possible to bound the "absolute moment" as $M_{n,r}(p)\le C(r)(\max(1/n, (p(1-p)/n)^{1/2})^r$ or $M_{n,r}(p)\le D(r)(1/n + (p(1-p)/n)^{1/2})^r$ (Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)), but the constants $C(r)$ and $D(r)$ seem to be higher (and less favorable) than the $E(r)$ in $M_{n,r}(p)\le E(r)/n^{r/2}$.
 
@@ -791,33 +791,33 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^11]: Molteni, Giuseppe. "Explicit bounds for even moments of Bernstein’s polynomials." Journal of Approximation Theory 273 (2022): 105658. [**https://doi.org/10.1016/j.jat.2021.105658**](https://doi.org/10.1016/j.jat.2021.105658)
 
-[^12]: Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation", Journal of Approximation Theory 39 (1983).
+[^12]: [**Cheng, F., "On the rate of convergence of Bernstein polynomials of functions of bounded variation"**](https://scholar.google.com/scholar?q=Cheng,+F.,+On+the+rate+of+convergence+of+Bernstein+polynomials+of+functions+of+bounded+variation), Journal of Approximation Theory 39 (1983).
 
 [^13]: Weisstein, Eric W. "Schwarz's Inequality." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/SchwarzsInequality.html**](https://mathworld.wolfram.com/SchwarzsInequality.html)
 
-[^14]: R. Bojanić, O. Shisha, "Degree of $L^1$ approximation to integrable functions by modified Bernstein polynomials", Journal of Approximation Theory 13, 66–72 (1975).
+[^14]: [**R. Bojanić, O. Shisha, "Degree of $L^1$ approximation to integrable functions by modified Bernstein polynomials"**](https://scholar.google.com/scholar?q=R.+Bojanić,+O.+Shisha,+Degree+of+L1+approximation+to+integrable+functions+by+modified+Bernstein+polynomials), Journal of Approximation Theory 13, 66–72 (1975).
 
-[^15]: Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators", dissertation, Universität Duisberg-Essen, 2007.
+[^15]: [**Piţul, P., "Evaluation of the Approximation Order by Positive Linear Operators"**](https://scholar.google.com/scholar?q=Piţul,+P.,+Evaluation+of+the+Approximation+Order+by+Positive+Linear+Operators), dissertation, Universität Duisberg-Essen, 2007.
 
 [^16]: I suspect that, whenever $L$ is a bounded linear operator that maps continuous functions on a compact interval to functions of that kind, $L$ can be written as a difference between two positive linear operators.  But I have not seen a proof of that statement; Acu et al. ("[**Grüss-type and Ostrowski-type inequalities in approximation theory**](https://doi.org/10.1007/s11253-011-0548-2)", Ukr Math J 63, 843–864, 2011) give a similar statement but without proof.
 
-[^17]: E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein", 1932.
+[^17]: [**E. Voronovskaya, "Détermination de la forme asymptotique d'approximation des fonctions par les polynômes de M. Bernstein"**](https://scholar.google.com/scholar?q=E.+Voronovskaya,+Détermination+de+la+forme+asymptotique+dapproximation+des+fonctions+par+les+polynômes+de+M.+Bernstein), 1932.
 
 [^18]: DeVore, Ronald A. The approximation of continuous functions by positive linear operators. Springer, 2006. [**https://doi.org/10.1007/BFb0059493**](https://doi.org/10.1007/BFb0059493)
 
 [^19]: Cárdenas-Morales, Daniel, Pedro Garrancho, and Ioan Rasa. "Asymptotic formulae via a Korovkin-type result." Abstract and Applied Analysis. Vol. 2012. John Wiley & Sons, Inc., 2012. [**https://doi.org/10.1155/2012/217464**](https://doi.org/10.1155/2012/217464)
 
-[^20]: Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants", Studia Sci. Math. Hungar. 22, 1987.
+[^20]: [**Gonska, H.H., Meier, J., "On approximation by Bernstein-type operators: best constants"**](https://scholar.google.com/scholar?q=Gonska,+H.H.,+Meier,+J.,+On+approximation+by+Bernstein-type+operators+best+constants), Studia Sci. Math. Hungar. 22, 1987.
 
-[^21]: Shisha, O., Mond. B, "The degree of convergence of linear positive operators", 1968.
+[^21]: [**Shisha, O., Mond. B, "The degree of convergence of linear positive operators"**](https://scholar.google.com/scholar?q=Shisha,+O.,+Mond.+B,+The+degree+of+convergence+of+linear+positive+operators), 1968.
 
-[^22]: R. G. Mamedov, "On the order of approximation of functions by linear positive operators" (Russian), Dokl. Akad. Nauk SSSR 128 (1959).
+[^22]: [**R. G. Mamedov, "On the order of approximation of functions by linear positive operators."**](https://scholar.google.com/scholar?q=R.+G.+Mamedov,+On+the+order+of+approximation+of+functions+by+linear+positive+operators) (Russian.) Dokl. Akad. Nauk SSSR 128 (1959).
 
 [^23]: Mond, B., "On the degree of approximation by linear positive operators", _Journal of Approximation Theory_ 18 (1976). [**https://doi.org/10.1016/0021-9045%2876%2990022-8**](https://doi.org/10.1016/0021-9045%2876%2990022-8) [**https://www.sciencedirect.com/science/article/pii/0021904576900228**](https://www.sciencedirect.com/science/article/pii/0021904576900228)
 
 [^24]: Păltănea, R., _Approximation Theory Using Positive Linear Operators_, Birkhäuser, 2004. [**https://doi.org/10.1007/978-1-4612-2058-9**](https://doi.org/10.1007/978-1-4612-2058-9)
 
-[^25]: Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory", in _Approximation Theory_, 1969.
+[^25]: [**Peetre, J., "On the connection between the theory of interpolation spaces and approximation theory"**](https://scholar.google.com/scholar?q=Peetre,+J.,+On+the+connection+between+the+theory+of+interpolation+spaces+and+approximation+theory), in _Approximation Theory_, 1969.
 
 [^26]: Gonska, Heiner. "The rate of convergence of bounded linear processes on spaces of continuous functions." Journal of Numerical Analysis and Approximation Theory 52.2 (2023): 182-232. [**https://doi.org/10.33993/jnaat522-1326**](https://doi.org/10.33993/jnaat522-1326)
 
@@ -825,9 +825,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^28]: H. H. Gonska, _Quantitative Approximation in C(X)_, Habilitationschrift, Universität Duisburg, 1985.
 
-[^29]: Peetre, J., "Exact interpolation theorems for Lipschitz-continuous functions", Ricerche Mat. 18 (1969).
+[^29]: [**Peetre, J., "Exact interpolation theorems for Lipschitz-continuous functions"**](https://scholar.google.com/scholar?q=Peetre,+J.,+Exact+interpolation+theorems+for+Lipschitz-continuous+functions), Ricerche Mat. 18 (1969).
 
-[^30]: Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness." General Mathematics 24 (2016)
+[^30]: [**Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness."**](https://scholar.google.com/scholar?q=Păltănea,+R,+Dimitriu,+M.T.,+On+some+second+order+moduli+of+smoothness) General Mathematics 24 (2016)
 
 [^31]: Păltănea, R., Smuc, M. "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74, 70 (2019). [**https://doi.org/10.1007/s00025-019-0997-8**](https://doi.org/10.1007/s00025-019-0997-8)
 
@@ -835,9 +835,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^33]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators". In _Proceedings of the International Conference on Numerical Analysis and Approximation Theory_, Cluj-Napoca. Romania, July 2006.
 
-[^34]: Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem", Studia Univ. Babeş-Bolyai, Math., September 2007.
+[^34]: [**Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem"**](https://scholar.google.com/scholar?q=Gonska,+Heiner.+On+the+degree+of+approximation+in+Voronovskajas+theorem), Studia Univ. Babeş-Bolyai, Math., September 2007.
 
-[^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270.
+[^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270. [https://doi.org/10.1016/0021-9045%2885%2990049-8](https://doi.org/10.1016/0021-9045%2885%2990049-8)
 
 [^36]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _{op}en_ interval (say, $0\lt\lambda\lt 1$), rather than a _compact_ interval, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
 
@@ -871,7 +871,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^51]: Marsden, M.J., "On Uniform Spline Approximation", _Journal of Approximation Theory_ 6 (1972). [**https://doi.org/10.1016/0021-9045%2872%2990056-1**](https://doi.org/10.1016/0021-9045%2872%2990056-1) [**https://www.sciencedirect.com/science/article/pii/0021904572900561**](https://www.sciencedirect.com/science/article/pii/0021904572900561)
 
-[^52]: Beutel, Laura, et al. "On variation-diminishing Schoenberg operators: new quantitative statements." Multivariate Approximation and Interpolation with Applications (ed. by M. Gasca), Monogr. Academia Cien. de Zaragoza 20 (2002): 9-58.
+[^52]: [**Beutel, Laura, et al. "On variation-diminishing Schoenberg operators: new quantitative statements."**](https://scholar.google.com/scholar?q=Beutel,+Laura,+et+al.+On+variation-diminishing+Schoenberg+operators+new+quantitative+statements) Multivariate Approximation and Interpolation with Applications (ed. by M. Gasca), Monogr. Academia Cien. de Zaragoza 20 (2002): 9-58.
 
 [^53]: De Boor, C., "On Uniform Approximation by Splines", _Journal of Approximation Theory_ 1 (1968). [**https://doi.org/10.1016/0021-9045%2868%2990026-9**](https://doi.org/10.1016/0021-9045%2868%2990026-9) [**https://www.sciencedirect.com/science/article/pii/0021904568900269**](https://www.sciencedirect.com/science/article/pii/0021904568900269)
 
@@ -891,7 +891,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^61]: It has been argued that the inequalities in this section apply to spline operators that reproduce every polynomial up to degree $d$, say, on _subintervals_ of their domain even though they map to more functions than polynomials on the _whole_ domain. For example, compare&mdash;<br>Sablonnière, P. "Univariate spline quasi-interpolants and applications to numerical analysis." Rend. Sem. Mat. Univ. Pol. Torino 63.3 (2005), section 2, and<br>Sablonnière, P. "Quadratic spline quasi-interpolants on bounded domains of Rd, d= 1, 2, 3." Rend. Sem. Mat. Univ. Pol. Torino 61.3 (2003), matter after Remark 1,<br>with the operators in Lee, B-G., et al., "Some examples of quasi-interpolants constructed from local spline projectors", Mathematical methods for curves and surfaces, Oslo 2000 (2000), section 2, which were shown to reproduce all functions they map to.<br>But what stops us from subdividing the intervals further into, say, $10n$ subintervals of length $1/(10n)$, and inferring a much smaller error bound?  Indeed, in this example, $L(f)$ then still equals a degree-2-or less polynomial at each of the new subintervals and reproduces polynomials of that kind at each of them.
 
-[^62]: Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind." Journal of Concrete & Applicable Mathematics 8.1 (2010).
+[^62]: [**Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind."**](https://scholar.google.com/scholar?q=Bede,+Barnabás,+and+Sorin+G.+Gal.+Approximation+by+Nonlinear+Bernstein+and+Favard-Szász-Mirakjan+Operators+of+Max-Product+Kind) Journal of Concrete & Applicable Mathematics 8.1 (2010).
 
 [^63]: Bede, Barnabás, Coroianu, Lucian, Gal, Sorin G., Approximation and Shape Preserving Properties of the Bernstein Operator of Max-Product Kind, International Journal of Mathematics and Mathematical Sciences, 2009, 590589, 26 pages, 2009. [**https://doi.org/10.1155/2009/590589**](https://doi.org/10.1155/2009/590589)
 
@@ -915,9 +915,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^73]: Ibrahimoglu, B.A. Lebesgue functions and Lebesgue constants in polynomial interpolation. J Inequal Appl 2016, 93 (2016). [**https://doi.org/10.1186/s13660-016-1030-3**](https://doi.org/10.1186/s13660-016-1030-3)
 
-[^74]: Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials." Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
+[^74]: [**Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials."**](https://scholar.google.com/scholar?q=Schaeffer,+A.+C.,+and+R.+J.+Duffin.+On+some+inequalities+of+S.+Bernstein+and+W.+Markoff+for+derivatives+of+polynomials) Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
 
-[^75]: G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials", 1963.
+[^75]: [**G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials"**](https://scholar.google.com/scholar?q=G.G.+Lorentz,+Inequalities+and+saturation+classes+of+Bernstein+polynomials), 1963.
 
 [^76]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
@@ -927,7 +927,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^79]: A linear space of functions with this property is also called a _Banach space_ (Axler, S., _Measure, Integration & Real Analysis_, Springer, 2020. [**https://doi.org/10.1007/978-3-030-33143-6**](https://doi.org/10.1007/978-3-030-33143-6)).
 
-[^80]: S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités", Comm. Kharkov Math. Soc. 13, 1-2, 1912.
+[^80]: [**S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités"**](https://scholar.google.com/scholar?q=S.N.+Bernstein,+Démonstration+du+théorème+de+Weierstrass+fondée+sur+le+calcul+des+probabilités), Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
 [^81]: Adell, J. A., and J. De la Cal. "Bernstein-type operators diminish the φ-variation." Constructive Approximation 12.4 (1996): 489-507. [**https://doi.org/10.1007/BF02437505**](https://doi.org/10.1007/BF02437505)
 
