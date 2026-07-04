@@ -2222,7 +2222,7 @@ The following are some additional articles I have written on the topic of random
 
 [^56]: [**Johnson and Kotz, "Discrete Distributions"**](https://scholar.google.com/scholar?q=Johnson+and+Kotz,+Discrete+Distributions), 1969.
 
-[^57]: [**Smith, Noah A., and Roy W. Tromble. "[**Sampling uniformly from the unit simplex**]()."](https://scholar.google.com/scholar?q=Smith,+Noah+A.,+and+Roy+W.+Tromble.+Sampling+uniformly+from+the+unit+simplex) Johns Hopkins University, Tech. Rep 29 (2004). [https://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf](https://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)
+[^57]: [**Smith, Noah A., and Roy W. Tromble. "[**Sampling uniformly from the unit simplex**]()."](https://scholar.google.com/scholar?q=Smith,+Noah+A.,+and+Roy+W.+Tromble.+Sampling+uniformly+from+the+unit+simplex) Johns Hopkins University, Tech. Rep 29 (2004). [**https://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf**](https://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)
 
 [^58]: [**Durfee, et al., "l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent"**](https://scholar.google.com/scholar?q=Durfee,+et+al.,+l1+Regression+using+Lewis+Weights+Preconditioning+and+Stochastic+Gradient+Descent), _Proceedings of Machine Learning Research_ 75(1), 2018.
 
@@ -2240,7 +2240,7 @@ The following are some additional articles I have written on the topic of random
 
 [^65]: Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. [**https://doi.org/10.1007/978-3-030-50417-5_2**](https://doi.org/10.1007/978-3-030-50417-5_2)
 
-[^66]: Monahan, J.F., "Accuracy in Random Number Generation", _Mathematics of Computation_ 45(172), 1985. [https://doi.org/10.1090/S0025-5718-1985-0804945-X](https://doi.org/10.1090/S0025-5718-1985-0804945-X)
+[^66]: Monahan, J.F., "Accuracy in Random Number Generation", _Mathematics of Computation_ 45(172), 1985. [**https://doi.org/10.1090/S0025-5718-1985-0804945-X**](https://doi.org/10.1090/S0025-5718-1985-0804945-X)
 
 [^67]: [**Halmos, P.R., "The theory of unbiased estimation"**](https://scholar.google.com/scholar?q=Halmos,+P.R.,+The+theory+of+unbiased+estimation), _Annals of Mathematical Statistics_ 17(1), 1946.
 
@@ -2274,7 +2274,7 @@ The following are some additional articles I have written on the topic of random
 
 [^81]: In floating-point arithmetic, finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019\)[^81].
 
-[^82]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold. 2010. Random variate generation by numerical inversion when only the density is known. ACM Trans. Model. Comput. Simul. 20, 4, Article 18 (October 2010), 25 pages. [https://doi.org/10.1145/1842722.1842723](https://doi.org/10.1145/1842722.1842723)
+[^82]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold. 2010. Random variate generation by numerical inversion when only the density is known. ACM Trans. Model. Comput. Simul. 20, 4, Article 18 (October 2010), 25 pages. [**https://doi.org/10.1145/1842722.1842723**](https://doi.org/10.1145/1842722.1842723)
 
 [^83]: [**Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector"**](https://scholar.google.com/scholar?q=Part+of+numbers_from_u01+uses+algorithms+described+in+Arnas,+D.,+Leake,+C.,+Mortari,+D.,+Random+Sampling+using+k-vector), _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
 
@@ -2304,9 +2304,9 @@ The following are some additional articles I have written on the topic of random
 
 [^96]: [**Devroye, L., "Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator"**](https://scholar.google.com/scholar?q=Devroye,+L.,+Expected+Time+Analysis+of+a+Simple+Recursive+Poisson+Random+Variate+Generator), _Computing_ 46, pp. 165-173, 1991.
 
-[^97]: Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation_ 62 (1994). [https://doi.org/10.1090/S0025-5718-1994-1219702-8](https://doi.org/10.1090/S0025-5718-1994-1219702-8)
+[^97]: Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation_ 62 (1994). [**https://doi.org/10.1090/S0025-5718-1994-1219702-8**](https://doi.org/10.1090/S0025-5718-1994-1219702-8)
 
-[^98]: Stein, W.E. and Keblis, M.F., "A new method to simulate the triangular distribution", _Mathematical and Computer Modelling_ 49(5-6), 2009, pp.1143-1147. [https://doi.org/10.1016/j.mcm.2008.06.013](https://doi.org/10.1016/j.mcm.2008.06.013) [https://www.sciencedirect.com/science/article/pii/S0895717708002665](https://www.sciencedirect.com/science/article/pii/S0895717708002665)
+[^98]: Stein, W.E. and Keblis, M.F., "A new method to simulate the triangular distribution", _Mathematical and Computer Modelling_ 49(5-6), 2009, pp.1143-1147. [**https://doi.org/10.1016/j.mcm.2008.06.013**](https://doi.org/10.1016/j.mcm.2008.06.013) [**https://www.sciencedirect.com/science/article/pii/S0895717708002665**](https://www.sciencedirect.com/science/article/pii/S0895717708002665)
 
 [^99]: [**Borel, E., "Sur l'emploi du théorème de Bernoulli pour faciliter le calcul d'un infinité de coefficients. Application au probleme de l'attente à un guichet"**](https://scholar.google.com/scholar?q=Borel,+E.,+Sur+lemploi+du+théorème+de+Bernoulli+pour+faciliter+le+calcul+dun+infinité+de+coefficients.+Application+au+probleme+d), 1942.
 

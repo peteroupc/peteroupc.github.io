@@ -360,7 +360,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^4]: [**S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités"**](https://scholar.google.com/scholar?q=S.N.+Bernstein,+Démonstration+du+théorème+de+Weierstrass+fondée+sur+le+calcul+des+probabilités), Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
-[^5]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18. [https://doi.org/10.1016/0021-9045%2873%2990028-2](https://doi.org/10.1016/0021-9045%2873%2990028-2)
+[^5]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18. [**https://doi.org/10.1016/0021-9045%2873%2990028-2**](https://doi.org/10.1016/0021-9045%2873%2990028-2)
 
 [^6]: Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
 
@@ -368,7 +368,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^8]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
 
-[^9]: Butzer, P. L. (1953). Linear Combinations of Bernstein Polynomials. Canadian Journal of Mathematics, 5, 559–567. [https://doi.org/10.4153/CJM-1953-063-7](https://doi.org/10.4153/CJM-1953-063-7)
+[^9]: Butzer, P. L. (1953). Linear Combinations of Bernstein Polynomials. Canadian Journal of Mathematics, 5, 559–567. [**https://doi.org/10.4153/CJM-1953-063-7**](https://doi.org/10.4153/CJM-1953-063-7)
 
 [^10]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
@@ -380,7 +380,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^14]: Qian et al. suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., & Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).
 
-[^15]: Schurer, F., Steutel, F.W. (1976). On an inequality of Lorentz in the theory of Bernstein polynomials. In: Böhmer, K., Meinardus, G., Schempp, W. (eds) Spline Functions. Lecture Notes in Mathematics, vol 501. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/BFb0079754](https://doi.org/10.1007/BFb0079754)
+[^15]: Schurer, F., Steutel, F.W. (1976). On an inequality of Lorentz in the theory of Bernstein polynomials. In: Böhmer, K., Meinardus, G., Schempp, W. (eds) Spline Functions. Lecture Notes in Mathematics, vol 501. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0079754**](https://doi.org/10.1007/BFb0079754)
 
 [^16]: [**Kac, M., "Une remarque sur les polynômes de M. S. Bernstein"**](https://scholar.google.com/scholar?q=Kac,+M.,+Une+remarque+sur+les+polynômes+de+M.+S.+Bernstein), Studia Math. 7, 1938.
 
@@ -404,19 +404,19 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^26]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
-[^27]: Sánchez-Reyes, J. (2003). [**Algebraic manipulation in the Bernstein form made simple via convolutions**](https://www.sciencedirect.com/science/article/pii/S0010448503000216). Computer-Aided Design, 35(10), 959-967. [https://doi.org/10.1016/S0010-4485%2803%2900021-6](https://doi.org/10.1016/S0010-4485%2803%2900021-6)
+[^27]: Sánchez-Reyes, J. (2003). [**Algebraic manipulation in the Bernstein form made simple via convolutions**](https://www.sciencedirect.com/science/article/pii/S0010448503000216). Computer-Aided Design, 35(10), 959-967. [**https://doi.org/10.1016/S0010-4485%2803%2900021-6**](https://doi.org/10.1016/S0010-4485%2803%2900021-6)
 
 [^28]: S. Ray, P.S.V. Nataraj, "[**A Matrix Method for Efficient Computation of Bernstein Coefficients**](https://interval.louisiana.edu/reliable-computing-journal/volume-17/reliable-computing-17-pp-40-71.pdf)", Reliable Computing 17(1), 2012.
 
 [^29]: Borwein, P. B. (1979). Restricted uniform rational approximations (Doctoral dissertation, University of British Columbia).
 
-[^30]: Borwein, Peter B. "Approximations by rational functions with positive coefficients." _Journal of Mathematical Analysis and Applications_ 74, no. 1 (1980): 144-151. [https://doi.org/10.1016/0022-247X%2880%2990118-3](https://doi.org/10.1016/0022-247X%2880%2990118-3) [https://www.sciencedirect.com/science/article/pii/0022247X80901183](https://www.sciencedirect.com/science/article/pii/0022247X80901183)
+[^30]: Borwein, Peter B. "Approximations by rational functions with positive coefficients." _Journal of Mathematical Analysis and Applications_ 74, no. 1 (1980): 144-151. [**https://doi.org/10.1016/0022-247X%2880%2990118-3**](https://doi.org/10.1016/0022-247X%2880%2990118-3) [**https://www.sciencedirect.com/science/article/pii/0022247X80901183**](https://www.sciencedirect.com/science/article/pii/0022247X80901183)
 
 [^31]: [**Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant."**](https://scholar.google.com/scholar?q=Zhang,+Ren-Jiang,+and+Xing+Liu.+Rational+interpolation+operator+with+finite+Lebesgue+constant) Calcolo 59.1 (2022): 10.
 
 [^32]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor 100, 729–744 (2025). [**https://doi.org/10.1007/s11075-024-01933-6**](https://doi.org/10.1007/s11075-024-01933-6)
 
-[^33]: Farouki, Rida T. "Convergent inversion approximations for polynomials in Bernstein form." _Computer Aided Geometric Design_ 17.2 (2000): 179-196. [https://doi.org/10.1016/S0167-8396%2899%2900046-1](https://doi.org/10.1016/S0167-8396%2899%2900046-1)
+[^33]: Farouki, Rida T. "Convergent inversion approximations for polynomials in Bernstein form." _Computer Aided Geometric Design_ 17.2 (2000): 179-196. [**https://doi.org/10.1016/S0167-8396%2899%2900046-1**](https://doi.org/10.1016/S0167-8396%2899%2900046-1)
 
 [^34]: Thus, Taylor polynomials won't work, for example.
 
@@ -444,7 +444,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^46]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
 
-[^47]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." _Results in Mathematics_ 66, no. 1 (2014): 21-41. [https://doi.org/10.1007/s00025-014-0389-z](https://doi.org/10.1007/s00025-014-0389-z)
+[^47]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." _Results in Mathematics_ 66, no. 1 (2014): 21-41. [**https://doi.org/10.1007/s00025-014-0389-z**](https://doi.org/10.1007/s00025-014-0389-z)
 
 [^48]: [**Kacsó, D.P., "Simultaneous approximation by almost convex operators"**](https://scholar.google.com/scholar?q=Kacsó,+D.P.,+Simultaneous+approximation+by+almost+convex+operators), 2002.
 
