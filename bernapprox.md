@@ -372,7 +372,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^10]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
-[^11]: [**Bernstein, S. N. (1932). "Complément a l’article de E. Voronovskaya."**](https://scholar.google.com/scholar?q=Bernstein,+S.+N.+1932.+Complément+a+larticle+de+E.+Voronovskaya) CR Acad. URSS, 86-92.
+[^11]: [**Bernstein, S. N. (1932). "Complément à l’article de E. Voronovskaya."**](https://scholar.google.com/scholar?q=Bernstein,+S.+N.+1932.+Complément+à+larticle+de+E.+Voronovskaya) CR Acad. URSS, 86-92.
 
 [^12]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
@@ -400,7 +400,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^24]: [**Muñoz, César, and Anthony Narkawicz. "Formalization of Bernstein polynomials and applications to global optimization."**](https://scholar.google.com/scholar?q=Muñoz,+César,+and+Anthony+Narkawicz.+Formalization+of+Bernstein+polynomials+and+applications+to+global+optimization) Journal of Automated Reasoning 51, no. 2 (2013): 151-196.
 
-[^25]: [**Knoop, H-B., Pottinger, P., "Ein Satz vom Korovkin-Typ für $C^k$-Räume"**](https://scholar.google.com/scholar?q=Knoop,+H-B.,+Pottinger,+P.,+Ein+Satz+vom+Korovkin-Typ+für+Ck-Räume), Math. Zeitschrift 148 (1976).
+[^25]: Knoop, H-B., Pottinger, P., "Ein Satz vom Korovkin-Typ für $C^k$-Räume", Math. Zeitschrift 148 (1976). [https://doi.org/10.1007/BF01187866](https://doi.org/10.1007/BF01187866)
 
 [^26]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
@@ -426,7 +426,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^37]: Waldron, S., "[**Increasing the polynomial reproduction of a quasi-interpolation operator**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)", Journal of Approximation Theory 161 (2009).
 
-[^38]: [**Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications"**](https://scholar.google.com/scholar?q=Costabile,+F.,+Gualtieri,+M.I.,+Serra,+S.,+Asymptotic+expansion+and+extrapolation+for+Bernstein+polynomials+with+applications), _BIT_ 36 (1996).
+[^38]: Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications", _BIT_ 36 (1996). [https://doi.org/10.1007/BF01733787](https://doi.org/10.1007/BF01733787)
 
 [^39]: Han, Xuli. "Multi-node higher order expansions of a function." Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
@@ -434,9 +434,9 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^41]: [**Kirov, G.H., "A generalization of the Bernstein polynomials"**](https://scholar.google.com/scholar?q=Kirov,+G.H.,+A+generalization+of+the+Bernstein+polynomials), _Mathematica Balkanica_ (New Series), 6 (1992), no. 2, 147–153.
 
-[^42]: [**Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval."**](https://scholar.google.com/scholar?q=Qian,+Weikang,+Marc+D.+Riedel,+and+Ivo+Rosenberg.+Uniform+approximation+and+Bernstein+polynomials+with+coefficients+in+the+unit+) European Journal of Combinatorics 32, no. 3 (2011): 448-463.
+[^42]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval." European Journal of Combinatorics 32, no. 3 (2011): 448-463. [https://doi.org/10.1016/j.ejc.2010.11.004](https://doi.org/10.1016/j.ejc.2010.11.004)
 
-[^43]: [**Li, Zhongkai. "Bernstein polynomials and modulus of continuity."**](https://scholar.google.com/scholar?q=Li,+Zhongkai.+Bernstein+polynomials+and+modulus+of+continuity) Journal of Approximation Theory 102, no. 1 (2000): 171-174.
+[^43]: Li, Zhongkai. "Bernstein polynomials and modulus of continuity." Journal of Approximation Theory 102, no. 1 (2000): 171-174. [https://doi.org/10.1006/jath.1999.3374](https://doi.org/10.1006/jath.1999.3374) [https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub](https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub)
 
 [^44]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
 

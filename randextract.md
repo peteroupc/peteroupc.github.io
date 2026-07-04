@@ -75,21 +75,21 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 ## Notes
 
-[^1]: Cliff, Y., Boyd, C., Gonzalez Nieto, J. "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.
+[^1]: [**Cliff, Y., Boyd, C., Gonzalez Nieto, J. "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results"**](https://scholar.google.com/scholar?q=Cliff,+Y.,+Boyd,+C.,+Gonzalez+Nieto,+J.+How+to+Extract+and+Expand+Randomness+A+Summary+and+Explanation+of+Existing+Results), 2009.
 
-[^2]: Coretti, S., Dodis, Y., et al., "Seedless Fruit is the Sweetest: Random Number Generation, Revisited", 2019.
+[^2]: [**Coretti, S., Dodis, Y., et al., "Seedless Fruit is the Sweetest: Random Number Generation, Revisited"**](https://scholar.google.com/scholar?q=Coretti,+S.,+Dodis,+Y.,+et+al.,+Seedless+Fruit+is+the+Sweetest+Random+Number+Generation,+Revisited), 2019.
 
-[^3]: Frauchiger, D., Renner, R., Troyer, M., "True randomness from realistic quantum devices", 2013.
+[^3]: [**Frauchiger, D., Renner, R., Troyer, M., "True randomness from realistic quantum devices"**](https://scholar.google.com/scholar?q=Frauchiger,+D.,+Renner,+R.,+Troyer,+M.,+True+randomness+from+realistic+quantum+devices), 2013.
 
 [^4]: McInnes, J. L., & Pinkas, B. (1990, August). On the impossibility of private key cryptography with weakly random keys. In Conference on the Theory and Application of Cryptography (pp. 421-435).
 
-[^5]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
+[^5]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
 
 [^6]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [**https://doi.org/10.1214/21-AAP1679**](https://doi.org/10.1214/21-AAP1679)
 
-[^7]: Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.
+[^7]: [**Pae, S., "Random number generation using a biased source"**](https://scholar.google.com/scholar?q=Pae,+S.,+Random+number+generation+using+a+biased+source), dissertation, University of Illinois at Urbana-Champaign, 2005.
 
-[^8]: Pae, S., Loui, M.C., "Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution", _IEEE Transactions on Information Theory_ 52(11), November 2006.
+[^8]: [**Pae, S., Loui, M.C., "Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution"**](https://scholar.google.com/scholar?q=Pae,+S.,+Loui,+M.C.,+Randomizing+functions+Simulation+of+discrete+probability+distribution+using+a+source+of+unknown+distributio), _IEEE Transactions on Information Theory_ 52(11), November 2006.
 
 [^9]: It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can't be extracting, either.
 
@@ -103,11 +103,11 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 [^14]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
-[^15]: Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.
+[^15]: [**Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision"**](https://scholar.google.com/scholar?q=Montes+Gutiérrez,+I.,+Comparison+of+alternatives+under+uncertainty+and+imprecision), doctoral thesis, Universidad de Oviedo, 2014.
 
-[^16]: De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.
+[^16]: [**De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables"**](https://scholar.google.com/scholar?q=De+Schuymer,+Bart,+Hans+De+Meyer,+and+Bernard+De+Baets.+A+fuzzy+approach+to+stochastic+dominance+of+random+variables), in _International Fuzzy Systems Association World Congress_ 2003.
 
-[^17]: Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.
+[^17]: [**Camion, Paul, "Unbiased die rolling with a biased die"**](https://scholar.google.com/scholar?q=Camion,+Paul,+Unbiased+die+rolling+with+a+biased+die), North Carolina State University. Dept. of Statistics, 1974.
 
 <a id=Appendix></a>
 

@@ -402,7 +402,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^13]: A _Lipschitz continuous_ function with Lipschitz constant _M_ is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_ apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_.
 
-[^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality.
+[^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality (Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [https://doi.org/10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830)).
 
 [^15]: [**Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters."**](https://scholar.google.com/scholar?q=Chen,+Xinjia.+Exact+computation+of+minimum+sample+size+for+estimation+of+binomial+parameters) Journal of Statistical Planning and Inference 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007.
 

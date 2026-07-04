@@ -2279,7 +2279,7 @@ The following are some additional articles I have written on the topic of random
 
 [^4]: Thomas, D.B. and Luk, W., 2008, September. Sampling from the exponential distribution using independent bernoulli variates. In 2008 International Conference on Field Programmable Logic and Applications (pp. 239-244). IEEE.
 
-[^5]: A. Habibizad Navin, R. Olfatkhah and M. K. Mirnia, "A data-oriented model of exponential random variable," 2010 2nd International Conference on Advanced Computer Control, Shenyang, 2010, pp. 603-607, doi: 10.1109/ICACC.2010.5487128.
+[^5]: [**A. Habibizad Navin, R. Olfatkhah and M. K. Mirnia, "A data-oriented model of exponential random variable,"**](https://scholar.google.com/scholar?q=A.+Habibizad+Navin,+R.+Olfatkhah+and+M.+K.+Mirnia,+A+data-oriented+model+of+exponential+random+variable) 2010 2nd International Conference on Advanced Computer Control, Shenyang, 2010, pp. 603-607, doi: 10.1109/ICACC.2010.5487128.
 
 [^6]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [**https://doi.org/10.1145/175007.175019**](https://doi.org/10.1145/175007.175019)
 
@@ -2287,7 +2287,7 @@ The following are some additional articles I have written on the topic of random
 
 [^8]: Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949)", arXiv:1704.07949 [stat.CO], 2018.
 
-[^9]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
+[^9]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
 
 [^10]: As noted by von Neumann (1951), a uniform random variate bounded by 0 and 1 can be produced by "juxtapos[ing] enough random binary digits".  In this sense, the variate is _X1_/`B`<sup>1</sup> + _X2_/`B`<sup>2</sup> + ..., (where `B` is the digit base 2, and _X1_, _X2_, etc. are independent uniform random integers in the interval \[0, `B`\)), perhaps "forc[ing] the last [random bit] to be 1" "[t]o avoid any bias".  It is not hard to see that this approach can be applied to generate any digit expansion of any base, not just 2.
 
@@ -2301,23 +2301,23 @@ The following are some additional articles I have written on the topic of random
 
 [^15]: A _nondiscrete distribution_ is a probability distribution taking on values that each can't be mapped to a different integer.  An example is a distribution taking on any real number between 0 and 1.
 
-[^16]: J.F. Williamson, "Random selection of points distributed on curved surfaces", _Physics in Medicine & Biology_ 32(10), 1987.
+[^16]: [**J.F. Williamson, "Random selection of points distributed on curved surfaces"**](https://scholar.google.com/scholar?q=J.F.+Williamson,+Random+selection+of+points+distributed+on+curved+surfaces), _Physics in Medicine & Biology_ 32(10), 1987.
 
 [^17]: Apostolos Chalkis, Christina Katsamaki, and Josué Tonelli-Cueto, "[**On the Error of Random Sampling: Uniformly Distributed Random Points on Parametric Curves**](https://arxiv.org/abs/2203.02832)", arXiv:2203.02832 [cs.CG], 2002; also in ISSAC'22, 2022. [**https://doi.org/10.1145/3476446.3536190**](https://doi.org/10.1145/3476446.3536190).
 
-[^18]: Boehm, Hans-J. "Towards an API for the real numbers." In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
+[^18]: [**Boehm, Hans-J. "Towards an API for the real numbers."**](https://scholar.google.com/scholar?q=Boehm,+Hans-J.+Towards+an+API+for+the+real+numbers) In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020.
 
 [^19]: Hans-J. Boehm. 1987. Constructive Real Interpretation of Numerical Programs. In Proceedings of the SIGPLAN ’87 Symposium on Interpreters and Interpretive Techniques. 214-221
 
 [^20]: Goubault-Larrecq, Jean, Xiaodong Jia, and Clément Théron. "[**A Domain-Theoretic Approach to Statistical Programming Languages**](https://arxiv.org/abs/2106.16190)", arXiv:2106.16190 (2021) (especially sec. 12.3).
 
-[^21]: Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), doi:10.3390/e21010092.
+[^21]: [**Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation"**](https://scholar.google.com/scholar?q=Brassard,+G.,+Devroye,+L.,+Gravel,+C.,+Remote+Sampling+with+Applications+to+General+Entanglement+Simulation), _Entropy_ 2019(21)(92), doi:10.3390/e21010092.
 
 [^22]: Note that _ak_ \* _&beta;_<sup>&minus;(_i_ + 1)</sup> is not just within _&beta;_<sup>&minus;(_i_ + 1)</sup> of its "true" result's absolute value, but also not more than that value.  Hence _ak_ >= _bk_ + 1 rather than _ak_ >= _bk_ + 2.
 
 [^23]: A. Habibizad Navin, Fesharaki, M.N., Teshnelab, M. and Mirnia, M., 2007. "Data oriented modeling of uniform random variable: Applied approach". _World Academy Science Engineering Technology_, 21, pp.382-385.
 
-[^24]: Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. "Designing a Universal Data-Oriented Random Number Generator", _International Journal of Modern Education and Computer Science_ 2013(2), pp. 19-24.
+[^24]: [**Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. "Designing a Universal Data-Oriented Random Number Generator"**](https://scholar.google.com/scholar?q=Nezhad,+R.F.,+Effatparvar,+M.,+Rahimzadeh,+M.,+2013.+Designing+a+Universal+Data-Oriented+Random+Number+Generator), _International Journal of Modern Education and Computer Science_ 2013(2), pp. 19-24.
 
 [^25]: In effect, for each supported integer _n_, the tree gives the probabilities of getting a value in \[_n_\*_p_, (_n_+1)\*_p_\], where _p_ is the resolution of the tree such as 1/100000.
 
@@ -2327,9 +2327,9 @@ The following are some additional articles I have written on the topic of random
 
 [^28]: C.T. Li, A. El Gamal, "[**A Universal Coding Scheme for Remote Generation of Continuous Random Variables**](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016.
 
-[^29]: Harlow, J., Sainudiin, R., Tucker, W., "Mapped Regular Pavings", _Reliable Computing_ 16 (2012).
+[^29]: [**Harlow, J., Sainudiin, R., Tucker, W., "Mapped Regular Pavings"**](https://scholar.google.com/scholar?q=Harlow,+J.,+Sainudiin,+R.,+Tucker,+W.,+Mapped+Regular+Pavings), _Reliable Computing_ 16 (2012).
 
-[^30]: Duff, T., "Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry", Computer Graphics 26(2), July 1992.
+[^30]: [**Duff, T., "Interval Arithmetic and Recursive Subdivision for Implicit Functions and Constructive Solid Geometry"**](https://scholar.google.com/scholar?q=Duff,+T.,+Interval+Arithmetic+and+Recursive+Subdivision+for+Implicit+Functions+and+Constructive+Solid+Geometry), Computer Graphics 26(2), July 1992.
 
 [^31]: Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.
 
@@ -2343,41 +2343,41 @@ The following are some additional articles I have written on the topic of random
 
 [^36]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 
-[^37]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.
+[^37]: [**S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients"**](https://scholar.google.com/scholar?q=S.+Ray,+P.S.V.+Nataraj,+A+Matrix+Method+for+Efficient+Computation+of+Bernstein+Coefficients), _Reliable Computing_ 17(1), 2012.
 
 [^38]: "_x_ is odd" means that _x_ is an integer and not divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 1, or if _x_ is an integer and the least significant bit of abs(_x_) is 1.
 
 [^39]: "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
 
-[^40]: Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs", in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).
+[^40]: [**Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs"**](https://scholar.google.com/scholar?q=Bringmann,+K.+and+Friedrich,+T.,+2013,+July.+Exact+and+efficient+generation+of+geometric+random+variates+and+random+graphs), in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).
 
-[^41]: Ahrens, J.H., and Dieter, U., "Computer methods for sampling from the exponential and normal distributions", _Communications of the ACM_ 15, 1972.
+[^41]: [**Ahrens, J.H., and Dieter, U., "Computer methods for sampling from the exponential and normal distributions"**](https://scholar.google.com/scholar?q=Ahrens,+J.H.,+and+Dieter,+U.,+Computer+methods+for+sampling+from+the+exponential+and+normal+distributions), _Communications of the ACM_ 15, 1972.
 
-[^42]: Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.
+[^42]: [**Lindley, D.V., "Fiducial distributions and Bayes' theorem"**](https://scholar.google.com/scholar?q=Lindley,+D.V.,+Fiducial+distributions+and+Bayes+theorem), _Journal of the Royal Statistical Society Series B_, 1958.
 
-[^43]: Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.
+[^43]: [**Shanker, R., "Garima distribution and its application to model behavioral science data"**](https://scholar.google.com/scholar?q=Shanker,+R.,+Garima+distribution+and+its+application+to+model+behavioral+science+data), _Biom Biostat Int J._ 4(7), 2016.
 
 [^44]: Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.
 
 [^45]: Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.
 
-[^46]: Sen, S., et al., "The xgamma distribution: statistical properties and application", 2016.
+[^46]: [**Sen, S., et al., "The xgamma distribution: statistical properties and application"**](https://scholar.google.com/scholar?q=Sen,+S.,+et+al.,+The+xgamma+distribution+statistical+properties+and+application), 2016.
 
-[^47]: Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets." In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
+[^47]: [**Sen, Subhradev, Suman K. Ghosh, and Hazem Al-Mofleh. "The Mirra distribution for modeling time-to-event data sets."**](https://scholar.google.com/scholar?q=Sen,+Subhradev,+Suman+K.+Ghosh,+and+Hazem+Al-Mofleh.+The+Mirra+distribution+for+modeling+time-to-event+data+sets) In Strategic Management, Decision Theory, and Decision Science, pp. 59-73. Springer, Singapore, 2021.
 
-[^48]: Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. "Sushila distribution and its application to waiting times data." International Journal of Business Management 3, no. 2 (2013): 1-11.
+[^48]: [**Shanker, Rama, Shambhu Sharma, Uma Shanker, and Ravi Shanker. "Sushila distribution and its application to waiting times data."**](https://scholar.google.com/scholar?q=Shanker,+Rama,+Shambhu+Sharma,+Uma+Shanker,+and+Ravi+Shanker.+Sushila+distribution+and+its+application+to+waiting+times+data) International Journal of Business Management 3, no. 2 (2013): 1-11.
 
-[^49]: Chouia, Sarra, and Halim Zeghdoudi. "The xlindley distribution: Properties and application." Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.
+[^49]: [**Chouia, Sarra, and Halim Zeghdoudi. "The xlindley distribution: Properties and application."**](https://scholar.google.com/scholar?q=Chouia,+Sarra,+and+Halim+Zeghdoudi.+The+xlindley+distribution+Properties+and+application) Journal of Statistical Theory and Applications 20, no. 2 (2021): 318-327.
 
 [^50]: Devroye, L., Györfi, L., _Nonparametric Density Estimation: The L1 View_, 1985.
 
-[^51]: Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data." arXiv:1904.00459 (2019).
+[^51]: [**Awan, Jordan, and Aleksandra Slavković. "Differentially private inference for binomial data."**](https://scholar.google.com/scholar?q=Awan,+Jordan,+and+Aleksandra+Slavković.+Differentially+private+inference+for+binomial+data) arXiv:1904.00459 (2019).
 
-[^52]: Loaiza-Ganem, Gabriel, and John P. Cunningham. "The continuous Bernoulli: fixing a pervasive error in variational autoencoders." _Advances in Neural Information Processing Systems_ 32 (2019).
+[^52]: [**Loaiza-Ganem, Gabriel, and John P. Cunningham. "The continuous Bernoulli: fixing a pervasive error in variational autoencoders."**](https://scholar.google.com/scholar?q=Loaiza-Ganem,+Gabriel,+and+John+P.+Cunningham.+The+continuous+Bernoulli+fixing+a+pervasive+error+in+variational+autoencoders) _Advances in Neural Information Processing Systems_ 32 (2019).
 
 [^53]: Blier-Wong, C., Cossette, H. and Marceau, E., "[**Exchangeable FGM copulas**](https://arxiv.org/abs/2205.11302)", arXiv:2205.11302, 2022.
 
-[^54]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^54]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
 [^55]: Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].
 
@@ -2389,19 +2389,19 @@ The following are some additional articles I have written on the topic of random
 
 [^59]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011; also in Random Struct. Alg., 38: 441-452 (2011). [**https://doi.org/10.1002/rsa.20333**](https://doi.org/10.1002/rsa.20333)
 
-[^60]: Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
+[^60]: [**Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates"**](https://scholar.google.com/scholar?q=Kinderman,+A.J.,+Monahan,+J.F.,+Computer+generation+of+random+variables+using+the+ratio+of+uniform+deviates), _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.
 
 [^61]: Leydold, J., "[**Automatic sampling with the ratio-of-uniforms method**](https://dl.acm.org/doi/10.1145/347837.347863)", ACM Transactions on Mathematical Software 26(1), 2000.
 
-[^62]: S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.
+[^62]: [**S. Kakutani, "On equivalence of infinite product measures"**](https://scholar.google.com/scholar?q=S.+Kakutani,+On+equivalence+of+infinite+product+measures), _Annals of Mathematics_ 1948.
 
 [^63]: George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .
 
 [^64]: Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.
 
-[^65]: For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485)
+[^65]: [**For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers"**](https://scholar.google.com/scholar?q=For+example,+see+Balcer,+V.,+Vadhan,+S.,+Differential+Privacy+on+Finite+Computers), Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485)
 
-[^66]: Ben Dov, Y., David, L., et al., "Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes", FORC 2023.
+[^66]: [**Ben Dov, Y., David, L., et al., "Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes"**](https://scholar.google.com/scholar?q=Ben+Dov,+Y.,+David,+L.,+et+al.,+Resistance+to+Timing+Attacks+for+Sampling+and+Privacy+Preserving+Schemes), FORC 2023.
 
 [^67]: In the privacy context, see, for example, Awan, J. and Rao, V., 2022. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965. Also, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
 

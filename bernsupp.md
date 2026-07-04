@@ -270,7 +270,7 @@ If _T_ turns out to be greater than 1 in this algorithm, but still finite, one w
 > **Example**: The following parameters allow this algorithm to work if $f$ is concave, has a maximum of less than 1, and has a Lipschitz-continuous derivative with Lipschitz constant _M_ or less.  In this case, it is allowed that $f(0)=0$, $f(1)=0$, or both.
 >
 > - The family of polynomials $L_n(f)$ is simply the family of Bernstein polynomials of $f$.  The Bernstein coefficients of $L_n(f)$ are $f(0/n), f(1/n), ..., f(n/n)$.
-> - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1963)[^8].
+> - The error bound is $\epsilon(f, n) = M/(8n)$ (Lorentz 1964)[^8].
 > - The **starting polynomial** is found as follows. Let _c_ = max($f(0), f(1)$).  Then the starting polynomial has two Bernstein coefficients both equal to $c$; **StartWidth** is equal to ceil($c\cdot 65536$)/65536, and **StartOrder** is equal to 0.
 > - ErrShift($f,m$) = 0. The reason for 0 is that $f$ is concave, so its Bernstein polynomials naturally "increase" with increasing degree (Temple 1954)[^9], (Moldovan 1962)[^10].
 > - DiffWidth($f,m$) = $1.01\cdot 3 M/(8\cdot 2^m)$.  For the same reason as the previous point, and because the Bernstein polynomials are always "below" $f$, DiffWidth($f,m$) can also equal 1.01 $\cdot \epsilon(f, 2^{m})$ = $1.01\cdot M/(8\cdot 2^m)$.  This is what is used to calculate _T_, later.
@@ -383,7 +383,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^7]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [**https://doi.org/10.1145/2133390.2133396**](https://doi.org/10.1145/2133390.2133396)
 
-[^8]: [**G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials"**](https://scholar.google.com/scholar?q=G.G.+Lorentz,+Inequalities+and+saturation+classes+of+Bernstein+polynomials), 1963.
+[^8]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [https://doi.org/10.1007/978-3-0348-4131-3_19](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
 [^9]: [**Temple, W.B., "Steltjes integral representation of convex functions"**](https://scholar.google.com/scholar?q=Temple,+W.B.,+Steltjes+integral+representation+of+convex+functions), 1954.
 
@@ -395,13 +395,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^13]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
-[^14]: [**Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series."**](https://scholar.google.com/scholar?q=Mendo,+Luis.+An+asymptotically+optimal+Bernoulli+factory+for+certain+functions+that+can+be+expressed+as+power+series) Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.
+[^14]: Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384. [https://doi.org/10.1016/j.spa.2018.11.017](https://doi.org/10.1016/j.spa.2018.11.017)  [https://www.sciencedirect.com/science/article/pii/S0304414918306768](https://www.sciencedirect.com/science/article/pii/S0304414918306768)
 
 [^15]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
 
 [^16]: This function's second derivative's absolute value can be plotted using the SymPy library as follows: `plot(diff(Abs(exp(-x)),(x,2)),(x,0,1))`.  In this plot, the maximum is 1, the same as the first derivative's Lipschitz constant.
 
-[^17]: [**Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)"](https://scholar.google.com/scholar?q=Wästlund,+J.,+Functions+arising+by+coin+flippinghttpwww.math.chalmers.sewastlundcoinFlip.pdf), 1999.
+[^17]: Wästlund, J., "[**Functions arising by coin flipping**](https://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.
 
 [^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative.  See, for example, Erdélyi, T., and J. Szabados. "On polynomials with positive coefficients." Journal of Approximation Theory 54.1 (1988): 107-122.
 
@@ -435,15 +435,15 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^33]: [**Kantorovich, L.V., "Some remarks on the approximation of functions by means of polynomials with integer coefficients"**](https://scholar.google.com/scholar?q=Kantorovich,+L.V.,+Some+remarks+on+the+approximation+of+functions+by+means+of+polynomials+with+integer+coefficients), 1931.
 
-[^34]: When $r$ is 1 or 2, this case includes cases where $W_n$ equals $f$ at $0, 1/n, ..., n/n$ and converges uniformly to $f$.  One example is where $W_n$ is the Lagrange interpolating polynomial of degree $n$; given that $r$ is 1 or 2, $f$ is continuous and of bounded variation, so that $W_n$ converges uniformly to $f$ by a result of P. Vértesi, "[**Lagrange interpolation for continuous functions of bounded variation**](https://doi.org/10.1007/BF01896819)", _Acta Mathematica Hungarica_ 35(1), 1980. Another example is where $W_n$ is a rational interpolation described in Zhang and Liu, “Rational interpolation operator with finite Lebesgue constant.” _Calcolo_ 59.1 (2022).
+[^34]: When $r$ is 1 or 2, this case includes cases where $W_n$ equals $f$ at $0, 1/n, ..., n/n$ and converges uniformly to $f$.  One example is where $W_n$ is the Lagrange interpolating polynomial of degree $n$; given that $r$ is 1 or 2, $f$ is continuous and of bounded variation, so that $W_n$ converges uniformly to $f$ by a result of P. Vértesi, "[**Lagrange interpolation for continuous functions of bounded variation**](https://doi.org/10.1007/BF01896819)", _Acta Mathematica Hungarica_ 35(1), 1980. Another example is where $W_n$ is a rational interpolation described in Zhang and Liu, “[**Rational interpolation operator with finite Lebesgue constant**](https://doi.org/10.1007/s10092-021-00454-1)”, _Calcolo_ 59.1 (2022).
 
 [^35]: S. Spektor, "[**Restricted Khinchine Inequality**](https://doi.org/10.4153/CMB-2015-047-8)", _Canadian Mathematical Bulletin_ 59(1), 2016, proposition 3.1, proved the bound $\tau_s(X) \le \sqrt{2}(s/4)^{s/2} n^{s/2}$ assuming $s\ge 2$ is a real number and $k\ge n$ is an integer (and the result extends to $0\le k\lt n$ by symmetry), but this bound is looser than the one given by this lemma.
 
 [^36]: Johnson, N.L., Kemp, A.W., Kotz, S., _Univariate Discrete Distributions, Third Edition_, Wiley, 2005.
 
-[^37]: [**Vatutin, V.A., Mikhaĭlov, V.G., "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles"**](https://scholar.google.com/scholar?q=Vatutin,+V.A.,+Mikhaĭlov,+V.G.,+Limit+theorems+for+the+number+of+empty+cells+in+an+equiprobable+scheme+for+group+allocation+of+p), Theory Probab. Appl. 27 (1982).
+[^37]: No note text yet.
 
-[^38]: [**Hoeffding, W., "Probability inequalities for sums of bounded random variables"**](https://scholar.google.com/scholar?q=Hoeffding,+W.,+Probability+inequalities+for+sums+of+bounded+random+variables), Journal of the American Statistical Association 58 (1963).
+[^38]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [https://doi.org/10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830)
 
 [^39]: Adell, J.A., Cárdenas-Morales, D., "[**Quantitative generalized Voronovskaja’s formulae for Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/S0021904518300376)", Journal of Approximation Theory 231, July 2018.
 
@@ -481,15 +481,15 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^56]: [**Vatan, F., "Distribution functions of probabilistic automata"**](https://scholar.google.com/scholar?q=Vatan,+F.,+Distribution+functions+of+probabilistic+automata), in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.
 
-[^57]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.
+[^57]: [**Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs,"**](https://scholar.google.com/scholar?q=Kindler,+Guy+and+D.+Romik,+On+distributions+computable+by+random+walks+on+graphs) _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.
 
 [^58]: Vatan (2001) claims that a finite-state generator has a continuous `CDF` (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.
 
-[^59]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
+[^59]: [**Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. "On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited."**](https://scholar.google.com/scholar?q=Adamczewski,+B.,+Cassaigne,+J.+and+Le+Gonidec,+M.,+2020.+On+the+computational+complexity+of+algebraic+numbers+the+HartmanisStear) Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
 
 [^60]: [**Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines"**](https://scholar.google.com/scholar?q=Cobham,+A.,+On+the+Hartmanis-Stearns+problem+for+a+class+of+tag+machines), in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
 
-[^61]: [**Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases"**](https://scholar.google.com/scholar?q=Adamczewski,+B.,+Bugeaud,+Y.,+On+the+complexity+of+algebraic+numbers+I.+Expansions+in+integer+bases), _Annals of Mathematics_ 165 (2007).
+[^61]: Adamczewski, Boris, and Yann Bugeaud. “On the Complexity of Algebraic Numbers I. Expansions in Integer Bases.” Annals of Mathematics 165, no. 2 (2007): 547–65. [http://www.jstor.org/stable/20160035.](http://www.jstor.org/stable/20160035.)
 
 [^62]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683. [**https://doi.org/10.1080/00927872.2011.584337**](https://doi.org/10.1080/00927872.2011.584337)
 
@@ -916,7 +916,7 @@ _Proof_: If $k\gt n$, rewrite $X$ to a hypergeometric($2n$, $n$, $k$) random var
 
 It is known that, if $s$ is an even integer, the $s$-th central moment of any real-number random variable, including $X$, is equal to the $s$-th central absolute moment.
 
-The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhaĭlov 1982)[^37], so by Hoeffding (1963)[^38], when $s$ is even, this central moment is no more than the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
+The $s$-th central moment of $X$ is the expected value or “long-run average” of a function of $X$, namely $(X - k/2)^s$.  This function is a convex function in $X$ whenever $s\ge 0$ is an even integer and $0\le X\le 2k$, and hypergeometric random variables are so-called _Poisson binomial_ random variables (they are sums of independent coin flip results with possibly different probabilities of "success", where 1 marks a "success" and 0 marks a "failure") (Vatutin and Mikhailov 1982)[^37], so by Hoeffding (1963)[^38], when $s$ is even, this central moment is no more than the $s$-th central moment of $Y$, a binomial random variable expressing the number of "successful" samples among $k$ independent samples with "success" probability 1/2; $Y$ has the same mean as $X$, namely $k/2$.
 
 In turn, the first inequality of Theorem 1 of Adell and Cárdenas-Morales (2018)[^39] gives an upper bound of binomial central moments for even $s$ when the "success" probability is 1/2.
 

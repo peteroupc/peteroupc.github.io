@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="dc.date" content="2026-03-13"><meta name="citation_date" content="2026/03/13"><meta name="citation_publication_date" content="2026/03/13"><meta name="citation_online_date" content="2026/03/13"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Randomization and Sampling Methods"><meta name="dc.title" content="Randomization and Sampling Methods"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="dc.date" content="2026-07-04"><meta name="citation_date" content="2026/07/04"><meta name="citation_publication_date" content="2026/07/04"><meta name="citation_online_date" content="2026/07/04"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Randomization and Sampling Methods"><meta name="dc.title" content="Randomization and Sampling Methods"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="randomization-and-sampling-methods">Randomization and Sampling Methods</h1><p>This version of the document is dated 2026-03-13.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="randomization-and-sampling-methods">Randomization and Sampling Methods</h1><p>This version of the document is dated 2026-07-04.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -2688,7 +2688,7 @@ END METHOD
       <p>An example of such a source is a Gaussian noise generator.  This kind of source is often called an <em>entropy source</em>. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>D. Lemire, “A fast alternative to the modulo reduction”, Daniel Lemire’s blog, 2016. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=D.+Lemire,+A+fast+alternative+to+the+modulo+reduction"><strong>D. Lemire, “A fast alternative to the modulo reduction”</strong></a>, Daniel Lemire’s blog, 2016. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5">
       <p>Lemire, D., “<a href="https://arxiv.org/abs/1805.10941v4"><strong>Fast Random Integer Generation in an Interval</strong></a>”, arXiv:1805.10941v4  [cs.DS], 2018. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2706,7 +2706,7 @@ END METHOD
       <p>Mennucci, A.C.G., “<a href="https://arxiv.org/abs/1012.4290"><strong>Bit Recycling for Scaling Random Number Generators</strong></a>”, arXiv:1012.4290 [cs.IT], 2018. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:10">
-      <p>Knuth, Donald E. and Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:10:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation"><strong>Knuth, Donald E. and Andrew Chi-Chih Yao. “The complexity of nonuniform random number generation”</strong></a>, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:10:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:11">
       <p>This is because the <em>binary entropy</em> of <code>p = 1/n</code> is <code>p * log2(1/p) = log2(n) / n</code>, and the sum of <code>n</code> binary entropies (for <code>n</code> outcomes with probability <code>1/n</code> each) is <code>log2(n) = ln(n)/ln(2)</code>. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:11:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
@@ -2733,7 +2733,7 @@ END METHOD
       <p>Bacher, A., Bodini, O., et al., “<a href="https://arxiv.org/abs/1508.03167"><strong>MergeShuffle: A Very Fast, Parallel Random Permutation Algorithm</strong></a>”, arXiv:1508.03167 [cs.DS], 2015. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:19">
-      <p>Merlini, D., Sprugnoli, R., Verri, M.C., “An Analysis of a Simple Algorithm for Random Derangements”, 2007. <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Merlini,+D.,+Sprugnoli,+R.,+Verri,+M.C.,+An+Analysis+of+a+Simple+Algorithm+for+Random+Derangements"><strong>Merlini, D., Sprugnoli, R., Verri, M.C., “An Analysis of a Simple Algorithm for Random Derangements”</strong></a>, 2007. <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:20">
       <p>Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986. <a href="#fnref:20" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:20:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:20:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:20:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:20:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a> <a href="#fnref:20:5" class="reversefootnote" role="doc-backlink">&#8617;<sup>6</sup></a> <a href="#fnref:20:6" class="reversefootnote" role="doc-backlink">&#8617;<sup>7</sup></a> <a href="#fnref:20:7" class="reversefootnote" role="doc-backlink">&#8617;<sup>8</sup></a> <a href="#fnref:20:8" class="reversefootnote" role="doc-backlink">&#8617;<sup>9</sup></a> <a href="#fnref:20:9" class="reversefootnote" role="doc-backlink">&#8617;<sup>10</sup></a> <a href="#fnref:20:10" class="reversefootnote" role="doc-backlink">&#8617;<sup>11</sup></a> <a href="#fnref:20:11" class="reversefootnote" role="doc-backlink">&#8617;<sup>12</sup></a> <a href="#fnref:20:12" class="reversefootnote" role="doc-backlink">&#8617;<sup>13</sup></a> <a href="#fnref:20:13" class="reversefootnote" role="doc-backlink">&#8617;<sup>14</sup></a> <a href="#fnref:20:14" class="reversefootnote" role="doc-backlink">&#8617;<sup>15</sup></a> <a href="#fnref:20:15" class="reversefootnote" role="doc-backlink">&#8617;<sup>16</sup></a> <a href="#fnref:20:16" class="reversefootnote" role="doc-backlink">&#8617;<sup>17</sup></a> <a href="#fnref:20:17" class="reversefootnote" role="doc-backlink">&#8617;<sup>18</sup></a></p>
@@ -2742,7 +2742,7 @@ END METHOD
       <p>See also the <em>Stack Overflow</em> question “Random index of a non zero value in a numpy array”. <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:22">
-      <p>S. Linderman, “A Parallel Gamma Sampling Implementation”, Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2013, illustrates one example, a sampler of gamma-distributed random variates that is designed to run on a programmable video card. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=S.+Linderman,+A+Parallel+Gamma+Sampling+Implementation"><strong>S. Linderman, “A Parallel Gamma Sampling Implementation”</strong></a>, Laboratory for Independent Probabilistic Systems Blog, Feb. 21, 2013, illustrates one example, a sampler of gamma-distributed random variates that is designed to run on a programmable video card. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:23">
       <p>De Bruyne, B., et al., “Generating discrete-time constrained random walks and Lévy flights, arXiv:2104.06145 (2021). <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2751,25 +2751,25 @@ END METHOD
       <p>Brownlee, J. “<a href="https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/"><strong>A Gentle Introduction to the Bootstrap Method</strong></a>”, <em>Machine Learning Mastery</em>, May 25, 2018. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:24:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:25">
-      <p>Propp, J.G., Wilson, D.B., “Exact sampling with coupled Markov chains and applications to statistical mechanics”, 1996. <a href="#fnref:25" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Propp,+J.G.,+Wilson,+D.B.,+Exact+sampling+with+coupled+Markov+chains+and+applications+to+statistical+mechanics"><strong>Propp, J.G., Wilson, D.B., “Exact sampling with coupled Markov chains and applications to statistical mechanics”</strong></a>, 1996. <a href="#fnref:25" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:26">
       <p>Fill, J.A., “<a href="https://projecteuclid.org/euclid.aoap/1027961037"><strong>An interruptible algorithm for perfect sampling via Markov chains</strong></a>”, <em>Annals of Applied Probability</em> 8(1), 1998. <a href="#fnref:26" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:27">
-      <p>E. N. Gilbert, “Random Graphs”, <em>Annals of Mathematical Statistics</em> 30(4), 1959. <a href="#fnref:27" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=E.+N.+Gilbert,+Random+Graphs"><strong>E. N. Gilbert, “Random Graphs”</strong></a>, <em>Annals of Mathematical Statistics</em> 30(4), 1959. <a href="#fnref:27" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:28">
-      <p>V. Batagelj and U. Brandes, “Efficient generation of large random networks”, Phys.Rev. E 71:036113, 2005. <a href="#fnref:28" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=V.+Batagelj+and+U.+Brandes,+Efficient+generation+of+large+random+networks"><strong>V. Batagelj and U. Brandes, “Efficient generation of large random networks”</strong></a>, Phys.Rev. E 71:036113, 2005. <a href="#fnref:28" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:29">
-      <p>Costantini, Lucia. “Algorithms for sampling spanning trees uniformly at random.” Master’s thesis, Universitat Politècnica de Catalunya, 2020. <a href="#fnref:29" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Costantini,+Lucia.+Algorithms+for+sampling+spanning+trees+uniformly+at+random"><strong>Costantini, Lucia. “Algorithms for sampling spanning trees uniformly at random.”</strong></a> Master’s thesis, Universitat Politècnica de Catalunya, 2020. <a href="#fnref:29" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:30">
       <p>Penschuck, M., et al., “<a href="https://arxiv.org/abs/2003.00736v1"><strong>Recent Advances in Scalable Network Generation</strong></a>”, arXiv:2003.00736v1  [cs.DS], 2020. <a href="#fnref:30" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:31">
-      <p>Jon Louis Bentley and James B. Saxe, “Generating Sorted Lists of Random Numbers”, <em>ACM Trans. Math. Softw.</em> 6 (1980), pp. 359-364, describes a way to generate certain kinds of random variates in sorted order, but it’s not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can’t choose among all real numbers between 0 and 1, and there are infinitely many of them. <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Jon+Louis+Bentley+and+James+B.+Saxe,+Generating+Sorted+Lists+of+Random+Numbers"><strong>Jon Louis Bentley and James B. Saxe, “Generating Sorted Lists of Random Numbers”</strong></a>, <em>ACM Trans. Math. Softw.</em> 6 (1980), pp. 359-364, describes a way to generate certain kinds of random variates in sorted order, but it’s not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can’t choose among all real numbers between 0 and 1, and there are infinitely many of them. <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:32">
       <p>(2020a) Saad, F.A., Freer C.E., et al., “<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>”, arXiv:2003.03830v2  [stat.CO], also in <em>AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research</em> 108, Palermo, Sicily, Italy, 2020. <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2784,37 +2784,37 @@ END METHOD
       <p>K. Bringmann and K. Panagiotou, “<a href="https://link.springer.com/article/10.1007/s00453-016-0205-0"><strong>Efficient Sampling Methods for Discrete Distributions</strong></a>.” <em>Algorithmica</em> 79 (2007), also in Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP’12), 2012. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:36">
-      <p>A.J. Walker, “An efficient method for generating discrete random variables with general distributions”, <em>ACM Transactions on Mathematical Software</em> 3, 1977. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=A.J.+Walker,+An+efficient+method+for+generating+discrete+random+variables+with+general+distributions"><strong>A.J. Walker, “An efficient method for generating discrete random variables with general distributions”</strong></a>, <em>ACM Transactions on Mathematical Software</em> 3, 1977. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:37">
-      <p>Vose, Michael D. “A linear algorithm for generating random numbers with a given distribution.” IEEE Transactions on software engineering 17, no. 9 (1991): 972-975. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Vose,+Michael+D.+A+linear+algorithm+for+generating+random+numbers+with+a+given+distribution"><strong>Vose, Michael D. “A linear algorithm for generating random numbers with a given distribution.”</strong></a> IEEE Transactions on software engineering 17, no. 9 (1991): 972-975. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:38">
       <p>Klundert, B. van de, “<a href="https://dspace.library.uu.nl/handle/1874/393383"><strong>Efficient Generation of Discrete Random Variates</strong></a>”, Faculty of Science Theses, Universiteit Utrecht, 2019. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:39">
-      <p>K. Bringmann and K. G. Larsen, “Succinct Sampling from Discrete Distributions”, In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC’13), 2013. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=K.+Bringmann+and+K.+G.+Larsen,+Succinct+Sampling+from+Discrete+Distributions"><strong>K. Bringmann and K. G. Larsen, “Succinct Sampling from Discrete Distributions”</strong></a>, In: Proc. 45th Annual ACM Symposium on Theory of Computing (STOC’13), 2013. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:40">
       <p>L. Hübschle-Schneider and P. Sanders, “<a href="https://arxiv.org/abs/1903.00227v2"><strong>Parallel Weighted Random Sampling</strong></a>”, arXiv:1903.00227v2  [cs.DS], 2019. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
-      <p>Y. Tang, “An Empirical Study of Random Sampling Methods for Changing Discrete Distributions”, Master’s thesis, University of Alberta, 2019. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Y.+Tang,+An+Empirical+Study+of+Random+Sampling+Methods+for+Changing+Discrete+Distributions"><strong>Y. Tang, “An Empirical Study of Random Sampling Methods for Changing Discrete Distributions”</strong></a>, Master’s thesis, University of Alberta, 2019. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:42">
-      <p>T. S. Han and M. Hoshi, “Interval algorithm for random number generation”, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997. <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=T.+S.+Han+and+M.+Hoshi,+Interval+algorithm+for+random+number+generation"><strong>T. S. Han and M. Hoshi, “Interval algorithm for random number generation”</strong></a>, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997. <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:43">
       <p>Efraimidis, P. “<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>”, arXiv:1012.0256v2 [cs.DS], 2015. <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:44">
-      <p>Efraimidis, P. and Spirakis, P. “<a href="http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>”, 2005. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf"><strong>Efraimidis, P. and Spirakis, P. “[</strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)**</a>”](https://scholar.google.com/scholar?q=Efraimidis,+P.+and+Spirakis,+P.+Weighted+Random+Sampling+2005+Efraimidis,+Spirakishttputopia.duth.grpefraimiresearchdata2007EncO), 2005. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:45">
       <p>Deville, J.-C. and Tillé, Y.  Unequal probability sampling without replacement through a splitting method. Biometrika 85 (1998). <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:46">
-      <p>Chao, M-T., “A general purpose unequal probability sampling plan”, <em>Biometrika</em> 69 (1982). <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Chao,+M-T.,+A+general+purpose+unequal+probability+sampling+plan"><strong>Chao, M-T., “A general purpose unequal probability sampling plan”</strong></a>, <em>Biometrika</em> 69 (1982). <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:47">
       <p>Cohen E., Duffield N., Kaplan H., Lund C., Thorup M., “<a href="https://arxiv.org/abs/0803.0473"><strong>Stream sampling for variance-optimal estimation of subset sums</strong></a>”, arXiv:0803.0473, 2010. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2841,16 +2841,16 @@ END METHOD
       <p>Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278). <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:54:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:55">
-      <p>Duchon, P., Duvignau, D., “Preserving the number of cycles of length <em>k</em> in a growing uniform permutation”, <em>Electronic Journal of Combinatorics</em> 23(4), 2016. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Duchon,+P.,+Duvignau,+D.,+Preserving+the+number+of+cycles+of+length+_k_+in+a+growing+uniform+permutation"><strong>Duchon, P., Duvignau, D., “Preserving the number of cycles of length <em>k</em> in a growing uniform permutation”</strong></a>, <em>Electronic Journal of Combinatorics</em> 23(4), 2016. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:56">
-      <p>Johnson and Kotz, “Discrete Distributions”, 1969. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Johnson+and+Kotz,+Discrete+Distributions"><strong>Johnson and Kotz, “Discrete Distributions”</strong></a>, 1969. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:57">
-      <p>Smith, Noah A., and Roy W. Tromble. “<a href="http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling uniformly from the unit simplex</strong></a>.” Johns Hopkins University, Tech. Rep 29 (2004). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf"><strong>Smith, Noah A., and Roy W. Tromble. “[</strong>Sampling uniformly from the unit simplex**</a>.”](https://scholar.google.com/scholar?q=Smith,+Noah+A.,+and+Roy+W.+Tromble.+Sampling+uniformly+from+the+unit+simplexhttpwww.cs.cmu.edunasmithpaperssmithtromble.tr04.pdf) Johns Hopkins University, Tech. Rep 29 (2004). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:58">
-      <p>Durfee, et al., “l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent”, <em>Proceedings of Machine Learning Research</em> 75(1), 2018. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Durfee,+et+al.,+l1+Regression+using+Lewis+Weights+Preconditioning+and+Stochastic+Gradient+Descent"><strong>Durfee, et al., “l1 Regression using Lewis Weights Preconditioning and Stochastic Gradient Descent”</strong></a>, <em>Proceedings of Machine Learning Research</em> 75(1), 2018. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:59">
       <p>The NVIDIA white paper “<a href="https://docs.nvidia.com/cuda/floating-point/"><strong>Floating Point and IEEE 754 Compliance for NVIDIA GPUs</strong></a>”, and “<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/"><strong>Floating-Point Determinism</strong></a>” by Bruce Dawson, discuss issues with floating-point numbers in much more detail. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2859,13 +2859,13 @@ END METHOD
       <p>“Uniform” in quotes means, as close to the uniform distribution as possible for the number format.  Both bounds are excluded because, mathematically, any specific real number from the uniform distribution occurs with probability 0. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:61">
-      <p>Boehm, Hans-J. “Towards an API for the real numbers.” In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020. <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Boehm,+Hans-J.+Towards+an+API+for+the+real+numbers"><strong>Boehm, Hans-J. “Towards an API for the real numbers.”</strong></a> In Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation, pp. 562-576. 2020. <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:62">
       <p>This includes integers if <code>e</code> is limited to 0, and fixed-point numbers if <code>e</code> is limited to a single exponent less than 0. <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:63">
-      <p>Downey, A. B. “<a href="http://allendowney.com/research/rand/"><strong>Generating Pseudo-random Floating Point Values</strong></a>”, 2007. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="http://allendowney.com/research/rand/"><strong>Downey, A. B. “[</strong>Generating Pseudo-random Floating Point Values**</a>”](https://scholar.google.com/scholar?q=Downey,+A.+B.+Generating+Pseudo-random+Floating+Point+Valueshttpallendowney.comresearchrand), 2007. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:64">
       <p>Ideally, <code>X</code> is the highest integer <code>p</code> such that all multiples of <code>1/p</code> in the interval [0, 1] are representable in the number format in question.  For example, <code>X</code> is 2^53 (9007199254740992) for binary64, and 2^24 (16777216) for binary32. <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2874,19 +2874,19 @@ END METHOD
       <p>Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. <a href="https://doi.org/10.1007/978-3-030-50417-5_2"><strong>https://doi.org/10.1007/978-3-030-50417-5_2</strong></a> <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:66">
-      <p>Monahan, J.F., “Accuracy in Random Number Generation”, <em>Mathematics of Computation</em> 45(172), 1985. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:66:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Monahan,+J.F.,+Accuracy+in+Random+Number+Generation"><strong>Monahan, J.F., “Accuracy in Random Number Generation”</strong></a>, <em>Mathematics of Computation</em> 45(172), 1985. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:66:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:67">
-      <p>Halmos, P.R., “The theory of unbiased estimation”, <em>Annals of Mathematical Statistics</em> 17(1), 1946. <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:67:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Halmos,+P.R.,+The+theory+of+unbiased+estimation"><strong>Halmos, P.R., “The theory of unbiased estimation”</strong></a>, <em>Annals of Mathematical Statistics</em> 17(1), 1946. <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:67:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:68">
-      <p>Spall, J.C., “An Overview of the Simultaneous Perturbation Method for Efficient Optimization”, <em>Johns Hopkins APL Technical Digest</em> 19(4), 1998, pp. 482-492. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Spall,+J.C.,+An+Overview+of+the+Simultaneous+Perturbation+Method+for+Efficient+Optimization"><strong>Spall, J.C., “An Overview of the Simultaneous Perturbation Method for Efficient Optimization”</strong></a>, <em>Johns Hopkins APL Technical Digest</em> 19(4), 1998, pp. 482-492. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:69">
       <p>Owen, Art B. “On dropping the first Sobol’point.” In International Conference on Monte Carlo and Quasi-Monte Carlo Methods in Scientific Computing, pp. 71-86. Springer, Cham, 2022.  “<a href="https://arxiv.org/abs/2008.08051"><strong>Preprint</strong></a>”: arXiv:2008.08051. <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:70">
-      <p>P. L’Ecuyer, “Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure”, <em>Mathematics of Computation</em> 68(225), January 1999, with <a href="http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf"><strong>errata</strong></a>. <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=P.+LEcuyer,+Tables+of+Linear+Congruential+Generators+of+Different+Sizes+and+Good+Lattice+Structure"><strong>P. L’Ecuyer, “Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure”</strong></a>, <em>Mathematics of Computation</em> 68(225), January 1999, with <a href="http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf"><strong>errata</strong></a>. <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:71">
       <p>Harase, S., “<a href="https://arxiv.org/abs/2002.09006"><strong>A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo</strong></a>”, arXiv:2002.09006 [math.NA], 2020. <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2895,13 +2895,13 @@ END METHOD
       <p>Kamath, Chandrika. “Intelligent sampling for surrogate modeling, hyperparameter optimization, and data analysis.” Machine Learning with Applications (2022): 100373, <a href="https://doi.org/10.1016/j.mlwa.2022.100373"><strong>https://doi.org/10.1016/j.mlwa.2022.100373</strong></a>. <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:73">
-      <p>D. Revuz, M. Yor, “Continuous Martingales and Brownian Motion”, 1999. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=D.+Revuz,+M.+Yor,+Continuous+Martingales+and+Brownian+Motion"><strong>D. Revuz, M. Yor, “Continuous Martingales and Brownian Motion”</strong></a>, 1999. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:74">
-      <p>Lewis, P.W., Shedler, G.S., “Simulation of nonhomogeneous Poisson processes by thinning”, <em>Naval Research Logistics Quarterly</em> 26(3), 1979. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Lewis,+P.W.,+Shedler,+G.S.,+Simulation+of+nonhomogeneous+Poisson+processes+by+thinning"><strong>Lewis, P.W., Shedler, G.S., “Simulation of nonhomogeneous Poisson processes by thinning”</strong></a>, <em>Naval Research Logistics Quarterly</em> 26(3), 1979. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:75">
-      <p>Saucier, R. “Computer Generation of Statistical Distributions”, March 2000. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:75:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Saucier,+R.+Computer+Generation+of+Statistical+Distributions"><strong>Saucier, R. “Computer Generation of Statistical Distributions”</strong></a>, March 2000. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:75:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:76">
       <p>Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation"><strong>blog post by M. Kay</strong></a>. <a href="#fnref:76" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2924,10 +2924,10 @@ END METHOD
       <p>In floating-point arithmetic, finding the quantile based on the <strong>CDF</strong> instead of a PDF-like function can introduce more error (Walter 2019)<sup id="fnref:81:1"><a href="#fn:81" class="footnote" rel="footnote" role="doc-noteref">81</a></sup>. <a href="#fnref:81" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:82">
-      <p>Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, “Random variate generation by numerical inversion when only the density is known”, ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010. <a href="#fnref:82" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Gerhard+Derflinger,+Wolfgang+Hörmann,+and+Josef+Leydold,+Random+variate+generation+by+numerical+inversion+when+only+the+density+"><strong>Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold, “Random variate generation by numerical inversion when only the density is known”</strong></a>, ACM Transactions on Modeling and Computer Simulation 20(4) article 18, October 2010. <a href="#fnref:82" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:83">
-      <p>Part of <code>numbers_from_u01</code> uses algorithms described in Arnas, D., Leake, C., Mortari, D., “Random Sampling using k-vector”, <em>Computing in Science &amp; Engineering</em> 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., “k-Vector Range Searching Techniques”. <a href="#fnref:83" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Part+of+numbers_from_u01+uses+algorithms+described+in+Arnas,+D.,+Leake,+C.,+Mortari,+D.,+Random+Sampling+using+k-vector"><strong>Part of <code>numbers_from_u01</code> uses algorithms described in Arnas, D., Leake, C., Mortari, D., “Random Sampling using k-vector”</strong></a>, <em>Computing in Science &amp; Engineering</em> 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., “k-Vector Range Searching Techniques”. <a href="#fnref:83" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:84">
       <p>There is a paper by Arnas et al. that describes approximate random sampling using the values of the CDF by the so-called <em>k-vector</em> technique, but the paper doesn’t formally prove how good the approximation is.  Arnas, D., Leake, C., Mortari, D., “Random Sampling using k-vector”, Computing in Science &amp; Engineering 21(1) pp. 94-107, 2019.  See also Mortari, D., Neta, B., “k-Vector Range Searching Techniques”. <a href="#fnref:84" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2936,10 +2936,10 @@ END METHOD
       <p>Devroye, L., “Non-Uniform Random Variate Generation”.  In <em>Handbooks in Operations Research and Management Science: Simulation</em>, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83. <a href="#fnref:85" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:85:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:85:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:86">
-      <p>von Neumann, J., “Various techniques used in connection with random digits”, 1951. <a href="#fnref:86" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits"><strong>von Neumann, J., “Various techniques used in connection with random digits”</strong></a>, 1951. <a href="#fnref:86" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:87">
-      <p>Sainudiin, Raazesh, and Thomas L. York. “An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,” <em>Reliable Computing</em> 18 (2013): 15-54. <a href="#fnref:87" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Sainudiin,+Raazesh,+and+Thomas+L.+York.+An+Auto-Validating,+Trans-Dimensional,+Universal+Rejection+Sampler+for+Locally+Lipschitz"><strong>Sainudiin, Raazesh, and Thomas L. York. “An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,”</strong></a> <em>Reliable Computing</em> 18 (2013): 15-54. <a href="#fnref:87" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:88">
       <p>Many Markov chains converge to a <em>stationary distribution</em>.  The chain’s <em>mixing time</em> is how fast this happens; it’s the number of steps after which the next draw will follow a distribution within <em>ε</em> of the stationary distribution.  This approximate distribution is then sampled by initializing several Markov chains (independently at random), then running each of them for their mixing time (“burn-in”), then taking the next draw of each chain.  For further information see Levin and Peres, <em>Markov chains and mixing times</em>, second edition, 2017. <a href="#fnref:88" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2948,7 +2948,7 @@ END METHOD
       <p>Tran, K.H., “<a href="https://arxiv.org/abs/1607.01985v5"><strong>A Common Derivation for Markov Chain Monte Carlo Algorithms with Tractable and Intractable Targets</strong></a>”, arXiv:1607.01985v5 [stat.CO], 2018, gives a common framework for describing many MCMC algorithms, including Metropolis–Hastings, slice sampling, and Gibbs sampling. <a href="#fnref:89" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:90">
-      <p>Kschischang, Frank R. “A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates.” (2019). <a href="#fnref:90" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Kschischang,+Frank+R.+A+Trapezoid-Ziggurat+Algorithm+for+Generating+Gaussian+Pseudorandom+Variates"><strong>Kschischang, Frank R. “A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates.”</strong></a> (2019). <a href="#fnref:90" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:91">
       <p>Devroye, L., 1996, December, “Random variate generation in one line of code” In <em>Proceedings Winter Simulation Conference</em> (pp. 265-272). IEEE. <a href="#fnref:91" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2957,7 +2957,7 @@ END METHOD
       <p>Crooks, G.E., <a href="https://threeplusone.com/pubs/FieldGuide.pdf"><strong><em>Field Guide to Continuous Probability Distributions</em></strong></a>, 2019. <a href="#fnref:92" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:93">
-      <p>McGrath, E.J., Irving, D.C., “Techniques for Efficient Monte Carlo Simulation, Volume II”, Oak Ridge National Laboratory, April 1975. <a href="#fnref:93" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=McGrath,+E.J.,+Irving,+D.C.,+Techniques+for+Efficient+Monte+Carlo+Simulation,+Volume+II"><strong>McGrath, E.J., Irving, D.C., “Techniques for Efficient Monte Carlo Simulation, Volume II”</strong></a>, Oak Ridge National Laboratory, April 1975. <a href="#fnref:93" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:94">
       <p>Crooks, G.E., “<a href="https://arxiv.org/abs/1005.3274v2"><strong>The Amoroso Distribution</strong></a>”, arXiv:1005.3274v2 [math.ST], 2015. <a href="#fnref:94" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2966,19 +2966,19 @@ END METHOD
       <p>Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgórski. The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance. Springer Science &amp; Business Media, 2012. <a href="#fnref:95" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:96">
-      <p>Devroye, L., “Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator”, <em>Computing</em> 46, pp. 165-173, 1991. <a href="#fnref:96" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Devroye,+L.,+Expected+Time+Analysis+of+a+Simple+Recursive+Poisson+Random+Variate+Generator"><strong>Devroye, L., “Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator”</strong></a>, <em>Computing</em> 46, pp. 165-173, 1991. <a href="#fnref:96" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:97">
-      <p>Bailey, R.W., “Polar generation of random variates with the t distribution”, <em>Mathematics of Computation</em> 62 (1994). <a href="#fnref:97" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Bailey,+R.W.,+Polar+generation+of+random+variates+with+the+t+distribution"><strong>Bailey, R.W., “Polar generation of random variates with the t distribution”</strong></a>, <em>Mathematics of Computation</em> 62 (1994). <a href="#fnref:97" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:98">
-      <p>Stein, W.E. and Keblis, M.F., “A new method to simulate the triangular distribution”, <em>Mathematical and Computer Modelling</em> 49(5-6), 2009, pp.1143-1147. <a href="#fnref:98" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Stein,+W.E.+and+Keblis,+M.F.,+A+new+method+to+simulate+the+triangular+distribution"><strong>Stein, W.E. and Keblis, M.F., “A new method to simulate the triangular distribution”</strong></a>, <em>Mathematical and Computer Modelling</em> 49(5-6), 2009, pp.1143-1147. <a href="#fnref:98" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:99">
-      <p>Borel, E., “Sur l’emploi du théorème de Bernoulli pour faciliter le calcul d’un infinité de coefficients. Application au probleme de l’attente à un guichet”, 1942. <a href="#fnref:99" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Borel,+E.,+Sur+lemploi+du+théorème+de+Bernoulli+pour+faciliter+le+calcul+dun+infinité+de+coefficients.+Application+au+probleme+d"><strong>Borel, E., “Sur l’emploi du théorème de Bernoulli pour faciliter le calcul d’un infinité de coefficients. Application au probleme de l’attente à un guichet”</strong></a>, 1942. <a href="#fnref:99" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:100">
-      <p>Piccolo, Domenico. “On the moments of a mixture of uniform and shifted binomial random variables.” Quaderni di Statistica 5, no. 1 (2003): 85-104. <a href="#fnref:100" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Piccolo,+Domenico.+On+the+moments+of+a+mixture+of+uniform+and+shifted+binomial+random+variables"><strong>Piccolo, Domenico. “On the moments of a mixture of uniform and shifted binomial random variables.”</strong></a> Quaderni di Statistica 5, no. 1 (2003): 85-104. <a href="#fnref:100" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:101">
       <p>Flajolet, P., Pelletier, M., Soria, M., “<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>”, arXiv:0906.5560v2  [math.PR], 2010. <a href="#fnref:101" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -2993,22 +2993,22 @@ END METHOD
       <p>Baker, R., Jackson, D., “<a href="https://arxiv.org/abs/1408.3237"><strong>A new distribution for robust least squares</strong></a>”, arXiv:1408.3237 [stat.ME], 2018. <a href="#fnref:104" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:105">
-      <p>Osada, R., Funkhouser, T., et al., “Shape Distributions”, _ACM Transactions on Graphics 21(4), Oct. 2002. <a href="#fnref:105" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Osada,+R.,+Funkhouser,+T.,+et+al.,+Shape+Distributions"><strong>Osada, R., Funkhouser, T., et al., “Shape Distributions”</strong></a>, _ACM Transactions on Graphics 21(4), Oct. 2002. <a href="#fnref:105" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:106">
       <p>Schechtman, G., Zinn, J., On the volume of intersection of two Lp^n balls. 1990. <a href="#fnref:106" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:107">
-      <p>Barthe, F., Guédon, O., et al., “A probabilistic approach to the geometry of the lP^N-ball”, Annals of Probability 33(2), 2005. <a href="#fnref:107" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Barthe,+F.,+Guédon,+O.,+et+al.,+A+probabilistic+approach+to+the+geometry+of+the+lPN-ball"><strong>Barthe, F., Guédon, O., et al., “A probabilistic approach to the geometry of the lP^N-ball”</strong></a>, Annals of Probability 33(2), 2005. <a href="#fnref:107" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:108">
       <p>Alternatively, if <code>p</code> is an integer greater than 0, generate a random point on the surface of an ball with <code>N+p</code> dimensions and the specified radius (for example, using <code>RandomPointOnSphere(N+p,radius,p)</code>), then discard the last <code>p</code> coordinates of that point (Corollary 1 of Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951). <a href="#fnref:108" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:109">
-      <p>See the <em>Mathematics Stack Exchange</em> question titled “Random multivariate in hyperannulus”, <code>questions/1885630</code>. <a href="#fnref:109" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=See+the+_Mathematics+Stack+Exchange_+question+titled+Random+multivariate+in+hyperannulus"><strong>See the <em>Mathematics Stack Exchange</em> question titled “Random multivariate in hyperannulus”</strong></a>, <code>questions/1885630</code>. <a href="#fnref:109" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:110">
-      <p>See the <em>Stack Overflow</em> question “Uniform sampling (by volume) within a cone”, <code>questions/41749411</code>. Square and cube roots replaced with maximums. <a href="#fnref:110" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=See+the+_Stack+Overflow_+question+Uniform+sampling+by+volume+within+a+cone"><strong>See the <em>Stack Overflow</em> question “Uniform sampling (by volume) within a cone”</strong></a>, <code>questions/41749411</code>. Square and cube roots replaced with maximums. <a href="#fnref:110" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:111">
       <p>Lacko, V., &amp; Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. <em>Metrika</em>, 75(7), 939-951. <a href="#fnref:111" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -3017,13 +3017,13 @@ END METHOD
       <p>Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>“Sphere Point Picking”</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent). <a href="#fnref:112" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:113">
-      <p>Ben Dov, Y., David, L., et al., “Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes”, FORC 2023. <a href="#fnref:113" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Ben+Dov,+Y.,+David,+L.,+et+al.,+Resistance+to+Timing+Attacks+for+Sampling+and+Privacy+Preserving+Schemes"><strong>Ben Dov, Y., David, L., et al., “Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes”</strong></a>, FORC 2023. <a href="#fnref:113" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:114">
       <p>In the privacy context, see, for example, Awan, J. and Rao, V., 2022. “<a href="https://arxiv.org/abs/2108.00965"><strong>Privacy-Aware Rejection Sampling</strong></a>”, arXiv:2108.00965. <a href="#fnref:114" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:115">
-      <p>For example, see Balcer, V., Vadhan, S., “Differential Privacy on Finite Computers”, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., “Gaussian sampling over the integers: Efficient, generic, constant-time”, in Annual International Cryptology Conference, August 2017 (pp. 455-485). <a href="#fnref:115" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=For+example,+see+Balcer,+V.,+Vadhan,+S.,+Differential+Privacy+on+Finite+Computers"><strong>For example, see Balcer, V., Vadhan, S., “Differential Privacy on Finite Computers”</strong></a>, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., “Gaussian sampling over the integers: Efficient, generic, constant-time”, in Annual International Cryptology Conference, August 2017 (pp. 455-485). <a href="#fnref:115" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -370,7 +370,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - One family uses a shape parameter _a_ > 0; step 1 is modified to read: "Generate _u_, a uniform random variate between 0 and 1, then set _x_ to _u_<sup>1/_a_</sup>."  This family is mentioned in Lehmann (1953)[^25], Durrans (1992)[^26], and Mudholkar and Srivastava (1993\)[^27], which called it _exponentiated_.
 - The _transmuted-G_ family (Shaw and Buckley 2007\)[^28]. The family uses a shape parameter _&eta;_ satisfying &minus;1 &le; _&eta;_ &le; 1; step 1 is modified to read: "Generate a piecewise linear random variate between 0 and 1 with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72\)[^4]\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate between 0 and 1. Otherwise, generate two uniform random variates between 0 and 1, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017\)[^29] mentions the same distribution, but with a parameter _&lambda;_ = _&eta;_ + 1 satisfying 0 &le; _&lambda;_ &le; 2.)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017\)[^29] uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates between 0 and 1, then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
-- Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: Step 1 is modified to read: "Generate a uniform random variate _x_ in \[0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."; or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
+- Biweight distribution (Al-Khazaleh and Alzoubi 2021)[^52]: [Step 1 is modified to read: "Generate a uniform random variate _x_ in \[0, 1], then with probability (1&minus;_x_<sup>2</sup>)<sup>2</sup>, go to the next step.  Otherwise, repeat this process."](https://scholar.google.com/scholar?q=Step+1+is+modified+to+read+Generate+a+uniform+random+variate+_x_+in+0,+1,+then+with+probability+1minus_x_sup2supsup2sup,+go+to+t); or "Create a uniform PSRN _x_ with positive sign and integer part 0, then run **SampleGeometricBag** on that PSRN four times.  If the first two results are not both 1 and if the last two results are not both 1, go to the next step; otherwise, repeat this process."
 
 **Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013\)[^30] that uses two distributions, X and G, where X (the "transformed") is an arbitrary distribution with a probability density function; G (the "transformer") is a distribution with an easy-to-compute quantile function; and _W_ is a nowhere decreasing function that, among other conditions, maps a number in the interval [0, 1] to a number with the same support as X.  The following algorithm samples a random variate from this kind of family:
 
@@ -738,7 +738,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^8]: "_x_ is even" means that _x_ is an integer and divisible by 2.  This is true if _x_ &minus; 2\*floor(_x_/2) equals 0, or if _x_ is an integer and the least significant bit of abs(_x_) is 0.
 
-[^9]: Ghosh, A., Roughgarden, T., and Sundararajan, M., "Universally Utility-Maximizing Privacy Mechanisms", _SIAM Journal on Computing_ 41(6), 2012.
+[^9]: [**Ghosh, A., Roughgarden, T., and Sundararajan, M., "Universally Utility-Maximizing Privacy Mechanisms"**](https://scholar.google.com/scholar?q=Ghosh,+A.,+Roughgarden,+T.,+and+Sundararajan,+M.,+Universally+Utility-Maximizing+Privacy+Mechanisms), _SIAM Journal on Computing_ 41(6), 2012.
 
 [^10]: Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).
 
@@ -758,41 +758,41 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^18]: Chakraborty, A., Vardeman, S. B., Modeling and inference for mixtures of simple symmetric exponential families of p-dimensional distributions for vectors with binary coordinates, Stat Anal Data Min: The ASA Data Sci Journal. 2021; 14: 352– 365. [**https://doi.org/10.1002/sam.11528**](https://doi.org/10.1002/sam.11528)
 
-[^19]: Ahmad, Z. et al. "Recent Developments in Distribution Theory: A Brief Survey and Some New Generalized Classes of distributions." Pakistan Journal of Statistics and Operation Research 15 (2019): 87-110.
+[^19]: [**Ahmad, Z. et al. "Recent Developments in Distribution Theory: A Brief Survey and Some New Generalized Classes of distributions."**](https://scholar.google.com/scholar?q=Ahmad,+Z.+et+al.+Recent+Developments+in+Distribution+Theory+A+Brief+Survey+and+Some+New+Generalized+Classes+of+distributions) Pakistan Journal of Statistics and Operation Research 15 (2019): 87-110.
 
-[^20]: Jones, M. C. "On families of distributions with shape parameters." International Statistical Review 83, no. 2 (2015): 175-192.
+[^20]: [**Jones, M. C. "On families of distributions with shape parameters."**](https://scholar.google.com/scholar?q=Jones,+M.+C.+On+families+of+distributions+with+shape+parameters) International Statistical Review 83, no. 2 (2015): 175-192.
 
-[^21]: Eugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications", _Commun. Stat. Theory Methods_ 31, 2002.
+[^21]: [**Eugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications"**](https://scholar.google.com/scholar?q=Eugene,+N.,+Lee,+C.,+Famoye,+F.,+Beta-normal+distribution+and+its+applications), _Commun. Stat. Theory Methods_ 31, 2002.
 
-[^22]: Barreto-Souza, Wagner and Alexandre B. Simas. "The exp-G family of probability distributions." _Brazilian Journal of Probability and Statistics_ 27, 2013.  Also in arXiv:1003.1727v1 [stat.ME], 2010.
+[^22]: [**Barreto-Souza, Wagner and Alexandre B. Simas. "The exp-G family of probability distributions."**](https://scholar.google.com/scholar?q=Barreto-Souza,+Wagner+and+Alexandre+B.+Simas.+The+exp-G+family+of+probability+distributions) _Brazilian Journal of Probability and Statistics_ 27, 2013.  Also in arXiv:1003.1727v1 [stat.ME], 2010.
 
-[^23]: Mahdavi, Abbas, and Debasis Kundu. "A new method for generating distributions with an application to exponential distribution." _Communications in Statistics -- Theory and Methods_ 46, no. 13 (2017): 6543-6557.
+[^23]: [**Mahdavi, Abbas, and Debasis Kundu. "A new method for generating distributions with an application to exponential distribution."**](https://scholar.google.com/scholar?q=Mahdavi,+Abbas,+and+Debasis+Kundu.+A+new+method+for+generating+distributions+with+an+application+to+exponential+distribution) _Communications in Statistics -- Theory and Methods_ 46, no. 13 (2017): 6543-6557.
 
 [^24]: M. C. Jones. Letter to the Editor concerning “A new method for generating distributions with an application to exponential distribution” and “Alpha power Weibull distribution: Properties and applications”, _Communications in Statistics - Theory and Methods_ 47 (2018).
 
-[^25]: Lehmann, E.L., "The power of rank tests", Annals of Mathematical Statistics 24(1), March 1953.
+[^25]: [**Lehmann, E.L., "The power of rank tests"**](https://scholar.google.com/scholar?q=Lehmann,+E.L.,+The+power+of+rank+tests), Annals of Mathematical Statistics 24(1), March 1953.
 
-[^26]: Durrans, S.R., "Distributions of fractional order statistics in hydrology", Water Resources Research 28 (1992).
+[^26]: [**Durrans, S.R., "Distributions of fractional order statistics in hydrology"**](https://scholar.google.com/scholar?q=Durrans,+S.R.,+Distributions+of+fractional+order+statistics+in+hydrology), Water Resources Research 28 (1992).
 
-[^27]: Mudholkar, G. S., Srivastava, D. K., "Exponentiated Weibull family for analyzing bathtub failure-rate data", _IEEE Transactions on Reliability_ 42(2), 299-302, 1993.
+[^27]: [**Mudholkar, G. S., Srivastava, D. K., "Exponentiated Weibull family for analyzing bathtub failure-rate data"**](https://scholar.google.com/scholar?q=Mudholkar,+G.+S.,+Srivastava,+D.+K.,+Exponentiated+Weibull+family+for+analyzing+bathtub+failure-rate+data), _IEEE Transactions on Reliability_ 42(2), 299-302, 1993.
 
-[^28]: Shaw, W.T., Buckley, I.R.C., "The alchemy of probability distributions: Beyond Gram-Charlier expansions, and a skew-kurtotic-normal distribution from a rank transmutation map", 2007.
+[^28]: [**Shaw, W.T., Buckley, I.R.C., "The alchemy of probability distributions: Beyond Gram-Charlier expansions, and a skew-kurtotic-normal distribution from a rank transmutation map"**](https://scholar.google.com/scholar?q=Shaw,+W.T.,+Buckley,+I.R.C.,+The+alchemy+of+probability+distributions+Beyond+Gram-Charlier+expansions,+and+a+skew-kurtotic-norma), 2007.
 
-[^29]: Granzotto, D.C.T., Louzada, F., et al., "Cubic rank transmuted distributions: inferential issues and applications", _Journal of Statistical Computation and Simulation_, 2017.
+[^29]: [**Granzotto, D.C.T., Louzada, F., et al., "Cubic rank transmuted distributions: inferential issues and applications"**](https://scholar.google.com/scholar?q=Granzotto,+D.C.T.,+Louzada,+F.,+et+al.,+Cubic+rank+transmuted+distributions+inferential+issues+and+applications), _Journal of Statistical Computation and Simulation_, 2017.
 
-[^30]: Alzaatreh, A., Famoye, F., Lee, C., "A new method for generating families of continuous distributions", _Metron_ 71:63–79 (2013).
+[^30]: [**Alzaatreh, A., Famoye, F., Lee, C., "A new method for generating families of continuous distributions"**](https://scholar.google.com/scholar?q=Alzaatreh,+A.,+Famoye,+F.,+Lee,+C.,+A+new+method+for+generating+families+of+continuous+distributions), _Metron_ 71:63–79 (2013).
 
 [^31]: Aljarrah, M.A., Lee, C. and Famoye, F., "On generating T-X family of distributions using quantile functions", Journal of Statistical Distributions and Applications,1(2), 2014. [**https://doi.org/10.1186/2195-5832-1-2**](https://doi.org/10.1186/2195-5832-1-2)
 
-[^32]: Gleaton, J.U., Lynch, J. D., "Properties of generalized log-logistic families of lifetime distributions", _Journal of Probability and Statistical Science_ 4(1), 2006.
+[^32]: [**Gleaton, J.U., Lynch, J. D., "Properties of generalized log-logistic families of lifetime distributions"**](https://scholar.google.com/scholar?q=Gleaton,+J.U.,+Lynch,+J.+D.,+Properties+of+generalized+log-logistic+families+of+lifetime+distributions), _Journal of Probability and Statistical Science_ 4(1), 2006.
 
-[^33]: Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Applications", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.
+[^33]: [**Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Applications"**](https://scholar.google.com/scholar?q=Hosseini,+B.,+Afshari,+M.,+The+Generalized+Odd+Gamma-G+Family+of+Distributions+Properties+and+Applications), _Austrian Journal of Statistics_ vol. 47, Feb. 2018.
 
-[^34]: N.H. Al Noor and N.K. Assi, "Rayleigh-Rayleigh Distribution: Properties and Applications", _Journal of Physics: Conference Series_ 1591, 012038 (2020).  The underlying Rayleigh distribution uses a parameter _&theta;_ (or _&lambda;_), which is different from _Mathematica_'s parameterization with _&sigma;_ = sqrt(1/_&theta;_<sup>2</sup>) = sqrt(1/_&lambda;_<sup>2</sup>).  The first Rayleigh distribution uses _&theta;_ and the second, _&lambda;_.
+[^34]: [**N.H. Al Noor and N.K. Assi, "Rayleigh-Rayleigh Distribution: Properties and Applications"**](https://scholar.google.com/scholar?q=N.H.+Al+Noor+and+N.K.+Assi,+Rayleigh-Rayleigh+Distribution+Properties+and+Applications), _Journal of Physics: Conference Series_ 1591, 012038 (2020).  The underlying Rayleigh distribution uses a parameter _&theta;_ (or _&lambda;_), which is different from _Mathematica_'s parameterization with _&sigma;_ = sqrt(1/_&theta;_<sup>2</sup>) = sqrt(1/_&lambda;_<sup>2</sup>).  The first Rayleigh distribution uses _&theta;_ and the second, _&lambda;_.
 
-[^35]: Boshi, M.A.A., et al., "Generalized Gamma – Generalized Gompertz Distribution", _Journal of Physics: Conference Series_ 1591, 012043 (2020).
+[^35]: [**Boshi, M.A.A., et al., "Generalized Gamma – Generalized Gompertz Distribution"**](https://scholar.google.com/scholar?q=Boshi,+M.A.A.,+et+al.,+Generalized+Gamma+Generalized+Gompertz+Distribution), _Journal of Physics: Conference Series_ 1591, 012043 (2020).
 
-[^36]: Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.
+[^36]: [**Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes"**](https://scholar.google.com/scholar?q=Tahir,+M.H.,+Cordeiro,+G.M.,+Compounding+of+distributions+a+survey+and+new+generalized+classes), _Journal of Statistical Distributions and Applications_ 3(13), 2016.
 
 [^37]: Pérez-Casany, M., Valero, J., and Ginebra, J. (2016). Random-Stopped Extreme distributions. International Conference on Statistical Distributions and Applications.
 
@@ -804,77 +804,77 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^41]: This is simplified from the paper because _Y_ can take on only values greater than 0 so that the probability of getting 0 is 0.
 
-[^42]: Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.
+[^42]: [**Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications"**](https://scholar.google.com/scholar?q=Akdoğan,+Y.,+Kus,+C.,+et+al.,+Geometric-Zero+Truncated+Poisson+Distribution+Properties+and+Applications), _Gazi University Journal of Science_ 32(4), 2019.
 
-[^43]: Barreto-Souza, W.: "Bivariate gamma-geometric law and its induced Lévy process", Journal of Multivariate Analysis 109 (2012).
+[^43]: [**Barreto-Souza, W.: "Bivariate gamma-geometric law and its induced Lévy process"**](https://scholar.google.com/scholar?q=Barreto-Souza,+W.+Bivariate+gamma-geometric+law+and+its+induced+Lévy+process), Journal of Multivariate Analysis 109 (2012).
 
-[^44]: Kuş, C., "A new lifetime distribution", _Computational Statistics & Data Analysis_ 51 (2007).
+[^44]: [**Kuş, C., "A new lifetime distribution"**](https://scholar.google.com/scholar?q=Kuş,+C.,+A+new+lifetime+distribution), _Computational Statistics & Data Analysis_ 51 (2007).
 
-[^45]: Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. "The Poisson-exponential lifetime distribution." Computational Statistics & Data Analysis 55, no. 1 (2011): 677-686.
+[^45]: [**Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. "The Poisson-exponential lifetime distribution."**](https://scholar.google.com/scholar?q=Cancho,+Vicente+G.,+Franscisco+Louzada-Neto,+and+Gladys+DC+Barriga.+The+Poisson-exponential+lifetime+distribution) Computational Statistics & Data Analysis 55, no. 1 (2011): 677-686.
 
-[^46]: Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.
+[^46]: [**Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions"**](https://scholar.google.com/scholar?q=Jodrá,+P.,+A+note+on+the+right+truncated+Weibull+distribution+and+the+minimum+of+power+function+distributions), 2020.
 
-[^47]: Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).
+[^47]: [**Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools"**](https://scholar.google.com/scholar?q=Keller,+A.Z.,+Kamath+A.R.,+Reliability+analysis+of+CNC+machine+tools), _Reliability Engineering_ 3 (1982).
 
-[^48]: Rao, C.R., "Weighted distributions arising out of methods of ascertainment", 1985.
+[^48]: [**Rao, C.R., "Weighted distributions arising out of methods of ascertainment"**](https://scholar.google.com/scholar?q=Rao,+C.R.,+Weighted+distributions+arising+out+of+methods+of+ascertainment), 1985.
 
-[^49]: Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions", 2010.
+[^49]: [**Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions"**](https://scholar.google.com/scholar?q=Ospina,+R.,+Ferrari,+S.L.P.,+Inflated+Beta+Distributions), 2010.
 
 [^50]: Chakraborty, S., Bhattacharjee, S., "[**Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution**](https://arxiv.org/abs/2103.08916)", arXiv:2103.08916 [stat.ME], 2021.
 
-[^51]: Mullahy, J., "Specification and testing of some modified count data models", 1986.
+[^51]: [**Mullahy, J., "Specification and testing of some modified count data models"**](https://scholar.google.com/scholar?q=Mullahy,+J.,+Specification+and+testing+of+some+modified+count+data+models), 1986.
 
-[^52]: Grassia, A., "On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions", _Australian Journal of Statistics_, 1977.
+[^52]: [**Grassia, A., "On a family of distributions with argument between 0 and 1 obtained by transformation of the gamma and derived compound distributions"**](https://scholar.google.com/scholar?q=Grassia,+A.,+On+a+family+of+distributions+with+argument+between+0+and+1+obtained+by+transformation+of+the+gamma+and+derived+comp), _Australian Journal of Statistics_, 1977.
 
-[^53]: Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.
+[^53]: [**Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling."**](https://scholar.google.com/scholar?q=Elgohari,+Hanaa,+and+Haitham+Yousof.+New+Extension+of+Weibull+Distribution+Copula,+Mathematical+Properties+and+Data+Modeling) Stat., Optim. Inf. Comput., Vol.8, December 2020.
 
 [^54]: Marshall, A.W. and Olkin, I., 1997. A new method for adding a parameter to a family of distributions with application to the exponential and Weibull families. Biometrika, 84(3), pp.641-652.
 
-[^55]: Rogers, W.H., Tukey, J.W., "Understanding some long-tailed statistical distributions", _Statistica Neerlandica_ 26(3), 1972.
+[^55]: [**Rogers, W.H., Tukey, J.W., "Understanding some long-tailed statistical distributions"**](https://scholar.google.com/scholar?q=Rogers,+W.H.,+Tukey,+J.W.,+Understanding+some+long-tailed+statistical+distributions), _Statistica Neerlandica_ 26(3), 1972.
 
-[^56]: Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).
+[^56]: [**Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data"**](https://scholar.google.com/scholar?q=Rady,+E.H.A.,+Hassanein,+W.A.,+Elhaddad,+T.A.,+The+power+Lomax+distribution+with+an+application+to+bladder+cancer+data), (2016).
 
-[^57]: Castellares, F., Lemonte, A.J., Moreno, G., "On the two-parameter Bell-Touchard discrete distribution", _Communications in Statistics - Theory and Methods_ 4, (2020).
+[^57]: [**Castellares, F., Lemonte, A.J., Moreno, G., "On the two-parameter Bell-Touchard discrete distribution"**](https://scholar.google.com/scholar?q=Castellares,+F.,+Lemonte,+A.J.,+Moreno,+G.,+On+the+two-parameter+Bell-Touchard+discrete+distribution), _Communications in Statistics - Theory and Methods_ 4, (2020).
 
 [^58]: The similar Bell&ndash;Touchard process is the sum of the first _N_ variates from an infinite sequence of zero-truncated Poisson(_a_) random variates, where _N_ is the number of events of a Poisson process with rate _b_\*exp(_a_)&minus;_b_ (Freud, T., Rodriguez, P.M., "[**The Bell-Touchard counting process**](https://arxiv.org/abs/2203.16737v2)", arXiv:2203.16737v2 [math.PR], 2022).
 
-[^59]: Buddana, Amrutha, and Tomasz J. Kozubowski. "Discrete Pareto distributions." Economic Quality Control 29, no. 2 (2014): 143-156.
+[^59]: [**Buddana, Amrutha, and Tomasz J. Kozubowski. "Discrete Pareto distributions."**](https://scholar.google.com/scholar?q=Buddana,+Amrutha,+and+Tomasz+J.+Kozubowski.+Discrete+Pareto+distributions) Economic Quality Control 29, no. 2 (2014): 143-156.
 
-[^60]: Batsidis, A., Lemonte, A.J., "On Goodness-of-Fit Tests for the Neyman Type A Distribution", REVSTAT-Statistical Journal (accepted Nov. 2021).
+[^60]: [**Batsidis, A., Lemonte, A.J., "On Goodness-of-Fit Tests for the Neyman Type A Distribution"**](https://scholar.google.com/scholar?q=Batsidis,+A.,+Lemonte,+A.J.,+On+Goodness-of-Fit+Tests+for+the+Neyman+Type+A+Distribution), REVSTAT-Statistical Journal (accepted Nov. 2021).
 
-[^61]: Kudryavtsev, A.A., "On the representation of gamma-exponential and generalized negative binomial distributions", Inform. Appl. 13 (2019)
+[^61]: [**Kudryavtsev, A.A., "On the representation of gamma-exponential and generalized negative binomial distributions"**](https://scholar.google.com/scholar?q=Kudryavtsev,+A.A.,+On+the+representation+of+gamma-exponential+and+generalized+negative+binomial+distributions), Inform. Appl. 13 (2019)
 
 [^62]: Saha, M., et al., "[**The extended xgamma distribution**](https://arxiv.org/abs/1909.01103)", arXiv:1909.01103 [math.ST], 2019.
 
-[^63]: McNeil, et al., "Quantitative risk management", 2010.
+[^63]: [**McNeil, et al., "Quantitative risk management"**](https://scholar.google.com/scholar?q=McNeil,+et+al.,+Quantitative+risk+management), 2010.
 
-[^64]: Azzalini, A., Capitanio, A., "Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution." Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389.
+[^64]: [**Azzalini, A., Capitanio, A., "Distributions generated by perturbation of symmetry with emphasis on a multivariate skew t‐distribution."**](https://scholar.google.com/scholar?q=Azzalini,+A.,+Capitanio,+A.,+Distributions+generated+by+perturbation+of+symmetry+with+emphasis+on+a+multivariate+skew+tdistribut) Journal of the Royal Statistical Society: Series B (Statistical Methodology) 65, no. 2 (2003): 367-389.
 
-[^65]: Azzalini, A., "An overview on the progeny of the skew-normal family&mdash; A personal perspective", Journal of Multivariate Analysis 188, March 2022.
+[^65]: [**Azzalini, A., "An overview on the progeny of the skew-normal family&mdash; A personal perspective"**](https://scholar.google.com/scholar?q=Azzalini,+A.,+An+overview+on+the+progeny+of+the+skew-normal+familymdash+A+personal+perspective), Journal of Multivariate Analysis 188, March 2022.
 
-[^66]: Azzalini, Adelchi. "A class of distributions which includes the normal ones." Scandinavian journal of statistics (1985): 171-178.
+[^66]: [**Azzalini, Adelchi. "A class of distributions which includes the normal ones."**](https://scholar.google.com/scholar?q=Azzalini,+Adelchi.+A+class+of+distributions+which+includes+the+normal+ones) Scandinavian journal of statistics (1985): 171-178.
 
 [^67]: Gómez-Déniz, Emilio, and E. Calderín-Ojeda. "[**On the usefulness of the logarithmic skew normal distribution for describing claims size data**](https://www.hindawi.com/journals/mpe/2020/1420618/)." Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, "The logarithmic skew-normal distributions are moment-indeterminate", _Journal of Applied Probability_ 46) studied the logarithmic skew normal distribution with _&mu;_=0 and _&sigma;_=1.
 
-[^68]: Hahn, Eugene D. "The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation." Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22.
+[^68]: [**Hahn, Eugene D. "The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation."**](https://scholar.google.com/scholar?q=Hahn,+Eugene+D.+The+Tilted+Beta-Binomial+Distribution+in+Overdispersed+Data+Maximum+Likelihood+and+Bayesian+Estimation) Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22.
 
 [^69]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. [**https://doi.org/10.1111/j.1740-9713.2020.01352.x**](https://doi.org/10.1111/j.1740-9713.2020.01352.x)
 
 [^70]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213
 
-[^71]: Sadeghi, Parastoo, and Mehdi Korki. "Offset-Symmetric Gaussians for Differential Privacy." arXiv preprint arXiv:2110.06412 (2021).
+[^71]: [**Sadeghi, Parastoo, and Mehdi Korki. "Offset-Symmetric Gaussians for Differential Privacy."**](https://scholar.google.com/scholar?q=Sadeghi,+Parastoo,+and+Mehdi+Korki.+Offset-Symmetric+Gaussians+for+Differential+Privacy) arXiv preprint arXiv:2110.06412 (2021).
 
-[^72]: Henze, Norbert. "A probabilistic representation of the 'skew-normal' distribution." Scandinavian journal of statistics (1986): 271-275. SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
+[^72]: [**Henze, Norbert. "A probabilistic representation of the 'skew-normal' distribution."**](https://scholar.google.com/scholar?q=Henze,+Norbert.+A+probabilistic+representation+of+the+skew-normal+distribution) Scandinavian journal of statistics (1986): 271-275. SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
 
 [^73]: Francis-Staite, Kelli, and Langford White. "[**Analysis of sojourn time distributions for semi-Markov models**](https://arxiv.org/abs/2206.10865)", arXiv:2206.10865 (2022).
 
-[^74]: Kozubowski, Tomasz J., and Krzysztof Podgórski. "A generalized Sibuya distribution." Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887.
+[^74]: [**Kozubowski, Tomasz J., and Krzysztof Podgórski. "A generalized Sibuya distribution."**](https://scholar.google.com/scholar?q=Kozubowski,+Tomasz+J.,+and+Krzysztof+Podgórski.+A+generalized+Sibuya+distribution) Annals of the Institute of Statistical Mathematics 70, no. 4 (2018): 855-887.
 
 [^75]: If _&nu;_ = 0, this is the ordinary Sibuya distribution.
 
-[^76]: Agarwal, A., Pandey, H., "Himanshu distribution and its applications", Bulletin of Mathematics and Statistics Research 10(4), 2022.
+[^76]: [**Agarwal, A., Pandey, H., "Himanshu distribution and its applications"**](https://scholar.google.com/scholar?q=Agarwal,+A.,+Pandey,+H.,+Himanshu+distribution+and+its+applications), Bulletin of Mathematics and Statistics Research 10(4), 2022.
 
-[^77]: Hahn, E.D., López Martín, M.d.M., "Robust project management with the tilted beta distribution", 2015.
+[^77]: [**Hahn, E.D., López Martín, M.d.M., "Robust project management with the tilted beta distribution"**](https://scholar.google.com/scholar?q=Hahn,+E.D.,+López+Martín,+M.d.M.,+Robust+project+management+with+the+tilted+beta+distribution), 2015.
 
 [^78]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
@@ -886,9 +886,9 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^82]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
-[^83]: Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
+[^83]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^84]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^84]: [**Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators"**](https://scholar.google.com/scholar?q=Jacob,+P.E.,+Thiery,+A.H.,+On+nonnegative+unbiased+estimators), Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
 [^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 
@@ -900,9 +900,9 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^89]: Akahira, M., & Koike, K. (1998). On the properties of statistical sequential decision procedures. Sugaku expositions, 11(2).
 
-[^90]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
+[^90]: [**AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling"**](https://scholar.google.com/scholar?q=AKAHIRA,+Masafumi,+Kei+TAKEUCHI,+and+Ken-ichi+KOIKE.+Unbiased+estimation+in+sequential+binomial+sampling),  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
-[^91]: Singh (1964, "Existence of unbiased estimates", Sankhyā A 26) claimed that an estimation algorithm with a mean of $f(\lambda)$ exists, given an oracle of variates with an unknown mean equal to $\lambda$, if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
+[^91]: [**Singh (1964, "Existence of unbiased estimates"**](https://scholar.google.com/scholar?q=Singh+1964,+Existence+of+unbiased+estimates), Sankhyā A 26) claimed that an estimation algorithm with a mean of $f(\lambda)$ exists, given an oracle of variates with an unknown mean equal to $\lambda$, if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 <a id=License></a>
 

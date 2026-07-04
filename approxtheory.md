@@ -636,7 +636,7 @@ so now there are two error bounds to find: one for $f$ and the other for $\text{
 
 $$B_n(g)\le \Vert g^{(2)}\Vert/(8n).$$
 
-(This follows from Lorentz (1963)[^75] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
+(This follows from Lorentz (1964)[^75] and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$'s second derivative, is an upper bound of $g$'s first derivative's smallest Lipschitz constant.)
 
 Altogether, if $f$ has a continuous second derivative and $m$ is fixed:
 
@@ -837,7 +837,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^34]: [**Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem"**](https://scholar.google.com/scholar?q=Gonska,+Heiner.+On+the+degree+of+approximation+in+Voronovskajas+theorem), Studia Univ. Babeş-Bolyai, Math., September 2007.
 
-[^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270. [https://doi.org/10.1016/0021-9045%2885%2990049-8](https://doi.org/10.1016/0021-9045%2885%2990049-8)
+[^35]: Anastassiou, George A. "[**A study of positive linear operators by the method of moments, one-dimensional case**](https://www.sciencedirect.com/science/article/pii/0021904585900498)." Journal of Approximation Theory 45.3 (1985): 247-270. [**https://doi.org/10.1016/0021-9045%2885%2990049-8**](https://doi.org/10.1016/0021-9045%2885%2990049-8)
 
 [^36]: The paper Cichoń et al., "[**On delta-method of moments and probabilistic sums**](https://doi.org/10.1137/1.9781611973037.11)", ANALCO 2013, has very similar results, but they assume the function $f$ has a $k$-th derivative defined on an _{op}en_ interval (say, $0\lt\lambda\lt 1$), rather than a _compact_ interval, making those results harder to use if $Y$ is a random variable that can take a value equal to either endpoint of the interval (in this example, 0 or 1).
 
@@ -917,7 +917,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^74]: [**Schaeffer, A. C., and R. J. Duffin. "On some inequalities of S. Bernstein and W. Markoff for derivatives of polynomials."**](https://scholar.google.com/scholar?q=Schaeffer,+A.+C.,+and+R.+J.+Duffin.+On+some+inequalities+of+S.+Bernstein+and+W.+Markoff+for+derivatives+of+polynomials) Bulletin of the American Mathematical Society 44.4 (1938): 289-297.
 
-[^75]: [**G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials"**](https://scholar.google.com/scholar?q=G.G.+Lorentz,+Inequalities+and+saturation+classes+of+Bernstein+polynomials), 1963.
+[^75]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [https://doi.org/10.1007/978-3-0348-4131-3_19](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
 [^76]: Lorentz, G.G. The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
