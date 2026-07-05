@@ -373,7 +373,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^2]: Thomas, A.C., Blanchet, J., "[**A Practical Implementation of the Bernoulli Factory**](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.
 
-[^3]: Thomas and Blanchet (2012) dealt with building polynomials that approach piecewise linear functions "fast".  Their strategy for $f(\lambda)=\min(mult\times\lambda, 1-2\varepsilon)$ is to first compute a low-degree polynomial $P$ satisfying $P(0)=0$ and otherwise greater than $f$, and then compute further polynomials of increasing degree that each come between $f$ and the previous polynomial and satisfy the consistency requirement. These polynomials approach $f$ rapidly when $\lambda$ is near 0, and extremely slowly when $\lambda$ is near 1. In their strategy, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_), where:<br>(1): _x_ = &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_. (This formula doesn't appear in their paper, but in the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)<br>(2): _y_ satisfies 0&lt;_y_&lt;1 and is chosen so that the degree-_n_ polynomial is between $f$ and the previous polynomial and meets the consistency requirement. The supplemental source code seems to choose _y_ in an _ad hoc_ manner.<br>(3): _n_ is the polynomial's degree.
+[^3]: Thomas and Blanchet (2012) dealt with building polynomials that approach piecewise linear functions "fast".  Their strategy for $f(\lambda)=\min(mult\times\lambda, 1-2\varepsilon)$ is to first compute a low-degree polynomial $P$ satisfying $P(0)=0$ and otherwise greater than $f$, and then compute further polynomials of increasing degree that each come between $f$ and the previous polynomial and satisfy the consistency requirement. These polynomials approach $f$ rapidly when $\lambda$ is near 0, and extremely slowly when $\lambda$ is near 1. In their strategy, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)\*_y_/_x_,_y_), where:<br>(1): _x_ = &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_. (This formula doesn't appear in their paper, but in the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas after I asked for that source code.)<br>(2): _y_ satisfies 0&lt;_y_&lt;1 and is chosen so that the degree-_n_ polynomial is between $f$ and the previous polynomial and meets the consistency requirement. The supplemental source code seems to choose _y_ in an _ad hoc_ manner.<br>(3): _n_ is the polynomial's degree.
 
 [^4]: In Nacu and Peres (2005), the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$ (using the algorithms from the section "General Factory Functions" in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)"), provided $\varepsilon \lt 1/8$, where _n_ is a power of 2.  However, with these sequences, each simulation will require an extraordinary number of input coin flips. **fbelow(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$. **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$ + $\frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})}$ $\sqrt{2/n}$ + $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.
 
@@ -385,13 +385,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^8]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [**https://doi.org/10.1007/978-3-0348-4131-3_19**](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
-[^9]: [**Temple, W.B., "Steltjes integral representation of convex functions"**](https://scholar.google.com/scholar?q=Temple,+W.B.,+Steltjes+integral+representation+of+convex+functions), 1954.
+[^9]: Temple, W.B., "Steltjes integral representation of convex functions",  Duke Math. J. 21(3): 527-531 (September 1954). [https://doi.org/10.1215/S0012-7094-54-02152-3](https://doi.org/10.1215/S0012-7094-54-02152-3)
 
-[^10]: [**Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue"**](https://scholar.google.com/scholar?q=Moldovan,+E.,+Observations+sur+la+suite+des+polynômes+de+S.+N.+Bernstein+dune+fonction+continue), 1962.
+[^10]: [**Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue"**](https://scholar.google.com/scholar?q=Moldovan,+E.,+Observations+sur+la+suite+des+polynômes+de+S.+N.+Bernstein+dune+fonction+continue), Mathematica (Cluj) 4.27 (1962): 289-292.
 
 [^11]: Farouki, Rida T., and V. T. Rajan. "[**Algorithms for polynomials in Bernstein form**](https://www.sciencedirect.com/science/article/pii/0167839688900167)". Computer Aided Geometric Design 5, no. 1 (1988): 1-26.
 
-[^12]: [**Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes"**](https://scholar.google.com/scholar?q=Henderson,+S.G.,+Glynn,+P.W.,+Nonexistence+of+a+class+of+variate+generation+schemes), _Operations Research Letters_ 31 (2003).
+[^12]: Henderson, S.G., Glynn, P.W., "[**Nonexistence of a class of variate generation schemes**](https://www.sciencedirect.com/science/article/pii/S0167637702002171)", _Operations Research Letters_ 31 (2003). [**https://doi.org/10.1016/S0167-6377%2802%2900217-1**](https://doi.org/10.1016/S0167-6377%2802%2900217-1) .
 
 [^13]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.
 
@@ -405,11 +405,11 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative.  See, for example, Erdélyi, T., and J. Szabados. "On polynomials with positive coefficients." Journal of Approximation Theory 54.1 (1988): 107-122.
 
-[^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001).
+[^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001). [https://doi.org/10.1016/S0022-4049(00](https://doi.org/10.1016/S0022-4049(00))00155-9
 
 [^20]: Boudaoud, F., Caruso, F. & Roy, MF. Certificates of Positivity in the Bernstein Basis. Discrete Comput Geom 39, 639–655 (2008). [**https://doi.org/10.1007/s00454-007-9042-x.**](https://doi.org/10.1007/s00454-007-9042-x.)
 
-[^21]: Mok, H-N., To, W-K., "[**Effective Pólya semi-positivity for nonnegative polynomials on the simplex**](https://doi.org/10.1016/j.jco.2008.01.003)", _Journal of Complexity_ 24 (2008).
+[^21]: Mok, H-N., To, W-K., "[**Effective Pólya semi-positivity for nonnegative polynomials on the simplex**](https://doi.org/10.1016/j.jco.2008.01.003)", _Journal of Complexity_ 24 (2008). [https://doi.org/10.1016/j.jco.2008.01.003](https://doi.org/10.1016/j.jco.2008.01.003)
 
 [^22]: [**Leroy, Richard. "Certificats de positivité et minimisation polynomiale dans la base de Bernstein multivariée."**](https://scholar.google.com/scholar?q=Leroy,+Richard.+Certificats+de+positivité+et+minimisation+polynomiale+dans+la+base+de+Bernstein+multivariée) PhD diss., Université Rennes 1, 2008
 
@@ -421,7 +421,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^26]: Dubickas, Artūras. "Inequalities between height and deviation of polynomials" Open Mathematics, vol. 19, no. 1, 2021, pp. 540-550. [**https://doi.org/10.1515/math-2021-0055**](https://doi.org/10.1515/math-2021-0055)
 
-[^27]: Lubinsky, D. S., and Z. Ziegler. "[**Coefficient bounds in the Lorentz representation of a polynomial**](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/coefficient-bounds-in-the-lorentz-representation-of-a-polynomial/DF34F2E23B329A44C3B37E8C11073AE4)". Canadian Mathematical Bulletin 33.2 (1990): 197-206.
+[^27]: Lubinsky, D. S., and Z. Ziegler. "[**Coefficient bounds in the Lorentz representation of a polynomial**](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/coefficient-bounds-in-the-lorentz-representation-of-a-polynomial/DF34F2E23B329A44C3B37E8C11073AE4)". Canadian Mathematical Bulletin 33.2 (1990): 197-206. [https://doi.org/10.4153/CMB-1990-033-1](https://doi.org/10.4153/CMB-1990-033-1)
 
 [^28]: Dorian Popa, Ioan Raşa, "On the stability of some classical operators from approximation theory", _Expositiones Mathematicae_ 31(3), 2013, [**https://doi.org/10.1016/j.exmath.2013.01.007**](https://doi.org/10.1016/j.exmath.2013.01.007) (https://www.sciencedirect.com/science/article/pii/S072308691300008X).
 
@@ -441,7 +441,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^36]: Johnson, N.L., Kemp, A.W., Kotz, S., _Univariate Discrete Distributions, Third Edition_, Wiley, 2005.
 
-[^37]: No note text yet.
+[^37]: Vatutin, V. A., and V. G. Mikhailov. "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles." Theory of Probability & Its Applications 27.4 (1983): 734-743.  [https://doi.org/10.1137/1127084](https://doi.org/10.1137/1127084)
 
 [^38]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [**https://doi.org/10.1080/01621459.1963.10500830**](https://doi.org/10.1080/01621459.1963.10500830)
 
@@ -461,31 +461,31 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^46]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [**https://doi.org/10.1007/s00493-005-0043-1**](https://doi.org/10.1007/s00493-005-0043-1)
 
-[^47]: S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.
+[^47]: S. -I. Pae, "Binarization Trees and Random Number Generation," in IEEE Transactions on Information Theory, vol. 66, no. 4, pp. 2581-2587, April 2020, [https://doi.org/10.1109/TIT.2019.2962480](https://doi.org/10.1109/TIT.2019.2962480)  Also: S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.
 
-[^48]: Banderier, C. And Drmota, M., 2015. Formulae and asymptotics for coefficients of algebraic functions. Combinatorics, Probability and Computing, 24(1), pp.1-53.
+[^48]: Banderier, C. And Drmota, M., 2015. "Formulae and asymptotics for coefficients of algebraic functions." Combinatorics, Probability and Computing, 24(1), pp.1-53.
 
-[^49]: [**Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy"**](https://scholar.google.com/scholar?q=Icard,+Thomas+F.,+Calibrating+generative+models+The+probabilistic+ChomskySchützenberger+hierarchy), _Journal of Mathematical Psychology_ 95 (2020): 102308.
+[^49]: [Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308. [https://doi.org/10.1016/j.jmp.2019.102308](https://doi.org/10.1016/j.jmp.2019.102308)
 
-[^50]: [**Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design."**](https://scholar.google.com/scholar?q=Dughmi,+Shaddin,+Jason+Hartline,+Robert+D.+Kleinberg,+and+Rad+Niazadeh.+Bernoulli+Factories+and+Black-box+Reductions+in+Mechanis) Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
+[^50]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [https://doi.org/10.1145/3440988](https://doi.org/10.1145/3440988)
 
-[^51]: [**Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations"**](https://scholar.google.com/scholar?q=Etessami,+K.+and+Yannakakis,+M.,+Recursive+Markov+chains,+stochastic+grammars,+and+monotone+systems+of+nonlinear+equations), _Journal of the ACM_ 56(1), pp.1-66, 2009.
+[^51]: Kousha Etessami and Mihalis Yannakakis. 2009. Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations. J. ACM 56, 1, Article 1 (January 2009), 66 pages. [https://doi.org/10.1145/1462153.1462154](https://doi.org/10.1145/1462153.1462154)
 
 [^52]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010
 
 [^53]: Levy, H., _Stochastic dominance_, 1998.
 
-[^54]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In _Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science_, 2004. (pp. 12-21). IEEE.
+[^54]: Esparza, J., Kučera, A. and Mayr, R., 2004, July. "Model checking probabilistic pushdown automata." In _Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science_, 2004. (pp. 12-21). IEEE.
 
 [^55]: [**Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. "Permutations generated by a depth 2 stack and an infinite stack in series are algebraic."**](https://scholar.google.com/scholar?q=Elder,+Murray,+Geoffrey+Lee,+and+Andrew+Rechnitzer.+Permutations+generated+by+a+depth+2+stack+and+an+infinite+stack+in+series+ar) _Electronic Journal of Combinatorics_ 22(1), 2015.
 
-[^56]: [**Vatan, F., "Distribution functions of probabilistic automata"**](https://scholar.google.com/scholar?q=Vatan,+F.,+Distribution+functions+of+probabilistic+automata), in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.
+[^56]: Farrokh Vatan. 2001. Distribution functions of probabilistic automata. In Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01). Association for Computing Machinery, New York, NY, USA, 684–693. [https://doi.org/10.1145/380752.380872](https://doi.org/10.1145/380752.380872)
 
-[^57]: [**Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs,"**](https://scholar.google.com/scholar?q=Kindler,+Guy+and+D.+Romik,+On+distributions+computable+by+random+walks+on+graphs) _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.
+[^57]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," SIAM Journal on Discrete Mathematics 17 (2004): 624-633. [https://doi.org/10.1137/S089548010343106X](https://doi.org/10.1137/S089548010343106X)
 
 [^58]: Vatan (2001) claims that a finite-state generator has a continuous `CDF` (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.
 
-[^59]: [**Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. "On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited."**](https://scholar.google.com/scholar?q=Adamczewski,+B.,+Cassaigne,+J.+and+Le+Gonidec,+M.,+2020.+On+the+computational+complexity+of+algebraic+numbers+the+HartmanisStear) Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
+[^59]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. "On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited."  Transactions of the American Mathematical Society, 373(5), pp.3085-3115. [https://doi.org/10.1090/tran/7915](https://doi.org/10.1090/tran/7915)
 
 [^60]: [**Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines"**](https://scholar.google.com/scholar?q=Cobham,+A.,+On+the+Hartmanis-Stearns+problem+for+a+class+of+tag+machines), in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
 
@@ -1228,7 +1228,7 @@ so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe th
 
 While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps each value _a_ or greater and _b_ or less to a small range of values, so that the algorithm could, for example, generate a uniform random variate between 0 and 1 using fair coin flips and see whether that variate lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
 
-<small>(&dagger;) For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2018\)[^47].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.</small>
+<small>(&dagger;) For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2020\)[^47].  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.</small>
 
 <a id=Pushdown_Automata_and_Algebraic_Functions></a>
 

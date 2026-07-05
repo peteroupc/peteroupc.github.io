@@ -98,19 +98,19 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 ## Notes
 
-[^1]: [**Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators"**](https://scholar.google.com/scholar?q=Jacob,+P.E.,+Thiery,+A.H.,+On+nonnegative+unbiased+estimators), Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^1]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784. [https://doi.org/10.1214/15-AOS1311](https://doi.org/10.1214/15-AOS1311)
 
 [^2]: Duvignau, R., "Maintenance et simulation de graphes aléatoires dynamiques", Doctoral dissertation, Université de Bordeaux, 2015. [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 
 [^3]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^4]: [**AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling"**](https://scholar.google.com/scholar?q=AKAHIRA,+Masafumi,+Kei+TAKEUCHI,+and+Ken-ichi+KOIKE.+Unbiased+estimation+in+sequential+binomial+sampling),  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
+[^4]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.  Also in _Joint Statistical Papers of Akahira and Takeuchi_ pp. 477-489 (2003). [https://doi.org/10.1142/9789812791221_0037](https://doi.org/10.1142/9789812791221_0037)
 
 [^5]: Singh (1964, [**"Existence of unbiased estimates"**](https://www.jstor.org/stable/25049314), Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists for a more general class of `InDist` distributions than the Bernoulli distribution, as long as there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
 [^6]: An algorithm that takes a finite number of inputs with probability 1 is also known as a _closed sampling plan_ in papers and books about sequential estimation.
 
-[^7]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115. [https://doi.org/10.1214/105051604000000549](https://doi.org/10.1214/105051604000000549)
+[^7]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115. [**https://doi.org/10.1214/105051604000000549**](https://doi.org/10.1214/105051604000000549)
 
 [^8]: Christman, M.C., Nayak, T.K., "[**Sequential unbiased estimation of the number of classes in a population**](https://www.jstor.org/stable/24305291)", Statistica Sinica 4(1), 1994.
 
@@ -120,9 +120,9 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^11]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
-[^12]: [**Paninski, Liam. "Estimation of Entropy and Mutual Information."**](https://scholar.google.com/scholar?q=Paninski,+Liam.+Estimation+of+Entropy+and+Mutual+Information) Neural Computation 15 (2003): 1191-1253.
+[^12]: L. Paninski, "Estimation of Entropy and Mutual Information," in Neural Computation, vol. 15, no. 6, pp. 1191-1253, 1 June 2003. [https://doi.org/10.1162/089976603321780272.](https://doi.org/10.1162/089976603321780272.)
 
-[^13]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964. [https://www.jstor.org/stable/25049314](https://www.jstor.org/stable/25049314)
+[^13]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964. [**https://www.jstor.org/stable/25049314**](https://www.jstor.org/stable/25049314)
 
 [^14]: In addition, Jacob and Thiery (2015) conjecture that this estimator exists if and only if $f$ is writable as $f(\lambda)=c_0 (\lambda-a)^0 + c_1 (\lambda-a)^1 + ...$, where $c_0, c_1, ...$ are all nonnegative.  In that case, they showed that the random number of inputs need not depend on inputs already taken.
 
@@ -130,19 +130,19 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^16]: Vineet Goyal and Karl Sigman. 2012. On simulating a class of Bernstein polynomials. ACM Trans. Model. Comput. Simul. 22, 2, Article 12 (March 2012), 5 pages. [**https://doi.org/10.1145/2133390.2133396**](https://doi.org/10.1145/2133390.2133396)
 
-[^17]: Richard C. Liu, Lawrence D. Brown "Nonexistence of Informative Unbiased Estimators in Singular Problems," The Annals of Statistics, Ann. Statist. 21(1), 1-13, (March, 1993).  [https://doi.org/10.1214/aos/1176349012](https://doi.org/10.1214/aos/1176349012)
+[^17]: Richard C. Liu, Lawrence D. Brown "Nonexistence of Informative Unbiased Estimators in Singular Problems," The Annals of Statistics, Ann. Statist. 21(1), 1-13, (March, 1993).  [**https://doi.org/10.1214/aos/1176349012**](https://doi.org/10.1214/aos/1176349012)
 
-[^18]: Hirano, K. and Porter, J.R. (2012), "Impossibility Results for Nondifferentiable Functionals." Econometrica, 80: 1769-1790. [https://doi.org/10.3982/ECTA8681](https://doi.org/10.3982/ECTA8681)
+[^18]: Hirano, K. and Porter, J.R. (2012), "Impossibility Results for Nondifferentiable Functionals." Econometrica, 80: 1769-1790. [**https://doi.org/10.3982/ECTA8681**](https://doi.org/10.3982/ECTA8681)
 
 [^19]: P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [**https://doi.org/10.1214/aoms/1177697370**](https://doi.org/10.1214/aoms/1177697370)
 
-[^20]: [**Gajek, L. (1995). "Note on unbiased estimability of the larger of two mean values."**](https://scholar.google.com/scholar?q=Gajek,+L.+1995.+Note+on+unbiased+estimability+of+the+larger+of+two+mean+values) Applicationes Mathematicae, 23(2), 239-245.
+[^20]: Gajek, Lesław. "Note on unbiased estimability of the larger of two mean values." Applicationes Mathematicae 23.2 (1995): 239-245. <http://eudml.org/doc/219128>.
 
-[^21]: [**Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function."**](https://scholar.google.com/scholar?q=Rychlik,+Tomasz.+A+class+of+unbiased+kernel+estimates+of+a+probability+density+function) Applicationes Mathematicae 22.4 (1995): 485-497. [http://eudml.org/doc/219109.](http://eudml.org/doc/219109.)
+[^21]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22.4 (1995): 485-497. [**http://eudml.org/doc/219109**](http://eudml.org/doc/219109)
 
-[^22]: [**Duncan, G. M. (2004). "Unbiased Simulators for Analytic Functions and Maximum Unbiased Simulated Likelihood Estimation."**](https://scholar.google.com/scholar?q=Duncan,+G.+M.+2004.+Unbiased+Simulators+for+Analytic+Functions+and+Maximum+Unbiased+Simulated+Likelihood+Estimation) Available at SSRN 692921
+[^22]: Duncan, Gregory M., Unbiased Simulators for Anaytic Functions and Maximum Unbiased Simulated Likelihood Estimation (August 2004). Available at SSRN: [https://ssrn.com/abstract=692921](https://ssrn.com/abstract=692921) or [https://doi.org/10.2139/ssrn.692921](https://doi.org/10.2139/ssrn.692921)
 
-[^23]: Henderson, S.G., Glynn, P.W., "[**Nonexistence of a class of variate generation schemes**](https://www.sciencedirect.com/science/article/pii/S0167637702002171)", _Operations Research Letters_ 31 (2003). [https://doi.org/10.1016/S0167-6377%2802%2900217-1](https://doi.org/10.1016/S0167-6377%2802%2900217-1) . It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
+[^23]: Henderson, S.G., Glynn, P.W., "[**Nonexistence of a class of variate generation schemes**](https://www.sciencedirect.com/science/article/pii/S0167637702002171)", _Operations Research Letters_ 31 (2003). [**https://doi.org/10.1016/S0167-6377%2802%2900217-1**](https://doi.org/10.1016/S0167-6377%2802%2900217-1) . It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
 
 <a id=License></a>
 

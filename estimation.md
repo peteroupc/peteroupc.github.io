@@ -376,21 +376,21 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 ## Notes
 
-[^1]: Vihola, M., 2018, "Unbiased estimators and multilevel Monte Carlo", Operations Research, 66(2), pp.448-462. [https://doi.org/10.1287/opre.2017.1670](https://doi.org/10.1287/opre.2017.1670)
+[^1]: Vihola, M., 2018, "Unbiased estimators and multilevel Monte Carlo", Operations Research, 66(2), pp.448-462. [**https://doi.org/10.1287/opre.2017.1670**](https://doi.org/10.1287/opre.2017.1670)
 
-[^2]: Huber, M., 2017, "A Bernoulli mean estimate with known relative error distribution", Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015). [https://doi.org/10.1002/rsa.20654](https://doi.org/10.1002/rsa.20654)
+[^2]: Huber, M., 2017, "A Bernoulli mean estimate with known relative error distribution", Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015). [**https://doi.org/10.1002/rsa.20654**](https://doi.org/10.1002/rsa.20654)
 
-[^3]: [**Feng, J. et al. "Monte Carlo with User-Specified Relative Error."**](https://scholar.google.com/scholar?q=Feng,+J.+et+al.+Monte+Carlo+with+User-Specified+Relative+Error) (2016).
+[^3]: Feng, J., Huber, M., Ruan, Y. (2018). Monte Carlo with User-Specified Relative Error. In: Owen, A., Glynn, P. (eds) Monte Carlo and Quasi-Monte Carlo Methods. MCQMC 2016. Springer Proceedings in Mathematics & Statistics, vol 241. Springer, Cham. [https://doi.org/10.1007/978-3-319-91436-7_12](https://doi.org/10.1007/978-3-319-91436-7_12)
 
 [^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli random variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
 
-[^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." _Mathematics and Computers in Simulation 161_ (2019): 93-101. [https://doi.org/10.1016/j.matcom.2019.01.011](https://doi.org/10.1016/j.matcom.2019.01.011)
+[^5]: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." _Mathematics and Computers in Simulation 161_ (2019): 93-101. [**https://doi.org/10.1016/j.matcom.2019.01.011**](https://doi.org/10.1016/j.matcom.2019.01.011)
 
 [^6]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
 
-[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .
+[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67. [https://doi.org/10.1016/j.jco.2018.10.007](https://doi.org/10.1016/j.jco.2018.10.007)
 
-[^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
+[^8]: Hickernell, F.J., Jiang, L., Liu, Y., Owen, A.B. (2013). Guaranteed Conservative Fixed Width Confidence Intervals via Monte Carlo Sampling. In: Dick, J., Kuo, F., Peters, G., Sloan, I. (eds) Monte Carlo and Quasi-Monte Carlo Methods 2012. Springer Proceedings in Mathematics & Statistics, vol 65. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-642-41095-6_5](https://doi.org/10.1007/978-3-642-41095-6_5) . Also in arXiv:1208.4318v3 [math.ST], 2012/2013.
 
 [^9]: As used here, kurtosis is the 4th absolute central moment divided by the square of the 2nd absolute central moment
 
@@ -398,13 +398,13 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^11]: Lee, J.C. and Valiant, P., 2022. [**Optimal Sub-Gaussian Mean Estimation in Very High Dimensions**](https://drops.dagstuhl.de/opus/volltexte/2022/15694/). In 13th Innovations in Theoretical Computer Science Conference (ITCS 2022). Schloss Dagstuhl-Leibniz-Zentrum für Informatik.
 
-[^12]: Dutta, S., Goswami, A. Mode estimation for discrete distributions. Math. Meth. Stat. 19, 374–384 (2010). [https://doi.org/10.3103/S1066530710040046](https://doi.org/10.3103/S1066530710040046)
+[^12]: Dutta, S., Goswami, A. Mode estimation for discrete distributions. Math. Meth. Stat. 19, 374–384 (2010). [**https://doi.org/10.3103/S1066530710040046**](https://doi.org/10.3103/S1066530710040046)
 
 [^13]: A _Lipschitz continuous_ function with Lipschitz constant _M_ is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_ apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_.
 
 [^14]: This was given as an [**answer to a Stack Exchange question**](https://stats.stackexchange.com/questions/522429); see also Jiang and Hickernell, "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", 2014.  As the answer notes, this sample size is based on Hoeffding's inequality (Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [**https://doi.org/10.1080/01621459.1963.10500830**](https://doi.org/10.1080/01621459.1963.10500830)).
 
-[^15]: Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters." _Journal of Statistical Planning and Inference_ 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007. [https://doi.org/10.1016/j.jspi.2011.02.015](https://doi.org/10.1016/j.jspi.2011.02.015)
+[^15]: Chen, Xinjia. "Exact computation of minimum sample size for estimation of binomial parameters." _Journal of Statistical Planning and Inference_ 141, no. 8 (2011): 2622-2632.  Also in arXiv:0707.2113, 2007. [**https://doi.org/10.1016/j.jspi.2011.02.015**](https://doi.org/10.1016/j.jspi.2011.02.015)
 
 [^16]: Follows from Chebyshev's inequality.  The case of _f_(_x_)=_x_ was mentioned as Equation 14 in Hickernell et al. (2012/2013\).
 
@@ -420,7 +420,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^22]: A [**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) function  (with _M_ being the _Hölder constant_ and _&alpha;_ being the _Hölder exponent_) is a continuous function _f_ such that _f_(_x_) and _f_(_y_) are no more than _M_\*_&delta;_<sup>_&alpha;_</sup> apart whenever _x_ and _y_ are in the function's domain and no more than _&delta;_ apart.<br>Here, _&alpha;_ satisfies 0 &lt; _&alpha;_ &le; 1.<br>Roughly speaking, the function's "steepness" is no greater than that of _M_\*_x_<sup>_&alpha;_</sup>.
 
-[^23]: Agarwal, A., Agarwal, S., Assadi, S. &amp; Khanna, S.. (2017). Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons. _Proceedings of the 2017 Conference on Learning Theory_, in _Proceedings of Machine Learning Research_ 65:39-75 Available from [https://proceedings.mlr.press/v65/agarwal17c.html.](https://proceedings.mlr.press/v65/agarwal17c.html.)
+[^23]: Agarwal, A., Agarwal, S., Assadi, S. &amp; Khanna, S.. (2017). Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons. _Proceedings of the 2017 Conference on Learning Theory_, in _Proceedings of Machine Learning Research_ 65:39-75 Available from [**https://proceedings.mlr.press/v65/agarwal17c.html.**](https://proceedings.mlr.press/v65/agarwal17c.html.)
 
 <a id=License></a>
 

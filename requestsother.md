@@ -279,23 +279,23 @@ Let $X$ be a random variable that does not take on a single value with probabili
 
 ## Notes
 
-[^1]: [**Yao, Andrew C. "Context-free grammars and random number generation."**](https://scholar.google.com/scholar?q=Yao,+Andrew+C.+Context-free+grammars+and+random+number+generation) In Combinatorial algorithms on words, pp. 357-361. Springer, Berlin, Heidelberg, 1985.
+[^1]: Yao, A.C. (1985). Context-Free Grammars and Random Number Generation. In: Apostolico, A., Galil, Z. (eds) Combinatorial Algorithms on Words. NATO ASI Series, vol 12. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-642-82456-2_25](https://doi.org/10.1007/978-3-642-82456-2_25)
 
 [^2]: [**Knuth, Donald E. And Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+And+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in Algorithms and Complexity: New Directions and Recent Results, 1976.
 
-[^3]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs, " SIAM Journal on Discrete Mathematics 17 (2004): 624-633.
+[^3]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," SIAM Journal on Discrete Mathematics 17 (2004): 624-633. [https://doi.org/10.1137/S089548010343106X](https://doi.org/10.1137/S089548010343106X)
 
-[^4]: Adamczewski, B., Cassaigne, J. And Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.
+[^4]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. "On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited."  Transactions of the American Mathematical Society, 373(5), pp.3085-3115. [https://doi.org/10.1090/tran/7915](https://doi.org/10.1090/tran/7915)
 
-[^5]: [**Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions"**](https://scholar.google.com/scholar?q=Forsythe,+G.E.,+Von+Neumanns+Comparison+Method+for+Random+Sampling+from+the+Normal+and+Other+Distributions), _Mathematics of Computation_ 26(120), October 1972.
+[^5]: Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972. [https://doi.org/10.1090/S0025-5718-1972-0315863-9](https://doi.org/10.1090/S0025-5718-1972-0315863-9)
 
-[^6]: [**Monahan, J. "Extensions of von Neumann’s method for generating random variables."**](https://scholar.google.com/scholar?q=Monahan,+J.+Extensions+of+von+Neumanns+method+for+generating+random+variables) Mathematics of Computation 33 (1979): 1065-1069.
+[^6]: Monahan, J. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069. [https://doi.org/10.1090/S0025-5718-1979-0528058-7](https://doi.org/10.1090/S0025-5718-1979-0528058-7)
 
-[^7]: [**Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection."**](https://scholar.google.com/scholar?q=Kunsch,+Robert+J.,+Erich+Novak,+and+Daniel+Rudolf.+Solvable+integration+problems+and+optimal+sample+size+selection) Journal of Complexity 53 (2019): 40-67.
+[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67. [https://doi.org/10.1016/j.jco.2018.10.007](https://doi.org/10.1016/j.jco.2018.10.007)
 
-[^8]: Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.
+[^8]: Hickernell, F.J., Jiang, L., Liu, Y., Owen, A.B. (2013). Guaranteed Conservative Fixed Width Confidence Intervals via Monte Carlo Sampling. In: Dick, J., Kuo, F., Peters, G., Sloan, I. (eds) Monte Carlo and Quasi-Monte Carlo Methods 2012. Springer Proceedings in Mathematics & Statistics, vol 65. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-642-41095-6_5](https://doi.org/10.1007/978-3-642-41095-6_5) . Also in arXiv:1208.4318v3 [math.ST], 2012/2013.
 
-[^9]: [**Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators"**](https://scholar.google.com/scholar?q=Jacob,+P.E.,+Thiery,+A.H.,+On+nonnegative+unbiased+estimators), Ann. Statist., Volume 43, Number 2 (2015), 769-784.
+[^9]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784. [https://doi.org/10.1214/15-AOS1311](https://doi.org/10.1214/15-AOS1311)
 
 <a id=License></a>
 

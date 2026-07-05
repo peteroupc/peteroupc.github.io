@@ -2438,15 +2438,15 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 ## Notes
 
-[^1]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115. [https://doi.org/10.1214/105051604000000549](https://doi.org/10.1214/105051604000000549)
+[^1]: Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115. [**https://doi.org/10.1214/105051604000000549**](https://doi.org/10.1214/105051604000000549)
 
 [^2]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.
 
 [^3]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [**https://doi.org/10.1145/175007.175019**](https://doi.org/10.1145/175007.175019)
 
-[^4]: [**Basu, D. "Statistical Information and Likelihood."**](https://scholar.google.com/scholar?q=Basu,+D.+Statistical+Information+and+Likelihood) Sankhyā: The Indian Journal of Statistics, Series A (1961-2002) 37, no. 1 (1975): 1–71. [http://www.jstor.org/stable/25049960.](http://www.jstor.org/stable/25049960.)
+[^4]: [**Basu, D. "Statistical Information and Likelihood."**](https://scholar.google.com/scholar?q=Basu,+D.+Statistical+Information+and+Likelihood) Sankhyā: The Indian Journal of Statistics, Series A (1961-2002) 37, no. 1 (1975): 1–71. [**http://www.jstor.org/stable/25049960.**](http://www.jstor.org/stable/25049960.)
 
-[^5]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  That's why the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function whose domain is \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0, 1, or both at a finite number of points in the domain (Dale, H., Jennings, D. & Rudolph, T. Provable quantum advantage in randomness processing. Nat Commun 6, 8203 (2015). [https://doi.org/10.1038/ncomms9203](https://doi.org/10.1038/ncomms9203)).
+[^5]: There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  That's why the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function whose domain is \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0, 1, or both at a finite number of points in the domain (Dale, H., Jennings, D. & Rudolph, T. Provable quantum advantage in randomness processing. Nat Commun 6, 8203 (2015). [**https://doi.org/10.1038/ncomms9203**](https://doi.org/10.1038/ncomms9203)).
 
 [^6]: Huber, M., "[**Nearly optimal Bernoulli factories for linear functions**](https://arxiv.org/abs/1308.1562v2)", arXiv:1308.1562v2  [math.PR], 2014.
 
@@ -2502,7 +2502,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^32]: Note that `u * BASE`<sup>&minus;`k`</sup> is not just within `BASE`<sup>&minus;`k`</sup> of its "true" result, but also not more than that result.  Hence `pk + 1 <= u` rather than `pk + 2 <= u`.
 
-[^33]: Leighton, W., "Proper continued fractions", _Amer. Math. Monthly_ 47 (1940). [https://doi.org/10.1080/00029890.1940.11990975](https://doi.org/10.1080/00029890.1940.11990975)
+[^33]: Leighton, W., "Proper continued fractions", _Amer. Math. Monthly_ 47 (1940). [**https://doi.org/10.1080/00029890.1940.11990975**](https://doi.org/10.1080/00029890.1940.11990975)
 
 [^34]: The "even-parity" construction (Flajolet et al. 2010) is so called because it involves flipping the input coin repeatedly until it returns zero, then counting the number of ones.  The final result is 1 if that number is even, or 0 otherwise. However, the number of flips needed by this method grows without bound as $\lambda$ (the probability the input coin returns 1) approaches 1. See also the note for **Algorithm CC**.
 
@@ -2516,7 +2516,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^39]: Carvalho, Luiz Max, and Guido A. Moreira. "[**Adaptive truncation of infinite sums: applications to Statistics**](https://arxiv.org/abs/2202.06121)", arXiv:2202.06121 (2022).
 
-[^40]: Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", Mediterranean Journal of Mathematics 13 (2016). [https://doi.org/10.1007/s00009-016-0747-z](https://doi.org/10.1007/s00009-016-0747-z)
+[^40]: Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", Mediterranean Journal of Mathematics 13 (2016). [**https://doi.org/10.1007/s00009-016-0747-z**](https://doi.org/10.1007/s00009-016-0747-z)
 
 [^41]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that _f_'s slope, slope-of-slope, etc. functions can achieve.
 
@@ -2558,7 +2558,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^60]: Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.
 
-[^61]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors", _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]). [https://doi.org/10.1093/biomet/asab031](https://doi.org/10.1093/biomet/asab031)
+[^61]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory Markov chain Monte Carlo for intractable posteriors", _Biometrika_ 109(2), June 2022 (also in arXiv:2004.07471 [stat.CO]). [**https://doi.org/10.1093/biomet/asab031**](https://doi.org/10.1093/biomet/asab031)
 
 [^62]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
@@ -2566,7 +2566,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^64]: There is another algorithm for tanh(_z_), based on Lambert's continued fraction for tanh(.), but it works only if 0 &le; _z_ &le; 1 and if _z_ is the probability of heads of an input coin.  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate either 1 or 0 with equal probability, then if 1 was generated this way, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
-[^65]: Dale, H., Jennings, D. & Rudolph, T. Provable quantum advantage in randomness processing. Nat Commun 6, 8203 (2015). [https://doi.org/10.1038/ncomms9203](https://doi.org/10.1038/ncomms9203)
+[^65]: Dale, H., Jennings, D. & Rudolph, T. Provable quantum advantage in randomness processing. Nat Commun 6, 8203 (2015). [**https://doi.org/10.1038/ncomms9203**](https://doi.org/10.1038/ncomms9203)
 
 [^66]: [**Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form"**](https://scholar.google.com/scholar?q=Tsai,+Yi-Feng,+Farouki,+R.T.,+Algorithm+812+BPOLY+An+Object-Oriented+Library+of+Numerical+Algorithms+for+Polynomials+in+Bernstei), _ACM Trans. Math. Softw._ 27(2), 2001.
 
@@ -2580,7 +2580,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^71]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$), but uses more bits on average as _&lambda;_ approaches 1.
 
-[^72]: Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972. [https://doi.org/10.1090/S0025-5718-1972-0315863-9](https://doi.org/10.1090/S0025-5718-1972-0315863-9)
+[^72]: Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972. [**https://doi.org/10.1090/S0025-5718-1972-0315863-9**](https://doi.org/10.1090/S0025-5718-1972-0315863-9)
 
 [^73]: [**Sondow, Jonathan. "New Vacca-Type Rational Series for Euler's Constant and Its 'Alternating' Analog ln 4/_&pi;_."**](https://scholar.google.com/scholar?q=Sondow,+Jonathan.+New+Vacca-Type+Rational+Series+for+Eulers+Constant+and+Its+Alternating+Analog+ln+4_pi_.), 2005.
 
@@ -2592,7 +2592,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^77]: [**Pae, S., "Random number generation using a biased source"**](https://scholar.google.com/scholar?q=Pae,+S.,+Random+number+generation+using+a+biased+source), dissertation, University of Illinois at Urbana-Champaign, 2005.
 
-[^78]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", _Annals of Statistics_ 1992,20,1, p. 590-597. [https://doi.org/10.1214/aos/1176348543](https://doi.org/10.1214/aos/1176348543)
+[^78]: Peres, Y., "Iterating von Neumann's procedure for extracting random bits", _Annals of Statistics_ 1992,20,1, p. 590-597. [**https://doi.org/10.1214/aos/1176348543**](https://doi.org/10.1214/aos/1176348543)
 
 [^79]: [**Monahan, J.. "Extensions of von Neumann’s method for generating random variables."**](https://scholar.google.com/scholar?q=Monahan,+J..+Extensions+of+von+Neumanns+method+for+generating+random+variables) Mathematics of Computation 33 (1979): 1065-1069.
 
