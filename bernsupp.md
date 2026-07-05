@@ -465,7 +465,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^48]: Banderier, C. And Drmota, M., 2015. "Formulae and asymptotics for coefficients of algebraic functions." Combinatorics, Probability and Computing, 24(1), pp.1-53.
 
-[^49]: [**Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308. [https://doi.org/10.1016/j.jmp.2019.102308**](https://doi.org/10.1016/j.jmp.2019.102308)
+[^49]: [**Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308. [**https://doi.org/10.1016/j.jmp.2019.102308**](https://doi.org/10.1016/j.jmp.2019.102308)
 
 [^50]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [**https://doi.org/10.1145/3440988**](https://doi.org/10.1145/3440988)
 

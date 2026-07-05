@@ -673,9 +673,9 @@ Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all p
 
 $Q_{n,2}$ can be bounded as follows:
 
-$$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),$$
+$$\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert_{op}\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert_{op}\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),$$
 
-where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)[^4] is the operator norm of the Bernstein polynomials.
+where $\Vert B\Vert_{op} = 1$ (De Villiers 2012, Theorem 5.2.2)[^4] is the operator norm of the Bernstein polynomials.
 
 Some of the "moments" of this operator are:
 
@@ -694,11 +694,11 @@ It is suspected further, using Lemma 6 and Corollary 1, that&mdash;
 
 $$\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},$$
 
-The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k>0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^79]\:
+The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn't map from all continuous functions, a different kind of "norm" than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k\ge 0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following "norm" gives $C^k$ the property that a sum of functions in that space converges whenever the sum of "norms" of those functions is finite[^79]\:
 
-$$\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert$$
+$$\Vert f\Vert_{C^k} = \begin{cases}\Vert f\Vert + \Vert f^{(k)}\Vert & \text{if }k\ge 0,\\\\\Vert f\Vert & \text{if }k=0.\end{cases}$$
 
-Using this norm, the operator $Q_{n,2}$ can be bounded as follows:
+Using the $C^2$ "norm" to define the operator norm of $Q_{n,2}$, that operator can be bounded as follows:
 
 $$\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},$$
 
@@ -925,7 +925,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^78]: $Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called _linear differential operator_: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$.
 
-[^79]: A linear space of functions with this property is also called a _Banach space_ (Axler, S., _Measure, Integration & Real Analysis_, Springer, 2020. [**https://doi.org/10.1007/978-3-030-33143-6**](https://doi.org/10.1007/978-3-030-33143-6)).
+[^79]: A linear space of functions with this property is also called a _Banach space_ (Axler, S., _Measure, Integration & Real Analysis_, Springer, 2020. [**https://doi.org/10.1007/978-3-030-33143-6**](https://doi.org/10.1007/978-3-030-33143-6)).  In the same work that introduced Banach spaces, S. Banach ("Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales", Fund. Math. 3, 1922) proposed the "norms" presented here.
 
 [^80]: [**S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités"**](https://scholar.google.com/scholar?q=S.N.+Bernstein,+Démonstration+du+théorème+de+Weierstrass+fondée+sur+le+calcul+des+probabilités), Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 

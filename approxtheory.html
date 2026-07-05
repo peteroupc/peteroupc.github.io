@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-07-04"><meta name="citation_date" content="2026/07/04"><meta name="citation_publication_date" content="2026/07/04"><meta name="citation_online_date" content="2026/07/04"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-07-05"><meta name="citation_date" content="2026/07/05"><meta name="citation_publication_date" content="2026/07/05"><meta name="citation_online_date" content="2026/07/05"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-07-04.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-07-05.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -873,9 +873,9 @@
 
 <p>$Q_{n,2}$ can be bounded as follows:</p>
 
-\[\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),\]
+\[\Vert Q_{n,2}(f)\Vert\le\Vert B\Vert_{op}\cdot\Vert f\Vert+\frac{1}{8n}\Vert B\Vert_{op}\cdot\Vert f^{(2)}\Vert = \Vert f\Vert+\Vert f^{(2)}\Vert/(8n),\]
 
-<p>where $\Vert B\Vert = 1$ (De Villiers 2012, Theorem 5.2.2)<sup id="fnref:4:3"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> is the operator norm of the Bernstein polynomials.</p>
+<p>where $\Vert B\Vert_{op} = 1$ (De Villiers 2012, Theorem 5.2.2)<sup id="fnref:4:3"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> is the operator norm of the Bernstein polynomials.</p>
 
 <p>Some of the “moments” of this operator are:</p>
 
@@ -896,11 +896,11 @@
 
 \[\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}},\]
 
-<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k&gt;0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:79"><a href="#fn:79" class="footnote" rel="footnote" role="doc-noteref">79</a></sup>:</p>
+<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k\ge 0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:79"><a href="#fn:79" class="footnote" rel="footnote" role="doc-noteref">79</a></sup>:</p>
 
-\[\Vert f\Vert_{C^k} = \Vert f\Vert + \Vert f^{(k)}\Vert\]
+\[\Vert f\Vert_{C^k} = \begin{cases}\Vert f\Vert + \Vert f^{(k)}\Vert &amp; \text{if }k\ge 0,\\\\\Vert f\Vert &amp; \text{if }k=0.\end{cases}\]
 
-<p>Using this norm, the operator $Q_{n,2}$ can be bounded as follows:</p>
+<p>Using the $C^2$ “norm” to define the operator norm of $Q_{n,2}$, that operator can be bounded as follows:</p>
 
 \[\Vert Q_{n,2}(f)\Vert\le\Vert f\Vert+\Vert f^{(2)}\Vert/(8n)\le\Vert f\Vert_{C^2}+\Vert f\Vert_{C^2}/(8n)=\Vert f\Vert_{C^2}\frac{9}{8n},\]
 
@@ -1223,7 +1223,7 @@
       <p>$Q_{n,2}$ can also be seen as the Bernstein polynomial of a so-called <em>linear differential operator</em>: $1\cdot f^{(0)} + 0\cdot f^{(1)} + (\lambda(1-\lambda)/(2n))\cdot f^{(2)}$. <a href="#fnref:78" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:79">
-      <p>A linear space of functions with this property is also called a <em>Banach space</em> (Axler, S., <em>Measure, Integration &amp; Real Analysis</em>, Springer, 2020. <a href="https://doi.org/10.1007/978-3-030-33143-6"><strong>https://doi.org/10.1007/978-3-030-33143-6</strong></a>). <a href="#fnref:79" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A linear space of functions with this property is also called a <em>Banach space</em> (Axler, S., <em>Measure, Integration &amp; Real Analysis</em>, Springer, 2020. <a href="https://doi.org/10.1007/978-3-030-33143-6"><strong>https://doi.org/10.1007/978-3-030-33143-6</strong></a>).  In the same work that introduced Banach spaces, S. Banach (“Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales”, Fund. Math. 3, 1922) proposed the “norms” presented here. <a href="#fnref:79" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:80">
       <p><a href="https://scholar.google.com/scholar?q=S.N.+Bernstein,+Démonstration+du+théorème+de+Weierstrass+fondée+sur+le+calcul+des+probabilités"><strong>S.N. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”</strong></a>, Comm. Kharkov Math. Soc. 13, 1-2, 1912. <a href="#fnref:80" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
