@@ -888,7 +888,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^83]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
-[^84]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784. [https://doi.org/10.1214/15-AOS1311](https://doi.org/10.1214/15-AOS1311)
+[^84]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784. [**https://doi.org/10.1214/15-AOS1311**](https://doi.org/10.1214/15-AOS1311)
 
 [^85]: Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux). [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 

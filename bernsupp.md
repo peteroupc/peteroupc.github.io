@@ -385,7 +385,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^8]: Lorentz, G.G. (1964). Inequalities and the Saturation Classes of Bernstein Polynomials. In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [**https://doi.org/10.1007/978-3-0348-4131-3_19**](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
-[^9]: Temple, W.B., "Steltjes integral representation of convex functions",  Duke Math. J. 21(3): 527-531 (September 1954). [https://doi.org/10.1215/S0012-7094-54-02152-3](https://doi.org/10.1215/S0012-7094-54-02152-3)
+[^9]: Temple, W.B., "Steltjes integral representation of convex functions",  Duke Math. J. 21(3): 527-531 (September 1954). [**https://doi.org/10.1215/S0012-7094-54-02152-3**](https://doi.org/10.1215/S0012-7094-54-02152-3)
 
 [^10]: [**Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue"**](https://scholar.google.com/scholar?q=Moldovan,+E.,+Observations+sur+la+suite+des+polynômes+de+S.+N.+Bernstein+dune+fonction+continue), Mathematica (Cluj) 4.27 (1962): 289-292.
 
@@ -405,11 +405,11 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^18]: The coin-flipping degree is very similar to the so-called _Bernstein degree_ or _Lorentz degree_, which is the smallest integer $n$ such that $p$'s Bernstein coefficients of degree $n$ are all nonnegative, assuming that $p$ is nonnegative.  See, for example, Erdélyi, T., and J. Szabados. "On polynomials with positive coefficients." Journal of Approximation Theory 54.1 (1988): 107-122.
 
-[^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001). [https://doi.org/10.1016/S0022-4049(00](https://doi.org/10.1016/S0022-4049(00))00155-9
+[^19]: Powers, V., Reznick, B., "[**A new bound for Pólya's Theorem with applications to polynomials positive on polyhedra**](https://www.sciencedirect.com/science/article/pii/S0022404900001559)", _Journal of Pure and Applied Algebra_ 164 (24 October 2001). [**https://doi.org/10.1016/S0022-4049(00**](https://doi.org/10.1016/S0022-4049(00))00155-9
 
 [^20]: Boudaoud, F., Caruso, F. & Roy, MF. Certificates of Positivity in the Bernstein Basis. Discrete Comput Geom 39, 639–655 (2008). [**https://doi.org/10.1007/s00454-007-9042-x.**](https://doi.org/10.1007/s00454-007-9042-x.)
 
-[^21]: Mok, H-N., To, W-K., "[**Effective Pólya semi-positivity for nonnegative polynomials on the simplex**](https://doi.org/10.1016/j.jco.2008.01.003)", _Journal of Complexity_ 24 (2008). [https://doi.org/10.1016/j.jco.2008.01.003](https://doi.org/10.1016/j.jco.2008.01.003)
+[^21]: Mok, H-N., To, W-K., "[**Effective Pólya semi-positivity for nonnegative polynomials on the simplex**](https://doi.org/10.1016/j.jco.2008.01.003)", _Journal of Complexity_ 24 (2008). [**https://doi.org/10.1016/j.jco.2008.01.003**](https://doi.org/10.1016/j.jco.2008.01.003)
 
 [^22]: [**Leroy, Richard. "Certificats de positivité et minimisation polynomiale dans la base de Bernstein multivariée."**](https://scholar.google.com/scholar?q=Leroy,+Richard.+Certificats+de+positivité+et+minimisation+polynomiale+dans+la+base+de+Bernstein+multivariée) PhD diss., Université Rennes 1, 2008
 
@@ -421,7 +421,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^26]: Dubickas, Artūras. "Inequalities between height and deviation of polynomials" Open Mathematics, vol. 19, no. 1, 2021, pp. 540-550. [**https://doi.org/10.1515/math-2021-0055**](https://doi.org/10.1515/math-2021-0055)
 
-[^27]: Lubinsky, D. S., and Z. Ziegler. "[**Coefficient bounds in the Lorentz representation of a polynomial**](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/coefficient-bounds-in-the-lorentz-representation-of-a-polynomial/DF34F2E23B329A44C3B37E8C11073AE4)". Canadian Mathematical Bulletin 33.2 (1990): 197-206. [https://doi.org/10.4153/CMB-1990-033-1](https://doi.org/10.4153/CMB-1990-033-1)
+[^27]: Lubinsky, D. S., and Z. Ziegler. "[**Coefficient bounds in the Lorentz representation of a polynomial**](https://www.cambridge.org/core/journals/canadian-mathematical-bulletin/article/coefficient-bounds-in-the-lorentz-representation-of-a-polynomial/DF34F2E23B329A44C3B37E8C11073AE4)". Canadian Mathematical Bulletin 33.2 (1990): 197-206. [**https://doi.org/10.4153/CMB-1990-033-1**](https://doi.org/10.4153/CMB-1990-033-1)
 
 [^28]: Dorian Popa, Ioan Raşa, "On the stability of some classical operators from approximation theory", _Expositiones Mathematicae_ 31(3), 2013, [**https://doi.org/10.1016/j.exmath.2013.01.007**](https://doi.org/10.1016/j.exmath.2013.01.007) (https://www.sciencedirect.com/science/article/pii/S072308691300008X).
 
@@ -441,7 +441,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^36]: Johnson, N.L., Kemp, A.W., Kotz, S., _Univariate Discrete Distributions, Third Edition_, Wiley, 2005.
 
-[^37]: Vatutin, V. A., and V. G. Mikhailov. "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles." Theory of Probability & Its Applications 27.4 (1983): 734-743.  [https://doi.org/10.1137/1127084](https://doi.org/10.1137/1127084)
+[^37]: Vatutin, V. A., and V. G. Mikhailov. "Limit theorems for the number of empty cells in an equiprobable scheme for group allocation of particles." Theory of Probability & Its Applications 27.4 (1983): 734-743.  [**https://doi.org/10.1137/1127084**](https://doi.org/10.1137/1127084)
 
 [^38]: Hoeffding, W., "Probability inequalities for sums of bounded random variables", Journal of the American Statistical Association 58 (1963). [**https://doi.org/10.1080/01621459.1963.10500830**](https://doi.org/10.1080/01621459.1963.10500830)
 
@@ -461,15 +461,15 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^46]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005. With an appendix by Christopher Hillar. [**https://doi.org/10.1007/s00493-005-0043-1**](https://doi.org/10.1007/s00493-005-0043-1)
 
-[^47]: S. -I. Pae, "Binarization Trees and Random Number Generation," in IEEE Transactions on Information Theory, vol. 66, no. 4, pp. 2581-2587, April 2020, [https://doi.org/10.1109/TIT.2019.2962480](https://doi.org/10.1109/TIT.2019.2962480)  Also: S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.
+[^47]: S. -I. Pae, "Binarization Trees and Random Number Generation," in IEEE Transactions on Information Theory, vol. 66, no. 4, pp. 2581-2587, April 2020, [**https://doi.org/10.1109/TIT.2019.2962480**](https://doi.org/10.1109/TIT.2019.2962480)  Also: S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.
 
 [^48]: Banderier, C. And Drmota, M., 2015. "Formulae and asymptotics for coefficients of algebraic functions." Combinatorics, Probability and Computing, 24(1), pp.1-53.
 
-[^49]: [Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308. [https://doi.org/10.1016/j.jmp.2019.102308](https://doi.org/10.1016/j.jmp.2019.102308)
+[^49]: [**Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308. [https://doi.org/10.1016/j.jmp.2019.102308**](https://doi.org/10.1016/j.jmp.2019.102308)
 
-[^50]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [https://doi.org/10.1145/3440988](https://doi.org/10.1145/3440988)
+[^50]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [**https://doi.org/10.1145/3440988**](https://doi.org/10.1145/3440988)
 
-[^51]: Kousha Etessami and Mihalis Yannakakis. 2009. Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations. J. ACM 56, 1, Article 1 (January 2009), 66 pages. [https://doi.org/10.1145/1462153.1462154](https://doi.org/10.1145/1462153.1462154)
+[^51]: Kousha Etessami and Mihalis Yannakakis. 2009. Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations. J. ACM 56, 1, Article 1 (January 2009), 66 pages. [**https://doi.org/10.1145/1462153.1462154**](https://doi.org/10.1145/1462153.1462154)
 
 [^52]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010
 
@@ -479,13 +479,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^55]: [**Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. "Permutations generated by a depth 2 stack and an infinite stack in series are algebraic."**](https://scholar.google.com/scholar?q=Elder,+Murray,+Geoffrey+Lee,+and+Andrew+Rechnitzer.+Permutations+generated+by+a+depth+2+stack+and+an+infinite+stack+in+series+ar) _Electronic Journal of Combinatorics_ 22(1), 2015.
 
-[^56]: Farrokh Vatan. 2001. Distribution functions of probabilistic automata. In Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01). Association for Computing Machinery, New York, NY, USA, 684–693. [https://doi.org/10.1145/380752.380872](https://doi.org/10.1145/380752.380872)
+[^56]: Farrokh Vatan. 2001. Distribution functions of probabilistic automata. In Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01). Association for Computing Machinery, New York, NY, USA, 684–693. [**https://doi.org/10.1145/380752.380872**](https://doi.org/10.1145/380752.380872)
 
-[^57]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," SIAM Journal on Discrete Mathematics 17 (2004): 624-633. [https://doi.org/10.1137/S089548010343106X](https://doi.org/10.1137/S089548010343106X)
+[^57]: Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," SIAM Journal on Discrete Mathematics 17 (2004): 624-633. [**https://doi.org/10.1137/S089548010343106X**](https://doi.org/10.1137/S089548010343106X)
 
 [^58]: Vatan (2001) claims that a finite-state generator has a continuous `CDF` (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.
 
-[^59]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. "On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited."  Transactions of the American Mathematical Society, 373(5), pp.3085-3115. [https://doi.org/10.1090/tran/7915](https://doi.org/10.1090/tran/7915)
+[^59]: Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. "On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited."  Transactions of the American Mathematical Society, 373(5), pp.3085-3115. [**https://doi.org/10.1090/tran/7915**](https://doi.org/10.1090/tran/7915)
 
 [^60]: [**Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines"**](https://scholar.google.com/scholar?q=Cobham,+A.,+On+the+Hartmanis-Stearns+problem+for+a+class+of+tag+machines), in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.
 

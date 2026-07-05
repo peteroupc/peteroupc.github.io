@@ -380,7 +380,7 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^2]: Huber, M., 2017, "A Bernoulli mean estimate with known relative error distribution", Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015). [**https://doi.org/10.1002/rsa.20654**](https://doi.org/10.1002/rsa.20654)
 
-[^3]: Feng, J., Huber, M., Ruan, Y. (2018). Monte Carlo with User-Specified Relative Error. In: Owen, A., Glynn, P. (eds) Monte Carlo and Quasi-Monte Carlo Methods. MCQMC 2016. Springer Proceedings in Mathematics & Statistics, vol 241. Springer, Cham. [https://doi.org/10.1007/978-3-319-91436-7_12](https://doi.org/10.1007/978-3-319-91436-7_12)
+[^3]: Feng, J., Huber, M., Ruan, Y. (2018). Monte Carlo with User-Specified Relative Error. In: Owen, A., Glynn, P. (eds) Monte Carlo and Quasi-Monte Carlo Methods. MCQMC 2016. Springer Proceedings in Mathematics & Statistics, vol 241. Springer, Cham. [**https://doi.org/10.1007/978-3-319-91436-7_12**](https://doi.org/10.1007/978-3-319-91436-7_12)
 
 [^4]: Huber, M., "[**Tight relative estimation in the mean of Bernoulli random variables**](https://arxiv.org/abs/2210.12861)", arXiv:2210.12861 [cs.LG], 2022.
 
@@ -388,9 +388,9 @@ For open questions, see "[**Questions on Estimation Algorithms**](https://petero
 
 [^6]: Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.
 
-[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67. [https://doi.org/10.1016/j.jco.2018.10.007](https://doi.org/10.1016/j.jco.2018.10.007)
+[^7]: Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67. [**https://doi.org/10.1016/j.jco.2018.10.007**](https://doi.org/10.1016/j.jco.2018.10.007)
 
-[^8]: Hickernell, F.J., Jiang, L., Liu, Y., Owen, A.B. (2013). Guaranteed Conservative Fixed Width Confidence Intervals via Monte Carlo Sampling. In: Dick, J., Kuo, F., Peters, G., Sloan, I. (eds) Monte Carlo and Quasi-Monte Carlo Methods 2012. Springer Proceedings in Mathematics & Statistics, vol 65. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-642-41095-6_5](https://doi.org/10.1007/978-3-642-41095-6_5) . Also in arXiv:1208.4318v3 [math.ST], 2012/2013.
+[^8]: Hickernell, F.J., Jiang, L., Liu, Y., Owen, A.B. (2013). Guaranteed Conservative Fixed Width Confidence Intervals via Monte Carlo Sampling. In: Dick, J., Kuo, F., Peters, G., Sloan, I. (eds) Monte Carlo and Quasi-Monte Carlo Methods 2012. Springer Proceedings in Mathematics & Statistics, vol 65. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/978-3-642-41095-6_5**](https://doi.org/10.1007/978-3-642-41095-6_5) . Also in arXiv:1208.4318v3 [math.ST], 2012/2013.
 
 [^9]: As used here, kurtosis is the 4th absolute central moment divided by the square of the 2nd absolute central moment
 

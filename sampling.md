@@ -98,13 +98,13 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 ## Notes
 
-[^1]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784. [https://doi.org/10.1214/15-AOS1311](https://doi.org/10.1214/15-AOS1311)
+[^1]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784. [**https://doi.org/10.1214/15-AOS1311**](https://doi.org/10.1214/15-AOS1311)
 
 [^2]: Duvignau, R., "Maintenance et simulation de graphes aléatoires dynamiques", Doctoral dissertation, Université de Bordeaux, 2015. [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc)
 
 [^3]: Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].
 
-[^4]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.  Also in _Joint Statistical Papers of Akahira and Takeuchi_ pp. 477-489 (2003). [https://doi.org/10.1142/9789812791221_0037](https://doi.org/10.1142/9789812791221_0037)
+[^4]: AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling",  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.  Also in _Joint Statistical Papers of Akahira and Takeuchi_ pp. 477-489 (2003). [**https://doi.org/10.1142/9789812791221_0037**](https://doi.org/10.1142/9789812791221_0037)
 
 [^5]: Singh (1964, [**"Existence of unbiased estimates"**](https://www.jstor.org/stable/25049314), Sankhyā A 26) claimed that an estimation algorithm with expected value $f(\lambda)$ exists for a more general class of `InDist` distributions than the Bernoulli distribution, as long as there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
 
@@ -120,7 +120,7 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^11]: Lehmann, E.L., _Theory of Point Estimation_, 1983.
 
-[^12]: L. Paninski, "Estimation of Entropy and Mutual Information," in Neural Computation, vol. 15, no. 6, pp. 1191-1253, 1 June 2003. [https://doi.org/10.1162/089976603321780272.](https://doi.org/10.1162/089976603321780272.)
+[^12]: L. Paninski, "Estimation of Entropy and Mutual Information," in Neural Computation, vol. 15, no. 6, pp. 1191-1253, 1 June 2003. [**https://doi.org/10.1162/089976603321780272.**](https://doi.org/10.1162/089976603321780272.)
 
 [^13]: R. Singh, "Existence of unbiased estimates", Sankhyā A 26, 1964. [**https://www.jstor.org/stable/25049314**](https://www.jstor.org/stable/25049314)
 
@@ -140,7 +140,7 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^21]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22.4 (1995): 485-497. [**http://eudml.org/doc/219109**](http://eudml.org/doc/219109)
 
-[^22]: Duncan, Gregory M., Unbiased Simulators for Anaytic Functions and Maximum Unbiased Simulated Likelihood Estimation (August 2004). Available at SSRN: [https://ssrn.com/abstract=692921](https://ssrn.com/abstract=692921) or [https://doi.org/10.2139/ssrn.692921](https://doi.org/10.2139/ssrn.692921)
+[^22]: Duncan, Gregory M., Unbiased Simulators for Anaytic Functions and Maximum Unbiased Simulated Likelihood Estimation (August 2004). Available at SSRN: [**https://ssrn.com/abstract=692921**](https://ssrn.com/abstract=692921) or [**https://doi.org/10.2139/ssrn.692921**](https://doi.org/10.2139/ssrn.692921)
 
 [^23]: Henderson, S.G., Glynn, P.W., "[**Nonexistence of a class of variate generation schemes**](https://www.sciencedirect.com/science/article/pii/S0167637702002171)", _Operations Research Letters_ 31 (2003). [**https://doi.org/10.1016/S0167-6377%2802%2900217-1**](https://doi.org/10.1016/S0167-6377%2802%2900217-1) . It is also believed that the paper's Theorem 2 remains true even if $Q$ must be a polynomial.
 
