@@ -20,7 +20,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
 | cause | lead to, provoke, yield, engender, occasion, beget, breed, bring on, bring about, give rise to, produce, result in | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
-| focus on | touch on, concentrate on, center on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on, zoom in on | |
+| focus on | concentrate on, center on, touch on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, be about, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on | |
 | focused on (for example, _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
@@ -36,11 +36,12 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | jury member | juror |Suggested by E. Bernal. |
 | many people | many | Inspired by E. Bernal. |
+| medal winner | medalist | |
 | member (_of an association, club, etc._) | adherent, individual. | E. Bernal wrote of his concerns about this word's overuse. |
 | people, persons | men and women, individuals, audience, public, population, anyone..., whoever..., they who..., [leave out].<br>_Informal:_ folks. | More generally, a more specific term than _people_ or _persons_ is preferred. Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider, for example: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
-| say | declare, affirm, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ note, affirm, add, explain, elaborate, conclude; <br>share, reveal, disclose; <br>opine, give the opinion, argue, contend, maintain; <br> reply, respond, answer; <br>signal, indicate, point out;<br>acknowledge, admit; <br>highlight, emphasize, underline, underscore, stress. | Spanish and French press articles tend to employ numerous synonyms for this word. |
+| say | declare, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ note, affirm, add, explain, elaborate, conclude; <br>share, reveal, disclose; <br>opine, give the opinion, argue, contend, maintain; <br> reply, respond, answer; <br>signal, indicate, point out;<br>acknowledge, admit; <br>highlight, emphasize, underline, underscore, stress. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, speak with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>In [someone]'s estimation, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that...<br>As [someone] puts it, ... | Expressing an opinion. |
@@ -51,7 +52,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | The fact that... | That... | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | The fact that _he appeared_ | That _he appeared_, _His appearance_, _His appearing_. | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
-| use | employ, make use of. | Verb. Also: "_something_ is used to..." &rarr; _something_ is for..., _something_ serves to...; "you can use _something_ to..." &rarr; with _something_ you can..., _something_ lets you...; _something_ helps you.... |
+| use | employ, make use of, leverage. | Verb. Also: "_something_ is used to..." &rarr; _something_ is for..., _something_ serves to...; "you can use _something_ to..." &rarr; with _something_ you can..., _something_ lets you..., _something_ helps you.... |
 | what's happening | what's going on, what's occurring, what's [synonym for _happening_]. | Inspired by E. Bernal. |
 
 Another technique to try is to rewrite a text to avoid overused words as much as possible.
@@ -72,6 +73,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | because of the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | blizzard conditions | blizzard |Inspired by E. Bernal. |
 | [adjective] day today (for example, _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
+| commission member | commissioner | Remark on 'member' inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
 | due to the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | examples include but are not limited to | examples are | The word "examples" already says that the list is not all-inclusive. |
@@ -94,7 +96,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
 | other people | others |Inspired by E. Bernal. |
 | people's identities | every personal identity, who someone is |Inspired by E. Bernal. |
-| people's lives | life |Inspired by E. Bernal. |
+| people's lives | (human) life |Inspired by E. Bernal. |
 | people/persons being held/jailed | (the) detainees, the jailed.<br>_In criminal cases:_ (the) inmates, the prisoners. |Inspired by E. Bernal. |
 | people/persons know | it is known, it is generally known, it is commonly known, we know |Inspired by E. Bernal. |
 | people/persons complaining | (the) complainants |Inspired by E. Bernal. |
@@ -104,7 +106,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | pregnant people | the pregnant, pregnant women |  |
 | prevent [something] from happening | prevent [something] |Inspired by E. Bernal. |
 | rain conditions, rainy conditions | rain. _Or as appropriate_: drizzle, showers, squalls, light rain, heavy rain, downpours. |Inspired by E. Bernal. |
-| remove (_in the sense of 'erase' or 'abolish'_) | eliminate, erase, delete, suppress, withhold, take away, get [something] off, get rid of, abolish, repeal, rescind, do away with | It is correct to say "remove [something] from [something else]", speak of "removing" an obstacle or disadvantage, or use in the sense of 'move [something] away'. |
+| remove (_in the sense of 'erase' or 'abolish'_) | take out, take away, do away with, eliminate, erase, delete, suppress, withhold, get [something] off, get rid of, abolish, repeal, rescind | It is correct to say "remove [something] from [something else]", speak of "removing" an obstacle or disadvantage, or use in the sense of 'move [something] away'. |
 | (they) saved their lives | (they) were saved, (they) saved their life |Inspired by E. Bernal. |
 | (their) lives, deaths, lifetimes, healths, sakes, identities, futures | their life, death, lifetime, health, sake, identity, future |Inspired by E. Bernal. |
 | This is [program]. | _To identify the program:_ [program]; You are listening to [program]; You are tuned to [program].<br>_To present the program:_ [program] starts now; We (now) welcome you to [program]; We (now) bring you [program]; Now starting [program]; Presenting [program]; We now present [program]; We now start [program]; It's time for [program]. | Identifications of TV and radio programs.  Suggested by E. Bernal. |
