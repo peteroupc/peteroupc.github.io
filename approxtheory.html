@@ -536,7 +536,7 @@
 
 <p>The following inequalities give bounds on the “best possible” error that a polynomial of degree $n$ can achieve in approximating a function.</p>
 
-<p><strong>Lemma 13</strong>. <em>Let $n$ be zero or a positive integer, let $k$ be a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$, and let $P$ be a polynomial of degree $n$ or less with the least maximum absolute difference between $f$ and the polynomial on that interval.  Then the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, Babenko and Kryakin 2018<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>, and references therein):</em></p>
+<p><strong>Lemma 13</strong>. <em>Let $n$ be zero or a positive integer, let $k$ be a positive integer, let $f(\lambda)$ be continuous on a compact interval $[a, b]$.  Then there is at least one polynomial $P$ of degree up to $n$ on that interval such that the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, Babenko and Kryakin 2018<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>, and references therein):</em></p>
 
 \[\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) &amp; \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}), &amp; \textrm{(JS)}\end{cases}\]
 
@@ -572,7 +572,7 @@
   <p><strong>Note:</strong> The inequality (Wh) is also known as Whitney’s inequality; the inequality (JS), the Jackson–Stechkin inequality.</p>
 </blockquote>
 
-<p><strong>Lemma 13A</strong>.  <em>With the assumptions in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:</em></p>
+<p><strong>Lemma 13A</strong>.  <em>With the setting in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:</em></p>
 
 \[\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+1}}. \tag{Ph}\]
 
