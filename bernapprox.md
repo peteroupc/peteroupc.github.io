@@ -366,17 +366,17 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^7]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^8]: Tachev, Gancho. "Linear combinations of two Bernstein polynomials", _Mathematical Foundations of Computing_, 2022. [https://doi.org/10.3934/mfc.2022061](https://doi.org/10.3934/mfc.2022061)
+[^8]: Tachev, Gancho. "Linear combinations of two Bernstein polynomials", _Mathematical Foundations of Computing_, 2022. [**https://doi.org/10.3934/mfc.2022061**](https://doi.org/10.3934/mfc.2022061)
 
 [^9]: Butzer, P. L. (1953). Linear Combinations of Bernstein Polynomials. Canadian Journal of Mathematics, 5, 559–567. [**https://doi.org/10.4153/CJM-1953-063-7**](https://doi.org/10.4153/CJM-1953-063-7)
 
-[^10]: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
+[^10]: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
 [^11]: [**Bernstein, S. N. (1932). "Complément à l’article de E. Voronovskaya."**](https://scholar.google.com/scholar?q=Bernstein,+S.+N.+1932.+Complément+à+larticle+de+E.+Voronovskaya) CR Acad. URSS, 86-92.
 
 [^12]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^13]: Lorentz, G.G. (1964). "Inequalities and the Saturation Classes of Bernstein Polynomials." In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [https://doi.org/10.1007/978-3-0348-4131-3_19](https://doi.org/10.1007/978-3-0348-4131-3_19)
+[^13]: Lorentz, G.G. (1964). "Inequalities and the Saturation Classes of Bernstein Polynomials." In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [**https://doi.org/10.1007/978-3-0348-4131-3_19**](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
 [^14]: Qian, W., Riedel, M. D., & Rosenberg, I. (2011), "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_, 32(3), 448-463, suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial ().
 
@@ -392,7 +392,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^20]: [**M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles"**](https://scholar.google.com/scholar?q=M.+Gevrey,+Sur+la+nature+analytique+des+solutions+des+équations+aux+dérivées+partielles), 1918.
 
-[^21]: Yi-Feng Tsai and Rida T. Farouki. 2001. Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form. ACM Trans. Math. Softw. 27, 2 (June 2001), 267–296. [https://doi.org/10.1145/383738.383743](https://doi.org/10.1145/383738.383743)
+[^21]: Yi-Feng Tsai and Rida T. Farouki. 2001. Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form. ACM Trans. Math. Softw. 27, 2 (June 2001), 267–296. [**https://doi.org/10.1145/383738.383743**](https://doi.org/10.1145/383738.383743)
 
 [^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
@@ -412,7 +412,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^30]: Borwein, Peter B. "Approximations by rational functions with positive coefficients." _Journal of Mathematical Analysis and Applications_ 74, no. 1 (1980): 144-151. [**https://doi.org/10.1016/0022-247X%2880%2990118-3**](https://doi.org/10.1016/0022-247X%2880%2990118-3) [**https://www.sciencedirect.com/science/article/pii/0022247X80901183**](https://www.sciencedirect.com/science/article/pii/0022247X80901183)
 
-[^31]: Zhang, RJ., Liu, X. Rational interpolation operator with finite Lebesgue constant. Calcolo 59, 10 (2022). [https://doi.org/10.1007/s10092-021-00454-1](https://doi.org/10.1007/s10092-021-00454-1)
+[^31]: Zhang, RJ., Liu, X. Rational interpolation operator with finite Lebesgue constant. Calcolo 59, 10 (2022). [**https://doi.org/10.1007/s10092-021-00454-1**](https://doi.org/10.1007/s10092-021-00454-1)
 
 [^32]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor 100, 729–744 (2025). [**https://doi.org/10.1007/s11075-024-01933-6**](https://doi.org/10.1007/s11075-024-01933-6)
 
@@ -440,7 +440,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^44]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
 
-[^45]: May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. [https://doi.org/10.4153/CJM-1976-123-8](https://doi.org/10.4153/CJM-1976-123-8)
+[^45]: May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. [**https://doi.org/10.4153/CJM-1976-123-8**](https://doi.org/10.4153/CJM-1976-123-8)
 
 [^46]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
 

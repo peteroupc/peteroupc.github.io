@@ -70,9 +70,11 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | all day today | all day [if _today_ is understood], from dawn to dusk (today), from sunrise to sunset (today) |Inspired by E. Bernal. |
 | basically | [leave out] | |
 | before [something] happened, ... | before [something] |Inspired by E. Bernal. |
+| because of its status as | for being |  |
 | because of the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | blizzard conditions | blizzard |Inspired by E. Bernal. |
 | [adjective] day today (for example, _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
+| by reason of its status as | for being | |
 | commission member | commissioner | Remark on 'member' inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
 | due to the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
