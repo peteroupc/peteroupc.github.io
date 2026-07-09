@@ -111,7 +111,7 @@ For some of the polynomials given earlier, a degree $n$ can be found so that the
 | Has Hölder continuous third derivative. | $U_{n, 2}(f)$. | _&epsilon;_ = $(9H_3+8M_2+8M_3)$ / $(64 n^{(3+\alpha)/2})$. | _n_=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{2/(3+\alpha)}$)). | $n\ge 6$.  0 &lt; _&alpha;_ &le; 1 is third derivative's Hölder exponent.  See Proposition B10D in appendix.|
 | Has Lipschitz continuous third derivative. | $U_{n, 2}(f)$. | _&epsilon;_ = $(9H_3+8M_2+8M_3)$ / $(64 n^2)$. | _n_=max(6, ceil($((9H_3+8M_2+8M_3)$ / $(64\epsilon))^{1/2}$)). | $n\ge 6$.  Special case of previous entry.|
 | Has Lipschitz continuous third derivative. | $L_{3, n/4}(f)$. | _&epsilon;_ = _L_<sub>3</sub>/(8\*_n_<sup>2</sup>). | _n_=max(4,ceil((sqrt(439)/25) \* sqrt(_L_<sub>3</sub>/_&epsilon;_))) &le; max(4,ceil((83810/100000) \* sqrt(_L_<sub>3</sub>/_&epsilon;_))). (Round _n_ up to nearest multiple of 4.) | $n\ge 4$ must be divisible by 4. See Proposition B10 in appendix. |
-| Has Lipschitz-continuous derivative. | $B_n(f)$. | _&epsilon;_ = _L_<sub>1</sub>/(8\*_n_). | _n_ = ceil(_L_<sub>1</sub>/(8\*_&epsilon;_)). | Lorentz (1963)[^13].[^14]|
+| Has Lipschitz-continuous derivative. | $B_n(f)$. | _&epsilon;_ = _L_<sub>1</sub>/(8\*_n_). | _n_ = ceil(_L_<sub>1</sub>/(8\*_&epsilon;_)). | Lorentz (1964)[^13].[^14]|
 | Has Hölder-continuous derivative. | $B_n(f)$. | _&epsilon;_ = _H_<sub>1</sub>/(4\*_n_<sup>(1+_&alpha;_)/2</sup>). | _n_ = ceil((_H_<sub>1</sub>/(4\*_&epsilon;_))<sup>2/(1+_&alpha;_)</sup>). | Schurer and Steutel (1975)[^15]. 0 &lt; _&alpha;_ &le; 1 is derivative's Hölder exponent. |
 | Is Hölder continuous. | $B_n(f)$. | _&epsilon;_ = _H_<sub>0</sub>\*(1/(4\*_n_))<sup>_&alpha;_/2</sup>. | _n_ = ceil((_H_<sub>0</sub>/_&epsilon;_))<sup>2/_&alpha;_</sup>/4). | Kac (1938)[^16]. 0 &lt; _&alpha;_ &le; 1 is _f_'s Hölder exponent. |
 | Is Lipschitz continuous. | $B_n(f)$. | _&epsilon;_ = _L_<sub>0</sub>\*sqrt(1/(4\*_n_)). | _n_ = ceil((_L_<sub>0</sub>)<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
@@ -356,7 +356,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^2]: In case 3 in general, if $f$ is analytic at every point on an interval, the "most stable" approximation occurs when the sample points are clustered at a quadratic rate toward the endpoints. Adcock, B., Platte, R.B., Shadrin, A., "[**Optimal sampling rates for approximating analytic functions from pointwise samples**](https://doi.org/10.1093/imanum/dry024), _IMA Journal of Numerical Analysis_ 39(3), July 2019.
 
-[^3]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, $m-1$) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as $n$ factorial; in this document, (0!) = 1.
+[^3]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) $={n \choose k}$ is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ satisfying _n_&minus;_k_+1 &le; _i_ &le; _n_, then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, $m-1$) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.<br>_n_! = 1\*2\*3\*...\*_n_ is also known as $n$ factorial; in this document, (0!) = 1.
 
 [^4]: [**S.N. Bernstein, "Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités"**](https://scholar.google.com/scholar?q=S.N.+Bernstein,+Démonstration+du+théorème+de+Weierstrass+fondée+sur+le+calcul+des+probabilités), Comm. Kharkov Math. Soc. 13, 1-2, 1912.
 
@@ -366,19 +366,19 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^7]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^8]: Tachev, Gancho. "[**Linear combinations of two Bernstein polynomials**](https://doi.org/10.3934/mfc.2022061)", _Mathematical Foundations of Computing_, 2022.
+[^8]: Tachev, Gancho. "Linear combinations of two Bernstein polynomials", _Mathematical Foundations of Computing_, 2022. [https://doi.org/10.3934/mfc.2022061](https://doi.org/10.3934/mfc.2022061)
 
 [^9]: Butzer, P. L. (1953). Linear Combinations of Bernstein Polynomials. Canadian Journal of Mathematics, 5, 559–567. [**https://doi.org/10.4153/CJM-1953-063-7**](https://doi.org/10.4153/CJM-1953-063-7)
 
-[^10]: Holtz, O., Nazarov, F., Peres, Y., "[**New Coins from Old, Smoothly**](https://link.springer.com/content/pdf/10.1007/s00365-010-9108-5.pdf)", _Constructive Approximation_ 33 (2011).
+[^10]: Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011). [https://doi.org/10.1007/s00365-010-9108-5](https://doi.org/10.1007/s00365-010-9108-5)
 
 [^11]: [**Bernstein, S. N. (1932). "Complément à l’article de E. Voronovskaya."**](https://scholar.google.com/scholar?q=Bernstein,+S.+N.+1932.+Complément+à+larticle+de+E.+Voronovskaya) CR Acad. URSS, 86-92.
 
 [^12]: The degree of approximation by polynomials with positive coefficients. Math. Ann. 151, 239–251 (1963). [**https://doi.org/10.1007/BF01398235**](https://doi.org/10.1007/BF01398235)
 
-[^13]: [**G.G. Lorentz, "Inequalities and saturation classes of Bernstein polynomials"**](https://scholar.google.com/scholar?q=G.G.+Lorentz,+Inequalities+and+saturation+classes+of+Bernstein+polynomials), 1963.
+[^13]: Lorentz, G.G. (1964). "Inequalities and the Saturation Classes of Bernstein Polynomials." In: Butzer, P.L., Korevaar, J. (eds) On Approximation Theory / Über Approximationstheorie. ISNM International Series of Numerical Mathematics / Internationale Schriftenreihe zur Nummerischen Mathematik / Série Internationale D’Analyse Numérique, vol 5 . Springer, Basel. [https://doi.org/10.1007/978-3-0348-4131-3_19](https://doi.org/10.1007/978-3-0348-4131-3_19)
 
-[^14]: Qian et al. suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial (Qian, W., Riedel, M. D., & Rosenberg, I. (2011). Uniform approximation and Bernstein polynomials with coefficients in the unit interval. European Journal of Combinatorics, 32(3), 448-463).
+[^14]: Qian, W., Riedel, M. D., & Rosenberg, I. (2011), "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_, 32(3), 448-463, suggested an _n_ which has the upper bound _n_=ceil(1+max($2n$,$n^2 (2^{n}C)/\epsilon$)), where $C$ is the maximum of $f$ on its domain, but this is often much worse and works only if $f$ is a polynomial ().
 
 [^15]: Schurer, F., Steutel, F.W. (1976). On an inequality of Lorentz in the theory of Bernstein polynomials. In: Böhmer, K., Meinardus, G., Schempp, W. (eds) Spline Functions. Lecture Notes in Mathematics, vol 501. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0079754**](https://doi.org/10.1007/BFb0079754)
 
@@ -392,7 +392,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^20]: [**M. Gevrey, "Sur la nature analytique des solutions des équations aux dérivées partielles"**](https://scholar.google.com/scholar?q=M.+Gevrey,+Sur+la+nature+analytique+des+solutions+des+équations+aux+dérivées+partielles), 1918.
 
-[^21]: [**Tsai, Yi-Feng, and Rida T. Farouki. "Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form."**](https://scholar.google.com/scholar?q=Tsai,+Yi-Feng,+and+Rida+T.+Farouki.+Algorithm+812+BPOLY+An+object-oriented+library+of+numerical+algorithms+for+polynomials+in+Be) ACM Transactions on Mathematical Software (TOMS) 27.2 (2001): 267-296.
+[^21]: Yi-Feng Tsai and Rida T. Farouki. 2001. Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form. ACM Trans. Math. Softw. 27, 2 (June 2001), 267–296. [https://doi.org/10.1145/383738.383743](https://doi.org/10.1145/383738.383743)
 
 [^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
@@ -412,7 +412,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^30]: Borwein, Peter B. "Approximations by rational functions with positive coefficients." _Journal of Mathematical Analysis and Applications_ 74, no. 1 (1980): 144-151. [**https://doi.org/10.1016/0022-247X%2880%2990118-3**](https://doi.org/10.1016/0022-247X%2880%2990118-3) [**https://www.sciencedirect.com/science/article/pii/0022247X80901183**](https://www.sciencedirect.com/science/article/pii/0022247X80901183)
 
-[^31]: [**Zhang, Ren-Jiang, and Xing Liu. "Rational interpolation operator with finite Lebesgue constant."**](https://scholar.google.com/scholar?q=Zhang,+Ren-Jiang,+and+Xing+Liu.+Rational+interpolation+operator+with+finite+Lebesgue+constant) Calcolo 59.1 (2022): 10.
+[^31]: Zhang, RJ., Liu, X. Rational interpolation operator with finite Lebesgue constant. Calcolo 59, 10 (2022). [https://doi.org/10.1007/s10092-021-00454-1](https://doi.org/10.1007/s10092-021-00454-1)
 
 [^32]: Themistoclakis, W., Van Barel, M. A note on generalized Floater–Hormann interpolation at arbitrary distributions of nodes. Numer Algor 100, 729–744 (2025). [**https://doi.org/10.1007/s11075-024-01933-6**](https://doi.org/10.1007/s11075-024-01933-6)
 
@@ -440,7 +440,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^44]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
 
-[^45]: [**May, C.P., "Saturation and inverse theorems for a class of exponential-type operators"**](https://scholar.google.com/scholar?q=May,+C.P.,+Saturation+and+inverse+theorems+for+a+class+of+exponential-type+operators), Canadian Journal of Mathematics 28 (1976).
+[^45]: May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. [https://doi.org/10.4153/CJM-1976-123-8](https://doi.org/10.4153/CJM-1976-123-8)
 
 [^46]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
 
