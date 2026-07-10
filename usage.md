@@ -99,7 +99,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | one way or another | either way; [leave out] |Inspired by E. Bernal. |
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |
 | other people | others |Inspired by E. Bernal. |
-| people's identities | every personal identity, who someone is |Inspired by E. Bernal. |
+| people's identities | who someone is, every personal identity |Inspired by E. Bernal. |
 | people's lives | (human) life |Inspired by E. Bernal. |
 | people/persons being held/jailed | (the) detainees, the jailed.<br>_In criminal cases:_ (the) inmates, the prisoners. |Inspired by E. Bernal. |
 | people/persons know | it is known, it is generally known, it is commonly known, we know |Inspired by E. Bernal. |

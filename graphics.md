@@ -211,7 +211,7 @@ This section has notes on this specification, such as how its requirements corre
     - 8:5 aspect ratio: 640 &times; 400,[^47] 320 &times; 200.[^29]
     - Other: 280 &times; 192,[^48] 480 &times; 272,[^49] 512 &times; 424, [^50] 400 &times; 240,[^51] 384 &times; 224,[^52] 160 &times; 200,[^53] 480 &times; 240.[^54]
 
-    This is not a complete list.  Some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.  [**Arcade game graphics**](#Arcade_Game_Graphics) are described later.
+    This is not a complete list.  Some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.  [**Arcade game graphics**](#Arcade_game_graphics) are described later.
 
 - As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^55]
 

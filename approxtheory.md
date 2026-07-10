@@ -490,15 +490,15 @@ _provided that, in either case,_ $L(\text{abs}(e_1-x))(x)$ _(the "absolute momen
 >
 > **Example**:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  And $L$ is unbounded because $L(z)/z=z^2$ grows without bound as $z$ increases.  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.
 
-**Lemma 16** (Gonska and Kovacheva [1994/2024, theorem 4.2\][^54]): _Let $H$ be a function that maps continuous functions on a compact interval $[a,b]$ to functions on that interval that belong to a Banach space equipped with the norm $\Vert\cdot\Vert_B$.  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. Then if&mdash;_
+**Lemma 16** (Gonska and Kovacheva [1994/2024, theorem 4.2\][^54]): _Let $H$ be a function that maps continuous functions on a compact interval $[a,b]$ to functions in a Banach space equipped with the norm $\Vert\cdot\Vert_B$.[^88]  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. If&mdash;_
 
-- _(Boundedness of $H$:) there is $\alpha>0$ such that_ $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ _whenever $f$ is continuous on the interval,_
-- _(Bounded subadditivity:) there is $\gamma>0$ such that_ $\Vert H(f+g)\Vert_B\le\gamma(\Vert H(f)\Vert_B+\Vert H(g)\Vert_B)$ _whenever $f$ and $g$ are continuous on the interval, and_
-- _there are positive numbers_ $\beta_0$, $\beta_1$, _and_ $\beta_2$ _such that_ $\Vert H(f)\Vert_B\le\beta_0\Vert f\Vert_C+\beta_1\Vert f^{(2)}\Vert_C+\beta_2\Vert f^{(2)}\Vert_C$ _whenever $f$ has a continuous second derivative on the interval,_
+- _(Boundedness of $H$:) there is $\alpha\ge 0$ such that_ $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ _whenever $f$ is continuous on the interval,_
+- _(Bounded subadditivity:) there is $\gamma\ge 0$ such that_ $\Vert H(f+g)\Vert_B\le$ $\gamma(\Vert H(f)\Vert_B$ + $\Vert H(g)\Vert_B)$ _whenever $f$ and $g$ are continuous on the interval, and_
+- _there are nonnegative numbers_ $\beta_0$, $\beta_1$, _and_ $\beta_2$ _such that_ $\Vert H(f)\Vert_B\le\beta_0\Vert f\Vert_C+$ $\beta_1\Vert f^{(1)}\Vert_C+\beta_2\Vert f^{(2)}\Vert_C$ _whenever $f$ has a continuous second derivative on the interval,_
 
 _then for every positive $h$ with $h\le (b-a)/2$ and every continuous function $f$ on the interval, the following error bound applies:_
 
-$$\Vert H(f)\Vert_B\le\gamma(\beta_0\Vert f\Vert_C+2\beta_1\omega_1(f,h)/h+(3/4)(\alpha+\beta_0+2\beta_1/hj+2\beta_2/h^2)\omega_2(f,h)).$$
+$$\begin{multline}\Vert H(f)\Vert_B\le\gamma(\beta_0\Vert f\Vert_C+2\beta_1\omega_1(f,h)/h+\\\\(3/4)(\alpha+\beta_0+2\beta_1/h+2\beta_2/h^2)\omega_2(f,h)).\end{multline}$$
 
 <a id=Lipschitz_Continuous_Operators></a>
 
@@ -960,3 +960,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^86]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
 
 [^87]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
+
+[^88]: Examples of Banach spaces are:<br>(1) continuous functions on a compact interval, with the maximum absolute value as the norm;<br>(2) the real line with the norm $\Vert x\Vert_B = \text{abs}(x)$;<br>(3) polynomials up to degree $k$ on a compact interval, with the maximum absolute value as the norm;<br>(4) bounded functions on a compact interval, with the least upper bound of the absolute value as the norm.
