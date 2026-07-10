@@ -22,6 +22,7 @@ All may interest 1990s computer users.
         - [**Screen resolutions**](#Screen_resolutions)
         - [**Frame rate**](#Frame_rate)
         - [**3-D graphics**](#3_D_graphics)
+        - [**Arcade Game Graphics**](#Arcade_Game_Graphics)
         - [**Screen image effects (filters)**](#Screen_image_effects_filters)
         - [**Sounds**](#Sounds)
         - [**Memory**](#Memory)
@@ -138,7 +139,7 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 
 In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^18]
 
-Some video game hardware from the late 1990s may have 3-D graphics capabilities beyond what is "classic" here, such as SEGA Model 3 (1996), SEGA NAOMI (1998), or NVIDIA GeForce 256 (late 1999).
+Arcade games in scope range from _Computer Space_ (1971)&mdash;the first commercial arcade game&mdash;to most arcade titles released in 1999.  But some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D graphics capabilities beyond what is "classic" here.
 
 In general, PC applications that feature classic graphics include:
 
@@ -147,6 +148,8 @@ In general, PC applications that feature classic graphics include:
 3. Games for MS-DOS or PC-9801 that were published before 2000.  Examples are _Quake_ (1996), _WarCraft_ (1994), and the first titles of the Touhou Project series (1997-1998).
 4. Games using OpenGL 1.2 or earlier for graphics.
 5. So-called "multimedia titles" from the 1990s, or applications resembling interactive versions of books (generally reference and other nonfiction works), complete with sound, animation, and video.  See the _Authoring Guide_ that came with Microsoft's Multimedia Development Kit.
+
+NVIDIA GeForce 256 (late 1999) is out of scope.
 
 One of the following games can be considered an upper limit to what is considered "classic graphics" in this specification.
 
@@ -250,6 +253,15 @@ This section has notes on this specification, such as how its requirements corre
     - Phong shading (per-pixel specular highlighting), ray-traced graphics (other than the _ray casting_ technique), and path-traced graphics, which were too slow for real-time graphics in the 20th century.
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^60] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
+
+<a id=Arcade_Game_Graphics></a>
+
+#### Arcade Game Graphics
+
+- From 1971 to 1979, arcade games tended to have white graphics drawn on a black screen; the screen image was one bit per pixel.  Some arcade cabinets in the late 1970s had a colored semitransparent overlay in front of the screen to lend color to the otherwise white graphics.
+- The practice of drawing graphics on a mostly black screen continued up to the early 1980s, but this time they were colored by the game itself rather than by an overlay.
+- The graphics of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are _Asteroids_ (1979) and _Battlezone_ (1980).
+- Graphics made of tiles and sprites were popularized by the arcade game _Galaxian_ (1979).
 
 <a id=Screen_image_effects_filters></a>
 

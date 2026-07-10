@@ -442,11 +442,11 @@ For certain operators, the approximation error of a function under that operator
 - _$L$ is a linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$ (for example, $L$ reproduces all functions in $T$)._
 - _$I$ is the identity operator $I(f)=f$._
 
-_Then:_
+_Then for every function $P$ in $T$:_
 
-$$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\text{Dist}(f,P)\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert_{op} + \Vert L\Vert_{op}) \cdot\text{Dist}(f,P)\\\\ \le(1 + \Vert L\Vert_{op}) \cdot\text{Dist}(f,P),\quad\text{(Leb)}\end{multline}$$
+$$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Vert\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert_{op} + \Vert L\Vert_{op}) \cdot\Vert f-P\Vert\\\\ \le(1 + \Vert L\Vert_{op}) \cdot\Vert f-P\Vert\quad\text{(Leb)}\end{multline}$$
 
-_where_ $\text{Dist}(f,P)$ is the greatest lower bound of $\Vert f-P\Vert$ over all functions $P$ in $T$ (see also DeVore and Lorentz (1993, p. 30; ch. 5)[^57], Powell (1981, theorem 3.1)[^58], De Villiers (2012, theorem 5.3.2)[^4]; for (Leb2) see De Boor (1982, chapter 2)[^59])._ [^60]
+_(see also DeVore and Lorentz (1993, p. 30; ch. 5)[^57], Powell (1981, theorem 3.1)[^58], De Villiers (2012, theorem 5.3.2)[^4]; for (Leb2) see De Boor (1982, chapter 2)[^59])._ [^60]
 
 > **Examples:**
 >
