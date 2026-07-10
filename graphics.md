@@ -22,7 +22,7 @@ All may interest 1990s computer users.
         - [**Screen resolutions**](#Screen_resolutions)
         - [**Frame rate**](#Frame_rate)
         - [**3-D graphics**](#3_D_graphics)
-        - [**Arcade Game Graphics**](#Arcade_Game_Graphics)
+        - [**Arcade game graphics**](#Arcade_game_graphics)
         - [**Screen image effects (filters)**](#Screen_image_effects_filters)
         - [**Sounds**](#Sounds)
         - [**Memory**](#Memory)
@@ -139,7 +139,7 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 
 In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^18]
 
-Arcade games in scope range from _Computer Space_ (1971)&mdash;the first commercial arcade game&mdash;to most arcade titles released in 1999.  But some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D graphics capabilities beyond what is "classic" here.
+Arcade games in scope range in year from 1971 &mdash; which saw the launch of the first arcade video game, _Computer Space_ &mdash; to 1999.  But some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D graphics capabilities beyond what is "classic" here.
 
 In general, PC applications that feature classic graphics include:
 
@@ -211,7 +211,7 @@ This section has notes on this specification, such as how its requirements corre
     - 8:5 aspect ratio: 640 &times; 400,[^47] 320 &times; 200.[^29]
     - Other: 280 &times; 192,[^48] 480 &times; 272,[^49] 512 &times; 424, [^50] 400 &times; 240,[^51] 384 &times; 224,[^52] 160 &times; 200,[^53] 480 &times; 240.[^54]
 
-    This is not a complete list.  Arcade machines of the 1990s tended to vary greatly in their screen resolutions, and some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.
+    This is not a complete list.  Some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.  [**Arcade game graphics**](#Arcade_Game_Graphics) are described later.
 
 - As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^55]
 
@@ -254,14 +254,18 @@ This section has notes on this specification, such as how its requirements corre
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^60] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
-<a id=Arcade_Game_Graphics></a>
+<a id=Arcade_game_graphics></a>
 
-#### Arcade Game Graphics
+#### Arcade game graphics
 
-- From 1971 to 1979, arcade games tended to have white graphics drawn on a black screen; the screen image was one bit per pixel.  Some arcade cabinets in the late 1970s had a colored semitransparent overlay in front of the screen to lend color to the otherwise white graphics.
+- From 1971 to 1979, arcade games tended to have white graphics drawn on a black screen; the screen image was one bit per pixel.  Some arcade cabinets in the late 1970s had a colored semitransparent overlay in front of the screen to lend color to the otherwise white graphics (an example is _Lunar Rescue_ [1979]).
 - The practice of drawing graphics on a mostly black screen continued up to the early 1980s, but this time they were colored by the game itself rather than by an overlay.
-- The graphics of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are _Asteroids_ (1979) and _Battlezone_ (1980).
+- The graphics of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are _Asteroids_ (1979) and _Battlezone_ (1980).  _Star Wars_ (1983) even had multicolored graphics of this kind.
 - Graphics made of tiles and sprites were popularized by the arcade game _Galaxian_ (1979).
+- Most arcade games before 1995 had a resolution from 46,080 pixels (192 &times; 240 or 240 &times; 192) through 98,304 pixels (256 &times; 384 or 384 &times; 256).  The following were exceptions:
+     - Certain two- or three-screen games by Taito (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
+     - The Midway MCR family of arcade machines (1980 to about 1986) had a resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but background graphics were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
+- If an arcade game employed 2-D graphics with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
 
 <a id=Screen_image_effects_filters></a>
 

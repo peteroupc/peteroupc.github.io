@@ -490,6 +490,16 @@ _provided that, in either case,_ $L(\text{abs}(e_1-x))(x)$ _(the "absolute momen
 >
 > **Example**:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  And $L$ is unbounded because $L(z)/z=z^2$ grows without bound as $z$ increases.  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.
 
+**Lemma 16** (Gonska and Kovacheva [1994/2024, theorem 4.2\][^54]): _Let $H$ be a function that maps continuous functions on a compact interval $[a,b]$ to functions on that interval that belong to a Banach space equipped with the norm $\Vert\cdot\Vert_B$.  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. Then if&mdash;_
+
+- _(Boundedness of $H$:) there is $\alpha>0$ such that_ $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ _whenever $f$ is continuous on the interval,_
+- _(Bounded subadditivity:) there is $\gamma>0$ such that_ $\Vert H(f+g)\Vert_B\le\gamma(\Vert H(f)\Vert_B+\Vert H(g)\Vert_B)$ _whenever $f$ and $g$ are continuous on the interval, and_
+- _there are positive numbers_ $\beta_0$, $\beta_1$, _and_ $\beta_2$ _such that_ $\Vert H(f)\Vert_B\le\beta_0\Vert f\Vert_C+\beta_1\Vert f^{(2)}\Vert_C+\beta_2\Vert f^{(2)}\Vert_C$ _whenever $f$ has a continuous second derivative on the interval,_
+
+_then for every positive $h$ with $h\le (b-a)/2$ and every continuous function $f$ on the interval, the following error bound applies:_
+
+$$\Vert H(f)\Vert_B\le\gamma(\beta_0\Vert f\Vert_C+2\beta_1\omega_1(f,h)/h+(3/4)(\alpha+\beta_0+2\beta_1/hj+2\beta_2/h^2)\omega_2(f,h)).$$
+
 <a id=Lipschitz_Continuous_Operators></a>
 
 ### Lipschitz-Continuous Operators
@@ -500,7 +510,7 @@ Every bounded linear operator $L$ (with the same "norm" on both sides) is Lipsch
 
 The definition of Lipschitz continuity easily leads to...
 
-**Lemma 16**: _If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:_
+**Lemma 17**: _If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:_
 
 $$\Vert L(f)\Vert\le M\Vert f-P\Vert,$$
 

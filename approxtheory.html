@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-07-09"><meta name="citation_date" content="2026/07/09"><meta name="citation_publication_date" content="2026/07/09"><meta name="citation_online_date" content="2026/07/09"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-07-10"><meta name="citation_date" content="2026/07/10"><meta name="citation_publication_date" content="2026/07/10"><meta name="citation_online_date" content="2026/07/10"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-07-09.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-07-10.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -682,6 +682,18 @@
   <p><strong>Example</strong>:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  And $L$ is unbounded because $L(z)/z=z^2$ grows without bound as $z$ increases.  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.</p>
 </blockquote>
 
+<p><strong>Lemma 16</strong> (Gonska and Kovacheva [1994/2024, theorem 4.2]<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>): <em>Let $H$ be a function that maps continuous functions on a compact interval $[a,b]$ to functions on that interval that belong to a Banach space equipped with the norm $\Vert\cdot\Vert_B$.  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. Then if—</em></p>
+
+<ul>
+  <li><em>(Boundedness of $H$:) there is $\alpha&gt;0$ such that</em> $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ <em>whenever $f$ is continuous on the interval,</em></li>
+  <li><em>(Bounded subadditivity:) there is $\gamma&gt;0$ such that</em> $\Vert H(f+g)\Vert_B\le\gamma(\Vert H(f)\Vert_B+\Vert H(g)\Vert_B)$ <em>whenever $f$ and $g$ are continuous on the interval, and</em></li>
+  <li><em>there are positive numbers</em> $\beta_0$, $\beta_1$, <em>and</em> $\beta_2$ <em>such that</em> $\Vert H(f)\Vert_B\le\beta_0\Vert f\Vert_C+\beta_1\Vert f^{(2)}\Vert_C+\beta_2\Vert f^{(2)}\Vert_C$ <em>whenever $f$ has a continuous second derivative on the interval,</em></li>
+</ul>
+
+<p><em>then for every positive $h$ with $h\le (b-a)/2$ and every continuous function $f$ on the interval, the following error bound applies:</em></p>
+
+\[\Vert H(f)\Vert_B\le\gamma(\beta_0\Vert f\Vert_C+2\beta_1\omega_1(f,h)/h+(3/4)(\alpha+\beta_0+2\beta_1/hj+2\beta_2/h^2)\omega_2(f,h)).\]
+
 <p><a id="Lipschitz_Continuous_Operators"></a></p>
 
 <h3 id="lipschitz-continuous-operators">Lipschitz-Continuous Operators</h3>
@@ -692,7 +704,7 @@
 
 <p>The definition of Lipschitz continuity easily leads to…</p>
 
-<p><strong>Lemma 16</strong>: <em>If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:</em></p>
+<p><strong>Lemma 17</strong>: <em>If $L$ is a Lipschitz-continuous operator, then for every allowed function $f$:</em></p>
 
 \[\Vert L(f)\Vert\le M\Vert f-P\Vert,\]
 
@@ -1156,7 +1168,7 @@
       <p>De Boor, C., “On Uniform Approximation by Splines”, <em>Journal of Approximation Theory</em> 1 (1968). <a href="https://doi.org/10.1016/0021-9045%2868%2990026-9"><strong>https://doi.org/10.1016/0021-9045%2868%2990026-9</strong></a> <a href="https://www.sciencedirect.com/science/article/pii/0021904568900269"><strong>https://www.sciencedirect.com/science/article/pii/0021904568900269</strong></a> <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:54">
-      <p>Gonska, H., &amp; Kovacheva, R. K. (2024). The second order modulus revisited: remarks, applications, problems. J. Numer. Anal. Approx. Theory, 53(1), 78-102. <a href="https://doi.org/10.33993/jnaat531-1410"><strong>https://doi.org/10.33993/jnaat531-1410</strong></a> <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gonska, H., &amp; Kovacheva, R. K. (2024). The second order modulus revisited: remarks, applications, problems. J. Numer. Anal. Approx. Theory, 53(1), 78-102. <a href="https://doi.org/10.33993/jnaat531-1410"><strong>https://doi.org/10.33993/jnaat531-1410</strong></a> <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:54:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:55">
       <p>Zhuk, V.V., “Functions of the Lip 1 class and S.N. Bernstein’s polynomials”, 1989. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

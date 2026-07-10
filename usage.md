@@ -14,6 +14,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
  --- | ---- | -- |
 | Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, not only that, what is more, apart from that, additionally | |
 | almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
+| a lot of people | many | See also "many people" entry. |
 | another [number] (for example, _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | award winner | awardee, recipient (of an award) | |
 | bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant, illegitimate actor | |
@@ -74,6 +75,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | because of the fact that | because | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | blizzard conditions | blizzard |Inspired by E. Bernal. |
 | [adjective] day today (for example, _nice day today_) | [adjective] day [if _today_ is understood], it's [adjective] today |Inspired by E. Bernal. |
+| brand-new news | news | |
 | by reason of its status as | for being | |
 | commission member | commissioner | Remark on 'member' inspired by E. Bernal. |
 | dead people | the dead |Inspired by E. Bernal. |
