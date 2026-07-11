@@ -1,5 +1,7 @@
 # Lean Programming Interfaces for Classic Graphics
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a game screen of 640 &times; 480 or smaller, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
 
 <a id=Goal_An_Open_Source_Engine_or_API_for_Classic_Graphics></a>
@@ -56,7 +58,7 @@ The following is not included in either API.
 
 ## 3-D Graphics
 
-Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple, yet admirable capabilities for real-time rendering of three-dimensional scenes, as well as a low scene complexity (fewer than 20,000 triangles per frame).
+Unlike with today's programmable "shaders", classic 3-D video-game graphics support only simple, yet admirable capabilities for real-time rendering of three-dimensional scenes, as well as a low scene complexity by today's standards (fewer than 20,000 triangles per frame).
 
 This section gives suggestions for a lean API supporting 3-D graphics. Any implementation of it should render graphics in software[^1] and optionally with hardware acceleration.  As with 2-D, the 3-D API is allowed to support drawing to images stored in system memory without also supporting drawing to video memory or directly to the screen.
 
