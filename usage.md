@@ -1,5 +1,7 @@
 # Overused and Discouraged Words and Phrases
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 To improve English usage, reduce monotony, and enrich English vocabulary in writing and speech, I have compiled these two lists on what not to say and what to say better.  Many items in these tables were inspired by Emilio Bernal Labrada, "Good usage prevents abusage", 2018.
 
 The lists could also be useful as a handout to Literacy students from ninth grade and up, or to suggest alternatives to overused and discouraged words for younger students.  For my other suggestions on Literacy instruction, see "[**Suggestions for Instructional Materials**](https://peteroupc.github.io/insmat.html)".

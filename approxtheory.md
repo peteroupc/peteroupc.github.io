@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-The notes in this page catalog results that may be useful in finding bounds on how close a single-variable function on a compact interval is to a polynomial or rational function (or, more generally, a "simpler" version of the other function).
+The notes in this page catalog results that may be useful in finding bounds on how close a single-variable function is to a polynomial or rational function (or, more generally, a "simpler" version of the other function).
 
 The aim is to find error bounds that are _explicit_, with no hidden constants and without introducing transcendental or trigonometric functions. If an error bound is explicit, it can be computed _offline_, without performing an approximation first, so that it can be known, for example, which degree polynomial to build in order to come close to a function with a given accuracy.
 

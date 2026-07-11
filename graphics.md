@@ -1,5 +1,7 @@
 # Graphics and Music Challenges for Classic-Style Computer Applications
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 The following are challenges I make to the computer community, relating to:
 
 - [**Graphics for classic-style game development**](#Graphics_Challenge_for_Classic_Style_Games).
@@ -568,11 +570,11 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^66]: "MB" is ambiguous here; it often means either one million bytes or 1024 times 1024 bytes.
 
-[^67]: "Typical PCs in 1994", [**https://www.dosdays.co.uk/topics/1994.php.**](https://www.dosdays.co.uk/topics/1994.php.)
+[^67]: "Typical PCs in 1994", [**https://www.dosdays.co.uk/topics/1994.php**](https://www.dosdays.co.uk/topics/1994.php).
 
-[^68]: "Typical PCs in 1997", [**https://www.dosdays.co.uk/topics/1997.php.**](https://www.dosdays.co.uk/topics/1997.php.)
+[^68]: "Typical PCs in 1997", [**https://www.dosdays.co.uk/topics/1997.php**](https://www.dosdays.co.uk/topics/1997.php).
 
-[^69]: "Typical PCs in 1998", [**https://www.dosdays.co.uk/topics/1998.php.**](https://www.dosdays.co.uk/topics/1998.php.)
+[^69]: "Typical PCs in 1998", [**https://www.dosdays.co.uk/topics/1998.php**](https://www.dosdays.co.uk/topics/1998.php).
 
 [^70]: Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br>(1) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (R. Fosner, "DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code", _Microsoft Systems Journal_ January 1999).<br>(2) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (M. Abrash, "Inside Xbox Graphics", _Dr. Dobb's Journal_, August 2000); to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(3) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br>(4) The game engine for _SpecOps: Rangers Lead the Way_ (1998) targeted 10,000 triangles per frame ([**"Postmortem: Zombie's _SpecOps: Rangers Lead the Way_"**](https://www.gamedeveloper.com/design/postmortem-zombie-s-i-specops-rangers-lead-the-way-i-), Jan. 31, 2000).  So did _Quake III Arena_ (1999) (John Carmack .plan, Sep. 2, 1999).
 
