@@ -19,9 +19,9 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | a lot of people | many | See also "many people" entry. |
 | another [number] (for example, _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
 | award winner | awardee, recipient (of an award) | |
-| bad actor | malicious actor, malevolent actor, wrongdoer, evildoer, baddie, malfeasant, illegitimate actor | |
+| bad actor | wrongdoer, evildoer, baddie, malicious actor, malevolent actor, malfeasant, illegitimate actor | |
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
-| cause | lead to, provoke, yield, engender, occasion, beget, breed, bring on, bring about, give rise to, produce, result in | Verb. |
+| cause | lead to, result in, yield,  bring on, bring about, produce, provoke, engender, occasion, beget, breed, give rise to | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | concentrate on, center on, touch on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, be about, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on | |
 | focused on (for example, _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
@@ -40,11 +40,11 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | jury member | juror |Suggested by E. Bernal. |
 | many people | many | Inspired by E. Bernal. |
 | medal winner | medalist | |
-| member (_of an association, club, etc._) | adherent, individual. | E. Bernal wrote of his concerns about this word's overuse. |
+| member (_of an association, club, etc._) |  individual, one of [the group], adherent. | E. Bernal wrote of his concerns about this word's overuse. |
 | people, persons | men and women, individuals, audience, public, population, anyone..., whoever..., they who..., [leave out].<br>_Informal:_ folks. | More generally, a more specific term than _people_ or _persons_ is preferred. Inspired by E. Bernal. |
 | people living in [territory] | residents of [territory], inhabitants of [territory] | Also consider, for example: _people living in Italy_ &rarr; _Italians_. |
 | (the) professors | the faculty, professorship, professor corps, professor body, body of professors | |
-| say | declare, assert, express, state, make (it) known, mention, comment, remark.<br>_Depending on context:_ note, affirm, add, explain, elaborate, conclude; <br>share, reveal, disclose; <br>opine, give the opinion, argue, contend, maintain; <br> reply, respond, answer; <br>signal, indicate, point out;<br>acknowledge, admit; <br>highlight, emphasize, underline, underscore, stress. | Spanish and French press articles tend to employ numerous synonyms for this word. |
+| say | state, make (it) known, mention, comment, declare, assert, express, remark.<br>_Depending on context:_ note, add, explain, affirm,  elaborate, conclude; <br>share, reveal, disclose; <br>opine, give the opinion, argue, contend, maintain; <br> answer, reply, respond; <br>signal, indicate, point out;<br>acknowledge, admit; <br>highlight, emphasize, underline, underscore, stress. | Spanish and French press articles tend to employ numerous synonyms for this word. |
 | sit down with | interview, join ... for an interview, meet, consult with, exchange views with, speak with, talk with, converse with, chat with | Suggested by E. Bernal. |
 | [someone] says (that)... | According to [someone], ...<br>In the words of [someone], ...<br>In [someone]'s words, ...<br>Per [someone], ...<br>As [someone] \[synonym for _says_], ...<br>[someone] \[synonym for _says_] that... | |
 | [someone] says (that)... | In [someone]'s opinion, ...<br>In the opinion of [someone], ...<br>In [someone]'s view, ...<br>In [someone]'s eyes, ...<br>In [someone]'s estimation, ...<br>For [someone], ...<br>As [someone] believes, ...<br>As [someone] sees it, ...<br>In [someone]'s belief, ...<br>[someone] believes that...<br>[someone] opines that...<br>[someone] considers that...<br>As [someone] puts it, ... | Expressing an opinion. |
@@ -54,7 +54,7 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | [something] is used to [do something else] | [something] serves to [do something else]. |  |
 | The fact that... | That... | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
 | The fact that _he appeared_ | That _he appeared_, _His appearance_, _His appearing_. | Suggested by Tom Hitchner, UCLA, in an Advanced Placement Daily video. |
-| (the) teachers | teachership, teacher corps, teacher body, body of teachers | |
+| (the) teachers | teacher body, teachership, teacher corps, body of teachers | |
 | use | employ, make use of, leverage. | Verb. Also: "_something_ is used to..." &rarr; _something_ is for..., _something_ serves to...; "you can use _something_ to..." &rarr; with _something_ you can..., _something_ lets you..., _something_ helps you.... |
 | what's happening | what's going on, what's occurring, what's [synonym for _happening_]. | Inspired by E. Bernal. |
 
@@ -91,7 +91,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | is someone who is [adjective] (for example, _is someone who is reliable_) | is [adjective]; is a(n) [adjective] one |Inspired by E. Bernal. |
 | is something that is | is |Inspired by E. Bernal. |
 | it is midnight tonight | it is midnight |Inspired by E. Bernal. |
-| least favorite | least desired, least preferred |Inspired by E. Bernal. |
+| least favorite | least desired, least preferred, most hated |Inspired by E. Bernal. |
 | literally (_in the sense of 'absolutely'_) | absolutely, totally, utterly, altogether, downright, completely, certainly; [leave out]\*\*\* | |
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
