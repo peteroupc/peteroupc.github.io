@@ -741,7 +741,7 @@ The Bernstein polynomials featured in a proof in 1912 of the result that any con
 
 ## Conclusion and Ways to Improve This Article
 
-Many academic papers and books present results in approximation theory, especially error bounds, with hidden constants and without giving upper bounds for such constants.  For example, a result may say the following about an operator (approximation scheme) $L$ and a function $f(\lambda)$.  If certain conditions are met, then:
+Many academic papers and books present results in approximation theory, especially error bounds, with hidden constants and without giving upper bounds for such constants.  For example, a result may say the following about an approximation scheme $L$ and a function $f(\lambda)$.  If certain conditions are met, then:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) \le C\omega_1(f, 1/n^{1/2}),\text{ or }$$
 
