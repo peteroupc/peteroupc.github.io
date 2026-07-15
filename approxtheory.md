@@ -437,10 +437,10 @@ The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovachev
 >
 > $$\begin{multline}3((3/4)\omega_2(f, h))+4((5/h)\omega_1(f,h))\\\\+5((3/(2h^2))\omega_2(f,h)).\end{multline}$$
 
-**Lemma 13C** (Köhler 1994)[^56]\: _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, let $r$ be a positive integer, and let $h$ satisfy $0\lt h\le (b-a)/r^2$.  Then there is at least one function $P$ with a continuous $r$-th derivative on that interval such that&mdash;_
+**Lemma 13C** (Köhler 1994)[^56]\: _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $h$ satisfy $0\lt h\le (b-a)/r^2$.  Then there is at least one function $P$ with a continuous $r$-th derivative on that interval (where $r$ is a positive integer) such that&mdash;_
 
-- $\text{abs}(f(\lambda)-P(\lambda))\le\tau_r\w_r(f,h)$ _and_ $\Vert P^{(r)}\Vert\le (2^r-1)\omega_r(f,h)/h^r$, _or_
-- $\text{abs}(f(\lambda)-P(\lambda))\le\w_r(f,rh)$ _and_ $\Vert P^{(r)}\Vert\le (r+1)\omega_r(f,rh)/h^r$,
+- $\text{abs}(f(\lambda)-P(\lambda))\le\tau_r\omega_r(f,h)$ _and_ $\Vert P^{(r)}\Vert\le (2^r-1)\omega_r(f,h)/h^r$, _or_
+- $\text{abs}(f(\lambda)-P(\lambda))\le\omega_r(f,rh)$ _and_ $\Vert P^{(r)}\Vert\le (r+1)\omega_r(f,rh)/h^r$,
 
 _for some_ $\tau_r\le r^r$, _where_ $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, _and_ $\tau_4=331/6$.
 
@@ -816,7 +816,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial; in this document, (0!) = 1.<br>_Summation notation_, involving the Greek capital sigma (&Sigma;), is a way to write the sum of one or more terms of similar form. For example, $\sum_{k=0}^n g(k)$ means $g(0)+g(1)+...+g(n)$, and $\sum_{k\ge 0} g(k)$ means $g(0)+g(1)+...$.
 
-[^7]: Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On Differences of Positive Linear Operators." _Carpathian Journal of Mathematics_ 22, no. 1/2 (2006): 65–78. [**http://www.jstor.org/stable/43998909**](http://www.jstor.org/stable/43998909)
+[^7]: [**Gonska, Heiner, Paula Piƫul, and Ioan Raşa. "On Differences of Positive Linear Operators."**](https://scholar.google.com/scholar?q=Gonska,+Heiner,+Paula+Piƫul,+and+Ioan+Raşa.+On+Differences+of+Positive+Linear+Operators) _Carpathian Journal of Mathematics_ 22, no. 1/2 (2006): 65–78. [**http://www.jstor.org/stable/43998909**](http://www.jstor.org/stable/43998909)
 
 [^8]: Skorski, Maciej. "Handy formulas for binomial moments." _Modern Stochastics: Theory and Applications_ 12.1 (2024): 27-41. [**https://doi.org/10.15559/24-VMSTA260**](https://doi.org/10.15559/24-VMSTA260)
 
@@ -862,13 +862,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^29]: [**Peetre, J., "Exact interpolation theorems for Lipschitz-continuous functions"**](https://scholar.google.com/scholar?q=Peetre,+J.,+Exact+interpolation+theorems+for+Lipschitz-continuous+functions), Ricerche Mat. 18 (1969).
 
-[^30]: [**Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness."**](https://scholar.google.com/scholar?q=Păltănea,+R,+Dimitriu,+M.T.,+On+some+second+order+moduli+of+smoothness) General Mathematics 24 (2016)
+[^30]: [**Păltănea, R, Dimitriu, M.T., "On some second order moduli of smoothness."**](https://scholar.google.com/scholar?q=Păltănea,+R,+Dimitriu,+M.T.,+On+some+second+order+moduli+of+smoothness) General Mathematics 24 (2016).
 
 [^31]: Păltănea, R., Smuc, M. "Sharp Estimates of Asymptotic Error of Approximation by General Positive Linear Operators in Terms of the First and the Second Moduli of Continuity", _Results in Mathematics_ 74, 70 (2019). [**https://doi.org/10.1007/s00025-019-0997-8**](https://doi.org/10.1007/s00025-019-0997-8)
 
 [^32]: Dimitriu, M.T., "[**Estimates with optimal constants using Peetre's K-functionals**](https://www.jstor.org/stable/43964559)", _Carpathian Journal of Mathematics_ 26 (2010).
 
-[^33]: Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators". In _Proceedings of the International Conference on Numerical Analysis and Approximation Theory_, Cluj-Napoca. Romania, July 2006.
+[^33]: [**Gonska, Heiner, Paula Piţul, and Ioan Raşa. "On Peano's form of the Taylor remainder, Voronovskaja's theorem and the commutator of positive linear operators."**](https://scholar.google.com/scholar?q=Gonska,+Heiner,+Paula+Piţul,+and+Ioan+Raşa.+On+Peanos+form+of+the+Taylor+remainder,+Voronovskajas+theorem+and+the+commutator+of+) In _Proceedings of the International Conference on Numerical Analysis and Approximation Theory_, Cluj-Napoca. Romania, July 2006.
 
 [^34]: [**Gonska, Heiner. "On the degree of approximation in Voronovskaja's theorem"**](https://scholar.google.com/scholar?q=Gonska,+Heiner.+On+the+degree+of+approximation+in+Voronovskajas+theorem), Studia Univ. Babeş-Bolyai, Math., September 2007.
 
@@ -912,9 +912,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^54]: Gonska, H., & Kovacheva, R. K. (2024). The second order modulus revisited: remarks, applications, problems. J. Numer. Anal. Approx. Theory, 53(1), 78-102. [**https://doi.org/10.33993/jnaat531-1410**](https://doi.org/10.33993/jnaat531-1410)
 
-[^55]: Zhuk, V.V., "Functions of the Lip 1 class and S.N. Bernstein’s polynomials", 1989.
+[^55]: [**Zhuk, V.V., "Functions of the Lip 1 class and S.N. Bernstein’s polynomials"**](https://scholar.google.com/scholar?q=Zhuk,+V.V.,+Functions+of+the+Lip+1+class+and+S.N.+Bernsteins+polynomials), 1989.
 
-[^56]: Köhler, P., "Estimating Remainder Functions by the Moduli of Smoothness", _Zeitschrift für Analysis und ihre Anwendungen_ 13(1), 1994.
+[^56]: [**Köhler, P., "Estimating Remainder Functions by the Moduli of Smoothness"**](https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness), _Zeitschrift für Analysis und ihre Anwendungen_ 13(1), 1994.
 
 [^57]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
 

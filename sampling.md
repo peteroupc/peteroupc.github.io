@@ -136,9 +136,9 @@ For any case of the sampling problem, suppose the number of input values taken i
 
 [^19]: P. J. Bickel. E. L. Lehmann. "Unbiased Estimation in Convex Families." Ann. Math. Statist. 40 (5) 1523 - 1535, October, 1969. [**https://doi.org/10.1214/aoms/1177697370**](https://doi.org/10.1214/aoms/1177697370)
 
-[^20]: Gajek, Lesław. "Note on unbiased estimability of the larger of two mean values." Applicationes Mathematicae 23.2 (1995): 239-245. <http://eudml.org/doc/219128>.
+[^20]: [**Gajek, Lesław. "Note on unbiased estimability of the larger of two mean values."**](https://scholar.google.com/scholar?q=Gajek,+Lesław.+Note+on+unbiased+estimability+of+the+larger+of+two+mean+values) Applicationes Mathematicae 23.2 (1995): 239-245. <http://eudml.org/doc/219128>.
 
-[^21]: Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function." Applicationes Mathematicae 22.4 (1995): 485-497. [**http://eudml.org/doc/219109**](http://eudml.org/doc/219109)
+[^21]: [**Rychlik, Tomasz. "A class of unbiased kernel estimates of a probability density function."**](https://scholar.google.com/scholar?q=Rychlik,+Tomasz.+A+class+of+unbiased+kernel+estimates+of+a+probability+density+function) Applicationes Mathematicae 22.4 (1995): 485-497. [**http://eudml.org/doc/219109**](http://eudml.org/doc/219109)
 
 [^22]: Duncan, Gregory M., Unbiased Simulators for Anaytic Functions and Maximum Unbiased Simulated Likelihood Estimation (August 2004). Available at SSRN: [**https://ssrn.com/abstract=692921**](https://ssrn.com/abstract=692921) or [**https://doi.org/10.2139/ssrn.692921**](https://doi.org/10.2139/ssrn.692921)
 

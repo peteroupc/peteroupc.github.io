@@ -463,7 +463,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^47]: S. -I. Pae, "Binarization Trees and Random Number Generation," in IEEE Transactions on Information Theory, vol. 66, no. 4, pp. 2581-2587, April 2020, [**https://doi.org/10.1109/TIT.2019.2962480**](https://doi.org/10.1109/TIT.2019.2962480)  Also: S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.
 
-[^48]: Banderier, C. And Drmota, M., 2015. "Formulae and asymptotics for coefficients of algebraic functions." Combinatorics, Probability and Computing, 24(1), pp.1-53.
+[^48]: [**Banderier, C. And Drmota, M., 2015. "Formulae and asymptotics for coefficients of algebraic functions."**](https://scholar.google.com/scholar?q=Banderier,+C.+And+Drmota,+M.,+2015.+Formulae+and+asymptotics+for+coefficients+of+algebraic+functions) Combinatorics, Probability and Computing, 24(1), pp.1-53.
 
 [^49]: Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308. [**https://doi.org/10.1016/j.jmp.2019.102308**](https://doi.org/10.1016/j.jmp.2019.102308)
 
