@@ -265,7 +265,7 @@ _The second inequality also works if $L$ maps from continuous functions instead 
 
 The following lemma adapts the previous lemmas to the setting of random variables.
 
-**Lemma 5.** _Let $f(\lambda)$ be continuous on a compact interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemmas 1 through 4A apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
+**Lemma 5.** _Let $f(\lambda)$ be continuous on a compact interval, and let $Y$ be a random variable taking only values in that interval.  Then Lemma 1, Lemma 2, Lemma 3, Lemma 4, and Lemma 4A apply as appropriate to $f$ meeting their conditions, with $L(f)=\mathbb{E}[f(Y)]$ and $\lambda =\mathbb{E}[Y]$._
 
 _Proof_: With these assumptions there is a positive linear operator $L(f) = \mathbb{E}[f(Y)]$ for $Y$ and $f$, according to Theorem 3.1.1 of Frantz (1984)[^37], letting $x_o = \lambda$.  Then $L(e_0)$ = $\mathbb{E}[e_0(Y)]$ = $\mathbb{E}[1]$ = 1 regardless of $Y$, and  $L(e_1)$ = $\mathbb{E}[e_1(Y)]$ = $\mathbb{E}[Y]$ = $\lambda$, so $L$ reproduces all polynomials of degree up to 1. &#x25a1;
 
@@ -366,7 +366,7 @@ $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)
 
 &nbsp;
 
->**Note:** Lemmas 11 and 12 are not guaranteed to work if $f$'s domain is not a single compact interval, unlike Lemmas 9 and 10 (see Remark 2.5 in Gonska (1998/2023)[^26]).
+>**Note:** Lemma 11 and Lemma 12 are not guaranteed to work if $f$'s domain is not a single compact interval, unlike Lemma 9 and Lemma 10 (see Remark 2.5 in Gonska (1998/2023)[^26]).
 
 <a id=Smoothing_Error_Bounds></a>
 
@@ -399,17 +399,11 @@ _where:_
 - $\omega_{n}(f, h)$ _is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$._
 - _The inequality (JS) is valid only for the compact interval $[-1,1]$._
 
-> **Note:** The inequality (Wh) is also known as Whitney's inequality; the inequality (JS), the Jackson&ndash;Stechkin inequality.
-
 **Lemma 13A**.  _With the setting in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:_
 
 $$\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+1}}. \tag{Ph}$$
 
-&nbsp;
-
->**Note:** The following are references on the inequality (Ph): Brass and Petras (2011, example 3.1.2)[^49]; Phillips (2003, theorem 2.4.6)[^50].
-
-Using properties of moduli of continuity (see Sevy 1991[^27], sec. 2.0.2; Gonska 1985[^28]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
+Using inequality (Wh) as well as properties of moduli of continuity (see Sevy 1991[^27], sec. 2.0.2; Gonska 1985[^28]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
 $$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),$$
 
@@ -419,7 +413,10 @@ $$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^n\om
 
 &nbsp;
 
->**Note:** Upper bounds similar to those in this section can be found by considering an operator $L$ that maps continuous functions to a family of "smoother" functions (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the "best approximation" to $f$.  As one example, Marsden (1972)[^51] \(see also Beutel et al. 2002[^52]) proved an upper bound of this kind using an operator that maps to a family of _splines_, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)[^53].  Another example is in the result given next.
+>**Notes:**
+>
+> 1. The inequality (Wh) is also known as Whitney's inequality; the inequality (JS), the Jackson&ndash;Stechkin inequality.  The following are references on the inequality (Ph) in Lemma 13A: Brass and Petras (2011, example 3.1.2)[^49]; Phillips (2003, theorem 2.4.6)[^50].
+> 2. Inequalities similar to (Wh), (JS), and (Ph) can be found by considering an operator $L$ that maps continuous functions to a family of "smoother" functions (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the "best approximation" to $f$.  As one example, Marsden (1972)[^51] \(see also Beutel et al. 2002[^52]) proved an upper bound of this kind using an operator that maps to a family of _splines_, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)[^53].  Another example is in the result given next.
 
 **Lemma 13B**. _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $0\lt h\le (b-a)/2$.  Then there is at least one function $P$ with a continuous second derivative on that interval such that the error of $P$ in approximating $f$ is bounded as follows:_
 
@@ -429,13 +426,17 @@ _and such that $P$'s first derivative's absolute value is no more than $(1/2)\om
 
 The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovacheva (1994/2024)[^54], where, as mentioned in that paper, lemma 2.1 is a result of Zhuk (1989)[^55].
 
-> **Example:** Suppose it is known that an approximation error is no more than:
+> **Examples:** The following are usage examples of the results just shown.
 >
-> $$3\Vert f - P\Vert + 4 \Vert P^{(1)}\Vert + 5\Vert P^{(2)}\Vert,$$
+> 1. Suppose it is known that an approximation error is no more than:
 >
-> and that this is true for every function $P$ with a continuous second derivative on $[a,b]$ and every continuous function $f$ on that interval.  Then with Lemma 13B, this bound can be transformed to the following:
+>     $$3\Vert f - P\Vert + 4 \Vert P^{(1)}\Vert + 5\Vert P^{(2)}\Vert,$$
 >
-> $$\begin{multline}3((3/4)\omega_2(f, h))+4((5/h)\omega_1(f,h))\\\\+5((3/(2h^2))\omega_2(f,h)).\end{multline}$$
+>     and that this is true for every function $P$ with a continuous second derivative on $[a,b]$ and every continuous function $f$ on that interval.  Then with Lemma 13B, this bound can be transformed to the following:
+>
+>     $$\begin{multline}3((3/4)\omega_2(f, h))+4((5/h)\omega_1(f,h))\\\\+5((3/(2h^2))\omega_2(f,h)).\end{multline}$$
+>
+> 2. Suppose it is known that an approximation error is no more than $6\Vert f-P\Vert$ for every degree-2 polynomial $P$ on $[a,b]$ and every continuous function $f$ on that interval.  Then with the inequality (Wh) in Lemma 13, this bound can be turned into $6(\omega_{2+1}(f,\frac{b-a}{2+1}))$ = $6(\omega_{3}(f,\frac{b-a}{3}))$.
 
 **Lemma 13C** (Köhler 1994)[^56]\: _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $h$ satisfy $0\lt h\le (b-a)/r^2$.  Then there is at least one function $P$ with a continuous $r$-th derivative on that interval (where $r$ is a positive integer) such that&mdash;_
 
@@ -443,6 +444,10 @@ The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovachev
 - $\text{abs}(f(\lambda)-P(\lambda))\le\omega_r(f,rh)$ _and_ $\Vert P^{(r)}\Vert\le (r+1)\omega_r(f,rh)/h^r$,
 
 _for some_ $\tau_r\le r^r$, _where_ $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, _and_ $\tau_4=331/6$.
+
+> **Note:** There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)[^90], but its bounds have hidden constants with no upper bounds given.
+
+**Lemma 13D** (Gonska and Kovacheva 1994/2024)[^54]\: _Let $f(\lambda)$ be continuous on the closed unit interval, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that_ $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,1/m)$ _and the derivative has a Lipschitz constant of_ $m^2 \omega_2(f,1/m)$ _or less_.
 
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
 
@@ -705,7 +710,7 @@ This operator is a nonpositive linear operator.
 - Unlike in the previous examples, this operator takes in only continuous functions with a second derivative.
 - The operator maps those functions to polynomials of degree up to $n+2$.
 
-Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Lemma 14 of Holtz et al. 2011[^80]).
+Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Holtz et al. \[2011, lemma 14\][^80]).
 
 $Q_{n,2}$ can be bounded as follows:
 
@@ -765,19 +770,21 @@ It was a goal of this article to catalog general-purpose error bounds without su
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
 - Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C$ is an explicitly given positive constant:
-    - $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.
-    - $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
-    - $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^87]).
-    - Inequalities of the foregoing kinds where $L$ and $f$ are restricted to some compact subinterval.
+    1. $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.
+    2. $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
+    3. $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^87]).
+    4. Inequalities of type 1 to 3 where $L$ and $f$ are restricted to some compact subinterval.
+
+    See a question on this matter in [**_MathOverflow_**](https://mathoverflow.net/questions/512319/ways-to-generalize-the-lebesgue-inequality-in-approximation-theory).
 - General-purpose upper bounds on the error when approximating a function with:
     1. Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.
     2. Ratios of polynomials described in (1).
     3. Convex combinations of functions described in (1) or (2).  A convex combination has the form $c_0 f_0(\lambda) + c_1 f_1(\lambda) + ...$ where $c_i$ are nonnegative and sum to 1.
     4. Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)[^88].  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.
-- Inequalities similar to Lemmas 13 and 13B that give the "best possible" error when approximating functions with "smoother" functions. For example, results like: If $f$ is continuous, there is at least one function $P$ in a subset of continuous functions such that $\Vert f-P\Vert\le ...$ and $\Vert P^{(1)}\Vert\le ...$, and so on up to $\Vert P^{(k)}\Vert\le ...$, for some value of $k$.
+- Inequalities similar to Lemma13, Lemma 13B, and Lemma 13C that give the "best possible" error when approximating functions with "smoother" functions. For example, results like: If $f$ is continuous, there is at least one function $P$ in a subset of continuous functions such that $\Vert f-P\Vert\le ...$ and $\Vert P^{(1)}\Vert\le ...$, and so on up to $\Vert P^{(k)}\Vert\le ...$, for some value of $k$.
 - Easy-to-use upper bounds for [**estimating Peano kernels**](#Bounds_for_General_Linear_Operators), such as the Peano kernels corresponding to the linear [**Lorentz operators**](#Example_The_Lorentz_operators).
 - Additional error bounds for [**nonlinear operators**](#Bounds_for_Certain_Nonlinear_Operators).
-- Error bounds that are sharper than those in Lemmas 9 to 12 for functions with a continuous $k$-th derivative for some $k\ge 2$.
+- Error bounds that are sharper than those in Lemma 9, Lemma 10, Lemma 11, and Lemma 12 for functions with a continuous $k$-th derivative for some $k\ge 2$.
 
 In addition, the following will be helpful.
 
@@ -808,7 +815,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^2]: A linear operator is also known as a _linear map_ (Axler 2020) or a _linear transformation_.
 
-[^3]: A better term for positive operators is probably nonnegativity-preserving operators.
+[^3]: A better term for positive operators is probably nonnegativity-preserving operators.  Indeed, in this document, a number or integer is positive if it is _greater than_ zero.
 
 [^4]: De Villiers, J., _Mathematics of Approximation_, Atlantis Press, 2012. [**https://doi.org/10.2991/978-94-91216-50-3**](https://doi.org/10.2991/978-94-91216-50-3)
 
@@ -940,7 +947,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^68]: DeVore, R. A. (1998). Nonlinear approximation. Acta Numerica, 7, 51–150. [**https://doi.org/10.1017/S0962492900002816**](https://doi.org/10.1017/S0962492900002816).
 
-[^69]: Examples of Banach spaces are:<br>(1) continuous functions on a compact interval, with the maximum absolute value as the "norm";<br>(2) the real line with the "norm" $\Vert x\Vert_B = \text{abs}(x)$;<br>(3) polynomials up to degree $k$ on a compact interval, with the maximum absolute value as the "norm";<br>(4) bounded functions on a compact interval, with the least upper bound of the absolute value as the "norm".
+[^69]: Banach spaces are described in chapter 6 of Axler, S., _Measure, Integration & Real Analysis_, Springer, 2020. [**https://doi.org/10.1007/978-3-030-33143-6**](https://doi.org/10.1007/978-3-030-33143-6).<br>Examples of Banach spaces are:<br>(1) continuous functions on a compact interval, with the maximum absolute value as the "norm";<br>(2) the real line with the "norm" $\Vert x\Vert_B = \text{abs}(x)$;<br>(3) polynomials up to degree $k$ on a compact interval, with the maximum absolute value as the "norm";<br>(4) bounded functions on a compact interval, with the least upper bound of the absolute value as the "norm".
 
 [^70]: $W_n$ can, in principle, be nonlinear instead, but this would require a totally different approach to finding the approximation error, and $L_n$ would then be nonlinear in general.
 
@@ -981,3 +988,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^88]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
 
 [^89]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
+
+[^90]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [https://doi.org/10.1216/RMJ-1989-19-1-157](https://doi.org/10.1216/RMJ-1989-19-1-157)
