@@ -445,7 +445,7 @@ The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovachev
 
 _for some_ $\tau_r\le r^r$, _where_ $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, _and_ $\tau_4=331/6$.
 
-> **Note:** There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)[^90], but its bounds have hidden constants with no upper bounds given.
+> **Note:** There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)[^57], but its bounds have hidden constants with no upper bounds given.
 
 **Lemma 13D** (Gonska and Kovacheva 1994/2024)[^54]\: _Let $f(\lambda)$ be continuous on the closed unit interval, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that_ $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,1/m)$ _and the derivative has a Lipschitz constant of_ $m^2 \omega_2(f,1/m)$ _or less_.
 
@@ -459,7 +459,7 @@ For certain operators, the approximation error of a function under that operator
 
 - _$S$ is the space of continuous functions on a compact interval, and its "norm" ($\Vert\cdot\Vert$) is the maximum absolute value._
 - _$f$ is a function in $S$._
-- _$T$ is a subspace of $S$ that has a "best approximation" to $f$, so that there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ (De Villiers 2012, theorem 5.3.2)[^4].[^57] Also, $T$ admits the same "norm" as $S$._
+- _$T$ is a subspace of $S$ that has a "best approximation" to $f$, so that there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ (De Villiers 2012, theorem 5.3.2)[^4].[^58] Also, $T$ admits the same "norm" as $S$._
 - _$L$ is a linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$ (for example, $L$ reproduces all functions in $T$)._
 - _$I$ is the identity operator $I(f)=f$._
 
@@ -467,8 +467,10 @@ _Then for every function $P$ in $T$:_
 
 $$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Vert\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert_{op} + \Vert L\Vert_{op}) \cdot\Vert f-P\Vert\\\\ \le(1 + \Vert L\Vert_{op}) \cdot\Vert f-P\Vert\quad\text{(Leb)}\end{multline}$$
 
-_(see also DeVore and Lorentz (1993, p. 30; ch. 5)[^58], Powell (1981, theorem 3.1)[^59], De Villiers (2012, theorem 5.3.2)[^4]; for (Leb2) see De Boor (1982, chapter 2)[^60])._ [^61]
+&nbsp;
 
+> **Note:** The following are references for Lemma 14: Powell (1981, theorem 3.1)[^59], De Villiers (2012, theorem 5.3.2)[^4].  For (Leb2), see De Boor (1982, chapter 2)[^60]).<br>The De Villiers reference assumes $T$ has a "best approximation" to $f$, so that $\Vert f-P\Vert$ in (Leb) changes to the _minimum_ of $\Vert f-g\Vert$ over all functions $g$ in $T$.<br>DeVore and Lorentz (1993, proposition 4.1)[^61], states (Leb) without a "best-approximation" assumption and where $\Vert f-P\Vert$ changes to the _largest number_ $b$ such that $b\le\Vert f-g\Vert$ for every $g$ in $T$, but I suspect that statement is false in general since $b$ might not be reached for any $g$ in $T$.
+>
 > **Examples:**
 >
 > 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequalities (Leb) and (Wh) leads to the following error bound if $T$ is the set of polynomials up to degree 2:
@@ -483,7 +485,7 @@ _(see also DeVore and Lorentz (1993, p. 30; ch. 5)[^58], Powell (1981, theorem 3
 >
 > **Notes:**
 >
-> 1. The only positive linear operator that maps continuous to continuous functions and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) is the identity operator (Păltănea 2004, corollary 1.1.2)[^24].[^62]
+> 1. The inequalities in Lemma 14 are generally useful only if $L$ is a nonpositive linear operator.  Indeed, besides the identity operator, no linear operator is positive, maps continuous to continuous functions, and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) (Păltănea 2004, corollary 1.1.2)[^24].[^62]
 > 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^63]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^64]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
@@ -781,7 +783,7 @@ To improve this article, explicit error bounds (with no hidden constants) of the
     2. Ratios of polynomials described in (1).
     3. Convex combinations of functions described in (1) or (2).  A convex combination has the form $c_0 f_0(\lambda) + c_1 f_1(\lambda) + ...$ where $c_i$ are nonnegative and sum to 1.
     4. Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)[^88].  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.
-- Inequalities similar to Lemma13, Lemma 13B, and Lemma 13C that give the "best possible" error when approximating functions with "smoother" functions. For example, results like: If $f$ is continuous, there is at least one function $P$ in a subset of continuous functions such that $\Vert f-P\Vert\le ...$ and $\Vert P^{(1)}\Vert\le ...$, and so on up to $\Vert P^{(k)}\Vert\le ...$, for some value of $k$.
+- Inequalities similar to Lemma 13, Lemma 13B, and Lemma 13C that give the "best possible" error when approximating functions with "smoother" functions. An example is Gonska's (1989)[^57] lemma 3.1, which has hidden constants for which upper bounds are sought.
 - Easy-to-use upper bounds for [**estimating Peano kernels**](#Bounds_for_General_Linear_Operators), such as the Peano kernels corresponding to the linear [**Lorentz operators**](#Example_The_Lorentz_operators).
 - Additional error bounds for [**nonlinear operators**](#Bounds_for_Certain_Nonlinear_Operators).
 - Error bounds that are sharper than those in Lemma 9, Lemma 10, Lemma 11, and Lemma 12 for functions with a continuous $k$-th derivative for some $k\ge 2$.
@@ -923,15 +925,15 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^56]: [**Köhler, P., "Estimating Remainder Functions by the Moduli of Smoothness"**](https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness), _Zeitschrift für Analysis und ihre Anwendungen_ 13(1), 1994.
 
-[^57]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
+[^57]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [**https://doi.org/10.1216/RMJ-1989-19-1-157**](https://doi.org/10.1216/RMJ-1989-19-1-157)
 
-[^58]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
+[^58]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
 
 [^59]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
 
 [^60]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 
-[^61]: In addition, chapter 5 of Rohwer's _Nonlinear Smoothing and Multiresolution Analysis_ discusses extensions to the Lebesgue inequality that apply to Lipschitz-continuous operators (both linear and nonlinear; see section "Bounds for Certain Nonlinear Operators" in this page).
+[^61]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
 
 [^62]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
@@ -988,5 +990,3 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^88]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
 
 [^89]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
-
-[^90]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [https://doi.org/10.1216/RMJ-1989-19-1-157](https://doi.org/10.1216/RMJ-1989-19-1-157)
