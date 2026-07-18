@@ -15,27 +15,27 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | Instead of just saying... | Try saying... | Notes |
  --- | ---- | -- |
 | Also, ... | in addition, furthermore, moreover, further, plus, besides, to add to that, on top of that, not only that, what is more, apart from that, additionally | |
-| almost all | most all, nearly all, all but a few | Inspired by E. Bernal. |
+| almost all | nearly all, most all, all but a few | Inspired by E. Bernal. |
 | a lot of people | many | See also "many people" entry. |
-| another [number] (for example, _another five_) | an additional [number], [number] additional, a further [number], [number] more, [number] extra, an extra [number] | Inspired by E. Bernal. |
+| another [number] (for example, _another five_) | [number] more, an additional [number], [number] additional, a further [number], [number] extra, an extra [number] | Inspired by E. Bernal. |
 | award winner | awardee, recipient (of an award) | |
 | bad actor | wrongdoer, evildoer, baddie, malicious actor, malevolent actor, malfeasant, illegitimate actor | |
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
-| cause | lead to, result in, yield,  bring on, bring about, produce, provoke, engender, occasion, beget, breed, give rise to | Verb. |
+| cause | lead to, result in, end up in, bring on, bring about, produce, yield, breed, provoke, engender, occasion, beget, give rise to | Verb. |
 | check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
-| focus on | concentrate on, center on, touch on, emphasize, put/lay emphasis on, zoom in on, put/lay weight on, put/lay an accent on, deal mostly with, prioritize, be about, concern, relate to, be anchored on, be devoted to, devote [_itself_] to, insist on, zero in on | |
-| focused on (for example, _a book (that is) focused on a topic_) | about, dedicated to, devoted to, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
+| focus on | center on, concentrate on, touch on, stress, emphasize, put/lay emphasis on, insist on, zero in on, zoom in on, prioritize, be anchored on, put/lay weight on, put/lay an accent on.<br>deal mostly with, be about, concern, relate to, be devoted to, devote [_itself_] to. | |
+| focused on (for example, _a book (that is) focused on a topic_) | about, devoted to, centered on, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
 | good | nice, fine, swell, decent, lovely, admirable, pleasing, pleasant | Words of positive sentiment. |
 | great | very good, fantastic, terrific, remarkable, magnificent, excellent, splendid, wonderful, superb | Words of very positive sentiment. |
-| happen | occur, take place, unfold, come about, manifest, produce itself, present itself, come to pass. | Inspired by E. Bernal. |
+| happen | occur, take place, unfold, be held, come to pass, come about, manifest, produce itself, present itself. | Inspired by E. Bernal. |
 | including [something] | [something] among them, among them [something], above all [something], [something] included, especially [something], even [something], inclusive of [something]. | Inspired by E. Bernal. |
-| leave | depart, get out of, exit, step away (from), abandon, go away (from), get away (from), run away (from), walk away. | In the sense of 'go away'. |
+| leave | get out (of), step away (from), go away (from), get away (from), run away (from), walk away, exit, depart, abandon. | In the sense of 'go away'. |
 | _an event_ leaves [someone] dead | _an event_ kills [someone]; _an event_ puts [someone] to death |Inspired by E. Bernal. |
 | _an event_ leaves many (people) dead | _an event_ kills many; _an event_ [synonym for _causes_] the death of many; _an event_ puts many to death |Inspired by E. Bernal. |
 | _an event_ leaves [someone] injured | _an event_ injures [someone] |Inspired by E. Bernal. |
 | _an event_ leaves many (people) injured | _an event_ injures many; _an event_ hurts many; _an event_ [synonym for _causes_] many injuries|Inspired by E. Bernal. |
 little house | housie, housette, houselet, minihouse | Diminutive. |
-| Note that... | Observe that..., Notably..., Notice that..., Take note that..., It should be noted that..., It bears noting that..., Be aware that..., It is worth noting that, It bears mentioning that..., Keep in mind that..., We point out that..., [leave out] | |
+| Note that... | Notably..., Notice that..., Be aware that..., Observe that..., Take note that..., It should be noted that..., It bears noting that..., It is worth noting that, It bears mentioning that..., Keep in mind that..., We point out that..., [leave out] | |
 | keep people safe online | keep users safe online, keep Internet users safe, keep internauts safe, protect users online | |
 | jury member | juror |Suggested by E. Bernal. |
 | many people | many | Inspired by E. Bernal. |
@@ -87,6 +87,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | including but not limited to | including | |
 | individual people | individuals |Inspired by E. Bernal. |
 | injured people | the injured |Inspired by E. Bernal. |
+| [a meeting or show] is happening [at time, at place] | ...is..., ...will be..., ...will take place..., ...will be held... | Inspired by E. Bernal's note that _happen_ is overused. |
 | is someone who is | is |Inspired by E. Bernal. |
 | is someone who is [adjective] (for example, _is someone who is reliable_) | is [adjective]; is a(n) [adjective] one |Inspired by E. Bernal. |
 | is something that is | is |Inspired by E. Bernal. |
@@ -96,7 +97,7 @@ Emilio Bernal, in "Good usage prevents abusage", wrote of his concerns about, am
 | moment in time | moment |Inspired by E. Bernal. |
 | most favorite | favorite |Inspired by E. Bernal. |
 | myth (_when a story is not meant_) | falsehood, untruth | |
-| [adjective] night tonight (for example, _nice night tonight_) | [adjective] night [if _tonight_ is understood], it's [adjective] tonight | Inspired by E. Bernal. |
+| [adjective] night tonight (_for example: "nice night tonight"_) | [adjective] night (_if_ tonight _is understood_), it's [adjective] tonight | Inspired by E. Bernal. |
 | [number] people/persons | [number] | Leave out _people_ or _persons_ if understood. Inspired by E. Bernal. |
 | one way or another | either way; [leave out] |Inspired by E. Bernal. |
 | one way or the other | either way; [leave out] |Inspired by E. Bernal. |

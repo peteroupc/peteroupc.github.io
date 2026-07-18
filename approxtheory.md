@@ -48,7 +48,7 @@ The mapping from a function to a function (for example, from a single-variable f
 For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder continuous_, and _Lipschitz continuous_, see the definitions section in "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html#Definitions)".
 
 - The _closed unit interval_ (written as \[0, 1\]) means the set consisting of 0, 1, and every real number in between.
-- A _compact interval_ (written as $[a, b]$), means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.[^1]  The closed unit interval is one example of a compact interval.
+- A _compact interval_ (written as $[a, b]$) means a set of real numbers consisting of $a$, $b$, and every real number in between, where $a$ is less than or equal to $b$.[^1]  The closed unit interval is one example of a compact interval.
 - A function $f(\lambda)$ is _bounded_ if there are two real numbers $a$ and $b$ such that $a\le f(\lambda) \le b$ over the domain of $f$.
 - The _least upper bound_ of a function $f(x)$ is the smallest number $b$ such that $f(x) \le b$ over the domain of $f$.  If $f$ is continuous, the least upper bound is the same as the maximum.
 - An _operator_ is a mapping from a function to a function.
@@ -405,11 +405,11 @@ $$\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+
 
 Using inequality (Wh) as well as properties of moduli of continuity (see Sevy 1991[^27], sec. 2.0.2; Gonska 1985[^28]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
-$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),\tag{Wh-n-plus-1}$$
 
 and if $f$ has a continuous $n$-th derivative on that interval:
 
-$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^n\omega_1(f^{(n)}, \frac{b-a}{n+1}).\tag{Wh-n}$$
 
 &nbsp;
 
@@ -434,7 +434,7 @@ The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovachev
 >
 >     and that this is true for every function $P$ with a continuous second derivative on $[a,b]$ and every continuous function $f$ on that interval.  Then with Lemma 13B, this bound can be transformed to the following:
 >
->     $$\begin{multline}3((3/4)\omega_2(f, h))+4((5/h)\omega_1(f,h))\\\\+5((3/(2h^2))\omega_2(f,h)).\end{multline}$$
+>     $$3((3/4)\omega_2(f, h))+4((5/h)\omega_1(f,h))+5((3/(2h^2))\omega_2(f,h)).$$
 >
 > 2. Suppose it is known that an approximation error is no more than $6\Vert f-P\Vert$ for every degree-2 polynomial $P$ on $[a,b]$ and every continuous function $f$ on that interval.  Then with the inequality (Wh) in Lemma 13, this bound can be turned into $6(\omega_{2+1}(f,\frac{b-a}{2+1}))$ = $6(\omega_{3}(f,\frac{b-a}{3}))$.
 
@@ -459,8 +459,8 @@ For certain operators, the approximation error of a function under that operator
 
 - _$S$ is the space of continuous functions on a compact interval, and its "norm" ($\Vert\cdot\Vert$) is the maximum absolute value._
 - _$f$ is a function in $S$._
-- _$T$ is a subspace of $S$ that has a "best approximation" to $f$, so that there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ (De Villiers 2012, theorem 5.3.2)[^4].[^58] Also, $T$ admits the same "norm" as $S$._
-- _$L$ is a linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every allowed function $f$ (for example, $L$ reproduces all functions in $T$)._
+- _$T$ is a subspace of $S$ [^58] and admits the same "norm" as $S$._
+- _$L$ is a linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
 - _$I$ is the identity operator $I(f)=f$._
 
 _Then for every function $P$ in $T$:_
@@ -469,11 +469,16 @@ $$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Ve
 
 &nbsp;
 
-> **Note:** The following are references for Lemma 14: Powell (1981, theorem 3.1)[^59], De Villiers (2012, theorem 5.3.2)[^4].  For (Leb2), see De Boor (1982, chapter 2)[^60]).<br>The De Villiers reference assumes $T$ has a "best approximation" to $f$, so that $\Vert f-P\Vert$ in (Leb) changes to the _minimum_ of $\Vert f-g\Vert$ over all functions $g$ in $T$.<br>DeVore and Lorentz (1993, proposition 4.1)[^61], states (Leb) without a "best-approximation" assumption and where $\Vert f-P\Vert$ changes to the _largest number_ $b$ such that $b\le\Vert f-g\Vert$ for every $g$ in $T$, but I suspect that statement is false in general since $b$ might not be reached for any $g$ in $T$.
+> **Notes:**
+>
+> 1. The following are references for Lemma 14: Powell (1981, theorem 3.1)[^59], De Villiers (2012, theorem 5.3.2)[^4]; DeVore and Lorentz (1993, proof of proposition 4.1)[^60].  For (Leb2), see De Boor (1982, chapter 2)[^61]).
+> 2. Lemma 14 states "\Vert f-P\Vert for every function $P$ in $T$" rather than the minimum or greatest lower bound of $\Vert f-P\Vert$ over all functions $P$ in $T$ (which are subtly different), because the first statement seems to be correct compared to the greatest-lower-bound statement.  Indeed:
+>     - DeVilliers theorem 5.3.2 assumes $T$ has a "best approximation" to $f$ (there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ [^58]) and uses the minimum as just given. Here there is no correctness issue.
+>     - DeVore and Lorentz proposition 4.1 states (Leb) without a "best-approximation" assumption and with the greatest lower bound as just given, but I suspect that statement is false in general since this bound might not be reached for any $P$ in $T$.
 >
 > **Examples:**
 >
-> 1. Let $f$ have a continuous third derivative on the closed unit interval.  Combining the inequalities (Leb) and (Wh) leads to the following error bound if $T$ is the set of polynomials up to degree 2:
+> 1. Let $f$ have a continuous third derivative on the closed unit interval, and let $T$ be the polynomials up to degree 2 on that interval.  Then by replacing $\Vert f-P\Vert$ in (Leb) with the upper bound in (Wh-n-plus-1) for $n=2$ (which is true for at least one function in $T$), the following upper bound results:
 >
 >     $$\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert_{op})\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert_{op})\Vert f^{(3)}\Vert /27.\end{multline}$$
 >
@@ -485,7 +490,7 @@ $$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Ve
 >
 > **Notes:**
 >
-> 1. The inequalities in Lemma 14 are generally useful only if $L$ is a nonpositive linear operator.  Indeed, besides the identity operator, no linear operator is positive, maps continuous to continuous functions, and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) (Păltănea 2004, corollary 1.1.2)[^24].[^62]
+> 1. Besides the identity operator, no linear operator is positive, maps continuous to continuous functions, and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) (Păltănea 2004, corollary 1.1.2)[^24].[^62]
 > 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^63]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^64]
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
@@ -511,13 +516,13 @@ _provided that, in either case,_ $L(\text{abs}(e_1-x))(x)$ _(the "absolute momen
 
 > **Note:** An operator meeting conditions 2 and 3 is also called a _sublinear_ operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)[^67]; on nonlinear approximation, see DeVore (1998)[^68].)
 >
-> **Example**:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  And $L$ is unbounded because $L(z)/z=z^2$ grows without bound as $z$ increases.  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.
+> **Example**:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.
 
 The following result allows for getting a more refined estimate on a mapping's upper bounds, using the first-and second order moduli of continuity ($\omega_1$ and $\omega_2$).
 
 **Lemma 16** (Gonska and Kovacheva [1994/2024, theorem 4.2\][^54]): _Let $H$ be an operator that maps continuous functions on a compact interval $[a,b]$ to functions in a Banach space equipped with the "norm" $\Vert\cdot\Vert_B$.[^69]  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. If&mdash;_
 
-- _(Boundedness of $H$:) there is $\alpha\ge 0$ such that_ $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ _whenever $f$ is continuous on the interval,_
+- _there is $\alpha\ge 0$ such that_ $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ _whenever $f$ is continuous on the interval,_
 - _there is_ $\gamma\ge 0$ _such that_ $\Vert H(f+g)\Vert_B\le$ $\gamma(\Vert H(f)\Vert_B$ + $\Vert H(g)\Vert_B)$ _whenever $f$ and $g$ are continuous on the interval (or $H$ is linear, so that $\gamma=1$), and_
 - _there are nonnegative numbers_ $\beta_0$, $\beta_1$, _and_ $\beta_2$ _such that_ $\Vert H(f)\Vert_B\le\beta_0\Vert f\Vert_C+$ $\beta_1\Vert f^{(1)}\Vert_C+\beta_2\Vert f^{(2)}\Vert_C$ _whenever $f$ has a continuous second derivative on the interval,_
 
@@ -765,24 +770,23 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^27] with Gonska and Zhou 1994[^86] and Holtz et al. 2011[^80].)
+where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^27] with Gonska and Zhou 1994[^86]; Holtz et al. 2011[^80]; Kopotun 1996[^87]; Kopotun et al. 2011((1.1), (1.3))[^88]).
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
 - Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C$ is an explicitly given positive constant:
-    1. $\Vert f-L(f)\Vert$ is no more than $C$ times the smallest $\Vert f-P\Vert$ over all functions $P$ mapped to by $L$.
-    2. $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
-    3. $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^87]).
-    4. Inequalities of type 1 to 3 where $L$ and $f$ are restricted to some compact subinterval.
+    1. $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$.
+    2. $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^89]).
+    3. Inequalities of type 1 or 2 where $L$ and $f$ are restricted to some compact subinterval.
 
     See a question on this matter in [**_MathOverflow_**](https://mathoverflow.net/questions/512319/ways-to-generalize-the-lebesgue-inequality-in-approximation-theory).
 - General-purpose upper bounds on the error when approximating a function with:
     1. Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.
     2. Ratios of polynomials described in (1).
     3. Convex combinations of functions described in (1) or (2).  A convex combination has the form $c_0 f_0(\lambda) + c_1 f_1(\lambda) + ...$ where $c_i$ are nonnegative and sum to 1.
-    4. Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)[^88].  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.
+    4. Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)[^90].  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.
 - Inequalities similar to Lemma 13, Lemma 13B, and Lemma 13C that give the "best possible" error when approximating functions with "smoother" functions. An example is Gonska's (1989)[^57] lemma 3.1, which has hidden constants for which upper bounds are sought.
 - Easy-to-use upper bounds for [**estimating Peano kernels**](#Bounds_for_General_Linear_Operators), such as the Peano kernels corresponding to the linear [**Lorentz operators**](#Example_The_Lorentz_operators).
 - Additional error bounds for [**nonlinear operators**](#Bounds_for_Certain_Nonlinear_Operators).
@@ -793,7 +797,7 @@ In addition, the following will be helpful.
 - Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.
 - Does Lemma 7 also work for linear operators, such as the [**Lorentz operator**](#Example_The_Lorentz_operators), whose norm is not based on the maximum absolute value?
 - In which cases are the [**Lebesgue inequalities**](#Lebesgue_Inequality_for_Certain_Linear_Operators) (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?
-- Given the work by Rohwer (2005)[^89], are the inequalities (Leb) and (Leb2) true when&mdash;
+- Given the work by Rohwer (2005)[^91], are the inequalities (Leb) and (Leb2) true when&mdash;
     - $L$ is nonlinear,
     - $L$ is Lipschitz continuous, replacing $\Vert L\Vert_{op}$ with the Lipschitz constant of $L$, and
     - both $L$ and $I-L$ are idempotent?
@@ -815,7 +819,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: This term is used instead of "closed interval", a term which can also encompass infinitely long intervals, which is not the intent of this document (Weisstein, Eric W. "Closed Interval." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/ClosedInterval.html**](https://mathworld.wolfram.com/ClosedInterval.html)).
 
-[^2]: A linear operator is also known as a _linear map_ (Axler 2020) or a _linear transformation_.
+[^2]: A linear operator is also known as a _linear map_ (Axler 2020), a _linear mapping_, or a _linear transformation_.
 
 [^3]: A better term for positive operators is probably nonnegativity-preserving operators.  Indeed, in this document, a number or integer is positive if it is _greater than_ zero.
 
@@ -927,13 +931,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^57]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [**https://doi.org/10.1216/RMJ-1989-19-1-157**](https://doi.org/10.1216/RMJ-1989-19-1-157)
 
-[^58]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that contains a finite set of functions.
+[^58]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that includes a finite set of functions (Axler 2020, definition 6.54).
 
 [^59]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
 
-[^60]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
+[^60]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
 
-[^61]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
+[^61]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 
 [^62]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
@@ -985,8 +989,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^86]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
 
-[^87]: Carl de Boor, "Quadratic spline interpolation and the sharpness of Lebesgue's inequality", _Journal of Approximation Theory_ 17(4), August 1976. [**https://doi.org/10.1016/0021-9045%2876%2990079-4**](https://doi.org/10.1016/0021-9045%2876%2990079-4) [**https://www.sciencedirect.com/science/article/pii/0021904576900794**](https://www.sciencedirect.com/science/article/pii/0021904576900794)
+[^87]: Kopotun, K. Simultaneous approximation by algebraic polynomials. Constr. Approx 12, 67–94 (1996). [https://doi.org/10.1007/BF02432855](https://doi.org/10.1007/BF02432855)
 
-[^88]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
+[^88]: Kopotun, K.A., Leviatan, D., Shevchuk, I.A., "Exact order of pointwise estimates for polynomial approximation with Hermite interpolation", _Journal of Approximation Theory_ 264 (2021), [https://doi.org/10.1016/j.jat.2021.105538](https://doi.org/10.1016/j.jat.2021.105538)
+(https://www.sciencedirect.com/science/article/pii/S0021904521000010).
 
-[^89]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
+[^89]: Carl de Boor, "Quadratic spline interpolation and the sharpness of Lebesgue's inequality", _Journal of Approximation Theory_ 17(4), August 1976. [**https://doi.org/10.1016/0021-9045%2876%2990079-4**](https://doi.org/10.1016/0021-9045%2876%2990079-4) [**https://www.sciencedirect.com/science/article/pii/0021904576900794**](https://www.sciencedirect.com/science/article/pii/0021904576900794)
+
+[^90]: Yeon, K., "[**Deep Univariate Polynomial and Conformal Approximation**](https://arxiv.org/abs/2503.00698)", arXiv:2503.00698 [math.NA], 2025.
+
+[^91]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
