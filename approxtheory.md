@@ -474,7 +474,7 @@ $$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Ve
 > 1. The following are references for Lemma 14: Powell (1981, theorem 3.1)[^59], De Villiers (2012, theorem 5.3.2)[^4]; DeVore and Lorentz (1993, proof of proposition 4.1)[^60].  For (Leb2), see De Boor (1982, chapter 2)[^61]).
 > 2. Lemma 14 states "\Vert f-P\Vert for every function $P$ in $T$" rather than the minimum or greatest lower bound of $\Vert f-P\Vert$ over all functions $P$ in $T$ (which are subtly different), because the first statement seems to be correct compared to the greatest-lower-bound statement.  Indeed:
 >     - DeVilliers theorem 5.3.2 assumes $T$ has a "best approximation" to $f$ (there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ [^58]) and uses the minimum as just given. Here there is no correctness issue.
->     - DeVore and Lorentz proposition 4.1 states (Leb) without a "best-approximation" assumption and with the greatest lower bound as just given, but I suspect that statement is false in general since this bound might not be reached for any $P$ in $T$.
+>     - DeVore and Lorentz proposition 4.1 states the inequality (Leb) without a "best-approximation" assumption and with the greatest lower bound as just given, but I suspect that statement is false in general since this bound might not be reached for any $P$ in $T$.
 >
 > **Examples:**
 >
@@ -959,7 +959,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^71]: Güntürk, C. Sinan, and Weilin Li. "[**Approximation with one-bit polynomials in Bernstein form**](https://arxiv.org/pdf/2112.09183)", arXiv:2112.09183 (2021); Constr Approx 57, 601–630 (2023). [**https://doi.org/10.1007/s00365-022-09608-y**](https://doi.org/10.1007/s00365-022-09608-y)
 
-[^72]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18.
+[^72]: Micchelli, Charles. "The saturation class and iterates of the Bernstein polynomials", Journal of Approximation Theory 8, no. 1 (1973): 1-18. [https://www.sciencedirect.com/science/article/pii/0021904573900282](https://www.sciencedirect.com/science/article/pii/0021904573900282) [https://doi.org/10.1016/0021-9045%2873%2990028-2](https://doi.org/10.1016/0021-9045%2873%2990028-2)
 
 [^73]: Wang, Y.Q., Zhang, Y.Y, Liu, J.L., "Expectation identity of the hypergeometric distribution and its application in the calculations of high-order origin moments", Communications in Statistics--Theory and Methods 52(17), 2023. [**https://doi.org/10.1080/03610926.2021.2024235**](https://doi.org/10.1080/03610926.2021.2024235)
 
@@ -989,10 +989,10 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^86]: Gonska, Heinz H., and Xin-long Zhou. "Approximation theorems for the iterated Boolean sums of Bernstein operators." Journal of Computational and Applied Mathematics 53.1 (1994): 21-31. [**https://doi.org/10.1016/0377-0427%02892%02900133-T**](https://doi.org/10.1016/0377-0427%02892%02900133-T)
 
-[^87]: Kopotun, K. Simultaneous approximation by algebraic polynomials. Constr. Approx 12, 67–94 (1996). [https://doi.org/10.1007/BF02432855](https://doi.org/10.1007/BF02432855)
+[^87]: Kopotun, K. Simultaneous approximation by algebraic polynomials. Constr. Approx 12, 67–94 (1996). [**https://doi.org/10.1007/BF02432855**](https://doi.org/10.1007/BF02432855)
 
-[^88]: Kopotun, K.A., Leviatan, D., Shevchuk, I.A., "Exact order of pointwise estimates for polynomial approximation with Hermite interpolation", _Journal of Approximation Theory_ 264 (2021), [https://doi.org/10.1016/j.jat.2021.105538](https://doi.org/10.1016/j.jat.2021.105538)
-(https://www.sciencedirect.com/science/article/pii/S0021904521000010).
+[^88]: Kopotun, K.A., Leviatan, D., Shevchuk, I.A., "Exact order of pointwise estimates for polynomial approximation with Hermite interpolation", _Journal of Approximation Theory_ 264 (2021), [**https://doi.org/10.1016/j.jat.2021.105538**](https://doi.org/10.1016/j.jat.2021.105538)
+[https://www.sciencedirect.com/science/article/pii/S0021904521000010](https://www.sciencedirect.com/science/article/pii/S0021904521000010) .
 
 [^89]: Carl de Boor, "Quadratic spline interpolation and the sharpness of Lebesgue's inequality", _Journal of Approximation Theory_ 17(4), August 1976. [**https://doi.org/10.1016/0021-9045%2876%2990079-4**](https://doi.org/10.1016/0021-9045%2876%2990079-4) [**https://www.sciencedirect.com/science/article/pii/0021904576900794**](https://www.sciencedirect.com/science/article/pii/0021904576900794)
 
