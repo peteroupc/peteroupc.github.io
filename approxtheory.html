@@ -47,6 +47,7 @@
   <li><a href="#Conclusion_and_Ways_to_Improve_This_Article"><strong>Conclusion and Ways to Improve This Article</strong></a></li>
   <li><a href="#License"><strong>License</strong></a></li>
   <li><a href="#Notes"><strong>Notes</strong></a></li>
+  <li><a href="#Appendix"><strong>Appendix</strong></a></li>
 </ul>
 
 <p><a id="About_This_Document"></a></p>
@@ -408,7 +409,7 @@
   <li><em>have a continuous $(k+1)$-th derivative on that interval, with maximum absolute value $M$ or less.</em></li>
 </ol>
 
-<p><em>Then the following bound holds true:</em> $\text{abs}(B_n(R_k(f, \lambda)) \le (M \mu_{k+1})/ ( ((k+1)!) n^{(k+1)/2})$ <em>for every integer $n\ge 2$ (and also for $n=1$ if $k$ is odd), where</em> $\mu_k$ <em>is as defined in Proposition 1.</em></p>
+<p><em>Then the following bound applies:</em> $\text{abs}(B_n(R_k(f, \lambda)) \le (M \mu_{k+1})/ ( ((k+1)!) n^{(k+1)/2})$ <em>for every integer $n\ge 2$ (and also for $n=1$ if $k$ is odd), where</em> $\mu_k$ <em>is as defined in Proposition 1.</em></p>
 
 <p><em>Proof</em>: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. □</p>
 
@@ -536,26 +537,27 @@
 
 <p>The following results give bounds on the “best possible” error in approximating a function with a “smoother” function, such as a polynomial of degree $n$.</p>
 
-<p><strong>Lemma 13</strong>. <em>Let $f(\lambda)$ be continuous on the compact interval $[a, b]$.  Then there is at least one polynomial $P$ on that interval of degree up to $n$ (where $n$ is zero or a positive integer) such that the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>, Babenko and Kryakin 2018<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>, and references therein):</em></p>
+<p><strong>Lemma 13</strong>. <em>Let $f(\lambda)$ be continuous on the compact interval $[a, b]$.  Then there is at least one polynomial $P$ on that interval of degree up to $n$ (where $n$ is zero or a positive integer) such that the error of $P$ in approximating $f$ is bounded as follows:</em></p>
 
-\[\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) &amp; \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}), &amp; \textrm{(JS)}\end{cases}\]
+\[\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) &amp; \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi(b-a)}{2(n+1)}), &amp; \textrm{(JS)}\end{cases}\]
 
 <p><em>where:</em></p>
 
 <ul>
   <li>$k$ is a positive integer.</li>
+  <li>$\omega_{n}(f, h)$ <em>is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$.</em></li>
   <li><em>$W$ is:</em>
     <ul>
-      <li>1/2 <em>if $n$ is 0 or 1 (Whitney 1957)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.</em></li>
+      <li>1/2 <em>if $n$ is 0 or 1.</em></li>
       <li>1 <em>if $2\le n\le 7$.</em></li>
       <li>2 <em>if $8\le n\lt 81999$.</em></li>
       <li>$(2+\exp(-2)) (&lt; 2.13534)$ <em>if</em> $n\ge 81999$.</li>
     </ul>
   </li>
-  <li><em>$J$ is (Babenko and Kryakin 2018<sup id="fnref:46:1"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>):</em>
+  <li><em>$J$ is:</em>
     <ul>
       <li>1 <em>if $k=1$ and $\alpha=1$.</em></li>
-      <li>1/2 <em>if $k=1$, $\alpha=1$, and</em> $\omega_1$ <em>is concave (Gal 1995)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>.</em></li>
+      <li>1/2 <em>if $k=1$, $\alpha=1$, and</em> $\omega_1$ <em>is concave.</em></li>
       <li><em>$3/4+3/(16\alpha^2)$ if $k=2$ and $n\ge 1$.</em></li>
       <li>4.38 <em>if $k=4$, $\alpha=1$, and $n\ge 11$.</em></li>
       <li>2.59 <em>if $k=4$, $\alpha=2$, and $n\ge 11$.</em></li>
@@ -564,9 +566,9 @@
     </ul>
   </li>
   <li>$\alpha\gt 0$.</li>
-  <li>$\omega_{n}(f, h)$ <em>is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$.</em></li>
-  <li><em>The inequality (JS) is valid only for the compact interval $[-1,1]$.</em><sup id="fnref:92"><a href="#fn:92" class="footnote" rel="footnote" role="doc-noteref">49</a></sup></li>
 </ul>
+
+<p><em>Proof</em>: For (Wh) see Theorem B of Babenko and Kryakin (2018)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>; the 1/2 constant for $W$ is from Whitney (1957)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>. For (JS) see Babenko and Kryakin (2018)<sup id="fnref:45:1"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>; constants for $J$ come from that paper, except for the $1/2$ constant, which is from Gal (1995)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.  Babenko and Kryakin proved (JS), with the $J$ constants attributed to it, only for continuous $f$ on the interval $[-1, 1]$; an upper bound for other compact intervals follows from Lemma B in the appendix, which involves a linear transformation from $[-1,1]$ to $[a,b]$. See also Babenko and Kryakin (2019)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> and references therein. □</p>
 
 <p><strong>Lemma 13A</strong>.  <em>With the setting in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:</em></p>
 
@@ -586,8 +588,8 @@
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>The inequality (Wh) is also known as Whitney’s inequality; the inequality (JS), the Jackson–Stechkin inequality.  The following are references on the inequality (Ph) in Lemma 13A: Brass and Petras (2011, example 3.1.2)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>; Phillips (2003, theorem 2.4.6)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">51</a></sup>.</li>
-    <li>Inequalities similar to (Wh), (JS), and (Ph) can be found by considering an operator $L$ that maps continuous functions to a family of “smoother” functions (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the “best approximation” to $f$.  As one example, Marsden (1972)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">52</a></sup> (see also Beutel et al. 2002<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>) proved an upper bound of this kind using an operator that maps to a family of <em>splines</em>, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>.  Another example is in the result given next.</li>
+    <li>(Wh) is also known as Whitney’s inequality; (JS), the Jackson–Stechkin inequality.  The following are references on the inequality (Ph) in Lemma 13A: Brass and Petras (2011, example 3.1.2)<sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>; Phillips (2003, theorem 2.4.6)<sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>.</li>
+    <li>Inequalities similar to (Wh), (JS), and (Ph) can be found by considering an operator $L$ that maps continuous functions to a family of “smoother” functions (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the “best approximation” to $f$.  As one example, Marsden (1972)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> (see also Beutel et al. 2002<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">52</a></sup>) proved an upper bound of this kind using an operator that maps to a family of <em>splines</em>, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>.  Another example is in the result given next.</li>
   </ol>
 </blockquote>
 
@@ -597,7 +599,7 @@
 
 <p><em>and such that $P$’s first derivative’s absolute value is no more than $(1/2)\omega_1(f,h)$ $+ (3/8)\omega_2(f,h)$ $\le (5/h)\omega_1(f,h)$ and $P$’s second derivative’s absolute value is no more than $(3/(2h^2))\omega_2(f,h)$.</em></p>
 
-<p>The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovacheva (1994/2024)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>, where, as mentioned in that paper, lemma 2.1 is a result of Zhuk (1989)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>.</p>
+<p>The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovacheva (1994/2024)<sup id="fnref:54"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>, where, as mentioned in that paper, lemma 2.1 is a result of Zhuk (1989)<sup id="fnref:55"><a href="#fn:55" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>.</p>
 
 <blockquote>
   <p><strong>Examples:</strong> The following are usage examples of the results just shown.</p>
@@ -618,7 +620,7 @@
   </ol>
 </blockquote>
 
-<p><strong>Lemma 13C</strong> (Köhler 1994)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>: <em>Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $h$ satisfy $0\lt h\le (b-a)/r^2$.  Then there is at least one function $P$ with a continuous $r$-th derivative on that interval (where $r$ is a positive integer) such that—</em></p>
+<p><strong>Lemma 13C</strong> (Köhler 1994)<sup id="fnref:56"><a href="#fn:56" class="footnote" rel="footnote" role="doc-noteref">56</a></sup>: <em>Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $h$ satisfy $0\lt h\le (b-a)/r^2$.  Then there is at least one function $P$ with a continuous $r$-th derivative on that interval (where $r$ is a positive integer) such that—</em></p>
 
 <ul>
   <li>$\text{abs}(f(\lambda)-P(\lambda))\le\tau_r\omega_r(f,h)$ <em>and</em> $\Vert P^{(r)}\Vert\le (2^r-1)\omega_r(f,h)/h^r$, <em>or</em></li>
@@ -628,10 +630,10 @@
 <p><em>for some</em> $\tau_r\le r^r$, <em>where</em> $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, <em>and</em> $\tau_4=331/6$.</p>
 
 <blockquote>
-  <p><strong>Note:</strong> There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">58</a></sup>, but its bounds have hidden constants with no upper bounds given.</p>
+  <p><strong>Note:</strong> There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>, but its bounds have hidden constants with no upper bounds given.</p>
 </blockquote>
 
-<p><strong>Lemma 13D</strong> (Gonska and Kovacheva 1994/2024)<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>: <em>Let $f(\lambda)$ be continuous on the closed unit interval, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that</em> $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,1/m)$ <em>and the derivative has a Lipschitz constant of</em> $m^2 \omega_2(f,1/m)$ <em>or less</em>.</p>
+<p><strong>Lemma 13D</strong> (Gonska and Kovacheva 1994/2024)<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>: <em>Let $f(\lambda)$ be continuous on the closed unit interval, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that</em> $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,1/m)$ <em>and the derivative has a Lipschitz constant of</em> $m^2 \omega_2(f,1/m)$ <em>or less</em>.</p>
 
 <p><a id="Lebesgue_Inequality_for_Certain_Linear_Operators"></a></p>
 
@@ -644,7 +646,7 @@
 <ul>
   <li><em>$S$ is the space of continuous functions on a compact interval, and its “norm” ($\Vert\cdot\Vert$) is the maximum absolute value.</em></li>
   <li><em>$f$ is a function in $S$.</em></li>
-  <li><em>$T$ is a subspace of $S$ <sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">59</a></sup> and admits the same “norm” as $S$.</em></li>
+  <li><em>$T$ is a subspace of $S$ <sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">58</a></sup> and admits the same “norm” as $S$.</em></li>
   <li><em>$L$ is a linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is</em> idempotent, <em>that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$).</em></li>
   <li><em>$I$ is the identity operator $I(f)=f$.</em></li>
 </ul>
@@ -659,10 +661,10 @@
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>The following are references for Lemma 14: Powell (1981, theorem 3.1)<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>; DeVore and Lorentz (1993, proof of proposition 4.1)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>.  For (Leb2), see De Boor (1982, chapter 2)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">62</a></sup>).</li>
+    <li>The following are references for Lemma 14: Powell (1981, theorem 3.1)<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">59</a></sup>, De Villiers (2012, theorem 5.3.2)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>; DeVore and Lorentz (1993, proof of proposition 4.1)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>.  For (Leb2), see De Boor (1982, chapter 2)<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>).</li>
     <li>Lemma 14 states “$\Vert f-P\Vert$ for every function $P$ in $T$” rather than the minimum or greatest lower bound of $\Vert f-P\Vert$ over all functions $P$ in $T$ (which are subtly different), because the first statement seems to be correct compared to the greatest-lower-bound statement.  Indeed:
       <ul>
-        <li>DeVilliers theorem 5.3.2 assumes $T$ has a “best approximation” to $f$ (there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ <sup id="fnref:58:1"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">59</a></sup>) and uses the minimum as just given. Here there is no correctness issue.</li>
+        <li>DeVilliers theorem 5.3.2 assumes $T$ has a “best approximation” to $f$ (there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ <sup id="fnref:58:1"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">58</a></sup>) and uses the minimum as just given. Here there is no correctness issue.</li>
         <li>DeVore and Lorentz proposition 4.1 states the inequality (Leb) without a “best-approximation” assumption and with the greatest lower bound as just given, but I suspect that statement is false in general since this bound might not be reached for any $P$ in $T$.</li>
       </ul>
     </li>
@@ -689,8 +691,8 @@
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>Besides the identity operator, no linear operator is positive, maps continuous to continuous functions, and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) (Păltănea 2004, corollary 1.1.2)<sup id="fnref:24:1"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>.<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">63</a></sup></li>
-    <li>Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">64</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">65</a></sup></li>
+    <li>Besides the identity operator, no linear operator is positive, maps continuous to continuous functions, and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) (Păltănea 2004, corollary 1.1.2)<sup id="fnref:24:1"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>.<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup></li>
+    <li>Inequalities similar to (Leb) and (Leb2) may apply to <em>spline operators</em> that map to a continuous function (a <em>spline</em>) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup>).  These operators may have a <em>local approximation</em> property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it’s not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup></li>
   </ol>
 </blockquote>
 
@@ -700,7 +702,7 @@
 
 <p>Not all mappings from functions to functions are linear transformations.  The results in this section provide approximation errors for a broader class of transformations, including nonlinear ones.</p>
 
-<p><strong>Lemma 15</strong> (from a result in Bede and Gal (2010)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>; see also Bede et al. (2009)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>): <em>Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:</em></p>
+<p><strong>Lemma 15</strong> (from a result in Bede and Gal (2010)<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup>; see also Bede et al. (2009)<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>): <em>Let $f(\lambda)$ be continuous, bounded, and nonnegative on an interval.  Let $L$ be an operator that maps functions of that kind to functions of that kind and also has the following properties:</em></p>
 
 <ol>
   <li><em>(Monotone.) For every pair of allowed functions $g$ and $h$, if $g\le h$, then $L(g)\le L(h)$.</em></li>
@@ -718,14 +720,14 @@
 <p><em>provided that, in either case,</em> $L(\text{abs}(e_1-x))(x)$ <em>(the “absolute moment” of $L$) exists (and is finite or infinite).</em></p>
 
 <blockquote>
-  <p><strong>Note:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>; on nonlinear approximation, see DeVore (1998)<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>.)</p>
+  <p><strong>Note:</strong> An operator meeting conditions 2 and 3 is also called a <em>sublinear</em> operator.  Every linear operator is also sublinear. A linear operator is monotone if and only if it is positive.  For more on nonlinear operators, see Gal and Niculescu (2023)<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>; on nonlinear approximation, see DeVore (1998)<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>.)</p>
 
   <p><strong>Example</strong>:  Take the operator $L(f) = (f)^3$.  Then $L$ is not a linear operator because $2\cdot L(e_2) = 2e_6$, yet $L(2 e_2) = 8e_6$.  For the same reason $L$ is not positively homogeneous (and thus not sublinear).  But $L$ is positive: a nonnegative number raised to a positive power (such as 3) is itself nonnegative.</p>
 </blockquote>
 
 <p>The following result allows for getting a more refined estimate on a mapping’s upper bounds, using the first-and second order moduli of continuity ($\omega_1$ and $\omega_2$).</p>
 
-<p><strong>Lemma 16</strong> (Gonska and Kovacheva [1994/2024, theorem 4.2]<sup id="fnref:54:2"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">55</a></sup>): <em>Let $H$ be an operator that maps continuous functions on a compact interval $[a,b]$ to functions in a Banach space equipped with the “norm” $\Vert\cdot\Vert_B$.<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">70</a></sup>  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. If—</em></p>
+<p><strong>Lemma 16</strong> (Gonska and Kovacheva [1994/2024, theorem 4.2]<sup id="fnref:54:2"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>): <em>Let $H$ be an operator that maps continuous functions on a compact interval $[a,b]$ to functions in a Banach space equipped with the “norm” $\Vert\cdot\Vert_B$.<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>  Let $\Vert\cdot\Vert_C$ be the maximum absolute value. If—</em></p>
 
 <ul>
   <li><em>there is $\alpha\ge 0$ such that</em> $\Vert H(f)\Vert_B\le\alpha\Vert f\Vert_C$ <em>whenever $f$ is continuous on the interval,</em></li>
@@ -743,7 +745,7 @@
 
 <p>An operator $L$ is <em>Lipschitz continuous</em> if it satisfies $\Vert L(f)-L(g)\Vert\le M\Vert f-g\Vert$ for some $M\ge 0$ and all allowed functions $f$ and $g$. (The left-hand side is a “norm” that depends on the space of functions $L$ maps <em>to</em>; the right-hand “norm”, on the functions $L$ maps <em>from</em>.) When this is the case, $M$ is a <em>Lipschitz constant</em> of that operator.</p>
 
-<p>Every bounded linear operator $L$ (with the same “norm” on both sides) is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert_{op}\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023)<sup id="fnref:67:1"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup>.</p>
+<p>Every bounded linear operator $L$ (with the same “norm” on both sides) is Lipschitz continuous with $M$ equal to its operator norm (because $\Vert L(f)-L(g)\Vert$ = $\Vert L(f-g)\Vert$ $\le\Vert L\Vert_{op}\cdot\Vert f-g\Vert$), and so is every monotone and sublinear operator (Gal and Niculescu 2023)<sup id="fnref:67:1"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup>.</p>
 
 <p>The definition of Lipschitz continuity easily leads to…</p>
 
@@ -769,12 +771,12 @@
 
 <ul>
   <li>$k = 2n\lambda$, where $0\le\lambda\le 1$.</li>
-  <li>$W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">71</a></sup></li>
+  <li>$W_n(f)$ is a linear operator that approaches $f$ as $n$ increases.<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">70</a></sup></li>
   <li>$X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.  This is the number of “good” balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are “good”.</li>
   <li>$\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.</li>
 </ul>
 
-<p>$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">73</a></sup>), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. (“$O(1/n^{3/2})$” means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)</p>
+<p>$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">71</a></sup>.  That paper, among others (for example, Micchelli 1973<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. (“$O(1/n^{3/2})$” means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)</p>
 
 <p>With this choice of $W_n$, $L_n$ becomes:</p>
 
@@ -802,7 +804,7 @@
   <li>$(LA_n+LB_n)((e_1-x)^2)(x)$ = $LA_n(\text{abs}(e_1-x)^2)(x) + LB_n(\text{abs}(e_1-x)^2)(x)$ = $-x(12n - 5)\cdot(x - 1)/(2n(2n - 1)) = O(1/n)$.</li>
 </ul>
 
-<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">74</a></sup> and central moments (Weisstein)<sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">75</a></sup> of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
+<p>To find values like those just listed, it is useful to calculate raw moments (Wang et al. 2023)<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">73</a></sup> and central moments (Weisstein)<sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">74</a></sup> of hypergeometric random variables (such as $X_k$).  Indeed, if $g(y)=W_{2n}(e_r;k/(2n))-W_n(e_r;y)$ is a polynomial in $y$ of degree $r$ or less, then $L_n(e_r)$ can be found using a Taylor expansion, namely as—</p>
 
 \[L_n(e_r) = \sum_{i=0}^r \mathbb{E}[(X_k/n-\mathbb{E}[X_k/n])^i]\frac{g^{(i)}(\mathbb{E}[X_k/n])}{i!}\]
 
@@ -856,7 +858,7 @@
 
 \[H_{n,m}(f)=B_n(f) + \text{Lag}_m(f) - B_n(\text{Lag}_m(f)),\]
 
-<p>where $B_n$ is the degree-$n$ Bernstein polynomial (see “Bernstein Form and Bernstein Polynomials”, earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at “$m+1$ distinct points on” the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)<sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">76</a></sup>, but appears not to have been studied elsewhere.</p>
+<p>where $B_n$ is the degree-$n$ Bernstein polynomial (see “Bernstein Form and Bernstein Polynomials”, earlier) and $\text{Lag}_m$ is the polynomial of degree up to $m$ that equals $f$ at “$m+1$ distinct points on” the closed unit interval.  This operator was mentioned in Remark 2 of Gavrea and Ivan (2018)<sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">75</a></sup>, but appears not to have been studied elsewhere.</p>
 
 <p>It is known that $Lag_m$ is a linear operator and reproduces all polynomials of degree $m$ or less, so that $Lag_m(e_i) = e_i$ whenever $0\le i\le m$ is an integer. Thus, if $f$ is such a polynomial, $B_n(f)=B_n(Lag_m(f))$ and therefore $H_{n,m}(f)$ = $Lag_m(f)=f$, and therefore $H_{n,m}(e_i)=e_i$ whenever $0\le i\le m$ is an integer.</p>
 
@@ -881,8 +883,8 @@
 <p>where:</p>
 
 <ul>
-  <li>$\Vert Lag_m\Vert_{op}$ is the operator norm of $Lag_m$, which in this case equals its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)<sup id="fnref:76"><a href="#fn:76" class="footnote" rel="footnote" role="doc-noteref">77</a></sup>.</li>
-  <li>$M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial’s second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 <sup id="fnref:77"><a href="#fn:77" class="footnote" rel="footnote" role="doc-noteref">78</a></sup>).</li>
+  <li>$\Vert Lag_m\Vert_{op}$ is the operator norm of $Lag_m$, which in this case equals its <em>Lebesgue constant</em>, which will vary depending on the points on the closed unit interval where the polynomial meets (interpolates) $f$ (Ibrahimoglu 2016)<sup id="fnref:76"><a href="#fn:76" class="footnote" rel="footnote" role="doc-noteref">76</a></sup>.</li>
+  <li>$M(m) = (4/3)\cdot \max(2,m)^2(\max(2,m)^2-1)$.  This is an upper bound on the maximum absolute value of a polynomial’s second derivative (on the closed unit interval) when that polynomial has a maximum absolute value of 1 (on that interval).  This uses the following lemma based on one proved for the interval $[-1,1]$ by V. Markov in 1892 (see also Schaeffer and Duffin 1938 <sup id="fnref:77"><a href="#fn:77" class="footnote" rel="footnote" role="doc-noteref">77</a></sup>).</li>
 </ul>
 
 <p><strong>Lemma</strong>: <em>Let</em> $p(\lambda)=c_0 \lambda^0 + … + c_n \lambda^n$ <em>be a polynomial on the interval</em> $[a,b]$, <em>where</em> $c_0$, …, $c_n$ <em>are real numbers and</em> $c_n$ <em>is not zero. If</em> $\Vert p\Vert\le 1$, <em>then</em> $\Vert p^{(2)}\Vert\le (b-a)^2 n^2 (n^2-1)/3$.</p>
@@ -897,7 +899,7 @@
 
 \[B_n(g)\le \Vert g^{(2)}\Vert/(8n).\]
 
-<p>(This follows from Lorentz (1964)<sup id="fnref:78"><a href="#fn:78" class="footnote" rel="footnote" role="doc-noteref">79</a></sup> and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$’s second derivative, is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.)</p>
+<p>(This follows from Lorentz (1964)<sup id="fnref:78"><a href="#fn:78" class="footnote" rel="footnote" role="doc-noteref">78</a></sup> and the well-known fact that $\Vert g^{(2)}\Vert$, the maximum absolute value of $g$’s second derivative, is an upper bound of $g$’s first derivative’s smallest Lipschitz constant.)</p>
 
 <p>Altogether, if $f$ has a continuous second derivative and $m$ is fixed:</p>
 
@@ -915,7 +917,7 @@
 
 <h2 id="example-the-lorentz-operators">Example: The Lorentz Operators</h2>
 
-<p>The <em>Lorentz operators</em> were introduced by Lorentz (1963)<sup id="fnref:79"><a href="#fn:79" class="footnote" rel="footnote" role="doc-noteref">80</a></sup> and studied by Holtz et al. (2011)<sup id="fnref:80"><a href="#fn:80" class="footnote" rel="footnote" role="doc-noteref">81</a></sup>.  The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials; those of higher orders produce polynomials too, but are more complex.</p>
+<p>The <em>Lorentz operators</em> were introduced by Lorentz (1963)<sup id="fnref:79"><a href="#fn:79" class="footnote" rel="footnote" role="doc-noteref">79</a></sup> and studied by Holtz et al. (2011)<sup id="fnref:80"><a href="#fn:80" class="footnote" rel="footnote" role="doc-noteref">80</a></sup>.  The Lorentz operators of order 0 and 1 are simply the Bernstein polynomials; those of higher orders produce polynomials too, but are more complex.</p>
 
 <p>This section touches on the Lorentz operator of order 2, defined as—</p>
 
@@ -923,7 +925,7 @@
 
 \[=B_n\left(f(e_1)-\frac{\lambda(1-\lambda)}{2n}f^{(2)}(e_1)\right)(\lambda),\]
 
-<p>where $0\le\lambda\le 1$.<sup id="fnref:81"><a href="#fn:81" class="footnote" rel="footnote" role="doc-noteref">82</a></sup></p>
+<p>where $0\le\lambda\le 1$.<sup id="fnref:81"><a href="#fn:81" class="footnote" rel="footnote" role="doc-noteref">81</a></sup></p>
 
 <p>This operator is a nonpositive linear operator.</p>
 
@@ -932,7 +934,7 @@
   <li>The operator maps those functions to polynomials of degree up to $n+2$.</li>
 </ul>
 
-<p>Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Holtz et al. [2011, lemma 14]<sup id="fnref:80:1"><a href="#fn:80" class="footnote" rel="footnote" role="doc-noteref">81</a></sup>).</p>
+<p>Because $Q_{n,2}(e_i) = e_i$ if $i$ is 0, 1, or 2, the operator reproduces all polynomials of degree 2 or less (for another proof, see Holtz et al. [2011, lemma 14]<sup id="fnref:80:1"><a href="#fn:80" class="footnote" rel="footnote" role="doc-noteref">80</a></sup>).</p>
 
 <p>$Q_{n,2}$ can be bounded as follows:</p>
 
@@ -957,7 +959,7 @@
 
 \[\Vert LF(f)\Vert \le \frac{\mu_3\Vert f^{(3)}\Vert}{6\cdot n^{3/2}}+\frac{1}{8n}\frac{\mu_1\Vert f^{(3)}\Vert}{1\cdot n^{1/2}}\le(0.06015+0.0625)\frac{\Vert f^{(3)}\Vert}{n^{3/2}}.\]
 
-<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k\ge 0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:82"><a href="#fn:82" class="footnote" rel="footnote" role="doc-noteref">83</a></sup>:</p>
+<p>The operator norm for $Q_{n,2}$ requires some care to define.  Because $Q_{n,2}$ doesn’t map from all continuous functions, a different kind of “norm” than the maximum absolute value is needed to define this operator norm.  Denote $C^k$, where $k\ge 0$, as the space of functions with a continuous $k$-th derivative on the closed unit interval. The following “norm” gives $C^k$ the property that a sum of functions in that space converges whenever the sum of “norms” of those functions is finite<sup id="fnref:82"><a href="#fn:82" class="footnote" rel="footnote" role="doc-noteref">82</a></sup>:</p>
 
 \[\Vert f\Vert_{C^k} = \begin{cases}\Vert f\Vert + \Vert f^{(k)}\Vert &amp; \text{if }k\gt 0,\\\\\Vert f\Vert &amp; \text{if }k=0.\end{cases}\]
 
@@ -971,7 +973,7 @@
 
 <h2 id="probabilistic-interpretations-of-linear-operators">Probabilistic Interpretations of Linear Operators</h2>
 
-<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:83"><a href="#fn:83" class="footnote" rel="footnote" role="doc-noteref">84</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:84"><a href="#fn:84" class="footnote" rel="footnote" role="doc-noteref">85</a></sup>, 1995<sup id="fnref:85"><a href="#fn:85" class="footnote" rel="footnote" role="doc-noteref">86</a></sup>).</p>
+<p>The Bernstein polynomials featured in a proof in 1912 of the result that any continuous function on a compact interval can be approximated as well as desired by polynomials (Bernstein 1912)<sup id="fnref:83"><a href="#fn:83" class="footnote" rel="footnote" role="doc-noteref">83</a></sup>. That proof used probability theory. In a series of papers, Adell and De la Cal use probability theory to interpret a number of linear operators in addition to those polynomials (Adell and De la Cal 1996<sup id="fnref:84"><a href="#fn:84" class="footnote" rel="footnote" role="doc-noteref">84</a></sup>, 1995<sup id="fnref:85"><a href="#fn:85" class="footnote" rel="footnote" role="doc-noteref">85</a></sup>).</p>
 
 <p><a id="Conclusion_and_Ways_to_Improve_This_Article"></a></p>
 
@@ -987,7 +989,7 @@
 
 \[\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),\]
 
-<p>where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:27:2"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> with Gonska and Zhou 1994<sup id="fnref:86"><a href="#fn:86" class="footnote" rel="footnote" role="doc-noteref">87</a></sup>; Holtz et al. 2011<sup id="fnref:80:2"><a href="#fn:80" class="footnote" rel="footnote" role="doc-noteref">81</a></sup>; Kopotun 1996<sup id="fnref:87"><a href="#fn:87" class="footnote" rel="footnote" role="doc-noteref">88</a></sup>; Kopotun et al. 2011((1.1), (1.3))<sup id="fnref:88"><a href="#fn:88" class="footnote" rel="footnote" role="doc-noteref">89</a></sup>).</p>
+<p>where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991<sup id="fnref:27:2"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> with Gonska and Zhou 1994<sup id="fnref:86"><a href="#fn:86" class="footnote" rel="footnote" role="doc-noteref">86</a></sup>; Holtz et al. 2011<sup id="fnref:80:2"><a href="#fn:80" class="footnote" rel="footnote" role="doc-noteref">80</a></sup>; Kopotun 1996<sup id="fnref:87"><a href="#fn:87" class="footnote" rel="footnote" role="doc-noteref">87</a></sup>; Kopotun et al. 2011((1.1), (1.3))<sup id="fnref:88"><a href="#fn:88" class="footnote" rel="footnote" role="doc-noteref">88</a></sup>).</p>
 
 <p>It was a goal of this article to catalog general-purpose error bounds without such hidden constants.</p>
 
@@ -997,7 +999,7 @@
   <li>Inequalities similar to the <a href="#Lebesgue_Inequality_for_Certain_Linear_Operators"><strong>Lebesgue inequality</strong></a> for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn’t apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C$ is an explicitly given positive constant:
     <ol>
       <li>$\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over <em>a subset</em> of functions $P$ mapped to by $L$.</li>
-      <li>$\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over <em>a subset</em> of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975<sup id="fnref:89"><a href="#fn:89" class="footnote" rel="footnote" role="doc-noteref">90</a></sup>).</li>
+      <li>$\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over <em>a subset</em> of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975<sup id="fnref:89"><a href="#fn:89" class="footnote" rel="footnote" role="doc-noteref">89</a></sup>).</li>
       <li>Inequalities of type 1 or 2 where $L$ and $f$ are restricted to some compact subinterval.</li>
     </ol>
 
@@ -1008,10 +1010,10 @@
       <li>Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.</li>
       <li>Ratios of polynomials described in (1).</li>
       <li>Convex combinations of functions described in (1) or (2).  A convex combination has the form $c_0 f_0(\lambda) + c_1 f_1(\lambda) + …$ where $c_i$ are nonnegative and sum to 1.</li>
-      <li>Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)<sup id="fnref:90"><a href="#fn:90" class="footnote" rel="footnote" role="doc-noteref">91</a></sup>.  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.</li>
+      <li>Compositions of functions described in (1), (2), or (3) (for example, Yeon 2025)<sup id="fnref:90"><a href="#fn:90" class="footnote" rel="footnote" role="doc-noteref">90</a></sup>.  A composition of functions $f$ and $g$ is a function like $f(g(\lambda))$.</li>
     </ol>
   </li>
-  <li>Inequalities similar to Lemma 13, Lemma 13B, and Lemma 13C that give the “best possible” error when approximating functions with “smoother” functions. An example is Gonska’s (1989)<sup id="fnref:57:1"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">58</a></sup> lemma 3.1, which has hidden constants for which upper bounds are sought.</li>
+  <li>Inequalities similar to Lemma 13, Lemma 13B, and Lemma 13C that give the “best possible” error when approximating functions with “smoother” functions. An example is Gonska’s (1989)<sup id="fnref:57:1"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup> lemma 3.1, which has hidden constants for which upper bounds are sought.</li>
   <li>Easy-to-use upper bounds for <a href="#Bounds_for_General_Linear_Operators"><strong>estimating Peano kernels</strong></a>, such as the Peano kernels corresponding to the linear <a href="#Example_The_Lorentz_operators"><strong>Lorentz operators</strong></a>.</li>
   <li>Additional error bounds for <a href="#Bounds_for_Certain_Nonlinear_Operators"><strong>nonlinear operators</strong></a>.</li>
   <li>Error bounds that are sharper than those in Lemma 9, Lemma 10, Lemma 11, and Lemma 12 for functions with a continuous $k$-th derivative for some $k\ge 2$.</li>
@@ -1023,7 +1025,7 @@
   <li>Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.</li>
   <li>Does Lemma 7 also work for linear operators, such as the <a href="#Example_The_Lorentz_operators"><strong>Lorentz operator</strong></a>, whose norm is not based on the maximum absolute value?</li>
   <li>In which cases are the <a href="#Lebesgue_Inequality_for_Certain_Linear_Operators"><strong>Lebesgue inequalities</strong></a> (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?</li>
-  <li>Given the work by Rohwer (2005)<sup id="fnref:91"><a href="#fn:91" class="footnote" rel="footnote" role="doc-noteref">92</a></sup>, are the inequalities (Leb) and (Leb2) true when—
+  <li>Given the work by Rohwer (2005)<sup id="fnref:91"><a href="#fn:91" class="footnote" rel="footnote" role="doc-noteref">91</a></sup>, are the inequalities (Leb) and (Leb2) true when—
     <ul>
       <li>$L$ is nonlinear,</li>
       <li>$L$ is Lipschitz continuous, replacing $\Vert L\Vert_{op}$ with the Lipschitz constant of $L$, and</li>
@@ -1049,6 +1051,29 @@
 
 <h2 id="notes">Notes</h2>
 
+<p><a id="Appendix"></a></p>
+
+<h2 id="appendix">Appendix</h2>
+
+<p><strong>Lemma A:</strong> Let $k$ be a positive integer.  Let $a$, $b$, $c$, and $d$ be constant real numbers that satisfy $a\lt b$ and $c\lt d$. Let $f(x)$ be continuous on the interval $[c, d]$. Let $\gamma(x)=c+(d-c)(x-a)/(b-a)$, which linearly transforms $x$’s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(x))$ is a function on $[a, b]$.)  Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$.</p>
+
+<p><em>Proof:</em> $\gamma(x)$ is linear in $x$ and thus continuous and concave.  Moreover, $\gamma(x)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))<sup id="fnref:92"><a href="#fn:92" class="footnote" rel="footnote" role="doc-noteref">92</a></sup>:</p>
+
+\[\omega_k(f(\gamma), h)\le\omega_k(f,\omega_1(\gamma,h)).\]
+
+<p>Using properties of the first-order modulus of continuity and of $\gamma(x)$ and the results of Gal (1990)<sup id="fnref:93"><a href="#fn:93" class="footnote" rel="footnote" role="doc-noteref">93</a></sup>, $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:</p>
+
+\[\omega_k(f(\gamma), h)\le\omega_k(f,h(d-c)/(b-a)).\]
+
+<p>□</p>
+
+<p>The special case $[a, b] = [-1, 1]$ leads to:</p>
+
+<p><strong>Lemma B:</strong>Let $k$ be a positive integer.  Let $f(x)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers and $a\lt b$. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $x$’s in the interval $[-1, 1]$ to the interval $[c, d]$. Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(b-a)/2)$.</p>
+
+<blockquote>
+  <p><strong>Note:</strong> For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)<sup id="fnref:94"><a href="#fn:94" class="footnote" rel="footnote" role="doc-noteref">94</a></sup>.</p>
+</blockquote>
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1">
@@ -1184,19 +1209,16 @@
       <p>$L$ maps functions in set $A$ to functions in set $B$. In this case, $A$ is the set of continuous functions on $f$’s domain and $B$ is the set of bounded functions on that domain.  Both sets are equipped with a “norm” equal to the least upper bound on $g$’s absolute value, where $g$ is a function in $A$ or $B$. (As used in Gonska (1998/2023), the “norm” for $A$ is the maximum rather than the least upper bound, but the two behave the same way in this case.) <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:45">
-      <p>Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. <a href="https://doi.org/10.1007/978-3-030-12277-5_2"><strong>https://doi.org/10.1007/978-3-030-12277-5_2</strong></a> <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Babenko, A.G., Kryakin, Y.V. On Constants in the Jackson Stechkin Theorem in the Case of Approximation by Algebraic Polynomials. Proc. Steklov Inst. Math. 303, 18–30 (2018). <a href="https://doi.org/10.1134/S0081543818080035"><strong>https://doi.org/10.1134/S0081543818080035</strong></a> <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:45:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:46">
-      <p>Babenko, A.G., Kryakin, Y.V. On Constants in the Jackson Stechkin Theorem in the Case of Approximation by Algebraic Polynomials. Proc. Steklov Inst. Math. 303, 18–30 (2018). <a href="https://doi.org/10.1134/S0081543818080035"><strong>https://doi.org/10.1134/S0081543818080035</strong></a> <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:46:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Whitney, H. “On functions with bounded n-th differences”, <em>J. Math. Pures Appl.</em>, Sér. 9, 36, 67–95 (1957). <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:47">
-      <p>Whitney, H. “On functions with bounded n-th differences”, <em>J. Math. Pures Appl.</em>, Sér. 9, 36, 67–95 (1957). <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gal, Sorin Gheorghe. “Properties of the modulus of continuity for monotonous convex functions and applications.” International Journal of Mathematics and Mathematical Sciences 18.3 (1995): 443-446. <a href="https://doi.org/10.1155/S016117129500055X"><strong>https://doi.org/10.1155/S016117129500055X</strong></a> <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:48">
-      <p>Gal, Sorin Gheorghe. “Properties of the modulus of continuity for monotonous convex functions and applications.” International Journal of Mathematics and Mathematical Sciences 18.3 (1995): 443-446. https://doi.org/10.1155/S016117129500055X <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:92">
-      <p>It would be nice to have a simple way to adapt bounds involving $\omega_k(f,h)$ from the interval $[-1,1]$ to any compact interval, but I have not found an easy reference.  This was suggested in Exercise 1.7 of Rivlin (<em>An Introduction to the Approximation of Functions</em>, 1981), but that applies only to $\omega_1(f,h)$. <a href="#fnref:92" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. <a href="https://doi.org/10.1007/978-3-030-12277-5_2"><strong>https://doi.org/10.1007/978-3-030-12277-5_2</strong></a> <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:49">
       <p>Brass, H., Petras, K., <em>Quadrature Theory: The Theory of Numerical Integration on a Compact Interval</em>, American Mathematical Society, 2011. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -1326,6 +1348,15 @@
     </li>
     <li id="fn:91">
       <p>Rohwer, C., <em>Nonlinear Smoothing and Multiresolution Analysis</em>, Birkhäuser, 2005. <a href="https://doi.org/10.1007/3-7643-7382-2"><strong>https://doi.org/10.1007/3-7643-7382-2</strong></a> <a href="#fnref:91" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:92">
+      <p>Topcu, Ufuk, et al. “Rigorous uncertainty quantification without integral testing.” Reliability Engineering &amp; System Safety 96.9 (2011): 1085-1091. https://doi.org/10.1016/j.ress.2010.07.013 https://www.sciencedirect.com/science/article/abs/pii/S0951832011000627 <a href="#fnref:92" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:93">
+      <p>Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, Calcolo 27 (1990). https://doi.org/10.1007/BF02575794 <a href="#fnref:93" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:94">
+      <p>Rivlin, T.J., <em>An Introduction to the Approximation of Functions</em>, Dover, 1981. <a href="#fnref:94" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

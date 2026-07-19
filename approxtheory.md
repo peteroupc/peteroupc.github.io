@@ -34,6 +34,7 @@ The mapping from a function to a function (for example, from a single-variable f
 - [**Conclusion and Ways to Improve This Article**](#Conclusion_and_Ways_to_Improve_This_Article)
 - [**License**](#License)
 - [**Notes**](#Notes)
+- [**Appendix**](#Appendix)
 
 <a id=About_This_Document></a>
 
@@ -280,7 +281,7 @@ The following results specialize the previous ones to the case of [**Bernstein p
 1. _have a Lipschitz-continuous $k$-th derivative on the closed unit interval, with Lipschitz constant $M$ or less, or_
 2. _have a continuous $(k+1)$-th derivative on that interval, with maximum absolute value $M$ or less._
 
-_Then the following bound holds true:_ $\text{abs}(B_n(R_k(f, \lambda)) \le (M \mu_{k+1})/ ( ((k+1)!) n^{(k+1)/2})$ _for every integer $n\ge 2$ (and also for $n=1$ if $k$ is odd), where_ $\mu_k$ _is as defined in Proposition 1._
+_Then the following bound applies:_ $\text{abs}(B_n(R_k(f, \lambda)) \le (M \mu_{k+1})/ ( ((k+1)!) n^{(k+1)/2})$ _for every integer $n\ge 2$ (and also for $n=1$ if $k$ is odd), where_ $\mu_k$ _is as defined in Proposition 1._
 
 _Proof_: Follows from Lemma 4, with $L(f)=B_n(f)$, and from Proposition 1. &#x25a1;
 
@@ -374,29 +375,30 @@ $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\big((\beta(\lambda)-1)
 
 The following results give bounds on the "best possible" error in approximating a function with a "smoother" function, such as a polynomial of degree $n$.
 
-**Lemma 13**. _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$.  Then there is at least one polynomial $P$ on that interval of degree up to $n$ (where $n$ is zero or a positive integer) such that the error of $P$ in approximating $f$ is bounded as follows (see Babenko and Kryakin 2019[^45], Babenko and Kryakin 2018[^46], and references therein):_
+**Lemma 13**. _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$.  Then there is at least one polynomial $P$ on that interval of degree up to $n$ (where $n$ is zero or a positive integer) such that the error of $P$ in approximating $f$ is bounded as follows:_
 
-$$\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) & \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi}{n+1}), & \textrm{(JS)}\end{cases}$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac{b-a}{n+1}) & \textrm{(Wh)}\\\\ J\cdot\omega_k(f,\frac{\alpha\pi(b-a)}{2(n+1)}), & \textrm{(JS)}\end{cases}$$
 
 _where:_
 
 - $k$ is a positive integer.
+- $\omega_{n}(f, h)$ _is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$._
 - _$W$ is:_
-    - 1/2 _if $n$ is 0 or 1 (Whitney 1957)[^47]._
+    - 1/2 _if $n$ is 0 or 1._
     - 1 _if $2\le n\le 7$._
     - 2 _if $8\le n\lt 81999$._
     - $(2+\exp(-2)) (< 2.13534)$ _if_ $n\ge 81999$.
-- _$J$ is (Babenko and Kryakin 2018[^46]):_
+- _$J$ is:_
     - 1 _if $k=1$ and $\alpha=1$._
-    - 1/2 _if $k=1$, $\alpha=1$, and_ $\omega_1$ _is concave (Gal 1995)[^48]._
+    - 1/2 _if $k=1$, $\alpha=1$, and_ $\omega_1$ _is concave._
     - _$3/4+3/(16\alpha^2)$ if $k=2$ and $n\ge 1$._
     - 4.38 _if $k=4$, $\alpha=1$, and $n\ge 11$._
     - 2.59 _if $k=4$, $\alpha=2$, and $n\ge 11$._
     - 8.9 _if $n\ge k(k-1)-1$, $k$ is 2, 4, 6, or 8, and $\alpha$ is 1 or 2._
     - 9.74 _if $n\ge k(k-1)-1$, $k\ge 10$, $k$ is even, and $\alpha=2$._
 - $\alpha\gt 0$.
-- $\omega_{n}(f, h)$ _is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$._
-- _The inequality (JS) is valid only for the compact interval $[-1,1]$._[^92]
+
+_Proof_: For (Wh) see Theorem B of Babenko and Kryakin (2018)[^45]; the 1/2 constant for $W$ is from Whitney (1957)[^46]. For (JS) see Babenko and Kryakin (2018)[^45]; constants for $J$ come from that paper, except for the $1/2$ constant, which is from Gal (1995)[^47].  Babenko and Kryakin proved (JS), with the $J$ constants attributed to it, only for continuous $f$ on the interval $[-1, 1]$; an upper bound for other compact intervals follows from Lemma B in the appendix, which involves a linear transformation from $[-1,1]$ to $[a,b]$. See also Babenko and Kryakin (2019)[^48] and references therein. &#x25a1;
 
 **Lemma 13A**.  _With the setting in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:_
 
@@ -414,7 +416,7 @@ $$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^n\om
 
 >**Notes:**
 >
-> 1. The inequality (Wh) is also known as Whitney's inequality; the inequality (JS), the Jackson&ndash;Stechkin inequality.  The following are references on the inequality (Ph) in Lemma 13A: Brass and Petras (2011, example 3.1.2)[^49]; Phillips (2003, theorem 2.4.6)[^50].
+> 1. (Wh) is also known as Whitney's inequality; (JS), the Jackson&ndash;Stechkin inequality.  The following are references on the inequality (Ph) in Lemma 13A: Brass and Petras (2011, example 3.1.2)[^49]; Phillips (2003, theorem 2.4.6)[^50].
 > 2. Inequalities similar to (Wh), (JS), and (Ph) can be found by considering an operator $L$ that maps continuous functions to a family of "smoother" functions (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the "best approximation" to $f$.  As one example, Marsden (1972)[^51] \(see also Beutel et al. 2002[^52]) proved an upper bound of this kind using an operator that maps to a family of _splines_, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)[^53].  Another example is in the result given next.
 
 **Lemma 13B**. _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $0\lt h\le (b-a)/2$.  Then there is at least one function $P$ with a continuous second derivative on that interval such that the error of $P$ in approximating $f$ is bounded as follows:_
@@ -904,13 +906,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^44]: $L$ maps functions in set $A$ to functions in set $B$. In this case, $A$ is the set of continuous functions on $f$'s domain and $B$ is the set of bounded functions on that domain.  Both sets are equipped with a "norm" equal to the least upper bound on $g$'s absolute value, where $g$ is a function in $A$ or $B$. (As used in Gonska (1998/2023), the "norm" for $A$ is the maximum rather than the least upper bound, but the two behave the same way in this case.)
 
-[^45]: Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. [**https://doi.org/10.1007/978-3-030-12277-5_2**](https://doi.org/10.1007/978-3-030-12277-5_2)
+[^45]: Babenko, A.G., Kryakin, Y.V. On Constants in the Jackson Stechkin Theorem in the Case of Approximation by Algebraic Polynomials. Proc. Steklov Inst. Math. 303, 18–30 (2018). [**https://doi.org/10.1134/S0081543818080035**](https://doi.org/10.1134/S0081543818080035)
 
-[^46]: Babenko, A.G., Kryakin, Y.V. On Constants in the Jackson Stechkin Theorem in the Case of Approximation by Algebraic Polynomials. Proc. Steklov Inst. Math. 303, 18–30 (2018). [**https://doi.org/10.1134/S0081543818080035**](https://doi.org/10.1134/S0081543818080035)
+[^46]: Whitney, H. “On functions with bounded n-th differences”, _J. Math. Pures Appl._, Sér. 9, 36, 67–95 (1957).
 
-[^47]: Whitney, H. “On functions with bounded n-th differences”, _J. Math. Pures Appl._, Sér. 9, 36, 67–95 (1957).
+[^47]: Gal, Sorin Gheorghe. "Properties of the modulus of continuity for monotonous convex functions and applications." International Journal of Mathematics and Mathematical Sciences 18.3 (1995): 443-446. [**https://doi.org/10.1155/S016117129500055X**](https://doi.org/10.1155/S016117129500055X)
 
-[^48]: Gal, Sorin Gheorghe. "Properties of the modulus of continuity for monotonous convex functions and applications." International Journal of Mathematics and Mathematical Sciences 18.3 (1995): 443-446. [https://doi.org/10.1155/S016117129500055X](https://doi.org/10.1155/S016117129500055X)
+[^48]: Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. [**https://doi.org/10.1007/978-3-030-12277-5_2**](https://doi.org/10.1007/978-3-030-12277-5_2)
 
 [^49]: Brass, H., Petras, K., _Quadrature Theory: The Theory of Numerical Integration on a Compact Interval_, American Mathematical Society, 2011.
 
@@ -998,4 +1000,30 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^91]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
 
-[^92]: It would be nice to have a simple way to adapt bounds involving $\omega_k(f,h)$ from the interval $[-1,1]$ to any compact interval, but I have not found an easy reference.  This was suggested in Exercise 1.7 of Rivlin (_An Introduction to the Approximation of Functions_, 1981), but that applies only to $\omega_1(f,h)$.
+[^92]: Topcu, Ufuk, et al. "Rigorous uncertainty quantification without integral testing." Reliability Engineering & System Safety 96.9 (2011): 1085-1091. [https://doi.org/10.1016/j.ress.2010.07.013](https://doi.org/10.1016/j.ress.2010.07.013) [https://www.sciencedirect.com/science/article/abs/pii/S0951832011000627](https://www.sciencedirect.com/science/article/abs/pii/S0951832011000627)
+
+[^93]: Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, Calcolo 27 (1990). [https://doi.org/10.1007/BF02575794](https://doi.org/10.1007/BF02575794)
+
+[^94]: Rivlin, T.J., _An Introduction to the Approximation of Functions_, Dover, 1981.
+
+<a id=Appendix></a>
+
+## Appendix
+
+**Lemma A:** Let $k$ be a positive integer.  Let $a$, $b$, $c$, and $d$ be constant real numbers that satisfy $a\lt b$ and $c\lt d$. Let $f(x)$ be continuous on the interval $[c, d]$. Let $\gamma(x)=c+(d-c)(x-a)/(b-a)$, which linearly transforms $x$'s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(x))$ is a function on $[a, b]$.)  Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$.
+
+_Proof:_ $\gamma(x)$ is linear in $x$ and thus continuous and concave.  Moreover, $\gamma(x)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))[^92]:
+
+$$\omega_k(f(\gamma), h)\le\omega_k(f,\omega_1(\gamma,h)).$$
+
+Using properties of the first-order modulus of continuity and of $\gamma(x)$ and the results of Gal (1990)[^93], $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:
+
+$$\omega_k(f(\gamma), h)\le\omega_k(f,h(d-c)/(b-a)).$$
+
+&#x25a1;
+
+The special case $[a, b] = [-1, 1]$ leads to:
+
+**Lemma B:**Let $k$ be a positive integer.  Let $f(x)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers and $a\lt b$. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $x$'s in the interval $[-1, 1]$ to the interval $[c, d]$. Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(b-a)/2)$.
+
+> **Note:** For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)[^94].
