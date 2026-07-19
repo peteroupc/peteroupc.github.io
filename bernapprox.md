@@ -528,7 +528,7 @@ Therefore&mdash;
 
 $$\text{abs}(L_{3,n/4}(f)(\lambda) - f(\lambda)) = \text{abs}(L_{3,n/4}(R_3(f,\lambda))).$$
 
-Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_3(f, \lambda)))$ over the closed unit interval.  By Corollary 1 in the article "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)", $\sigma_n \le \Lambda_3(1/128)/n^{3/2}$.  Therefore&mdash;
+Now denote $\sigma_n$ as the maximum of $\text{abs}(B_n(R_3(f, \lambda)))$ over the closed unit interval.  By Corollary 1 in the article "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)", $\sigma_n \le \Lambda_3(1/128)/n^2$.  Therefore&mdash;
 
 $$\text{abs}(L_{3,n/4}(R_3(f, \lambda))) \le(1/3)\cdot\sigma_{n/4} + 2\cdot\sigma_{n/2}+(8/3)\cdot\sigma_n\le\frac{\Lambda_3}{8 n^2}.$$
 

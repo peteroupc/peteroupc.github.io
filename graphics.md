@@ -252,7 +252,7 @@ This section has notes on this specification, such as how its requirements corre
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
-    - Phong shading (per-pixel specular highlighting), ray-traced graphics (other than the _ray casting_ technique), and path-traced graphics, which were too slow for real-time graphics in the 20th century.
+    - Visuals produced by Phong shading (per-pixel specular highlighting), ray tracing (other than the _ray casting_ technique), and path tracing, which were too slow for real-time use in the 20th century.
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^60] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
@@ -260,14 +260,14 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Arcade game graphics
 
-- From 1971 to 1979, arcade games tended to have white graphics drawn on a black screen; the screen image was one bit per pixel.  Some arcade cabinets in the late 1970s had a colored semitransparent overlay in front of the screen to lend color to the otherwise white graphics (an example is _Lunar Rescue_ [1979]).
+- From 1971 to 1979, arcade games tended to have white visuals drawn on a black screen; the screen image was one bit per pixel.  Some arcade cabinets in the late 1970s had a colored semitransparent overlay in front of the screen to lend color to the otherwise white graphics (an example is _Lunar Rescue_ [1979]).
 - The practice of drawing graphics on a mostly black screen continued up to the early 1980s, but this time they were colored by the game itself rather than by an overlay.
-- The graphics of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are _Asteroids_ (1979) and _Battlezone_ (1980).  _Star Wars_ (1983) even had multicolored graphics of this kind.
+- The visuals of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are _Asteroids_ (1979) and _Battlezone_ (1980).  In _Star Wars_ (1983), these line segments were even multicolored.
 - Graphics made of tiles and sprites were popularized by the arcade game _Galaxian_ (1979).
 - Most arcade games before 1995 had a resolution from 46,080 pixels (192 &times; 240 or 240 &times; 192) through 98,304 pixels (256 &times; 384 or 384 &times; 256).  The following were exceptions:
      - Certain two- or three-screen games by Taito (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
-     - The Midway MCR family of arcade machines (1980 to about 1986) had a resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but background graphics were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
-- If an arcade game employed 2-D graphics with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
+     - The Midway MCR family of arcade machines (1980 to about 1986) had a resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but backgrounds were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
+- If an arcade game employed 2-D visuals with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
 
 <a id=Screen_image_effects_filters></a>
 
@@ -287,7 +287,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Memory
 
-- This specification does not impose a limit on graphics memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes of graphics memory, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, or other graphics files a game can have.[^65]
+- This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.[^65]
 - According to "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)", the following ranges of system memory were typical for PCs sold in the specified years:[^66]
     - 1994: 4MB to 8 MB, with more expensive PCs having 16 MB.[^67]
     - 1997: 8MB to 32MB.[^68]
@@ -297,9 +297,9 @@ This section has notes on this specification, such as how its requirements corre
 
 ### Seeking Comments
 
-As with the rest of this open-source article, [**comments on this specification**](https://www.reddit.com/r/retrogamedev/comments/1rl36fo/pre2000_computer_graphics_for_modern_video_games/) are welcome.  But most useful would be comments that improve or refine the specification to fit the graphics abilities of pre-2000 video games.
+As with the rest of this open-source article, [**comments on this specification**](https://www.reddit.com/r/retrogamedev/comments/1rl36fo/pre2000_computer_graphics_for_modern_video_games/) are welcome.  But most useful would be comments that improve or refine the specification to fit the graphical abilities of pre-2000 video games.
 
-Examples are comments that give _measurements_ (or references to other works that make such measurements) on the graphics capabilities actually achieved by video games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.  (It bears repeating: _measurements_, not inferences or guesses from screenshots or videos.)
+Examples are comments that give _measurements_ (or references to other works that make such measurements) on the graphical performance actually achieved by video games released in 1999 and earlier (or released in, say, 1994 or earlier) for home computers or game consoles.  (It bears repeating: _measurements_, not inferences or guesses from screenshots or videos.)
 
 This includes statements like the following, with references or measurements:
 
@@ -411,12 +411,12 @@ Develop a guide for creating 3-D models for use in modern video games that follo
 
 ### Book-form tutorial on pre-2000 computer graphics programming
 
-Write a free and open-source tutorial on game graphics programming using the pre-2000 graphics style emphasized in the [**specification**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games) given earlier, with the following features:
+Write a free and open-source tutorial on game graphics programming using the pre-2000 graphic style emphasized in the [**specification**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games) given earlier, with the following features:
 
 1. The tutorial is book-length, printable, and programming-language neutral.
-2. The tutorial should cover all 2-D and 3-D graphics concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and 3-D graphics features. Coverage of graphics programming with a limited-color frame buffer (such as 16 colors or 256 colors) is recommended.
+2. The tutorial should cover all 2-D and 3-D concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and features for 3-D graphics. Coverage of graphics programming with a limited-color frame buffer (such as 16 colors or 256 colors) is recommended.
 3. The tutorial explains math concepts to readers as necessary, without assuming prior knowledge of math higher than basic algebra.
-4. The tutorial does not require the use of hardware-accelerated graphics, OpenGL, or Direct3D in the practice exercises.  (See definition of "rendered in software" in the specification.)
+4. The tutorial does not require the use of hardware acceleration, OpenGL, or Direct3D in the practice exercises.  (See definition of "rendered in software" in the specification.)
 5. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
 6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
 
@@ -440,7 +440,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: The following are examples of a graphics library that follows the spirit, even if not the letter, of this specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/), and so did [**Jani Peltonen**](https://www.codeslow.com/2019/12/tiny-windows-executable-in-rust.html).<br>I offer a [**template for Win32 applications**](https://gist.github.com/peteroupc/f1a5d8e45e27123b86b284271cfd802b) that supports 8- and 24-bit-per-pixel game images and paints finished game images using `StretchDIBits`.<br>By contrast, even though today's Unity and Unreal game engines can allow the making of games with "classic graphics", they are far from lightweight and their use is not within the spirit of this challenge.
 
-[^2]: A computer has adequate performance for classic graphics if it achieves a score of&mdash;<br>(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 &times; 480) when run without graphics acceleration, or<br>(b) 195 or greater on the 3DMark2000 CPU speed test.<br>Both figures correspond to the running of two visually demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo's detail level averages more than 12,800 triangles per frame; see the section "Test Descriptions" in the 3DMark2000 help).
+[^2]: A computer has adequate performance for pre-2000 graphics if it achieves a score of&mdash;<br>(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 &times; 480) when run without hardware acceleration, or<br>(b) 195 or greater on the 3DMark2000 CPU speed test.<br>Both figures correspond to the running of two visually demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo's detail level averages more than 12,800 triangles per frame; see the section "Test Descriptions" in the 3DMark2000 help).
 
 [^3]: One editor specialized for creating classic 3-D models is the open-source tool [**_Blockbench_**](https://www.blockbench.net/). For classic 3-D scenes, there is the open-source tool [**_Trenchbroom_**](https://trenchbroom.github.io/).
 
@@ -456,13 +456,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^9]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be _rendered in software_.  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
-[^10]: The Neo Geo (1990) has only one 2-D layer; the rest of the graphics are sprites drawn below that layer.
+[^10]: The Neo Geo (1990) has only one 2-D layer; the rest of the visuals are sprites drawn below that layer.
 
 [^11]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in _Tricks of the Mac Game Programming Gurus_ (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
 [^12]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically. In the Super Famicom/Super Nintendo Entertainment System (1990), sprites could not be scaled, but they could be flipped.
 
-[^13]: Tile- and sprite-based graphics were in place largely because they saved memory; they were popularized by the arcade game _Galaxian_ (1979).  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer (see the "Architecture of Consoles" series by Rodrigo Copetti).<br>Game consoles employing tile-based graphics tended to limit not only the number of sprites per frame, but also the number of sprites per row of pixels, but a per-row limit is not adopted here.  As for the per-frame limit, the Famicom/Nintendo Entertainment System (1983), SEGA Master System/SEGA Mark III (1985), and PC Engine/TurboGrafx 16 (1987) had a limit of 64 sprites; the Game Boy (1989), 40; the SEGA Mega Drive/Genesis (1988), 80; the Super Famicom/Super Nintendo Entertainment System (1990), 128; and the relatively expensive Neo Geo (1990), 381.  Again, see the "Architecture of Consoles" series by Rodrigo Copetti.
+[^13]: Tile- and sprite-based graphics were in place largely because they saved memory; they were popularized by the arcade game _Galaxian_ (1979).  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer (see the "Architecture of Consoles" series by Rodrigo Copetti).<br>Game consoles employing tile-based visuals tended to limit not only the number of sprites per frame, but also the number of sprites per row of pixels, but a per-row limit is not adopted here.  As for the per-frame limit, the Famicom/Nintendo Entertainment System (1983), SEGA Master System/SEGA Mark III (1985), and PC Engine/TurboGrafx 16 (1987) had a limit of 64 sprites; the Game Boy (1989), 40; the SEGA Mega Drive/Genesis (1988), 80; the Super Famicom/Super Nintendo Entertainment System (1990), 128; and the relatively expensive Neo Geo (1990), 381.  Again, see the "Architecture of Consoles" series by Rodrigo Copetti.
 
 [^14]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels) (but even so this resolution was ["up from 640[ &times; ]350"](https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742)).<br><br>In the Godot engine, the screen resolution corresponds to the "Viewport Width" (`window/size/viewport_width`) and "Viewport Height" (`window/size/viewport_height`) project settings.  For the Unity engine, there is advice from 2019 relating to the visual style in [**"8-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games) and [**"16-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games) game consoles.  In Unreal Engine, the screen resolution apparently corresponds to `ResolutionSizeX` and `ResolutionSizeY`.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification.
 

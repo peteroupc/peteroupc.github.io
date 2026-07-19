@@ -21,7 +21,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | award winner | awardee, recipient (of an award) | |
 | bad actor | wrongdoer, evildoer, baddie, malicious actor, malevolent actor, malfeasant, illegitimate actor | |
 | bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
-| cause | lead to, result in, end up in, bring on, bring about, produce, yield, breed, provoke, engender, occasion, beget, give rise to | Verb. |
+| cause | lead to, result in, end up in, bring on, bring about, produce, yield, breed, provoke, engender, occasion, beget, give rise to | Verb.\* |
 | check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | center on, concentrate on, touch on, stress, emphasize, put/lay emphasis on, insist on, zero in on, zoom in on, prioritize, be anchored on, put/lay weight on, put/lay an accent on.<br>deal mostly with, be about, concern, relate to, be devoted to, devote [_itself_] to. | |
 | focused on (for example, _a book (that is) focused on a topic_) | about, devoted to, centered on, dealing with, treating of, relating to, involving, concentrated on, concerning, anchored on, directed to, oriented on, aimed at | |
@@ -59,6 +59,8 @@ little house | housie, housette, houselet, minihouse | Diminutive. |
 | what's happening | what's going on, what's occurring, what's [synonym for _happening_]. | Inspired by E. Bernal. |
 
 Another technique to try is to rewrite a text to avoid overused words as much as possible.
+
+\* _Contribute to_ has the variants _spur_ and _fuel_, and does not mean 'to cause'.
 
 <a id=Discouraged_Words></a>
 

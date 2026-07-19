@@ -87,7 +87,7 @@ These alternative polynomials usually come with results where the error bound is
 
 The following is a [**conjecture**](https://peteroupc.github.io/bernsupp.html#A_Conjecture_on_Polynomial_Approximation) that could help reduce this problem to the problem of finding explicit error bounds when approximating a function by polynomials.
 
-Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M=\max_{0\le i\le r, 0\le\lambda\le 1}\vert f^{(r)}(\lambda)\vert$, let $B_n$ be the degree-$n$ Bernstein operator, and let $(W_{n}(g; \lambda))_n$ be a sequence of operators that map a continuous function $g$ on $[0, 1]$ to a bounded function on $[0, 1]$ and converge uniformly to $f$.
+Let $f(\lambda):[0,1]\to(0,1)$ have a continuous $r$-th derivative, where $r\ge 1$, let $M=\max \lbrace\vert f^{(r)}(\lambda)\vert; 0\le i\le r, 0\le\lambda\le 1\rbrace$, let $B_n$ be the degree-$n$ Bernstein operator, and let $(W_{n}(g; \lambda))_n$ be a sequence of operators that map a continuous function $g$ on $[0, 1]$ to a bounded function on $[0, 1]$ and converge uniformly to $f$.
 
 Prove or disprove the following statement. If there is $D>0$ such that $\vert f(\lambda)-B_n(W_n(f; \lambda); \lambda)\vert \le DM/n^{r/2}$ for each integer $n\ge 1$ and each $0\le \lambda\le 1$, then there is $C_1>0$ depending only on $r$ and $\lgroup W_n\rgroup_n$ such that the inequality $\sum_{i=0}^n \left( W_{2n}\left(f; \frac{k}{2n}\right) - W_n\left(f; \frac{i}{n}\right)\right)\sigma_{n,k,i}$ $\ge -C_1 M/n^{r/2}$ holds true for each integer $n\ge 1$ and whenever $0\le k\le 2n$, where $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$. Call the latter inequality (PB).[^20]
 
