@@ -381,7 +381,7 @@ $$\text{abs}(f(\lambda)-P(\lambda))\le\begin{cases} W \cdot \omega_{n+1}(f,\frac
 
 _where:_
 
-- $k$ is a positive integer.
+- _$k$ is a positive integer._
 - $\omega_{n}(f, h)$ _is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$._
 - _$W$ is:_
     - 1/2 _if $n$ is 0 or 1._
@@ -398,7 +398,7 @@ _where:_
     - 9.74 _if $n\ge k(k-1)-1$, $k\ge 10$, $k$ is even, and $\alpha=2$._
 - $\alpha\gt 0$.
 
-_Proof_: For (Wh) see Theorem B of Babenko and Kryakin (2018)[^45]; the 1/2 constant for $W$ is from Whitney (1957)[^46]. For (JS) see Babenko and Kryakin (2018)[^45]; constants for $J$ come from that paper, except for the $1/2$ constant, which is from Gal (1995)[^47].  Babenko and Kryakin proved (JS), with the $J$ constants attributed to it, only for continuous $f$ on the interval $[-1, 1]$; an upper bound for other compact intervals follows from Lemma B in the appendix, which involves a linear transformation from $[-1,1]$ to $[a,b]$. See also Babenko and Kryakin (2019)[^48] and references therein. &#x25a1;
+_Proof_: For (Wh) see Theorem B of Babenko and Kryakin (2018)[^45]; the 1/2 constant for $W$ is from Whitney (1957)[^46]. For (JS) see Babenko and Kryakin (2018)[^45]; constants for $J$ come from that paper, except for the $1/2$ constant, which is from Gal (1995)[^47].  The Babenko and Kryakin paper proved (JS), with the $J$ constants attributed to that paper, only for continuous $f$ on the interval $[-1, 1]$; an upper bound for other compact intervals follows from Lemma B in the appendix, which involves a linear transformation from $[-1,1]$ to $[a,b]$. See also Babenko and Kryakin (2019)[^48] and references therein. &#x25a1;
 
 **Lemma 13A**.  _With the setting in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:_
 
@@ -406,7 +406,7 @@ $$\text{abs}(f(\lambda)-P(\lambda))\le \frac{M (b-a)^{n+1}}{((n+1)!)\cdot 2^{2n+
 
 Using inequality (Wh) as well as properties of moduli of continuity (see Sevy 1991[^27], sec. 2.0.2; Gonska 1985[^28]), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:
 
-$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),\tag{Wh-n-plus-1}$$
+$$\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),\tag{Whnp1}$$
 
 and if $f$ has a continuous $n$-th derivative on that interval:
 
@@ -448,7 +448,9 @@ _for some_ $\tau_r\le r^r$, _where_ $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, _and_
 
 > **Note:** There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)[^57], but its bounds have hidden constants with no upper bounds given.
 
-**Lemma 13D** (Gonska and Kovacheva 1994/2024)[^54]\: _Let $f(\lambda)$ be continuous on the closed unit interval, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that_ $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,1/m)$ _and the derivative has a Lipschitz constant of_ $m^2 \omega_2(f,1/m)$ _or less_.
+**Lemma 13D**: _Let $f(\lambda)$ be continuous on the compact interval $[a,b]$, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that_ $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,(b-a)/m)$ _and the derivative has a Lipschitz constant of_ $m^2 \omega_2(f,(b-a)/m)$ _or less_.
+
+_Proof_: For the closed unit interval, this is a result of Gonska and Kovacheva (1994/2024)[^54]; with Lemma A in the appendix, the result for other compact intervals follows; in this case, Lemma A involves a linear transformation from the closed unit interval to $[a,b]$. &#x25a1;
 
 <a id=Lebesgue_Inequality_for_Certain_Linear_Operators></a>
 
@@ -479,7 +481,7 @@ $$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Ve
 >
 > **Examples:**
 >
-> 1. Let $f$ have a continuous third derivative on the closed unit interval, and let $T$ be the polynomials up to degree 2 on that interval.  Then by replacing $\Vert f-P\Vert$ in (Leb) with the upper bound in (Wh-n-plus-1) for $n=2$ (which is true for at least one function in $T$), the following upper bound results:
+> 1. Let $f$ have a continuous third derivative on the closed unit interval, and let $T$ be the polynomials up to degree 2 on that interval.  Then by replacing $\Vert f-P\Vert$ in (Leb) with the upper bound in (Whnp1) for $n=2$ (which is true for at least one function in $T$), the following upper bound results:
 >
 >     $$\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert_{op})\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert_{op})\Vert f^{(3)}\Vert /27.\end{multline}$$
 >
@@ -1000,30 +1002,28 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^91]: Rohwer, C., _Nonlinear Smoothing and Multiresolution Analysis_, Birkhäuser, 2005. [**https://doi.org/10.1007/3-7643-7382-2**](https://doi.org/10.1007/3-7643-7382-2)
 
-[^92]: Topcu, Ufuk, et al. "Rigorous uncertainty quantification without integral testing." Reliability Engineering & System Safety 96.9 (2011): 1085-1091. [https://doi.org/10.1016/j.ress.2010.07.013](https://doi.org/10.1016/j.ress.2010.07.013) [https://www.sciencedirect.com/science/article/abs/pii/S0951832011000627](https://www.sciencedirect.com/science/article/abs/pii/S0951832011000627)
+[^92]: Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, Calcolo 27 (1990). [**https://doi.org/10.1007/BF02575794**](https://doi.org/10.1007/BF02575794)
 
-[^93]: Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, Calcolo 27 (1990). [https://doi.org/10.1007/BF02575794](https://doi.org/10.1007/BF02575794)
-
-[^94]: Rivlin, T.J., _An Introduction to the Approximation of Functions_, Dover, 1981.
+[^93]: Rivlin, T.J., _An Introduction to the Approximation of Functions_, Dover, 1981.
 
 <a id=Appendix></a>
 
 ## Appendix
 
-**Lemma A:** Let $k$ be a positive integer.  Let $a$, $b$, $c$, and $d$ be constant real numbers that satisfy $a\lt b$ and $c\lt d$. Let $f(x)$ be continuous on the interval $[c, d]$. Let $\gamma(x)=c+(d-c)(x-a)/(b-a)$, which linearly transforms $x$'s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(x))$ is a function on $[a, b]$.)  Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$.
+**Lemma A:** _Let $a$, $b$, $c$, and $d$ be constant real numbers. Let $f(\lambda)$ be continuous on the interval $[c, d]$. Let $\gamma(\lambda)=c+(d-c)(\lambda-a)/(b-a)$, which linearly transforms $\lambda$'s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(\lambda))$ is a function on $[a, b]$.)  Then for each $h>0$,_ $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$, _where $k$ is a positive integer and_ $\omega_k(f, h)$ _is the smallest modulus of continuity of $f$ of order $k$, with parameter $h$._
 
-_Proof:_ $\gamma(x)$ is linear in $x$ and thus continuous and concave.  Moreover, $\gamma(x)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))[^92]:
+_Proof:_ $\gamma(\lambda)$ is linear in $\lambda$ and thus continuous and concave.  Moreover, $\gamma(\lambda)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))[^92]:
 
 $$\omega_k(f(\gamma), h)\le\omega_k(f,\omega_1(\gamma,h)).$$
 
-Using properties of the first-order modulus of continuity and of $\gamma(x)$ and the results of Gal (1990)[^93], $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:
+Using properties of the first-order modulus of continuity and of $\gamma(\lambda)$ and the results of Gal (1990)[^92], $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:
 
 $$\omega_k(f(\gamma), h)\le\omega_k(f,h(d-c)/(b-a)).$$
 
 &#x25a1;
 
-The special case $[a, b] = [-1, 1]$ leads to:
+The special case $[a, b] = [-1, 1]$ in Lemma A leads to:
 
-**Lemma B:**Let $k$ be a positive integer.  Let $f(x)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers and $a\lt b$. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $x$'s in the interval $[-1, 1]$ to the interval $[c, d]$. Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(b-a)/2)$.
+**Lemma B:** _Let $f(\lambda)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $\lambda$'s in the interval $[-1, 1]$ to the interval $[a,b]$. Then for each $h>0$,_ $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(b-a)/2)$, _where $k$ and_ $\omega_k$ _are as in Lemma A._
 
-> **Note:** For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)[^94].
+> **Note:** For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)[^93].

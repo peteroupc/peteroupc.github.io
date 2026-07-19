@@ -544,7 +544,7 @@
 <p><em>where:</em></p>
 
 <ul>
-  <li>$k$ is a positive integer.</li>
+  <li><em>$k$ is a positive integer.</em></li>
   <li>$\omega_{n}(f, h)$ <em>is the smallest modulus of continuity of $f$ of order $n$, with parameter $h$.</em></li>
   <li><em>$W$ is:</em>
     <ul>
@@ -568,7 +568,7 @@
   <li>$\alpha\gt 0$.</li>
 </ul>
 
-<p><em>Proof</em>: For (Wh) see Theorem B of Babenko and Kryakin (2018)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>; the 1/2 constant for $W$ is from Whitney (1957)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>. For (JS) see Babenko and Kryakin (2018)<sup id="fnref:45:1"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>; constants for $J$ come from that paper, except for the $1/2$ constant, which is from Gal (1995)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.  Babenko and Kryakin proved (JS), with the $J$ constants attributed to it, only for continuous $f$ on the interval $[-1, 1]$; an upper bound for other compact intervals follows from Lemma B in the appendix, which involves a linear transformation from $[-1,1]$ to $[a,b]$. See also Babenko and Kryakin (2019)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> and references therein. □</p>
+<p><em>Proof</em>: For (Wh) see Theorem B of Babenko and Kryakin (2018)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>; the 1/2 constant for $W$ is from Whitney (1957)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>. For (JS) see Babenko and Kryakin (2018)<sup id="fnref:45:1"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>; constants for $J$ come from that paper, except for the $1/2$ constant, which is from Gal (1995)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.  The Babenko and Kryakin paper proved (JS), with the $J$ constants attributed to that paper, only for continuous $f$ on the interval $[-1, 1]$; an upper bound for other compact intervals follows from Lemma B in the appendix, which involves a linear transformation from $[-1,1]$ to $[a,b]$. See also Babenko and Kryakin (2019)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> and references therein. □</p>
 
 <p><strong>Lemma 13A</strong>.  <em>With the setting in Lemma 13, if $f$ has a continuous $(n+1)$-th derivative whose maximum absolute value is $M$ or less, then:</em></p>
 
@@ -576,7 +576,7 @@
 
 <p>Using inequality (Wh) as well as properties of moduli of continuity (see Sevy 1991<sup id="fnref:27:1"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>, sec. 2.0.2; Gonska 1985<sup id="fnref:28:1"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>), if $f$ has a continuous $(n+1)$-th derivative on $[a, b]$:</p>
 
-\[\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),\tag{Wh-n-plus-1}\]
+\[\text{abs}(f(\lambda)-P(\lambda))\le W \cdot \left(\frac{b-a}{n+1}\right)^{n+1}\max(\text{abs}(f^{(n+1)})),\tag{Whnp1}\]
 
 <p>and if $f$ has a continuous $n$-th derivative on that interval:</p>
 
@@ -633,7 +633,9 @@
   <p><strong>Note:</strong> There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup>, but its bounds have hidden constants with no upper bounds given.</p>
 </blockquote>
 
-<p><strong>Lemma 13D</strong> (Gonska and Kovacheva 1994/2024)<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>: <em>Let $f(\lambda)$ be continuous on the closed unit interval, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that</em> $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,1/m)$ <em>and the derivative has a Lipschitz constant of</em> $m^2 \omega_2(f,1/m)$ <em>or less</em>.</p>
+<p><strong>Lemma 13D</strong>: <em>Let $f(\lambda)$ be continuous on the compact interval $[a,b]$, and let $m\ge 2$ be an integer.  Then there is at least one function $P$ with a Lipschitz-continuous first derivative on that interval such that</em> $\text{abs}(f(\lambda)-P(\lambda))\le\omega_2(f,(b-a)/m)$ <em>and the derivative has a Lipschitz constant of</em> $m^2 \omega_2(f,(b-a)/m)$ <em>or less</em>.</p>
+
+<p><em>Proof</em>: For the closed unit interval, this is a result of Gonska and Kovacheva (1994/2024)<sup id="fnref:54:1"><a href="#fn:54" class="footnote" rel="footnote" role="doc-noteref">54</a></sup>; with Lemma A in the appendix, the result for other compact intervals follows; in this case, Lemma A involves a linear transformation from the closed unit interval to $[a,b]$. □</p>
 
 <p><a id="Lebesgue_Inequality_for_Certain_Linear_Operators"></a></p>
 
@@ -674,7 +676,7 @@
 
   <ol>
     <li>
-      <p>Let $f$ have a continuous third derivative on the closed unit interval, and let $T$ be the polynomials up to degree 2 on that interval.  Then by replacing $\Vert f-P\Vert$ in (Leb) with the upper bound in (Wh-n-plus-1) for $n=2$ (which is true for at least one function in $T$), the following upper bound results:</p>
+      <p>Let $f$ have a continuous third derivative on the closed unit interval, and let $T$ be the polynomials up to degree 2 on that interval.  Then by replacing $\Vert f-P\Vert$ in (Leb) with the upper bound in (Whnp1) for $n=2$ (which is true for at least one function in $T$), the following upper bound results:</p>
 
 \[\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert_{op})\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert_{op})\Vert f^{(3)}\Vert /27.\end{multline}\]
     </li>
@@ -1055,24 +1057,24 @@
 
 <h2 id="appendix">Appendix</h2>
 
-<p><strong>Lemma A:</strong> Let $k$ be a positive integer.  Let $a$, $b$, $c$, and $d$ be constant real numbers that satisfy $a\lt b$ and $c\lt d$. Let $f(x)$ be continuous on the interval $[c, d]$. Let $\gamma(x)=c+(d-c)(x-a)/(b-a)$, which linearly transforms $x$’s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(x))$ is a function on $[a, b]$.)  Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$.</p>
+<p><strong>Lemma A:</strong> <em>Let $a$, $b$, $c$, and $d$ be constant real numbers. Let $f(\lambda)$ be continuous on the interval $[c, d]$. Let $\gamma(\lambda)=c+(d-c)(\lambda-a)/(b-a)$, which linearly transforms $\lambda$’s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(\lambda))$ is a function on $[a, b]$.)  Then for each $h&gt;0$,</em> $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$, <em>where $k$ is a positive integer and</em> $\omega_k(f, h)$ <em>is the smallest modulus of continuity of $f$ of order $k$, with parameter $h$.</em></p>
 
-<p><em>Proof:</em> $\gamma(x)$ is linear in $x$ and thus continuous and concave.  Moreover, $\gamma(x)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))<sup id="fnref:92"><a href="#fn:92" class="footnote" rel="footnote" role="doc-noteref">92</a></sup>:</p>
+<p><em>Proof:</em> $\gamma(\lambda)$ is linear in $\lambda$ and thus continuous and concave.  Moreover, $\gamma(\lambda)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))<sup id="fnref:92"><a href="#fn:92" class="footnote" rel="footnote" role="doc-noteref">92</a></sup>:</p>
 
 \[\omega_k(f(\gamma), h)\le\omega_k(f,\omega_1(\gamma,h)).\]
 
-<p>Using properties of the first-order modulus of continuity and of $\gamma(x)$ and the results of Gal (1990)<sup id="fnref:93"><a href="#fn:93" class="footnote" rel="footnote" role="doc-noteref">93</a></sup>, $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:</p>
+<p>Using properties of the first-order modulus of continuity and of $\gamma(\lambda)$ and the results of Gal (1990)<sup id="fnref:92:1"><a href="#fn:92" class="footnote" rel="footnote" role="doc-noteref">92</a></sup>, $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:</p>
 
 \[\omega_k(f(\gamma), h)\le\omega_k(f,h(d-c)/(b-a)).\]
 
 <p>□</p>
 
-<p>The special case $[a, b] = [-1, 1]$ leads to:</p>
+<p>The special case $[a, b] = [-1, 1]$ in Lemma A leads to:</p>
 
-<p><strong>Lemma B:</strong>Let $k$ be a positive integer.  Let $f(x)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers and $a\lt b$. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $x$’s in the interval $[-1, 1]$ to the interval $[c, d]$. Then $\omega_k(f(\gamma(x)), h)$ $\le\omega_k(f, h(b-a)/2)$.</p>
+<p><strong>Lemma B:</strong> <em>Let $f(\lambda)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $\lambda$’s in the interval $[-1, 1]$ to the interval $[a,b]$. Then for each $h&gt;0$,</em> $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(b-a)/2)$, <em>where $k$ and</em> $\omega_k$ <em>are as in Lemma A.</em></p>
 
 <blockquote>
-  <p><strong>Note:</strong> For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)<sup id="fnref:94"><a href="#fn:94" class="footnote" rel="footnote" role="doc-noteref">94</a></sup>.</p>
+  <p><strong>Note:</strong> For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)<sup id="fnref:93"><a href="#fn:93" class="footnote" rel="footnote" role="doc-noteref">93</a></sup>.</p>
 </blockquote>
 <div class="footnotes" role="doc-endnotes">
   <ol>
@@ -1350,13 +1352,10 @@
       <p>Rohwer, C., <em>Nonlinear Smoothing and Multiresolution Analysis</em>, Birkhäuser, 2005. <a href="https://doi.org/10.1007/3-7643-7382-2"><strong>https://doi.org/10.1007/3-7643-7382-2</strong></a> <a href="#fnref:91" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:92">
-      <p>Topcu, Ufuk, et al. “Rigorous uncertainty quantification without integral testing.” Reliability Engineering &amp; System Safety 96.9 (2011): 1085-1091. https://doi.org/10.1016/j.ress.2010.07.013 https://www.sciencedirect.com/science/article/abs/pii/S0951832011000627 <a href="#fnref:92" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, Calcolo 27 (1990). <a href="https://doi.org/10.1007/BF02575794"><strong>https://doi.org/10.1007/BF02575794</strong></a> <a href="#fnref:92" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:92:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:93">
-      <p>Gal, S.G., “Calculus of the modulus of continuity for nonconcave functions and applications”, Calcolo 27 (1990). https://doi.org/10.1007/BF02575794 <a href="#fnref:93" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:94">
-      <p>Rivlin, T.J., <em>An Introduction to the Approximation of Functions</em>, Dover, 1981. <a href="#fnref:94" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Rivlin, T.J., <em>An Introduction to the Approximation of Functions</em>, Dover, 1981. <a href="#fnref:93" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
