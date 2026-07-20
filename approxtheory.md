@@ -461,23 +461,24 @@ For certain operators, the approximation error of a function under that operator
 **Lemma 14** (Lebesgue's lemma or Lebesgue inequality): _Suppose the following:_
 
 - _$S$ is the space of continuous functions on a compact interval, and its "norm" ($\Vert\cdot\Vert$) is the maximum absolute value._
-- _$f$ is a function in $S$._
-- _$T$ is a subspace of $S$ [^58] and admits the same "norm" as $S$._
-- _$L$ is a linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
-- _$I$ is the identity operator $I(f)=f$._
+- _$T$ is either $S$ or a subset thereof[^94] and admits the same "norm" as $S$._
+- _$L$ is a bounded linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
+- _$I$ is the identity operator, that is, $I(g)=g$._
 
-_Then for every function $P$ in $T$:_
+_Then for every function $f$ in $S$ and every function $P$ in $T$:_
 
 $$\begin{multline}\Vert f - L(f)\Vert\le(\Vert I - L\Vert_{op})\cdot\Vert f-P\Vert\quad\text{(Leb2)}\\\\ \le(\Vert I\Vert_{op} + \Vert L\Vert_{op}) \cdot\Vert f-P\Vert\\\\ \le(1 + \Vert L\Vert_{op}) \cdot\Vert f-P\Vert\quad\text{(Leb)}\end{multline}$$
+
+Due to the
 
 &nbsp;
 
 > **Notes:**
 >
-> 1. The following are references for Lemma 14: Powell (1981, theorem 3.1)[^59], De Villiers (2012, theorem 5.3.2)[^4]; DeVore and Lorentz (1993, proof of proposition 4.1)[^60].  For (Leb2), see De Boor (1982, chapter 2)[^61]).
+> 1. The following are references for Lemma 14: Powell (1981, theorem 3.1)[^58]; De Villiers (2012, theorem 5.3.2)[^4]; Cheney and Light (2009, chapter 2)[^95].  For (Leb2), see also De Boor (1982, chapter 2)[^59]).
 > 2. Lemma 14 states "$\Vert f-P\Vert$ for every function $P$ in $T$" rather than the minimum or greatest lower bound of $\Vert f-P\Vert$ over all functions $P$ in $T$ (which are subtly different), because the first statement seems to be correct compared to the greatest-lower-bound statement.  Indeed:
->     - DeVilliers theorem 5.3.2 assumes $T$ has a "best approximation" to $f$ (there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ [^58]) and uses the minimum as just given. Here there is no correctness issue.
->     - DeVore and Lorentz proposition 4.1 states the inequality (Leb) without a "best-approximation" assumption and with the greatest lower bound as just given, but I suspect that statement is false in general since this bound might not be reached for any $P$ in $T$.
+>     - DeVilliers theorem 5.3.2 assumes $T$ has a "best approximation" to $f$ (there is a function $g$ in $T$ such that $\Vert f - g\Vert\le\Vert f - h\Vert$ for every function $h$ in $T$ [^60]) and uses the minimum as just given. Here there is no correctness issue.
+>     - DeVore and Lorentz (1993, proposition 4.1)[^61] states the inequality (Leb) without a "best-approximation" assumption and with the greatest lower bound as just given, but I suspect that statement is false in general since this bound might not be reached for any $P$ in $T$.
 >
 > **Examples:**
 >
@@ -934,13 +935,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^57]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [**https://doi.org/10.1216/RMJ-1989-19-1-157**](https://doi.org/10.1216/RMJ-1989-19-1-157)
 
-[^58]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that includes a finite set of functions (Axler 2020, definition 6.54).
+[^58]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
 
-[^59]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
+[^59]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 
-[^60]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
+[^60]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that includes a finite set of functions (Axler 2020, definition 6.54).
 
-[^61]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
+[^61]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
 
 [^62]: However, Gavrea and Ivan ("[**A note on the fixed points of positive linear operators**](https://doi.org/10.1016/j.jat.2017.12.001)", _Journal of Approximation Theory_ (227), 2018) pointed out that there are positive linear operators besides the identity that reproduce all polynomials of the form $x^i$ where $i>0$.
 
@@ -1006,17 +1007,23 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^93]: Rivlin, T.J., _An Introduction to the Approximation of Functions_, Dover, 1981.
 
+[^94]: Due to the assumptions on $L$, $T$ will be a subspace of $S$; see chapter 2 of Cheney and Light (2009).
+
+[^95]: Cheney, W., Light, W., [**_A Course in Approximation Theory_**](https://bookstore.ams.org/gsm-101), American Mathematical Society, 2009.
+
 <a id=Appendix></a>
 
 ## Appendix
 
+The following technical results help adapt certain upper bounds that work only for functions on a given compact interval, such as $[-1, 1]$ or the closed unit interval.
+
 **Lemma A:** _Let $a$, $b$, $c$, and $d$ be constant real numbers. Let $f(\lambda)$ be continuous on the interval $[c, d]$. Let $\gamma(\lambda)=c+(d-c)(\lambda-a)/(b-a)$, which linearly transforms $\lambda$'s in the interval $[a, b]$ to the interval $[c, d]$. (Thus, $f(\gamma(\lambda))$ is a function on $[a, b]$.)  Then for each $h>0$,_ $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(d-c)/(b-a))$, _where $k$ is a positive integer and_ $\omega_k(f, h)$ _is the smallest modulus of continuity of $f$ of order $k$, with parameter $h$._
 
-_Proof:_ $\gamma(\lambda)$ is linear in $\lambda$ and thus continuous and concave.  Moreover, $\gamma(\lambda)$ is nowhere decreasing and maps the interval $[a, b]$ to $[c, d]$.  Thus, by the remarks of Topcu et al. (2011, (14))[^92]:
+_Proof:_ $\gamma(\lambda)$ is linear in $\lambda$ and thus continuous and concave.  Because $\gamma$ is continuous and maps the interval $[a, b]$ to $[c, d]$, and by the remarks of Topcu et al. (2011, (14))[^92]:
 
 $$\omega_k(f(\gamma), h)\le\omega_k(f,\omega_1(\gamma,h)).$$
 
-Using properties of the first-order modulus of continuity and of $\gamma(\lambda)$ and the results of Gal (1990)[^92], $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:
+Using properties of the first-order modulus of continuity and the results of Gal (1990)[^92], and because $\gamma(\lambda)$ is continuous, concave, and nowhere decreasing, $\omega_1(\gamma,h)$ $\le\gamma(a+h)-\gamma(a)=h(d-c)/(b-a)$, so:
 
 $$\omega_k(f(\gamma), h)\le\omega_k(f,h(d-c)/(b-a)).$$
 
