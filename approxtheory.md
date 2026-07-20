@@ -478,7 +478,7 @@ _where $I$ is the identity operator that maps every function to itself: $I(g)=g$
 >
 >     $$\begin{multline}\Vert f - L(f)\Vert\le(1+\Vert L\Vert_{op})\cdot 1\cdot \left(\frac{1}{3}\right)^{3}\Vert f^{(3)}\Vert\\\\= (1+\Vert L\Vert_{op})\Vert f^{(3)}\Vert /27.\end{multline}$$
 >
-> 2. The Bernstein polynomial $B_n$ maps continuous functions to polynomials up to degree $n$, but if $n$ is 2 or greater it is _not_ idempotent because it does not reproduce all polynomials up to degree $n$.  For example, for $e_2(x)=x^2$, a degree-2 polynomial, $B_n(e_2)=x^2+x(1-x)/n\ne x^2$.  Thus, the inequalities (Leb) and (Leb2) do not apply to Bernstein polynomials of degree 2 or greater.
+> 2. The Bernstein polynomial $B_n$ maps continuous functions to polynomials up to degree $n$, but if $n$ is 2 or greater it is _not_ idempotent because it does not reproduce all polynomials up to degree $n$.  For example, for $e_2(x)=x^2$, a degree-2 polynomial, $B_n(e_2)=x^2+x(1-x)/n\ne x^2$.  Thus, Lemma 14 does not apply to Bernstein polynomials of degree 2 or greater.
 >
 > 3. The _identity operator_ $I(f)=f$ has operator norm 1.  For this operator, the inequality (Leb2) becomes:
 >
@@ -870,7 +870,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^27]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
 
-[^28]: H. Johnen. "Inequalities connected with the moduli of smootness." Matematički Vesnik 9(24).56 (1972): 289-305. [http://eudml.org/doc/259235](http://eudml.org/doc/259235)
+[^28]: H. Johnen. "Inequalities connected with the moduli of smootness." Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
 
 [^29]: [**Peetre, J., "Exact interpolation theorems for Lipschitz-continuous functions"**](https://scholar.google.com/scholar?q=Peetre,+J.,+Exact+interpolation+theorems+for+Lipschitz-continuous+functions), Ricerche Mat. 18 (1969).
 
@@ -912,7 +912,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^48]: Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. [**https://doi.org/10.1007/978-3-030-12277-5_2**](https://doi.org/10.1007/978-3-030-12277-5_2)
 
-[^49]: H. Johnen. "Inequalities connected with the moduli of smoothness." Matematički Vesnik 9(24).56 (1972): 289-305. [http://eudml.org/doc/259235](http://eudml.org/doc/259235)
+[^49]: H. Johnen. "Inequalities connected with the moduli of smoothness." Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
 
 [^50]: Brass, H., Petras, K., _Quadrature Theory: The Theory of Numerical Integration on a Compact Interval_, American Mathematical Society, 2011.
 

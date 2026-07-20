@@ -164,7 +164,7 @@ Prove or disprove:
     - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
     - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $h(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
 
-    A condition such as "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz-continuous function on $[0, \epsilon)$ for some $\epsilon>0$" does not work.  A counterexample is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 despite not being Lipschitz at 0.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)  Keane and O'Brien already showed strong simulability when $D$ contains neither 0 nor 1.
+    It's possible that the conditions given are not necessary, and stronger conditions hold; for example: "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz-continuous function on $[0, \epsilon)$ for some $\epsilon>0$".  A tricky example of such a function is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 and is Lipschitz at, say, $[0, 0.01]$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)  Keane and O'Brien already showed strong simulability when $D$ contains neither 0 nor 1.
 
 <a id=Notes></a>
 
