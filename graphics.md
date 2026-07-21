@@ -64,7 +64,7 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 
 Limit 3-D graphics to the following:[^3]
 
-1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4] \(See also survey project in "[**Other Challenges and Projects**](#Other_Challenges_and_Projects)", later.)
+1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4]
     * A _primitive_ is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.
     * Each vertex of the primitive points to a vertex from the vertex list described later.
     * Each primitive can be translucent.
@@ -80,7 +80,7 @@ Limit 3-D graphics to the following:[^3]
 4. The width and height of each texture are each powers of 2.
 5. A texture's maximum width, in pixels, is the larger of the screen width and the screen height, but not more than 256.  A texture's maximum height is the same as the maximum texture width.
 6. Textures may contain transparent pixels.
-7. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image occurs when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
+7. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 8. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering and edge antialiasing (smoothing)[^7] are optional.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^8]
 
@@ -119,12 +119,15 @@ Limit 2-D graphics to the following: [^9]
 
 > **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
 >
-> **Example:** For a "screen resolution" (see later) of 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
+> **Examples:**
+>
+> 1. For a "screen resolution" (see later) of 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
+> 2.  Here is what the maximum primitive counts look like for different screen resolutions (rounding down): 256 × 192 / 24 = 2048; 320 × 200 / 24 = 2666; 320 × 240 / 24 = 3200; 480 × 360 / 24 = 6400; 640 × 400 / 24 = 10666; 640 × 480 / 24 = 12800.
 
 Other requirements:
 
 - **Screen resolution:** The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^14]  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.
-- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
+- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card, a visual accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
 - **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^15]
 
 <a id=Classic_Graphics_in_Scope></a>
@@ -137,7 +140,7 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 - home computers released before 1995,[^17]
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier, and
-- the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphics ability.
+- the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
 
 In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^18]
 
@@ -180,7 +183,7 @@ Examples of optional constraints are the following:
     - 65,536 bytes,[^21] or
     - 681 million bytes (slightly less than the maximum total size of files in a formatted CD-ROM).
 - The game uses no more than 16 million bytes of system memory at a time.
-- The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.[^22]
+- The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphical use only) at a time.[^22]
 - The game is a Win32 application compatible with Windows XP.
 - The game is a Win32 application compatible with Windows 98.
 - The game aims for a rate of 30 frames per second.
@@ -252,7 +255,7 @@ This section has notes on this specification, such as how its requirements corre
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
-    - Visuals produced by Phong shading (per-pixel specular highlighting), ray tracing (other than the _ray casting_ technique), and path tracing, which were too slow for real-time use in the 20th century.
+    - Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include the _ray-casting_ technique and _light maps_ with precomputed lighting.
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^60] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
@@ -287,7 +290,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Memory
 
-- This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.[^65]
+- This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 &times; 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphical memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.[^65]
 - According to "[**Typical PCs Each Year**](https://www.dosdays.co.uk/topics/typical_pc_per_year.php)", the following ranges of system memory were typical for PCs sold in the specified years:[^66]
     - 1994: 4MB to 8 MB, with more expensive PCs having 16 MB.[^67]
     - 1997: 8MB to 32MB.[^68]
@@ -350,6 +353,7 @@ The following are examples of the kind of statements desired:
 - Abrash, M., [**_Michael Abrash's Graphics Programming Black Book: Special Edition_**](https://github.com/jagregory/abrash-black-book), 1997.
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
 - Donnelly, P., "Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation", Microsoft Developer Network, Nov. 25, 1996.
+- Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [https://ben3d.ca/blog/rendering-real-time-3d-before-gpus](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - Lamothe, A., _Tricks of the Game Programming Gurus_, Sams, 1994.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
 - Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.

@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-07-18"><meta name="citation_date" content="2026/07/18"><meta name="citation_publication_date" content="2026/07/18"><meta name="citation_online_date" content="2026/07/18"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-07-21"><meta name="citation_date" content="2026/07/21"><meta name="citation_publication_date" content="2026/07/21"><meta name="citation_online_date" content="2026/07/21"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-07-18.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-07-21.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -86,7 +86,7 @@
 <p>Limit 3-D graphics to the following:<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <ol>
-  <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> (See also survey project in “<a href="#Other_Challenges_and_Projects"><strong>Other Challenges and Projects</strong></a>”, later.)
+  <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>
     <ul>
       <li>A <em>primitive</em> is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.</li>
       <li>Each vertex of the primitive points to a vertex from the vertex list described later.</li>
@@ -108,7 +108,7 @@
   <li>The width and height of each texture are each powers of 2.</li>
   <li>A texture’s maximum width, in pixels, is the larger of the screen width and the screen height, but not more than 256.  A texture’s maximum height is the same as the maximum texture width.</li>
   <li>Textures may contain transparent pixels.</li>
-  <li>Image files used by the game should not store “pre-pixelated” textures.  A “pre-pixelated” image occurs when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
+  <li>Image files used by the game should not store “pre-pixelated” textures.  A “pre-pixelated” image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
   <li>For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>  Bilinear filtering and edge antialiasing (smoothing)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> are optional.</li>
   <li>3-D primitives should undergo perspective correction, but this is optional.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></li>
 </ol>
@@ -168,14 +168,19 @@
 <blockquote>
   <p><strong>Note:</strong> The suggested width and height for tiles is 8 pixels × 8 pixels.</p>
 
-  <p><strong>Example:</strong> For a “screen resolution” (see later) of 640 × 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</p>
+  <p><strong>Examples:</strong></p>
+
+  <ol>
+    <li>For a “screen resolution” (see later) of 640 × 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</li>
+    <li>Here is what the maximum primitive counts look like for different screen resolutions (rounding down): 256 × 192 / 24 = 2048; 320 × 200 / 24 = 2666; 320 × 240 / 24 = 3200; 480 × 360 / 24 = 6400; 640 × 400 / 24 = 10666; 640 × 480 / 24 = 12800.</li>
+  </ol>
 </blockquote>
 
 <p>Other requirements:</p>
 
 <ul>
   <li><strong>Screen resolution:</strong> The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.</li>
-  <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that the rendering of graphics does not rely on a video card, a graphics accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
+  <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card, a visual accelerator chip, or the operating system’s graphics API (such as GDI, OpenGL, or Direct3D) with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
   <li><strong>Music:</strong> Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup></li>
 </ul>
 
@@ -190,7 +195,7 @@
   <li>home computers released before 1995,<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup></li>
   <li>game consoles (handheld and for TVs) released before 2000,</li>
   <li>arcade machines with similar performance to machines described earlier, and</li>
-  <li>the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphics ability.</li>
+  <li>the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.</li>
 </ul>
 
 <p>In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.<sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup></p>
@@ -245,7 +250,7 @@
     </ul>
   </li>
   <li>The game uses no more than 16 million bytes of system memory at a time.</li>
-  <li>The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphics use only) at a time.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
+  <li>The game uses no more than 655,360 bytes of system memory (plus 262,144 bytes of additional memory for graphical use only) at a time.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
   <li>The game is a Win32 application compatible with Windows XP.</li>
   <li>The game is a Win32 application compatible with Windows 98.</li>
   <li>The game aims for a rate of 30 frames per second.</li>
@@ -343,7 +348,7 @@
   <li>The following are not within the spirit of this challenge:
     <ul>
       <li>Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.</li>
-      <li>Visuals produced by Phong shading (per-pixel specular highlighting), ray tracing (other than the <em>ray casting</em> technique), and path tracing, which were too slow for real-time use in the 20th century.</li>
+      <li>Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include the <em>ray-casting</em> technique and <em>light maps</em> with precomputed lighting.</li>
     </ul>
   </li>
   <li>It wasn’t until 1995 that 3-D video cards became widely available for consumer PCs.<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup> In 3-D video games for PCs “[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures” (according to an <a href="https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/"><strong>article</strong></a> that compared <em>Havoc</em> [1995] with <em>Mortal Kombat 4</em> [1997]).</li>
@@ -391,7 +396,7 @@
 <h4 id="memory">Memory</h4>
 
 <ul>
-  <li>This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphics memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup></li>
+  <li>This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphical memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup></li>
   <li>According to “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”, the following ranges of system memory were typical for PCs sold in the specified years:<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>
     <ul>
       <li>1994: 4MB to 8 MB, with more expensive PCs having 16 MB.<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup></li>
@@ -470,6 +475,7 @@
   <li>Abrash, M., <a href="https://github.com/jagregory/abrash-black-book"><strong><em>Michael Abrash’s Graphics Programming Black Book: Special Edition</em></strong></a>, 1997.</li>
   <li>(Akenine-)Möller, T., Haines, E., <em>Real-Time Rendering</em> (first edition), 1999.</li>
   <li>Donnelly, P., “Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation”, Microsoft Developer Network, Nov. 25, 1996.</li>
+  <li>Houston, B., “Rendering Real-Time 3D Before GPUs”, Jul. 17, 2026. https://ben3d.ca/blog/rendering-real-time-3d-before-gpus</li>
   <li>Lamothe, A., <em>Tricks of the Game Programming Gurus</em>, Sams, 1994.</li>
   <li>Lamothe, A., <em>Black Art of 3D Game Programming</em>, Waite Group Press, 1995.</li>
   <li>Lamothe, A., <em>Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization</em>, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.</li>
