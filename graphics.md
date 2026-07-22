@@ -353,7 +353,7 @@ The following are examples of the kind of statements desired:
 - Abrash, M., [**_Michael Abrash's Graphics Programming Black Book: Special Edition_**](https://github.com/jagregory/abrash-black-book), 1997.
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
 - Donnelly, P., "Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation", Microsoft Developer Network, Nov. 25, 1996.
-- Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [https://ben3d.ca/blog/rendering-real-time-3d-before-gpus](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
+- Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - Lamothe, A., _Tricks of the Game Programming Gurus_, Sams, 1994.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
 - Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.

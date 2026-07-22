@@ -870,7 +870,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^27]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
 
-[^28]: H. Johnen. "Inequalities connected with the moduli of smootness." Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
+[^28]: [**H. Johnen. "Inequalities connected with the moduli of smootness."**](https://scholar.google.com/scholar?q=H.+Johnen.+Inequalities+connected+with+the+moduli+of+smootness) Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
 
 [^29]: [**Peetre, J., "Exact interpolation theorems for Lipschitz-continuous functions"**](https://scholar.google.com/scholar?q=Peetre,+J.,+Exact+interpolation+theorems+for+Lipschitz-continuous+functions), Ricerche Mat. 18 (1969).
 
@@ -912,7 +912,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^48]: Babenko, A.G., Kryakin, Y.V. (2019). Special Difference Operators and the Constants in the Classical Jackson-Type Theorems. In: Abell, M., Iacob, E., Stokolos, A., Taylor, S., Tikhonov, S., Zhu, J. (eds) Topics in Classical and Modern Analysis. Applied and Numerical Harmonic Analysis. Birkhäuser, Cham. [**https://doi.org/10.1007/978-3-030-12277-5_2**](https://doi.org/10.1007/978-3-030-12277-5_2)
 
-[^49]: H. Johnen. "Inequalities connected with the moduli of smoothness." Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
+[^49]: [**H. Johnen. "Inequalities connected with the moduli of smoothness."**](https://scholar.google.com/scholar?q=H.+Johnen.+Inequalities+connected+with+the+moduli+of+smoothness) Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
 
 [^50]: Brass, H., Petras, K., _Quadrature Theory: The Theory of Numerical Integration on a Compact Interval_, American Mathematical Society, 2011.
 

@@ -2172,7 +2172,7 @@ The following are some additional articles I have written on the topic of random
 
 [^31]: [**Jon Louis Bentley and James B. Saxe, "Generating Sorted Lists of Random Numbers"**](https://scholar.google.com/scholar?q=Jon+Louis+Bentley+and+James+B.+Saxe,+Generating+Sorted+Lists+of+Random+Numbers), _ACM Trans. Math. Softw._ 6 (1980), pp. 359-364, describes a way to generate certain kinds of random variates in sorted order, but it's not given here because it relies on generating real numbers in the interval [0, 1], which is inherently imperfect because computers can't choose among all real numbers between 0 and 1, and there are infinitely many of them.
 
-[^32]: (2020a) Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO], also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.
+[^32]: Saad, F.A., Freer C.E., et al., "[**The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions**](https://arxiv.org/abs/2003.03830v2)", arXiv:2003.03830v2  [stat.CO] (2020a), also in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.
 
 [^33]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
@@ -2196,7 +2196,7 @@ The following are some additional articles I have written on the topic of random
 
 [^43]: Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.
 
-[^44]: [**Efraimidis, P. and Spirakis, P. "[**Weighted Random Sampling (2005; Efraimidis, Spirakis)**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)"](https://scholar.google.com/scholar?q=Efraimidis,+P.+and+Spirakis,+P.+Weighted+Random+Sampling+2005+Efraimidis,+Spirakishttputopia.duth.grpefraimiresearchdata2007EncO), 2005.
+[^44]: Efraimidis, P. and Spirakis, P. "Weighted Random Sampling (2005; Efraimidis, Spirakis)", 2005. [http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)
 
 [^45]: Deville, J.-C. and Tillé, Y.  Unequal probability sampling without replacement through a splitting method. Biometrika 85 (1998).
 
@@ -2210,9 +2210,9 @@ The following are some additional articles I have written on the topic of random
 
 [^50]: An _affine transformation_ is one that keeps straight lines straight and parallel lines parallel.
 
-[^51]: Farach-Colton, M. and Tsai, M.T., 2015. Exact sublinear binomial sampling. _Algorithmica_ 73(4), pp. 637-651.
+[^51]: Farach-Colton, M. and Tsai, M.T., 2015. "Exact sublinear binomial sampling." _Algorithmica_ 73(4), pp. 637-651.
 
-[^52]: K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
+[^52]: K. Bringmann, F. Kuhn, et al., "Internal DLA: Efficient Simulation of a Physical Growth Model." In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
 
 [^53]: Heaukulani, C., Roy, D.M., "[**Black-box constructions for exchangeable sequences of random multisets**](https://arxiv.org/abs/1908.06349v1)", arXiv:1908.06349v1  [math.PR], 2019.  Note however that this reference defines a negative binomial distribution as the number of successes before N failures (not vice versa).
 
@@ -2276,13 +2276,13 @@ The following are some additional articles I have written on the topic of random
 
 [^82]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold. 2010. Random variate generation by numerical inversion when only the density is known. ACM Trans. Model. Comput. Simul. 20, 4, Article 18 (October 2010), 25 pages. [**https://doi.org/10.1145/1842722.1842723**](https://doi.org/10.1145/1842722.1842723)
 
-[^83]: [**Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector"**](https://scholar.google.com/scholar?q=Part+of+numbers_from_u01+uses+algorithms+described+in+Arnas,+D.,+Leake,+C.,+Mortari,+D.,+Random+Sampling+using+k-vector), _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
+[^83]: [**Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector"**](https://scholar.google.com/scholar?q=Arnas,+D.,+Leake,+C.,+Mortari,+D.,+Random+Sampling+using+k-vector), _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
 
 [^84]: There is a paper by Arnas et al. that describes approximate random sampling using the values of the CDF by the so-called _k-vector_ technique, but the paper doesn't formally prove how good the approximation is.  Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-vector", Computing in Science & Engineering 21(1) pp. 94-107, 2019.  See also Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
 
 [^85]: Devroye, L., "Non-Uniform Random Variate Generation".  In _Handbooks in Operations Research and Management Science: Simulation_, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.
 
-[^86]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
+[^86]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
 [^87]: [**Sainudiin, Raazesh, and Thomas L. York. "An Auto-Validating, Trans-Dimensional, Universal Rejection Sampler for Locally Lipschitz Arithmetical Expressions,"**](https://scholar.google.com/scholar?q=Sainudiin,+Raazesh,+and+Thomas+L.+York.+An+Auto-Validating,+Trans-Dimensional,+Universal+Rejection+Sampler+for+Locally+Lipschitz) _Reliable Computing_ 18 (2013): 15-54.
 
@@ -2328,13 +2328,13 @@ The following are some additional articles I have written on the topic of random
 
 [^108]: Alternatively, if `p` is an integer greater than 0, generate a random point on the surface of an ball with `N+p` dimensions and the specified radius (for example, using `RandomPointOnSphere(N+p,radius,p)`), then discard the last `p` coordinates of that point (Corollary 1 of Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951).
 
-[^109]: [**See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus"**](https://scholar.google.com/scholar?q=See+the+_Mathematics+Stack+Exchange_+question+titled+Random+multivariate+in+hyperannulus), `questions/1885630`.
+[^109]: See the _Mathematics Stack Exchange_ question titled _Random multivariate in hyperannulus_, `questions/1885630`.
 
-[^110]: [**See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone"**](https://scholar.google.com/scholar?q=See+the+_Stack+Overflow_+question+Uniform+sampling+by+volume+within+a+cone), `questions/41749411`. Square and cube roots replaced with maximums.
+[^110]: See the _Stack Overflow_ question _Uniform sampling (by volume) within a cone_, `questions/41749411`. Square and cube roots replaced with maximums.
 
 [^111]: Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951.
 
-[^112]: Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).
+[^112]: Reference:  Weisstein, Eric W. "Sphere Point Picking." From MathWorld--A Wolfram Resource. [https://mathworld.wolfram.com/SpherePointPicking.html](https://mathworld.wolfram.com/SpherePointPicking.html)  (replacing inverse cosine with `atan2` equivalent).
 
 [^113]: [**Ben Dov, Y., David, L., et al., "Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes"**](https://scholar.google.com/scholar?q=Ben+Dov,+Y.,+David,+L.,+et+al.,+Resistance+to+Timing+Attacks+for+Sampling+and+Privacy+Preserving+Schemes), FORC 2023.
 

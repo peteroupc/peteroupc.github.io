@@ -81,9 +81,9 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 [^3]: [**Frauchiger, D., Renner, R., Troyer, M., "True randomness from realistic quantum devices"**](https://scholar.google.com/scholar?q=Frauchiger,+D.,+Renner,+R.,+Troyer,+M.,+True+randomness+from+realistic+quantum+devices), 2013.
 
-[^4]: McInnes, J. L., & Pinkas, B. (1990, August). On the impossibility of private key cryptography with weakly random keys. In Conference on the Theory and Application of Cryptography (pp. 421-435).
+[^4]: [**McInnes, J. L., & Pinkas, B. "On the impossibility of private key cryptography with weakly random keys."**](https://scholar.google.com/scholar?q=McInnes,+J.+L.,+Pinkas,+B.+On+the+impossibility+of+private+key+cryptography+with+weakly+random+keys) In _Conference on the Theory and Application of Cryptography_ (pp. 421-435), 1990.
 
-[^5]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
+[^5]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
 [^6]: Giulio Morina. Krzysztof Łatuszyński. Piotr Nayar. Alex Wendland. "From the Bernoulli factory to a dice enterprise via perfect sampling of Markov chains." Ann. Appl. Probab. 32 (1) 327 - 359, February 2022. [**https://doi.org/10.1214/21-AAP1679**](https://doi.org/10.1214/21-AAP1679)
 

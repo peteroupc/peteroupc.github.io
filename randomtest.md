@@ -52,7 +52,7 @@ _Other combinations and transformations._  There are other ways to combine two P
 - The "shrinking generator" technique, which takes each bit from one PRNG only if the corresponding bit from another PRNG is set (see (Cook 2019\)[^7]).
 - "Self-shrinking" and von Neumann unbiasing (von Neumann 1951)[^8], which each transform a PRNG based on pairs of output bits.
 
-**Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015; Claessen et al., 2013\)[^9]. The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
+**Splittable PRNGs.** A _splittable PRNG_ consists of two operations: a `split` operation to create multiple new internal states from one, and a `generate` operation to produce a pseudorandom number from a state (Schaathun 2015[^9]; Claessen et al., 2013[^10]\). The Schaathun paper surveys several known constructions of splittable PRNGs.  Some of the constructions can be used by any PRNG, but do not necessarily lead to high-quality splittable PRNGs.
 
 The Schaathun paper suggests the following four pseudorandom number sequences for testing purposes:
 
@@ -72,20 +72,22 @@ The Schaathun paper suggests the following four pseudorandom number sequences fo
 
 ## Notes
 
-[^1]: Bauke and Mertens, "Random numbers for large-scale distributed Monte Carlo simulations", 2007
+[^1]: [**Bauke and Mertens, "Random numbers for large-scale distributed Monte Carlo simulations"**](https://scholar.google.com/scholar?q=Bauke+and+Mertens,+Random+numbers+for+large-scale+distributed+Monte+Carlo+simulations), 2007.
 
-[^2]: Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3." In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.
+[^2]: [**Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3."**](https://scholar.google.com/scholar?q=Salmon,+John+K.,+Mark+A.+Moraes,+Ron+O.+Dror,+and+David+E.+Shaw.+Parallel+random+numbers+as+easy+as+1,+2,+3) In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.
 
-[^3]: Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**](http://digitalcommons.wayne.edu/jmasm/vol14/iss1/23)", _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015).
+[^3]: Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**], _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015). [https://doi.org/10.22237/jmasm/1430454120](https://doi.org/10.22237/jmasm/1430454120)
 
 [^4]: A _permutation function_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; mixing functions with reversible operations as described in "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey.
 
 [^5]: As [**P. Evensen shows**](https://mostlymangling.blogspot.com/2018/07/on-mixing-functions-in-fast-splittable.html#testing_with_practrand), the choice of constant can matter for a given permutation function.
 
-[^6]: Blackman, D., Vigna, S., "Scrambled Linear Pseudorandom Number Generators", 2019.
+[^6]: [**Blackman, D., Vigna, S., "Scrambled Linear Pseudorandom Number Generators"**](https://scholar.google.com/scholar?q=Blackman,+D.,+Vigna,+S.,+Scrambled+Linear+Pseudorandom+Number+Generators), 2019.
 
-[^7]: J. D. Cook, "Using one RNG to sample another", June 4, 2019.
+[^7]: [**J. D. Cook, "Using one RNG to sample another"**](https://scholar.google.com/scholar?q=J.+D.+Cook,+Using+one+RNG+to+sample+another), June 4, 2019.
 
-[^8]: von Neumann, J., "Various techniques used in connection with random digits", 1951.
+[^8]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
-[^9]: Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015; Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.
+[^9]: Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators", 2015.
+
+[^10]: Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing", Proceedings of Haskell Symposium 2013, pp. 47-58.

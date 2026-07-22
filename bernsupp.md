@@ -453,7 +453,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^42]: Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994. [**https://doi.org/10.1145/175007.175019**](https://doi.org/10.1145/175007.175019)
 
-[^43]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
+[^43]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
 [^44]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
 

@@ -575,7 +575,7 @@ After a sampling method produces an output _Y_, both _X_ (the number of random b
 
 The issue of finding _P_(_X_ \| _Y__X_ \| _Y_) is now discussed.  Generally, if the sampling method implements a random walk on a binary tree that is driven by numbers that each equal 1 or 0 with equal probability and has leaves labeled with one outcome each (Knuth and Yao 1976\)[^83], _P_(_X_ \| _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ \| _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to give out _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ \| _Y_) is 0.1010 / 0.101011...).
 
-Unfortunately, _P_(_X_ \| _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
+Unfortunately, _P_(_X_ \| _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann (1951)[^92], Peres (1992)[^93], or Zhou&ndash;Bruck (2012)[^94] extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
 1. Let _z_ be abs(_X_&minus;_lastX_), where _lastX_ is either the last value of _X_ fed to this extractor for this batch or 0 if there is no such value.
 2. If _z_ is greater than 0, feed the bits of _z_ from most significant to least significant to a queue of extractor inputs.
@@ -903,6 +903,12 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 [^90]: [**AKAHIRA, Masafumi, Kei TAKEUCHI, and Ken-ichi KOIKE. "Unbiased estimation in sequential binomial sampling"**](https://scholar.google.com/scholar?q=AKAHIRA,+Masafumi,+Kei+TAKEUCHI,+and+Ken-ichi+KOIKE.+Unbiased+estimation+in+sequential+binomial+sampling),  Rep. Stat. Appl. Res., JUSE 39 1-13, 1992.
 
 [^91]: [**Singh (1964, "Existence of unbiased estimates"**](https://scholar.google.com/scholar?q=Singh+1964,+Existence+of+unbiased+estimates), Sankhyā A 26) claimed that an estimation algorithm with a mean of $f(\lambda)$ exists, given an oracle of variates with an unknown mean equal to $\lambda$, if there are polynomials that converge pointwise to $f$, and Bhandari and Bose (1990, "Existence of unbiased estimates in sequential binomial experiments", Sankhyā A 52) claimed necessary conditions for those algorithms.  However, Akahira et al. (1992) questioned the claims of both papers, and the latter paper underwent a correction, which I haven't seen (Sankhyā A 55, 1993).
+
+[^92]: von Neumann, J. "Various Techniques Used in Connection with Random Digits." _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
+
+[^93]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
+
+[^94]: Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.
 
 <a id=License></a>
 

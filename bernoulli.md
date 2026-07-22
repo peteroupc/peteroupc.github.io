@@ -2520,9 +2520,9 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^41]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that _f_'s slope, slope-of-slope, etc. functions can achieve.
 
-[^42]: Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.
+[^42]: Kozen, D., "Optimal Coin Flipping", 2014. http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf
 
-[^43]: K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
+[^43]: K. Bringmann, F. Kuhn, et al., "Internal DLA: Efficient Simulation of a Physical Growth Model." In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
 
 [^44]: Huber, M., "[**Optimal linear Bernoulli factories for small mean problems**](https://arxiv.org/abs/1507.00843v2)", arXiv:1507.00843v2 [math.PR], 2016.
 
@@ -2532,7 +2532,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^47]: However, the number of flips needed by this method will then grow without bound as $\lambda$ approaches 1.  Also, this article avoids calling the value _X_ produced this way a "geometric" random variate.  Indeed, there is no single way to give the probabilities of a "geometric" random variate; different academic works define the variate differently.
 
-[^48]: Schmon, S.M., Doucet, A. and Deligiannidis, G., 2019, April. Bernoulli race particle filters. In The 22nd International Conference on Artificial Intelligence and Statistics (pp. 2350-2358).
+[^48]: Schmon, S.M., Doucet, A. and Deligiannidis, G., 2019, April. "Bernoulli race particle filters." In The 22nd International Conference on Artificial Intelligence and Statistics (pp. 2350-2358).
 
 [^49]: Agrawal, Sanket, Dootika Vats, Krzysztof Łatuszyński, and Gareth O. Roberts. "Optimal scaling of MCMC beyond Metropolis." Advances in Applied Probability 55, no. 2 (2023): 492-509; also in "[**Optimal Scaling of MCMC Beyond Metropolis**](https://arxiv.org/abs/2104.02020)", arXiv:2104.02020 [stat.CO], 2021.
 
@@ -2588,7 +2588,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^75]: [**Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals"**](https://scholar.google.com/scholar?q=Fishman,+D.,+Miller,+S.J.,+Closed+Form+Continued+Fraction+Expansions+of+Special+Quadratic+Irrationals), ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).
 
-[^76]: [**von Neumann, J., "Various techniques used in connection with random digits"**](https://scholar.google.com/scholar?q=von+Neumann,+J.,+Various+techniques+used+in+connection+with+random+digits), 1951.
+[^76]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
 [^77]: [**Pae, S., "Random number generation using a biased source"**](https://scholar.google.com/scholar?q=Pae,+S.,+Random+number+generation+using+a+biased+source), dissertation, University of Illinois at Urbana-Champaign, 2005.
 
