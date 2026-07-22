@@ -2157,13 +2157,13 @@ The following are some additional articles I have written on the topic of random
 
 [^24]: Brownlee, J. "[**A Gentle Introduction to the Bootstrap Method**](https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/)", _Machine Learning Mastery_, May 25, 2018.
 
-[^25]: [**Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics"**](https://scholar.google.com/scholar?q=Propp,+J.G.,+Wilson,+D.B.,+Exact+sampling+with+coupled+Markov+chains+and+applications+to+statistical+mechanics), 1996.
+[^25]: Propp, J.G. and Wilson, D.B. (1996), Exact sampling with coupled Markov chains and applications to statistical mechanics. Random Struct. Alg., 9: 223-252. [**https://doi.org/10.1002/%28SIC%291098-2418%28199608/09%299:1/2<223::AID-RSA14>3.0.CO;2-O**](https://doi.org/10.1002/%28SIC%291098-2418%28199608/09%299:1/2<223::AID-RSA14>3.0.CO;2-O)
 
-[^26]: Fill, J.A., "[**An interruptible algorithm for perfect sampling via Markov chains**](https://projecteuclid.org/euclid.aoap/1027961037)", _Annals of Applied Probability_ 8(1), 1998.
+[^26]: Fill, J.A., "[**An interruptible algorithm for perfect sampling via Markov chains**](https://projecteuclid.org/euclid.aoap/1027961037)", _Annals of Applied Probability_ 8(1), 1998.  [https://doi.org/10.1214/aoap/1027961037](https://doi.org/10.1214/aoap/1027961037)
 
 [^27]: [**E. N. Gilbert, "Random Graphs"**](https://scholar.google.com/scholar?q=E.+N.+Gilbert,+Random+Graphs), _Annals of Mathematical Statistics_ 30(4), 1959.
 
-[^28]: [**V. Batagelj and U. Brandes, "Efficient generation of large random networks"**](https://scholar.google.com/scholar?q=V.+Batagelj+and+U.+Brandes,+Efficient+generation+of+large+random+networks), Phys.Rev. E 71:036113, 2005.
+[^28]: V. Batagelj and U. Brandes, "Efficient generation of large random networks", Phys.Rev. E 71:036113, 2005.  [https://doi.org/10.1103/PhysRevE.71.036113](https://doi.org/10.1103/PhysRevE.71.036113)
 
 [^29]: [**Costantini, Lucia. "Algorithms for sampling spanning trees uniformly at random."**](https://scholar.google.com/scholar?q=Costantini,+Lucia.+Algorithms+for+sampling+spanning+trees+uniformly+at+random) Master's thesis, Universitat Politècnica de Catalunya, 2020.
 [**https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf**](https://upcommons.upc.edu/bitstream/handle/2117/328169/memoria.pdf)
@@ -2180,9 +2180,9 @@ The following are some additional articles I have written on the topic of random
 
 [^35]: K. Bringmann and K. Panagiotou, "[**Efficient Sampling Methods for Discrete Distributions**](https://link.springer.com/article/10.1007/s00453-016-0205-0)." _Algorithmica_ 79 (2007), also in Proc. 39th International Colloquium on Automata, Languages, and Programming (ICALP'12), 2012.
 
-[^36]: [**A.J. Walker, "An efficient method for generating discrete random variables with general distributions"**](https://scholar.google.com/scholar?q=A.J.+Walker,+An+efficient+method+for+generating+discrete+random+variables+with+general+distributions), _ACM Transactions on Mathematical Software_ 3, 1977.
+[^36]: Alastair J. Walker. 1977. An Efficient Method for Generating Discrete Random Variables with General Distributions. ACM Trans. Math. Softw. 3, 3 (Sept. 1977), 253–256. [https://doi.org/10.1145/355744.355749](https://doi.org/10.1145/355744.355749)
 
-[^37]: [**Vose, Michael D. "A linear algorithm for generating random numbers with a given distribution."**](https://scholar.google.com/scholar?q=Vose,+Michael+D.+A+linear+algorithm+for+generating+random+numbers+with+a+given+distribution) IEEE Transactions on software engineering 17, no. 9 (1991): 972-975.
+[^37]: M. D. Vose, "A linear algorithm for generating random numbers with a given distribution," in IEEE Transactions on Software Engineering, vol. 17, no. 9, pp. 972-975, Sept. 1991, [https://doi.org/10.1109/32.92917](https://doi.org/10.1109/32.92917)
 
 [^38]: Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Faculty of Science Theses, Universiteit Utrecht, 2019.
 
@@ -2196,11 +2196,11 @@ The following are some additional articles I have written on the topic of random
 
 [^43]: Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.
 
-[^44]: Efraimidis, P. and Spirakis, P. "Weighted Random Sampling (2005; Efraimidis, Spirakis)", 2005. [http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)
+[^44]: Efraimidis, P. and Spirakis, P. "Weighted Random Sampling (2005; Efraimidis, Spirakis)", 2005. [**http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)
 
 [^45]: Deville, J.-C. and Tillé, Y.  Unequal probability sampling without replacement through a splitting method. Biometrika 85 (1998).
 
-[^46]: [**Chao, M-T., "A general purpose unequal probability sampling plan"**](https://scholar.google.com/scholar?q=Chao,+M-T.,+A+general+purpose+unequal+probability+sampling+plan), _Biometrika_ 69 (1982).
+[^46]: M. T. CHAO, A general purpose unequal probability sampling plan, Biometrika, Volume 69, Issue 3, December 1982, Pages 653–656, [https://doi.org/10.1093/biomet/69.3.653](https://doi.org/10.1093/biomet/69.3.653)
 
 [^47]: Cohen E., Duffield N., Kaplan H., Lund C., Thorup M., "[**Stream sampling for variance-optimal estimation of subset sums**](https://arxiv.org/abs/0803.0473)", arXiv:0803.0473, 2010.
 
@@ -2256,7 +2256,7 @@ The following are some additional articles I have written on the topic of random
 
 [^73]: [**D. Revuz, M. Yor, "Continuous Martingales and Brownian Motion"**](https://scholar.google.com/scholar?q=D.+Revuz,+M.+Yor,+Continuous+Martingales+and+Brownian+Motion), 1999.
 
-[^74]: [**Lewis, P.W., Shedler, G.S., "Simulation of nonhomogeneous Poisson processes by thinning"**](https://scholar.google.com/scholar?q=Lewis,+P.W.,+Shedler,+G.S.,+Simulation+of+nonhomogeneous+Poisson+processes+by+thinning), _Naval Research Logistics Quarterly_ 26(3), 1979.
+[^74]: Lewis, P.A.W. and Shedler, G.S. (1979), Simulation of nonhomogeneous poisson processes by thinning. Naval Research Logistics, 26: 403-413. [https://doi.org/10.1002/nav.3800260304](https://doi.org/10.1002/nav.3800260304)
 
 [^75]: [**Saucier, R. "Computer Generation of Statistical Distributions"**](https://scholar.google.com/scholar?q=Saucier,+R.+Computer+Generation+of+Statistical+Distributions), March 2000.
 
@@ -2292,7 +2292,7 @@ The following are some additional articles I have written on the topic of random
 
 [^90]: [**Kschischang, Frank R. "A Trapezoid-Ziggurat Algorithm for Generating Gaussian Pseudorandom Variates."**](https://scholar.google.com/scholar?q=Kschischang,+Frank+R.+A+Trapezoid-Ziggurat+Algorithm+for+Generating+Gaussian+Pseudorandom+Variates) (2019).
 
-[^91]: [**Devroye, L., 1996, December, "Random variate generation in one line of code."**](https://scholar.google.com/scholar?q=Devroye,+L.,+1996,+December,+Random+variate+generation+in+one+line+of+code) In _Proceedings Winter Simulation Conference_ (pp. 265-272). IEEE.
+[^91]: Luc Devroye. 1996. Random variate generation in one line of code. In Proceedings of the 28th conference on Winter simulation (WSC '96). IEEE Computer Society, USA, 265–272. [https://doi.org/10.1145/256562.256623](https://doi.org/10.1145/256562.256623)
 
 [^92]: Crooks, G.E., [**_Field Guide to Continuous Probability Distributions_**](https://threeplusone.com/pubs/FieldGuide.pdf), 2019.
 
@@ -2300,9 +2300,9 @@ The following are some additional articles I have written on the topic of random
 
 [^94]: Crooks, G.E., "[**The Amoroso Distribution**](https://arxiv.org/abs/1005.3274v2)", arXiv:1005.3274v2 [math.ST], 2015.
 
-[^95]: Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgórski. The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance. Springer Science & Business Media, 2012.
+[^95]: Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgórski. "The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance." Springer Science & Business Media, 2012.
 
-[^96]: [**Devroye, L., "Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator"**](https://scholar.google.com/scholar?q=Devroye,+L.,+Expected+Time+Analysis+of+a+Simple+Recursive+Poisson+Random+Variate+Generator), _Computing_ 46, pp. 165-173, 1991.
+[^96]: Devroye, L. Expected time analysis of a simple recursive Poisson random variate generator. _Computing_ 46, 165–173 (1991). [https://doi.org/10.1007/BF02239170](https://doi.org/10.1007/BF02239170)
 
 [^97]: Bailey, R.W., "Polar generation of random variates with the t distribution", _Mathematics of Computation_ 62 (1994). [**https://doi.org/10.1090/S0025-5718-1994-1219702-8**](https://doi.org/10.1090/S0025-5718-1994-1219702-8)
 
@@ -2320,13 +2320,13 @@ The following are some additional articles I have written on the topic of random
 
 [^104]: Baker, R., Jackson, D., "[**A new distribution for robust least squares**](https://arxiv.org/abs/1408.3237)", arXiv:1408.3237 [stat.ME], 2018.
 
-[^105]: [**Osada, R., Funkhouser, T., et al., "Shape Distributions"**](https://scholar.google.com/scholar?q=Osada,+R.,+Funkhouser,+T.,+et+al.,+Shape+Distributions), _ACM Transactions on Graphics 21(4), Oct. 2002.
+[^105]: Robert Osada, Thomas Funkhouser, Bernard Chazelle, and David Dobkin. 2002. Shape distributions. ACM Trans. Graph. 21, 4 (October 2002), 807–832. [https://doi.org/10.1145/571647.571648](https://doi.org/10.1145/571647.571648)
 
-[^106]: Schechtman, G., Zinn, J., "On the volume of intersection of two Lp^n balls". 1990.
+[^106]: Schechtman, G., Zinn, J., "On the volume of intersection of two Lp^n balls", 1990.
 
-[^107]: [**Barthe, F., Guédon, O., et al., "A probabilistic approach to the geometry of the lP^N-ball"**](https://scholar.google.com/scholar?q=Barthe,+F.,+Guédon,+O.,+et+al.,+A+probabilistic+approach+to+the+geometry+of+the+lPN-ball), Annals of Probability 33(2), 2005.
+[^107]: Franck Barthe, Olivier Guédon, Shahar Mendelson, Assaf Naor "A probabilistic approach to the geometry of the ℓpn-ball," The Annals of Probability, Ann. Probab. 33(2), 480-513, (March 2005). [https://doi.org/10.1214/009117904000000874](https://doi.org/10.1214/009117904000000874)
 
-[^108]: Alternatively, if `p` is an integer greater than 0, generate a random point on the surface of an ball with `N+p` dimensions and the specified radius (for example, using `RandomPointOnSphere(N+p,radius,p)`), then discard the last `p` coordinates of that point (Corollary 1 of Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951).
+[^108]: Alternatively, if `p` is an integer greater than 0, generate a random point on the surface of an ball with `N+p` dimensions and the specified radius (for example, using `RandomPointOnSphere(N+p,radius,p)`), then discard the last `p` coordinates of that point (Corollary 1 of Lacko, V., Harman, R. A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_ 75, 939–951 (2012). [https://doi.org/10.1007/s00184-011-0360-x](https://doi.org/10.1007/s00184-011-0360-x)).
 
 [^109]: See the _Mathematics Stack Exchange_ question titled _Random multivariate in hyperannulus_, `questions/1885630`.
 
@@ -2334,7 +2334,7 @@ The following are some additional articles I have written on the topic of random
 
 [^111]: Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951.
 
-[^112]: Reference:  Weisstein, Eric W. "Sphere Point Picking." From MathWorld--A Wolfram Resource. [https://mathworld.wolfram.com/SpherePointPicking.html](https://mathworld.wolfram.com/SpherePointPicking.html)  (replacing inverse cosine with `atan2` equivalent).
+[^112]: Reference:  Weisstein, Eric W. "Sphere Point Picking." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/SpherePointPicking.html**](https://mathworld.wolfram.com/SpherePointPicking.html)  (replacing inverse cosine with `atan2` equivalent).
 
 [^113]: [**Ben Dov, Y., David, L., et al., "Resistance to Timing Attacks for Sampling and Privacy Preserving Schemes"**](https://scholar.google.com/scholar?q=Ben+Dov,+Y.,+David,+L.,+et+al.,+Resistance+to+Timing+Attacks+for+Sampling+and+Privacy+Preserving+Schemes), FORC 2023.
 

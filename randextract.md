@@ -75,13 +75,13 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 ## Notes
 
-[^1]: [**Cliff, Y., Boyd, C., Gonzalez Nieto, J. "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results"**](https://scholar.google.com/scholar?q=Cliff,+Y.,+Boyd,+C.,+Gonzalez+Nieto,+J.+How+to+Extract+and+Expand+Randomness+A+Summary+and+Explanation+of+Existing+Results), 2009.
+[^1]: Cliff, Y., Boyd, C., Gonzalez Nieto, J. (2009). How to Extract and Expand Randomness: A Summary and Explanation of Existing Results. In: Abdalla, M., Pointcheval, D., Fouque, PA., Vergnaud, D. (eds) Applied Cryptography and Network Security. ACNS 2009. Lecture Notes in Computer Science, vol 5536. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-642-01957-9_4](https://doi.org/10.1007/978-3-642-01957-9_4)
 
-[^2]: [**Coretti, S., Dodis, Y., et al., "Seedless Fruit is the Sweetest: Random Number Generation, Revisited"**](https://scholar.google.com/scholar?q=Coretti,+S.,+Dodis,+Y.,+et+al.,+Seedless+Fruit+is+the+Sweetest+Random+Number+Generation,+Revisited), 2019.
+[^2]: Coretti, S., Dodis, Y., Karthikeyan, H., Tessaro, S. (2019). Seedless Fruit Is the Sweetest: Random Number Generation, Revisited. In: Boldyreva, A., Micciancio, D. (eds) Advances in Cryptology – CRYPTO 2019. CRYPTO 2019. Lecture Notes in Computer Science(), vol 11692. Springer, Cham. [https://doi.org/10.1007/978-3-030-26948-7_8](https://doi.org/10.1007/978-3-030-26948-7_8)
 
-[^3]: [**Frauchiger, D., Renner, R., Troyer, M., "True randomness from realistic quantum devices"**](https://scholar.google.com/scholar?q=Frauchiger,+D.,+Renner,+R.,+Troyer,+M.,+True+randomness+from+realistic+quantum+devices), 2013.
+[^3]: Frauchiger, Daniela, Renato Renner, and Matthias Troyer, "[True randomness from realistic quantum devices](https://arxiv.org/abs/1311.4547)", arXiv:1311.4547 (2013).
 
-[^4]: [**McInnes, J. L., & Pinkas, B. "On the impossibility of private key cryptography with weakly random keys."**](https://scholar.google.com/scholar?q=McInnes,+J.+L.,+Pinkas,+B.+On+the+impossibility+of+private+key+cryptography+with+weakly+random+keys) In _Conference on the Theory and Application of Cryptography_ (pp. 421-435), 1990.
+[^4]: McInnes, J.L., Pinkas, B. (1991). On the Impossibility of Private Key Cryptography with Weakly Random Keys. In: Menezes, A.J., Vanstone, S.A. (eds) Advances in Cryptology-CRYPTO’ 90. CRYPTO 1990. Lecture Notes in Computer Science, vol 537. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/3-540-38424-3_31](https://doi.org/10.1007/3-540-38424-3_31)
 
 [^5]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
@@ -89,11 +89,11 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 [^7]: [**Pae, S., "Random number generation using a biased source"**](https://scholar.google.com/scholar?q=Pae,+S.,+Random+number+generation+using+a+biased+source), dissertation, University of Illinois at Urbana-Champaign, 2005.
 
-[^8]: [**Pae, S., Loui, M.C., "Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution"**](https://scholar.google.com/scholar?q=Pae,+S.,+Loui,+M.C.,+Randomizing+functions+Simulation+of+discrete+probability+distribution+using+a+source+of+unknown+distributio), _IEEE Transactions on Information Theory_ 52(11), November 2006.
+[^8]: S.-I. Pae and M. C. Loui, "Randomizing Functions: Simulation of a Discrete Probability Distribution Using a Source of Unknown Distribution," in IEEE Transactions on Information Theory, vol. 52, no. 11, pp. 4965-4976, Nov. 2006, [https://doi.org/10.1109/TIT.2006.883555](https://doi.org/10.1109/TIT.2006.883555)
 
 [^9]: It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can't be extracting, either.
 
-[^10]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.
+[^10]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597. [https://doi.org/10.1214/aos/1176348543](https://doi.org/10.1214/aos/1176348543)
 
 [^11]: Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.
 

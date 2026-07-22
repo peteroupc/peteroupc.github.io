@@ -76,7 +76,7 @@ The Schaathun paper suggests the following four pseudorandom number sequences fo
 
 [^2]: [**Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3."**](https://scholar.google.com/scholar?q=Salmon,+John+K.,+Mark+A.+Moraes,+Ron+O.+Dror,+and+David+E.+Shaw.+Parallel+random+numbers+as+easy+as+1,+2,+3) In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.
 
-[^3]: Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**], _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015). [https://doi.org/10.22237/jmasm/1430454120](https://doi.org/10.22237/jmasm/1430454120)
+[^3]: Agner Fog, "[**Pseudo-Random Number Generators for Vector Processors and Multicore Processors**], _Journal of Modern Applied Statistical Methods_ 14(1), article 23 (2015). [**https://doi.org/10.22237/jmasm/1430454120**](https://doi.org/10.22237/jmasm/1430454120)
 
 [^4]: A _permutation function_ (or _bijection_) is a reversible mapping from N-bit integers to N-bit integers.  Examples include: JSF64 by B. Jenkins; MIX and MIX-i (part of Tyche and Tyche-i); the Romu family by Mark Overton; block ciphers with a fixed key; mixing functions with reversible operations as described in "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey.
 
