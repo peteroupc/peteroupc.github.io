@@ -792,7 +792,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^35]: [**Boshi, M.A.A., et al., "Generalized Gamma – Generalized Gompertz Distribution"**](https://scholar.google.com/scholar?q=Boshi,+M.A.A.,+et+al.,+Generalized+Gamma+Generalized+Gompertz+Distribution), _Journal of Physics: Conference Series_ 1591, 012043 (2020).
 
-[^36]: [**Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes"**](https://scholar.google.com/scholar?q=Tahir,+M.H.,+Cordeiro,+G.M.,+Compounding+of+distributions+a+survey+and+new+generalized+classes), _Journal of Statistical Distributions and Applications_ 3(13), 2016.
+[^36]: Tahir, M.H., Cordeiro, G.M. Compounding of distributions: a survey and new generalized classes. J Stat Distrib App 3, 13 (2016). [https://doi.org/10.1186/s40488-016-0052-1](https://doi.org/10.1186/s40488-016-0052-1)
 
 [^37]: Pérez-Casany, M., Valero, J., and Ginebra, J. (2016). Random-Stopped Extreme distributions. International Conference on Statistical Distributions and Applications.
 
@@ -810,7 +810,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^44]: [**Kuş, C., "A new lifetime distribution"**](https://scholar.google.com/scholar?q=Kuş,+C.,+A+new+lifetime+distribution), _Computational Statistics & Data Analysis_ 51 (2007).
 
-[^45]:  Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. "The Poisson-exponential lifetime distribution." Computational Statistics & Data Analysis 55, no. 1 (2011): 677-686. https://doi.org/10.1016/j.csda.2010.05.033 https://www.sciencedirect.com/science/article/abs/pii/S0167947310002550
+[^45]: Cancho, Vicente G., Franscisco Louzada-Neto, and Gladys DC Barriga. "The Poisson-exponential lifetime distribution." Computational Statistics & Data Analysis 55, no. 1 (2011): 677-686. [https://doi.org/10.1016/j.csda.2010.05.033](https://doi.org/10.1016/j.csda.2010.05.033) [https://www.sciencedirect.com/science/article/abs/pii/S0167947310002550](https://www.sciencedirect.com/science/article/abs/pii/S0167947310002550)
 
 [^46]: [**Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions"**](https://scholar.google.com/scholar?q=Jodrá,+P.,+A+note+on+the+right+truncated+Weibull+distribution+and+the+minimum+of+power+function+distributions), 2020.
 
@@ -856,15 +856,15 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^67]: Gómez-Déniz, Emilio, and E. Calderín-Ojeda. "[**On the usefulness of the logarithmic skew normal distribution for describing claims size data**](https://www.hindawi.com/journals/mpe/2020/1420618/)." Mathematical Problems in Engineering 2020 (2020). Lin and Stoyanov (2009, "The logarithmic skew-normal distributions are moment-indeterminate", _Journal of Applied Probability_ 46) studied the logarithmic skew normal distribution with _&mu;_=0 and _&sigma;_=1.
 
-[^68]: [**Hahn, Eugene D. "The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation."**](https://scholar.google.com/scholar?q=Hahn,+Eugene+D.+The+Tilted+Beta-Binomial+Distribution+in+Overdispersed+Data+Maximum+Likelihood+and+Bayesian+Estimation) Journal of Statistical Theory and Practice 16, no. 3 (2022): 1-22.
+[^68]: Hahn, E.D. The Tilted Beta-Binomial Distribution in Overdispersed Data: Maximum Likelihood and Bayesian Estimation. J Stat Theory Pract 16, 43 (2022). [https://doi.org/10.1007/s42519-022-00271-x](https://doi.org/10.1007/s42519-022-00271-x)
 
 [^69]: Rubio, F.J. and Steel, M.F.J. (2020), The family of two-piece distributions. Significance, 17: 12-13. [**https://doi.org/10.1111/j.1740-9713.2020.01352.x**](https://doi.org/10.1111/j.1740-9713.2020.01352.x)
 
 [^70]: A. Tesei and C. S. Regazzoni, “The asymmetric generalized Gaussian function: a new HOS-based model for generic noise PDFs,” in Proceedings of 8th Workshop on Statistical Signal and Array Processing, Corfu, Greece, Jun. 1996, pp. 210-213
 
-[^71]: [**Sadeghi, Parastoo, and Mehdi Korki. "Offset-Symmetric Gaussians for Differential Privacy."**](https://scholar.google.com/scholar?q=Sadeghi,+Parastoo,+and+Mehdi+Korki.+Offset-Symmetric+Gaussians+for+Differential+Privacy) arXiv preprint arXiv:2110.06412 (2021).
+[^71]: P. Sadeghi and M. Korki, "Offset-Symmetric Gaussians for Differential Privacy," in IEEE Transactions on Information Forensics and Security, vol. 17, pp. 2394-2409, 2022,  [https://doi.org/10.1109/TIFS.2022.3185770](https://doi.org/10.1109/TIFS.2022.3185770)
 
-[^72]: [**Henze, Norbert. "A probabilistic representation of the 'skew-normal' distribution."**](https://scholar.google.com/scholar?q=Henze,+Norbert.+A+probabilistic+representation+of+the+skew-normal+distribution) Scandinavian journal of statistics (1986): 271-275. SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
+[^72]: Henze, Norbert. “A Probabilistic Representation of the ‘Skew-Normal’ Distribution.” Scandinavian Journal of Statistics 13, no. 4 (1986): 271–75. [http://www.jstor.org/stable/4616036](http://www.jstor.org/stable/4616036)  SNE(_&lambda;_,0) is distributed as Azzalini's skew normal distribution.
 
 [^73]: Francis-Staite, Kelli, and Langford White. "[**Analysis of sojourn time distributions for semi-Markov models**](https://arxiv.org/abs/2206.10865)", arXiv:2206.10865 (2022).
 
@@ -890,7 +890,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^84]: von Neumann, J. "Various Techniques Used in Connection with Random Digits." _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
-[^85]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597. [https://doi.org/10.1214/aos/1176348543](https://doi.org/10.1214/aos/1176348543)
+[^85]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597. [**https://doi.org/10.1214/aos/1176348543**](https://doi.org/10.1214/aos/1176348543)
 
 [^86]: Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.
 

@@ -455,7 +455,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^43]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
-[^44]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597. [https://doi.org/10.1214/aos/1176348543](https://doi.org/10.1214/aos/1176348543)
+[^44]: Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597. [**https://doi.org/10.1214/aos/1176348543**](https://doi.org/10.1214/aos/1176348543)
 
 [^45]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 

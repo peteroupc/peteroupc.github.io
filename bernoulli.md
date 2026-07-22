@@ -2520,7 +2520,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^41]: The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that _f_'s slope, slope-of-slope, etc. functions can achieve.
 
-[^42]: Kozen, D., "Optimal Coin Flipping", 2014. [http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf)
+[^42]: Kozen, D., "Optimal Coin Flipping", 2014. [**http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf)
 
 [^43]: K. Bringmann, F. Kuhn, et al., "Internal DLA: Efficient Simulation of a Physical Growth Model." In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
 

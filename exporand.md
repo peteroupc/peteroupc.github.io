@@ -2301,7 +2301,7 @@ The following are some additional articles I have written on the topic of random
 
 [^15]: A _nondiscrete distribution_ is a probability distribution taking on values that each can't be mapped to a different integer.  An example is a distribution taking on any real number between 0 and 1.
 
-[^16]: J.F. Williamson, "Random selection of points distributed on curved surfaces", _Physics in Medicine & Biology_ 32(10), 1987. [https://doi.org/10.1088/0031-9155/32/10/009](https://doi.org/10.1088/0031-9155/32/10/009)
+[^16]: J.F. Williamson, "Random selection of points distributed on curved surfaces", _Physics in Medicine & Biology_ 32(10), 1987. [**https://doi.org/10.1088/0031-9155/32/10/009**](https://doi.org/10.1088/0031-9155/32/10/009)
 
 [^17]: Apostolos Chalkis, Christina Katsamaki, and Josué Tonelli-Cueto, "[**On the Error of Random Sampling: Uniformly Distributed Random Points on Parametric Curves**](https://arxiv.org/abs/2203.02832)", arXiv:2203.02832 [cs.CG], 2002; also in ISSAC'22, 2022. [**https://doi.org/10.1145/3476446.3536190**](https://doi.org/10.1145/3476446.3536190).
 
