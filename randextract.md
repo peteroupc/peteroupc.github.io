@@ -105,7 +105,7 @@ Devroye and Gravel (2020\)[^14] suggest a special randomness extractor to reduce
 
 [^15]: [**Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision"**](https://scholar.google.com/scholar?q=Montes+Gutiérrez,+I.,+Comparison+of+alternatives+under+uncertainty+and+imprecision), doctoral thesis, Universidad de Oviedo, 2014.
 
-[^16]: De Schuymer, B., De Meyer, H., De Baets, B. (2003). A Fuzzy Approach to Stochastic Dominance of Random Variables. In: Bilgiç, T., De Baets, B., Kaynak, O. (eds) Fuzzy Sets and Systems — IFSA 2003. IFSA 2003. Lecture Notes in Computer Science, vol 2715. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/3-540-44967-1_30](https://doi.org/10.1007/3-540-44967-1_30)
+[^16]: De Schuymer, B., De Meyer, H., De Baets, B. (2003). A Fuzzy Approach to Stochastic Dominance of Random Variables. In: Bilgiç, T., De Baets, B., Kaynak, O. (eds) Fuzzy Sets and Systems — IFSA 2003. IFSA 2003. Lecture Notes in Computer Science, vol 2715. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/3-540-44967-1_30**](https://doi.org/10.1007/3-540-44967-1_30)
 
 [^17]: [**Camion, Paul, "Unbiased die rolling with a biased die"**](https://scholar.google.com/scholar?q=Camion,+Paul,+Unbiased+die+rolling+with+a+biased+die), North Carolina State University. Dept. of Statistics, 1974.
 

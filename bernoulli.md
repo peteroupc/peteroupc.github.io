@@ -2480,7 +2480,7 @@ Due to a suggestion by Michael Shoemate who suggested it was "easy to get lost" 
 
 [^21]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
 
-[^22]: [**Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design."**](https://scholar.google.com/scholar?q=Dughmi,+Shaddin,+Jason+Hartline,+Robert+D.+Kleinberg,+and+Rad+Niazadeh.+Bernoulli+Factories+and+Black-box+Reductions+in+Mechanis) Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.
+[^22]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [https://doi.org/10.1145/3440988](https://doi.org/10.1145/3440988)
 
 [^23]: [**Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation"**](https://scholar.google.com/scholar?q=Knuth,+Donald+E.+and+Andrew+Chi-Chih+Yao.+The+complexity+of+nonuniform+random+number+generation), in _Algorithms and Complexity: New Directions and Recent Results_, 1976.
 
