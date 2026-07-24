@@ -419,7 +419,7 @@
 <ul>
   <li>“Game X shows up to Y polygons at a time at Z frames per second and screen resolution W”.
     <ul>
-      <li>Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br />(1) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (Fosner 1999)<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">71</a></sup>.<br />(2) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (Abrash 2000)<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>; to be noted here is that the game normally ran at a screen resolution of 320 × 240.<br />(3) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(4) The game engine for <em>SpecOps: Rangers Lead the Way</em> (1998) targeted 10,000 triangles per frame <sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">73</a></sup>.  So did <em>Quake III Arena</em> (1999) (John Carmack .plan, Sep. 2, 1999).</li>
+      <li>Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br />(1) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (Fosner 1999)<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">71</a></sup>.<br />(2) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (Abrash 2000)<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>; to be noted here is that the game normally ran at a screen resolution of 320 × 240.<br />(3) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(4) The game engine for <em>SpecOps: Rangers Lead the Way</em> (1998) targeted 10,000 triangles per frame <sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">73</a></sup>.  So did <em>Quake III Arena</em> (1999) (John Carmack .plan, Sep. 2, 1999).</li>
     </ul>
   </li>
   <li>“Scenes in game X have Y triangles on average”.</li>
@@ -468,7 +468,7 @@
 <ul>
   <li><em>Actua Soccer</em> (<em>VR Soccer ‘96</em>) (1995) <a href="http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/"><strong>averaged 776 triangles per frame</strong></a> at 640 × 480 resolution.</li>
   <li><em>Terminal Velocity</em> (1995) <a href="http://www-graphics.stanford.edu/~bjohanso/tv_stats/"><strong>averaged 498 triangles per frame</strong></a> at 640 × 480 resolution.</li>
-  <li>A benchmark of <em>Quake III Arena</em> averaged about 3,250 and topped out at about 6,970 triangles per frame after back-face culling, at screen resolution 640 × 480 (Antochi et al. 2004)<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">74</a></sup>.</li>
+  <li>A benchmark of <em>Quake III Arena</em> averaged about 3,250 and topped out at about 6,970 triangles per frame after back-face culling, at screen resolution 640 × 480 (Antochi et al. 2003)<sup id="fnref:76"><a href="#fn:76" class="footnote" rel="footnote" role="doc-noteref">74</a></sup>, (Antochi et al. 2004)<sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">75</a></sup>.</li>
 </ul>
 
 <p><a id="Further_Reading"></a></p>
@@ -544,7 +544,7 @@
 
 <h3 id="guide-for-creating-3-d-models-in-the-pre-2000-style">Guide for creating 3-D models in the pre-2000 style</h3>
 
-<p>Develop a guide for creating 3-D models for use in modern video games that follow the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification</strong></a> given earlier on classic (pre-2000) 3-D graphics, in a similar vein to “<a href="https://threedium.io/3d-model/game-ready"><strong>Game-Ready 3D Models: Requirements, Creation, and Export</strong></a>” <sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">75</a></sup>.  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today’s models.)</p>
+<p>Develop a guide for creating 3-D models for use in modern video games that follow the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification</strong></a> given earlier on classic (pre-2000) 3-D graphics, in a similar vein to “<a href="https://threedium.io/3d-model/game-ready"><strong>Game-Ready 3D Models: Requirements, Creation, and Export</strong></a>” <sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">76</a></sup>.  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today’s models.)</p>
 
 <p><a id="Book_form_tutorial_on_pre_2000_computer_graphics_programming"></a></p>
 
@@ -797,14 +797,17 @@
     <li id="fn:72">
       <p>M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000. <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:75">
-      <p><a href="https://www.gamedeveloper.com/design/postmortem-zombie-s-i-specops-rangers-lead-the-way-i-"><strong>“Postmortem: Zombie’s <em>SpecOps: Rangers Lead the Way</em>“</strong></a>, Jan. 31, 2000. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:73">
-      <p>Antochi, Iosif, et al., “GraalBench: a 3D graphics benchmark suite for mobile phones”, <em>ACM SIGPLAN Notices</em> 39(7), 2004. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://www.gamedeveloper.com/design/postmortem-zombie-s-i-specops-rangers-lead-the-way-i-"><strong>“Postmortem: Zombie’s <em>SpecOps: Rangers Lead the Way</em>“</strong></a>, Jan. 31, 2000. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:76">
+      <p>Antochi, Iosif, et al. “3D Graphics Benchmarks for Low-Power Architectures.” 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003. <a href="#fnref:76" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:74">
-      <p>The “Game-Ready 3D Models” guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Antochi, Iosif, et al., “GraalBench: a 3D graphics benchmark suite for mobile phones”, <em>ACM SIGPLAN Notices</em> 39(7), 2004. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:75">
+      <p>The “Game-Ready 3D Models” guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -2175,9 +2175,9 @@ The following are some additional articles I have written on the topic of random
 
 [^33]: Feras A. Saad, Cameron E. Freer, Martin C. Rinard, and Vikash K. Mansinghka, "[**Optimal Approximate Sampling From Discrete Probability Distributions**](https://arxiv.org/abs/2001.04555v1)", arXiv:2001.04555v1 [cs.DS], also in Proc. ACM Program. Lang. 4, POPL, Article 36 (January 2020), 33 pages.
 
-[^34]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [https://doi.org/10.1145/3440988](https://doi.org/10.1145/3440988)
+[^34]: Shaddin Dughmi, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. 2021. Bernoulli Factories and Black-box Reductions in Mechanism Design. J. ACM 68, 2, Article 10 (April 2021), 30 pages. [**https://doi.org/10.1145/3440988**](https://doi.org/10.1145/3440988)
 
-[^35]: Bringmann, K., Panagiotou, K. Efficient Sampling Methods for Discrete Distributions. _Algorithmica_ 79, 484–508 (2017). [https://doi.org/10.1007/s00453-016-0205-0](https://doi.org/10.1007/s00453-016-0205-0)
+[^35]: Bringmann, K., Panagiotou, K. Efficient Sampling Methods for Discrete Distributions. _Algorithmica_ 79, 484–508 (2017). [**https://doi.org/10.1007/s00453-016-0205-0**](https://doi.org/10.1007/s00453-016-0205-0)
 
 [^36]: Alastair J. Walker. 1977. An Efficient Method for Generating Discrete Random Variables with General Distributions. ACM Trans. Math. Softw. 3, 3 (Sept. 1977), 253–256. [**https://doi.org/10.1145/355744.355749**](https://doi.org/10.1145/355744.355749)
 
@@ -2185,7 +2185,7 @@ The following are some additional articles I have written on the topic of random
 
 [^38]: Klundert, B. van de, "[**Efficient Generation of Discrete Random Variates**](https://dspace.library.uu.nl/handle/1874/393383)", Faculty of Science Theses, Universiteit Utrecht, 2019.
 
-[^39]: Karl Bringmann and Kasper Green Larsen. 2013. Succinct sampling from discrete distributions. In Proceedings of the forty-fifth annual ACM symposium on Theory of Computing (STOC '13). Association for Computing Machinery, New York, NY, USA, 775–782. [https://doi.org/10.1145/2488608.2488707](https://doi.org/10.1145/2488608.2488707)
+[^39]: Karl Bringmann and Kasper Green Larsen. 2013. Succinct sampling from discrete distributions. In Proceedings of the forty-fifth annual ACM symposium on Theory of Computing (STOC '13). Association for Computing Machinery, New York, NY, USA, 775–782. [**https://doi.org/10.1145/2488608.2488707**](https://doi.org/10.1145/2488608.2488707)
 
 [^40]: L. Hübschle-Schneider and P. Sanders, "[**Parallel Weighted Random Sampling**](https://arxiv.org/abs/1903.00227v2)", arXiv:1903.00227v2  [cs.DS], 2019.
 
@@ -2197,11 +2197,11 @@ The following are some additional articles I have written on the topic of random
 
 [^44]: Efraimidis, P. and Spirakis, P. "Weighted Random Sampling (2005; Efraimidis, Spirakis)", 2005. [**http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)
 
-[^45]: JEAN-CLAUDE DEVILLE, YVES TILLÉ, Unequal probability sampling without replacement through a splitting method, Biometrika, Volume 85, Issue 1, March 1998, Pages 89–101, [https://doi.org/10.1093/biomet/85.1.89](https://doi.org/10.1093/biomet/85.1.89)
+[^45]: JEAN-CLAUDE DEVILLE, YVES TILLÉ, Unequal probability sampling without replacement through a splitting method, Biometrika, Volume 85, Issue 1, March 1998, Pages 89–101, [**https://doi.org/10.1093/biomet/85.1.89**](https://doi.org/10.1093/biomet/85.1.89)
 
 [^46]: M. T. CHAO, A general purpose unequal probability sampling plan, Biometrika, Volume 69, Issue 3, December 1982, Pages 653–656, [**https://doi.org/10.1093/biomet/69.3.653**](https://doi.org/10.1093/biomet/69.3.653)
 
-[^47]: Cohen, Edith, Duffield, Nick, Kaplan, Haim, Lund, Carsten, Thorup, Mikkel: Stream sampling for variance-optimal estimation of subset sums, Proceedings of the 2009 Annual ACM-SIAM Symposium on Discrete Algorithms (SODA), p. 1255–1264, 2009. [https://doi.org/10.1137/1.9781611973068](https://doi.org/10.1137/1.9781611973068) . Also in arXiv:0803.0473, 2010, [https://arxiv.org/abs/0803.0473](https://arxiv.org/abs/0803.0473)
+[^47]: Cohen, Edith, Duffield, Nick, Kaplan, Haim, Lund, Carsten, Thorup, Mikkel: Stream sampling for variance-optimal estimation of subset sums, Proceedings of the 2009 Annual ACM-SIAM Symposium on Discrete Algorithms (SODA), p. 1255–1264, 2009. [**https://doi.org/10.1137/1.9781611973068**](https://doi.org/10.1137/1.9781611973068) . Also in arXiv:0803.0473, 2010, [**https://arxiv.org/abs/0803.0473**](https://arxiv.org/abs/0803.0473)
 
 [^48]: The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes a `ConvexPolygonSampler` class that implements this kind of sampling for convex polygons; unlike other polygons, convex polygons are trivial to decompose into triangles.
 
@@ -2211,11 +2211,11 @@ The following are some additional articles I have written on the topic of random
 
 [^51]: Farach-Colton, M., Tsai, MT. Exact Sublinear Binomial Sampling. _Algorithmica_ 73, 637–651 (2015). [**https://doi.org/10.1007/s00453-015-0077-8**](https://doi.org/10.1007/s00453-015-0077-8)
 
-[^52]: Bringmann, K., Kuhn, F., Panagiotou, K., Peter, U., Thomas, H. (2014). Internal DLA: Efficient Simulation of a Physical Growth Model. In: Esparza, J., Fraigniaud, P., Husfeldt, T., Koutsoupias, E. (eds) Automata, Languages, and Programming. ICALP 2014. Lecture Notes in Computer Science, vol 8572. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-662-43948-7_21](https://doi.org/10.1007/978-3-662-43948-7_21)
+[^52]: Bringmann, K., Kuhn, F., Panagiotou, K., Peter, U., Thomas, H. (2014). Internal DLA: Efficient Simulation of a Physical Growth Model. In: Esparza, J., Fraigniaud, P., Husfeldt, T., Koutsoupias, E. (eds) Automata, Languages, and Programming. ICALP 2014. Lecture Notes in Computer Science, vol 8572. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/978-3-662-43948-7_21**](https://doi.org/10.1007/978-3-662-43948-7_21)
 
 [^53]: Heaukulani, C., Roy, D.M., "[**Black-box constructions for exchangeable sequences of random multisets**](https://arxiv.org/abs/1908.06349v1)", arXiv:1908.06349v1  [math.PR], 2019.  Note however that this reference defines a negative binomial distribution as the number of successes before N failures (not vice versa).
 
-[^54]: Bringmann, K., Friedrich, T. (2013). Exact and Efficient Generation of Geometric Random Variates and Random Graphs. In: Fomin, F.V., Freivalds, R., Kwiatkowska, M., Peleg, D. (eds) Automata, Languages, and Programming. ICALP 2013. Lecture Notes in Computer Science, vol 7965. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-642-39206-1_23](https://doi.org/10.1007/978-3-642-39206-1_23)
+[^54]: Bringmann, K., Friedrich, T. (2013). Exact and Efficient Generation of Geometric Random Variates and Random Graphs. In: Fomin, F.V., Freivalds, R., Kwiatkowska, M., Peleg, D. (eds) Automata, Languages, and Programming. ICALP 2013. Lecture Notes in Computer Science, vol 7965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/978-3-642-39206-1_23**](https://doi.org/10.1007/978-3-642-39206-1_23)
 
 [^55]: Duchon, P., & Duvignau, R. (2016). Preserving the Number of Cycles of Length in a Growing Uniform Permutation. _The Electronic Journal of Combinatorics_, 23(4), #P4.22. [**https://doi.org/10.37236/6014**](https://doi.org/10.37236/6014)
 
@@ -2233,7 +2233,7 @@ The following are some additional articles I have written on the topic of random
 
 [^62]: This includes integers if `e` is limited to 0, and fixed-point numbers if `e` is limited to a single exponent less than 0.
 
-[^63]: [**Downey, A. B. "Generating Pseudo-random Floating Point Values", 2007. [http://allendowney.com/research/rand/**](http://allendowney.com/research/rand/)
+[^63]: [**Downey, A. B. "Generating Pseudo-random Floating Point Values", 2007. [**http://allendowney.com/research/rand/**](http://allendowney.com/research/rand/)
 
 [^64]: Ideally, `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example, `X` is 2^53 (9007199254740992) for binary64, and 2^24 (16777216) for binary32.
 
@@ -2241,15 +2241,15 @@ The following are some additional articles I have written on the topic of random
 
 [^66]: Monahan, J.F., "Accuracy in Random Number Generation", _Mathematics of Computation_ 45(172), 1985. [**https://doi.org/10.1090/S0025-5718-1985-0804945-X**](https://doi.org/10.1090/S0025-5718-1985-0804945-X)
 
-[^67]: Paul R. Halmos "The Theory of Unbiased Estimation," The Annals of Mathematical Statistics, Ann. Math. Statist. 17(1), 34-43, (March, 1946) [https://doi.org/10.1214/aoms/1177731020](https://doi.org/10.1214/aoms/1177731020)
+[^67]: Paul R. Halmos "The Theory of Unbiased Estimation," The Annals of Mathematical Statistics, Ann. Math. Statist. 17(1), 34-43, (March, 1946) [**https://doi.org/10.1214/aoms/1177731020**](https://doi.org/10.1214/aoms/1177731020)
 
 [^68]: [**Spall, J.C., "An Overview of the Simultaneous Perturbation Method for Efficient Optimization"**](https://scholar.google.com/scholar?q=Spall,+J.C.,+An+Overview+of+the+Simultaneous+Perturbation+Method+for+Efficient+Optimization), _Johns Hopkins APL Technical Digest_ 19(4), 1998, pp. 482-492.
 
-[^69]: Owen, A.B. (2022). On Dropping the First Sobol’ Point. In: Keller, A. (eds) Monte Carlo and Quasi-Monte Carlo Methods. MCQMC 2020. Springer Proceedings in Mathematics & Statistics, vol 387. Springer, Cham. [https://doi.org/10.1007/978-3-030-98319-2_4](https://doi.org/10.1007/978-3-030-98319-2_4) "[**Preprint**](https://arxiv.org/abs/2008.08051)": arXiv:2008.08051.
+[^69]: Owen, A.B. (2022). On Dropping the First Sobol’ Point. In: Keller, A. (eds) Monte Carlo and Quasi-Monte Carlo Methods. MCQMC 2020. Springer Proceedings in Mathematics & Statistics, vol 387. Springer, Cham. [**https://doi.org/10.1007/978-3-030-98319-2_4**](https://doi.org/10.1007/978-3-030-98319-2_4) "[**Preprint**](https://arxiv.org/abs/2008.08051)": arXiv:2008.08051.
 
-[^70]: P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, [https://doi.org/10.1090/S0025-5718-99-00996-5](https://doi.org/10.1090/S0025-5718-99-00996-5) , with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).
+[^70]: P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, [**https://doi.org/10.1090/S0025-5718-99-00996-5**](https://doi.org/10.1090/S0025-5718-99-00996-5) , with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).
 
-[^71]: Shin Harase, A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo, Journal of Computational and Applied Mathematics, Volume 384, 2021, 113136, ISSN 0377-0427, [https://doi.org/10.1016/j.cam.2020.113136](https://doi.org/10.1016/j.cam.2020.113136) . (https://www.sciencedirect.com/science/article/pii/S0377042720304271)
+[^71]: Shin Harase, A table of short-period Tausworthe generators for Markov chain quasi-Monte Carlo, Journal of Computational and Applied Mathematics, Volume 384, 2021, 113136, ISSN 0377-0427, [**https://doi.org/10.1016/j.cam.2020.113136**](https://doi.org/10.1016/j.cam.2020.113136) . (https://www.sciencedirect.com/science/article/pii/S0377042720304271)
 
 [^72]: Kamath, Chandrika. "Intelligent sampling for surrogate modeling, hyperparameter optimization, and data analysis." Machine Learning with Applications (2022): 100373, [**https://doi.org/10.1016/j.mlwa.2022.100373**](https://doi.org/10.1016/j.mlwa.2022.100373).
 
@@ -2275,9 +2275,9 @@ The following are some additional articles I have written on the topic of random
 
 [^82]: Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold. 2010. Random variate generation by numerical inversion when only the density is known. ACM Trans. Model. Comput. Simul. 20, 4, Article 18 (October 2010), 25 pages. [**https://doi.org/10.1145/1842722.1842723**](https://doi.org/10.1145/1842722.1842723)
 
-[^83]: Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-Vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, [https://doi.org/10.1109/MCSE.2018.2882727](https://doi.org/10.1109/MCSE.2018.2882727) , and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
+[^83]: Part of `numbers_from_u01` uses algorithms described in Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-Vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, [**https://doi.org/10.1109/MCSE.2018.2882727**](https://doi.org/10.1109/MCSE.2018.2882727) , and Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
 
-[^84]: There is a paper by Arnas et al. that describes approximate random sampling using the values of the CDF by the so-called _k-vector_ technique, but the paper doesn't formally prove how good the approximation is.  Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-Vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, [https://doi.org/10.1109/MCSE.2018.2882727](https://doi.org/10.1109/MCSE.2018.2882727) .  See also Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
+[^84]: There is a paper by Arnas et al. that describes approximate random sampling using the values of the CDF by the so-called _k-vector_ technique, but the paper doesn't formally prove how good the approximation is.  Arnas, D., Leake, C., Mortari, D., "Random Sampling using k-Vector", _Computing in Science & Engineering_ 21(1) pp. 94-107, 2019, [**https://doi.org/10.1109/MCSE.2018.2882727**](https://doi.org/10.1109/MCSE.2018.2882727) .  See also Mortari, D., Neta, B., "k-Vector Range Searching Techniques".
 
 [^85]: Devroye, L., "Non-Uniform Random Variate Generation".  In _Handbooks in Operations Research and Management Science: Simulation_, Henderson, S.G., Nelson, B.L. (eds.), 2006, p.83.
 
@@ -2299,7 +2299,7 @@ The following are some additional articles I have written on the topic of random
 
 [^94]: Crooks, G.E., "[**The Amoroso Distribution**](https://arxiv.org/abs/1005.3274v2)", arXiv:1005.3274v2 [math.ST], 2015.
 
-[^95]: Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgórski. _The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance_. Springer Science & Business Media, 2012. [https://doi.org/10.1007/978-1-4612-0173-1](https://doi.org/10.1007/978-1-4612-0173-1)
+[^95]: Kotz, Samuel, Tomasz Kozubowski, and Krzystof Podgórski. _The Laplace distribution and generalizations: a revisit with applications to communications, economics, engineering, and finance_. Springer Science & Business Media, 2012. [**https://doi.org/10.1007/978-1-4612-0173-1**](https://doi.org/10.1007/978-1-4612-0173-1)
 
 [^96]: Devroye, L. Expected time analysis of a simple recursive Poisson random variate generator. _Computing_ 46, 165–173 (1991). [**https://doi.org/10.1007/BF02239170**](https://doi.org/10.1007/BF02239170)
 
@@ -2313,7 +2313,7 @@ The following are some additional articles I have written on the topic of random
 
 [^101]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.
 
-[^102]: Makalic, E., & Schmidt, D. F. (2022). An efficient algorithm for sampling from sink (x) for generating random correlation matrices. Communications in Statistics - Simulation and Computation, 51(5), 2731–2735. [https://doi.org/10.1080/03610918.2019.1700277](https://doi.org/10.1080/03610918.2019.1700277) . Also in arXiv:1809.05212v2 [stat.CO], 2018, [https://arxiv.org/abs/1809.05212v2](https://arxiv.org/abs/1809.05212v2)
+[^102]: Makalic, E., & Schmidt, D. F. (2022). An efficient algorithm for sampling from sink (x) for generating random correlation matrices. Communications in Statistics - Simulation and Computation, 51(5), 2731–2735. [**https://doi.org/10.1080/03610918.2019.1700277**](https://doi.org/10.1080/03610918.2019.1700277) . Also in arXiv:1809.05212v2 [stat.CO], 2018, [**https://arxiv.org/abs/1809.05212v2**](https://arxiv.org/abs/1809.05212v2)
 
 [^103]: Ghorbanzadeh, D., Jaupi, L., Durand, P., "[**A Method to Simulate the Skew Normal Distribution**](https://www.scirp.org/html/24-7402277_47986.htm)", _Applied Mathematics_ 5(13), 2014.
 
@@ -2321,7 +2321,7 @@ The following are some additional articles I have written on the topic of random
 
 [^105]: Robert Osada, Thomas Funkhouser, Bernard Chazelle, and David Dobkin. 2002. Shape distributions. ACM Trans. Graph. 21, 4 (October 2002), 807–832. [**https://doi.org/10.1145/571647.571648**](https://doi.org/10.1145/571647.571648)
 
-[^106]: Schechtman, G., Zinn, J., "On the volume of intersection of two $L_p^n$ balls", Proc. Amer. Math. Soc. 110, 217-224, 1990. [https://doi.org/10.1090/S0002-9939-1990-1015684-0](https://doi.org/10.1090/S0002-9939-1990-1015684-0)
+[^106]: Schechtman, G., Zinn, J., "On the volume of intersection of two $L_p^n$ balls", Proc. Amer. Math. Soc. 110, 217-224, 1990. [**https://doi.org/10.1090/S0002-9939-1990-1015684-0**](https://doi.org/10.1090/S0002-9939-1990-1015684-0)
 
 [^107]: Franck Barthe, Olivier Guédon, Shahar Mendelson, Assaf Naor "A probabilistic approach to the geometry of the ℓpn-ball," The Annals of Probability, Ann. Probab. 33(2), 480-513, (March 2005). [**https://doi.org/10.1214/009117904000000874**](https://doi.org/10.1214/009117904000000874)
 
@@ -2331,7 +2331,7 @@ The following are some additional articles I have written on the topic of random
 
 [^110]: See the _Stack Overflow_ question _Uniform sampling (by volume) within a cone_, `questions/41749411`. Square and cube roots replaced with maximums.
 
-[^111]: Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951. [https://doi.org/10.1007/s00184-011-0360-x](https://doi.org/10.1007/s00184-011-0360-x)
+[^111]: Lacko, V., & Harman, R. (2012). A conditional distribution approach to uniform sampling on spheres and balls in Lp spaces. _Metrika_, 75(7), 939-951. [**https://doi.org/10.1007/s00184-011-0360-x**](https://doi.org/10.1007/s00184-011-0360-x)
 
 [^112]: Reference:  Weisstein, Eric W. "Sphere Point Picking." From MathWorld--A Wolfram Resource. [**https://mathworld.wolfram.com/SpherePointPicking.html**](https://mathworld.wolfram.com/SpherePointPicking.html)  (replacing inverse cosine with `atan2` equivalent).
 

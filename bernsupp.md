@@ -389,7 +389,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 [^10]: [**Moldovan, E., "Observations sur la suite des polynômes de S. N. Bernstein d'une fonction continue"**](https://scholar.google.com/scholar?q=Moldovan,+E.,+Observations+sur+la+suite+des+polynômes+de+S.+N.+Bernstein+dune+fonction+continue), Mathematica (Cluj) 4.27 (1962): 289-292.
 
-[^11]: Farouki, Rida T., and V. T. Rajan. "**Algorithms for polynomials in Bernstein form**". Computer Aided Geometric Design 5, no. 1 (1988): 1-26. [https://doi.org/10.1016/0167-8396%2888%2990016-7](https://doi.org/10.1016/0167-8396%2888%2990016-7) [https://www.sciencedirect.com/science/article/pii/0167839688900167](https://www.sciencedirect.com/science/article/pii/0167839688900167)
+[^11]: Farouki, Rida T., and V. T. Rajan. "**Algorithms for polynomials in Bernstein form**". Computer Aided Geometric Design 5, no. 1 (1988): 1-26. [**https://doi.org/10.1016/0167-8396%2888%2990016-7**](https://doi.org/10.1016/0167-8396%2888%2990016-7) [**https://www.sciencedirect.com/science/article/pii/0167839688900167**](https://www.sciencedirect.com/science/article/pii/0167839688900167)
 
 [^12]: Henderson, S.G., Glynn, P.W., "[**Nonexistence of a class of variate generation schemes**](https://www.sciencedirect.com/science/article/pii/S0167637702002171)", _Operations Research Letters_ 31 (2003). [**https://doi.org/10.1016/S0167-6377%2802%2900217-1**](https://doi.org/10.1016/S0167-6377%2802%2900217-1) .
 
