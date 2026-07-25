@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="dc.date" content="2026-07-22"><meta name="citation_date" content="2026/07/22"><meta name="citation_publication_date" content="2026/07/22"><meta name="citation_online_date" content="2026/07/22"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Approximations in Bernstein Form"><meta name="dc.title" content="Approximations in Bernstein Form"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Approximations in Bernstein Form</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernapprox.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernapprox.html"><meta name="citation_title" content="Approximations in Bernstein Form"><meta name="dc.date" content="2026-07-24"><meta name="citation_date" content="2026/07/24"><meta name="citation_publication_date" content="2026/07/24"><meta name="citation_online_date" content="2026/07/24"><meta name="og:title" content="Approximations in Bernstein Form"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernapprox.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Approximations in Bernstein Form"><meta name="dc.title" content="Approximations in Bernstein Form"><meta name="twitter:title" content="Approximations in Bernstein Form"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1><p>This version of the document is dated 2026-07-22.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="approximations-in-bernstein-form">Approximations in Bernstein Form</h1><p>This version of the document is dated 2026-07-24.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -125,7 +125,7 @@
       <td>Order-2 iterated Boolean sum.</td>
       <td>$U_{n,2} = B_n(W_{n,2})$.</td>
       <td>$W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$.</td>
-      <td>Micchelli (1973)<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, Guan (2009)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>, Güntürk and Li (2021, sec. 3.3)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>.  Evaluates $f$ at $n+1$ evenly spaced points.</td>
+      <td>Micchelli (1973)<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, Güntürk and Li (2021, sec. 3.3)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>. For history see introduction of Sevy (1991)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>.  Evaluates $f$ at $n+1$ evenly spaced points.</td>
     </tr>
     <tr>
       <td>Order-3 iterated Boolean sum.</td>
@@ -407,7 +407,7 @@
 
 <h3 id="approximating-an-integral">Approximating an Integral</h3>
 
-<p>Roughly speaking, the <em>integral</em> of <em>f</em>(<em>x</em>) on an interval [<em>a</em>, <em>b</em>] is the “area under the graph” of that function when the function is restricted to that interval.  If <em>f</em> is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+…+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.</p>
+<p>Roughly speaking, the <em>integral</em> of $f(x)$ on an interval $[a,b]$ is the “area under the graph” of that function when the function is restricted to that interval.  If <em>f</em> is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+…+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.</p>
 
 <p>If a polynomial is in Bernstein form of degree $n$, and is defined on the closed unit interval:</p>
 
@@ -438,7 +438,7 @@
 
 <h3 id="approximating-a-derivative">Approximating a Derivative</h3>
 
-<p>For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary interval.</p>
+<p>For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval. How to adapt this section to an arbitrary interval is requested.</p>
 
 <p>If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it’s possible to approximate $f$’s $r$-th derivative as follows:</p>
 
@@ -505,7 +505,7 @@
   </li>
 </ul>
 
-<p>Some methods in this document require rewriting a polynomial in “power” form of degree $m$ (also known as “monomial” form) to Bernstein form of degree $m$.  This rewriting works only for polynomials in Bernstein form on the closed unit interval.</p>
+<p>Some methods in this document require rewriting a polynomial in “power” form of degree $m$ (also known as “monomial” form) to Bernstein form of degree $m$.  For the time being, this rewriting works only for polynomials in Bernstein form on the closed unit interval; how to adapt it to an arbitrary interval is requested.</p>
 
 <ul>
   <li>This rewriting can be done directly using the so-called “matrix method” from Ray and Nataraj (2012)<sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>.</li>
@@ -575,7 +575,7 @@
   <li>without introducing transcendental or trigonometric functions.</li>
 </ul>
 
-<p>Holtz et al. (2011)<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup>; Sevy (1991)<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> and references there; Waldron (2009)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>; Costabile et al. (2005)<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>; Han (2003)<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>; Guessab et al. (2009)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>; Kirov (1992)<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>.  Excluded from this list are schemes that employ <em>splines</em> (piecewise polynomials), or sequences of nonpolynomial functions.</p>
+<p>Holtz et al. (2011)<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup>; Sevy (1991)<sup id="fnref:7:1"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> and references there; Waldron (2009)<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup>; Costabile et al. (2005)<sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>; Han (2003)<sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>; Guessab et al. (2009)<sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup>; Kirov (1992)<sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup>.  Excluded from this list are schemes that employ <em>splines</em> (piecewise polynomials), or sequences of nonpolynomial functions.</p>
 
 <p>There may be other useful schemes for polynomials not mentioned in this document or in the references just given.  There may also be schemes that do not converge to the target function but can be made to achieve an approximation error of $\epsilon$ or less (where $\epsilon$ is a user-defined positive value).</p>
 
@@ -629,11 +629,11 @@
 
 <p><em>Proof:</em> For $W_{n,2}$ it’s enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen’s inequality and because $f$ is concave.</p>
 
-<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>.  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. □</p>
+<p>For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)<sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup>.  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. □</p>
 
 <p><strong>Proposition B2</strong>: Let $f(\lambda)$ map the closed unit interval to itself, be continuous, nowhere decreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on the closed unit interval.</p>
 
-<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, showing that $W_{n,2}$ is nonnegative on the closed unit interval.  □</p>
+<p><em>Proof:</em> The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)<sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup>, showing that $W_{n,2}$ is nonnegative on the closed unit interval.  □</p>
 
 <blockquote>
   <p><strong>Note:</strong> A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$’s domain.</p>
@@ -647,7 +647,7 @@
 
 <p><em>Proof</em>: This proof is inspired by the proof technique in Tachev (2022)<sup id="fnref:8:2"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>.</p>
 
-<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, and linear functions, and constants), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>, Butzer (1955)<sup id="fnref:9:2"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>, May (1976)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>.  Because of this, $f$ can be replaced with $R_3(f,\lambda)$, the result of subtracting $f$’s Taylor polynomial centered at $\lambda$ from $f$ (see the section “Taylor Polynomials for ‘Smooth’ Functions”).</p>
+<p>It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, and linear functions, and constants), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)<sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup>, Butzer (1955)<sup id="fnref:9:2"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>, May (1976)<sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup>.  Because of this, $f$ can be replaced with $R_3(f,\lambda)$, the result of subtracting $f$’s Taylor polynomial centered at $\lambda$ from $f$ (see the section “Taylor Polynomials for ‘Smooth’ Functions”).</p>
 
 <p>Therefore—</p>
 
@@ -663,7 +663,7 @@
 
 \[P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)\]
 
-<p>(where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)<sup id="fnref:38:1"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup>, citing Stoer and Bulirsch (1970)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>.</p>
+<p>(where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)<sup id="fnref:37:1"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup>, citing Stoer and Bulirsch (1970)<sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup>.</p>
 
 <p>The following error bounds, which make use of Corollary 1 in the article “<a href="https://peteroupc.github.io/approxtheory.html"><strong>Notes on Approximation Theory</strong></a>” as well as the proof technique in Proposition B10, can be shown.  In the following table, $\Lambda_r$ is the maximum of $f$’s $r$-th derivative’s Lipschitz constant or greater, and each result applies only to values of $n$ where all the numbers in the third column are integers greater than 1.</p>
 
@@ -740,7 +740,7 @@
 
 \[\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.\]
 
-<p><em>Proof</em>: This proof is inspired by a result in Draganov (2014, Theorem 4.1)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>.</p>
+<p><em>Proof</em>: This proof is inspired by a result in Draganov (2014, Theorem 4.1)<sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup>.</p>
 
 <p>The error to be bounded can be expressed as $\text{abs}((B_n(f)-f)( B_n(f)-f ))$.  Following Corollary B10B:</p>
 
@@ -764,13 +764,13 @@
 
 \[\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.\]
 
-<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>, which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:</p>
+<p><em>Proof</em>: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)<sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup>, which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:</p>
 
 \[\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})\]
 
 \[\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},\]
 
-<p>where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Sevy (1991)<sup id="fnref:36:1"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> and Gonska (1985)[^59]: if $f^{(3)}$ is Hölder continuous and $h&gt;0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore—</p>
+<p>where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Sevy (1991)<sup id="fnref:7:2"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> and Johnen (1972)<sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup>: if $f^{(3)}$ is Hölder continuous and $h&gt;0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore—</p>
 
 \[\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right) \tag{**}\]
 
@@ -778,7 +778,7 @@
 
 <p>□</p>
 
-<p>The following error bounds follow from results of Sevy (1991)<sup id="fnref:36:2"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup>, especially theorems 3.1 and 3.7 there:</p>
+<p>The following error bounds follow from results of Sevy (1991)<sup id="fnref:7:3"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>, especially theorems 3.1 and 3.7 there:</p>
 
 <table>
   <thead>
@@ -910,10 +910,10 @@
       <p>Micchelli, Charles. “<a href="https://www.sciencedirect.com/science/article/pii/0021904573900282"><strong>The saturation class and iterates of the Bernstein polynomials</strong></a>”, Journal of Approximation Theory 8, no. 1 (1973): 1-18. <a href="https://doi.org/10.1016/0021-9045%2873%2990028-2"><strong>https://doi.org/10.1016/0021-9045%2873%2990028-2</strong></a> <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>Guan, Zhong. “<a href="https://arxiv.org/abs/0909.0684"><strong>Iterated Bernstein polynomial approximations</strong></a>”, arXiv:0909.0684 (2009). <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Güntürk, C.S., Li, W., “<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>”, arXiv:2112.09181 [cs.LG], 2021. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
-      <p>Güntürk, C.S., Li, W., “<a href="https://arxiv.org/abs/2112.09181"><strong>Approximation of functions with one-bit neural networks</strong></a>”, arXiv:2112.09181 [cs.LG], 2021. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="https://doi.org/10.17918/00010296"><strong>https://doi.org/10.17918/00010296</strong></a> <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:7:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:7:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a></p>
     </li>
     <li id="fn:8">
       <p>Tachev, Gancho. “Linear combinations of two Bernstein polynomials”, <em>Mathematical Foundations of Computing</em>, 2022. <a href="https://doi.org/10.3934/mfc.2022061"><strong>https://doi.org/10.3934/mfc.2022061</strong></a> <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:8:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:8:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
@@ -958,7 +958,7 @@
       <p>Yi-Feng Tsai and Rida T. Farouki. 2001. Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form. ACM Trans. Math. Softw. 27, 2 (June 2001), 267–296. <a href="https://doi.org/10.1145/383738.383743"><strong>https://doi.org/10.1145/383738.383743</strong></a> <a href="#fnref:21" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:21:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:21:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:21:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:21:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a> <a href="#fnref:21:5" class="reversefootnote" role="doc-backlink">&#8617;<sup>6</sup></a> <a href="#fnref:21:6" class="reversefootnote" role="doc-backlink">&#8617;<sup>7</sup></a></p>
     </li>
     <li id="fn:22">
-      <p>Konečný, Michal, and Eike Neumann. “Representations and evaluation strategies for feasibly approximable functions.” Computability 10, no. 1 (2021): 63-89. Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>1710.03702</strong></a>. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Konečný, Michal, and Eike Neumann. “Representations and evaluation strategies for feasibly approximable functions.” Computability 10, no. 1 (2021): 63-89. https://doi.org/10.3233/COM-180234 . Also in arXiv: <a href="https://arxiv.org/abs/1710.03702"><strong>1710.03702</strong></a>. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:23">
       <p>Konečný, Michal, and Eike Neumann. “<a href="https://arxiv.org/abs/1910.04891"><strong>Implementing evaluation strategies for continuous real functions</strong></a>”, arXiv:1910.04891 (2019). <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:23:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
@@ -1000,43 +1000,43 @@
       <p>Holtz, O., Nazarov, F. &amp; Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). <a href="https://doi.org/10.1007/s00365-010-9108-5"><strong>https://doi.org/10.1007/s00365-010-9108-5</strong></a> <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:36">
-      <p>Sevy, J., “Acceleration of convergence of sequences of simultaneous approximants”, dissertation, Drexel University, 1991. <a href="https://doi.org/10.17918/00010296"><strong>https://doi.org/10.17918/00010296</strong></a> <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:36:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:36:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>Waldron, S., “Increasing the polynomial reproduction of a quasi-interpolation operator”, Journal of Approximation Theory 161 (2009). https://doi.org/10.1016/j.jat.2008.08.011 https://www.sciencedirect.com/science/article/pii/S0021904508001640 <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:37">
-      <p>Waldron, S., “<a href="https://www.sciencedirect.com/science/article/pii/S0021904508001640"><strong>Increasing the polynomial reproduction of a quasi-interpolation operator</strong></a>”, Journal of Approximation Theory 161 (2009). <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Costabile, F., Gualtieri, M.I., Serra, S., “Asymptotic expansion and extrapolation for Bernstein polynomials with applications”, <em>BIT</em> 36 (1996). <a href="https://doi.org/10.1007/BF01733787"><strong>https://doi.org/10.1007/BF01733787</strong></a> <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:37:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:38">
-      <p>Costabile, F., Gualtieri, M.I., Serra, S., “Asymptotic expansion and extrapolation for Bernstein polynomials with applications”, <em>BIT</em> 36 (1996). <a href="https://doi.org/10.1007/BF01733787"><strong>https://doi.org/10.1007/BF01733787</strong></a> <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:38:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. <a href="https://doi.org/10.1016/j.jat.2003.08.001"><strong>https://doi.org/10.1016/j.jat.2003.08.001</strong></a> <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:39">
-      <p>Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. <a href="https://doi.org/10.1016/j.jat.2003.08.001"><strong>https://doi.org/10.1016/j.jat.2003.08.001</strong></a> <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a> <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:40">
-      <p>Guessab, A., Nouisser, O. &amp; Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). <a href="https://doi.org/10.1007/s11117-008-2253-4"><strong>https://doi.org/10.1007/s11117-008-2253-4</strong></a> <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Kirov,+G.H.,+A+generalization+of+the+Bernstein+polynomials"><strong>Kirov, G.H., “A generalization of the Bernstein polynomials”</strong></a>, <em>Mathematica Balkanica</em> (New Series), 6 (1992), no. 2, 147–153. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:41">
-      <p><a href="https://scholar.google.com/scholar?q=Kirov,+G.H.,+A+generalization+of+the+Bernstein+polynomials"><strong>Kirov, G.H., “A generalization of the Bernstein polynomials”</strong></a>, <em>Mathematica Balkanica</em> (New Series), 6 (1992), no. 2, 147–153. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. “Uniform approximation and Bernstein polynomials with coefficients in the unit interval.” European Journal of Combinatorics 32, no. 3 (2011): 448-463. <a href="https://doi.org/10.1016/j.ejc.2010.11.004"><strong>https://doi.org/10.1016/j.ejc.2010.11.004</strong></a> <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:42">
-      <p>Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. “Uniform approximation and Bernstein polynomials with coefficients in the unit interval.” European Journal of Combinatorics 32, no. 3 (2011): 448-463. <a href="https://doi.org/10.1016/j.ejc.2010.11.004"><strong>https://doi.org/10.1016/j.ejc.2010.11.004</strong></a> <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Li, Zhongkai. “Bernstein polynomials and modulus of continuity.” Journal of Approximation Theory 102, no. 1 (2000): 171-174. <a href="https://doi.org/10.1006/jath.1999.3374"><strong>https://doi.org/10.1006/jath.1999.3374</strong></a> <a href="https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub"><strong>https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub</strong></a> <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:43">
-      <p>Li, Zhongkai. “Bernstein polynomials and modulus of continuity.” Journal of Approximation Theory 102, no. 1 (2000): 171-174. <a href="https://doi.org/10.1006/jath.1999.3374"><strong>https://doi.org/10.1006/jath.1999.3374</strong></a> <a href="https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub"><strong>https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub</strong></a> <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987. <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:44">
-      <p>Ditzian, Z., Totik, V., <em>Moduli of Smoothness</em>, 1987. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. <a href="https://doi.org/10.4153/CJM-1976-123-8"><strong>https://doi.org/10.4153/CJM-1976-123-8</strong></a> <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:45">
-      <p>May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. <a href="https://doi.org/10.4153/CJM-1976-123-8"><strong>https://doi.org/10.4153/CJM-1976-123-8</strong></a> <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Stoer, J., Bulirsch, R., <em>Introduction to Numerical Analysis</em>, 1970. <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:46">
-      <p>Stoer, J., Bulirsch, R., <em>Introduction to Numerical Analysis</em>, 1970. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Draganov, Borislav R. “On simultaneous approximation by iterated Boolean sums of Bernstein operators.” <em>Results in Mathematics</em> 66, no. 1 (2014): 21-41. <a href="https://doi.org/10.1007/s00025-014-0389-z"><strong>https://doi.org/10.1007/s00025-014-0389-z</strong></a> <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:47">
-      <p>Draganov, Borislav R. “On simultaneous approximation by iterated Boolean sums of Bernstein operators.” <em>Results in Mathematics</em> 66, no. 1 (2014): 21-41. <a href="https://doi.org/10.1007/s00025-014-0389-z"><strong>https://doi.org/10.1007/s00025-014-0389-z</strong></a> <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Kacsó,+D.P.,+Simultaneous+approximation+by+almost+convex+operators"><strong>Kacsó, D.P., “Simultaneous approximation by almost convex operators”</strong></a>, 2002. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:48">
-      <p><a href="https://scholar.google.com/scholar?q=Kacsó,+D.P.,+Simultaneous+approximation+by+almost+convex+operators"><strong>Kacsó, D.P., “Simultaneous approximation by almost convex operators”</strong></a>, 2002. <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=H.+Johnen.+Inequalities+connected+with+the+moduli+of+smootness"><strong>H. Johnen. “Inequalities connected with the moduli of smoothness.”</strong></a> Matematički Vesnik 9(24).56 (1972): 289-305. <a href="http://eudml.org/doc/259235"><strong>http://eudml.org/doc/259235</strong></a> <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:49">
       <p>Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. <a href="https://doi.org/10.1016/j.jat.2003.08.001"><strong>https://doi.org/10.1016/j.jat.2003.08.001</strong></a> <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -1057,7 +1057,7 @@
       <p>R. Kannan and C.K. Kreuger, <em>Advanced Analysis on the Real Line</em>, 1996. <a href="#fnref:54" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:55">
-      <p>Rababah, Abedallah. “<a href="https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html"><strong>Transformation of Chebyshev–Bernstein polynomial basis</strong></a>.” Computational Methods in Applied Mathematics 3.4 (2003): 608-622. <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Rababah, Abedallah. “Transformation of Chebyshev–Bernstein polynomial basis.” Computational Methods in Applied Mathematics 3.4 (2003): 608-622.  https://doi.org/10.2478/cmam-2003-0038 <a href="#fnref:55" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -86,7 +86,7 @@ Then, a polynomial of a high enough degree (called $n$) can be used to approxima
 | Name |  Polynomial | Its Bernstein coefficients are found as follows: | Notes |
  --- | --- | --- | --- |
 | Bernstein polynomial. | $B_n(f)$.  | $f(j/n)$, where $0\le j\le n$. | Originated with S.N. Bernstein (1912)[^4].  Evaluates $f$ at $n+1$ evenly spaced points. |
-| Order-2 iterated Boolean sum. | $U_{n,2} = B_n(W_{n,2})$. | $W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$. | Micchelli (1973)[^5], Guan (2009)[^6], Güntürk and Li (2021, sec. 3.3)[^7].  Evaluates $f$ at $n+1$ evenly spaced points. |
+| Order-2 iterated Boolean sum. | $U_{n,2} = B_n(W_{n,2})$. | $W_{n,2}(j/n)$, where $0\le j\le n$ and $W_{n,2}(\lambda) = 2 f(\lambda) - B_n(f)(\lambda)$. | Micchelli (1973)[^5], Güntürk and Li (2021, sec. 3.3)[^6]. For history see introduction of Sevy (1991)[^7].  Evaluates $f$ at $n+1$ evenly spaced points. |
 | Order-3 iterated Boolean sum. | $U_{n,3} = B_n(W_{n,3})$. | $W_{n,3}(j/n)$, where $0\le j\le n$ and $W_{n,3}(\lambda) = B_n(B_n(f)(\lambda))$ + $3 (f(\lambda)$ &minus; $B_n(f)(\lambda))$. | Same. |
 | Butzer's linear combination (order 2). | $L_{2,n/2} = 2 B_{n}(f(\lambda))$ &minus; $B_{n/2}(f(\lambda))$. | (First, define the following operation: **Get coefficients for $n$ given $m$**: Treat the coefficients \[$f(0/m)$, $f(1/m)$, ..., $f(m/m)$\] as representing a polynomial in Bernstein form of degree $m$, then rewrite that polynomial to one of degree $n$ with $n+1$ Bernstein coefficients (see "[**Computational Issues**](#Computational_Issues)"), then return those coefficients.)<br>**Get coefficients for $n$ given $n/2$**, call them _a_[0], ..., _a_[_n_], then set the final Bernstein coefficients to $2 f(j/n) - a[j]$ for each $j$. |Tachev (2022)[^8], Butzer (1955)[^9].  $n\ge 6$ must be even.  Evaluates $f$ at $n/2+1$ evenly spaced points.|
 | Butzer's linear combination (order 3). | $L_{3,n/4} = B_{n/4}(f)/3$ + $B_{n}(f)\cdot 8/3$ &minus; $2 B_{n/2}(f)$ | **Get coefficients for $n$ given $n/4$**, call them _a_[0], ..., _a_[_n_], then **get coefficients for $n$ given $n/2$**, call them _b_[0], ..., _b_[_n_], then set the final Bernstein coefficients to $a[j]/3-2 b[j]+8 f(j/n)/3$ for each $j$. | Butzer (1955)[^9]. $n\ge 4$ must be divisible by 4. Evaluates $f$ at $n/2+1$ evenly spaced points.|
@@ -231,7 +231,7 @@ The result will be in the form of Bernstein coefficients for the interval $[a, b
 
 ### Approximating an Integral
 
-Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the "area under the graph" of that function when the function is restricted to that interval.  If _f_ is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.
+Roughly speaking, the _integral_ of $f(x)$ on an interval $[a,b]$ is the "area under the graph" of that function when the function is restricted to that interval.  If _f_ is continuous there, this is the value that $\frac{1}{n} (f(a+(b-a)(1-\frac{1}{2})/n)+f(a+(b-a)(2-\frac{1}{2})/n)+...+f(a+(b-a)(n-\frac{1}{2})/n))$ approaches as $n$ gets larger and larger.
 
 If a polynomial is in Bernstein form of degree $n$, and is defined on the closed unit interval:
 
@@ -254,7 +254,7 @@ Let $P(\lambda)$ be a continuous function (such as a polynomial) on the interval
 
 ### Approximating a Derivative
 
-For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval, rather than an arbitrary interval.
+For the time being, this section works only if $f(\lambda)$ is defined on the closed unit interval. How to adapt this section to an arbitrary interval is requested.
 
 If $f(\lambda)$ has a continuous $r$-th derivative on the closed unit interval (where $r$ is 1 or greater), it's possible to approximate $f$'s $r$-th derivative as follows:
 
@@ -290,7 +290,7 @@ Some methods in this document require rewriting a polynomial in Bernstein form o
     - The _i_-th Bernstein coefficient of degree _m_ is turned to a scaled Bernstein coefficient by multiplying it by choose(_m_,_i_).
     - The _i_-th scaled Bernstein coefficient of degree _m_ is turned to a Bernstein coefficient by dividing it by choose(_m_,_i_).
 
-Some methods in this document require rewriting a polynomial in "power" form of degree $m$ (also known as "monomial" form) to Bernstein form of degree $m$.  This rewriting works only for polynomials in Bernstein form on the closed unit interval.
+Some methods in this document require rewriting a polynomial in "power" form of degree $m$ (also known as "monomial" form) to Bernstein form of degree $m$.  For the time being, this rewriting works only for polynomials in Bernstein form on the closed unit interval; how to adapt it to an arbitrary interval is requested.
 
 - This rewriting can be done directly using the so-called "matrix method" from Ray and Nataraj (2012)[^28].
 - This rewriting can also be done by rewriting the polynomial from "power" form to scaled Bernstein form (see Sánchez-Reyes (2003, section 2.6)[^27]), then converting the scaled Bernstein form to Bernstein form.
@@ -344,7 +344,7 @@ The following references discuss schemes that&mdash;
 - at a rate no slower than a constant times $1/n^{r/2}$, and
 - without introducing transcendental or trigonometric functions.
 
-Holtz et al. (2011)[^35]; Sevy (1991)[^36] and references there; Waldron (2009)[^37]; Costabile et al. (2005)[^38]; Han (2003)[^39]; Guessab et al. (2009)[^40]; Kirov (1992)[^41].  Excluded from this list are schemes that employ _splines_ (piecewise polynomials), or sequences of nonpolynomial functions.
+Holtz et al. (2011)[^35]; Sevy (1991)[^7] and references there; Waldron (2009)[^36]; Costabile et al. (2005)[^37]; Han (2003)[^38]; Guessab et al. (2009)[^39]; Kirov (1992)[^40].  Excluded from this list are schemes that employ _splines_ (piecewise polynomials), or sequences of nonpolynomial functions.
 
 There may be other useful schemes for polynomials not mentioned in this document or in the references just given.  There may also be schemes that do not converge to the target function but can be made to achieve an approximation error of $\epsilon$ or less (where $\epsilon$ is a user-defined positive value).
 
@@ -362,9 +362,9 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^5]: Micchelli, Charles. "[**The saturation class and iterates of the Bernstein polynomials**](https://www.sciencedirect.com/science/article/pii/0021904573900282)", Journal of Approximation Theory 8, no. 1 (1973): 1-18. [**https://doi.org/10.1016/0021-9045%2873%2990028-2**](https://doi.org/10.1016/0021-9045%2873%2990028-2)
 
-[^6]: Guan, Zhong. "[**Iterated Bernstein polynomial approximations**](https://arxiv.org/abs/0909.0684)", arXiv:0909.0684 (2009).
+[^6]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
 
-[^7]: Güntürk, C.S., Li, W., "[**Approximation of functions with one-bit neural networks**](https://arxiv.org/abs/2112.09181)", arXiv:2112.09181 [cs.LG], 2021.
+[^7]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
 
 [^8]: Tachev, Gancho. "Linear combinations of two Bernstein polynomials", _Mathematical Foundations of Computing_, 2022. [**https://doi.org/10.3934/mfc.2022061**](https://doi.org/10.3934/mfc.2022061)
 
@@ -394,7 +394,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^21]: Yi-Feng Tsai and Rida T. Farouki. 2001. Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form. ACM Trans. Math. Softw. 27, 2 (June 2001), 267–296. [**https://doi.org/10.1145/383738.383743**](https://doi.org/10.1145/383738.383743)
 
-[^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
+[^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. [https://doi.org/10.3233/COM-180234](https://doi.org/10.3233/COM-180234) . Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
 [^23]: Konečný, Michal, and Eike Neumann. "[**Implementing evaluation strategies for continuous real functions**](https://arxiv.org/abs/1910.04891)", arXiv:1910.04891 (2019).
 
@@ -422,31 +422,31 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^35]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^36]: Sevy, J., "Acceleration of convergence of sequences of simultaneous approximants", dissertation, Drexel University, 1991. [**https://doi.org/10.17918/00010296**](https://doi.org/10.17918/00010296)
+[^36]: Waldron, S., "Increasing the polynomial reproduction of a quasi-interpolation operator", Journal of Approximation Theory 161 (2009). [https://doi.org/10.1016/j.jat.2008.08.011](https://doi.org/10.1016/j.jat.2008.08.011) [https://www.sciencedirect.com/science/article/pii/S0021904508001640](https://www.sciencedirect.com/science/article/pii/S0021904508001640)
 
-[^37]: Waldron, S., "[**Increasing the polynomial reproduction of a quasi-interpolation operator**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)", Journal of Approximation Theory 161 (2009).
+[^37]: Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications", _BIT_ 36 (1996). [**https://doi.org/10.1007/BF01733787**](https://doi.org/10.1007/BF01733787)
 
-[^38]: Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications", _BIT_ 36 (1996). [**https://doi.org/10.1007/BF01733787**](https://doi.org/10.1007/BF01733787)
+[^38]: Han, Xuli. "Multi-node higher order expansions of a function." Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
-[^39]: Han, Xuli. "Multi-node higher order expansions of a function." Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
+[^39]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4)
 
-[^40]: Guessab, A., Nouisser, O. & Schmeisser, G. Enhancement of the algebraic precision of a linear operator and consequences under positivity. Positivity 13, 693–707 (2009). [**https://doi.org/10.1007/s11117-008-2253-4**](https://doi.org/10.1007/s11117-008-2253-4)
+[^40]: [**Kirov, G.H., "A generalization of the Bernstein polynomials"**](https://scholar.google.com/scholar?q=Kirov,+G.H.,+A+generalization+of+the+Bernstein+polynomials), _Mathematica Balkanica_ (New Series), 6 (1992), no. 2, 147–153.
 
-[^41]: [**Kirov, G.H., "A generalization of the Bernstein polynomials"**](https://scholar.google.com/scholar?q=Kirov,+G.H.,+A+generalization+of+the+Bernstein+polynomials), _Mathematica Balkanica_ (New Series), 6 (1992), no. 2, 147–153.
+[^41]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval." European Journal of Combinatorics 32, no. 3 (2011): 448-463. [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004)
 
-[^42]: Qian, Weikang, Marc D. Riedel, and Ivo Rosenberg. "Uniform approximation and Bernstein polynomials with coefficients in the unit interval." European Journal of Combinatorics 32, no. 3 (2011): 448-463. [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004)
+[^42]: Li, Zhongkai. "Bernstein polynomials and modulus of continuity." Journal of Approximation Theory 102, no. 1 (2000): 171-174. [**https://doi.org/10.1006/jath.1999.3374**](https://doi.org/10.1006/jath.1999.3374) [**https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub**](https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub)
 
-[^43]: Li, Zhongkai. "Bernstein polynomials and modulus of continuity." Journal of Approximation Theory 102, no. 1 (2000): 171-174. [**https://doi.org/10.1006/jath.1999.3374**](https://doi.org/10.1006/jath.1999.3374) [**https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub**](https://www.sciencedirect.com/science/article/pii/S0021904599933749?via%3Dihub)
+[^43]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
 
-[^44]: Ditzian, Z., Totik, V., _Moduli of Smoothness_, 1987.
+[^44]: May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. [**https://doi.org/10.4153/CJM-1976-123-8**](https://doi.org/10.4153/CJM-1976-123-8)
 
-[^45]: May, C. P. (1976). Saturation and Inverse Theorems for Combinations of a Class of Exponential-Type Operators. Canadian Journal of Mathematics, 28(6), 1224–1250. [**https://doi.org/10.4153/CJM-1976-123-8**](https://doi.org/10.4153/CJM-1976-123-8)
+[^45]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
 
-[^46]: Stoer, J., Bulirsch, R., _Introduction to Numerical Analysis_, 1970.
+[^46]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." _Results in Mathematics_ 66, no. 1 (2014): 21-41. [**https://doi.org/10.1007/s00025-014-0389-z**](https://doi.org/10.1007/s00025-014-0389-z)
 
-[^47]: Draganov, Borislav R. "On simultaneous approximation by iterated Boolean sums of Bernstein operators." _Results in Mathematics_ 66, no. 1 (2014): 21-41. [**https://doi.org/10.1007/s00025-014-0389-z**](https://doi.org/10.1007/s00025-014-0389-z)
+[^47]: [**Kacsó, D.P., "Simultaneous approximation by almost convex operators"**](https://scholar.google.com/scholar?q=Kacsó,+D.P.,+Simultaneous+approximation+by+almost+convex+operators), 2002.
 
-[^48]: [**Kacsó, D.P., "Simultaneous approximation by almost convex operators"**](https://scholar.google.com/scholar?q=Kacsó,+D.P.,+Simultaneous+approximation+by+almost+convex+operators), 2002.
+[^48]: [**H. Johnen. "Inequalities connected with the moduli of smoothness."**](https://scholar.google.com/scholar?q=H.+Johnen.+Inequalities+connected+with+the+moduli+of+smootness) Matematički Vesnik 9(24).56 (1972): 289-305. [**http://eudml.org/doc/259235**](http://eudml.org/doc/259235)
 
 [^49]: Han, Xuli. “Multi-node higher order expansions of a function.” Journal of Approximation Theory 124.2 (2003): 242-253. [**https://doi.org/10.1016/j.jat.2003.08.001**](https://doi.org/10.1016/j.jat.2003.08.001)
 
@@ -460,7 +460,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^54]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
-[^55]: Rababah, Abedallah. "[**Transformation of Chebyshev–Bernstein polynomial basis**](https://www.degruyter.com/document/doi/10.2478/cmam-2003-0038/html)." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.
+[^55]: Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.  [https://doi.org/10.2478/cmam-2003-0038](https://doi.org/10.2478/cmam-2003-0038)
 
 <a id=Appendix></a>
 
@@ -506,11 +506,11 @@ For a function $f(x)$ described in Lemma A1, $f(1)=a_0 1^0 + a_1 1^1 + ... = a_0
 
 _Proof:_ For $W_{n,2}$ it's enough to prove that $B_n(f)\le f$ for every $n\ge 1$.  This is the case because of Jensen's inequality and because $f$ is concave.
 
-For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^42].  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;
+For $W_{n,3}$ it must also be shown that $B_n(B_n(f)(\lambda))$ is nonnegative.  For this, using only the fact that $f$ maps the closed unit interval to itself, $B_n(f)$ will have Bernstein coefficients in that interval (each of those coefficients is a value of $f$) and so will likewise map the closed unit interval to itself (Qian et al. 2011)[^41].  Thus, by induction, $B_n(B_n(f)(\lambda))$ is nonnegative.  The discussion for $W_{n,2}$ also shows that $(f - B_n(f))$ is nonnegative as well.  Thus, $W_{n,3}$ is nonnegative on the closed unit interval. &#x25a1;
 
 **Proposition B2**: Let $f(\lambda)$ map the closed unit interval to itself, be continuous, nowhere decreasing, and subadditive, and equal 0 at 0. Then $W_{n,2}$ is nonnegative on the closed unit interval.
 
-_Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^43], showing that $W_{n,2}$ is nonnegative on the closed unit interval.  &#x25a1;
+_Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^42], showing that $W_{n,2}$ is nonnegative on the closed unit interval.  &#x25a1;
 
 > **Note:** A subadditive function $f$ has the property that $f(a+b) \le f(a)+f(b)$ whenever $a$, $b$, and $a+b$ are in $f$'s domain.
 
@@ -522,7 +522,7 @@ _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^
 
 _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^8].
 
-It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, and linear functions, and constants), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^44], Butzer (1955)[^9], May (1976)[^45].  Because of this, $f$ can be replaced with $R_3(f,\lambda)$, the result of subtracting $f$'s Taylor polynomial centered at $\lambda$ from $f$ (see the section "Taylor Polynomials for 'Smooth' Functions").
+It is known that $L_{3,n/4}$ is a linear operator that preserves polynomials of degree 3 or less (cubic, quadratic, and linear functions, and constants), so that $L_{3,n/4}(f) = f$ whenever $f$ is a polynomial of degree 3 or less (Ditzian and Totik 1987)[^43], Butzer (1955)[^9], May (1976)[^44].  Because of this, $f$ can be replaced with $R_3(f,\lambda)$, the result of subtracting $f$'s Taylor polynomial centered at $\lambda$ from $f$ (see the section "Taylor Polynomials for 'Smooth' Functions").
 
 Therefore&mdash;
 
@@ -538,7 +538,7 @@ The proof of Proposition B10 shows how to prove an upper bound on the approximat
 
 $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B_{n(k)}(f)(x)$$
 
-(where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^38], citing Stoer and Bulirsch (1970)[^46].
+(where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^37], citing Stoer and Bulirsch (1970)[^45].
 
 The following error bounds, which make use of Corollary 1 in the article "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)" as well as the proof technique in Proposition B10, can be shown.  In the following table, $\Lambda_r$ is the maximum of $f$'s $r$-th derivative's Lipschitz constant or greater, and each result applies only to values of $n$ where all the numbers in the third column are integers greater than 1.
 
@@ -568,7 +568,7 @@ In the following propositions:
 
 $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2}{8 n^{2}} + 5 H_2/(32 n^{1+\alpha/2}) \le ((5H_2+4M_2)/32)/n^{1+\alpha/2}.$$
 
-_Proof_: This proof is inspired by a result in Draganov (2014, Theorem 4.1)[^47].
+_Proof_: This proof is inspired by a result in Draganov (2014, Theorem 4.1)[^46].
 
 The error to be bounded can be expressed as $\text{abs}((B_n(f)-f)( B_n(f)-f ))$.  Following Corollary B10B:
 
@@ -592,13 +592,13 @@ $$\text{abs}(f-U_{n,2}(f))\le \frac{M_2+M_3}{8n^2}+9H_3/(64 n^{(3+\alpha)/2})$$
 
 $$\le \frac{9H_3+8M_2+8M_3}{64n^{(3+\alpha)/2}}.$$
 
-_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^48], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:
+_Proof_: Again, the goal is to estimate the right-hand side of (B10C-1).  But this time, a different simultaneous approximation bound is employed, namely a result from Kacsó (2002)[^47], which in this case works if $n\ge\max(r+2,(r+1)r)=6$, where $r=2$. By that result:
 
 $$\text{abs}((B_n(f))^{(2)}-f^{(2)}) \le \frac{r(r-1)}{2n} M_2+\frac{r M_3}{2n}+\frac{9}{8}\omega_2(f^{(2)},1/n^{1/2})$$
 
 $$\le \frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2},$$
 
-where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Sevy (1991)[^36] and Gonska (1985)[^59]: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
+where $r=2$, using properties of $\omega_1$, the smallest modulus of continuity of $f^{(2)}$, and $\omega_2$, its smallest second-order modulus of continuity, given, for example, in Sevy (1991)[^7] and Johnen (1972)[^48]\: if $f^{(3)}$ is Hölder continuous and $h>0$, then $\omega_2(f^{(2)}, h)\le h\cdot\omega_1(f^{(3)}, h)\le h\cdot H_3 h^\alpha = H_3 h^{1+\alpha}$.  Therefore&mdash;
 
 $$\text{abs}((B_n(f)-f)( B_n(f)-f ))\le \frac{1}{8n} \left(\frac{1}{n} M_2+M_3/n+\frac{9}{8} H_3/n^{(1+\alpha)/2}\right) \tag{**}$$
 
@@ -606,7 +606,7 @@ $$\le \frac{M_2+M_3}{8n^2} + \frac{9H_3}{64 n^{(3+\alpha)/2}}\le \frac{9H_3+8M_2
 
 &#x25a1;
 
-The following error bounds follow from results of Sevy (1991)[^36], especially theorems 3.1 and 3.7 there:
+The following error bounds follow from results of Sevy (1991)[^7], especially theorems 3.1 and 3.7 there:
 
 | If _f_(_&lambda;_) on the closed unit interval: |  Then the following polynomial: |  Is close to _f_ with the following error bound: |
  --- | - | --- |

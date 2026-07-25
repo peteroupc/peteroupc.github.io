@@ -6,7 +6,7 @@
 
 ## Background
 
-Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$. This is the _Bernoulli factory problem_, and it can be solved for a function $f(\lambda)$ only if it's continuous. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)
+Suppose there is a coin that shows heads with an unknown probability, $\lambda$. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on $\lambda$, call it $f(\lambda)$, where $f$ is a known function. This is the _Bernoulli factory problem_, and it can be solved for a function $f(\lambda)$ only if it's continuous. (For example, flipping the coin twice and taking heads only if exactly one coin shows heads, the probability $2\lambda(1-\lambda)$ can be simulated.)
 
 This page contains several questions about the [**Bernoulli factory**](https://peteroupc.github.io/bernoulli.html) problem.  Answers to them will greatly improve my pages on this site about Bernoulli factories.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
@@ -157,14 +157,14 @@ The following are some strategies for answering these questions:
 Prove or disprove:
 
 - Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max\lbrace\text{abs}(B_n(f)(\lambda)-f(\lambda))) : 0\le\lambda\le 1\rbrace$ (where $n$ is a positive integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - \text{abs}(B_n(f)(1/2)-f(1/2)))$, if $f$ is also symmetric about 1/2.
-- Let $f:(D\subseteq [0, 1])\to [0,1]$.  Given a coin that shows heads with probability $\lambda$ (which can be 0 or 1), it is [**_strongly simulable_**](https://www.reddit.com/r/probabilitytheory/comments/1v37hc8) (see definition later) **if and only if**&mdash;
+- Let $f:D\to [0,1]$, where $D\subseteq [0, 1]$ is known.  Given a coin that shows heads with unknown probability $\lambda$ (which can be 0 or 1), it is [**_strongly simulable_**](https://www.reddit.com/r/probabilitytheory/comments/1v37hc8) (see definition later) **if and only if**&mdash;
 
     - $f$ is constant on its domain, or is continuous and polynomially bounded on its domain (_polynomially bounded_ means, both $f$ and $1-f$ are not less than min($x^n$, $(1-x)^n$) for some integer $n$ (Keane and O'Brien 1994)[^26]), and
     - $f(0)$ is 0 or 1 if 0 is in $f$'s domain and $f(1)$ is 0 or 1 whenever 1 is in $f$'s domain, and
     - if $f(0) = 0$ or $f(1) = 0$ or both, then there is a polynomial $g(x):[0,1]\to [0,1]$ with computable coefficients, such that $g(0) = f(0)$ and $g(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $g(x)\gt f(x)$ for every $x$ in the domain of $f$, except at 0 and 1, and
     - if $f(0) = 1$ or $f(1) = 1$ or both, then there is a polynomial $h(x):[0,1]\to [0,1]$ with computable coefficients, such that $h(0) = f(0)$ and $h(1) = f(1)$ whenever 0 or 1, respectively, is in the domain of $f$, and such that $h(x)\lt f(x)$ for every $x$ in the domain of f, except at 0 and 1.
 
-    _Strongly simulable_ means that an algorithm exists to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness, and the algorithm terminates with probability 1 (that is, almost surely, or the event of terminating has Lebesgue measure 1).
+    _Strongly simulable_ means that an algorithm exists to toss heads with probability $f(\lambda)$ using the coin and no other sources of randomness, and the algorithm terminates with probability 1 (that is, almost surely, or the event of terminating has Lebesgue measure 1), where $f$ is a known function.
 
     It's possible that the conditions given are not necessary, and stronger conditions hold; for example: "0 is not in the domain of $f$, or $f$ can be extended to a Lipschitz-continuous function on $[0, \epsilon)$ for some $\epsilon>0$".  A tricky example of such a function is $f(x)=(\sin(1/x)/4+1/2)\cdot(1-(1-x)^n)$ for $n\ge 1$ ($f(0)=0$), which is strongly simulable at 0 and is Lipschitz at, say, $[0, 0.01]$.  ($(1-x)^n$ is the probability of the biased coin showing zero $n$ times in a row.)  Keane and O'Brien already showed strong simulability when $D$ contains neither 0 nor 1.
 
