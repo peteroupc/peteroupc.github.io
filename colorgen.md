@@ -1852,7 +1852,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^13]: The hue angle is in radians, and the angle is 0 or greater and less than 2&pi;. Radians can be converted to degrees by multiplying by `180 / pi`.  Degrees can be converted to radians by multiplying by `pi / 180`.
 
-[^14]: Smith, A.R. and Lyons, E.R., 1996. HWB&mdash;A more intuitive hue-based color model. Journal of graphics tools, 1(1), pp. 3-17.
+[^14]: Smith, A.R. and Lyons, E.R., 1996. HWB&mdash;A more intuitive hue-based color model. Journal of graphics tools, 1(1), pp. 3-17. [https://doi.org/10.1080/10867651.1996.10487451](https://doi.org/10.1080/10867651.1996.10487451)
 
 [^15]: The prime symbol appears near Y because the conversion from RGB usually involves [**encoded RGB colors**](#RGB_Color_Spaces), so that Y&prime; (_luma_) is not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.
 
@@ -1891,7 +1891,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^30]: B. MacEvoy calls these [**_hue harmonies_**](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [**summary of harmonious color relationships**](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).  See also U.S. patent US6870544, "Harmonizing color selection system and method", which expired in February 2022.
 
-[^31]: Porter, T., and Duff, T. "Compositing Digital Images". Computer Graphics 18(3), p 253 ff., 1984.
+[^31]: Porter, T., and Duff, T. "Compositing Digital Images." Computer Graphics 18(3), p 253 ff., 1984. [https://doi.org/10.1145/800031.808606](https://doi.org/10.1145/800031.808606)
 
 [^32]: P. Haeberli, [**"Matrix Operations for Image Processing"**](https://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.
 

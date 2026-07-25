@@ -81,7 +81,7 @@ Limit 3-D graphics to the following:[^3]
 5. A texture's maximum width, in pixels, is the larger of the screen width and the screen height, but not more than 256.  A texture's maximum height is the same as the maximum texture width.
 6. Textures may contain transparent pixels.
 7. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-8. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing, two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering and edge antialiasing (smoothing)[^7] are optional.
+8. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering and edge antialiasing (smoothing)[^7] are optional.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^8]
 
 > **Example:** For a "screen resolution" (see later) of 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.  For 320 &times; 240 pixels, the maximums are 3200 primitives, 9600 vertices, and textures of 256 &times; 256 pixels.  For 320 &times; 200 pixels, the maximums are 2666 primitives, 8000 vertices, and textures of 256 &times; 256 pixels.
@@ -189,7 +189,7 @@ Examples of optional constraints are the following:
 - The game aims for a rate of 30 frames per second.
 - The game's graphics must be _rendered in software_.
 - The game's rendering of visuals employs only 32-bit and smaller integers, and the only arithmetic used is fixed-point arithmetic.[^23]
-- The game renders only one-unit-thick white line segments on a black background (or vice versa), and displays no more than 320 of those segments at a time.
+- The game renders only white line segments on a black background (or vice versa), and displays no more than 320 of those segments at a time.  These line segments are approximated at integer coordinates.
 - The game runs with acceptable performance on [**80486-compatible processors**](https://www.dosdays.co.uk/topics/cpus.php#i486) at 33 or 50 megahertz.[^24]
 - The game runs with acceptable performance on x86 processors at 100 megahertz.
 
@@ -255,7 +255,7 @@ This section has notes on this specification, such as how its requirements corre
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
-    - Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include the _ray-casting_ technique and _light maps_ with precomputed lighting.
+    - Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include (1) two-dimensional (per-screen-column) _ray casting_, and (2) _light maps_ with precomputed lighting.
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^61] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 

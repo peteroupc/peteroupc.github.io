@@ -191,7 +191,7 @@
 <ul>
   <li>Before 2003 (and even before 1995):
     <ul>
-      <li>Curves and straight line segments are one unit thick and drawn without smoothing.</li>
+      <li>Curves and straight line segments are drawn without smoothing by approximating them with points at integer coordinates and coloring the pixels at those points.</li>
       <li>Straight line segments are horizontal, are vertical, or have a slope equal to an integer or 1 divided by an integer.  This can be achieved by drawing the line segment in equally sized steps.</li>
       <li>There are no translucent (semitransparent) pixels.</li>
     </ul>
@@ -224,7 +224,7 @@
       <li>Most cursors are limited to the two colors black and white, with optional transparency.<sup id="fnref:18:1"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup></li>
       <li>Before 1990, cursors do not have colors other than black and white.</li>
       <li>From 1990 to about 2003, cursors with colors other than black and white are rare, and cursors with more than 32 colors are very rare.  From 1995 to about 2003, cursors with colors limited to the VGA palette become more common, especially infrequently seen cursors such as the busy-wait cursor.</li>
-      <li>Before 2003, and even before 1995, each shape of a black-and-white cursor is generally either white with a 1-unit-thick black outline or vice versa, to make the cursor easy to see over any background.</li>
+      <li>Before 2003, and even before 1995, each shape of a black-and-white cursor is generally either white with a black outline (approximated with integer coordinates) or vice versa, to make the cursor easy to see over any background.</li>
     </ul>
   </li>
 </ul>
@@ -384,7 +384,7 @@ end
       <p>Buttons possessed a 3-D look (in that they appear to have depth or elevation) in Windows versions 3.0 and 3.1 by default, but not other interface elements.  The article “Adding 3-D Effects to Controls” describes a library for these versions that gives 3-D appearances to more places in an application. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
-      <p>In this case, if the button is a toolbar button with a thin border, the button’s inner background involved in the mixed-value appearance is surrounded by an additional 1-unit-thick edge drawn in the button face color. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>In this case, if the button is a toolbar button with a thin border, the button’s inner background involved in the mixed-value appearance is surrounded by an additional edge consisting of simple line segments drawn in the button face color. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:9">
       <p><em>Macintosh Human Interface Guidelines</em>, p. 207 (according to which the system font in System 7 of the Macintosh Operating System was designed to be legible even when rendered this way). <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -411,7 +411,7 @@ end
       <p>This is evident in the graphics (also known as <em>watermarks</em>) of Windows 95’s wizards, which are drawn in a teal background (color (0,128,128)) and show one or more computing devices in a three-dimensional, often rectangular appearance, and where, although there is internal shadowing, no shadow is cast on the teal background.  But computer monitors may still be drawn straight on in order to accentuate what the monitor is showing. <a href="#fnref:16" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:17">
-      <p>Adventure games developed by Sierra On-Line in the early 1990s are well known to employ essentially 1-unit-thick lines and flood fills in their illustrations.  (A <em>flood fill</em> is a way to fill a colored area that is surrounded by other colors.) Windows 95 wizard watermarks are also of this style, essentially, except that the use of black outlines, as opposed to outlines of other colors, is rarer and less systematic. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Adventure games developed by Sierra On-Line in the early 1990s are well known to employ essentially simple lines and flood fills in their illustrations.  (A <em>flood fill</em> is a way to fill a colored area that is surrounded by other colors.) Windows 95 wizard watermarks are also of this style, essentially, except that the use of black outlines, as opposed to outlines of other colors, is rarer and less systematic. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:18">
       <p>The only icons and cursors supported by Windows versions before Windows 3.0 (in 1990) were limited to the two colors black and white. <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
@@ -435,7 +435,7 @@ end
       <p><em>The Microsoft Windows User Experience</em> considers an animation to be fluid only if it runs at 16 or more frames per second.  For an example of an animation in the form of a single image file, see Herman Rodent, “Animation in Win32”, Microsoft Developer Network, Feb. 1, 1994. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:24">
-      <p>For example, an image can be drawn with four variations in width and height: 32 × 32, 40 × 40, 32 × 24, and 32 × 16 pixels.  Multiple sizes and vector versions of a graphic are useful for several reasons, including:<br />(1) to accommodate different display modes and pixel densities;<br />(2) to render parts of the graphic more crisply, especially if their <a href="http://rastertragedy.com/RTRCh1.htm"><strong>smallest feature would measure less than twice the spacing between pixels</strong></a>.<br />They are useful for toolbar icons, for example, especially nowadays where the icon style is a single-color filled outline akin to a typographic symbol.  Indeed, even 16-×-15-pixel images often used as toolbar icons are, in many cases, ultimately vector graphics consisting of polygons and 1-unit-thick line segments. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>For example, an image can be drawn with four variations in width and height: 32 × 32, 40 × 40, 32 × 24, and 32 × 16 pixels.  Multiple sizes and vector versions of a graphic are useful for several reasons, including:<br />(1) to accommodate different display modes and pixel densities;<br />(2) to render parts of the graphic more crisply, especially if their <a href="http://rastertragedy.com/RTRCh1.htm"><strong>smallest feature would measure less than twice the spacing between pixels</strong></a>.<br />They are useful for toolbar icons, for example, especially nowadays where the icon style is a single-color filled outline akin to a typographic symbol.  Indeed, even 16-×-15-pixel images often used as toolbar icons are, in many cases, ultimately vector graphics consisting of polygons and simple line segments. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:24a">
       <p>Suggested to me by a Reddit community. <a href="#fnref:24a" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

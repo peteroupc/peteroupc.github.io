@@ -117,7 +117,7 @@ For some of the polynomials given earlier, a degree $n$ can be found so that the
 | Is Lipschitz continuous. | $B_n(f)$. | _&epsilon;_ = _L_<sub>0</sub>\*sqrt(1/(4\*_n_)). | _n_ = ceil((_L_<sub>0</sub>)<sup>2</sup>/(4\*_&epsilon;_<sup>2</sup>)). | Special case of previous entry. |
 | Is Lipschitz continuous. | $B_n(f)$. | _&epsilon;_ = $\frac{4306+837\sqrt{6}}{5832} L_0/n^{1/2}$ &lt; $1.08989 L_0/n^{1/2}$. | _n_=ceil((_L_<sub>0</sub>\*1.08989/_&epsilon;_)<sup>2</sup>). | Sikkema (1961)[^17]. |
 
-Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that they approach $f$ slowly in general, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)[^18].
+Bernstein polynomials ($B_n(f)$) have the advantages that only one Bernstein coefficient has to be found per run and that the coefficient will be bounded by 0 and 1 if $f(\lambda)$ is.  But their disadvantage is that, in general, they approach $f$ slowly, at a rate no faster than a rate proportional to $1/n$ (Voronovskaya 1932)[^18].
 
 On the other hand, polynomials other than Bernstein polynomials can approach $f$ faster in many cases than Bernstein polynomials, but are not necessarily bounded by 0 and 1.  For these polynomials, the following process can be used to calculate the required degree $n$, given an error tolerance of $\epsilon$, assuming none of $f$'s values is less than 0 or greater than 1.
 
@@ -394,7 +394,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^21]: Yi-Feng Tsai and Rida T. Farouki. 2001. Algorithm 812: BPOLY: An object-oriented library of numerical algorithms for polynomials in Bernstein form. ACM Trans. Math. Softw. 27, 2 (June 2001), 267–296. [**https://doi.org/10.1145/383738.383743**](https://doi.org/10.1145/383738.383743)
 
-[^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. [https://doi.org/10.3233/COM-180234](https://doi.org/10.3233/COM-180234) . Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
+[^22]: Konečný, Michal, and Eike Neumann. "Representations and evaluation strategies for feasibly approximable functions." Computability 10, no. 1 (2021)\: 63-89. [**https://doi.org/10.3233/COM-180234**](https://doi.org/10.3233/COM-180234) . Also in arXiv\: [**1710.03702**](https://arxiv.org/abs/1710.03702).
 
 [^23]: Konečný, Michal, and Eike Neumann. "[**Implementing evaluation strategies for continuous real functions**](https://arxiv.org/abs/1910.04891)", arXiv:1910.04891 (2019).
 
@@ -422,7 +422,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^35]: Holtz, O., Nazarov, F. & Peres, Y. New Coins from Old, Smoothly. Constr Approx 33, 331–363 (2011). [**https://doi.org/10.1007/s00365-010-9108-5**](https://doi.org/10.1007/s00365-010-9108-5)
 
-[^36]: Waldron, S., "Increasing the polynomial reproduction of a quasi-interpolation operator", Journal of Approximation Theory 161 (2009). [https://doi.org/10.1016/j.jat.2008.08.011](https://doi.org/10.1016/j.jat.2008.08.011) [https://www.sciencedirect.com/science/article/pii/S0021904508001640](https://www.sciencedirect.com/science/article/pii/S0021904508001640)
+[^36]: Waldron, S., "Increasing the polynomial reproduction of a quasi-interpolation operator", Journal of Approximation Theory 161 (2009). [**https://doi.org/10.1016/j.jat.2008.08.011**](https://doi.org/10.1016/j.jat.2008.08.011) [**https://www.sciencedirect.com/science/article/pii/S0021904508001640**](https://www.sciencedirect.com/science/article/pii/S0021904508001640)
 
 [^37]: Costabile, F., Gualtieri, M.I., Serra, S., "Asymptotic expansion and extrapolation for Bernstein polynomials with applications", _BIT_ 36 (1996). [**https://doi.org/10.1007/BF01733787**](https://doi.org/10.1007/BF01733787)
 
@@ -460,7 +460,7 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^54]: R. Kannan and C.K. Kreuger, _Advanced Analysis on the Real Line_, 1996.
 
-[^55]: Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.  [https://doi.org/10.2478/cmam-2003-0038](https://doi.org/10.2478/cmam-2003-0038)
+[^55]: Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.  [**https://doi.org/10.2478/cmam-2003-0038**](https://doi.org/10.2478/cmam-2003-0038)
 
 <a id=Appendix></a>
 
