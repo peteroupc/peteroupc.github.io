@@ -76,7 +76,6 @@ In the articles above, I put an emphasis on random variate generation that:
 * [**Notes on Approximation Theory**](./approxtheory.html)
 * [**A Note on Hash Functions**](./hash.html)
 * [**Pseudocode Conventions**](./pseudocode.html)
-* [**On a claim of computational complexity**](https://peteroupc.github.io/complexity.html)
 * [**File Name Support in Applications**](./filenames.html)
 
 **Other Articles**
