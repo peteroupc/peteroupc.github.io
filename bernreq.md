@@ -111,7 +111,7 @@ The following are some strategies for answering these questions:
 - Verify my proofs for the results on error bounds for certain polynomials in "[**Results Used in Approximations By Polynomials**](https://peteroupc.github.io/bernapprox.html#Results_Used_in_Approximations_by_Polynomials)", including:
     - Iterated Boolean sums (linear combinations of iterates) of Bernstein polynomials ($B_n(W_n) = f-(f-B_n(f))^k$:[^24] Propositions B10C and B10D.
     - Linear combinations of Bernstein polynomials (see Costabile et al. (2005)[^12]): Proposition B10.
-- For the [**Lorentz operator**](https://doi.org/10.1007/s00365-010-9108-5) studied in Holtz et al. (2011)[^6], find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in that paper.
+- For the _Lorentz operator_ studied in Holtz et al. (2011)[^6], find the hidden constants $\theta_\alpha$, $s$, and $D$ as well as those in Lemmas 15, 17 to 22, 24, and 25 in that paper.
 - Find operators or functions of the following kinds and find explicit bounds, with no hidden constants, on the approximation error:
     - Operators that produce a degree-$n$ polynomial in Bernstein form, or a ratio of two such polynomials, such that&mdash;
         - the operator preserves polynomials at a higher degree than linear functions, or
@@ -172,7 +172,7 @@ Prove or disprove:
 
 ## Notes
 
-[^1]: See also the following questions on _Mathematics Stack Exchange_ and _MathOverflow_: [**Converging polynomials**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con), [**Error bounds**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions), [**A conjecture**](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form), [**Lorentz operators**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi), [**Series representations**](https://mathoverflow.net/questions/409174/concave-functions-series-representation-and-converging-polynomials).
+[^1]: See also the following questions on _Mathematics Stack Exchange_ and _MathOverflow_: [**Converging polynomials**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con), [**Error bounds**](https://mathoverflow.net/questions/442057/explicit-and-fast-error-bounds-for-approximating-continuous-functions), [**A conjecture**](https://mathoverflow.net/questions/427595/a-conjecture-on-consistent-monotone-sequences-of-polynomials-in-bernstein-form).
 
 [^2]: As discussed later, the Bernstein polynomials solve this question for functions no "smoother" than arbitrary functions in $C^2[0, 1]$, but their convergence rate is $O(1/n)$ in general.  For some of these functions, there may be rational-function approximations or more practical methods with a faster convergence rate.  By contrast, results for functions "smoother" than $C^2$ are hard to find.
 

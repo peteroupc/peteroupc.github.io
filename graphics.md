@@ -139,6 +139,7 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 - consumer PCs (personal computers) released in the mid- to late 1990s,
 - home computers released before 1995,[^17]
 - game consoles (handheld and for TVs) released before 2000,
+- learning toys with an electronic display, released before 2000,
 - arcade machines with similar performance to machines described earlier, and
 - the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
 
@@ -189,7 +190,7 @@ Examples of optional constraints are the following:
 - The game aims for a rate of 30 frames per second.
 - The game's graphics must be _rendered in software_.
 - The game's rendering of visuals employs only 32-bit and smaller integers, and the only arithmetic used is fixed-point arithmetic.[^23]
-- The game renders only white line segments on a black background (or vice versa), and displays no more than 320 of those segments at a time.  These line segments are approximated at integer coordinates.
+- The game renders only white line segments on a black background (or vice versa), and displays no more than 320 of those segments at a time.  These line segments are drawn with an approximation at integer coordinates.
 - The game runs with acceptable performance on [**80486-compatible processors**](https://www.dosdays.co.uk/topics/cpus.php#i486) at 33 or 50 megahertz.[^24]
 - The game runs with acceptable performance on x86 processors at 100 megahertz.
 
@@ -269,7 +270,7 @@ This section has notes on this specification, such as how its requirements corre
 - Graphics made of tiles and sprites were popularized by the arcade game _Galaxian_ (1979).
 - Most arcade games before 1995 had a resolution from 46,080 pixels (192 &times; 240 or 240 &times; 192) through 98,304 pixels (256 &times; 384 or 384 &times; 256).  The following were exceptions:
      - Certain two- or three-screen games by Taito (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
-     - The Midway MCR family of arcade machines (1980 to about 1986) had a resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but backgrounds were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
+     - The Midway MCR family of arcade machines (1980 to about 1986) had a screen resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but backgrounds were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
 - If an arcade game employed 2-D visuals with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
 
 <a id=Screen_image_effects_filters></a>
