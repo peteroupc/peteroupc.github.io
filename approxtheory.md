@@ -838,7 +838,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^3]: A better term for positive operators is probably nonnegativity-preserving operators.  Indeed, in this document, a number or integer is positive if it is _greater than_ zero.
 
-[^4]: De Villiers, J., _Mathematics of Approximation_, Atlantis Press, 2012. [**https://doi.org/10.2991/978-94-91216-50-3**](https://doi.org/10.2991/978-94-91216-50-3)
+[^4]: De Villiers, J., _Mathematics of Approximation_, Atlantis Press, 2012. [**https://doi.org/10.2991/978-94-91216-50-3**](https://doi.org/10.2991/978-94-91216-50-3) ISBN 978-94-91216-50-3.
 
 [^5]: If $L$ is linear, the operator norm is the maximum "norm" of $L(f)$ over all allowed functions $f$ with a "norm" equal to 1 (De Villiers 2012, Theorem 5.2.3).
 
@@ -968,7 +968,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^68]: For example, if $f$ is continuous on a compact interval:<br>(1) The set of polynomials of degree up to $n$ on that interval, where $n$ is zero or a positive integer, has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.2).<br>(2) Any finite-dimensional subspace of continuous functions on that interval has a "best approximation" to $f$ (De Villiers 2012, theorem 4.1.1).<br>A _subspace_ of a set of functions is a subset of that set (which can be that set itself) with the following property: If $f$ and $g$ are in the subset, so are $(f+g)$ and $(c\cdot f)$ for any number $c$. The subspace is _finite-dimensional_ if it is the smallest subspace that includes a finite set of functions (Axler 2020, definition 6.54).
 
-[^69]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270)
+[^69]: R.A. DeVore and G.G. Lorentz, _Constructive Approximation_, 1993. [**https://link.springer.com/book/9783540506270**](https://link.springer.com/book/9783540506270). ISBN 978-3-540-50627-0.
 
 [^70]: [**Bede, Barnabás, and Sorin G. Gal. "Approximation by Nonlinear Bernstein and Favard-Szász-Mirakjan Operators of Max-Product Kind."**](https://scholar.google.com/scholar?q=Bede,+Barnabás,+and+Sorin+G.+Gal.+Approximation+by+Nonlinear+Bernstein+and+Favard-Szász-Mirakjan+Operators+of+Max-Product+Kind) Journal of Concrete & Applicable Mathematics 8.1 (2010).
 

@@ -10,12 +10,12 @@ Let `InDist` be the probability distribution of these input values, and let $\la
 
 - In **Algorithm 1** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum and maximum, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
 - In **Algorithm 2** (Duvignau 2015)[^2], `InDist` is a fair die with an unknown number of faces, $\lambda$ is the number of faces, and `OutDist` is a specific distribution that depends on the number of faces.
-- In **Algorithm 3** (Lee et al. 2014)[^3], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken.
+- In **Algorithm 3** (Lee et al. 2014)[^3], `InDist` is arbitrary, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value equal to the mean of $f(X)$, where $X$ is an input value taken and $f$ is a known function.
 - In **Algorithm 4** (Jacob and Thiery 2015)[^1], `InDist` is arbitrary but must have a known minimum, $\lambda$ is the expected value of `InDist`, and `OutDist` is nonnegative and has an expected value of $f(\lambda)$.
 - In **Algorithm 5** (Akahira et al. 1992)[^4], `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` has an expected value of $f(\lambda)$.
-- In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html) (a problem of turning biased coins to biased coins), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$.
+- In the [**Bernoulli factory problem**](https://peteroupc.github.io/bernoulli.html) (a problem of turning biased coins to biased coins), `InDist` is Bernoulli, $\lambda$ is the expected value of `InDist`, and `OutDist` is Bernoulli with an expected value of $f(\lambda)$, where $f$ is a known function.
 
-In all cases given earlier, each input value is independent of everything else.
+In all cases given earlier, each input value is independent of everything else, and `OutDist` is known to have the specified properties.
 
 There are numerous other cases of interest that are not covered in the algorithms above.  An example is the case of **Algorithm 5** except `InDist` is any discrete distribution, not just Bernoulli. [^5]  An interesting topic is to answer the following: In which cases (and for which functions $f$) can the problem be solved...
 

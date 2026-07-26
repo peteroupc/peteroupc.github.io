@@ -189,7 +189,8 @@ Examples of optional constraints are the following:
 - The game is a Win32 application compatible with Windows 98.
 - The game aims for a rate of 30 frames per second.
 - The game's graphics must be _rendered in software_.
-- The game's rendering of visuals employs only 32-bit and smaller integers, and the only arithmetic used is fixed-point arithmetic.[^23]
+- The game's rendering of visuals employs only 32-bit and smaller integers, integer arithmetic, and fixed-point arithmetic.[^23]
+- The game's rendering of visuals employs only 32-bit and smaller integers, integer arithmetic, fixed-point arithmetic, and arithmetic involving 32-bit floating-point numbers (IEEE 754 binary32, or the commonly implemented meaning of the C language's `float` type).[^77]
 - The game renders only white line segments on a black background (or vice versa), and displays no more than 320 of those segments at a time.  These line segments are drawn with an approximation at integer coordinates.
 - The game runs with acceptable performance on [**80486-compatible processors**](https://www.dosdays.co.uk/topics/cpus.php#i486) at 33 or 50 megahertz.[^24]
 - The game runs with acceptable performance on x86 processors at 100 megahertz.
@@ -360,6 +361,7 @@ The following are examples of the kind of statements desired:
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
 - Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
 - Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999.
+- J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995.
 - Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).
 - Rodent, H., "Animation in Win32", Microsoft Developer Network, Feb. 1, 1994.
 - Thompson, N., _Animation Techniques in Win32_, Microsoft Press, 1995.
@@ -426,7 +428,7 @@ Write a free and open-source tutorial on game graphics programming using the pre
 5. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
 6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
 
-A similar tutorial is [**_Computer Graphics from Scratch_**](https://gabrielgambetta.com/computer-graphics-from-scratch/) by Gabriel Gambetta, although it's not geared toward the visuals in pre-2000 video games.  For example, it covers ray tracing (which is outside this specification's scope) but not sprites or other 2-D concepts.
+Similar tutorials are [**_Computer Graphics from Scratch_**](https://gabrielgambetta.com/computer-graphics-from-scratch/) by Gabriel Gambetta and the [**tiny-renderer tutorial**](https://haqr.eu/tinyrenderer/) by Dmitry Sokolov, although they are not always geared toward the visuals in pre-2000 video games.  For example, Gambetta covers ray tracing (which is outside this specification's scope) but not sprites or other 2-D concepts.
 
 <a id=Acknowledgments></a>
 
@@ -456,15 +458,15 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^6]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).
 
-[^7]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". _Tricks of the Mac Game Programming Gurus_ (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
+[^7]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". McCornack et al. (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
 
-[^8]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many PlayStation (One) games.
+[^8]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation.
 
 [^9]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be _rendered in software_.  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
 [^10]: The Neo Geo (1990) has only one 2-D layer; the rest of the visuals are sprites drawn below that layer.
 
-[^11]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in _Tricks of the Mac Game Programming Gurus_ (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
+[^11]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in McCornack et al. (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
 [^12]: SEGA arcade machines from the 1980s and earlier had rudimentary systems for scaling (stretching or shrinking) sprites horizontally and vertically. In the Super Famicom/Super Nintendo Entertainment System (1990), sprites could not be scaled, but they could be flipped.
 
@@ -482,7 +484,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^19]: An example is _Loom_ (1990).
 
-[^20]: This was recommended for Macintosh games in J. McCornack et al., _Tricks of the Mac Game Programming Gurus_ (Hayden Books, 1995), notably because 8-bit-per-pixel images transfer faster and save memory over images with more bits per pixel; see also chapter 70 of Abrash (1997) (dealing with the porting of an 8-bit-per-pixel game to a 16-bit-per-pixel video card).
+[^20]: This was recommended for Macintosh games in McCornack et al. (1995), notably because 8-bit-per-pixel images transfer faster and save memory over images with more bits per pixel; see also chapter 70 of Abrash (1997) (dealing with the porting of an 8-bit-per-pixel game to a 16-bit-per-pixel video card).
 
 [^21]: Popular file size limit of so-called "64K intros".
 
@@ -562,7 +564,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^59]: Stands for phase alternating line.
 
-[^60]: Intel & Microsoft, _PC 99 System Design Guide_, 1998.
+[^60]: Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
 
 [^61]: By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were [**introduced in 1988**](https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/).
 
@@ -595,3 +597,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^75]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^76]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^77]: The use of 64-bit floating-point numbers (IEEE 754 binary64, or the commonly implemented meaning of the C language's `double` type) is perhaps unusual in graphics programming before 2000.
