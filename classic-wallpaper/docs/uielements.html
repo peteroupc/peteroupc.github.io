@@ -235,15 +235,15 @@
 
 <p>In general, from about 1990 to about 1997, user-interface text was drawn in one color only and rarely had smoothed edges; the edges were smoothed only if the display mode can show more than 256 colors at a time.  In fancier ways to show text, a “shadowed” text look was often achieved using multiple shifted renderings of the text in a single color (for example, from one unit upward and leftward to three units downward and rightward) followed by an unshifted rendering in the base color or pattern.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup>  But new applications should avoid having text in icons, cursors, and other images. An example of shadowed text follows:</p>
 
-<p><img src="shadowed.png" alt="The word &quot;Sample&quot; in blue, shadowed above by gray and below by black." /></p>
+<p><img src="shadowed.png" alt="**The word &quot;Sample&quot; in blue, shadowed above by gray and below by black.**" /></p>
 
-<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.<sup id="fnref:22a"><a href="#fn:22a" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
+<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
 
 <p><a id="Animations"></a></p>
 
 <h2 id="animations">Animations</h2>
 
-<p>Although Windows 95 and later versions have an <em>animation control</em> for displaying simple video files without sound that are limited to 256 colors, this control appears to be rarely used.  More usually, traditional desktop applications don’t store an animation as a video file; rather, the images making up the animation are either stored as separate image files or arranged in a row or column of a single image file (in either case with transparent pixels marked with a color not present in the animation’s frames). <sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>  The source code file <em>desktopwallpaper.py</em> has a method, named <code>writeavi</code>, to write video files.</p>
+<p>Although Windows 95 and later versions have an <em>animation control</em> for displaying simple video files without sound that are limited to 256 colors, this control appears to be rarely used.  More usually, traditional desktop applications don’t store an animation as a video file; rather, the images making up the animation are either stored as separate image files or arranged in a row or column of a single image file (in either case with transparent pixels marked with a color not present in the animation’s frames). <sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>  The source code file <em>desktopwallpaper.py</em> has a method, named <code>writeavi</code>, to write video files.</p>
 
 <p><a id="Flexible_User_Interface_Graphics"></a></p>
 
@@ -257,7 +257,7 @@
   <li>Designing user-interface elements as images or vector graphics limited to gray tones, where the system replaces each gray tone in the image or graphic with the corresponding color in a color gradient involving one or more system colors.</li>
   <li>Drawing the same icon, cursor, or graphic—
     <ul>
-      <li>in multiple variations in size (width, height, or both), each with a different level of detail (where the system is expected to use a shrinking of the smallest available graphic that’s larger than the requested size, if the requested size is not available), even in the case of <a href="https://www.haiku-os.org/docs/userguide/en/applications/icon-o-matic.html"><strong>vector graphics</strong></a> <sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, and</li>
+      <li>in multiple variations in size (width, height, or both), each with a different level of detail (where the system is expected to use a shrinking of the smallest available graphic that’s larger than the requested size, if the requested size is not available), even in the case of <a href="https://www.haiku-os.org/docs/userguide/en/applications/icon-o-matic.html"><strong>vector graphics</strong></a> <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>, and</li>
       <li>with a different maximum number of unique colors (such as 2, 8, 16, 256, or 2^24 colors).</li>
     </ul>
   </li>
@@ -270,35 +270,7 @@
 
 <h2 id="relevant-works">Relevant Works</h2>
 
-<p>The following books and other works discuss design matters on traditional user interfaces:</p>
-
-<ul>
-  <li><em>The Microsoft Windows User Experience</em>, which applies to Windows 98 and Windows 2000.</li>
-  <li><em>The Windows Interface Guidelines for Software Design</em>, which applies to Windows 95.</li>
-  <li>“Wizard 97” (1999) and “Backward Compatible Wizard 97”, part of the Windows Platform SDK, April 2000.</li>
-  <li>Matt Saettler, “Graphics Design and Optimization”, Multimedia Technical Note (Microsoft), 1992.</li>
-  <li>W. Cherry and K. Marsh, “Adding 3-D Effects to Controls”, Technical Note (Microsoft), 1992-1993.</li>
-  <li>Microsoft Knowledge Base article Q69079, “How to Give a 3-D Effect to Windows Controls”.</li>
-  <li>K. Brockschmidt, “A Primer on Designing Custom Controls”, <em>Microsoft Systems Journal</em> 7(2).</li>
-  <li>K. P. Welch, “Extending the Windows 3.0 Interface with Installable Custom Controls”, <em>Microsoft Systems Journal</em> 5(4), July 1990.</li>
-  <li>Kyle Marsh, “Implementing a Status Bar”, Technical Note (Microsoft), April 2, 1992.</li>
-  <li>Kyle Marsh, “Creating a Toolbar”, Technical Note (Microsoft), December 31, 1992.</li>
-  <li>The “Visual Design Guide” that came with Microsoft Visual Basic 3.0 Professional Edition.</li>
-  <li>“Tip 53: Adding Three-Dimensional Effects to Visual Basic Controls”, Visual Basic Tips, April 10, 1995.</li>
-  <li><em>Common User Access: Basic Interface Design Guide</em> and <em>Common User Access: Advanced Interface Design Guide</em>, which apply to Windows version 3.0 and Presentation Manager.</li>
-  <li>Shiz Kobara, <em>Visual Design with OSF/Motif</em>, Addison-Wesley, 1991.</li>
-  <li><em>OSF/Motif Style Guide</em> (releases 1.1, 1.2, and 2.0), and <em>OSF/Motif Widget Writer’s Guide</em>.</li>
-  <li><em>The Windows Interface: An Application Design Guide</em>, which applies to Windows version 3.1.</li>
-  <li><em>Motif Reference Manual</em> (Volume Six B) and <em>XView Reference Manual</em> (Volume Seven B), from the X Window System series published by O’Reilly &amp; Associates.</li>
-  <li><a href="https://dl.acm.org/doi/book/10.5555/573097"><strong><em>Macintosh Human Interface Guidelines</em></strong></a>, 1992.</li>
-  <li><em>Mac OS 8 Human Interface Guidelines</em> (addendum to <em>Macintosh User Interface Guidelines</em>), Sep. 2, 1997.</li>
-  <li>“Color, Windows and 7.0”, Apple Technical Note TB33, Oct. 1, 1992.</li>
-  <li>E. Voas, “Appearance: Not Just Another Pretty Interface”, <em>develop</em> (Apple), June 1997.</li>
-  <li>J. Osborne, D. Thomas, “Working in the Third Dimension”, <em>develop</em> (Apple), September 1993, describes the
-authors’ suggestions for the three-dimensional appearance of buttons and certain other interface elements compatible with System 7 of the Macintosh Operating System.</li>
-  <li><a href="https://learn.microsoft.com/en-us/previous-versions/ms997636(v=msdn.10)"><strong>“Creating Windows XP Icons”</strong></a> (Microsoft Learn), July 2001.</li>
-  <li>Commodore-Amiga, Inc., <em>Amiga User Interface Style Guide</em>, Addison-Wesley, 1991.<sup id="fnref:24a"><a href="#fn:24a" class="footnote" rel="footnote" role="doc-noteref">26</a></sup></li>
-</ul>
+<p>There are many books and other works that discuss design matters on traditional user interfaces.<sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">26</a></sup> <sup id="fnref:6:4"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> <sup id="fnref:27"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> <sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup> <sup id="fnref:29"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">29</a></sup> <sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">30</a></sup> <sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup> <sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup> <sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup> <sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup> <sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup> <sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> <sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup> <sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup> <sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup> <sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup> <sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup> <sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup> <sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup> <sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup> <sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> <sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> <sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> <sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup></p>
 
 <p><a id="Worthy_Mentions"></a></p>
 
@@ -306,7 +278,7 @@ authors’ suggestions for the three-dimensional appearance of buttons and certa
 
 <ul>
   <li>The <code>QLCDNumber</code> interface element, from the Qt framework, displays a number in a form resembling seven-segment displays.  The number’s digits are vector graphics (geometric models), not images, and <code>QLCDNumber</code> supports a drawing mode where the upper and left-hand outlines are drawn in a lighter color than the lower and right-hand outlines.</li>
-  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
+  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
 </ul>
 
 <hr />
@@ -378,7 +350,7 @@ end
       <p>Examples include the Motif toolkit (see the section “Worthy Mentions”) as well as <a href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor"><strong>Windows 10 and Windows 11</strong></a>. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>See <em>The Windows Interface Guidelines for Software Design</em>. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:6:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:6:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:6:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a></p>
+      <p><em>The Windows Interface Guidelines for Software Design</em>, which applies to Windows 95. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:6:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:6:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a> <a href="#fnref:6:3" class="reversefootnote" role="doc-backlink">&#8617;<sup>4</sup></a> <a href="#fnref:6:4" class="reversefootnote" role="doc-backlink">&#8617;<sup>5</sup></a></p>
     </li>
     <li id="fn:7">
       <p>Buttons possessed a 3-D look (in that they appear to have depth or elevation) in Windows versions 3.0 and 3.1 by default, but not other interface elements.  The article “Adding 3-D Effects to Controls” describes a library for these versions that gives 3-D appearances to more places in an application. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -428,20 +400,86 @@ end
     <li id="fn:22">
       <p>For example, see the discussion on buttons in the <em>RIPscrip</em> specification developed by TeleGrafix in 1992 and 1993. This specification was designed for building graphical user interfaces for online bulletin board systems under the EGA display mode. <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:22a">
-      <p>I am reminded of the way textures were created for the modern game <em>QUOD</em> by “Daivuk”: they were stored as editing commands such as bevels, sunken areas, and tiling. <a href="#fnref:22a" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:23">
-      <p><em>The Microsoft Windows User Experience</em> considers an animation to be fluid only if it runs at 16 or more frames per second.  For an example of an animation in the form of a single image file, see Herman Rodent, “Animation in Win32”, Microsoft Developer Network, Feb. 1, 1994. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>I am reminded of the way textures were created for the modern game <em>QUOD</em> by “Daivuk”: they were stored as editing commands such as bevels, sunken areas, and tiling. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:24">
-      <p>For example, an image can be drawn with four variations in width and height: 32 × 32, 40 × 40, 32 × 24, and 32 × 16 pixels.  Multiple sizes and vector versions of a graphic are useful for several reasons, including:<br />(1) to accommodate different display modes and pixel densities;<br />(2) to render parts of the graphic more crisply, especially if their <a href="http://rastertragedy.com/RTRCh1.htm"><strong>smallest feature would measure less than twice the spacing between pixels</strong></a>.<br />They are useful for toolbar icons, for example, especially nowadays where the icon style is a single-color filled outline akin to a typographic symbol.  Indeed, even 16-×-15-pixel images often used as toolbar icons are, in many cases, ultimately vector graphics consisting of polygons and simple line segments. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-    <li id="fn:24a">
-      <p>Suggested to me by a Reddit community. <a href="#fnref:24a" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><em>The Microsoft Windows User Experience</em> considers an animation to be fluid only if it runs at 16 or more frames per second.  For an example of an animation in the form of a single image file, see Herman Rodent, “Animation in Win32”, Microsoft Developer Network, Feb. 1, 1994. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:25">
-      <p>The resulting color may vary slightly from the one calculated by the Motif toolkit, because of rounding errors committed by that toolkit. <a href="#fnref:25" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>For example, an image can be drawn with four variations in width and height: 32 × 32, 40 × 40, 32 × 24, and 32 × 16 pixels.  Multiple sizes and vector versions of a graphic are useful for several reasons, including:<br />(1) to accommodate different display modes and pixel densities;<br />(2) to render parts of the graphic more crisply, especially if their <a href="http://rastertragedy.com/RTRCh1.htm"><strong>smallest feature would measure less than twice the spacing between pixels</strong></a>.<br />They are useful for toolbar icons, for example, especially nowadays where the icon style is a single-color filled outline akin to a typographic symbol.  Indeed, even 16-×-15-pixel images often used as toolbar icons are, in many cases, ultimately vector graphics consisting of polygons and simple line segments. <a href="#fnref:25" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:26">
+      <p><em>The Microsoft Windows User Experience</em>, which applies to Windows 98 and Windows 2000. <a href="#fnref:26" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:27">
+      <p>“Wizard 97” (1999) and “Backward Compatible Wizard 97”, part of the Windows Platform SDK, April 2000. <a href="#fnref:27" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:28">
+      <p>Matt Saettler, “Graphics Design and Optimization”, Multimedia Technical Note (Microsoft), 1992. <a href="#fnref:28" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:29">
+      <p>W. Cherry and K. Marsh, “Adding 3-D Effects to Controls”, Technical Note (Microsoft), 1992-1993. <a href="#fnref:29" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:30">
+      <p>Microsoft Knowledge Base article Q69079, “How to Give a 3-D Effect to Windows Controls”. <a href="#fnref:30" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:31">
+      <p>K. Brockschmidt, “A Primer on Designing Custom Controls”, <em>Microsoft Systems Journal</em> 7(2). <a href="#fnref:31" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:32">
+      <p>K. P. Welch, “Extending the Windows 3.0 Interface with Installable Custom Controls”, <em>Microsoft Systems Journal</em> 5(4), July 1990. <a href="#fnref:32" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:33">
+      <p>Kyle Marsh, “Implementing a Status Bar”, Technical Note (Microsoft), April 2, 1992. <a href="#fnref:33" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:34">
+      <p>Kyle Marsh, “Creating a Toolbar”, Technical Note (Microsoft), December 31, 1992. <a href="#fnref:34" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:35">
+      <p>The “Visual Design Guide” that came with Microsoft Visual Basic 3.0 Professional Edition. <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:36">
+      <p>“Tip 53: Adding Three-Dimensional Effects to Visual Basic Controls”, Visual Basic Tips, April 10, 1995. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:37">
+      <p><em>Common User Access: Basic Interface Design Guide</em> and <em>Common User Access: Advanced Interface Design Guide</em>, which apply to Windows version 3.0 and Presentation Manager. <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:38">
+      <p>Shiz Kobara, <em>Visual Design with OSF/Motif</em>, Addison-Wesley, 1991. <a href="#fnref:38" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:39">
+      <p><em>OSF/Motif Style Guide</em> (releases 1.1, 1.2, and 2.0), and <em>OSF/Motif Widget Writer’s Guide</em>. <a href="#fnref:39" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:40">
+      <p><em>The Windows Interface: An Application Design Guide</em>, which applies to Windows version 3.1. <a href="#fnref:40" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:41">
+      <p><em>Motif Reference Manual</em> (Volume Six B) and <em>XView Reference Manual</em> (Volume Seven B), from the X Window System series published by O’Reilly &amp; Associates. <a href="#fnref:41" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:42">
+      <p><em>Macintosh Human Interface Guidelines</em>, 1992. https://doi.org/10.5555/573097 <a href="#fnref:42" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:43">
+      <p><em>Mac OS 8 Human Interface Guidelines</em> (addendum to <em>Macintosh User Interface Guidelines</em>), Sep. 2, 1997. <a href="#fnref:43" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:44">
+      <p>“Color, Windows and 7.0”, Apple Technical Note TB33, Oct. 1, 1992. <a href="#fnref:44" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:45">
+      <p>E. Voas, “Appearance: Not Just Another Pretty Interface”, <em>develop</em> (Apple), June 1997. <a href="#fnref:45" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:46">
+      <p>J. Osborne, D. Thomas, “Working in the Third Dimension”, <em>develop</em> (Apple), September 1993, describes the authors’ suggestions for the three-dimensional appearance of buttons and certain other interface elements compatible with System 7 of the Macintosh Operating System. <a href="#fnref:46" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:47">
+      <p><a href="https://learn.microsoft.com/en-us/previous-versions/ms997636(v=msdn.10)"><strong>“Creating Windows XP Icons”</strong></a> (Microsoft Learn), July 2001. <a href="#fnref:47" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:48">
+      <p>Commodore-Amiga, Inc., <em>Amiga User Interface Style Guide</em>, Addison-Wesley, 1991. Suggested to me by a Reddit community. <a href="#fnref:48" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:49">
+      <p>The resulting color may vary slightly from the one calculated by the Motif toolkit, because of rounding errors committed by that toolkit. <a href="#fnref:49" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
