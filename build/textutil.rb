@@ -284,7 +284,7 @@ Dir.glob("*.md").sort.each{|fn|
 
   file=File.basename(fn).gsub(/\.md$/,"")
   r=IO.read("#{file}.md")
-  if r.include?(".svg")
+  if r.include?(".svg") && !file.include?("pixeltovector")
     outputengine="html5"
   else
     outputengine="latex"
