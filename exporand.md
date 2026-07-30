@@ -2273,7 +2273,7 @@ The following are some additional articles I have written on the topic of random
 
 [^1]: Karney, C.F.F., 2016. "Sampling exactly from the normal distribution." ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.
 
-[^2]: Philippe Flajolet, Nasser Saheb. "The complexity of generating an exponentially distributed variate." [Research Report] RR-0159, INRIA. 1982. inria-00076400.
+[^2]: [Philippe Flajolet, Nasser Saheb. "The complexity of generating an exponentially distributed variate."](https://scholar.google.com/scholar?q=Philippe+Flajolet,+Nasser+Saheb.+The+complexity+of+generating+an+exponentially+distributed+variate) [Research Report] RR-0159, INRIA. 1982. inria-00076400.
 
 [^3]: Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.
 
@@ -2297,7 +2297,7 @@ The following are some additional articles I have written on the topic of random
 
 [^13]: Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.
 
-[^14]: Hill, T.P. and Schürger, K., 2005. "Regularity of digits and significant digits of random variables." _Stochastic processes and their applications_, 115(10), pp.1723-1743.
+[^14]: [Hill, T.P. and Schürger, K., 2005. "Regularity of digits and significant digits of random variables."](https://scholar.google.com/scholar?q=Hill,+T.P.+and+Schürger,+K.,+2005.+Regularity+of+digits+and+significant+digits+of+random+variables) _Stochastic processes and their applications_, 115(10), pp.1723-1743.
 
 [^15]: A _nondiscrete distribution_ is a probability distribution taking on values that each can't be mapped to a different integer.  An example is a distribution taking on any real number between 0 and 1.
 

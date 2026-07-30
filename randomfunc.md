@@ -2195,7 +2195,7 @@ The following are some additional articles I have written on the topic of random
 
 [^43]: Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.
 
-[^44]: Efraimidis, P. and Spirakis, P. "Weighted Random Sampling (2005; Efraimidis, Spirakis)", 2005. [**http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)
+[^44]: [Efraimidis, P. and Spirakis, P. "Weighted Random Sampling (2005; Efraimidis, Spirakis)"](https://scholar.google.com/scholar?q=Efraimidis,+P.+and+Spirakis,+P.+Weighted+Random+Sampling+2005+Efraimidis,+Spirakis), 2005. [**http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf**](http://utopia.duth.gr/~pefraimi/research/data/2007EncOfAlg.pdf)
 
 [^45]: JEAN-CLAUDE DEVILLE, YVES TILLÉ, Unequal probability sampling without replacement through a splitting method, Biometrika, Volume 85, Issue 1, March 1998, Pages 89–101, [**https://doi.org/10.1093/biomet/85.1.89**](https://doi.org/10.1093/biomet/85.1.89)
 
@@ -2233,7 +2233,7 @@ The following are some additional articles I have written on the topic of random
 
 [^62]: This includes integers if `e` is limited to 0, and fixed-point numbers if `e` is limited to a single exponent less than 0.
 
-[^63]: [**Downey, A. B. "Generating Pseudo-random Floating Point Values", 2007. [**http://allendowney.com/research/rand/**](http://allendowney.com/research/rand/)
+[^63]: [[**Downey, A. B. "Generating Pseudo-random Floating Point Values"](https://scholar.google.com/scholar?q=Downey,+A.+B.+Generating+Pseudo-random+Floating+Point+Values), 2007. [**http://allendowney.com/research/rand/**](http://allendowney.com/research/rand/)
 
 [^64]: Ideally, `X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example, `X` is 2^53 (9007199254740992) for binary64, and 2^24 (16777216) for binary32.
 
