@@ -478,7 +478,7 @@ For certain operators, the approximation error of a function under that operator
 
 - _$S$ is the space of continuous functions that take a number in a compact interval or a closed subset thereof and give a real number, and its "norm" ($\Vert\cdot\Vert$) is the maximum absolute value._
 - _$T$ is either $S$ or a subset thereof[^61] and admits the same "norm" as $S$._
-- _$L$ is a bounded linear operator that maps functions in $S$ to functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
+- _$L$ is a bounded linear operator that maps functions in $S$ to all functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
 
 _Then for every function $f$ in $S$ and every function $P$ in $T$:_
 
@@ -504,7 +504,6 @@ _where $I$ is the identity operator that maps every function to itself: $I(g)=g$
 >
 > 1. Besides the identity operator, no linear operator is positive, maps continuous to continuous functions, and reproduces all polynomials up to degree 2 (constants, linear functions, and quadratic functions) (Păltănea 2004, corollary 1.1.2)[^30].[^65]
 > 2. Inequalities similar to (Leb) and (Leb2) may apply to _spline operators_ that map to a continuous function (a _spline_) that equals a polynomial at subintervals of its domain (for example, Sablonnière 2007[^66]).  These operators may have a _local approximation_ property, such that $L(f)(\lambda)$ depends only on the behavior of $f$ near $\lambda$.  But it's not clear to me when inequalities similar to (Leb) and (Leb2) apply to those cases.[^67]
-> 3. Lemma 14 states "$\Vert f-P\Vert$ for every function $P$ in $T$" rather than the greatest lower bound of $\Vert f-P\Vert$ over all functions $P$ in $T$ (which is subtly different). But the latter statement is not a problem for Lemma 14 as stated, at least if $T$ is a subalgebra of $S$. Indeed, with the assumptions on $L$ and $S$, the theorem in chapter 2 of Cheney and Light (2009)[^63], and Mazur's theorem (mentioned in Roversi (1984)[^97], every function in $S$ has a "best approximation" from $T$ (see also DeVilliers \[2012, theorem 5.3.2\][^68], which makes this "best-approximation" assumption for a larger class of function spaces $S$).
 
 <a id=Bounds_for_Certain_Nonlinear_Operators></a>
 
@@ -789,12 +788,9 @@ It was a goal of this article to catalog general-purpose error bounds without su
 
 To improve this article, explicit error bounds (with no hidden constants) of the following kinds are sought:
 
-- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, inequalities of the following forms, where $C$ is an explicitly given positive constant:
-    1. $\Vert f-L(f)\Vert \le (C \Vert I - L\Vert_{op})$ times the smallest $\Vert f-P\Vert$ over _a subset_ of functions $P$ mapped to by $L$ (for example, $L$ maps to polynomials up to degree 5, but reproduces only polynomials up to degree 2).
-    2. $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^93]).
-    3. Inequalities of type 1 or 2 where $L$ and $f$ are restricted to some compact subinterval.
+- Inequalities similar to the [**Lebesgue inequality**](#Lebesgue_Inequality_for_Certain_Linear_Operators) for certain operators (not necessarily linear ones) where the normal Lebesgue inequality doesn't apply (say, spline operators with local approximation, or numerical integration rules).  For example, $\Vert f-L(f)\Vert \le (C\Vert I - L\Vert_{op})$ times the smallest $\Vert f^{(k)}-P^{(k)}\Vert$ over _a subset_ of functions $P$ mapped to by $L$, where $k\ge 1$ (for example, De Boor 1975[^93]).
 
-    See a question on this matter in [**_MathOverflow_**](https://mathoverflow.net/questions/512319/ways-to-generalize-the-lebesgue-inequality-in-approximation-theory).
+    An answer to a [**_MathOverflow_ question**](https://mathoverflow.net/questions/512319/ways-to-generalize-the-lebesgue-inequality-in-approximation-theory) gives a generalization of the Lebesgue inequality.
 - General-purpose upper bounds on the error when approximating a function with:
     1. Polynomials, especially polynomials in Bernstein form with nonnegative coefficients.
     2. Ratios of polynomials described in (1).
@@ -809,11 +805,6 @@ In addition, the following will be helpful.
 
 - Results on ways to rewrite a nonpositive linear operator into a difference of two positive linear operators, as used in Lemma 8 and the first Example section.
 - Does Lemma 7 also work for linear operators, such as the [**Lorentz operator**](#Example_The_Lorentz_operators), whose norm is not based on the maximum absolute value?
-- In which cases are the [**Lebesgue inequalities**](#Lebesgue_Inequality_for_Certain_Linear_Operators) (Leb) and (Leb2) true even if the set of functions $L$ maps to is not a (linear) subspace?
-- Given the work by Rohwer (2005)[^95], are the inequalities (Leb) and (Leb2) true when&mdash;
-    - $L$ is nonlinear,
-    - $L$ is Lipschitz continuous, replacing $\Vert L\Vert_{op}$ with the Lipschitz constant of $L$, and
-    - both $L$ and $I-L$ are idempotent?
 
 Also:
 
