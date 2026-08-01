@@ -140,7 +140,8 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 - home computers released before 1995,[^17]
 - game consoles (handheld and for TVs) released before 2000,
 - learning toys with an electronic display, released before 2000,
-- arcade machines with similar performance to machines described earlier, and
+- arcade machines with similar performance to machines described earlier,
+- videotex protocols before 1995<<|Videotex is a communication system involving video screens.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).>>, and
 - the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
 
 In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^18]

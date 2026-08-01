@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-07-31"><meta name="citation_date" content="2026/07/31"><meta name="citation_publication_date" content="2026/07/31"><meta name="citation_online_date" content="2026/07/31"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Notes on Approximation Theory</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/approxtheory.pdf"><meta name="citation_url" content="https://peteroupc.github.io/approxtheory.html"><meta name="citation_title" content="Notes on Approximation Theory"><meta name="dc.date" content="2026-08-01"><meta name="citation_date" content="2026/08/01"><meta name="citation_publication_date" content="2026/08/01"><meta name="citation_online_date" content="2026/08/01"><meta name="og:title" content="Notes on Approximation Theory"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/approxtheory.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Notes on Approximation Theory"><meta name="dc.title" content="Notes on Approximation Theory"><meta name="twitter:title" content="Notes on Approximation Theory"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-07-31.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="notes-on-approximation-theory">Notes on Approximation Theory</h1><p>This version of the document is dated 2026-08-01.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -78,6 +78,7 @@
   </li>
   <li>The <em>expected value</em> (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.</li>
   <li>A <em>modulus of continuity of order 1</em> of a function <em>f</em>, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$’s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the “regularity” of $f$; generally, the smaller it is, the more “regular”.</li>
+  <li>A <em>modulus of continuity of order $r$</em> of a function <em>f</em>, denoted $\omega_r(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(\Delta_r(f,x,h))\le\omega_r(f, \delta)$ whenever the left-hand side is defined and $0\le h\le\delta$.  Here, $r$ is a positive integer, and $\Delta_r$ is a forward difference function as follows: $\Delta_1(f,x,h) = f(x+h)-f(x)$ provided $x$ and $x+h$ are in $f$’s domain, and for $i\ge 2$, $\Delta_i(f,x,h) = \Delta_{i-1}(f,x+h,h)-\Delta_{i-1}(f,x,h)$.</li>
   <li>In this document:
     <ul>
       <li>$e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.</li>
@@ -235,16 +236,16 @@
 
 <ol>
   <li>
-    <p>If <em>f</em> is nowhere decreasing and convex, $\omega(f,x) = \tilde\omega(f,x)$ $= f(b)-f(b-x)$ (Gal 1990)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; (Gal 1995)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.</p>
+    <p>If <em>f</em> is nowhere decreasing and convex, $\omega_1(f,x) = \tilde\omega_1(f,x)$ $= f(b)-f(b-x)$ (Gal 1990)<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; (Gal 1995)<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.</p>
   </li>
   <li>
-    <p>If <em>f</em> is nowhere increasing and convex, $\omega(f,x) = \tilde\omega(f,x)$ $= f(a)-f(a+x)$ (Gal 1990)<sup id="fnref:20:1"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; (Gal 1995)<sup id="fnref:21:1"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.</p>
+    <p>If <em>f</em> is nowhere increasing and convex, $\omega_1(f,x) = \tilde\omega_1(f,x)$ $= f(a)-f(a+x)$ (Gal 1990)<sup id="fnref:20:1"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>; (Gal 1995)<sup id="fnref:21:1"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup>.</p>
   </li>
   <li>
-    <p>If <em>f</em> is nowhere decreasing and concave, $\omega(f, x)= \tilde\omega(f,x)$ $=f(a+x)-f(a)$ (by symmetry with 2).</p>
+    <p>If <em>f</em> is nowhere decreasing and concave, $\omega_1(f, x)= \tilde\omega_1(f,x)$ $=f(a+x)-f(a)$ (by symmetry with 2).</p>
   </li>
   <li>
-    <p>If <em>f</em> is nowhere increasing and concave, $\omega(f, x)= \tilde\omega(f,x)$ $=f(b-x)-f(b)$ (by symmetry with 1).</p>
+    <p>If <em>f</em> is nowhere increasing and concave, $\omega_1(f, x)= \tilde\omega_1(f,x)$ $=f(b-x)-f(b)$ (by symmetry with 1).</p>
   </li>
 </ol>
 
@@ -652,7 +653,7 @@
   <li>$\text{abs}(f(\lambda)-P(\lambda))\le\omega_r(f,rh)$ <em>and</em> $\Vert P^{(r)}\Vert\le (r+1)\omega_r(f,rh)/h^r$,</li>
 </ul>
 
-<p><em>for some</em> $\tau_r\le r^r$, <em>where</em> $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, <em>and</em> $\tau_4=331/6$.</p>
+<p><em>for some positive</em> $\tau_r\le r^r$, <em>where</em> $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, <em>and</em> $\tau_4=331/6$.</p>
 
 <blockquote>
   <p><strong>Note:</strong> There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup>, but that result has hidden constants with no upper bounds given.</p>
@@ -673,7 +674,7 @@
 <ul>
   <li><em>$S$ is the space of continuous functions that take a number in a compact interval or a closed subset thereof and give a real number, and its “norm” ($\Vert\cdot\Vert$) is the maximum absolute value.</em></li>
   <li><em>$T$ is either $S$ or a subset thereof<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">61</a></sup> and admits the same “norm” as $S$.</em></li>
-  <li><em>$L$ is a bounded linear operator that maps functions in $S$ to all functions in $T$.  Also, $L$ is</em> idempotent, <em>that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$).</em></li>
+  <li><em>$L$ is a bounded linear operator that maps functions in $S$ to exactly the functions in $T$.  Also, $L$ is</em> idempotent, <em>that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$).</em></li>
 </ul>
 
 <p><em>Then for every function $f$ in $S$ and every function $P$ in $T$:</em></p>
@@ -1256,7 +1257,7 @@
       <p><a href="https://scholar.google.com/scholar?q=Zhuk,+V.V.,+Functions+of+the+Lip+1+class+and+S.N.+Bernsteins+polynomials"><strong>Zhuk, V.V., “Functions of the Lip 1 class and S.N. Bernstein’s polynomials”</strong></a>, 1989. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:59">
-      <p><a href="https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness"><strong>Köhler, P., “Estimating Remainder Functions by the Moduli of Smoothness”</strong></a>, <em>Zeitschrift für Analysis und ihre Anwendungen</em> 13(1), 1994. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness"><strong>Köhler, P., “Estimating Remainder Functionals by the Moduli of Smoothness”</strong></a>, <em>Zeitschrift für Analysis und ihre Anwendungen</em> 13(1), 1994. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:60">
       <p>Heinz H. Gonska “Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation”, Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). <a href="https://doi.org/10.1216/RMJ-1989-19-1-157"><strong>https://doi.org/10.1216/RMJ-1989-19-1-157</strong></a> <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:60:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>

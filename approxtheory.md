@@ -60,6 +60,7 @@ For definitions of _continuous_, _derivative_, _convex_, _concave_, _Hölder con
     - An operator is _bounded_ if its operator norm is finite.
 - The _expected value_ (or mean or “long-run average”) of a random variable $Y$ is denoted $\mathbb{E}[Y]$.
 - A _modulus of continuity of order 1_ of a function _f_, denoted $\omega_1(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(f(x)-f(y))\le\omega_1(f, \delta)$ whenever $x$ and $y$ are in $f$'s domain and no more than $\delta$ apart.  Loosely speaking, $\omega_1(f, \delta)$ gives how much $f$ can vary when $f$ is restricted to a window of size $\delta$ or less.  The modulus of continuity reflects the "regularity" of $f$; generally, the smaller it is, the more "regular".
+- A _modulus of continuity of order $r$_ of a function _f_, denoted $\omega_r(f, \delta)$, means a nonnegative and nowhere decreasing function where, for each $\delta\ge 0$, $\text{abs}(\Delta_r(f,x,h))\le\omega_r(f, \delta)$ whenever the left-hand side is defined and $0\le h\le\delta$.  Here, $r$ is a positive integer, and $\Delta_r$ is a forward difference function as follows: $\Delta_1(f,x,h) = f(x+h)-f(x)$ provided $x$ and $x+h$ are in $f$'s domain, and for $i\ge 2$, $\Delta_i(f,x,h) = \Delta_{i-1}(f,x+h,h)-\Delta_{i-1}(f,x,h)$.
 - In this document:
     - $e_i$ is a function such that $e_i(t) = t^i$, so that $e_0(t) = 1$ and $e_1(t) = t$; as an example, if $L(f) = f(0) + f(1)$, then $L(e_1 - x)$ = $(e_1(0) - x) + (e_1(1) - x)$ = $(0-x)+(1-x)=1-2x$.
     - The notation $\Vert f\Vert$, where $f$ is a function, means the function's "norm", which is the maximum absolute value over its domain unless the context indicates otherwise.
@@ -173,13 +174,13 @@ Meanwhile, bounds for the derivatives of $f$ (here, $f^{(i)}$) are often assumed
 
 **Remark 2:** The moduli $\omega_1$ and $\tilde\omega_1$ of certain functions can be calculated.  For example, the following results apply to continuous functions $f$ on the compact interval $[a, b]$:
 
-1. If _f_ is nowhere decreasing and convex, $\omega(f,x) = \tilde\omega(f,x)$ $= f(b)-f(b-x)$ (Gal 1990\)[^20]; (Gal 1995\)[^21].
+1. If _f_ is nowhere decreasing and convex, $\omega_1(f,x) = \tilde\omega_1(f,x)$ $= f(b)-f(b-x)$ (Gal 1990\)[^20]; (Gal 1995\)[^21].
 
-2. If _f_ is nowhere increasing and convex, $\omega(f,x) = \tilde\omega(f,x)$ $= f(a)-f(a+x)$ (Gal 1990\)[^20]; (Gal 1995\)[^21].
+2. If _f_ is nowhere increasing and convex, $\omega_1(f,x) = \tilde\omega_1(f,x)$ $= f(a)-f(a+x)$ (Gal 1990\)[^20]; (Gal 1995\)[^21].
 
-3. If _f_ is nowhere decreasing and concave, $\omega(f, x)= \tilde\omega(f,x)$ $=f(a+x)-f(a)$ (by symmetry with 2).
+3. If _f_ is nowhere decreasing and concave, $\omega_1(f, x)= \tilde\omega_1(f,x)$ $=f(a+x)-f(a)$ (by symmetry with 2).
 
-4. If _f_ is nowhere increasing and concave, $\omega(f, x)= \tilde\omega(f,x)$ $=f(b-x)-f(b)$ (by symmetry with 1).
+4. If _f_ is nowhere increasing and concave, $\omega_1(f, x)= \tilde\omega_1(f,x)$ $=f(b-x)-f(b)$ (by symmetry with 1).
 
 For more results of this nature, see Anastassiou and Gal (2000)[^22], especially theorem 2.1.4 there.
 
@@ -460,7 +461,7 @@ The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovachev
 - $\text{abs}(f(\lambda)-P(\lambda))\le\tau_r\omega_r(f,h)$ _and_ $\Vert P^{(r)}\Vert\le (2^r-1)\omega_r(f,h)/h^r$, _or_
 - $\text{abs}(f(\lambda)-P(\lambda))\le\omega_r(f,rh)$ _and_ $\Vert P^{(r)}\Vert\le (r+1)\omega_r(f,rh)/h^r$,
 
-_for some_ $\tau_r\le r^r$, _where_ $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, _and_ $\tau_4=331/6$.
+_for some positive_ $\tau_r\le r^r$, _where_ $\tau_1=1$, $\tau_2=5/2$, $\tau_3=10$, _and_ $\tau_4=331/6$.
 
 > **Note:** There is a result, broader than Lemma 13C, in Gonska (1989, Lemma 3.1)[^60], but that result has hidden constants with no upper bounds given.
 
@@ -478,7 +479,7 @@ For certain operators, the approximation error of a function under that operator
 
 - _$S$ is the space of continuous functions that take a number in a compact interval or a closed subset thereof and give a real number, and its "norm" ($\Vert\cdot\Vert$) is the maximum absolute value._
 - _$T$ is either $S$ or a subset thereof[^61] and admits the same "norm" as $S$._
-- _$L$ is a bounded linear operator that maps functions in $S$ to all functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
+- _$L$ is a bounded linear operator that maps functions in $S$ to exactly the functions in $T$.  Also, $L$ is_ idempotent, _that is, applying the linear operator twice or more is the same as applying it once, so that $L(L(f))=L(f)$ for every function $f$ in $S$ (for example, $L$ reproduces all functions in $T$)._
 
 _Then for every function $f$ in $S$ and every function $P$ in $T$:_
 
@@ -937,7 +938,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^58]: [**Zhuk, V.V., "Functions of the Lip 1 class and S.N. Bernstein’s polynomials"**](https://scholar.google.com/scholar?q=Zhuk,+V.V.,+Functions+of+the+Lip+1+class+and+S.N.+Bernsteins+polynomials), 1989.
 
-[^59]: [**Köhler, P., "Estimating Remainder Functions by the Moduli of Smoothness"**](https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness), _Zeitschrift für Analysis und ihre Anwendungen_ 13(1), 1994.
+[^59]: [**Köhler, P., "Estimating Remainder Functionals by the Moduli of Smoothness"**](https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness), _Zeitschrift für Analysis und ihre Anwendungen_ 13(1), 1994.
 
 [^60]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [**https://doi.org/10.1216/RMJ-1989-19-1-157**](https://doi.org/10.1216/RMJ-1989-19-1-157)
 
