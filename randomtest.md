@@ -88,6 +88,6 @@ The Schaathun paper suggests the following four pseudorandom number sequences fo
 
 [^8]: [**von Neumann, J. "Various Techniques Used in Connection with Random Digits."**](https://scholar.google.com/scholar?q=von+Neumann,+J.+Various+Techniques+Used+in+Connection+with+Random+Digits) _NBS Appl. Math. Ser._ 12, pp. 36-38, 1951.
 
-[^9]: [Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators"](https://scholar.google.com/scholar?q=Schaathun,+H.G.+Evaluation+of+Splittable+Pseudo-Random+Generators), 2015.
+[^9]: [**Schaathun, H.G. "Evaluation of Splittable Pseudo-Random Generators"**](https://scholar.google.com/scholar?q=Schaathun,+H.G.+Evaluation+of+Splittable+Pseudo-Random+Generators), 2015.
 
-[^10]: [Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing"](https://scholar.google.com/scholar?q=Claessen,+K.,+et+al.+Splittable+Pseudorandom+Number+Generators+using+Cryptographic+Hashing), Proceedings of Haskell Symposium 2013, pp. 47-58.
+[^10]: [**Claessen, K., et al. "Splittable Pseudorandom Number Generators using Cryptographic Hashing"**](https://scholar.google.com/scholar?q=Claessen,+K.,+et+al.+Splittable+Pseudorandom+Number+Generators+using+Cryptographic+Hashing), Proceedings of Haskell Symposium 2013, pp. 47-58.
