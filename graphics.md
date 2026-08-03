@@ -115,7 +115,7 @@ Limit 2-D graphics to the following: [^9]
         2. Each sprite can be horizontally flipped, vertically flipped, or both.[^12]
         3. No affine transformation or flipping of sprites is allowed.
     6. Image files used by the game should not store "pre-pixelated" sprites.
-    7. Up to N sprites can be displayed at a time, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.  In this formula, X is the maximum sprite width and Y is the maximum sprite height.[^13]
+    7. Up to N sprites can be displayed at a time on the game screen, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.  In this formula, X is the maximum sprite width and Y is the maximum sprite height.[^13]
 
 > **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
 >
@@ -144,7 +144,7 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 - videotex protocols before 1995[^18], and
 - the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
 
-In addition, video-game graphics for personal digital assistants, graphical calculators, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^19]
+In addition, video-game graphics for personal digital assistants, graphical calculators, learning toys, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^19]
 
 Arcade games in scope range in year from 1971 &mdash; which saw the launch of the first arcade video game, _Computer Space_ &mdash; to 1999.  But some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D rendering capabilities beyond what is "classic" here.
 
@@ -358,7 +358,7 @@ The following are examples of the kind of statements desired:
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
 - Donnelly, P., "Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation", Microsoft Developer Network, Nov. 25, 1996.
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
-- Lamothe, A., _Tricks of the Game Programming Gurus_, Sams, 1994.
+- Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
 - Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
 - Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999.
@@ -479,7 +479,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^16]: Matt Saettler, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992, contains a rich discussion of graphics used in computer games and other audiovisual computer applications up to 1992.  Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid crystal displays, of the kind found in Nintendo's Game & Watch and many Tiger Electronics handheld games.  These are simple to emulate, though: design a screen-size image that assigns each segment a unique color and, each frame, draw black where where the segments that are "on" are, and draw white (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
-[^17]: Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System.
+[^17]: Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Sharp X68000, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System.
 
 [^18]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
