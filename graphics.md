@@ -356,7 +356,6 @@ The following are examples of the kind of statements desired:
 
 - Abrash, M., [**_Michael Abrash's Graphics Programming Black Book: Special Edition_**](https://github.com/jagregory/abrash-black-book), 1997.
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
-- Donnelly, P., "Moving Your Game to Windows, Part III: Sound, Graphics, Installation, and Documentation", Microsoft Developer Network, Nov. 25, 1996.
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
@@ -430,6 +429,18 @@ Write a free and open-source tutorial on game graphics programming using the pre
 6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
 
 Similar tutorials are [**_Computer Graphics from Scratch_**](https://gabrielgambetta.com/computer-graphics-from-scratch/) by Gabriel Gambetta and the [**tiny-renderer tutorial**](https://haqr.eu/tinyrenderer/) by Dmitry Sokolov, although they are not always geared toward the visuals in pre-2000 video games.  For example, Gambetta covers ray tracing (which is outside this specification's scope) but not sprites or other 2-D concepts.
+
+> **Example:** A potential list of topics the tutorial can have:
+>
+> - The game screen; Pixel coloring; Line drawing; Circle and ellipse drawing; Circle and ellipse filling; Polygon filling; Flood filling; Text rendering using line drawing; Shape drawing review;
+> - Colors and color palettes; Image copying; Image stretching; Sprites; Tile mapping; Sprite animation; Text rendering using sprites and tiles; 2-D layers; Image and sprite review;
+> - Palette animation; Pixel formats; 2-D affine transformations; 2-D review;
+> - Introduction to 3-D; 3-D line drawing; 3-D triangle drawing; 3-D transformations (affine and perspective); The "camera";
+> - Flat shading; Gouraud shading; 1-D ray casting; Hidden surface removal; Z buffering;
+> - Texture mapping; Perspective correction; Texture blending; Specular highlighting;
+> - MIP mapping; Fog; Combining 2-D and 3-D; 3-D review.
+>
+> Examples of exercises for line drawing are an exercise for drawing polygons, and another for plotting Bézier curves.
 
 <a id=Acknowledgments></a>
 
