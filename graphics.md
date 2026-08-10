@@ -24,7 +24,7 @@ All may interest 1990s computer users.
         - [**Screen resolutions**](#Screen_resolutions)
         - [**Frame rate**](#Frame_rate)
         - [**3-D graphics**](#3_D_graphics)
-        - [**Arcade game graphics**](#Arcade_game_graphics)
+        - [**Graphics in video arcade games**](#Graphics_in_video_arcade_games)
         - [**Screen image effects (filters)**](#Screen_image_effects_filters)
         - [**Sounds**](#Sounds)
         - [**Memory**](#Memory)
@@ -219,7 +219,7 @@ This section has notes on this specification, such as how its requirements corre
     - 8:5 aspect ratio: 640 &times; 400,[^49] 320 &times; 200.[^31]
     - Other: 280 &times; 192,[^50] 480 &times; 272,[^51] 512 &times; 424, [^52] 400 &times; 240,[^53] 384 &times; 224,[^54] 160 &times; 200,[^55] 480 &times; 240.[^56]
 
-    This is not a complete list.  Some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.  [**Arcade game graphics**](#Arcade_game_graphics) are described later.
+    This is not a complete list.  Some game consoles, such as the SEGA Saturn or Nintendo 64, allowed games to alter the screen resolution during gameplay.  [**Arcade game graphics**](#Graphics_in_arcade_video_games) are described later.
 
 - As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^57]
 
@@ -262,9 +262,9 @@ This section has notes on this specification, such as how its requirements corre
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^63] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 
-<a id=Arcade_game_graphics></a>
+<a id=Graphics_in_video_arcade_games></a>
 
-#### Arcade game graphics
+#### Graphics in video arcade games
 
 - From 1971 to 1979, arcade games tended to have white visuals drawn on a black screen; the screen image was one bit per pixel.  Some arcade cabinets in the late 1970s had a colored semitransparent overlay in front of the screen to lend color to the otherwise white graphics (an example is _Lunar Rescue_ [1979]).
 - The practice of drawing graphics on a mostly black screen continued up to the early 1980s, but this time they were colored by the game itself rather than by an overlay.
@@ -432,13 +432,13 @@ Similar tutorials are [**_Computer Graphics from Scratch_**](https://gabrielgamb
 
 > **Example:** A potential list of topics the tutorial can have:
 >
-> - The game screen; Pixel coloring; Line drawing; Circle and ellipse drawing; Circle and ellipse filling; Polygon filling; Flood filling; Text rendering using line drawing; Shape drawing review;
-> - Colors and color palettes; Image copying; Image stretching; Sprites; Tile mapping; Sprite animation; Text rendering using sprites and tiles; 2-D layers; Image and sprite review;
+> - The game screen; Line drawing; Polygon and triangle filling; Circles and ellipses; Flood filling; Text rendering using line drawing; Shape drawing review;
+> - Colors and color palettes; Image copying; Image stretching; Sprites; Tile maps and layers; Sprite animation; Text rendering using sprites and tiles; Image and sprite review;
 > - Palette animation; Pixel formats; 2-D affine transformations; 2-D review;
-> - Introduction to 3-D; 3-D line drawing; 3-D triangle drawing; 3-D transformations (affine and perspective); The "camera";
-> - Flat shading; Gouraud shading; 1-D ray casting; Hidden surface removal; Z buffering;
-> - Texture mapping; Perspective correction; Texture blending; Specular highlighting;
-> - MIP mapping; Fog; Combining 2-D and 3-D; 3-D review.
+> - 3-D lines and triangles; 3-D transformations (including perspective correction); The "camera";
+> - Per-column ray casting; Hidden surface removal; Triangle clipping; Z buffering;
+> - Shading (flat and Gouraud) and texture mapping; Texture blending; Specular highlighting;
+> - Fixed-point numbers; MIP mapping; Fog; Combining 2-D and 3-D; 3-D review.
 >
 > Examples of exercises for line drawing are an exercise for drawing polygons, and another for plotting Bézier curves.
 
@@ -494,7 +494,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^18]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
-[^19]: Examples are the [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000) and the many cellular phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).
+[^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Games for cellular phones that supported the OpenGL ES 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
 
 [^20]: An example is _Loom_ (1990).
 
