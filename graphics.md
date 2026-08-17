@@ -240,7 +240,7 @@ This section has notes on this specification, such as how its requirements corre
 
 - Modern games implementing this specification can choose to target a frame rate typical of today, such as 30, 40, or 60 frames per second.
 
-- Game consoles for TVs were designed for how often TVs can draw their image (nearly 60 frames per second for NTSC[^60] and 50 for PAL[^61]).
+- TVs with NTSC video[^60] can draw their image nearly 60 times per second; TVs with PAL video[^61], 50 times.
 
 - _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^58]
 
@@ -424,8 +424,8 @@ Write a free and open-source tutorial on game graphics programming using the pre
 1. The tutorial is book-length, printable, and programming-language neutral.
 2. The tutorial should cover all 2-D and 3-D concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and features for 3-D graphics. Coverage of graphics programming with a limited-color frame buffer (such as 16 colors or 256 colors) is recommended.
 3. The tutorial explains math concepts to readers as necessary, without assuming prior knowledge of math higher than basic algebra.
-4. The tutorial does not require the use of hardware acceleration, OpenGL, or Direct3D in the practice exercises.  (See definition of "rendered in software" in the specification.)
-5. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
+4. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
+5. The tutorial does not require the use of hardware acceleration, OpenGL, or Direct3D in the practice exercises.  (See definition of "rendered in software" in the specification.)
 6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
 
 Similar tutorials are [**_Computer Graphics from Scratch_**](https://gabrielgambetta.com/computer-graphics-from-scratch/) by Gabriel Gambetta and the [**tiny-renderer tutorial**](https://haqr.eu/tinyrenderer/) by Dmitry Sokolov, although they are not always geared toward the visuals in pre-2000 video games.  For example, Gambetta covers ray tracing (which is outside this specification's scope) but not sprites or other 2-D concepts.
@@ -494,7 +494,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^18]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
-[^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Games for cellular phones that supported the OpenGL ES 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
+[^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the OpenGL ES 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
 
 [^20]: An example is _Loom_ (1990).
 
@@ -516,7 +516,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^29]: VGA mode 12h (16 colors).
 
-[^30]: PlayStation (One); Nintendo 3DS lower screen; larger VGA "mode X" (256 colors).
+[^30]: PlayStation (One); Nintendo 3DS lower screen; larger VGA "mode X" (256 colors); most common Nintendo 64 resolution.
 
 [^31]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors), especially seen in MS-DOS games; Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
 
