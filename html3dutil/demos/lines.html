@@ -1,4 +1,4 @@
-<head><meta charset=utf-8>
+<!DOCTYPE html><head><meta charset=utf-8>
 <style>
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
@@ -7,15 +7,18 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </head>
 <body>
 <canvas id=canvas></canvas>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://threejs.org/build/three.module.js",
+          "h3du": "../h3du_module.js"
+        }
+      }
+</script>
 <script type="module">
 
-import {MathUtil,MeshBuffer,Meshes,newFrames} from "../h3du_module.js";
-/* global H3DU */
-// <!--
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
+import * as THREE from 'three';
+import {MathUtil,Meshes,newFrames} from 'h3du';
 
 function dms2rad(d,m,s){
  var ret=(d<0 ? -1 : 1)*(
@@ -522,36 +525,63 @@ function ProjectionLines(count, w, h) {
           p2[0],p2[1],0,0,0,0)
    }
   }
-  this.group=MeshBuffer.fromPositionsColors(triVertices)
-     .setType(MeshBuffer.LINES)
+  this.group=Meshes.fromPositionsColors(THREE,triVertices)
 }
 ProjectionLines.prototype.update = function(time, width, height) {
   "use strict";
   var frames = newFrames(this.timer, time);
-  var attr=this.group.getAttribute("POSITION")
-  var attrcolor=this.group.getAttribute("COLOR")
+  var attr=this.group.getAttribute("position")
+  var attrcolor=this.group.getAttribute("color")
 };
 ///////////////////////
 // Helper methods
 
+function meshVertexCount(mesh){
+  return mesh.index.count
+}
+
+function meshIndices(mesh){
+  return mesh.index.array
+}
+
+function accessorCountPerValue(accessor){
+  return accessor.itemSize
+}
+
+function accessorBuffer(accessor){
+  return accessor.array
+}
+
+function accessorStride(accessor){
+  return accessor.isInterleavedBufferAttribute ? accessor.data.stride :
+     accessorCountPerValue(accessor)
+}
+
+function accessorOffset(accessor){
+  return accessor.isInterleavedBufferAttribute ? accessor.offset : 0
+}
+
 function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
+ if(!mesh)throw new Error()
  var bufferObj=[]
  Object.keys(attributes).forEach(x=>{
   var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
   var accessor=mesh.getAttribute(x)
+  if(!accessor)throw new Error(x)
   if(attrLoc>=0){
    var b=context.createBuffer()
    buffers.push(b)
    bufferObj.push([x,attributes[x],b])
    context.bindBuffer(context.ARRAY_BUFFER,b)
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
+     context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
    context.vertexAttribPointer(attrLoc,
-     accessor.countPerValue,context.FLOAT,false,
-     accessor.stride*4,accessor.offset*4)
+     accessorCountPerValue(accessor),context.FLOAT,false,
+     accessorStride(accessor)*4,accessorOffset(accessor)*4)
   }
  })
- var indices=mesh.getIndices()
+ var indices=meshIndices(mesh)
  if(indices==null){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
  } else {
@@ -569,7 +599,7 @@ function refreshBuffer(context,shaderProgram,mesh,bufferObj){
   var accessor=mesh.getAttribute(x[0])
   if(attrLoc>=0){
    context.bindBuffer(context.ARRAY_BUFFER,x[2])
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
   }
  })
@@ -634,7 +664,7 @@ context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
 // Prepare mesh and instance buffer
 var bdata=prepareMeshBuffer(context,sp,sf.group,
-  {"POSITION":"position","COLOR":"color"},buffers)
+  {"position":"position","color":"color"},buffers)
 // animation loop
 var raf=(time)=>{
 // resize canvas if needed
@@ -659,7 +689,7 @@ refreshBuffer(context,sp,sf.group,bdata)
 context.uniformMatrix4fv(projUniform,false,matrix)
 context.drawArrays(
   context.LINES,0,
-  sf.group.vertexCount())
+  meshVertexCount(sf.group))
 requestAnimationFrame(raf)
 }
 requestAnimationFrame(raf)

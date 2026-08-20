@@ -2,10 +2,30 @@
  Any copyright to this file is released to the Public Domain.
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
+
 /* global H3DU */
 // TODO: Convert this code to use MeshBuffer instead of Mesh
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
+
+function _Mesh() {
+  this.nx=0
+  this.ny=0
+  this.nz=0
+  this.m=0
+  this.vertices=[]
+  this.mode=function(m) {
+    this.m=m
+  }
+  this.normal3=function(x,y,z) {
+    this.nx=x
+    this.ny=y
+    this.nz=z
+  }
+  this.vertex3=function(x,y,z) {
+    this.vertices.push(x,y,z,this.nx,this.ny,this.nz)
+  }
+}
 
 /**
  * An evaluator for implicit surfaces.
@@ -546,13 +566,13 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * @param {number} ymax Greatest value along the y-axis.
  * @param {number} zmin Smallest value along the z-axis.
  * @param {number} zmax Greatest value along the z-axis.
- * @returns {ImplicitSurface} This object.
+ * @returns {*} A mesh buffer.
  */
-ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
+ImplicitSurface.prototype.evalSurfacePoints = function(three, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
-  mesh.mode(H3DU.MeshBuffer.POINTS);
-
+  var mesh=new _Mesh();
+  mesh.mode(0); // points
   const xstep = (xmax - xmin) / (xsize - 1);
   const ystep = (ymax - ymin) / (ysize - 1);
   const zstep = (zmax - zmin) / (zsize - 1);
@@ -571,7 +591,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
       }
     }
   }
-  return this;
+  return H3DU.Meshes.fromPositionsNormals(three,mesh.vertices);
 };
 /**
  * Evaluates the grid points of the specified three-dimensional area and adds to the specified mesh the triangles and normals that make up the boundary of
@@ -586,11 +606,12 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * @param {number} ymax Greatest value along the y-axis.
  * @param {number} zmin Smallest value along the z-axis.
  * @param {number} zmax Greatest value along the z-axis.
- * @returns {ImplicitSurface} This object.
+ * @returns {*} A mesh buffer.
  */
-ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
+ImplicitSurface.prototype.evalSurface = function(three, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
-  mesh.mode(H3DU.Mesh.TRIANGLES);
+  var mesh=new _Mesh();
+  mesh.mode(1); // triangles
   const tmpobj = {
     "asCubePosition":[[], [], [], [], [], [], [], []],
     "afCubeValue":[],
@@ -617,7 +638,7 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
       }
     }
   }
-  return this;
+  return H3DU.Meshes.fromPositionsNormals(three,mesh.vertices);
 };
 /**
  * Returns a sampling object for the union of

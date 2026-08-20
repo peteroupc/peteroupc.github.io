@@ -1,4 +1,4 @@
-<head><meta charset=utf-8>
+<!DOCTYPE html><head><meta charset=utf-8>
 <style>
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
@@ -7,15 +7,18 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </head>
 <body>
 <canvas id=canvas></canvas>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://threejs.org/build/three.module.js",
+          "h3du": "../h3du_module.js"
+        }
+      }
+</script>
 <script type="module">
 
-import {MathUtil,MeshBuffer,Meshes,newFrames} from "../h3du_module.js";
-/* global H3DU */
-// <!--
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
+import * as THREE from 'three';
+import {MathUtil,Meshes,newFrames} from 'h3du';
 
 function TriangleParticles(count, w, h) {
   "use strict";
@@ -33,13 +36,22 @@ tri.color[0],tri.color[1],tri.color[2],
 tri.position[6],tri.position[7],tri.position[8],
 tri.color[0],tri.color[1],tri.color[2])
   }
-  this.group=MeshBuffer.fromPositionsColors(triVertices)
+  this.group=Meshes.fromPositionsColors(THREE,triVertices)
+  if(!this.group)throw new Error()
+}
+function _setVec(attr,i,v){
+  attr.setXYZ(i,v[0],v[1],v[2])
+}
+function _getVec(attr,i,v){
+  v[0]=attr.getX(i)
+  v[1]=attr.getY(i)
+  v[2]=attr.getZ(i)
 }
 TriangleParticles.prototype.update = function(time, width, height) {
   "use strict";
   var frames = newFrames(this.timer, time);
-  var attr=this.group.getAttribute("POSITION")
-  var attrcolor=this.group.getAttribute("COLOR")
+  var attr=this.group.getAttribute("position")
+  var attrcolor=this.group.getAttribute("color")
   var vec=[]
   for(var i = 0; i < this.tris.length; i++) {
     this.tris[i].life -= frames;
@@ -47,23 +59,23 @@ TriangleParticles.prototype.update = function(time, width, height) {
       var tri = TriangleParticles.generateTri(width,height);
       this.tris[i] = tri;
       // NOTE: No rotation here
-      attr.setXyz(i*3,tri.position[0],tri.position[1],tri.position[2])
-          .setXyz(i*3+1,tri.position[3],tri.position[4],tri.position[5])
-          .setXyz(i*3+2,tri.position[6],tri.position[7],tri.position[8])
-      attrcolor.setVec(i*3,tri.color)
-          .setVec(i*3+1,tri.color)
-          .setVec(i*3+2,tri.color)
+      attr.setXYZ(i*3,tri.position[0],tri.position[1],tri.position[2])
+          .setXYZ(i*3+1,tri.position[3],tri.position[4],tri.position[5])
+          .setXYZ(i*3+2,tri.position[6],tri.position[7],tri.position[8])
+      _setVec(attrcolor,i*3,tri.color)
+      _setVec(attrcolor,i*3+1,tri.color)
+      _setVec(attrcolor,i*3+2,tri.color)
     } else {
       var trans = MathUtil.mat4translated(
          MathUtil.vec3scale(this.tris[i].movement, frames));
       trans=MathUtil.mat4rotate(trans,
          this.tris[i].rotation * frames, 0, 0, 1);
-      attr.getVec(i*3,vec)
-      attr.setVec(i*3,MathUtil.mat4transformVec3(trans,vec))
-      attr.getVec(i*3+1,vec)
-      attr.setVec(i*3+1,MathUtil.mat4transformVec3(trans,vec))
-      attr.getVec(i*3+2,vec)
-      attr.setVec(i*3+2,MathUtil.mat4transformVec3(trans,vec))
+      _getVec(attr,i*3,vec)
+      _setVec(attr,i*3,MathUtil.mat4transformVec3(trans,vec))
+      _getVec(attr,i*3+1,vec)
+      _setVec(attr,i*3+1,MathUtil.mat4transformVec3(trans,vec))
+      _getVec(attr,i*3+2,vec)
+      _setVec(attr,i*3+2,MathUtil.mat4transformVec3(trans,vec))
     }
   }
 };
@@ -114,24 +126,52 @@ TriangleParticles.generateTri = function(width, height) {
 ///////////////////////
 // Helper methods
 
+function meshVertexCount(mesh){
+  return mesh.index.count
+}
+
+function meshIndices(mesh){
+  return mesh.index.array
+}
+
+function accessorCountPerValue(accessor){
+  return accessor.itemSize
+}
+
+function accessorBuffer(accessor){
+  return accessor.array
+}
+
+function accessorStride(accessor){
+  return accessor.isInterleavedBufferAttribute ? accessor.data.stride :
+     accessorCountPerValue(accessor)
+}
+
+function accessorOffset(accessor){
+  return accessor.isInterleavedBufferAttribute ? accessor.offset : 0
+}
+
 function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
+ if(!mesh)throw new Error()
  var bufferObj=[]
  Object.keys(attributes).forEach(x=>{
   var attrLoc=context.getAttribLocation(shaderProgram,attributes[x])
   var accessor=mesh.getAttribute(x)
+  if(!accessor)throw new Error(x)
   if(attrLoc>=0){
    var b=context.createBuffer()
    buffers.push(b)
    bufferObj.push([x,attributes[x],b])
    context.bindBuffer(context.ARRAY_BUFFER,b)
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
+     context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
    context.vertexAttribPointer(attrLoc,
-     accessor.countPerValue,context.FLOAT,false,
-     accessor.stride*4,accessor.offset*4)
+     accessorCountPerValue(accessor),context.FLOAT,false,
+     accessorStride(accessor)*4,accessorOffset(accessor)*4)
   }
  })
- var indices=mesh.getIndices()
+ var indices=meshIndices(mesh)
  if(indices==null){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
  } else {
@@ -149,7 +189,7 @@ function refreshBuffer(context,shaderProgram,mesh,bufferObj){
   var accessor=mesh.getAttribute(x[0])
   if(attrLoc>=0){
    context.bindBuffer(context.ARRAY_BUFFER,x[2])
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
   }
  })
@@ -214,7 +254,7 @@ context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
 // Prepare mesh and instance buffer
 var bdata=prepareMeshBuffer(context,sp,sf.group,
-  {"POSITION":"position","COLOR":"color"},buffers)
+  {"position":"position","color":"color"},buffers)
 // animation loop
 var raf=(time)=>{
 // resize canvas if needed
@@ -236,10 +276,12 @@ var matrix=MathUtil.mat4ortho2dAspect(
  -50,50,-50,50,window.innerWidth/Math.max(1,window.innerHeight))
 matrix=new Float32Array(matrix)
 refreshBuffer(context,sp,sf.group,bdata)
+// set up uniforms
 context.uniformMatrix4fv(projUniform,false,matrix)
+// draw call
 context.drawArrays(
   context.TRIANGLES,0,
-  sf.group.vertexCount())
+  meshVertexCount(sf.group))
 requestAnimationFrame(raf)
 }
 requestAnimationFrame(raf)

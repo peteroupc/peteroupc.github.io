@@ -1,19 +1,54 @@
+<!DOCTYPE html>
 <head><meta charset=utf-8>
 <style>
 body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
-<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
 </head>
 <body>
 <canvas id=canvas></canvas>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+          "h3du": "../h3du.js"
+        }
+      }
+</script>
 <script type="module">
 
-import {MathUtil,MeshBuffer,Meshes} from "../h3du_module.js";
-import {StarField} from "../extras/starfield.js";
+import * as THREE from 'three';
+import {MathUtil,MeshBuffer,Meshes} from 'h3du';
+import {StarField} from "../extras/meshes/starfield.js";
 
 ///////////////////////
 // Helper methods
+
+function meshVertexCount(mesh){
+  return mesh.index.count
+}
+
+function meshIndices(mesh){
+  return mesh.index.array
+}
+
+function accessorCountPerValue(accessor){
+  return accessor.itemSize
+}
+
+function accessorBuffer(accessor){
+  return accessor.array
+}
+
+function accessorStride(accessor){
+  return accessor.isInterleavedBufferAttribute ? accessor.data.stride :
+     accessorCountPerValue(accessor)
+}
+
+function accessorOffset(accessor){
+  return accessor.isInterleavedBufferAttribute ? accessor.offset : 0
+}
 
 function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
  var bufferObj=[]
@@ -25,14 +60,18 @@ function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
    buffers.push(b)
    bufferObj.push([x,attributes[x],b])
    context.bindBuffer(context.ARRAY_BUFFER,b)
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
+     context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
+   console.log([attributes[x],accessorCountPerValue(accessor),
+     accessorStride(accessor)*4,
+     accessorOffset(accessor)*4])
    context.vertexAttribPointer(attrLoc,
-     accessor.countPerValue,context.FLOAT,false,
-     accessor.stride*4,accessor.offset*4)
+     accessorCountPerValue(accessor),context.FLOAT,false,
+     accessorStride(accessor)*4,accessorOffset(accessor)*4)
   }
  })
- var indices=mesh.getIndices()
+ var indices=meshIndices(mesh)
  if(indices==null){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
  } else {
@@ -54,11 +93,12 @@ function prepareInstanceBuffer(context,ext,shaderProgram,mesh,attributes,buffers
    buffers.push(b)
    bufferObj.push([x,attributes[x],b])
    context.bindBuffer(context.ARRAY_BUFFER,b)
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
+     context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
    context.vertexAttribPointer(attrLoc,
-     accessor.countPerValue,context.FLOAT,false,
-     accessor.stride*4,accessor.offset*4)
+     accessorCountPerValue(accessor),context.FLOAT,false,
+     accessorStride(accessor)*4,accessorOffset(accessor)*4)
    if(ext)ext.vertexAttribDivisorANGLE(attrLoc,1)
   }
  })
@@ -71,7 +111,8 @@ function refreshInstanceBuffer(context,ext,shaderProgram,mesh,bufferObj){
   var accessor=mesh.getAttribute(x[0])
   if(attrLoc>=0){
    context.bindBuffer(context.ARRAY_BUFFER,x[2])
-   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
+     context.STATIC_DRAW)
    if(ext)ext.vertexAttribDivisorANGLE(attrLoc,1)
   }
  })
@@ -87,7 +128,9 @@ var vertexShader=[
 "uniform mat4 proj;",
 "varying vec3 colorVar;",
 "void main(){",
-"colorVar=color;gl_Position=(proj)*vec4(position+instancePosition,1.0); }"
+"colorVar=color;",
+//"colorVar=vec3(1.0,1.0,1.0,1.0);",
+"gl_Position=(proj)*vec4(position+instancePosition,1.0); }"
 ].join("\n")
 
 var fragmentShader=[
@@ -131,16 +174,18 @@ context.linkProgram(sp)
 context.detachShader(sp,vs)
 context.detachShader(sp,fs)
 ////////////////////////
+if(!THREE)console.log("THREE not defined")
+if(!THREE["BufferGeometry"]){console.log("No BufferGeometry in THREE"); console.log(THREE)}
 var ext=context.getExtension("ANGLE_instanced_arrays");
-var sf=new StarField(100);
+var sf=new StarField(THREE,100);
 var buffers=[]
 context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
 // Prepare mesh and instance buffer
 prepareMeshBuffer(context,sp,sf.star,
-  {"POSITION":"position","COLOR":"color"},buffers)
+  {"position":"position","color":"color"},buffers)
 var ibdata=prepareInstanceBuffer(context,ext,sp,sf.instances,
-  {"POSITION":"instancePosition"},buffers)
+  {"position":"instancePosition"},buffers)
 // animation loop
 var raf=(time)=>{
 // resize canvas if needed
@@ -167,10 +212,13 @@ matrix=new Float32Array(matrix)
 context.uniformMatrix4fv(projUniform,false,matrix)
 // refresh instances and draw
 refreshInstanceBuffer(context,ext,sp,sf.instances,ibdata);
+//console.log(""+[meshVertexCount(sf.star),meshVertexCount(sf.instances)])
+// TODO: Address warning: "WebGL warning: drawArraysInstanced: Vertex fetch
+// requires 1536, but attribs only supply 289."
 ext.drawArraysInstancedANGLE(
   context.TRIANGLES,0,
-  sf.star.vertexCount(),
-  sf.instances.vertexCount())
+  meshVertexCount(sf.star),
+  meshVertexCount(sf.instances))
 requestAnimationFrame(raf)
 }
 requestAnimationFrame(raf)

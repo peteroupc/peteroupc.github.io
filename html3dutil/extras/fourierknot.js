@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** The <code>extras/fourierknot.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -5,11 +10,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/fourierknot.js";</pre>
  * @module extras/fourierknot */
-
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 /**
  * A curve evaluator object that calculates a knot in the form of the Fourier series<p>

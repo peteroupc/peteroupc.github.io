@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** The <code>extras/starpolygon.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -5,10 +10,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/starpolygon.js";</pre>
  * @module extras/starpolygon */
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 import {MathUtil} from "../h3du_module.js";
 /**
@@ -32,7 +33,7 @@ export function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
     connected[i] = false;
   }
   const phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * MathUtil.ToRadians;
-  const angleStep = MathUtil.PiTimes2 / points;
+  const angleStep = 6.283185307179586 / points;
   const cosStep = Math.cos(angleStep);
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);

@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** The <code>extras/evaluators.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -6,10 +11,6 @@
  * import * as CustomModuleName from "extras/evaluators.js";</pre>
  * @module extras/evaluators */
 
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 import {Curve, MathUtil, Surface} from "../h3du_module.js";
 
 /**
@@ -219,30 +220,6 @@ function Circle(radius, rotationDegrees, reversed) {
     return [0, Math.PI * 2];
   };
 }
-/*
-
-const PolarCurve = function(radius, rotationDegrees, reversed) {
-  this.radius = radius;
-  this.reversed = reversed || false;
-  let phase = rotationDegrees || 0;
-  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
-       (phase < 0 ? 360 : 0);
-  phase *= MathUtil.ToRadians;
-  this.phase = phase;
-  this.evaluate = function(u) {
-    const angle = reversed ? Math.PI * 2 - (u + this.phase) :
-      u + this.phase;
-    const c = Math.cos(angle);
-    const s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
-    const r = this.radius(angle);
-    return [r * c,
-      r * s];
-  };
-  this.endPoints = function() {
-    return [0, Math.PI * 2];
-  };
-};
-*/
 /** @ignore
  * @constructor */
 function Line(length) {
@@ -337,7 +314,7 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
 };
 
 /**
- * Creates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
+ * Creates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
  * of another circle, whose position is fixed, with a center of (0,0).
  * The rolling circle will start at the positive x-axis of the fixed circle
  * unless otherwise given in the parameter <code>rotationDegrees</code>.<p>

@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** Contains a method to generate a simple polygon at random.<p>
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -5,11 +10,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/randompolygon.js";</pre>
  * @module extras/randompolygon */
-
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 import {GraphicsPath, MathUtil} from "../h3du_module.js";
 

@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** The <code>extras/camera.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -5,11 +10,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/camera.js";</pre>
  * @module extras/camera */
-
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 import {MathUtil} from "../h3du_module.js";
 /**
@@ -49,7 +49,6 @@ export const InputTracker = function(element) {
   this.clientX = null;
   this.clientY = null;
   this.element = element || window.document;
-  this.mouseWheelCallback = null;
   const that = this;
   this.handlers = [];
   const addHandler = function(h, a, b, c) {
@@ -80,20 +79,10 @@ export const InputTracker = function(element) {
       } else if (e.originalEvent && e.originalEvent.wheelDelta) {
         delta = e.originalEvent.wheelDelta;
       }
-      tracker.ticksDelta += delta / 120.0;
       // delta of 120 represents 1 tick of the mouse wheel;
       // positive values mean moving the mouse wheel up,
       // negative values mean down
-      if(tracker.mouseWheelCallback) {
-        tracker.mouseWheelCallback({
-          "target":e.target,
-          "delta":delta,
-          "click":click,
-          "x":clientX,
-          "y":clientY
-        });
-        e.preventDefault();
-      }
+      tracker.ticksDelta += delta / 120.0;
     };
     const mouseEvent = function(tracker, e) {
       if(e.button === 0) {
@@ -194,7 +183,6 @@ InputTracker.prototype.dispose = function() {
   }
   this.handlers = [];
   this.element = null;
-  this.mouseWheelCallback = null;
   this.keys = [];
   this.ticksDelta = 0;
   this.clientX = null;
@@ -211,18 +199,6 @@ InputTracker.prototype.dispose = function() {
  */
 InputTracker.prototype.getKey = function(key) {
   return this.keys[key];
-};
-
-/**
- * Sets a function to handle mouse wheel events.
- * @deprecated Will be removed in the future. Use the
- * mousePos method to find out whether the user
- * has rotated the mouse wheel.
- * @param {Function} func A function.
- * @returns {Object} Return value.
- */
-InputTracker.prototype.mousewheel = function(func) {
-  this.mouseWheelCallback = func;
 };
 
 /** @ignore */

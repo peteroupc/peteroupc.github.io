@@ -2,6 +2,7 @@
  Any copyright to this file is released to the Public Domain.
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
+
 /* global H3DU, alert, updateShape */
 /* exported formulaEditorHelp */
 function formulaEditorHelp() {
@@ -112,11 +113,11 @@ function addRange(label, min, max, step, defvalue, func) {
   const defvaluelbl = document.createElement("span");
   defvaluelbl.innerHTML = defvalue;
   const input = document.createElement("input");
-  input.setAttribute("type", "range");
-  input.setAttribute("value", "" + defvalue);
-  input.setAttribute("min", "" + min);
-  input.setAttribute("max", "" + max);
-  input.setAttribute("step", "" + step);
+  input["setAttribute"]("type", "range");
+  input["setAttribute"]("value", "" + defvalue);
+  input["setAttribute"]("min", "" + min);
+  input["setAttribute"]("max", "" + max);
+  input["setAttribute"]("step", "" + step);
   const oldvalue = [defvalue];
   input.addEventListener("input", function(e) {
     const val = e.target.value * 1.0;
@@ -192,7 +193,7 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
 }
 
 /* exported makeMesh */
-function makeMesh(func, resolutionU, resolutionV) {
+function makeMesh(three, func, resolutionU, resolutionV) {
   // Default resolution is 50
   "use strict";
   if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
@@ -210,26 +211,26 @@ function makeMesh(func, resolutionU, resolutionV) {
   };
   return new H3DU.SurfaceBuilder()
     .positionNormal(func)
-    .attribute(colorGradient, H3DU.Semantic.COLOR)
+    .attribute(colorGradient, "color")
     // Evaluate the surface and generate a triangle
     // mesh, using resolution+1 different u-coordinates,
     // and resolution+1 different v-coordinates.
-    // Instead of H3DU.Mesh.TRIANGLES, we could use
-    // H3DU.Mesh.LINES to create a wireframe mesh,
-    // or H3DU.Mesh.POINTS to create a point mesh.
+    // Instead of H3DU.MeshBuffer.TRIANGLES, we could use
+    // H3DU.MeshBuffer.LINES to create a wireframe mesh,
+    // or H3DU.MeshBuffer.POINTS to create a point mesh.
     .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
-    .toMeshBuffer();
+    .toMeshBuffer(three);
 }
 
 window.addEventListener("load", function() {
   "use strict";
   const a = document.createElement("a");
-  a.setAttribute("style", "margin-left:2px;margin-top:2px;margin-bottom:2px;position:absolute;left:80%;top:0;" +
+  a["setAttribute"]("style", "margin-left:2px;margin-top:2px;margin-bottom:2px;position:absolute;left:80%;top:0;" +
    "background-color:white;text-align:center;text-decoration:none;font-weight:bold");
   a.href = "javascript:void(null)";
   a.innerHTML = "View Source";
   const e = document.createElement("pre");
-  e.setAttribute("style", "border:2px solid;margin:2px 2px 2px 2px;left:10;padding:2px 2px 2px 2px;" +
+  e["setAttribute"]("style", "border:2px solid;margin:2px 2px 2px 2px;left:10;padding:2px 2px 2px 2px;" +
   "background:rgba(255,255,255,0.8);left:10%;width:85%;height:80%;overflow:scroll;position:absolute;float:right;top:2em");
   let demoContent = document.documentElement ? document.documentElement.outerHTML :
     document.body.outerHTML;
@@ -282,5 +283,3 @@ function makeAxisLines(width) {
   return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis)
     .addShape(xaxis2).addShape(yaxis2).addShape(zaxis2);
 }
-
-document.write("<script src='../extras/meshjson.js'></script>");

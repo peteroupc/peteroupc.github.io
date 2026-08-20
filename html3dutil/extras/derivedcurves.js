@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /**
  * Additional curve evaluator and surface evaluator objects.<p>
  * To import all symbols in this module, either of the following can be used:
@@ -6,11 +11,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/derivedcurves.js";</pre>
  * @module extras/derivedcurves */
-
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 import {Curve, Surface} from "../h3du_module.js";
 

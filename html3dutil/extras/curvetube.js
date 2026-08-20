@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** The <code>extras/curvetube.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -5,11 +10,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/curvetube.js";</pre>
  * @module extras/curvetube */
-
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 import {Curve, MathUtil, Surface} from "../h3du_module";
 

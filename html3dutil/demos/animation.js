@@ -2,6 +2,7 @@
  Any copyright to this file is released to the Public Domain.
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
+
 /* global H3DU */
 
 function Animator(shape) {
@@ -235,42 +236,42 @@ function perspectiveFrustum(fov, aspect, near, far, cameraPos, lookingAt) {
   return frustum;
 }
 
-function meshAddLine(mesh, point1, point2, thickness) {
+function meshAddLine(three, mesh, point1, point2, thickness) {
   "use strict";
   const vector = H3DU.MathUtil.vec3sub(point1, point2);
   const dist = H3DU.MathUtil.vec3length(vector);
   const normVector = H3DU.MathUtil.vec3norm(vector);
   const midPoint = H3DU.MathUtil.vec3lerp(point1, point2, 0.5);
-  let line = H3DU.Meshes.createCapsule(thickness / 2, dist, 6, 4);
+  let line = H3DU.Meshes.createCapsule(three, thickness / 2, dist, 6, 4);
   const matrix = H3DU.MathUtil.quatToMat4(H3DU.MathUtil.quatFromVectors([0, 0, 1], normVector));
   matrix[12] = midPoint[0];
   matrix[13] = midPoint[1];
   matrix[14] = midPoint[2];
   line = line.transform(matrix);
-  return mesh.merge(line);
+  return three["BufferGeometryUtils"]["mergeGeometries"]([mesh,line],0);
 }
-function meshAddLineStrip(mesh, strip, thickness) {
+function meshAddLineStrip(three, mesh, strip, thickness) {
   "use strict";
   let i;
   for (i = 0; i < strip.length - 1; i++) {
-    mesh = meshAddLine(mesh, strip[i], strip[i + 1], thickness);
+    mesh = meshAddLine(three, mesh, strip[i], strip[i + 1], thickness);
   }
   return mesh;
 }
 /* exported frustumMesh */
-function frustumMesh(frustum) {
+function frustumMesh(three, frustum) {
   "use strict";
-  const mesh = new H3DU.MeshBuffer();
+  const mesh = H3DU.Meshes.fromPositions([]);
   const nearRect = H3DU.MathUtil.frustumNearPlane(frustum);
   const farRect = H3DU.MathUtil.frustumFarPlane(frustum);
   const thickness = 0.01;
-  meshAddLine(mesh, nearRect[0], farRect[0], thickness);
-  meshAddLine(mesh, nearRect[1], farRect[1], thickness);
-  meshAddLine(mesh, nearRect[2], farRect[2], thickness);
-  meshAddLine(mesh, nearRect[3], farRect[3], thickness);
-  meshAddLineStrip(mesh, [nearRect[0], nearRect[1],
+  meshAddLine(three, mesh, nearRect[0], farRect[0], thickness);
+  meshAddLine(three, mesh, nearRect[1], farRect[1], thickness);
+  meshAddLine(three, mesh, nearRect[2], farRect[2], thickness);
+  meshAddLine(three, mesh, nearRect[3], farRect[3], thickness);
+  meshAddLineStrip(three, mesh, [nearRect[0], nearRect[1],
     nearRect[3], nearRect[2], nearRect[0]], thickness);
-  meshAddLineStrip(mesh, [farRect[0], farRect[1],
+  meshAddLineStrip(three, mesh, [farRect[0], farRect[1],
     farRect[3], farRect[2], farRect[0]], thickness);
   return mesh;
 }
