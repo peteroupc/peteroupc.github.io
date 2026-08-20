@@ -189,7 +189,7 @@ Examples of optional constraints are the following:
 - The game is a Win32 application compatible with Windows XP.
 - The game is a Win32 application compatible with Windows 98.
 - The game aims for a rate of 30 frames per second.
-- The game's graphics must be _rendered in software_.
+- The game's graphics must be _rendered in software_ (see specification).
 - The game's rendering of visuals employs only 32-bit and smaller integers, integer arithmetic, and fixed-point arithmetic.[^24]
 - The game's rendering of visuals employs only 32-bit and smaller integers, integer arithmetic, fixed-point arithmetic, and arithmetic involving 32-bit floating-point numbers (IEEE 754 binary32, or the commonly implemented meaning of the C language's `float` type).[^25]
 - The game renders only white line segments on a black background (or vice versa), and displays no more than 320 of those segments at a time.  These line segments are drawn with an approximation at integer coordinates.
