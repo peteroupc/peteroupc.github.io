@@ -84,8 +84,6 @@ Limit 3-D graphics to the following:[^3]
 8. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering and edge antialiasing (smoothing)[^7] are optional.
 9. 3-D primitives should undergo perspective correction, but this is optional.[^8]
 
-> **Example:** For a "screen resolution" (see later) of 640 &times; 480 pixels, no more than 12,800 primitives (640 &times; 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 &times; 256 pixels.  For 320 &times; 240 pixels, the maximums are 3200 primitives, 9600 vertices, and textures of 256 &times; 256 pixels.  For 320 &times; 200 pixels, the maximums are 2666 primitives, 8000 vertices, and textures of 256 &times; 256 pixels.
-
 Limit 2-D graphics to the following: [^9]
 
 1. Layers:
@@ -115,20 +113,41 @@ Limit 2-D graphics to the following: [^9]
         2. Each sprite can be horizontally flipped, vertically flipped, or both.[^12]
         3. No affine transformation or flipping of sprites is allowed.
     6. Image files used by the game should not store "pre-pixelated" sprites.
-    7. Up to N sprites can be displayed at a time on the game screen, where N is calculated as (screen width &times; screen height &times; 16) / (X &times; Y), rounded up, but not more than 512.  In this formula, X is the maximum sprite width and Y is the maximum sprite height.[^13]
+    7. Up to N sprites can be displayed at a time on the game screen, where N is calculated as (screen width &times; screen height &times; 16) / 4096, rounded up, but not more than 512.[^13]
 
 > **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
->
-> **Examples:**
->
-> 1. For a "screen resolution" (see later) of 640 &times; 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
-> 2.  Here is what the maximum primitive counts look like for different screen resolutions (rounding down): 256 × 192 / 24 = 2048; 320 × 200 / 24 = 2666; 320 × 240 / 24 = 3200; 480 × 360 / 24 = 6400; 640 × 400 / 24 = 10666; 640 × 480 / 24 = 12800.
 
 Other requirements:
 
 - **Screen resolution:** The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^14]  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.
-- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is provided by the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of OpenGL ES 1.1 or OpenGL 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
+- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of OpenGL ES 1.1 or OpenGL 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
 - **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^15]
+
+&nbsp;
+
+> **Examples:**
+>
+> 1. The following limits apply for various "screen resolutions":
+>
+>     | "Resolution" | Max. primitives | Max. vertices | Max. texture size | Max. sprite size | Max. sprites |
+>       ---- | -- | -- | ---- | ---- | -- |
+>     | 640 &times; 480 | 12800 | 38400 | 256 &times; 256 | 256 &times; 256 | 1200 |
+>     | 256 &times; 192 | 2048 | 6144 | 256 &times; 256 | 64 &times; 64 | 192 |
+>     | 320 &times; 200 | 2666 | 8000 | 256 &times; 256 | 128 &times; 128 | 250 |
+>     | 320 &times; 240 | 3200 | 9600 | 256 &times; 256 | 128 &times; 128 | 300 |
+>     | 512 &times; 384 | 8192 | 24576 | 256 &times; 256 | 128 &times; 128 | 768 |
+>     | 480 &times; 360 | 7200 | 21600 | 256 &times; 256 | 128 &times; 128 | 675 |
+>     | 640 &times; 400 | 10666 | 32000 | 256 &times; 256 | 256 &times; 256 | 1000 |
+>
+> 2. The following is one way to implement the 3-D portion of this specification:
+>
+>     - Screen resolution: 512 &times; 384.
+>     - Triangles per frame: up to 5000.
+>     - Maximum texture size: 128 &times; 128.
+>     - Implements a subset of OpenGL ES 1.1, rendered in software.
+>     - Has a game engine that renders only in that subset of OpenGL ES 1.1.
+>
+> 3. One way to implement the 2-D limits is: Screen resolution 640 &times; 480, 4-bit-per-pixel tiles, 8 &times; 8 tiles, sprites up to 160 &times; 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.
 
 <a id=Classic_Graphics_in_Scope></a>
 
@@ -254,7 +273,7 @@ This section has notes on this specification, such as how its requirements corre
 - An application may choose to support stencil buffers, bump mapping, environment mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.
 - For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.
 - This specification allows for:
-    - Prerendered graphics (as in _Space Quest 5_, _Myst_, or the original _Final Fantasy VII_ on PlayStation [1997]), to simulate showing highly detailed imagery.
+    - Prerendered graphics (as in _Space Quest 5_, [_Star Wars: Rebel Assault_ \[1993\]](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/), or the original _Final Fantasy VII_ on PlayStation [1997]), to simulate showing highly detailed imagery.
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_), as long as the triangle limits are respected.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.
@@ -274,6 +293,7 @@ This section has notes on this specification, such as how its requirements corre
      - Certain two- or three-screen games by Taito (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
      - The Midway MCR family of arcade machines (1980 to about 1986) had a screen resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but backgrounds were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
 - If an arcade game employed 2-D visuals with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
+- There have been so-called cinematic arcade video games, such as _Wild Gunman_ (1974) and _Dragon's Lair_ (1983).
 
 <a id=Screen_image_effects_filters></a>
 
@@ -464,7 +484,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^3]: One editor specialized for creating classic 3-D models is the open-source tool [**_Blockbench_**](https://www.blockbench.net/). For classic 3-D scenes, there is the open-source tool [**_Trenchbroom_**](https://trenchbroom.github.io/).
 
-[^4]: This is also known as _visible primitives_ or _visible primitives per frame_; in the case of polygons or triangles, this is also called _visible polygons (per frame)_ or _visible triangles (per frame)_.
+[^4]: This is also known as _visible primitives_ or _visible primitives per frame_; in the case of polygons or triangles, this is also called _visible polygons (per frame)_ or _visible triangles (per frame)_.  This maximum assumes the game's target rate is 60 frames per second.
 
 [^5]: If there is interest, this format may instead be: The red and blue components occupy 5 bits each; the green component, 6 bits.
 
@@ -472,7 +492,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^7]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". McCornack et al. (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
 
-[^8]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_), together with the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation.
+[^8]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_) contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation; so did the fact that triangles were drawn unsmoothed and with vertices placed at integer coordinates on the game screen.
 
 [^9]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be rendered in software (see the specification's definition of "rendered in software").  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 

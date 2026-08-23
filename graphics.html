@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-08-18"><meta name="citation_date" content="2026/08/18"><meta name="citation_publication_date" content="2026/08/18"><meta name="citation_online_date" content="2026/08/18"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-08-23"><meta name="citation_date" content="2026/08/23"><meta name="citation_publication_date" content="2026/08/23"><meta name="citation_online_date" content="2026/08/23"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-08-18.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-08-23.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -113,10 +113,6 @@
   <li>3-D primitives should undergo perspective correction, but this is optional.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></li>
 </ol>
 
-<blockquote>
-  <p><strong>Example:</strong> For a “screen resolution” (see later) of 640 × 480 pixels, no more than 12,800 primitives (640 × 480 / 24) and 38,400 vertices can be shown at a time, and the maximum texture size is 256 × 256 pixels.  For 320 × 240 pixels, the maximums are 3200 primitives, 9600 vertices, and textures of 256 × 256 pixels.  For 320 × 200 pixels, the maximums are 2666 primitives, 8000 vertices, and textures of 256 × 256 pixels.</p>
-</blockquote>
-
 <p>Limit 2-D graphics to the following: <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></p>
 
 <ol>
@@ -160,29 +156,119 @@
         </ol>
       </li>
       <li>Image files used by the game should not store “pre-pixelated” sprites.</li>
-      <li>Up to N sprites can be displayed at a time on the game screen, where N is calculated as (screen width × screen height × 16) / (X × Y), rounded up, but not more than 512.  In this formula, X is the maximum sprite width and Y is the maximum sprite height.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
+      <li>Up to N sprites can be displayed at a time on the game screen, where N is calculated as (screen width × screen height × 16) / 4096, rounded up, but not more than 512.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
     </ol>
   </li>
 </ol>
 
 <blockquote>
   <p><strong>Note:</strong> The suggested width and height for tiles is 8 pixels × 8 pixels.</p>
-
-  <p><strong>Examples:</strong></p>
-
-  <ol>
-    <li>For a “screen resolution” (see later) of 640 × 480 pixels, one choice is: 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</li>
-    <li>Here is what the maximum primitive counts look like for different screen resolutions (rounding down): 256 × 192 / 24 = 2048; 320 × 200 / 24 = 2666; 320 × 240 / 24 = 3200; 480 × 360 / 24 = 6400; 640 × 400 / 24 = 10666; 640 × 480 / 24 = 12800.</li>
-  </ol>
 </blockquote>
 
 <p>Other requirements:</p>
 
 <ul>
   <li><strong>Screen resolution:</strong> The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup>  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.</li>
-  <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is provided by the operating system, with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).  (Implementing a subset of OpenGL ES 1.1 or OpenGL 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
+  <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).  (Implementing a subset of OpenGL ES 1.1 or OpenGL 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
   <li><strong>Music:</strong> Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.<sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup></li>
 </ul>
+
+<p> </p>
+
+<blockquote>
+  <p><strong>Examples:</strong></p>
+
+  <ol>
+    <li>
+      <p>The following limits apply for various “screen resolutions”:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>“Resolution”</th>
+            <th>Max. primitives</th>
+            <th>Max. vertices</th>
+            <th>Max. texture size</th>
+            <th>Max. sprite size</th>
+            <th>Max. sprites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>640 × 480</td>
+            <td>12800</td>
+            <td>38400</td>
+            <td>256 × 256</td>
+            <td>256 × 256</td>
+            <td>1200</td>
+          </tr>
+          <tr>
+            <td>256 × 192</td>
+            <td>2048</td>
+            <td>6144</td>
+            <td>256 × 256</td>
+            <td>64 × 64</td>
+            <td>192</td>
+          </tr>
+          <tr>
+            <td>320 × 200</td>
+            <td>2666</td>
+            <td>8000</td>
+            <td>256 × 256</td>
+            <td>128 × 128</td>
+            <td>250</td>
+          </tr>
+          <tr>
+            <td>320 × 240</td>
+            <td>3200</td>
+            <td>9600</td>
+            <td>256 × 256</td>
+            <td>128 × 128</td>
+            <td>300</td>
+          </tr>
+          <tr>
+            <td>512 × 384</td>
+            <td>8192</td>
+            <td>24576</td>
+            <td>256 × 256</td>
+            <td>128 × 128</td>
+            <td>768</td>
+          </tr>
+          <tr>
+            <td>480 × 360</td>
+            <td>7200</td>
+            <td>21600</td>
+            <td>256 × 256</td>
+            <td>128 × 128</td>
+            <td>675</td>
+          </tr>
+          <tr>
+            <td>640 × 400</td>
+            <td>10666</td>
+            <td>32000</td>
+            <td>256 × 256</td>
+            <td>256 × 256</td>
+            <td>1000</td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+    <li>
+      <p>The following is one way to implement the 3-D portion of this specification:</p>
+
+      <ul>
+        <li>Screen resolution: 512 × 384.</li>
+        <li>Triangles per frame: up to 5000.</li>
+        <li>Maximum texture size: 128 × 128.</li>
+        <li>Implements a subset of OpenGL ES 1.1, rendered in software.</li>
+        <li>Has a game engine that renders only in that subset of OpenGL ES 1.1.</li>
+      </ul>
+    </li>
+    <li>
+      <p>One way to implement the 2-D limits is: Screen resolution 640 × 480, 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</p>
+    </li>
+  </ol>
+</blockquote>
 
 <p><a id="Classic_Graphics_in_Scope"></a></p>
 
@@ -344,7 +430,7 @@
   <li>For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.</li>
   <li>This specification allows for:
     <ul>
-      <li>Prerendered graphics (as in <em>Space Quest 5</em>, <em>Myst</em>, or the original <em>Final Fantasy VII</em> on PlayStation [1997]), to simulate showing highly detailed imagery.</li>
+      <li>Prerendered graphics (as in <em>Space Quest 5</em>, <a href="https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/"><em>Star Wars: Rebel Assault</em> [1993]</a>, or the original <em>Final Fantasy VII</em> on PlayStation [1997]), to simulate showing highly detailed imagery.</li>
       <li>Drawing a 3-D graphic as a <a href="https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation"><strong><em>voxel mesh</em></strong></a> (formed from point samples in 3-D, rather than 2-D, called <em>voxels</em>), as long as the triangle limits are respected.</li>
     </ul>
   </li>
@@ -374,6 +460,7 @@
     </ul>
   </li>
   <li>If an arcade game employed 2-D visuals with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.</li>
+  <li>There have been so-called cinematic arcade video games, such as <em>Wild Gunman</em> (1974) and <em>Dragon’s Lair</em> (1983).</li>
 </ul>
 
 <p><a id="Screen_image_effects_filters"></a></p>
@@ -610,7 +697,7 @@
       <p>One editor specialized for creating classic 3-D models is the open-source tool <a href="https://www.blockbench.net/"><strong><em>Blockbench</em></strong></a>. For classic 3-D scenes, there is the open-source tool <a href="https://trenchbroom.github.io/"><strong><em>Trenchbroom</em></strong></a>. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>This is also known as <em>visible primitives</em> or <em>visible primitives per frame</em>; in the case of polygons or triangles, this is also called <em>visible polygons (per frame)</em> or <em>visible triangles (per frame)</em>. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>This is also known as <em>visible primitives</em> or <em>visible primitives per frame</em>; in the case of polygons or triangles, this is also called <em>visible polygons (per frame)</em> or <em>visible triangles (per frame)</em>.  This maximum assumes the game’s target rate is 60 frames per second. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:5">
       <p>If there is interest, this format may instead be: The red and blue components occupy 5 bits each; the green component, 6 bits. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -622,7 +709,7 @@
       <p>Antialiasing “<a href="https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html"><strong>didn’t appear in home console graphics architectures</strong></a> until the debut of the [Nintendo 64] in late 1996”. McCornack et al. (1995) considers antialiasing among the features “unlikely” to be needed in game programming. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
-      <p>Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called <em>affine texture mapping</em>), together with the lack of smoothing (antialiasing) of edges, contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called <em>affine texture mapping</em>) contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation; so did the fact that triangles were drawn unsmoothed and with vertices placed at integer coordinates on the game screen. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:9">
       <p>It is being considered whether to replace these 2-D limits with one of the following alternatives:<br /><br />1. Instead of tiles, sprites, and layers, the game uses a <em>frame buffer</em> (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be rendered in software (see the specification’s definition of “rendered in software”).  But I don’t know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br />2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don’t apply) and can have transparent and translucent pixels.<br />3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br /><br />The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
