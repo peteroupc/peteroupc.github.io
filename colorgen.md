@@ -1913,7 +1913,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^41]: In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a specified or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").
 
-[^42]: [Many color collections are represented by printed or dyed color swatches, are found in printed fan decks, or both.  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.
+[^42]: Many color collections are represented by printed or dyed color swatches, are found in printed fan decks, or both.  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.
 
 [^43]: Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".
 

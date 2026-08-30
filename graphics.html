@@ -66,7 +66,7 @@
 
 <p>An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.</p>
 
-<p>In this document, <em>classic graphics</em> generally means two- or three-dimensional graphics achieved by video games from 1999 or earlier, before the advent of programmable “shaders”.  For details, see “<a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a>”, later. (To summarize: In general, a game screen of 640 × 480 or smaller, up to 12,800 3-D polygons at a time [fewer if the game screen is smaller], and tile- or sprite-based 2-D visuals are involved.)</p>
+<p>In this document, <em>classic graphics</em> generally means two- or three-dimensional graphics achieved by video games from 1999 or earlier, before the advent of programmable “shaders”.  For details, see “<a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a>”, later. (To summarize: In general, a game screen of 640 × 480 or smaller, up to 12,800 3-D polygons at a time, and tile- or sprite-based 2-D visuals are involved.)</p>
 
 <p>This challenge is intended to encourage the making of—</p>
 
@@ -86,14 +86,14 @@
 <p>Limit 3-D graphics to the following:<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <ol>
-  <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>
+  <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  Alternatively, the maximum number of primitives rendered per second is equal to screen width times screen height times 2.5.
     <ul>
       <li>A <em>primitive</em> is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.</li>
       <li>Each vertex of the primitive points to a vertex from the vertex list described later.</li>
       <li>Each primitive can be translucent.</li>
     </ul>
   </li>
-  <li>The maximum number of vertices that can be displayed at a time is 3 times the maximum number of primitives.
+  <li>The maximum number of vertices that can be displayed at a time (or rendered per second) is 3 times the maximum number of primitives.
     <ul>
       <li>A <em>vertex</em> consists of an XYZ position, an XY texture coordinate, and a red–green–blue vertex color.</li>
       <li>Each vertex color follows one of the following color formats: The red, green, and blue components occupy up to 5 bits each; or the red and blue components occupy 5 bits each and the green component occupies 6 bits.</li>
@@ -120,7 +120,7 @@
     <ol>
       <li>Up to four <em>2-D layers</em> can be displayed at a time.  Each 2-D layer is a rectangular array of references to <em>tiles</em> (see later), and can also be called a <em>tile map</em>.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></li>
       <li>Up to two of the 2-D layers can undergo a 2-D affine transformation.</li>
-      <li>If 3-D graphics are being displayed, one of the 2-D layers is replaced with a <em>3-D layer</em>, which is an image on which the 3-D graphics are drawn. The 2-D layer replaced this way can vary over time.</li>
+      <li>If 3-D graphics are being displayed, one of the 2-D layers is replaced with a <em>3-D layer</em>, which is an image on which the 3-D graphics are drawn. Which 2-D layer is replaced this way can vary over time.</li>
       <li>The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></li>
       <li>The 3-D layer’s dimensions, in pixels, are the same as the “screen resolution” (see later).</li>
     </ol>
@@ -169,7 +169,7 @@
 
 <ul>
   <li><strong>Screen resolution:</strong> The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.</li>
-  <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).  (Implementing a subset of OpenGL ES 1.1 or OpenGL 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
+  <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to VGA’s video memory).  (Implementing a subset of <a href="https://registry.khronos.org/OpenGL/index_es.php"><strong>OpenGL ES</strong></a> 1.1 or <a href="https://registry.khronos.org/OpenGL/index_gl.php"><strong>OpenGL</strong></a> 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
   <li><strong>Music:</strong> Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
 </ul>
 
@@ -186,7 +186,7 @@
         <thead>
           <tr>
             <th>Resolution</th>
-            <th>Max. primitives</th>
+            <th>Max. primitives per frame</th>
             <th>Max. vertices</th>
             <th>Max. texture size</th>
             <th>Max. sprite size</th>
@@ -262,6 +262,9 @@
       </table>
     </li>
     <li>
+      <p>For the screen resolution 640 × 480, the maximum number of primitives per second is 768,000.</p>
+    </li>
+    <li>
       <p>The following is one way to implement the 3-D portion of this specification:</p>
 
       <ul>
@@ -304,7 +307,7 @@
   <li>Windows applications written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for rendering visuals.</li>
   <li>Windows games using GDI or <a href="https://www.pcgamingwiki.com/wiki/List_of_WinG_games"><strong>WinG</strong></a> for graphics and supporting Windows 98 or earlier.  Examples are  <em>Chip’s Challenge</em> for Windows (1992) and Brian Goble’s <em>The Adventures of MicroMan</em> (1993).</li>
   <li>Games for MS-DOS or PC-9801 that were published before 2000.  Examples are <em>Quake</em> (1996), <em>WarCraft</em> (1994), and the first titles of the Touhou Project series (1997-1998).</li>
-  <li>Games using OpenGL 1.2 or earlier for graphics.</li>
+  <li>Games using <a href="https://registry.khronos.org/OpenGL/index_gl.php"><strong>OpenGL</strong></a> 1.2 or earlier for graphics.</li>
   <li>So-called “multimedia titles” from the 1990s, or applications resembling interactive versions of books (generally reference and other nonfiction works), complete with sound, animation, and video.  See “Multimedia PC Level 1 and Level 2 Specifications” by the Multimedia PC Marketing Council.</li>
 </ol>
 
@@ -412,8 +415,8 @@
 
 <ul>
   <li>No particular frame rate is required.<sup id="fnref:58"><a href="#fn:58" class="footnote" rel="footnote" role="doc-noteref">58</a></sup></li>
-  <li>Possible choices for the frame rate include 20, 30, 40, and 60 frames per second.  Rates beyond 60 were rare before 2000.<sup id="fnref:78"><a href="#fn:78" class="footnote" rel="footnote" role="doc-noteref">59</a></sup></li>
-  <li>TVs with NTSC video<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">60</a></sup> can draw their image about 60 times per second; TVs with PAL video<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>, 50 times.</li>
+  <li>Possible choices for the frame rate include 20, 30, 40, and 60 frames per second.  Rates beyond 60 were rare before 2000.<sup id="fnref:59"><a href="#fn:59" class="footnote" rel="footnote" role="doc-noteref">59</a></sup></li>
+  <li>TVs with NTSC video<sup id="fnref:60"><a href="#fn:60" class="footnote" rel="footnote" role="doc-noteref">60</a></sup> can draw their image about 60 times per second; TVs with PAL video<sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">61</a></sup>, 50 times.</li>
   <li><em>Doom</em> (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.<sup id="fnref:57:1"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup></li>
   <li>For comfort reasons, a minimum frame rate may be required for video games that offer “<a href="https://www.pcgamingwiki.com/wiki/Glossary:Native_3D"><strong>3-D vision</strong></a>” by rendering multiple views of the scene at a time, in conjunction with special glasses (for example, a SEGA Master System accessory) or a virtual-reality headset (for example, Nintendo’s Virtual Boy).  But such games were rare before 2000.</li>
 </ul>
@@ -423,7 +426,7 @@
 <h4 id="d-graphics">3-D graphics</h4>
 
 <ul>
-  <li>The <em>PC 99 System Design Guide</em><sup id="fnref:61"><a href="#fn:61" class="footnote" rel="footnote" role="doc-noteref">62</a></sup> sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.</li>
+  <li>The <em>PC 99 System Design Guide</em><sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">62</a></sup> sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.</li>
   <li>An application may choose to support stencil buffers, bump mapping, environment mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.</li>
   <li>For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.</li>
   <li>This specification allows for:
@@ -445,7 +448,7 @@
       </li>
     </ul>
   </li>
-  <li>It wasn’t until 1995 that 3-D video cards became widely available for consumer PCs.<sup id="fnref:62"><a href="#fn:62" class="footnote" rel="footnote" role="doc-noteref">63</a></sup> In 3-D video games for PCs “[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures” (according to an <a href="https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/"><strong>article</strong></a> that compared <em>Havoc</em> [1995] with <em>Mortal Kombat 4</em> [1997]).</li>
+  <li>It wasn’t until 1995 that 3-D video cards became widely available for consumer PCs.<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">63</a></sup> In 3-D video games for PCs “[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures” (according to an <a href="https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/"><strong>article</strong></a> that compared <em>Havoc</em> [1995] with <em>Mortal Kombat 4</em> [1997]).</li>
   <li>This specification is not centered on video games that offer “3-D vision” (see note under “Frame rate”), given how rare they were before 2000.</li>
 </ul>
 
@@ -473,7 +476,7 @@
 <h4 id="screen-image-effects-filters">Screen image effects (filters)</h4>
 
 <ul>
-  <li>Effects that modify the game screen image to emulate CRT displays<sup id="fnref:63"><a href="#fn:63" class="footnote" rel="footnote" role="doc-noteref">64</a></sup> are outside the scope of this challenge.  So are effects that <a href="https://www.pcgamingwiki.com/wiki/Glossary:Scaling"><strong>scale</strong></a> the game screen to fit the height or width of the player’s display.<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">65</a></sup> This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.</li>
+  <li>Effects that modify the game screen image to emulate CRT displays<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup> are outside the scope of this challenge.  So are effects that <a href="https://www.pcgamingwiki.com/wiki/Glossary:Scaling"><strong>scale</strong></a> the game screen to fit the height or width of the player’s display.<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup> This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.</li>
 </ul>
 
 <p><a id="Sounds"></a></p>
@@ -482,8 +485,8 @@
 
 <ul>
   <li>Besides the limitation on music, this specification has no further limitations on sounds.</li>
-  <li>Early game consoles supported sound only through one or more <em>programmable sound generators</em>, such as square and triangle wave generators, as opposed to digitized sounds<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>.  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.</li>
-  <li>When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 hertz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">67</a></sup></li>
+  <li>Early game consoles supported sound only through one or more <em>programmable sound generators</em>, such as square and triangle wave generators, as opposed to digitized sounds<sup id="fnref:66"><a href="#fn:66" class="footnote" rel="footnote" role="doc-noteref">66</a></sup>.  Games that choose to constrain file size may wish to implement software versions of programmable sound generators for at least some of their sounds.</li>
+  <li>When digitized sounds are supported in classic games, they typically have a sample rate of 8000, 11,025, 22,050, or 44,100 hertz, are either mono or stereo, and take 8 or 16 bits per sample.<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">67</a></sup></li>
 </ul>
 
 <p><a id="Memory"></a></p>
@@ -491,12 +494,12 @@
 <h4 id="memory">Memory</h4>
 
 <ul>
-  <li>This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphical memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.<sup id="fnref:67"><a href="#fn:67" class="footnote" rel="footnote" role="doc-noteref">68</a></sup></li>
-  <li>According to “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”, the following ranges of system memory were typical for PCs sold in the specified years:<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>
+  <li>This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphical memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.<sup id="fnref:68"><a href="#fn:68" class="footnote" rel="footnote" role="doc-noteref">68</a></sup></li>
+  <li>According to “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”, the following ranges of system memory were typical for PCs sold in the specified years:<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">69</a></sup>
     <ul>
-      <li>1994: 4MB to 8 MB, with more expensive PCs having 16 MB.<sup id="fnref:69"><a href="#fn:69" class="footnote" rel="footnote" role="doc-noteref">70</a></sup></li>
-      <li>1997: 8MB to 32MB.<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">71</a></sup></li>
-      <li>1998: 32MB to 128MB.<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">72</a></sup></li>
+      <li>1994: 4MB to 8 MB, with more expensive PCs having 16 MB.<sup id="fnref:70"><a href="#fn:70" class="footnote" rel="footnote" role="doc-noteref">70</a></sup></li>
+      <li>1997: 8MB to 32MB.<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">71</a></sup></li>
+      <li>1998: 32MB to 128MB.<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">72</a></sup></li>
     </ul>
   </li>
 </ul>
@@ -514,7 +517,7 @@
 <ul>
   <li>“Game X shows up to Y polygons at a time at Z frames per second and screen resolution W”.
     <ul>
-      <li>Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br />(1) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (Fosner 1999)<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">73</a></sup>.<br />(2) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (Abrash 2000)<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">74</a></sup>; to be noted here is that the game normally ran at a screen resolution of 320 × 240.<br />(3) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(4) The game engine for <em>SpecOps: Rangers Lead the Way</em> (1998) targeted 10,000 triangles per frame <sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">75</a></sup>.  So did <em>Quake III Arena</em> (1999) (John Carmack .plan, Sep. 2, 1999).</li>
+      <li>Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br />(1) “A typical scene in a current [PC] application has 2000 to 2500 triangles per frame” (Fosner 1999)<sup id="fnref:73"><a href="#fn:73" class="footnote" rel="footnote" role="doc-noteref">73</a></sup>.<br />(2) “For context, <em>Quake</em> on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) … at best” (Abrash 2000)<sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">74</a></sup>; to be noted here is that the game normally ran at a screen resolution of 320 × 240.<br />(3) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br />(4) The game engine for <em>SpecOps: Rangers Lead the Way</em> (1998) targeted 10,000 triangles per frame <sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">75</a></sup>.  So did <em>Quake III Arena</em> (1999) (John Carmack .plan, Sep. 2, 1999).</li>
     </ul>
   </li>
   <li>“Scenes in game X have Y triangles on average”.</li>
@@ -563,7 +566,7 @@
 <ul>
   <li><em>Actua Soccer</em> (<em>VR Soccer ‘96</em>) (1995) <a href="http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/"><strong>averaged 776 triangles per frame</strong></a> at 640 × 480 resolution.</li>
   <li><em>Terminal Velocity</em> (1995) <a href="http://www-graphics.stanford.edu/~bjohanso/tv_stats/"><strong>averaged 498 triangles per frame</strong></a> at 640 × 480 resolution.</li>
-  <li>A benchmark of <em>Quake III Arena</em> averaged about 3,250 and topped out at about 6,970 triangles per frame after back-face culling, at screen resolution 640 × 480 (Antochi et al. 2003)<sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">76</a></sup>, (Antochi et al. 2004)<sup id="fnref:76"><a href="#fn:76" class="footnote" rel="footnote" role="doc-noteref">77</a></sup>.</li>
+  <li>A benchmark of <em>Quake III Arena</em> averaged about 3,250 and topped out at about 6,970 triangles per frame after back-face culling, at screen resolution 640 × 480 (Antochi et al. 2003)<sup id="fnref:76"><a href="#fn:76" class="footnote" rel="footnote" role="doc-noteref">76</a></sup>, (Antochi et al. 2004)<sup id="fnref:77"><a href="#fn:77" class="footnote" rel="footnote" role="doc-noteref">77</a></sup>.</li>
   <li>The game <em>Star Wars Racer</em> (1999) <a href="https://x.com/jonk1969/status/1636183310203498496"><strong>targeted a limit of 3000 polygons per frame</strong></a> as well as texture sizes that appeared to respect the Nintendo 64’s 4096-byte texture cache.</li>
 </ul>
 
@@ -643,7 +646,7 @@
 
 <h3 id="guide-for-creating-3-d-models-in-the-pre-2000-style">Guide for creating 3-D models in the pre-2000 style</h3>
 
-<p>Develop a guide for creating 3-D models for use in modern video games that follow the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification</strong></a> given earlier on classic (pre-2000) 3-D graphics, in a similar vein to “<a href="https://threedium.io/3d-model/game-ready"><strong>Game-Ready 3D Models: Requirements, Creation, and Export</strong></a>” <sup id="fnref:77"><a href="#fn:77" class="footnote" rel="footnote" role="doc-noteref">78</a></sup>.  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today’s models.)</p>
+<p>Develop a guide for creating 3-D models for use in modern video games that follow the <a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>specification</strong></a> given earlier on classic (pre-2000) 3-D graphics, in a similar vein to “<a href="https://threedium.io/3d-model/game-ready"><strong>Game-Ready 3D Models: Requirements, Creation, and Export</strong></a>” <sup id="fnref:78"><a href="#fn:78" class="footnote" rel="footnote" role="doc-noteref">78</a></sup>.  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today’s models.)</p>
 
 <p><a id="Book_form_tutorial_on_pre_2000_computer_graphics_programming"></a></p>
 
@@ -748,7 +751,7 @@
       <p>Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it’s these that are of particular interest.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is <em>Dire Straits</em> (1982). <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:18">
-      <p>Examples are:<br />(1) The <a href="https://dench.flatlib.jp/app/chiraks_em"><strong>Sharp MI-Zaurus</strong></a> (2000).<br />(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, <a href="https://jcp.org/en/jsr/detail?id=37"><strong>Java specification request 37</strong></a> and <a href="https://jcp.org/en/jsr/detail?id=118"><strong>JSR 118</strong></a>), and extensions (especially <a href="https://jcp.org/en/jsr/detail?id=184"><strong>JSR 184, Mobile 3D Graphics API</strong></a>).<br />(3) Feature phones and smartphones that supported the OpenGL ES 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic). <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Examples are:<br />(1) The <a href="https://dench.flatlib.jp/app/chiraks_em"><strong>Sharp MI-Zaurus</strong></a> (2000).<br />(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, <a href="https://jcp.org/en/jsr/detail?id=37"><strong>Java specification request 37</strong></a> and <a href="https://jcp.org/en/jsr/detail?id=118"><strong>JSR 118</strong></a>), and extensions (especially <a href="https://jcp.org/en/jsr/detail?id=184"><strong>JSR 184, Mobile 3D Graphics API</strong></a>).<br />(3) Feature phones and smartphones that supported the <a href="https://registry.khronos.org/OpenGL/index_es.php"><strong>OpenGL ES</strong></a> 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic). <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:19">
       <p>An example is <em>Loom</em> (1990). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -870,65 +873,65 @@
     <li id="fn:58">
       <p>Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 × 240 video at 15 frames per second, the recommendation in Microsoft Knowledge Base article Q139826, “AVI Video Authoring Tips &amp; Compression Options Dialog Box”, 1995).  Both recommendations are far from the 6.144 million samples per second needed to display 640 × 480 video smoothly at 20 frames per second. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:78">
-      <p>Most of the VGA standard’s display modes, including the 320 × 200 mode, ran at 70 hertz, but the 320 × 240 and 640 × 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second. <a href="#fnref:78" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:59">
-      <p>Stands for the National Television Standards Committee of the Electronics Industries Association.  “NTSC” often refers to the video standard known as RS-170A. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Most of the VGA standard’s display modes, including the 320 × 200 mode, ran at 70 hertz, but the 320 × 240 and 640 × 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second. <a href="#fnref:59" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:60">
-      <p>Stands for phase alternating line. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Stands for the National Television Standards Committee of the Electronics Industries Association.  “NTSC” often refers to the video standard known as RS-170A. <a href="#fnref:60" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:61">
-      <p>Intel &amp; Microsoft, <em>PC 99 System Design Guide</em>, 1998. ISBN 0-7356-0518-1. <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Stands for phase alternating line. <a href="#fnref:61" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:62">
-      <p>By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were <a href="https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/"><strong>introduced in 1988</strong></a>. <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Intel &amp; Microsoft, <em>PC 99 System Design Guide</em>, 1998. ISBN 0-7356-0518-1. <a href="#fnref:62" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:63">
-      <p>CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were <a href="https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/"><strong>introduced in 1988</strong></a>. <a href="#fnref:63" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:64">
-      <p>Effects to scale the game screen include so-called “pixel-art scaling algorithms” such as <code>HQX</code> and <code>2xSaI</code>, as well as bilinear or point filtering.<br />Effects to scale the game screen do not include the decoding of small videos to fit the <em>game screen</em>, as opposed to the player’s display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen “on the fly”, in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 × 200. (See, for instance, Nigel Thompson, “<a href="https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10)"><strong>Stretching 256-Color Images Using Interpolation</strong></a>”, Microsoft Developer Network, March 7, 1995.) <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s. <a href="#fnref:64" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:65">
-      <p>Sound today is most commonly digitized by pulse-code modulation (PCM), and PCM-digitized sound is often stored in computer files ending in “.WAV”. <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Effects to scale the game screen include so-called “pixel-art scaling algorithms” such as <code>HQX</code> and <code>2xSaI</code>, as well as bilinear or point filtering.<br />Effects to scale the game screen do not include the decoding of small videos to fit the <em>game screen</em>, as opposed to the player’s display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen “on the fly”, in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 × 200. (See, for instance, Nigel Thompson, “<a href="https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10)"><strong>Stretching 256-Color Images Using Interpolation</strong></a>”, Microsoft Developer Network, March 7, 1995.) <a href="#fnref:65" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:66">
-      <p>The MPC Level 1 specification required support in “multimedia PCs” for playback of at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 hertz.  MPC Level 2 required support in “multimedia PCs” for playing back at least 16-bit-per-sample stereo digitized sound at 44,100 hertz. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Sound today is most commonly digitized by pulse-code modulation (PCM), and PCM-digitized sound is often stored in computer files ending in “.WAV”. <a href="#fnref:66" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:67">
-      <p>PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, <em>Quake</em> (1996) required 8 million and recommended 16 million bytes of system memory. <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The MPC Level 1 specification required support in “multimedia PCs” for playback of at least 8-bit-per-sample mono digitized sound at 11,025 and 22,050 hertz.  MPC Level 2 required support in “multimedia PCs” for playing back at least 16-bit-per-sample stereo digitized sound at 44,100 hertz. <a href="#fnref:67" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:68">
-      <p>“MB” is ambiguous here; it often means either one million bytes or 1024 times 1024 bytes. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>PC games released in 1999 tended to require 32 million bytes of system memory.  Meanwhile, <em>Quake</em> (1996) required 8 million and recommended 16 million bytes of system memory. <a href="#fnref:68" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:69">
-      <p>“Typical PCs in 1994”, <a href="https://www.dosdays.co.uk/topics/1994.php"><strong>https://www.dosdays.co.uk/topics/1994.php</strong></a>. <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>“MB” is ambiguous here; it often means either one million bytes or 1024 times 1024 bytes. <a href="#fnref:69" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:70">
-      <p>“Typical PCs in 1997”, <a href="https://www.dosdays.co.uk/topics/1997.php"><strong>https://www.dosdays.co.uk/topics/1997.php</strong></a>. <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>“Typical PCs in 1994”, <a href="https://www.dosdays.co.uk/topics/1994.php"><strong>https://www.dosdays.co.uk/topics/1994.php</strong></a>. <a href="#fnref:70" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:71">
-      <p>“Typical PCs in 1998”, <a href="https://www.dosdays.co.uk/topics/1998.php"><strong>https://www.dosdays.co.uk/topics/1998.php</strong></a>. <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>“Typical PCs in 1997”, <a href="https://www.dosdays.co.uk/topics/1997.php"><strong>https://www.dosdays.co.uk/topics/1997.php</strong></a>. <a href="#fnref:71" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:72">
-      <p>R. Fosner, “DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code”, <em>Microsoft Systems Journal</em> January 1999. <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>“Typical PCs in 1998”, <a href="https://www.dosdays.co.uk/topics/1998.php"><strong>https://www.dosdays.co.uk/topics/1998.php</strong></a>. <a href="#fnref:72" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:73">
-      <p>M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>R. Fosner, “DirectX 6.0 Goes Ballistic With Multiple New Features And Much Faster Code”, <em>Microsoft Systems Journal</em> January 1999. <a href="#fnref:73" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:74">
-      <p><a href="https://www.gamedeveloper.com/design/postmortem-zombie-s-i-specops-rangers-lead-the-way-i-"><strong>“Postmortem: Zombie’s <em>SpecOps: Rangers Lead the Way</em>“</strong></a>, Jan. 31, 2000. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>M. Abrash, “Inside Xbox Graphics”, <em>Dr. Dobb’s Journal</em>, August 2000. <a href="#fnref:74" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:75">
-      <p>Antochi, Iosif, et al. “3D Graphics Benchmarks for Low-Power Architectures.” 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="https://www.gamedeveloper.com/design/postmortem-zombie-s-i-specops-rangers-lead-the-way-i-"><strong>“Postmortem: Zombie’s <em>SpecOps: Rangers Lead the Way</em>“</strong></a>, Jan. 31, 2000. <a href="#fnref:75" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:76">
-      <p>Antochi, Iosif, et al., “GraalBench: a 3D graphics benchmark suite for mobile phones”, <em>ACM SIGPLAN Notices</em> 39(7), 2004. <a href="#fnref:76" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Antochi, Iosif, et al. “3D Graphics Benchmarks for Low-Power Architectures.” 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003. <a href="#fnref:76" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:77">
-      <p>The “Game-Ready 3D Models” guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project. <a href="#fnref:77" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Antochi, Iosif, et al., “GraalBench: a 3D graphics benchmark suite for mobile phones”, <em>ACM SIGPLAN Notices</em> 39(7), 2004. <a href="#fnref:77" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:78">
+      <p>The “Game-Ready 3D Models” guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project. <a href="#fnref:78" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
