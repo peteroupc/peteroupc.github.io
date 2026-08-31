@@ -8,12 +8,12 @@ Notes on developing an application programming interface (API) for classic graph
 
 ## Goal: An Open-Source Engine or API for Classic Graphics
 
-It would be of interest to write a free and open-source graphics engine that implements [**the classic-graphics specification**](https://peteroupc.github.io/graphics.html#The_Specification) and renders graphics in software (with a minimum of source code and dependencies),[^1] or to establish a lean API for this specification.  The following are examples:
+It would be of interest to write a free and open-source graphics engine that implements [**the classic-graphics specification**](https://peteroupc.github.io/graphics.html#The_Specification) and renders graphics in software (with a minimum of source code and dependencies),[^1] or to establish a lean API for that specification.  The following are examples:
 
 - _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 programming interface for a game's graphics rendering[^2].
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
-- BGI (Borland Graphics Interface), a 2-D graphics API (`graphics.h`).
+- Borland Graphics Interface (BGI), a 2-D graphics API (e.g, _Turbo Pascal Reference Guide_ chapter 12, section "The Graph Unit").
 
 The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable video games that run with acceptable performance on those computers.
 
@@ -143,9 +143,10 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
          - Chapter 3 of the _Graphics Driver Design Guide_, part of the Windows NT 4.0 Device Driver Kit.
          - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
     - Windows CE 2.0's version of the GDI and its 2-D graphics features are described in Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997). Windows CE was an operating system for embedded and handheld computers.
-- J.E. Bresenham, "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
+- Borland International, _Turbo Pascal Reference Guide, Version 5.0_, 1989.
+- Jack E. Bresenham, "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
 - Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
-- Jack Bresenham. 1977. A linear algorithm for incremental digital display of circular arcs. Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
+- Jack E. Bresenham, "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
 - J. R. Van Aken, "An Efficient Ellipse-Drawing Algorithm," in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, [**https://doi.org/10.1109/MCG.1984.275994**](https://doi.org/10.1109/MCG.1984.275994).
 - Alois Zingl, "[**A Rasterizing Algorithm for Drawing Curves**](https://zingl.github.io/Bresenham.pdf)", Technikum-Wien, 2016 (simple outlines of paths).
 - Porter, T., and Duff, T. "Compositing Digital Images." Computer Graphics 18(3), p 253 ff., 1984. [**https://doi.org/10.1145/800031.808606**](https://doi.org/10.1145/800031.808606)
