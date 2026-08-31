@@ -120,7 +120,7 @@ Limit 2-D graphics to the following: [^8]
 Other requirements:
 
 - **Screen resolution:** The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^13]  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.
-- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
+- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 in software without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
 - **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^14]
 
 &nbsp;
@@ -228,7 +228,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Screen resolutions
 
-- Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for the 800 &times; 600 resolution or higher for 3-D graphics.   Indeed, for the most part, major game consoles and arcade machines in the 1990s and earlier supported a resolution of no more than 307,200 total pixels.[^26]
+- Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997)[^79], aimed for the 800 &times; 600 resolution or higher for 3-D graphics.  Indeed, for the most part, major game consoles and arcade machines in the 1990s and earlier supported a resolution of no more than 307,200 total pixels.[^26]
 
 - Screen resolutions that have been used in classic games include:[^27]
 
@@ -268,7 +268,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### 3-D graphics
 
-- The _PC 99 System Design Guide_[^62] sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.
+- The _PC 99 System Design Guide_[^62] sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.[^80]  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.
 - An application may choose to support stencil buffers, bump mapping, environment mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.
 - For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.
 - This specification allows for:
@@ -545,9 +545,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^30]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors), especially seen in MS-DOS games; Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
 
-[^31]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also recommended by the _PC 98 System Design Guide_.
+[^31]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also recommended by the _PC 98 System Design Guide_ (chapter 14, item 20).
 
-[^32]: One low resolution recommended by the _PC 98 System Design Guide_.
+[^32]: One low resolution recommended by the _PC 98 System Design Guide_ (chapter 14, item 20).
 
 [^33]: Nintendo DS; NEC PC-6001; SEGA Master System/SEGA Mark III; MSX; Colecovision.
 
@@ -640,3 +640,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^77]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^78]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^79]: Intel & Microsoft, _PC 98 System Design Guide_, 1997, ISBN 1-57231-716-7.
+
+[^80]: The _PC 98 System Design Guide_, chapter 14, items 24 to 30, have largely the same guidelines.  Microsoft's _PC 97 Hardware Design Guide_ (1996), chapter 15, items 24-28 and 30-31, have weaker guidelines.

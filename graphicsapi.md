@@ -63,7 +63,7 @@ Unlike with today's programmable "shaders", classic 3-D video-game graphics supp
 
 This section gives suggestions for a lean API supporting 3-D graphics. Any implementation of it should render graphics in software[^1] and optionally with hardware acceleration.  As with 2-D, the 3-D API is allowed to support drawing to images stored in system memory without also supporting drawing to video memory or directly to the screen.
 
-The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) recognizes the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_graphics) as within its spirit:
+The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) allows the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_graphics):
 
 - Z buffering (depth buffering).
 - Bilinear filtering.
@@ -71,13 +71,13 @@ The [**classic-graphics specification**](https://peteroupc.github.io/graphics.ht
 - Perspective correction.
 - Per-vertex specular highlighting.
 - Per-vertex depth-based fog.
-- Line drawing.
+- 3-D line drawing.
 - Two-texture blending.
 - Edge antialiasing (smoothing).
 - MIP mapping.
 - Source and destination alpha blending.
 
-These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The _PC 99 System Design Guide_ sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
+These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The _PC 99 System Design Guide_ (1998)[^10] sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
 
 Stencil buffers, bump mapping, environment mapping, and three- or four-texture blending are borderline capabilities.
 
@@ -161,7 +161,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Notes
 
-[^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of OpenGL ES 1.1 or OpenGL 1.1 without relying on a video card or graphics accelerator is allowed.)
+[^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 in software without relying on a video card or graphics accelerator is allowed.)
 
 [^2]: See, for example, "Optimizing OpenGL drivers for Quake3" by John Carmack, referenced in .plan, April 30, 1999.
 
@@ -178,3 +178,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^8]: [**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text.  _Glyphs_ are graphics that represent elements of text (examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination), and a _font_ is a collection of these glyphs along with rules for drawing and placing them. Glyphs are often but not always mapped one-to-one to letters or other writing symbols. Before 2000, there were three kinds of fonts for screen display: raster fonts (the glyphs are images); vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples); and outline fonts (the glyphs are filled 2-D paths; TrueType fonts are examples). (Later developments saw (1) the addition of scalable colored graphics, especially _emoji_, to outline fonts and (2) [**"subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.) The conversion of text to glyphs and the positioning of such glyphs is often nontrivial.
 
 [^9]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
+
+[^10]: Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
