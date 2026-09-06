@@ -115,12 +115,12 @@ Limit 2-D graphics to the following: [^8]
     6. Image files used by the game should not store "pre-pixelated" sprites.
     7. Up to N sprites can be displayed at a time on the game screen, where N is calculated as (screen width &times; screen height) / 256, rounded up, but not more than 512.[^12]
 
-> **Note:** The suggested width and height for tiles is 8 pixels &times; 8 pixels.
+> **Note:** The suggested width and height for tiles is 8 pixels by 8 pixels.
 
 Other requirements:
 
 - **Screen resolution:** The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^13]  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.
-- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to VGA's video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 in software without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
+- **Rendering in software:** The game should include a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 in software without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
 - **Music:** Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.[^14]
 
 &nbsp;
@@ -129,7 +129,7 @@ Other requirements:
 >
 > 1. The following limits apply for various game screen resolutions:
 >
->     | Resolution | Max. primitives per frame | Max. vertices | Max. texture size | Max. sprite size | Max. sprites |
+>     | Resolution | Max. primitives per frame | Max. vertices per frame | Max. texture size | Max. sprite size | Max. sprites |
 >       ---- | -- | -- | ---- | ---- | -- |
 >     | 640 &times; 480 | 12800 | 38400 | 256 &times; 256 | 256 &times; 256 | 1200 |
 >     | 256 &times; 192 | 2048 | 6144 | 256 &times; 256 | 64 &times; 64 | 192 |
@@ -140,7 +140,7 @@ Other requirements:
 >     | 640 &times; 360 | 9600 | 28800 | 256 &times; 256 | 256 &times; 256 | 900 |
 >     | 640 &times; 400 | 10666 | 32000 | 256 &times; 256 | 256 &times; 256 | 1000 |
 >
-> 2. For the screen resolution 640 &times; 480, the maximum number of primitives per second is 768,000.
+> 2. For the screen resolution 640 &times; 480, the maximum number of primitives per second is 768,000; for 320 &times; 240, it is 192,000.
 >
 > 3. The following is one way to implement the 3-D portion of this specification:
 >
@@ -388,7 +388,12 @@ The following are examples of the kind of statements desired:
 - Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
 - Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999.
 - J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995.
-- Multimedia PC Marketing Council, "Multimedia PC Level 1 and Level 2 Specifications" (May 1993), also in Microsoft Knowledge Base article Q106055 (1993).  The two specifications are called MPC Level 1 and MPC Level 2 in this document.
+- PC hardware guidelines:
+    - Multimedia PC Marketing Council, "Multimedia PC Level 1 and Level 2 Specifications" (May 1993), also in Microsoft Knowledge Base article Q106055 (1993).  The two specifications are called MPC Level 1 (from 1990) and MPC Level 2 (from 1993) in this document.
+    - In _Dr. Dobbs' Journal_, Sep. 1995 ("Of Interest"), it was announced that the Multimedia PC Software Publishers Association released an MPC Level 3 specification.
+    - Microsoft Corp., _PC 97 Hardware Design Guide_, 1996.
+    - Intel & Microsoft, _PC 98 System Design Guide_, 1997, ISBN 1-57231-716-7.
+    - Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
 - Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).
 - Rodent, H., "Animation in Win32", Microsoft Developer Network, Feb. 1, 1994.
 - Thompson, N., _Animation Techniques in Win32_, Microsoft Press, 1995.
@@ -535,17 +540,17 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^25]: This is the performance level targeted for the "[**CyberVGA**](https://expfunction.itch.io/cybervga)" engine by Burak Yazar.
 
-[^26]: Intel & Microsoft, _PC 98 System Design Guide_, 1997, ISBN 1-57231-716-7.
+[^26]: No note text yet.
 
 [^27]: Moreover, PC games before 2000 that required screen resolutions larger than 640 &times; 480 are rare, and according to PCGamingWiki they include the following games (most of which are 2-D): _Timon & Pumbaa's Jungle Games_ (1995); _Tequila & Boom Boom_ (1995); _Romance of the Three Kingdoms IV: Wall of Fire_ (1995/1996); _Joint Strike Fighter_ (1997), but only when run with the Glide programming interface; _Links LS: 1998 Edition_ (1997); _Emergency: Fighters for Life_ (1998); _Championship Manager: Season 99/00_ (1999); _Heroes of Might and Magic III_ (1999); _Alien Nations_ (1999); _Pizza Syndicate_/_Fast Food Tycoon_ (1999); _Age of Empires II: The Age of Kings_ (1999).
 
 [^28]: In addition to the resolutions shown here, there are modern games that employ low resolutions with the same 16:9 aspect ratio as high-definition displays.  These include 640 &times; 360 (_Blasphemous_ [2019]); 400 &times; 225 (_Unsighted_); 480 &times; 270 (_Enter the Gungeon_); 320 &times; 180 (_Celeste_).<br>Information about game consoles' screen resolution can be found in Rodrigo Copetti's "Architecture of Consoles" series.
 
-[^29]: VGA mode 12h (16 colors).
+[^29]: VGA mode 12h (16 colors); VGA mode 11h (2 colors).
 
 [^30]: PlayStation (One); Nintendo 3DS lower screen; larger VGA "mode X" (256 colors); most common Nintendo 64 resolution.
 
-[^31]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors), especially seen in MS-DOS games; Color/Graphics Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
+[^31]: Commodore 64; NEC PC-8001; VGA mode 13h (256 colors), especially seen in MS-DOS games; Color/Graphics Monitor Adapter (CGA) 4-color mode; Atari ST 16-color mode; [**Amiga NTSC**](https://blog.johnnovak.net/2022/04/15/achieving-period-correct-graphics-in-personal-computer-emulators-part-1-the-amiga).
 
 [^32]: One commonly supported "super-VGA" mode, especially in mid-1990s gaming, and which was also recommended by the _PC 98 System Design Guide_ (chapter 14, item 20).
 
@@ -579,7 +584,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^47]: 12-inch classic Macintosh.
 
-[^48]: 16 colors.
+[^48]: 16 colors.  See: IBM Corp., _IBM Enhanced Graphics Adapter_, Aug. 2, 1984.
 
 [^49]: NEC PC-9801 8-color mode; Atari ST two-color.
 
@@ -605,13 +610,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^60]: Most of the VGA standard's display modes, including the 320 &times; 200 mode, ran at 70 hertz, but the 320 &times; 240 and 640 &times; 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second.
 
-[^61]: Stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video standard known as RS-170A.
+[^61]: Stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A.
 
 [^62]: Stands for phase alternating line.
 
-[^63]: Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
+[^63]: No note text yet.
 
-[^64]: The _PC 98 System Design Guide_, chapter 14, items 24 to 30, have largely the same guidelines.  Microsoft's _PC 97 Hardware Design Guide_ (1996), chapter 15, items 24-28 and 30-31, have weaker guidelines.
+[^64]: The _PC 98 System Design Guide_, chapter 14, items 24 to 30, have largely the same guidelines.  The _PC 97 Hardware Design Guide_, chapter 15, items 24-28 and 30-31, have weaker guidelines.
 
 [^65]: By contrast, 3-D video cards have been offered for professional-use computers since the mid-1980s; the first such cards for PCs that supported real-time display were [**introduced in 1988**](https://retro.swarm.cz/sgi-irisvision-add-in-3d-accelerator-for-pc-1990/).
 

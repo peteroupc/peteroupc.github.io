@@ -47,9 +47,9 @@
 <p>Some display modes follow, along with their screen resolutions and commonly implemented pixel densities:</p>
 
 <ul>
-  <li>VGA’s (IBM Video Graphics Array) 640 × 480 16-color display mode: 96 horizontal and vertical pixels per inch.</li>
-  <li>IBM Enhanced Graphics Adapter’s (EGA) 640 × 350 16-color display mode: 96 horizontal and 72 vertical pixels per inch.</li>
-  <li>IBM Color/Graphics Adapter’s (CGA) 640 × 200 2-color display mode: 96 horizontal and 48 vertical pixels per inch.</li>
+  <li>VGA’s (IBM Video Graphics Array)<sup id="fnref:51"><a href="#fn:51" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> 640 × 480 16-color display mode: 96 horizontal and vertical pixels per inch.</li>
+  <li>IBM Enhanced Graphics Adapter’s (EGA)<sup id="fnref:52"><a href="#fn:52" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> 640 × 350 16-color display mode: 96 horizontal and 72 vertical pixels per inch.</li>
+  <li>IBM Color/Graphics Monitor Adapter’s (CGA)<sup id="fnref:53"><a href="#fn:53" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> 640 × 200 2-color display mode: 96 horizontal and 48 vertical pixels per inch.</li>
 </ul>
 
 <p>An image can be adapted for display modes with pixel densities that differ from the VGA mode just given (which is the usual one in the mid-1990s) by scaling the image’s width, height, or both.  For example, a 300 × 300 image, when adapted for the EGA mode, becomes a shrunken 300 × 225 image (the height becomes 72/96 = 3/4 of the original height).  If a display mode’s horizontal and vertical pixel spacing are equal, one way to find an appropriate scaling factor for images is to divide the mode’s pixels per inch by 96 (or whatever value of pixels per inch is the “normal” one); examples of such a factor are 1.25 (for the pixel density 1.25 to 1; IBM 8514/a), 2 (for high-pixel-density displays), and 3 (for very-high-pixel-density displays).</p>
@@ -71,13 +71,13 @@
 <ul>
   <li>Button face color (by default, (192, 192, 192)<span style="background:rgb(192,192,192);border:1px black">   </span>).</li>
   <li>Window frame color (by default, (0,0,0)<span style="background:rgb(0,0,0);border:1px white">   </span> or black).</li>
-  <li>Button highlight color (by default, (255,255,255)<span style="background:rgb(255,255,255);border:1px black">   </span> or white).<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>  Often, this is a lighter version of the button face color.</li>
+  <li>Button highlight color (by default, (255,255,255)<span style="background:rgb(255,255,255);border:1px black">   </span> or white).<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>  Often, this is a lighter version of the button face color.</li>
   <li>Button shadow color (by default, (128, 128, 128)<span style="background:rgb(128,128,128);border:1px black">   </span>).   Often, this is a darker version of the button face color.</li>
-  <li>Button “light” highlight color (by default, (192, 192, 192)<span style="background:rgb(192,192,192);border:1px black">   </span>).<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  Often, this is either the button face color or comes between the highlight and face colors.</li>
-  <li>Button dark shadow color (by default, (0,0,0)<span style="background:rgb(0,0,0);border:1px white">   </span> or black).<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  Often, this is either the window frame color or a darker version of the button shadow color.</li>
+  <li>Button “light” highlight color (by default, (192, 192, 192)<span style="background:rgb(192,192,192);border:1px black">   </span>).<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>  Often, this is either the button face color or comes between the highlight and face colors.</li>
+  <li>Button dark shadow color (by default, (0,0,0)<span style="background:rgb(0,0,0);border:1px white">   </span> or black).<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>  Often, this is either the window frame color or a darker version of the button shadow color.</li>
 </ul>
 
-<p>User-interface conventions other than Windows 95 may use only a subset of these system colors or derive some of them (such as the highlight or shadow color) from a base color (such as the button face color).<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
+<p>User-interface conventions other than Windows 95 may use only a subset of these system colors or derive some of them (such as the highlight or shadow color) from a base color (such as the button face color).<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></p>
 
 <p>This discussion does not apply to black-and-white buttons (buttons with colors limited to black and white).  For example, buttons in Mac OS versions before 8.0 and in Windows 1.x and 2.x were of that kind.</p>
 
@@ -99,7 +99,7 @@
 
     <p>in each case with transparency and opacity in the label preserved.</p>
   </li>
-  <li><em>Unavailable appearance</em>: The button’s text and icons have an <em>embossed appearance</em> <sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>, are drawn with 50% opacity, or are drawn such that only every other pixel is rendered in a checkerboard pattern.</li>
+  <li><em>Unavailable appearance</em>: The button’s text and icons have an <em>embossed appearance</em> <sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>, are drawn with 50% opacity, or are drawn such that only every other pixel is rendered in a checkerboard pattern.</li>
   <li>
     <p><em>Mixed appearance</em>: The button’s inner background is drawn—</p>
 
@@ -110,28 +110,28 @@
   </li>
 </ul>
 
-<p>The following is typical in buttons found in Windows versions 3.0 and 3.1 <sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>, Windows 95 <sup id="fnref:6:1"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>, and applications for these systems:</p>
+<p>The following is typical in buttons found in Windows versions 3.0 and 3.1 <sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">10</a></sup>, Windows 95 <sup id="fnref:6:1"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>, and applications for these systems:</p>
 
 <ul>
   <li>For the pressed button style, the button’s text and icons are shifted one unit to the right and one unit down, compared to the unpressed style.</li>
 </ul>
 
-<p>The following ways to draw buttons, default buttons, and toolbar buttons are typical in Windows 95 <sup id="fnref:6:2"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> and applications for it:</p>
+<p>The following ways to draw buttons, default buttons, and toolbar buttons are typical in Windows 95 <sup id="fnref:6:2"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">9</a></sup> and applications for it:</p>
 
 <ul>
   <li>The mixed value style tends to be drawn as the unpressed variant, except the button’s text and icons have a <em>monochrome appearance</em> and its inner background has a <em>mixed appearance</em>.</li>
   <li>The unavailable style tends to be drawn as the unpressed variant, except the button’s text and icons have an <em>unavailable appearance</em>.</li>
   <li>For the option-set style, the button tends to be drawn as the normal pressed variant, except:
     <ul>
-      <li>For the unpressed style, its inner background has a <em>mixed appearance</em>. <sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></li>
+      <li>For the unpressed style, its inner background has a <em>mixed appearance</em>. <sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></li>
       <li>For the unavailable style, its text and icons have an <em>unavailable appearance</em>.</li>
     </ul>
   </li>
 </ul>
 
-<p>In Presentation Manager and in System 7 of the Macintosh Operating System <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>, to render a button in the unavailable style, the entire button (including text, icons, and borders) is drawn such that only every other pixel is rendered in a “checkerboard” pattern.</p>
+<p>In Presentation Manager and in System 7 of the Macintosh Operating System <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">12</a></sup>, to render a button in the unavailable style, the entire button (including text, icons, and borders) is drawn such that only every other pixel is rendered in a “checkerboard” pattern.</p>
 
-<p>Traditionally, the three-dimensional effects of buttons, icons, and other user-interface elements are based on a light source shining from the upper left. <sup id="fnref:6:3"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> <sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></p>
+<p>Traditionally, the three-dimensional effects of buttons, icons, and other user-interface elements are based on a light source shining from the upper left. <sup id="fnref:6:3"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">9</a></sup> <sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></p>
 
 <p><a id="Button_and_Border_Drawing_Challenge"></a></p>
 
@@ -140,7 +140,7 @@
 <p>Here is a challenge.  Write computer code (released to the public domain or licensed under the Unlicense) to draw the following ways to style borders and buttons:</p>
 
 <ul>
-  <li>Window border, text box border, status field border, and grouping border.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></li>
+  <li>Window border, text box border, status field border, and grouping border.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
   <li>The following elements in the unpressed, pressed, and unavailable (“disabled” or “inactive”) appearances:
     <ul>
       <li>Buttons in normal, “option-set”, and mixed-value (“indeterminate” or “third state”) states.</li>
@@ -154,7 +154,7 @@
   <li>Optionally, other user-interface elements (such as scroll bars and toggle switches).</li>
 </ul>
 
-<p>Using only the following system colors and with some pixels or areas allowed to be transparent: the button face, window frame, button highlight, button shadow, button “light” highlight, and button dark shadow colors.  It is allowed to simulate more colors using these six system colors by means of dithering.<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup></p>
+<p>Using only the following system colors and with some pixels or areas allowed to be transparent: the button face, window frame, button highlight, button shadow, button “light” highlight, and button dark shadow colors.  It is allowed to simulate more colors using these six system colors by means of dithering.<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">15</a></sup></p>
 
 <p>The border and button design should not employ trademarks, should be suitable for all ages, and must not involve the help of artificial-intelligence tools.  Moreover, the design should not be a mere copy of border and button appearances found by default in Windows or other operating systems.</p>
 
@@ -167,8 +167,8 @@
 <p>An icon (a small graphic representing a computer program, document, or resource) should come in a set of variations in color and dimensions:</p>
 
 <ul>
-  <li>The same icon should be drawn in up to 2, up to 16, and up to 256 unique colors, and optionally with 8 bits per color component (also known as 8 bits per color channel or <em>8 bpc</em>).  A traditional color choice for 16-color icons is the VGA palette.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
-  <li>The same icon should have dimensions 16 × 16, 24 × 24, 32 × 32, 48 × 48, and 64 × 64 pixels, and may be drawn in other dimensions to account for <a href="#display-modes"><strong>pixel density</strong></a>. <sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
+  <li>The same icon should be drawn in up to 2, up to 16, and up to 256 unique colors, and optionally with 8 bits per color component (also known as 8 bits per color channel or <em>8 bpc</em>).  A traditional color choice for 16-color icons is the VGA palette.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">16</a></sup></li>
+  <li>The same icon should have dimensions 16 × 16, 24 × 24, 32 × 32, 48 × 48, and 64 × 64 pixels, and may be drawn in other dimensions to account for <a href="#display-modes"><strong>pixel density</strong></a>. <sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">17</a></sup></li>
   <li>Although the 256- and 16-color icons should be specially drawn if feasible, it is allowed to derive those icons from 8-bpc and 256-color icons, respectively, through an automated method.</li>
 </ul>
 
@@ -196,14 +196,14 @@
       <li>There are no translucent (semitransparent) pixels.</li>
     </ul>
   </li>
-  <li>The three-dimensional (3-D) appearance of buttons and other objects in two-dimensional graphics supposes the presence of a light source shining from the upper left.<sup id="fnref:6:4"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>
+  <li>The three-dimensional (3-D) appearance of buttons and other objects in two-dimensional graphics supposes the presence of a light source shining from the upper left.<sup id="fnref:6:4"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>
     <ul>
-      <li>Graphics are drawn with a “black outline” on the bottom and right edges and with a “dark gray or other dark outline” on the other edges. <sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup> <sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">16</a></sup></li>
-      <li>If a real-world object should have a 3-D look with a limited number of colors, that object is drawn in an <em>isometric</em> view (rather than straight on).<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">17</a></sup>  (This doesn’t apply to the edges of buttons.)</li>
+      <li>Graphics are drawn with a “black outline” on the bottom and right edges and with a “dark gray or other dark outline” on the other edges. <sup id="fnref:15"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">18</a></sup> <sup id="fnref:16"><a href="#fn:16" class="footnote" rel="footnote" role="doc-noteref">19</a></sup></li>
+      <li>If a real-world object should have a 3-D look with a limited number of colors, that object is drawn in an <em>isometric</em> view (rather than straight on).<sup id="fnref:17"><a href="#fn:17" class="footnote" rel="footnote" role="doc-noteref">20</a></sup>  (This doesn’t apply to the edges of buttons.)</li>
     </ul>
   </li>
-  <li>Real-world objects depicted in user-interface graphics have an illustrative look with clean lines and curves rather than an abstract, pencil- or brush-drawn, highly realistic, or even <em>photorealistic</em> look. <sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">18</a></sup></li>
-  <li>From 1990 to about 2003, for graphics limited to the 16-color VGA palette: <sup id="fnref:13:1"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup>
+  <li>Real-world objects depicted in user-interface graphics have an illustrative look with clean lines and curves rather than an abstract, pencil- or brush-drawn, highly realistic, or even <em>photorealistic</em> look. <sup id="fnref:18"><a href="#fn:18" class="footnote" rel="footnote" role="doc-noteref">21</a></sup></li>
+  <li>From 1990 to about 2003, for graphics limited to the 16-color VGA palette: <sup id="fnref:13:1"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">16</a></sup>
     <ul>
       <li>Areas are filled with either a solid color in the palette or an alternating checkerboard pattern of two colors (to simulate a color outside the palette).</li>
       <li>Color gradient fills (smooth transitions from one color to another) and simulations of color gradients are rare (and then especially in backgrounds of illustrations), if not avoided.</li>
@@ -212,16 +212,16 @@
   <li>For graphics with 17 to 256 colors, gradient fills are present but subtle.</li>
   <li>Icons:
     <ul>
-      <li>Before 1990, icons are limited to the two colors black and white, with optional transparency.<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup></li>
-      <li>Before 1995, black-and-white icons (with no intermediate gray tones) from which a color version is derived do not use shading or hatch patterns to mimic shadows or solid colors.<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup></li>
+      <li>Before 1990, icons are limited to the two colors black and white, with optional transparency.<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
+      <li>Before 1995, black-and-white icons (with no intermediate gray tones) from which a color version is derived do not use shading or hatch patterns to mimic shadows or solid colors.<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">23</a></sup></li>
       <li>Icons with more than 32 colors are rare; more than 64 colors, very rare.</li>
-      <li>Icons for toolbars, menu items, and the like do not behave like typographic symbols (dingbats), unlike the tendency in the late 2010s. For example, they are not designed in the same way as letters and digits in a typeface, or font; they can be colored; and they have less harmony with accompanying text than such symbols as the at-sign <code>@</code>.<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup></li>
-      <li>Larger versions of originally 32 × 32 icons (for example, the 48 × 48 version) appear the same as the  original icon but with finer but nonessential detail.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
+      <li>Icons for toolbars, menu items, and the like do not behave like typographic symbols (dingbats), unlike the tendency in the late 2010s. For example, they are not designed in the same way as letters and digits in a typeface, or font; they can be colored; and they have less harmony with accompanying text than such symbols as the at-sign <code>@</code>.<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">24</a></sup></li>
+      <li>Larger versions of originally 32 × 32 icons (for example, the 48 × 48 version) appear the same as the  original icon but with finer but nonessential detail.<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">25</a></sup></li>
     </ul>
   </li>
   <li>Cursors:
     <ul>
-      <li>Most cursors are limited to the two colors black and white, with optional transparency.<sup id="fnref:19:1"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup></li>
+      <li>Most cursors are limited to the two colors black and white, with optional transparency.<sup id="fnref:19:1"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
       <li>Before 1990, cursors do not have colors other than black and white.</li>
       <li>From 1990 to about 2003, cursors with colors other than black and white are rare, and cursors with more than 32 colors are very rare.  From 1995 to about 2003, cursors with colors limited to the VGA palette become more common, especially infrequently seen cursors such as the busy-wait cursor.</li>
       <li>Before 2003, and even before 1995, each shape of a black-and-white cursor is generally either white with a black outline (approximated with integer coordinates) or vice versa, to make the cursor easy to see over any background.</li>
@@ -230,20 +230,20 @@
 </ul>
 
 <blockquote>
-  <p><strong>Note:</strong> After about 2003, user-interface graphics tend to be 8-bpc images (with or without translucent pixels) and are less interesting to discuss here, as 16- and 256-color versions are often made from those images through <em>dithering</em><sup id="fnref:12:1"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup> or similar techniques.</p>
+  <p><strong>Note:</strong> After about 2003, user-interface graphics tend to be 8-bpc images (with or without translucent pixels) and are less interesting to discuss here, as 16- and 256-color versions are often made from those images through <em>dithering</em><sup id="fnref:12:1"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">15</a></sup> or similar techniques.</p>
 </blockquote>
 
-<p>In general, from about 1990 to about 1997, user-interface text was drawn in one color only and rarely had smoothed edges; the edges were smoothed only if the display mode can show more than 256 colors at a time.  In fancier ways to show text, a “shadowed” text look was often achieved using multiple shifted renderings of the text in a single color (for example, from one unit upward and leftward to three units downward and rightward) followed by an unshifted rendering in the base color or pattern.<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  But new applications should avoid having text in icons, cursors, and other images. An example of shadowed text follows:</p>
+<p>In general, from about 1990 to about 1997, user-interface text was drawn in one color only and rarely had smoothed edges; the edges were smoothed only if the display mode can show more than 256 colors at a time.  In fancier ways to show text, a “shadowed” text look was often achieved using multiple shifted renderings of the text in a single color (for example, from one unit upward and leftward to three units downward and rightward) followed by an unshifted rendering in the base color or pattern.<sup id="fnref:23"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>  But new applications should avoid having text in icons, cursors, and other images. An example of shadowed text follows:</p>
 
 <p><img src="shadowed.png" alt="**The word &quot;Sample&quot; in blue, shadowed above by gray and below by black.**" /></p>
 
-<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">24</a></sup>  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
+<p>New user-interface graphics with limited colors ought to be designed as vector graphics (geometric models; for example, line segments and filled polygons) from the start, even if they are meant to resemble the drawing style given in this section when in their original size.<sup id="fnref:24"><a href="#fn:24" class="footnote" rel="footnote" role="doc-noteref">27</a></sup>  Existing images that function like icons should be <a href="https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html"><strong>converted to vector graphics</strong></a> if they are simple enough.</p>
 
 <p><a id="Animations"></a></p>
 
 <h2 id="animations">Animations</h2>
 
-<p>Although Windows 95 and later versions have an <em>animation control</em> for displaying simple video files without sound that are limited to 256 colors, this control appears to be rarely used.  More usually, traditional desktop applications don’t store an animation as a video file; rather, the images making up the animation are either stored as separate image files or arranged in a row or column of a single image file (in either case with transparent pixels marked with a color not present in the animation’s frames). <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">25</a></sup>  The source code file <em>desktopwallpaper.py</em> has a method, named <code>writeavi</code>, to write video files.</p>
+<p>Although Windows 95 and later versions have an <em>animation control</em> for displaying simple video files without sound that are limited to 256 colors, this control appears to be rarely used.  More usually, traditional desktop applications don’t store an animation as a video file; rather, the images making up the animation are either stored as separate image files or arranged in a row or column of a single image file (in either case with transparent pixels marked with a color not present in the animation’s frames). <sup id="fnref:25"><a href="#fn:25" class="footnote" rel="footnote" role="doc-noteref">28</a></sup>  The source code file <em>desktopwallpaper.py</em> has a method, named <code>writeavi</code>, to write video files.</p>
 
 <p><a id="Flexible_User_Interface_Graphics"></a></p>
 
@@ -257,20 +257,20 @@
   <li>Designing user-interface elements as images or vector graphics limited to gray tones, where the system replaces each gray tone in the image or graphic with the corresponding color in a color gradient involving one or more system colors.</li>
   <li>Drawing the same icon, cursor, or graphic—
     <ul>
-      <li>in multiple variations in size (width, height, or both), each with a different level of detail (where the system is expected to use a shrinking of the smallest available graphic that’s larger than the requested size, if the requested size is not available), even in the case of <a href="https://www.haiku-os.org/docs/userguide/en/applications/icon-o-matic.html"><strong>vector graphics</strong></a> <sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">26</a></sup>, and</li>
+      <li>in multiple variations in size (width, height, or both), each with a different level of detail (where the system is expected to use a shrinking of the smallest available graphic that’s larger than the requested size, if the requested size is not available), even in the case of <a href="https://www.haiku-os.org/docs/userguide/en/applications/icon-o-matic.html"><strong>vector graphics</strong></a> <sup id="fnref:26"><a href="#fn:26" class="footnote" rel="footnote" role="doc-noteref">29</a></sup>, and</li>
       <li>with a different maximum number of unique colors (such as 2, 8, 16, 256, or 2<sup>24</sup> colors).</li>
     </ul>
   </li>
   <li>Animation of icons and cursors.</li>
 </ul>
 
-<p>Given a graphic with multiple variations (such as in size, colors, or being a vector graphic), a system could then choose or synthesize the appropriate version of that graphic depending on the current display mode’s pixel density and which colors the mode can show.  (For example, a vector graphic could be scaled up for high-pixel-density display modes, or a 256-color icon could be dithered to the VGA palette <sup id="fnref:13:2"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup> if the display mode can show only colors in that palette.)</p>
+<p>Given a graphic with multiple variations (such as in size, colors, or being a vector graphic), a system could then choose or synthesize the appropriate version of that graphic depending on the current display mode’s pixel density and which colors the mode can show.  (For example, a vector graphic could be scaled up for high-pixel-density display modes, or a 256-color icon could be dithered to the VGA palette <sup id="fnref:13:2"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">16</a></sup> if the display mode can show only colors in that palette.)</p>
 
 <p><a id="Relevant_Works"></a></p>
 
 <h2 id="relevant-works">Relevant Works</h2>
 
-<p>There are many books and other works that discuss design matters on traditional user interfaces.<sup id="fnref:27"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">27</a></sup> <sup id="fnref:6:5"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> <sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">28</a></sup> <sup id="fnref:29"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">29</a></sup> <sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">30</a></sup> <sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup> <sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">32</a></sup> <sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">33</a></sup> <sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">34</a></sup> <sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup> <sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> <sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">37</a></sup> <sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">38</a></sup> <sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">39</a></sup> <sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">40</a></sup> <sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">41</a></sup> <sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">42</a></sup> <sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">43</a></sup> <sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">44</a></sup> <sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> <sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> <sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> <sup id="fnref:15:1"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">15</a></sup> <sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> <sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">49</a></sup></p>
+<p>There are many books and other works that discuss design matters on traditional user interfaces.<sup id="fnref:27"><a href="#fn:27" class="footnote" rel="footnote" role="doc-noteref">30</a></sup> <sup id="fnref:6:5"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">9</a></sup> <sup id="fnref:28"><a href="#fn:28" class="footnote" rel="footnote" role="doc-noteref">31</a></sup> <sup id="fnref:29"><a href="#fn:29" class="footnote" rel="footnote" role="doc-noteref">32</a></sup> <sup id="fnref:30"><a href="#fn:30" class="footnote" rel="footnote" role="doc-noteref">33</a></sup> <sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">34</a></sup> <sup id="fnref:32"><a href="#fn:32" class="footnote" rel="footnote" role="doc-noteref">35</a></sup> <sup id="fnref:33"><a href="#fn:33" class="footnote" rel="footnote" role="doc-noteref">36</a></sup> <sup id="fnref:34"><a href="#fn:34" class="footnote" rel="footnote" role="doc-noteref">37</a></sup> <sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">38</a></sup> <sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">39</a></sup> <sup id="fnref:37"><a href="#fn:37" class="footnote" rel="footnote" role="doc-noteref">40</a></sup> <sup id="fnref:38"><a href="#fn:38" class="footnote" rel="footnote" role="doc-noteref">41</a></sup> <sup id="fnref:39"><a href="#fn:39" class="footnote" rel="footnote" role="doc-noteref">42</a></sup> <sup id="fnref:40"><a href="#fn:40" class="footnote" rel="footnote" role="doc-noteref">43</a></sup> <sup id="fnref:41"><a href="#fn:41" class="footnote" rel="footnote" role="doc-noteref">44</a></sup> <sup id="fnref:42"><a href="#fn:42" class="footnote" rel="footnote" role="doc-noteref">45</a></sup> <sup id="fnref:43"><a href="#fn:43" class="footnote" rel="footnote" role="doc-noteref">46</a></sup> <sup id="fnref:44"><a href="#fn:44" class="footnote" rel="footnote" role="doc-noteref">47</a></sup> <sup id="fnref:45"><a href="#fn:45" class="footnote" rel="footnote" role="doc-noteref">48</a></sup> <sup id="fnref:46"><a href="#fn:46" class="footnote" rel="footnote" role="doc-noteref">49</a></sup> <sup id="fnref:47"><a href="#fn:47" class="footnote" rel="footnote" role="doc-noteref">50</a></sup> <sup id="fnref:15:1"><a href="#fn:15" class="footnote" rel="footnote" role="doc-noteref">18</a></sup> <sup id="fnref:48"><a href="#fn:48" class="footnote" rel="footnote" role="doc-noteref">51</a></sup> <sup id="fnref:49"><a href="#fn:49" class="footnote" rel="footnote" role="doc-noteref">52</a></sup></p>
 
 <p><a id="Worthy_Mentions"></a></p>
 
@@ -278,7 +278,7 @@
 
 <ul>
   <li>The <code>QLCDNumber</code> interface element, from the Qt framework, displays a number in a form resembling seven-segment displays.  The number’s digits are vector graphics (geometric models), not images, and <code>QLCDNumber</code> supports a drawing mode where the upper and left-hand outlines are drawn in a lighter color than the lower and right-hand outlines.</li>
-  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">50</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
+  <li>The <a href="https://github.com/fjardon/motif"><strong>Motif interface toolkit</strong></a> generates four kinds of system colors from a background color: a selection color, a foreground (text) color (which is either black or white), an upper shadow color, and a lower shadow color (generally darker than the upper shadow color), using an algorithm like the following that depends on the background color’s calculated “brightness”. <sup id="fnref:50"><a href="#fn:50" class="footnote" rel="footnote" role="doc-noteref">53</a></sup>  The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to the following pseudocode.</li>
 </ul>
 
 <hr />
@@ -339,6 +339,15 @@ end
     </li>
     <li id="fn:2">
       <p>These two values for pixel density need not match the true pixel density of a particular computer display.  For example, the drivers that come with Windows version 3.x employ a pixel density that is greater, on average, than the true one to aid readability of text (chapter 14 of Petzold 1990).<br />Moreover, two display modes with the same screen resolution can differ in their pixel density, even if both are meant for displays with the same aspect ratio.  For example, a 320-×-200 display mode can have 40 or 48 vertical pixels per inch, even if both are intended for displays with the 4:3 aspect ratio typical in 2000 and earlier. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:51">
+      <p>Discussed, for example, in Cockerham, J.T., “VGA: Evolutionary Half Step”, <em>PC Tech Journal</em>, August 1987. <a href="#fnref:51" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:52">
+      <p>IBM Corp., <em>IBM Enhanced Graphics Adapter</em>, Aug. 2, 1984. <a href="#fnref:52" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:53">
+      <p>IBM Corp., <em>IBM Color/Graphics Monitor Adapter</em>, undated. <a href="#fnref:53" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3">
       <p>In Windows, this color was first supported in version 3.1.  In the Foundation Class Library’s implementation of toolbars, this color is fixed to (255,255,255); see MFC Technical Note TN031, “Control Bars”. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
