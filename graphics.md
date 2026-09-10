@@ -99,6 +99,7 @@ Limit 2-D graphics to the following: [^8]
     2. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
     3. The upper-left corner of a sprite can be placed anywhere relative to the game screen and even outside it.
 4. Image files used by the game should not store "pre-pixelated" sprites or tiles.
+5. The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.[^82] Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing them with translucency is also not supported.
 
 Other requirements:
 
@@ -114,13 +115,11 @@ The following are decided by the application:
 5. If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
 6. If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
 7. The number of 2-D layers (up to four).
-8. The number of bits per pixel in each tile: 1, 2, 4, or 8.
-9. Whether a special index in a color table marks transparent pixels in tiles. (For example, whether pixels labeled 0 are treated as transparent pixels.)
-10. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^13]
-11. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.  Alternatively, a statement that each sprite is no more than 64 &times; 64 pixels in size.
-12. Whether a special index in a color table marks transparent pixels in sprites.
-13. The maximum number of sprites displayed at a time on the game screen, no more than 512 and no more than (screen width &times; screen height) / 256, rounded up.
-14. Whether sprites made of tiles, sprites made of pixels, or both are supported.
+8. The number of bits per pixel that tiles have: 1, 2, 4, or 8.
+9. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^13]
+10. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.
+11. The maximum number of sprites displayed at a time on the game screen, no more than (screen width &times; screen height) / 256, rounded up.
+12. Whether sprites made of tiles, sprites made of pixels, or both are supported.
 
 The following are optional features; the application decides:
 
@@ -158,7 +157,7 @@ The following are optional features; the application decides:
 >     - Implements a subset of OpenGL ES 1.1, rendered in software.
 >     - Has a game engine that renders only in that subset of OpenGL ES 1.1.
 >
-> 4. One way to implement the 2-D limits is: Screen resolution 640 &times; 480; four 2-D layers; 4 bits per pixel; pixels labeled 15 are transparent in tiles and sprites; tiles are 16 &times; 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.
+> 4. One way to implement the 2-D limits is: Screen resolution 640 &times; 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 &times; 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.
 
 <a id=Classic_Graphics_in_Scope></a>
 
@@ -207,6 +206,7 @@ Examples of optional constraints are the following:
     - In the vertex color format, the closest colors to this palette are: 24/24/24; or each color component is 0 or 16; or each color component is 0 or 31.
 - The game displays no more than 256 colors at a time.[^20]
 - The game is limited to a fixed set of 256 colors, of which one is black and another is white.
+- Drawing graphics with translucency (semitransparency) is not supported.
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than&mdash;
     - 1,457,664 bytes (the capacity of a [**file-allocation-table (FAT) formatted high-density 3.5-inch floppy disk**](https://fitsonafloppy.com/)), or
     - 1,213,952 bytes (the capacity of a FAT formatted high-density 5.25-inch floppy disk), or
@@ -390,6 +390,7 @@ The following are examples of the kind of statements desired:
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
 - Amanatides, John, and Andrew Woo. "A fast voxel traversal algorithm for ray tracing." Eurographics. Vol. 87. No. 3. 1987.
 [**http://www.cse.yorku.ca/~amana/research/grid.pdf**](http://www.cse.yorku.ca/~amana/research/grid.pdf)
+- Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
@@ -660,3 +661,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^80]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^81]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^82]: This drawing can be done in many ways: for example, by designating pixels with a given label, say, 0, as transparent, or designating pixels that are the same as the upper-left pixel as transparent \[Rodent 1994\], or preparing a two-color mask identifying the pixels to be drawn \[Gery 1992\].
