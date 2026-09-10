@@ -65,7 +65,7 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 Limit 3-D graphics to the following:[^3]
 
 1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4]  Alternatively, the maximum number of primitives drawn per second is equal to screen width times screen height times 2.5.
-    * A _primitive_ is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.
+    * A _primitive_ is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.
     * Each vertex of the primitive points to a vertex from the vertex list described later.
     * Each primitive can be translucent.
 
@@ -110,16 +110,17 @@ The following are decided by the application:
 1. The **"screen resolution"**: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^12]
 2. Whether the green component of vertex colors is 5 or 6 bits.
 3. If 3-D is supported, the maximum number of primitives shown simultaneously ("per frame") or per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.
-4. If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
-5. If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
-6. The number of 2-D layers (up to four).
-7. The number of bits per pixel in each tile: 1, 2, 4, or 8.
-8. Whether a special index in a color table marks transparent pixels in tiles. (For example, whether pixels labeled 0 are treated as transparent pixels.)
-9. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^13]
-10. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.  Alternatively, a statement that each sprite is no more than 64 &times; 64 pixels in size.
-11. Whether a special index in a color table marks transparent pixels in sprites.
-12. The maximum number of sprites displayed at a time on the game screen, no more than 512 and no more than (screen width &times; screen height) / 256, rounded up.
-13. Whether sprites made of tiles, sprites made of pixels, or both are supported.
+4. If 3-D is supported, whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
+5. If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
+6. If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
+7. The number of 2-D layers (up to four).
+8. The number of bits per pixel in each tile: 1, 2, 4, or 8.
+9. Whether a special index in a color table marks transparent pixels in tiles. (For example, whether pixels labeled 0 are treated as transparent pixels.)
+10. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^13]
+11. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.  Alternatively, a statement that each sprite is no more than 64 &times; 64 pixels in size.
+12. Whether a special index in a color table marks transparent pixels in sprites.
+13. The maximum number of sprites displayed at a time on the game screen, no more than 512 and no more than (screen width &times; screen height) / 256, rounded up.
+14. Whether sprites made of tiles, sprites made of pixels, or both are supported.
 
 The following are optional features; the application decides:
 
@@ -152,7 +153,7 @@ The following are optional features; the application decides:
 > 3. The following is one way to implement the 3-D portion of this specification:
 >
 >     - Game screen resolution: 512 &times; 384.
->     - Triangles per frame: up to 5000.
+>     - Primitives per frame: up to 5000.  Primitives are triangles and line segments, not quadrilaterals.
 >     - Maximum texture size: 128 &times; 128.
 >     - Implements a subset of OpenGL ES 1.1, rendered in software.
 >     - Has a game engine that renders only in that subset of OpenGL ES 1.1.

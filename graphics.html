@@ -88,7 +88,7 @@
 <ol>
   <li>The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>  Alternatively, the maximum number of primitives drawn per second is equal to screen width times screen height times 2.5.
     <ul>
-      <li>A <em>primitive</em> is either a triangle or a line segment.  An application may also consider a convex quadrilateral to be a primitive.</li>
+      <li>A <em>primitive</em> is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.</li>
       <li>Each vertex of the primitive points to a vertex from the vertex list described later.</li>
       <li>Each primitive can be translucent.</li>
     </ul>
@@ -153,6 +153,7 @@
   <li>The <strong>“screen resolution”</strong>: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup></li>
   <li>Whether the green component of vertex colors is 5 or 6 bits.</li>
   <li>If 3-D is supported, the maximum number of primitives shown simultaneously (“per frame”) or per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.</li>
+  <li>If 3-D is supported, whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.</li>
   <li>If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)</li>
   <li>If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.</li>
   <li>The number of 2-D layers (up to four).</li>
@@ -272,14 +273,14 @@
 
       <ul>
         <li>Game screen resolution: 512 × 384.</li>
-        <li>Triangles per frame: up to 5000.</li>
+        <li>Primitives per frame: up to 5000.  Primitives are triangles and line segments, not quadrilaterals.</li>
         <li>Maximum texture size: 128 × 128.</li>
         <li>Implements a subset of OpenGL ES 1.1, rendered in software.</li>
         <li>Has a game engine that renders only in that subset of OpenGL ES 1.1.</li>
       </ul>
     </li>
     <li>
-      <p>One way to implement the 2-D limits is: Screen resolution 640 × 480; four 2-D layers; 4 bits per pixel; pixels labeled 15 are transparent in tiles and sprites; tiles are 16 × 16 pixels; maximum sprite size 64 × 64 pixels; up to 192 sprites at a time; sprites are made of pixels.</p>
+      <p>One way to implement the 2-D limits is: Screen resolution 640 × 480; four 2-D layers; 4 bits per pixel; pixels labeled 15 are transparent in tiles and sprites; tiles are 16 × 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.</p>
     </li>
   </ol>
 </blockquote>
