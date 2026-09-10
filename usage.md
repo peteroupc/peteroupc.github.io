@@ -20,7 +20,7 @@ This is an open-source document; see its [**source code**](https://github.com/pe
 | another [number] (for example, _another five_) | [number] more, an additional [number], [number] additional, a further [number], [number] extra, an extra [number] | Inspired by E. Bernal. |
 | award winner | awardee, recipient (of an award) | |
 | bad actor | wrongdoer, evildoer, baddie, malicious actor, malevolent actor, malfeasant, illegitimate actor | |
-| bias (_in the sense of 'subjective opinion'_) | prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
+| bias (_in the sense of 'subjective opinion'_) | leaning, prejudice, subjectivity, partiality | Similarly: _biased_ &rarr; _prejudiced_. |
 | cause | lead to, result in, end up in, bring on, bring about, produce, yield, breed, provoke, engender, occasion, beget, give rise to | Verb.\* |
 | check out | discover, uncover, learn more about, find out about, see for yourself, consult | In the sense of 'discover', rather than 'register a book to borrow' or 'end a hotel stay'. |
 | focus on | center on, concentrate on, touch on, stress, emphasize, put/lay emphasis on, insist on, zero in on, zoom in on, prioritize, be anchored on, put/lay weight on, put/lay an accent on.<br>deal mostly with, be about, concern, relate to, be devoted to, devote [_itself_] to. | |
