@@ -117,10 +117,9 @@
   <li>Layers:
     <ol>
       <li>Up to four <em>2-D layers</em> can be displayed at a time.  Each 2-D layer is a rectangular array of references to <em>tiles</em> (see later), and can also be called a <em>tile map</em>.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></li>
-      <li>Up to two of the 2-D layers can undergo a 2-D affine transformation.</li>
       <li>If 3-D graphics are being displayed, one of the 2-D layers is replaced with a <em>3-D layer</em>, which is an image on which the 3-D graphics are drawn. Which 2-D layer is replaced this way can vary over time.</li>
       <li>The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></li>
-      <li>The 3-D layer’s dimensions, in pixels, are the same as the “screen resolution” (see later).</li>
+      <li>The upper-left corner of a 2-D layer can be placed anywhere relative to the game screen and even outside it.  The 3-D layer’s upper-left corner and dimensions are the same as the game screen image’s.</li>
     </ol>
   </li>
   <li>Tiles. A <em>tile</em> is a small rectangular array of pixels.
@@ -129,13 +128,13 @@
       <li>If tiles have 1, 2, or 4 bits per pixel, each tile uses one of 16 color tables.  If tiles have 8 bits per pixel, they use the same 256-color table.</li>
       <li>Each color in each color table used by tiles is of the vertex color format given earlier.</li>
       <li>Tiles may contain transparent, but not translucent, pixels.</li>
-      <li>When referenced in a 2-D layer, a tile can be horizontally flipped, vertically flipped, or both.</li>
     </ol>
   </li>
   <li>Sprites.  A <em>sprite</em> is a rectangular array of either tiles or pixels.
     <ol>
       <li>Each sprite made of pixels (rather than tiles) has a pixel format allowed for <em>3-D textures</em>, given earlier, and may contain transparent, but not translucent, pixels.</li>
       <li>Each sprite can be drawn above or below any of the 2-D or 3-D layers.</li>
+      <li>The upper-left corner of a sprite can be placed anywhere relative to the game screen and even outside it.</li>
     </ol>
   </li>
   <li>Image files used by the game should not store “pre-pixelated” sprites or tiles.</li>
@@ -144,31 +143,37 @@
 <p>Other requirements:</p>
 
 <ul>
-  <li><strong>Screen resolution:</strong> The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>  Support for game screen resolutions larger than this limit, in addition to resolutions meeting the limit, is optional.</li>
   <li><strong>Rendering in software:</strong> The game should include a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card or graphics accelerator or a graphics API (such as GDI, OpenGL, or Direct3D) that is integrated into the operating system, with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to video memory).  (Implementing a subset of <a href="https://registry.khronos.org/OpenGL/index_es.php"><strong>OpenGL ES</strong></a> 1.1 or <a href="https://registry.khronos.org/OpenGL/index_gl.php"><strong>OpenGL</strong></a> 1.1 in software without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
-  <li><strong>Music:</strong> Music is in Standard MIDI files (SMF) only. The General MIDI System level 1 should be followed for such files.<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup></li>
+  <li><strong>Music:</strong> Music is in in the Standard MIDI File (SMF) format only. The General MIDI System level 1 should be followed for such files.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></li>
 </ul>
 
-<p>The following is set by the application:</p>
+<p>The following are decided by the application:</p>
 
 <ol>
-  <li>The “screen resolution”: the width and height of the game screen image in pixels.</li>
+  <li>The <strong>“screen resolution”</strong>: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup></li>
   <li>Whether the green component of vertex colors is 5 or 6 bits.</li>
-  <li>If 3-D is supported, the maximum number of primitives shown simultaneously (“per frame”) or per second.</li>
+  <li>If 3-D is supported, the maximum number of primitives shown simultaneously (“per frame”) or per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.</li>
   <li>If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)</li>
   <li>If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.</li>
   <li>The number of 2-D layers (up to four).</li>
-  <li>The number of 2-D layers (up to two) that can undergo a 2-D affine transformation.</li>
   <li>The number of bits per pixel in each tile: 1, 2, 4, or 8.</li>
   <li>Whether a special index in a color table marks transparent pixels in tiles. (For example, whether pixels labeled 0 are treated as transparent pixels.)</li>
-  <li>Whether tiles can be flipped horizontally and/or vertically.</li>
   <li>The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
   <li>The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.  Alternatively, a statement that each sprite is no more than 64 × 64 pixels in size.</li>
   <li>Whether a special index in a color table marks transparent pixels in sprites.</li>
-  <li>Whether sprites can undergo a 2-D affine transformation.</li>
-  <li>Whether sprites can be flipped horizontally and/or vertically (even if affine transformation of sprites is unavailable in general).<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
   <li>The maximum number of sprites displayed at a time on the game screen, no more than 512 and no more than (screen width × screen height) / 256, rounded up.</li>
+  <li>Whether sprites made of tiles, sprites made of pixels, or both are supported.</li>
+</ol>
+
+<p>The following are optional features; the application decides:</p>
+
+<ol>
+  <li>Whether the application supports game screen resolutions larger than 307,200 total pixels, in addition to the primary one (of 307,200 total pixels or less).</li>
   <li>Whether hardware acceleration is supported in addition to rendering in software.</li>
+  <li>Whether tiles can be flipped horizontally and/or vertically.</li>
+  <li>Whether sprites can undergo a 2-D affine transformation (such as a rotation or shrinking).</li>
+  <li>Whether sprites can be flipped horizontally and/or vertically (even if affine transformation of sprites isn’t supported in general).<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
+  <li>Whether at least one of the 2-D layers can undergo a 2-D affine transformation.</li>
 </ol>
 
 <p> </p>
@@ -178,7 +183,7 @@
 
   <ol>
     <li>
-      <p>The following limits apply for various game screen resolutions:</p>
+      <p>The following limits apply for various game screen resolutions.  An application can decide on lower limits than the ones shown.</p>
 
       <table>
         <thead>
@@ -274,7 +279,7 @@
       </ul>
     </li>
     <li>
-      <p>One way to implement the 2-D limits is: Screen resolution 640 × 480, 4-bit-per-pixel tiles, 8 × 8 tiles, sprites up to 160 × 160 pixels, no more than 192 sprites at a time, and no flipping or transformation of sprites.</p>
+      <p>One way to implement the 2-D limits is: Screen resolution 640 × 480; four 2-D layers; 4 bits per pixel; pixels labeled 15 are transparent in tiles and sprites; tiles are 16 × 16 pixels; maximum sprite size 64 × 64 pixels; up to 192 sprites at a time; sprites are made of pixels.</p>
     </li>
   </ol>
 </blockquote>
@@ -737,10 +742,10 @@
       <p>Translucent pixels enable <em>alpha blending</em> techniques (the mixing of one image with another).  But alpha blending was “relatively new to PC games” at the time of <em>Quake</em>’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in McCornack et al. (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:11">
-      <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels) (but even so this resolution was <a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742">“up from 640[ × ]350”</a>).<br /><br />In the Godot engine, the screen resolution corresponds to the “Viewport Width” (<code>window/size/viewport_width</code>) and “Viewport Height” (<code>window/size/viewport_height</code>) project settings, along with <code>window/stretch/mode=viewport</code> and <code>window/stretch/scale_mode=integer</code>.  For the Unity engine, there is advice from 2019 relating to the visual style in <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games"><strong>“8-bit”</strong></a> and <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games"><strong>“16-bit”</strong></a> game consoles.  In Unreal Engine, the screen resolution apparently corresponds to <code>ResolutionSizeX</code> and <code>ResolutionSizeY</code>.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:12">
-      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels) (but even so this resolution was <a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742">“up from 640[ × ]350”</a>).<br /><br />In the Godot engine, the screen resolution corresponds to the “Viewport Width” (<code>window/size/viewport_width</code>) and “Viewport Height” (<code>window/size/viewport_height</code>) project settings, along with <code>window/stretch/mode=viewport</code> and <code>window/stretch/scale_mode=integer</code>.  For the Unity engine, there is advice from 2019 relating to the visual style in <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games"><strong>“8-bit”</strong></a> and <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games"><strong>“16-bit”</strong></a> game consoles.  In Unreal Engine, the screen resolution apparently corresponds to <code>ResolutionSizeX</code> and <code>ResolutionSizeY</code>.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:13">
       <p>The suggested width and height for tiles is 8 pixels by 8 pixels. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
