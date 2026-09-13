@@ -261,13 +261,20 @@ This section has notes on this specification, such as how its requirements corre
 
 - Games within the scope of this challenge are meant to be run in a desktop window if the player's display is 800 &times; 600 pixels or larger.  The same is true if the game's resolution is 620 &times; 420 or smaller and the player's display is 640 &times; 480.  The game may also support full-screen display.
 
+- For games that simulate the resolution of video game consoles supporting NTSC-compatible[^60] or PAL-compatible[^61] TV screens, a vertical resolution of&mdash;
+
+    - 240 or 288 rows of video (respectively) in _progressive scan_ at nearly 60 frames or 50 frames per second, or
+    - 480 or 576 rows of _interlaced video_ (in two passes, each pass drawing every other row) at nearly 30 frames or 25 frames per second,
+
+    is common.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlaced or progressive scan.
+
 <a id=Frame_rate></a>
 
 #### Frame rate
 
-- No particular frame rate is required.[^60]
-- Possible choices for the frame rate include 20, 30, 40, and 60 frames per second.  Rates beyond 60 were rare before 2000.[^61]
-- TVs with NTSC video[^62] can draw their image about 60 times per second; TVs with PAL video[^63], 50 times.
+- No particular frame rate is required.[^62]
+- Possible choices for the frame rate include 20, 30, 40, and 60 frames per second.  Rates beyond 60 were rare before 2000.[^63]
+- For NTSC- and PAL-compatible TV screens, see the remark on frames per second in the previous section.
 - _Doom_ (1993) operated at 35 frames per second but could not be run at that rate (under default settings) by typical PCs of the time.[^59]
 - For comfort reasons, a minimum frame rate may be required for video games that offer "[**3-D vision**](https://www.pcgamingwiki.com/wiki/Glossary:Native_3D)" by rendering multiple views of the scene at a time, in conjunction with special glasses (for example, a SEGA Master System accessory) or a virtual-reality headset (for example, Nintendo's Virtual Boy).  But such games were rare before 2000.
 
@@ -309,7 +316,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Screen image effects (filters)
 
-- Effects that modify the game screen image to emulate CRT displays[^68] are outside the scope of this challenge.  So are effects that [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display.[^69] This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.
+- Effects that modify the game screen image to emulate CRT displays[^68] are outside the scope of this challenge.  So are effects that [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display,[^69] and effects that simulate the interlaced video display of NTSC- and PAL-compatible TV screens. This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.
 
 <a id=Sounds></a>
 
@@ -360,7 +367,7 @@ Statements like the following are also useful, with references:
 - A market-share-weighted average of system memory requirements of video games in year X.
 - On a market-share-weighted basis, X% of video games in year Y&mdash;
     - ran on [16 or 256]-color display modes, or
-    - were 3-D video games, or
+    - had real-time 3-D rendering, or
     - were played on arcade machines, or
     - were played on PCs, or
     - were played on game console Z.
@@ -619,13 +626,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^59]: Fabien Sanglard, [**_Game Engine Black Book: Doom_**](https://fabiensanglard.net/gebb/).
 
-[^60]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in Microsoft Knowledge Base article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
+[^60]: Stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A.
 
-[^61]: Most of the VGA standard's display modes, including the 320 &times; 200 mode, ran at 70 hertz, but the 320 &times; 240 and 640 &times; 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second.
+[^61]: Stands for phase alternating line.
 
-[^62]: Stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A.
+[^62]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in Microsoft Knowledge Base article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
 
-[^63]: Stands for phase alternating line.
+[^63]: Most of the VGA standard's display modes, including the 320 &times; 200 mode, ran at 70 hertz, but the 320 &times; 240 and 640 &times; 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second.
 
 [^64]: The _PC 98 System Design Guide_, chapter 14, items 24 to 30, have largely the same guidelines.  The _PC 97 Hardware Design Guide_, chapter 15, items 24-28 and 30-31, have weaker guidelines.
 
