@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-09-13"><meta name="citation_date" content="2026/09/13"><meta name="citation_publication_date" content="2026/09/13"><meta name="citation_online_date" content="2026/09/13"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Graphics and Music Challenges for Classic-Style Computer Applications</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphics.html"><meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.date" content="2026-09-14"><meta name="citation_date" content="2026/09/14"><meta name="citation_publication_date" content="2026/09/14"><meta name="citation_online_date" content="2026/09/14"><meta name="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphics.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="twitter:title" content="Graphics and Music Challenges for Classic-Style Computer Applications"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-09-13.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-09-14.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -108,7 +108,7 @@
   <li>The width and height of each texture are each powers of 2.</li>
   <li>Textures may contain transparent pixels.</li>
   <li>Image files used by the game should not store “pre-pixelated” textures.  A “pre-pixelated” image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
-  <li>For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>  Bilinear filtering, edge antialiasing (smoothing)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>, and perspective correction<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> are optional.</li>
+  <li>For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>  Bilinear filtering, edge antialiasing (smoothing)<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>, and perspective correction (outside the vertices)<sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> are optional.</li>
 </ol>
 
 <p>Limit 2-D graphics to the following: <sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></p>
@@ -152,10 +152,16 @@
 <ol>
   <li>The <strong>“screen resolution”</strong>: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (for example, 640 × 480, or 640 pixels horizontally and 480 pixels vertically).<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
   <li>Whether the green component of vertex colors is 5 or 6 bits.</li>
-  <li>If 3-D is supported, the maximum number of primitives shown simultaneously (“per frame”)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> or, alternatively, per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.</li>
-  <li>If 3-D is supported, whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.</li>
-  <li>If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)</li>
-  <li>If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.</li>
+  <li>
+    <p>If 3-D is supported:</p>
+
+    <ol>
+      <li>The maximum number of primitives shown simultaneously (“per frame”)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> or, alternatively, per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.</li>
+      <li>Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.</li>
+      <li>Which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)</li>
+      <li>The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.</li>
+    </ol>
+  </li>
   <li>The number of 2-D layers (up to four).</li>
   <li>The number of bits per pixel that tiles have: 1, 2, 4, or 8.</li>
   <li>The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
@@ -411,14 +417,14 @@
     <p>Games within the scope of this challenge are meant to be run in a desktop window if the player’s display is 800 × 600 pixels or larger.  The same is true if the game’s resolution is 620 × 420 or smaller and the player’s display is 640 × 480.  The game may also support full-screen display.</p>
   </li>
   <li>
-    <p>For games that simulate the resolution of video game consoles supporting NTSC-compatible or PAL-compatible TV screens,<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup> a vertical resolution of—</p>
+    <p>For games that simulate the resolution of video game consoles supporting NTSC- or PAL-compatible TV screens,<sup id="fnref:57"><a href="#fn:57" class="footnote" rel="footnote" role="doc-noteref">57</a></sup> a vertical resolution of—</p>
 
     <ul>
       <li>240 or 288 rows of video (respectively) in <em>progressive scan</em> at nearly 60 frames or 50 frames per second, or</li>
       <li>480 or 576 rows of <em>interlaced video</em> (in two passes, each pass drawing every other row) at nearly 30 frames or 25 frames per second,</li>
     </ul>
 
-    <p>is common.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlaced or progressive scan.  In the case of some NTSC-compatible TVs, though, the upper and lower portions of the image are hidden by the bezel, so that, in effect, only 224 rows in progressive scan or 448 rows of interlaced video may be visible (see Copetti’s “Architecture of Consoles” series).</p>
+    <p>is common.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlacing or progressive scan.  In the case of some NTSC-compatible TVs, though, the upper and lower portions of the image are hidden by the bezel, so that, in effect, only 224 rows in progressive scan or 448 rows of interlaced video may be visible (see Rodrigo Copetti’s “Architecture of Consoles” series).</p>
   </li>
 </ul>
 
@@ -592,8 +598,11 @@
   <li>(Akenine-)Möller, T., Haines, E., <em>Real-Time Rendering</em> (first edition), 1999.</li>
   <li>Amanatides, John, and Andrew Woo. “A fast voxel traversal algorithm for ray tracing.” Eurographics. Vol. 87. No. 3. 1987.
 <a href="http://www.cse.yorku.ca/~amana/research/grid.pdf"><strong>http://www.cse.yorku.ca/~amana/research/grid.pdf</strong></a></li>
+  <li>CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, “Videotex/Teletext Presentation Level Protocol Syntax”, also known as the North American Presentation Layer Protocol Syntax.</li>
   <li>Gery, R., “Bitmaps with Transparency”, Microsoft Developer Network, Jun. 1, 1992.</li>
   <li>Houston, B., “Rendering Real-Time 3D Before GPUs”, Jul. 17, 2026. <a href="https://ben3d.ca/blog/rendering-real-time-3d-before-gpus"><strong>https://ben3d.ca/blog/rendering-real-time-3d-before-gpus</strong></a></li>
+  <li>International Telecommunication Union, <em>Conventional Television Systems</em>, ITU-R BT.470-6, 1998.</li>
+  <li>International Telecommunication Union, <em>International Interworking for Videotex Services</em>, ITU-T T.101, 1988.</li>
   <li>Lamothe, A., et al., <em>Tricks of the Game Programming Gurus</em>, Sams, 1994.</li>
   <li>Lamothe, A., <em>Black Art of 3D Game Programming</em>, Waite Group Press, 1995.</li>
   <li>Lamothe, A., <em>Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization</em>, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.</li>
@@ -776,7 +785,7 @@
       <p>Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Sharp X68000, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System. <a href="#fnref:17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:18">
-      <p>Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it’s these that are of particular interest.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is <em>Dire Straits</em> (1982). <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it’s these that are of particular interest.  See the videotex references in “Further Reading”. However, distribution of video games over videotex seems to be rare; an early example is <em>Dire Straits</em> (1982). <a href="#fnref:18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:19">
       <p>Examples are:<br />(1) The <a href="https://dench.flatlib.jp/app/chiraks_em"><strong>Sharp MI-Zaurus</strong></a> (2000).<br />(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, <a href="https://jcp.org/en/jsr/detail?id=37"><strong>Java specification request 37</strong></a> and <a href="https://jcp.org/en/jsr/detail?id=118"><strong>JSR 118</strong></a>), and extensions (especially <a href="https://jcp.org/en/jsr/detail?id=184"><strong>JSR 184, Mobile 3D Graphics API</strong></a>).<br />(3) Feature phones and smartphones that supported the <a href="https://registry.khronos.org/OpenGL/index_es.php"><strong>OpenGL ES</strong></a> 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic). <a href="#fnref:19" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -893,7 +902,7 @@
       <p>Fabien Sanglard, <a href="https://fabiensanglard.net/gebb/"><strong><em>Game Engine Black Book: Doom</em></strong></a>. <a href="#fnref:56" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:56:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:57">
-      <p>“NTSC” stands for the National Television Standards Committee of the Electronics Industries Association.  “NTSC” often refers to the video display protocol known as RS-1070A. “PAL” stands for phase alternating line.   For information on NTSC- and PAL-compatible video, see ITU BT.470-6, <em>Conventional Television Systems</em>, by the International Telecommunication Union. <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>“NTSC” stands for the National Television Standards Committee of the Electronics Industries Association.  “NTSC” often refers to the video display protocol known as RS-1070A. “PAL” stands for phase alternating line.   For information on NTSC- and PAL-compatible video, see <em>Conventional Television Systems</em> (in the “Further Reading” section of this article). <a href="#fnref:57" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:58">
       <p>Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 × 240 video at 15 frames per second, the recommendation in Microsoft Knowledge Base article Q139826, “AVI Video Authoring Tips &amp; Compression Options Dialog Box”, 1995).  Both recommendations are far from the 6.144 million samples per second needed to display 640 × 480 video smoothly at 20 frames per second. <a href="#fnref:58" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

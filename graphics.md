@@ -80,7 +80,7 @@ Limit 3-D graphics to the following:[^3]
 4. The width and height of each texture are each powers of 2.
 5. Textures may contain transparent pixels.
 6. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-7. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^5]  Bilinear filtering, edge antialiasing (smoothing)[^6], and perspective correction[^7] are optional.
+7. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^5]  Bilinear filtering, edge antialiasing (smoothing)[^6], and perspective correction (outside the vertices)[^7] are optional.
 
 Limit 2-D graphics to the following: [^8]
 
@@ -109,16 +109,19 @@ The following are decided by the application:
 
 1. The **"screen resolution"**: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^13]
 2. Whether the green component of vertex colors is 5 or 6 bits.
-3. If 3-D is supported, the maximum number of primitives shown simultaneously ("per frame"\)[^4] or, alternatively, per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.
-4. If 3-D is supported, whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
-5. If 3-D is supported, which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
-6. If 3-D is supported, the maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
-7. The number of 2-D layers (up to four).
-8. The number of bits per pixel that tiles have: 1, 2, 4, or 8.
-9. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^14]
-10. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.
-11. The maximum number of sprites displayed at a time on the game screen, no more than (screen width &times; screen height) / 256, rounded up.
-12. Whether sprites made of tiles, sprites made of pixels, or both are supported.
+3. If 3-D is supported:
+
+    1. The maximum number of primitives shown simultaneously ("per frame"\)[^4] or, alternatively, per second.  The per-frame value is no more than screen width times screen height divided by 24.  The per-second number is no more than screen width times screen height times 2.5.
+    2. Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
+    3. Which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
+    4. The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
+
+4. The number of 2-D layers (up to four).
+5. The number of bits per pixel that tiles have: 1, 2, 4, or 8.
+6. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^14]
+7. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.
+8. The maximum number of sprites displayed at a time on the game screen, no more than (screen width &times; screen height) / 256, rounded up.
+9. Whether sprites made of tiles, sprites made of pixels, or both are supported.
 
 The following are optional features; the application decides:
 
@@ -261,12 +264,12 @@ This section has notes on this specification, such as how its requirements corre
 
 - Games within the scope of this challenge are meant to be run in a desktop window if the player's display is 800 &times; 600 pixels or larger.  The same is true if the game's resolution is 620 &times; 420 or smaller and the player's display is 640 &times; 480.  The game may also support full-screen display.
 
-- For games that simulate the resolution of video game consoles supporting NTSC-compatible or PAL-compatible TV screens,[^57] a vertical resolution of&mdash;
+- For games that simulate the resolution of video game consoles supporting NTSC- or PAL-compatible TV screens,[^57] a vertical resolution of&mdash;
 
     - 240 or 288 rows of video (respectively) in _progressive scan_ at nearly 60 frames or 50 frames per second, or
     - 480 or 576 rows of _interlaced video_ (in two passes, each pass drawing every other row) at nearly 30 frames or 25 frames per second,
 
-    is common.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlaced or progressive scan.  In the case of some NTSC-compatible TVs, though, the upper and lower portions of the image are hidden by the bezel, so that, in effect, only 224 rows in progressive scan or 448 rows of interlaced video may be visible (see Copetti's "Architecture of Consoles" series).
+    is common.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlacing or progressive scan.  In the case of some NTSC-compatible TVs, though, the upper and lower portions of the image are hidden by the bezel, so that, in effect, only 224 rows in progressive scan or 448 rows of interlaced video may be visible (see Rodrigo Copetti's "Architecture of Consoles" series).
 
 <a id=Frame_rate></a>
 
@@ -396,8 +399,11 @@ The following are examples of the kind of statements desired:
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
 - Amanatides, John, and Andrew Woo. "A fast voxel traversal algorithm for ray tracing." Eurographics. Vol. 87. No. 3. 1987.
 [**http://www.cse.yorku.ca/~amana/research/grid.pdf**](http://www.cse.yorku.ca/~amana/research/grid.pdf)
+- CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, "Videotex/Teletext Presentation Level Protocol Syntax", also known as the North American Presentation Layer Protocol Syntax.
 - Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
+- International Telecommunication Union, _Conventional Television Systems_, ITU-R BT.470-6, 1998.
+- International Telecommunication Union, _International Interworking for Videotex Services_, ITU-T T.101, 1988.
 - Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
 - Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
@@ -542,7 +548,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^17]: Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Sharp X68000, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System.
 
-[^18]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  One example of a videotex standard is CSA T500-1983/ANSI X3.110-1983, the North American Presentation Layer Protocol Syntax.  However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
+[^18]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
 [^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
 
@@ -620,7 +626,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^56]: Fabien Sanglard, [**_Game Engine Black Book: Doom_**](https://fabiensanglard.net/gebb/).
 
-[^57]: "NTSC" stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A. "PAL" stands for phase alternating line.   For information on NTSC- and PAL-compatible video, see ITU BT.470-6, _Conventional Television Systems_, by the International Telecommunication Union.
+[^57]: "NTSC" stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A. "PAL" stands for phase alternating line.   For information on NTSC- and PAL-compatible video, see _Conventional Television Systems_ (in the "Further Reading" section of this article).
 
 [^58]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, the recommendation in Microsoft Knowledge Base article Q139826, "AVI Video Authoring Tips & Compression Options Dialog Box", 1995).  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
 
