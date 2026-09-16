@@ -107,7 +107,7 @@ Other requirements:
 
 The following are decided by the application:
 
-1. The **"screen resolution"**: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (for example, 640 &times; 480, or 640 pixels horizontally and 480 pixels vertically).[^13]
+1. The **"screen resolution"**: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (that is, no more pixels than a 640-&times;-480 screen, or a screen with 640 pixels horizontally and 480 vertically).[^13]
 2. Whether the green component of vertex colors is 5 or 6 bits.
 3. If 3-D is supported:
 
@@ -125,7 +125,7 @@ The following are decided by the application:
 
 The following are optional features; the application decides:
 
-1. Whether the application supports game screen resolutions larger than 307,200 total pixels, in addition to the primary one (of 307,200 total pixels or less).
+1. Whether the application supports game screen resolutions with more pixels than a 640-&times;-480 screen, in addition to the primary resolution.
 2. Whether hardware acceleration is supported in addition to rendering in software.
 3. Whether tiles can be flipped horizontally and/or vertically.
 4. Whether sprites can undergo a 2-D affine transformation (such as a rotation or shrinking).
@@ -170,14 +170,10 @@ This specification for "classic graphics"[^16] in modern games largely reflects 
 - consumer PCs (personal computers) released in the mid- to late 1990s,
 - home computers released before 1995,[^17]
 - game consoles (handheld and for TVs) released before 2000,
-- learning toys with an electronic display, released before 2000,
-- arcade machines with similar performance to machines described earlier,
-- videotex protocols before 1995[^18], and
+- arcade machines with similar performance to machines described earlier,[^80]
+- personal digital assistants, graphical calculators, learning toys with an electronic display, and cellular phones with similar performance to consumer PCs from before 2000,[^18]
+- videotex protocols before 1995[^19], and
 - the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
-
-In addition, video-game graphics for personal digital assistants, graphical calculators, learning toys, and cellular phones (generally those released before 2007) are within the spirit of this specification, up to the performance of consumer PCs released before 2000.[^19]
-
-Arcade games in scope range in year from 1971 &mdash; which saw the launch of the first arcade video game, _Computer Space_ &mdash; to 1999.  But some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D rendering capabilities beyond what is "classic" here.
 
 In general, PC applications that feature classic graphics include:
 
@@ -187,7 +183,12 @@ In general, PC applications that feature classic graphics include:
 4. Games using [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.2 or earlier for graphics.
 5. So-called "multimedia titles" from the 1990s, or applications resembling interactive versions of books (generally reference and other nonfiction works), complete with sound, animation, and video.  See "Multimedia PC Level 1 and Level 2 Specifications" by the Multimedia PC Marketing Council.
 
-NVIDIA GeForce 256 (late 1999) is out of scope.
+Video games released in 2000 or later are out of scope, even if they were designed for hardware that launched before 2000.  The exceptions are:
+
+- Video games released before 2010 for the Nintendo DS or the Game Boy Advance.
+- Video games released before 2007 for personal digital assistants, graphical calculators, learning toys, and cellular phones that do not exceed the performance of consumer PCs released before 2000.[^18]
+
+NVIDIA GeForce 256 (late 1999) is out of scope.  Some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D rendering capabilities beyond what is "classic" here.
 
 One of the following games can be considered an upper limit to what is considered "classic graphics" in this specification.
 
@@ -238,7 +239,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### Screen resolutions
 
-- Screen resolutions larger than 307,200 total pixels (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for the 800 &times; 600 resolution or higher for 3-D graphics.  Indeed, for the most part, major game consoles and arcade machines in the 1990s and earlier supported a resolution of no more than 307,200 total pixels.[^27]
+- Screen resolutions with more pixels than a 640-&times;-480 screen (such as 800 &times; 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the _PC 98 System Design Guide_ (1997), aimed for the 800 &times; 600 resolution or higher for 3-D graphics.  Indeed, for the most part, major game consoles and arcade machines in the 1990s and earlier supported resolutions with no more pixels than a 640-&times;-480 screen.[^27]
 
 - Screen resolutions that have been used in classic games include:[^28]
 
@@ -502,7 +503,7 @@ Similar tutorials are [**_Computer Graphics from Scratch_**](https://gabrielgamb
 
 ## Acknowledgments
 
-I acknowledge the advice of the `gameenginedevs` community on Reddit.
+I acknowledge the advice of the `gameenginedevs` and `programming` communities on Reddit.
 
 <a id=License></a>
 
@@ -548,9 +549,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^17]: Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Sharp X68000, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System.
 
-[^18]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
+[^18]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
 
-[^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
+[^19]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
 [^20]: An example is _Loom_ (1990).
 
@@ -671,3 +672,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^78]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^79]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^80]: The first arcade video game, _Computer Space_, launched in 1971.
