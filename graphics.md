@@ -357,7 +357,7 @@ This includes statements like the following, with references or measurements:
     - Statements like this that relate to polygons or triangles per frame are hard to find and often anecdotal, and they cannot always be inferred from screenshots or videos of gameplay.  For example:<br>(1) "A typical scene in a current [PC] application has 2000 to 2500 triangles per frame" (Fosner 1999)[^76].<br>(2) "For context, _Quake_ on a Pentium Pro pumped out maybe 100K triangles/second (tris/sec.) ... at best" (Abrash 2000)[^77]; to be noted here is that the game normally ran at a screen resolution of 320 &times; 240.<br>(3) According to the help for the 3DMark2000 benchmark, that benchmark comes with two game scenes that average up to 9,400 polygons in low detail and up to 55,000 in high detail.<br>(4) The game engine for _SpecOps: Rangers Lead the Way_ (1998) targeted 10,000 triangles per frame [^78].  So did _Quake III Arena_ (1999) (John Carmack .plan, Sep. 2, 1999).
 - "Scenes in game X have Y triangles on average".
 - "Game X shows no more than [16 or 256] simultaneous colors".
-- "Game X uses Y bytes of memory while running on Windows 98".[^82]
+- "Game X uses Y bytes of memory while running on Windows 98".[^79]
 - "Game X shows up to Y sprites at a time [at screen resolution Z]" (for 2-D games such as those built using the tool Director, then by Macromedia).
 - The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics) (for example, 2-D rotations of sprites; filling ellipses with a solid color; flood filling; antialiasing of lines and shapes; translucent alpha blending; translucent sprites).
 - The 3-D game X, from year Y, supports a [**given 3-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#3_D_Graphics) (for example, texture mapping, Gouraud shading, bump mapping, edge antialiasing, alpha blending, texturing of most polygons in a scene, or MIP mapping).
@@ -392,7 +392,7 @@ The following are examples of the kind of statements desired:
 
 - _Actua Soccer_ (_VR Soccer '96_) (1995) [**averaged 776 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/asoccer_stats/) at 640 &times; 480 resolution.
 - _Terminal Velocity_ (1995) [**averaged 498 triangles per frame**](http://www-graphics.stanford.edu/~bjohanso/tv_stats/) at 640 &times; 480 resolution.
-- A benchmark of _Quake III Arena_ averaged about 3,250 and topped out at about 6,970 triangles per frame after back-face culling, at screen resolution 640 &times; 480 (Antochi et al. 2003)[^79], (Antochi et al. 2004)[^80].
+- A benchmark of _Quake III Arena_ averaged about 3,250 and topped out at about 6,970 triangles per frame after back-face culling, at screen resolution 640 &times; 480 (Antochi et al. 2003)[^80], (Antochi et al. 2004)[^81].
 - The game _Star Wars Racer_ (1999) [**targeted a limit of 3000 polygons per frame**](https://x.com/jonk1969/status/1636183310203498496) as well as texture sizes that appeared to respect the Nintendo 64's 4096-byte texture cache.
 
 <a id=Further_Reading></a>
@@ -473,7 +473,7 @@ Write an open-source and detailed guide on using free-of-cost software to produc
 
 ### Guide for creating 3-D models in the pre-2000 style
 
-Develop a guide for creating 3-D models for use in modern video games that follow the [**specification**](#Graphics_Challenge_for_Classic_Style_Games) given earlier on classic (pre-2000) 3-D graphics, in a similar vein to "[**Game-Ready 3D Models: Requirements, Creation, and Export**](https://threedium.io/3d-model/game-ready)" [^81].  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today's models.)
+Develop a guide for creating 3-D models for use in modern video games that follow the [**specification**](#Graphics_Challenge_for_Classic_Style_Games) given earlier on classic (pre-2000) 3-D graphics, in a similar vein to "[**Game-Ready 3D Models: Requirements, Creation, and Export**](https://threedium.io/3d-model/game-ready)" [^82].  Notably, no shader-based techniques should be required for any such models, and advice should apply to models for a game just as though the game were developed in 1999 (or an earlier year) rather than today, but the use of modern creation tools is allowed. (For example, instead of normal, roughness, or ambient-occlusion maps, late-1990s 3-D game models typically employed light maps and bump maps, and such models were generally much coarser than today's models.)
 
 <a id=Book_form_tutorial_on_pre_2000_computer_graphics_programming></a>
 
@@ -674,10 +674,10 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^78]: [**"Postmortem: Zombie's _SpecOps: Rangers Lead the Way_"**](https://www.gamedeveloper.com/design/postmortem-zombie-s-i-specops-rangers-lead-the-way-i-), Jan. 31, 2000.
 
-[^79]: Antochi, Iosif, et al. "3D Graphics Benchmarks for Low-Power Architectures." 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003.
+[^79]: The system requirements of games for home computers offer approximations to statements like this, but they are not perfect.  Indeed, a game might use less memory than the operating system's minimum requirements, such as Windows 98's system memory requirement of 16 million bytes.
 
-[^80]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
+[^80]: Antochi, Iosif, et al. "3D Graphics Benchmarks for Low-Power Architectures." 14th Annual Workshop on Circuits, Systems and Signal Processing. 2003.
 
-[^81]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+[^81]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
-[^82]: The system requirements of games for home computers offer approximations to statements like this, but they are not perfect.  Indeed, a game might use less memory than the operating system's minimum requirements, such as Windows 98's system memory requirement of 16 million bytes.
+[^82]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
