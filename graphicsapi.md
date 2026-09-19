@@ -144,6 +144,8 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
          - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
     - Windows CE 2.0's version of the GDI and its 2-D graphics features are described in Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997). Windows CE was an operating system for embedded and handheld computers.
 - Borland International, _Turbo Pascal Reference Guide, Version 5.0_, 1989.
+- Ted Gruber Software, _Fastgraph User's Guide_, April 1993.
+- Ted Gruber Software, _Fastgraph Reference Manual_, April 1993.
 - Jack E. Bresenham, "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
 - Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
 - Jack E. Bresenham, "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).

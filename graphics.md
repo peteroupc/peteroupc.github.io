@@ -381,7 +381,7 @@ Statements like the following are also useful, with references:
 
 By contrast, statements like the following are not very useful, since they often don't relate to the actual performance of specific video games:
 
-- "Game console/video card X can process up to Y triangles per second".
+- "Game console/video card X can process up to Y [**triangles per second**](https://developer.arm.com/community/arm-community-blogs/b/mobile-graphics-and-gaming-blog/posts/triangles-per-second-performance-metric-or-chocolate-teapot)".
 - "Game console/video card X can render up to Y polygons per frame".
 - "Game console/video card X can render up to Y pixels per second".
 - "Game X renders Y triangles per second", without stating the frame rate or the screen resolution.
@@ -524,7 +524,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^3]: One editor specialized for creating classic 3-D models is the open-source tool [**_Blockbench_**](https://www.blockbench.net/). For classic 3-D scenes, there is the open-source tool [**_Trenchbroom_**](https://trenchbroom.github.io/).
 
-[^4]: This is also known as _visible primitives_ or _visible primitives per frame_; in the case of polygons or triangles, this is also called _visible polygons (per frame)_ or _visible triangles (per frame)_.  This maximum assumes the game's target rate is 60 frames per second.
+[^4]: There are many [**definitions of triangles**](https://developer.arm.com/community/arm-community-blogs/b/mobile-graphics-and-gaming-blog/posts/triangles-per-second-performance-metric-or-chocolate-teapot) per frame. One definition is the triangles processed each frame after their vertices are transformed but before they are clipped (corresponding to the `GL_PRIMITIVES_GENERATED` query in [**OpenGL 3.1**](https://registry.khronos.org/OpenGL/specs/gl/glspec31.pdf), section 2.16). Another definition (often called _visible triangles_) is the number of triangles under the first definition that are neither back-facing nor totally outside the view volume.  Clipping these visible triangles to the view volume (which can sometimes produce more triangles) leads to a third definition: the triangles inside the volume that result after this clipping.   A similar situation occurs with "primitives per frame" rather than "triangles per frame".  For purposes of this specification, an overestimate of primitives per frame (such as in the first definition) is better than an underestimate.  The maximum number of primitives per frame in this specification was determined based on a target rate of 60 frames per second.
 
 [^5]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).
 
