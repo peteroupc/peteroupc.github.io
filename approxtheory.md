@@ -1030,6 +1030,6 @@ $$\omega_k(f(\gamma), h)\le\omega_k(f,h(d-c)/(b-a)).$$
 
 The special case $[a, b] = [-1, 1]$ in Lemma A leads to:
 
-**Lemma B:** _Let $f(\lambda)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers. Let $\gamma(x)=a+(b-a)/2$, which linearly transforms $\lambda$'s in the interval $[-1, 1]$ to the interval $[a,b]$. Then for each $h>0$,_ $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(b-a)/2)$, _where $k$ and_ $\omega_k$ _are as in Lemma A._
+**Lemma B:** _Let $f(\lambda)$ be continuous on the interval $[a, b]$, where $a$ and $b$ are constant real numbers. Let $\gamma(x)=a+(b-a)(x+1)/2$, which linearly transforms $\lambda$'s in the interval $[-1, 1]$ to the interval $[a,b]$. Then for each $h>0$,_ $\omega_k(f(\gamma(\lambda)), h)$ $\le\omega_k(f, h(b-a)/2)$, _where $k$ and_ $\omega_k$ _are as in Lemma A._
 
 > **Note:** For $k=1$, Lemma B was also suggested in Exercise 1.7 of Rivlin (1969/1981)[^94].
