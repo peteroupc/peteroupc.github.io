@@ -434,7 +434,7 @@ On the inequality (Ph), see Brass and Petras (2011, example 3.1.2)[^52]; Phillip
 >**Notes:**
 >
 > 1. (Wh) is also known as Whitney's inequality; (JS), the Jackson&ndash;Stechkin inequality.
-> 2. Inequalities similar to (Wh), (JS), and (Ph) can be found by considering an operator $L$ that maps continuous functions to a family of "smoother" functions (such as polynomials of degree $n$ or less, as in this section); in that case $P$ would be a function in the family with the "best approximation" to $f$.  As one example, Marsden (1972)[^54] \(see also Beutel et al. 2002[^55]) proved an upper bound of this kind using an operator that maps to a family of _splines_, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)[^56].  Another example is in the result given next.
+> 2. Inequalities similar to (Wh), (JS), and (Ph) can be found by considering an operator $L$ that maps continuous functions to a family of "smoother" functions (such as polynomials of degree $n$ or less, as in Lemma 13); in that case $P$ would be a function in the family with the "best approximation" to $f$.  As one example, Marsden (1972)[^54] \(see also Beutel et al. 2002[^55]) proved an inequality of this kind using an operator that maps to a family of _splines_, that is, continuous functions whose pieces are polynomials. So did De Boor (1968)[^56].  Another example is in the result given next.
 
 **Lemma 13B**. _Let $f(\lambda)$ be continuous on the compact interval $[a, b]$, and let $0\lt h\le (b-a)/2$.  Then there is at least one function $P$ with a continuous second derivative on that interval such that the error of $P$ in approximating $f$ is bounded as follows:_
 
@@ -450,7 +450,7 @@ The proof comes from lemmas 2.1 and 2.4 and corollary 2.5 of Gonska and Kovachev
 >
 >     $$3\Vert f - P\Vert + 4 \Vert P^{(1)}\Vert + 5\Vert P^{(2)}\Vert,$$
 >
->     and that this is true for every function $P$ with a continuous second derivative on $[a,b]$ and every continuous function $f$ on that interval.  Then with Lemma 13B, this bound can be transformed to the following:
+>     whenever $P$ is a function with a continuous second derivative on $[a,b]$ and $f$ is continuous on that interval.  Then with Lemma 13B, this bound can be transformed to the following:
 >
 >     $$3((3/4)\omega_2(f, h))+4((5/h)\omega_1(f,h))+5((3/(2h^2))\omega_2(f,h)).$$
 >
