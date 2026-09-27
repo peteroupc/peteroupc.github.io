@@ -12,7 +12,7 @@ It would be of interest to write a free and open-source graphics engine that imp
 
 - _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 programming interface for a game's graphics rendering[^2].
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
-- The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
+- The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
 - Borland Graphics Interface (BGI), a 2-D graphics API (e.g, _Turbo C User's Guide_, chapter 8).
 
 The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable video games that run with acceptable performance on those computers.
@@ -34,21 +34,21 @@ The following is a sketch of what could be included in a lean API for copying an
 - Copying a rectangular area (whose edges have integer coordinates) of an image onto another image, with optional nearest-neighbor scaling.  The copying can optionally exclude transparent pixels or pixels of a certain color.
 - Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
 - Drawing simple outlines of 2-D paths with a solid color.[^4]
-- Flood filling colored areas of an image.[^10]
+- Flood filling colored areas of an image.[^5]
 - Optionally, "inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
-- Optionally, fading an image to or from black.[^5]
+- Optionally, fading an image to or from black.[^6]
 
 A leaner API could provide for the following instead:
 
 - Getting and setting pixel values of an image.
 - Filling the following figures with a solid color.
     - Rectangles whose edges have integer coordinates, and ellipses that are tightly contained in them.
-    - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^6]
+    - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^7]
 - Drawing simple outlines of line segments with a solid color, supporting only integer coordinates.[^4]
-- Flood filling colored areas of an image.[^11]
+- Flood filling colored areas of an image.[^5]
 - Optionally:
     - "Inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
-    - Drawing simple outlines of elliptical arcs with a solid color, supporting only integer coordinates.[^4], [^7]
+    - Drawing simple outlines of elliptical arcs with a solid color, supporting only integer coordinates.[^4], [^8]
 
 The following is not included in either API.
 
@@ -63,7 +63,7 @@ The following is not included in either API.
 
 _Glyphs_ are graphics that represent elements of text (examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination). A _font_ is a collection of these glyphs along with rules for drawing and placing them. Glyphs are often but not always mapped one-to-one to letters or other writing symbols.
 
-Before 2000,[^8] there were three kinds of fonts for screen display:
+Before 2000,[^9] there were three kinds of fonts for screen display:
 
 - Raster fonts (the glyphs are images).
 - Vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples)
@@ -71,7 +71,7 @@ Before 2000,[^8] there were three kinds of fonts for screen display:
 
 For example, Borland Graphics Interface supports raster and vector fonts (called "bit-mapped" and "stroked" fonts in _Turbo C User's Guide_, chapter 8), while Windows CE 2.0 supports raster and outline fonts (Christiansen).
 
-In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^12]
+In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^10]
 
 Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.  Moreover, the conversion of text to glyphs and the positioning of such glyphs is often nontrivial.  If text rendering is supported, glyph smoothing is optional.
 
@@ -108,7 +108,7 @@ Stencil buffers, bump mapping, and three- or four-texture blending are borderlin
     DrawTrianglesOneTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture);
 
-Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^9]
+Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^11]
 
 > **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a screen resolution of 640 &times; 480.
 
@@ -193,18 +193,16 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^4]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.) A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Gery (1992), Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
 
-[^5]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
+[^5]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
 
-[^6]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of _Michael Abrash's Graphics Programming Black Book Special Edition_, 1997.
+[^6]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
 
-[^7]: Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features", Bresenham (1975), Van Aken (1984).
+[^7]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of _Michael Abrash's Graphics Programming Black Book Special Edition_, 1997.
 
-[^8]: Later developments in text rendering saw:<br>(1) The addition of scalable colored graphics, especially _emoji_, to outline fonts.<br>(2) [**"Subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.)<br>Both features are outside the scope of this document.
+[^8]: Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features", Bresenham (1975), Van Aken (1984).
 
-[^9]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
+[^9]: Later developments in text rendering saw:<br>(1) The addition of scalable colored graphics, especially _emoji_, to outline fonts.<br>(2) [**"Subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.)<br>Both features are outside the scope of this document.
 
-[^10]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
+[^10]: Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough.
 
-[^11]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
-
-[^12]: Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough.
+[^11]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.

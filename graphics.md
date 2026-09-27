@@ -71,16 +71,18 @@ Limit 3-D graphics to the following:[^3]
 
 2. The maximum number of vertices that can be displayed at a time (or rendered per second) is 3 times the maximum number of primitives.
     * A _vertex_ consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
-    * Each vertex color follows one of the following color formats: The red, green, and blue components occupy up to 5 bits each; or the red and blue components occupy 5 bits each and the green component occupies 6 bits.
+    * Each vertex color follows one of the following color formats:
+        * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
+        * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent pixels.
+        * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.
 
 3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
-    * is in a 16-bit-per-pixel format, where each pixel has the vertex color format given earlier, or
+    * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given earlier, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 
 4. The width and height of each texture are each powers of 2.
-5. Textures may contain transparent pixels.
-6. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-7. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^5]  Bilinear filtering, edge antialiasing (smoothing)[^6], and perspective correction (outside the vertices)[^7] are optional.
+5. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
+6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^5]  Bilinear filtering, edge antialiasing (smoothing)[^6], and perspective correction (outside the vertices)[^7] are optional.
 
 Limit 2-D graphics to the following: [^8]
 
@@ -114,6 +116,7 @@ The following are decided by the application:
     2. Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
     3. Which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
     4. The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
+    5. Whether translucent and/or transparent pixels are supported in vertices and textures.
 
 3. If 2-D tiles and sprites are supported:
 
@@ -123,8 +126,6 @@ The following are decided by the application:
     4. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.
     5. The maximum number of sprites displayed at a time on the game screen, no more than (screen width &times; screen height) / 256, rounded up.
     6. Whether sprites made of tiles, sprites made of pixels, or both are supported.
-
-4. Whether the green component of vertex colors is 5 or 6 bits.
 
 The following are optional features; the application decides:
 
@@ -422,6 +423,7 @@ The following are examples of the kind of statements desired:
 - PC hardware guidelines:
     - Multimedia PC Marketing Council, "Multimedia PC Level 1 and Level 2 Specifications" (May 1993), also in Microsoft Knowledge Base article Q106055 (1993).  The two specifications are called MPC Level 1 (from 1990) and MPC Level 2 (from 1993) in this document.
     - In _Dr. Dobbs' Journal_, Sep. 1995 ("Of Interest"), it was announced that the Multimedia PC Software Publishers Association released an MPC Level 3 specification.
+    - Microsoft Corp., _Hardware Design Guide for Microsoft Windows 95_, Microsoft Press. ISBN 1-55615-642-1.
     - Microsoft Corp., _PC 97 Hardware Design Guide_, Microsoft Press, 1996. ISBN 1-57231-381-1.
     - Intel & Microsoft, _PC 98 System Design Guide_, 1997. ISBN 1-57231-716-7.
     - Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
@@ -560,7 +562,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^18]: The first arcade video game, _Computer Space_, launched in 1971.
 
-[^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
+[^19]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).<br><br>If there is interest, this exception could expand to years before 2009 and thus include certain video games for the original iPhone from 2007.
 
 [^20]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
