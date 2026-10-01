@@ -121,19 +121,19 @@ There are several possibilities for "vertex blocks":
 
 `texture` is information about the texture, to be determined.  This information will include the texture's image data and a blending operation (add, modulate, etc.).
 
-    DrawTriangleFanOneTex(State3D *state, float* vertices, uint32_t numvertices, Texture *texture);
+    DrawTriangleFanOneTex(State3D * state, float* vertices, uint32_t numvertices, Texture *texture);
 
 Draws a triangle fan.  `vertices`, `texture`, and `numvertices` are as in `DrawTrianglesOneTex`. Moreover, `numvertices` must be 3 or greater.
 
-    DrawTriangleStripOneTex(State3D *state, float* vertices, uint32_t numvertices, Texture *texture);
+    DrawTriangleStripOneTex(State3D * state, float* vertices, uint32_t numvertices, Texture *texture);
 
 Draws a triangle strip.  `vertices`, `texture`, and `numvertices` are as in `DrawTrianglesOneTex`. Moreover, `numvertices` must be 3 or greater.
 
-    DrawTrianglesTwoTex(State3D *state, float* vertices, uint32_t numvertices,
+    DrawTrianglesTwoTex(State3D * state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture1, Texture *texture2);
-    DrawTriangleFanTwoTex(State3D *state, float* vertices, uint32_t numvertices,
+    DrawTriangleFanTwoTex(State3D * state, float* vertices, uint32_t numvertices,
        Texture *texture1, Texture *texture2);
-    DrawTriangleStripTwoTex(State3D *state, float* vertices, uint32_t numvertices,
+    DrawTriangleStripTwoTex(State3D * state, float* vertices, uint32_t numvertices,
        Texture *texture1, Texture *texture2);
 
 Like the corresponding `...OneTex` versions, with the following exceptions. Each vertex block has ten `float` values: the x-, y-, and z-coordinates; the normal vector's X, Y, and Z components; the texture coordinates (U and V) for `texture1`; and the texture coordinates for `texture2`.  These functions are suggested here because some games from the late 1990s rely on so-called _light-map_ textures and two-texture blending rather than in-game lighting calculations.
@@ -173,7 +173,7 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 - J. R. Van Aken, "An Efficient Ellipse-Drawing Algorithm," in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, [**https://doi.org/10.1109/MCG.1984.275994**](https://doi.org/10.1109/MCG.1984.275994).
 - Alois Zingl, "[**A Rasterizing Algorithm for Drawing Curves**](https://zingl.github.io/Bresenham.pdf)", Technikum-Wien, 2016 (simple outlines of paths).
 - Porter, T., and Duff, T. "Compositing Digital Images." Computer Graphics 18(3), p 253 ff., 1984. [**https://doi.org/10.1145/800031.808606**](https://doi.org/10.1145/800031.808606)
-- Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
+- Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
 
 <a id=License></a>
 

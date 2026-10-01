@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Lean Programming Interfaces for Classic Graphics</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphicsapi.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="citation_title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.date" content="2026-09-27"><meta name="citation_date" content="2026/09/27"><meta name="citation_publication_date" content="2026/09/27"><meta name="citation_online_date" content="2026/09/27"><meta name="og:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.title" content="Lean Programming Interfaces for Classic Graphics"><meta name="twitter:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Lean Programming Interfaces for Classic Graphics</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphicsapi.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="citation_title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.date" content="2026-09-28"><meta name="citation_date" content="2026/09/28"><meta name="citation_publication_date" content="2026/09/28"><meta name="citation_online_date" content="2026/09/28"><meta name="og:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.title" content="Lean Programming Interfaces for Classic Graphics"><meta name="twitter:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-09-27.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-09-28.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -152,21 +152,21 @@
 
 <p><code>texture</code> is information about the texture, to be determined.  This information will include the texture’s image data and a blending operation (add, modulate, etc.).</p>
 
-<pre>DrawTriangleFanOneTex(State3D *state, float* vertices, uint32_t numvertices, Texture *texture);
+<pre>DrawTriangleFanOneTex(State3D * state, float* vertices, uint32_t numvertices, Texture *texture);
 </pre>
 
 <p>Draws a triangle fan.  <code>vertices</code>, <code>texture</code>, and <code>numvertices</code> are as in <code>DrawTrianglesOneTex</code>. Moreover, <code>numvertices</code> must be 3 or greater.</p>
 
-<pre>DrawTriangleStripOneTex(State3D *state, float* vertices, uint32_t numvertices, Texture *texture);
+<pre>DrawTriangleStripOneTex(State3D * state, float* vertices, uint32_t numvertices, Texture *texture);
 </pre>
 
 <p>Draws a triangle strip.  <code>vertices</code>, <code>texture</code>, and <code>numvertices</code> are as in <code>DrawTrianglesOneTex</code>. Moreover, <code>numvertices</code> must be 3 or greater.</p>
 
-<pre>DrawTrianglesTwoTex(State3D *state, float* vertices, uint32_t numvertices,
+<pre>DrawTrianglesTwoTex(State3D * state, float* vertices, uint32_t numvertices,
    uint32_t * indices, uint32_t numindices, Texture *texture1, Texture *texture2);
-DrawTriangleFanTwoTex(State3D *state, float* vertices, uint32_t numvertices,
+DrawTriangleFanTwoTex(State3D * state, float* vertices, uint32_t numvertices,
    Texture *texture1, Texture *texture2);
-DrawTriangleStripTwoTex(State3D *state, float* vertices, uint32_t numvertices,
+DrawTriangleStripTwoTex(State3D * state, float* vertices, uint32_t numvertices,
    Texture *texture1, Texture *texture2);
 </pre>
 
@@ -218,7 +218,7 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
   <li>J. R. Van Aken, “An Efficient Ellipse-Drawing Algorithm,” in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, <a href="https://doi.org/10.1109/MCG.1984.275994"><strong>https://doi.org/10.1109/MCG.1984.275994</strong></a>.</li>
   <li>Alois Zingl, “<a href="https://zingl.github.io/Bresenham.pdf"><strong>A Rasterizing Algorithm for Drawing Curves</strong></a>”, Technikum-Wien, 2016 (simple outlines of paths).</li>
   <li>Porter, T., and Duff, T. “Compositing Digital Images.” Computer Graphics 18(3), p 253 ff., 1984. <a href="https://doi.org/10.1145/800031.808606"><strong>https://doi.org/10.1145/800031.808606</strong></a></li>
-  <li>Intel &amp; Microsoft, <em>PC 99 System Design Guide</em>, 1998. ISBN 0-7356-0518-1.</li>
+  <li>Intel &amp; Microsoft, <em>PC 99 System Design Guide</em>, Microsoft Press, 1998. ISBN 0-7356-0518-1.</li>
 </ul>
 
 <p><a id="License"></a></p>

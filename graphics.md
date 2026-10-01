@@ -72,9 +72,10 @@ Limit 3-D graphics to the following:[^3]
 2. The maximum number of vertices that can be displayed at a time (or rendered per second) is 3 times the maximum number of primitives.
     * A _vertex_ consists of an XYZ position, an XY texture coordinate, and a red&ndash;green&ndash;blue vertex color.
     * Each vertex color follows one of the following color formats:
-        * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
+        * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
         * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent pixels.
-        * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.
+        * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
+        * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.[^5]
 
 3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given earlier, or
@@ -82,14 +83,14 @@ Limit 3-D graphics to the following:[^3]
 
 4. The width and height of each texture are each powers of 2.
 5. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^5]  Bilinear filtering, edge antialiasing (smoothing)[^6], and perspective correction (outside the vertices)[^7] are optional.
+6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering, edge antialiasing (smoothing)[^7], and perspective correction (outside the vertices)[^8] are optional.
 
-Limit 2-D graphics to the following: [^8]
+Limit 2-D graphics to the following: [^9]
 
 1. Layers:
-    1. Up to four _2-D layers_ can be displayed at a time.  Each 2-D layer is a rectangular array of references to _tiles_ (see later), and can also be called a _tile map_.[^9]
+    1. Up to four _2-D layers_ can be displayed at a time.  Each 2-D layer is a rectangular array of references to _tiles_ (see later), and can also be called a _tile map_.[^10]
     3. If 3-D graphics are being displayed, one of the 2-D layers is replaced with a _3-D layer_, which is an image on which the 3-D graphics are drawn. Which 2-D layer is replaced this way can vary over time.
-    4. The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.[^10]
+    4. The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.[^5]
     5. The upper-left corner of a 2-D layer can be placed anywhere relative to the game screen and even outside it.  The 3-D layer's upper-left corner and dimensions are the same as the game screen image's.
 2. Tiles. A _tile_ is a small rectangular array of pixels.
     1. Tiles share width in pixels, height in pixels, and number of bits per pixel.
@@ -116,7 +117,7 @@ The following are decided by the application:
     2. Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
     3. Which 3-D features are supported, as given in point 7 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
     4. The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
-    5. Whether translucent and/or transparent pixels are supported in vertices and textures.
+    5. Whether translucent pixels, transparent pixels, or both are supported in vertices and textures.
 
 3. If 2-D tiles and sprites are supported:
 
@@ -162,6 +163,7 @@ The following are optional features; the application decides:
 >     - Maximum texture size: 128 &times; 128.
 >     - Implements a subset of OpenGL ES 1.1, rendered in software.
 >     - Has a game engine that renders only in that subset of OpenGL ES 1.1.
+       - No translucent or transparent pixels.
 >
 > 4. One way to implement the 2-D limits is: Screen resolution 640 &times; 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 &times; 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.
 
@@ -294,7 +296,7 @@ This section has notes on this specification, such as how its requirements corre
 - An application may choose to support stencil buffers, bump mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.[^63]
 - For years earlier than 1999, some of the 3-D capabilities mentioned in the specification (such as texture blending) might not be typical.
 - This specification allows for:
-    - Prerendered graphics (as in _Space Quest 5_, [_Star Wars: Rebel Assault_ \[1993\]](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/), or the original _Final Fantasy VII_ on PlayStation [1997]), to simulate showing highly detailed imagery.
+    - Prerendered graphics, to simulate showing highly detailed imagery.  Examples of video games with prerendered graphics are _Space Quest 5_, _Myst_ (1993), [_Star Wars: Rebel Assault_\]](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/) (1993), _Resident Evil_ (1996), the original _Final Fantasy VII_ on PlayStation (1997), and the arcade games _GP World_ (1984) and _Dragon's Lair_ (1983).
     - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_; see also Amanatides and Woo 1987), as long as the triangle limits are respected.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions, such as arcade games for the SEGA Model 3.  Moreover, a rate of much more than 20,000 triangles per frame is poorly suited for rendering in software.
@@ -415,24 +417,25 @@ The following are examples of the kind of statements desired:
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - International Telecommunication Union, _Conventional Television Systems_, ITU-R BT.470-6, 1998.
 - International Telecommunication Union, _International Interworking for Videotex Services_, ITU-T T.101, 1988.
-- Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994.
-- Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995.
-- Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
-- Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999.
-- J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995.
+- Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994. ISBN 0-672-30846-0.
+- Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995. ISBN 1-57169-004-2.
+- Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification. ISBN 0-672-31835-0.
+- Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999. ISBN 0-672-31361-8.
+- J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995. ISBN 1-56830-183-9.
 - PC hardware guidelines:
     - Multimedia PC Marketing Council, "Multimedia PC Level 1 and Level 2 Specifications" (May 1993), also in Microsoft Knowledge Base article Q106055 (1993).  The two specifications are called MPC Level 1 (from 1990) and MPC Level 2 (from 1993) in this document.
     - In _Dr. Dobbs' Journal_, Sep. 1995 ("Of Interest"), it was announced that the Multimedia PC Software Publishers Association released an MPC Level 3 specification.
-    - Microsoft Corp., _Hardware Design Guide for Microsoft Windows 95_, Microsoft Press. ISBN 1-55615-642-1.
-    - Microsoft Corp., _PC 97 Hardware Design Guide_, Microsoft Press, 1996. ISBN 1-57231-381-1.
-    - Intel & Microsoft, _PC 98 System Design Guide_, 1997. ISBN 1-57231-716-7.
-    - Intel & Microsoft, _PC 99 System Design Guide_, 1998. ISBN 0-7356-0518-1.
+    - Microsoft Corp., _Hardware Design Guide for Microsoft Windows 95_, Microsoft Press, 1995. ISBN 1-55615-642-1.
+    - Microsoft Corp., _PC 97 Hardware Design Guide_, Microsoft Press, 1997. ISBN 1-57231-381-1.
+    - Intel & Microsoft, _PC 98 System Design Guide_, Microsoft Press, 1997. ISBN 1-57231-716-7.
+    - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
 - Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).
 - Rodent, H., "Animation in Win32", Microsoft Developer Network, Feb. 1, 1994.
 - Saettler, Matt, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992.
+- TeleGrafix Communications, Inc, "RIPscrip Graphics Protocol Specification", revision 1.54, July 19th, 1993.
 - Thompson, N., _3D Graphics Programming for Windows 95_, Microsoft Press, 1996. ISBN 1-57231-345-5.
 - Thompson, N., _Animation Techniques in Win32_, Microsoft Press, 1995. ISBN 1-55615-669-3.
-- Woo, Mason, et al., _OpenGL Programming Guide: The Official Guide to Learning OpenGL, Version 1.1_, Addison Wesley Longman, 1997. ISBN 0-201-46138-2.
+- Woo, Mason, et al., _OpenGL Programming Guide: The Official Guide to Learning OpenGL, Version 1.1_, second edition, Addison Wesley Longman, 1997. ISBN 0-201-46138-2.
 
 <a id=Building_a_Public_Domain_music_synthesis_library_and_instrument_banks></a>
 
@@ -534,17 +537,17 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^4]: There are many [**definitions of triangles**](https://developer.arm.com/community/arm-community-blogs/b/mobile-graphics-and-gaming-blog/posts/triangles-per-second-performance-metric-or-chocolate-teapot) per frame. One definition is the triangles processed each frame after their vertices are transformed but before they are clipped (corresponding to the `GL_PRIMITIVES_GENERATED` query in [**OpenGL 3.1**](https://registry.khronos.org/OpenGL/specs/gl/glspec31.pdf), section 2.16). Another definition (often called _visible triangles_) is the number of triangles under the first definition that are neither back-facing nor totally outside the view volume.  Clipping these visible triangles to the view volume (which can sometimes produce more triangles) leads to a third definition: the triangles inside the volume that result after this clipping.   A similar situation occurs with "primitives per frame" rather than "triangles per frame".  For purposes of this specification, an overestimate of primitives per frame (such as in the first definition) is better than an underestimate.  The maximum number of primitives per frame in this specification was determined based on a target rate of 60 frames per second.
 
-[^5]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).
+[^5]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another), also known as [**_compositing_**](https://ciechanow.ski/alpha-compositing/).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in McCornack et al. (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
-[^6]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". McCornack et al. (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
+[^6]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).
 
-[^7]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_) contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation; so did the fact that triangles were drawn without smooth edges and with vertices placed at integer coordinates on the game screen.
+[^7]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". McCornack et al. (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
 
-[^8]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be rendered in software (see the specification's definition of "rendered in software").  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
+[^8]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_) contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation; so did the fact that triangles were drawn without smooth edges and with vertices placed at integer coordinates on the game screen.
 
-[^9]: The Neo Geo (1990) has only one 2-D layer; the rest of the visuals are sprites drawn below that layer.
+[^9]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be rendered in software (see the specification's definition of "rendered in software").  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
-[^10]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another), also known as [**_compositing_**](https://ciechanow.ski/alpha-compositing/).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in McCornack et al. (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
+[^10]: The Neo Geo (1990) has only one 2-D layer; the rest of the visuals are sprites drawn below that layer.
 
 [^11]: This drawing can be done in many ways: for example, by designating pixels with a given label, say, 0, as transparent (in a process also known as _chroma keying_), or designating pixels that are the same as the upper-left pixel as transparent \[Rodent 1994\], or preparing a two-color mask identifying the pixels to be drawn \[Gery 1992\].
 
