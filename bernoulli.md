@@ -254,7 +254,7 @@ In the following algorithms:
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating a uniform random variate between 0 and 1, call it _v_ (see above), and generating 1 if _v_ is less than _u_ (see above) or 0 otherwise.
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
-    - Generate a uniform random variate between 0 and 1 _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
+    - [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
     - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 1. For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  If _x_ is not a rational number, then rounding error will result, however.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce errors due to fixed-precision calculations, such as rounding and cancellations.
 
@@ -290,7 +290,7 @@ For certain polynomials with duplicate Bernstein coefficients, the following is 
 
 And here is another optimized algorithm:
 
-1. Set _j_ to 0 and _i_ to 0.  If _n_ is 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1, call it _u_.
+1. Set _j_ to 0 and _i_ to 0.  If _n_ is 0, return 0.  Otherwise, [**generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _u_.
 2. If _u_ is less than a lower bound of the lowest Bernstein coefficient, return 1.  Otherwise, if _u_ is less than (or equal to) an upper bound of the highest Bernstein coefficient, go to the next step.  Otherwise, return 0.
 3. If _i_ is _n_ or greater, or if the Bernstein coefficients _a_\[_k_\], with _k_ in the interval \[_j_, _j_+(_n_&minus;_i_)\], are all equal, return a number that is 1 if _u_ is less than _a_\[_j_\], or 0 otherwise.
 4. Flip the input coin.  If it returns 1, add 1 to _j_.
@@ -386,7 +386,7 @@ Then the algorithm is as follows:
 
 1. Create two empty lists: _blist_ and _ulist_.
 2. Set _state1_ to the position of the first nonzero item in _R_.  Set _state2_ to the position of the last nonzero item in _R_.  In both cases, positions start at 0.  If all the items in _R_ are zeros, return 0.
-3. Flip the input coin and append the result (which is 0 or 1) to the end of _blist_.  Generate a uniform random variate between 0 and 1 and append it to the end of _ulist_.
+3. Flip the input coin and append the result (which is 0 or 1) to the end of _blist_.  [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes) and append it to the end of _ulist_.
 4. (Monotonic coupling from the past (Morina et al., 2022\)[^19], (Propp and Wilson 1996\)[^20].) Set _i_ to the number of items in _blist_ minus 1, then while _i_ is 0 or greater:
     1. Let _b_ be the item at position _i_ (starting at 0) in _blist_, and let _u_ be the item at that position in _ulist_.
     2. **Get the new state given _state1_, _b_, _u_, and _n_**, and set _state1_ to the new state.
@@ -443,7 +443,7 @@ Then the algorithm below, based on an algorithm by Łatuszyński et al. (2009/20
 **General martingale algorithm:**
 
 1. Set _u_ to abs($d_0$) ($d_0$ is the value of the first nonzero power coefficient in the sequence $(a_i)$), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
-2. Generate a uniform random variate between 0 and 1 _ret_.
+2. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _ret_.
 3. Do the following process repeatedly, until this algorithm returns a value:
     1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ (if $g(\lambda) = \lambda$, this is done by flipping the input coin), then multiply _w_ by the result of the run.
     2. If $a_n$ is greater than 0: Set _u_ to _&#x2113;_ + _w_ * $a_n$, then, if no further nonzero power coefficients follow $a_n$, set _&#x2113;_ to _u_.
@@ -699,7 +699,7 @@ The following algorithm can be used to simulate factory functions via polynomial
 
 The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011\)[^21] and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012\)[^28], although an error in Algorithm I is noted below.  The first algorithm follows.
 
-1. Generate a uniform random variate between 0 and 1, call it _ret_.
+1. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _ret_.
 2. Set _&#x2113;_ and _LT_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
 3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in the closed unit interval.  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) with _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
@@ -1139,9 +1139,9 @@ The von Neumann schema uses **Algorithm BR**, where in step 1, the von Neumann s
 > 4. For the permutation class of _alternating sequences of even size_ (see example 1), step 2 in **Algorithm BR** can be implemented as follows (Flajolet et al. 2010, sec. 2.2\)[^1]:
 >
 >     - (2a.) (Limited to even-sized sequences.) If _X_ is odd[^25], reject _X_ (and go to step 1).
->     - (2b.) Generate a uniform random variate between 0 and 1, call it U, then set _i_ to 1.
+>     - (2b.) [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it U, then set _i_ to 1.
 >     - (2c.) While _i_ is less than _X_:
->         - Generate a uniform random variate between 0 and 1, call it V.
+>         - [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it V.
 >         - If _i_ is odd[^25] and V is less than U, or if _i_ is even[^27] and U is less than V, reject _X_ (and go to step 1).
 >         - Add 1 to i, then set U to V.
 >
@@ -1199,7 +1199,7 @@ namely the following algorithm:
 
 **Algorithm 2.** A special case of Algorithm 1 is the integral $\int_0^1 f(u)\,du$, when the original input coin always returns 1:
 
-1. Generate a uniform random variate between 0 and 1, call it _u_.
+1. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _u_.
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
 3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
 
@@ -1211,7 +1211,7 @@ where $0\le a\lt b\le 1$, using the following algorithm:
 
 1. Generate _u_, a uniform random variate between 0 and 1.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
 2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
-3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform random variate between 0 and 1 _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, [**generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _v_, and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
 
 > **Note**: If _a_ is 0 and _b_ is 1, the function $f(\lambda)$ that can be simulated by algorithm 3 will be strictly increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
 
@@ -1931,7 +1931,7 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 2. If _G_ is **odd**, return 0.
 3. Generate _u_, a uniform random variate between 0 and 1, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform random variate between 0 and 1, _V_.
+    1. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), _V_.
     2. If _i_ is odd[^25] and _V_ is less than _U_, return 0.
     3. If _i_ is even[^27] and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -1947,7 +1947,7 @@ This algorithm is based on the **algorithm for _&lambda;_<sup>_x_/_y_</sup>**, b
 2. If _G_ is **even**, return 0.
 3. Generate _u_, a uniform random variate between 0 and 1, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform random variate between 0 and 1 _V_.
+    1. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _V_.
     2. If _i_ is odd[^25] and _V_ is less than _U_, return 0.
     3. If _i_ is even[^27] and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -2283,7 +2283,7 @@ This can be extended to cover any constant of the form _&zeta;_(_k_) * (1 &minus
 
 In the following algorithm, _x_ is a real number that is 0 or greater and 1 or less.
 
-1. Generate a uniform random variate between 0 and 1, call it _ret_.
+1. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _ret_.
 2. Set _u_ to point to the same value as _ret_, and set _k_ to 1.
 3. (In this and the next step, _v_ is created, which is the maximum of two uniform random variates between 0 and 1.) Generate two uniform random variates between 0 and 1, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
@@ -2303,7 +2303,7 @@ In this algorithm, _m_ must be greater than 0, and _x_ is a real number that is 
 
 1. Set _ret_ to a number distributed as the maximum of _m_ uniform random variates between 0 and 1.  (See note 1 below.)
 2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
-3. Generate a uniform random variate between 0 and 1, call it _v_.
+3. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it _v_.
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd[^25], return a number that is 1 if _ret_ is less than _x_ and 0 otherwise. If _k_ is even[^27], go to step 1.  (If _ret_ is implemented as a uniform partially-sampled random number, this comparison should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 
@@ -2771,7 +2771,7 @@ Then the algorithm's behavior is given in the tables below.
 
 The following is a derivation of the Madhava&ndash;Gregory&ndash;Leibniz (MGL) generator for simulating the probability $\pi/4$ (Flajolet et al. 2010)[^2].  It works as follows.  Let $S$ be a set of nonnegative integers.  Then:
 
-1. Generate a uniform random variate between 0 and 1, call it $U$.
+1. [**Generate a uniform random variate between 0 and 1**](#Implementation_Notes), call it $U$.
 2. [**Sample from the number $U$**](#Implementation_Notes) repeatedly until the sampling "fails" (returns 0).  Set $k$ to the number of "successes".  (Thus, this step generates $k$ with probability $g(k,U) = (1-U) U^k$.)
 3. If $k$ is in $S$, return 1; otherwise, return 0.
 
