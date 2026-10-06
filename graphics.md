@@ -71,11 +71,6 @@ Limit 3-D graphics to the following:[^3]
 
 2. The maximum number of vertices that can be displayed at a time (or rendered per second) is 3 times the maximum number of primitives.
     * A _vertex_ has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a  red&ndash;green&ndash;blue _vertex color_.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
-    * Each vertex color follows one of the following color formats:
-        * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
-        * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent pixels.
-        * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
-        * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.[^6]
 
 3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given earlier, or
@@ -83,14 +78,20 @@ Limit 3-D graphics to the following:[^3]
 
 4. The width and height of each texture are each powers of 2.
 5. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^7]  Bilinear filtering, edge antialiasing (smoothing)[^8], and perspective correction (outside the vertices)[^9] are optional.
+6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering, edge antialiasing (smoothing)[^7], and perspective correction (outside the vertices)[^8] are optional.
+7. The following color formats only are supported for vertex colors:
+
+    * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
+    * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent pixels.
+    * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
+    * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.[^9]
 
 Limit 2-D graphics to the following: [^10]
 
 1. Layers:
     1. Up to four _2-D layers_ can be displayed at a time.  Each 2-D layer is a rectangular array of references to _tiles_ (see later), and can also be called a _tile map_.[^11]
     3. If 3-D graphics are being displayed, one of the 2-D layers is replaced with a _3-D layer_, which is an image on which the 3-D graphics are drawn. Which 2-D layer is replaced this way can vary over time.
-    4. The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.[^6]
+    4. The 2-D layers may contain transparent pixels.  The 3-D layer may contain transparent and translucent (semitransparent) pixels.[^9]
     5. The upper-left corner of a 2-D layer can be placed anywhere relative to the game screen and even outside it.  The 3-D layer's upper-left corner and dimensions are the same as the game screen image's.
 2. Tiles. A _tile_ is a small rectangular array of pixels.
     1. Tiles share width in pixels, height in pixels, and number of bits per pixel.
@@ -163,7 +164,7 @@ The following are optional features; the application decides:
 >     - Maximum texture size: 128 &times; 128.
 >     - Implements a subset of OpenGL ES 1.1, rendered in software.
 >     - Has a game engine that renders only in that subset of OpenGL ES 1.1.
-       - No translucent or transparent pixels.
+>     - No translucent or transparent pixels.
 >
 > 4. One way to implement the 2-D limits is: Screen resolution 640 &times; 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 &times; 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.
 >
@@ -543,13 +544,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^5]: For example, see "Optimizing OpenGL drivers for Quake3" by John Carmack, referenced in .plan, April 30, 1999.  But primitives with two or more textures are a feature hardly seen before the late 1990s.  See that document as well as Abrash (1997), chapters 69-70.
 
-[^6]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another), also known as [**_compositing_**](https://ciechanow.ski/alpha-compositing/).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in McCornack et al. (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
+[^6]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).
 
-[^7]: _Quake_ (1996) also employed _subdivision rasterization_ for drawing small and relatively distant triangles whose vertices are rounded to integers, an algorithm likewise in scope here (Abrash (1997), chapter 69).
+[^7]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". McCornack et al. (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
 
-[^8]: Antialiasing "[**didn’t appear in home console graphics architectures**](https://imagequalitymatters.blogspot.com/2011/01/retro-tech-analysis-virtua-racing-md-vs.html) until the debut of the \[Nintendo 64\] in late 1996". McCornack et al. (1995) considers antialiasing among the features "unlikely" to be needed in game programming.
+[^8]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_) contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation; so did the fact that triangles were drawn without smooth edges and with vertices placed at integer coordinates on the game screen.
 
-[^9]: Perspective correction accounts for distance from the viewer: closer objects appear larger.  The lack of perspective correction (as in what is called _affine texture mapping_) contributed to the characteristic distortion and instability of 3-D graphics in many video games for the original PlayStation; so did the fact that triangles were drawn without smooth edges and with vertices placed at integer coordinates on the game screen.
+[^9]: Translucent pixels enable _alpha blending_ techniques (the mixing of one image with another), also known as [**_compositing_**](https://ciechanow.ski/alpha-compositing/).  But alpha blending was “relatively new to PC games” at the time of _Quake_’s launch in 1996, according to Abrash (1997), and is practically not discussed at all in McCornack et al. (1995). Only images with opaque and/or transparent pixels tended to be supported in early-1990s video games.
 
 [^10]: It is being considered whether to replace these 2-D limits with one of the following alternatives:<br><br>1. Instead of tiles, sprites, and layers, the game uses a _frame buffer_ (array of color samples, called pixels, in computer memory) with no more than 8 bits per pixel (no more than 256 simultaneous colors) and all visuals in the game must be rendered in software (see the specification's definition of "rendered in software").  But I don't know of a way to describe further restrictions useful for game programming in the mid- to late 1990s style.<br>2. The 2-D limits in the specification apply, but instead of replacing a 2-D layer, the 3-D layer is simply a special sprite that covers the game screen (the usual size limits for sprites don't apply) and can have transparent and translucent pixels.<br>3. Same as (2), but in addition, there are no tiles or 2-D layers (all the graphics are sprites).<br><br>The tile-based limits in this specification also suit games that support only text display, and thus have visuals that resemble the text modes (as opposed to graphics modes) found in PCs and computer terminals.
 
