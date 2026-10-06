@@ -14,7 +14,7 @@ It would be of interest to write a free and open-source graphics engine that imp
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
 - Borland Graphics Interface (BGI), a 2-D graphics API (e.g, _Turbo C User's Guide_, chapter 8).
-- Certain game-oriented graphics APIs from the 1990s, such as 3dfx's Glide, S3's S3d, and Matrox's MSI.
+- Certain game-oriented 3-D graphics APIs from the 1990s, such as 3dfx's Glide, S3's S3d, and Matrox's MSI.
 
 The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable video games that run with acceptable performance on those computers.
 
@@ -85,7 +85,7 @@ It is unclear whether to include any of the following in the lean 2-D graphics A
 1. 2-D affine transformations (which keep parallel lines parallel; examples are scalings, shears, and rotations).
 2. Translations, rotations and scalings, but no other 2-D affine transformations.
 3. Translations, rotations, scalings, and reflections, but no other 2-D affine transformations.
-4. So-called "[**raster operations**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBit`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).
+4. So-called "[**raster operations**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBlt`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).
 5. [**Alpha compositing**](https://ciechanow.ski/alpha-compositing/) while drawing 2-D graphics.
 6. Drawing one image part over another (the "over" operation of Porter and Duff 1984), with optional translucency, but no other nontrivial alpha compositing.  The images may have translucent (semitransparent) or transparent pixels.
 7. Same as point 6, except the images can't have translucent pixels.
