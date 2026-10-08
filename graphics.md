@@ -80,13 +80,12 @@ Limit 3-D graphics to the following:[^3]
 5. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering, edge antialiasing (smoothing)[^7], and perspective correction (outside the vertices)[^8] are optional.
 7. The following color formats only are supported for vertex colors:
-
     * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
     * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent pixels.
     * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
     * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.[^9]
 
-Limit 2-D graphics to the following: [^10]
+Limit 2-D graphics to the following\:[^10]
 
 1. Layers:
     1. Up to four _2-D layers_ can be displayed at a time.  Each 2-D layer is a rectangular array of references to _tiles_ (see later), and can also be called a _tile map_.[^11]
@@ -308,6 +307,8 @@ This section has notes on this specification, such as how its requirements corre
         1. Per-screen-column _ray casting_, of the kind popularized in _Wolfenstein 3-D_ (1992).[^67]
         2. _Light maps_ with precomputed lighting (for example, Abrash 2007, chapters 68 and 69).
 
+        Phong shading is not to be confused with the Phong lighting model; per-vertex lighting in software using the Phong lighting model is allowed.
+
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^68] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 - The following is an alternative primitive drawing rate an application can use.  Nadeau, D.R., "Optimizing the Performance of VRML Worlds", _Dr. Dobbs' Journal_, July 1996, mentions: "[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh".  Assuming the Pentium processor's speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.
@@ -414,8 +415,9 @@ The following are examples of the kind of statements desired:
 
 - Abrash, M., [**_Michael Abrash's Graphics Programming Black Book: Special Edition_**](https://github.com/jagregory/abrash-black-book), 1997.
 - (Akenine-)Möller, T., Haines, E., _Real-Time Rendering_ (first edition), 1999.
-- Amanatides, John, and Andrew Woo. "A fast voxel traversal algorithm for ray tracing." Eurographics. Vol. 87. No. 3. 1987.
-[**http://www.cse.yorku.ca/~amana/research/grid.pdf**](http://www.cse.yorku.ca/~amana/research/grid.pdf)
+- Amanatides, John, and Andrew Woo. "A fast voxel traversal algorithm for ray tracing." Eurographics. Vol. 87. No. 3. 1987. [**http://www.cse.yorku.ca/~amana/research/grid.pdf**](http://www.cse.yorku.ca/~amana/research/grid.pdf)
+- Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
+- Apple Computer Inc., "[**Building a 3D application that calls RAVE**](https://developer.apple.com/library/archive/technotes/tn/tn1125.html)", Technical Note TN1125, May 4, 1998.
 - Anderson, G (ed.), _More Tricks of the Game Programming Gurus_, Sams, 1995. ISBN 0-672-30697-2.
 - CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, "Videotex/Teletext Presentation Level Protocol Syntax", also known as the North American Presentation Layer Protocol Syntax.
 - Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.

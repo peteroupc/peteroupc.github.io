@@ -13,8 +13,8 @@ It would be of interest to write a free and open-source graphics engine that imp
 - _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 programming interface for a game's graphics rendering[^2].
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
-- Borland Graphics Interface (BGI), a 2-D graphics API (e.g, _Turbo C User's Guide_, chapter 8).
-- Certain game-oriented 3-D graphics APIs from the 1990s, such as 3dfx's Glide, S3's S3d, and Matrox's MSI.
+- Borland Graphics Interface (BGI), a 2-D graphics API (for example, _Turbo C User's Guide_, chapter 8).
+- Certain game-oriented [**3-D graphics APIs**](https://leikareipa.github.io/blog/wrapping-old-graphics-apis/) from the 1990s, such as 3dfx's Glide, S3's S3d, ATI's CIF, and Matrox Simple Interface.
 
 The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable video games that run with acceptable performance on those computers.
 
@@ -200,6 +200,8 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 - Alois Zingl, "[**A Rasterizing Algorithm for Drawing Curves**](https://zingl.github.io/Bresenham.pdf)", Technikum-Wien, 2016 (simple outlines of paths).
 - Porter, T., and Duff, T. "Compositing Digital Images." Computer Graphics 18(3), p 253 ff., 1984. [**https://doi.org/10.1145/800031.808606**](https://doi.org/10.1145/800031.808606)
 - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
+- Woo, Mason, et al., _OpenGL Programming Guide: The Official Guide to Learning OpenGL, Version 1.1_, second edition, Addison Wesley Longman, 1997. ISBN 0-201-46138-2.
+- Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
 
 <a id=License></a>
 
@@ -215,7 +217,8 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^2]: See, for example, "Optimizing OpenGL drivers for Quake3" by John Carmack, referenced in .plan, April 30, 1999.
 
-[^3]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.) A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment. Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Gery (1992), Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
+[^3]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br>A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then:<br>1. Drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or...
+<br>2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment's slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br>Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
 
 [^4]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
 
