@@ -78,10 +78,10 @@ Limit 3-D graphics to the following:[^3]
 
 4. The width and height of each texture are each powers of 2.
 5. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-6. For 3-D graphics, Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending are supported.[^6]  Bilinear filtering, edge antialiasing (smoothing)[^7], and perspective correction (outside the vertices)[^8] are optional.
+6. For 3-D graphics, any number of the following features are supported: Z buffering (depth buffering), flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, line drawing (by approximating the line at integer coordinates), two-texture blending, MIP mapping, source alpha blending, and destination alpha blending.[^6]  Bilinear filtering, edge antialiasing (smoothing)[^7], and perspective correction (outside the vertices)[^8] are optional.
 7. The following color formats only are supported for vertex colors:
     * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
-    * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent pixels.
+    * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent (semitransparent) pixels.
     * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
     * For 3-D rendering only: The red, green, and blue components occupy 4 bits each, and a 4-bit alpha component marks transparent and translucent pixels.[^9]
 
@@ -176,28 +176,40 @@ The following are optional features; the application decides:
 
 This specification for "classic graphics"[^18] in modern games largely reflects the visual limitations of&mdash;
 
-- consumer PCs (personal computers) released in the mid- to late 1990s,
+- consumer PCs (personal computers) released in the mid- to late 1990s (see example 1 later in this section),
 - home computers released before 1995,[^19]
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier,[^20]
 - personal digital assistants, graphical calculators, learning toys with an electronic display, and cellular phones with similar performance to consumer PCs from before 2000,[^21]
-- videotex protocols before 1995[^22], and
+- videotex protocols before 1995,[^22] and
 - the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
 
-In general, PC applications that feature classic graphics include:
-
-1. Windows applications written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for rendering visuals.
-2. Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.  Examples are  _Chip's Challenge_ for Windows (1992) and Brian Goble's _The Adventures of MicroMan_ (1993).
-3. Games for MS-DOS or PC-9801 that were published before 2000.  Examples are _Quake_ (1996), _WarCraft_ (1994), and the first titles of the Touhou Project series (1997-1998).
-4. Games using [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.2 or earlier for graphics.
-5. So-called "multimedia titles" from the 1990s, or applications resembling interactive versions of books (generally reference and other nonfiction works), complete with sound, animation, and video.  See "Multimedia PC Level 1 and Level 2 Specifications" by the Multimedia PC Marketing Council.
-
-Video games released in 2000 or later are out of scope, even if they were designed for hardware that launched before 2000.  The exceptions are:
+Video games and other software programs released in 2000 or later are out of scope, even if they were designed for hardware that launched before 2000.  The exceptions are:
 
 - Video games released before 2010 for the Nintendo DS or the Game Boy Advance.
-- Video games released before 2007 for personal digital assistants, graphical calculators, learning toys, and cellular phones that do not exceed the performance of consumer PCs released before 2000.[^21]
+- Video games released before 2007 for personal digital assistants, graphical calculators, learning toys, and cellular phones that do not exceed the performance of consumer PCs released before 2000.  See example 2 later in this section.
 
 NVIDIA GeForce 256 (late 1999) is out of scope.  Some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D rendering capabilities beyond what is "classic" here.  Video games released in 1998 or 1999 for Dreamcast (1998) are borderline cases; they are at most barely within the spirit of this challenge.[^23]
+
+> **Examples:**
+>
+> 1. In general, PC applications that feature classic graphics include:
+>
+>     - Windows applications written for DirectX versions earlier than 7 and using Direct3D or DirectDraw for their visuals.
+>     - Windows games using GDI or [**WinG**](https://www.pcgamingwiki.com/wiki/List_of_WinG_games) for graphics and supporting Windows 98 or earlier.  Examples are  _Chip's Challenge_ for Windows (1992) and Brian Goble's _The Adventures of MicroMan_ (1993).
+>     - Games for MS-DOS or PC-9801 that were published before 2000.  Examples are _Quake_ (1996), _WarCraft_ (1994), and the first titles of the Touhou Project series (1997-1998).
+>     - Games using [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.2 or earlier for graphics.[^84]
+>     - So-called "multimedia titles" from the 1990s, or applications resembling interactive versions of books (generally reference and other nonfiction works), complete with sound, animation, and video.  See "Multimedia PC Level 1 and Level 2 Specifications" by the Multimedia PC Marketing Council.
+>
+> 2. In general, video games covered by the phone exception include games released before 2007 for:
+>
+>    - The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).
+>    - Symbian OS.
+>    - Mobile phones, when the graphics are drawn using:
+>        - Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), or extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).  Or...
+>        - [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
+>
+>    If there is interest, this exception could expand to years before 2009 and thus include certain video games for the original iPhone from 2007.
 
 One of the following games can be considered an upper limit to what is considered "classic graphics" in this specification.
 
@@ -325,7 +337,7 @@ This section has notes on this specification, such as how its requirements corre
      - Certain two- or three-screen games by Taito (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
      - The Midway MCR family of arcade machines (1980 to about 1986) had a screen resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but backgrounds were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
 - If an arcade game employed 2-D visuals with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
-- There have been so-called cinematic arcade video games, such as _Wild Gunman_ (1974) and _Dragon's Lair_ (1983).
+- There have been so-called cinematic arcade video games, such as _Wild Gunman_ (1974), _Astron Belt_ (1982), and _Dragon's Lair_ (1983).
 
 <a id=Screen_image_effects_filters></a>
 
@@ -701,3 +713,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^82]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^83]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^84]: Versions 1.3 and later of OpenGL came after 2000.
