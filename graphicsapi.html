@@ -237,7 +237,13 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
           <li>The <a href="https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/"><strong>archived documentation for the XDDM</strong></a>, the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.</li>
         </ul>
       </li>
-      <li>Windows CE 2.0’s version of the GDI and its 2-D graphics features are described in Jon Christiansen, “Microsoft Windows CE Graphics Features” (undated, about 1997). Windows CE was an operating system for embedded and handheld computers.</li>
+      <li>Windows CE’s GDI.  Windows CE was an operating system for embedded and handheld computers.
+        <ul>
+          <li>Windows CE 2.0’s version of the GDI and its 2-D graphics features are described in Jon Christiansen, “Microsoft Windows CE Graphics Features” (undated, about 1997).</li>
+          <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29"><strong>Windows CE 5.0 documentation</strong></a> (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29"><strong>video driver recommendations</strong></a>, <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29"><strong>line drawing</strong></a>, and <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29"><strong>supported features</strong></a>.  (This information did not materially change in <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29"><strong>Windows Embedded CE 6.0</strong></a> [2010].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></li>
+          <li>In addition to the GDI, Windows CE 5.0 supports <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29"><strong>Direct3D Mobile</strong></a>, and Windows CE .NET 4.2 supports a version of <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29"><strong>Direct3D</strong></a>.  Both APIs approximate pre-2000 three-dimensional computer graphics.</li>
+        </ul>
+      </li>
     </ul>
   </li>
   <li>Borland International, <em>Turbo C User’s Guide: Version 2.0</em>, 1988. Chapter 8 under “Programming in Graphics Mode” discusses the BGI graphics library.</li>
@@ -298,6 +304,9 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
     </li>
     <li id="fn:10">
       <p>This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5’s Direct3D (Immediate Mode).  By contrast, the approach of <em>execute buffers</em>, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:11">
+      <p>Indeed, much “hardware acceleration” in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -376,7 +376,7 @@ This specification assumes those effects are not in place.  A game can have thos
 
 As with the rest of this open-source article, [**comments on this specification**](https://www.reddit.com/r/retrogamedev/comments/1rl36fo/pre2000_computer_graphics_for_modern_video_games/) are welcome.  But most useful would be comments that improve or refine the specification to fit the graphical abilities of pre-2000 video games.
 
-Examples are comments that give _measurements_ (or references to other works that make such measurements) on the graphical performance actually achieved, in normal gameplay, by video games released in 1999 and earlier (or released in, say, 1994 and earlier) for home computers or game consoles.  (It bears repeating: _measurements_, not inferences or guesses from screenshots or videos.)
+Examples are comments that give _measurements_ (or references to other works that make such measurements) on the graphical performance actually achieved, in normal gameplay, by video games within the [**scope of the specification**](#Classic_Graphics_in_Scope).  (It bears repeating: _measurements_, not inferences or guesses from screenshots or videos.)
 
 This includes statements like the following, with references or measurements:
 
