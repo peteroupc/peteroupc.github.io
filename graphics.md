@@ -52,7 +52,7 @@ In this document, _classic graphics_ or _pre-2000 graphics_ generally means two-
 This challenge is intended to encourage the making of&mdash;
 
 -  modern video games that simulate pre-2000 graphics and run with very low resource requirements (say, 64 million bytes of memory or less) and even on very low-end computers (say, those that date from 2010 or earlier or support Windows 7, Windows XP, or even older), and
--  graphics engines (especially free and open-source ones) devoted to pre-2000 visuals and meant for developing such modern video games.[^1]
+-  graphics engines and editors (especially free and open-source ones) devoted to pre-2000 visuals and meant for developing such modern video games.[^1]
 
 Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality pre-2000 graphics using only software &mdash; without relying on specialized video cards &mdash; at 640 &times; 480 pixels or smaller, screen resolutions typically targeted by video games in the 1990s and earlier.[^2]
 
@@ -167,8 +167,10 @@ The following are optional features; the application decides:
 >
 > 4. One way to implement the 2-D limits is: Screen resolution 640 &times; 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 &times; 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.
 >
-> **Note:** For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending) might not be typical.
+> **Notes:**
 >
+> 1. For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending) might not be typical.
+> 2. The use by the game of graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code is highly encouraged for this challenge.
 
 <a id=Classic_Graphics_in_Scope></a>
 
@@ -176,12 +178,12 @@ The following are optional features; the application decides:
 
 This specification for "classic graphics"[^18] in modern games largely reflects the visual limitations of&mdash;
 
-- consumer PCs (personal computers) released in the mid- to late 1990s (see example 1 later in this section),
+- consumer PCs (personal computers) released before 2000 (see example 1 later in this section),
 - home computers released before 1995,[^19]
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier,[^20]
-- personal digital assistants, graphical calculators, learning toys with an electronic display, and cellular phones with similar performance to consumer PCs from before 2000,[^21]
-- videotex protocols before 1995,[^22] and
+- videotex protocols before 1995,[^21]
+- personal digital assistants, palmtop PCs, graphical calculators, learning toys with an electronic display, and mobile phones with similar performance to consumer PCs from before 2000,[^22] and
 - the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.
 
 Video games and other software programs released in 2000 or later are out of scope, even if they were designed for hardware that launched before 2000.  The exceptions are:
@@ -189,7 +191,7 @@ Video games and other software programs released in 2000 or later are out of sco
 - Video games released before 2010 for the Nintendo DS or the Game Boy Advance.
 - Video games released before 2007 for personal digital assistants, graphical calculators, learning toys, and mobile phones that do not exceed the performance of consumer PCs released before 2000.  See example 2 later in this section.
 
-NVIDIA GeForce 256 (late 1999) is out of scope.  Some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D rendering capabilities beyond what is "classic" here.  Video games released in 1998 or 1999 for Dreamcast (1998) are borderline cases; they are at most barely within the spirit of this challenge.[^23]
+NVIDIA GeForce 256 (late 1999) is out of scope.  Some arcade machines, such as SEGA Model 3 (1996) and SEGA NAOMI (1998), may have 3-D features beyond what is "classic" here.  Video games released in 1998 or 1999 for Dreamcast (1998) are borderline cases; they are at most barely within the spirit of this challenge.[^23]
 
 > **Examples:**
 >
@@ -205,12 +207,12 @@ NVIDIA GeForce 256 (late 1999) is out of scope.  Some arcade machines, such as S
 >
 >    - The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).
 >    - Symbian OS.
->    - Mobile phones and personal digital assistants running Windows CE 5.0 or earlier, including when the graphics are drawn using [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29).
+>    - Mobile phones, palmtop PCs, personal digital assistants running Windows CE 5.0 or earlier, including when the graphics are drawn using [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29).
 >    - Mobile phones, when the graphics are drawn using:
 >        - Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), or extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).  Or...
 >        - [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
 >
->    If there is interest, this exception could expand to years before 2009 and thus include certain video games for the original iPhone from 2007.
+>    If there is interest, this exception could expand to the years 2007 and 2008 and thus include certain video games for the original iPhone from 2007.
 
 One of the following games can be considered an upper limit to what is considered "classic graphics" in this specification.
 
@@ -324,8 +326,9 @@ This section has notes on this specification, such as how its requirements corre
 
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^69] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
-- The following is an alternative primitive drawing rate an application can use.  Nadeau, D.R., "Optimizing the Performance of VRML Worlds", _Dr. Dobbs' Journal_, July 1996, mentions: "[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh".  Assuming the Pentium processor's speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.
-
+- The following suggests alternative primitive drawing rates an application can use.
+    - Nadeau (1996)[^85], mentions: "[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh".  Assuming the Pentium processor's speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.
+    - The first version of the Renderware library (1994) was claimed to draw about 40,000 polygons per second at resolution 400 &times; 400 on a 50-megahertz processor.[^86]  Assuming an average of 60 frames per second, the target rate would be about 13.33 polygons per megahertz per frame, or 666.66 polygons per frame.
 <a id=Graphics_in_video_arcade_games></a>
 
 #### Graphics in video arcade games
@@ -549,7 +552,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 ## Notes
 
-[^1]: The following are examples of a graphics library that follows the spirit, even if not the letter, of this specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib), [**_quadplay✜_**](https://github.com/morgan3d/quadplay).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/), and so did [**Jani Peltonen**](https://www.codeslow.com/2019/12/tiny-windows-executable-in-rust.html).<br>I offer a [**template for Win32 applications**](https://gist.github.com/peteroupc/f1a5d8e45e27123b86b284271cfd802b) that supports 8- and 24-bit-per-pixel game images and paints finished game images using `StretchDIBits`.<br>By contrast, even though today's Unity and Unreal game engines can allow the making of games with "classic graphics", they are far from lightweight and their use is not within the spirit of this challenge.
+[^1]: The following are examples of a graphics library that follows the spirit, even if not the letter, of this specification: [**_Tilengine_**](https://github.com/megamarc/Tilengine), [**_kit_**](https://github.com/rxi/kit/), [**_DOS-like_**](https://github.com/mattiasgustavsson/dos-like), [**_raylib_'s `rlsw` software renderer**](https://github.com/raysan5/raylib), [**_quadplay✜_**](https://github.com/morgan3d/quadplay), [**_TIC-80_**](https://github.com/nesbox/TIC-80).  Michal Strehovský published an [**interesting technique to create small game applications**](https://migeel.sk/blog/2024/01/02/building-a-self-contained-game-in-csharp-under-2-kilobytes/), and so did [**Jani Peltonen**](https://www.codeslow.com/2019/12/tiny-windows-executable-in-rust.html).<br>I offer a [**template for Win32 applications**](https://gist.github.com/peteroupc/f1a5d8e45e27123b86b284271cfd802b) that supports 8- and 24-bit-per-pixel game images and paints finished game images using `StretchDIBits`.<br>By contrast, even though today's Unity and Unreal game engines can allow the making of games with "classic graphics", they are far from lightweight and their use is not within the spirit of this challenge.
 
 [^2]: A computer has adequate performance for pre-2000 graphics if it achieves a score of&mdash;<br>(a) 3108 or more 3D marks on the 3DMark2000 benchmark (640 &times; 480) when run without hardware acceleration, or<br>(b) 195 or greater on the 3DMark2000 CPU speed test.<br>Both figures correspond to the running of two visually demanding 3-D demos, at three levels of detail each, at 60 frames per second (adjusted downward as needed if a demo's detail level averages more than 12,800 triangles per frame; see the section "Test Descriptions" in the 3DMark2000 help).
 
@@ -589,9 +592,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^20]: The first arcade video game, _Computer Space_, launched in 1971.
 
-[^21]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).<br><br>If there is interest, this exception could expand to years before 2009 and thus include certain video games for the original iPhone from 2007.
+[^21]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
-[^22]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
+[^22]: Examples are:<br>(1) The [**Sharp MI-Zaurus**](https://dench.flatlib.jp/app/chiraks_em) (2000).<br>(2) Cellular and feature phones that came with Java Micro Edition, its Mobile Information Device Profile (MIDP, [**Java specification request 37**](https://jcp.org/en/jsr/detail?id=37) and [**JSR 118**](https://jcp.org/en/jsr/detail?id=118)), and extensions (especially [**JSR 184, Mobile 3D Graphics API**](https://jcp.org/en/jsr/detail?id=184)).<br>(3) Feature phones and smartphones that supported the [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).<br><br>If there is interest, this exception could expand to years before 2009 and thus include certain video games for the original iPhone from 2007.
 
 [^23]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_,  _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)".
 
@@ -716,3 +719,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^83]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^84]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^85]: Nadeau, D.R., "Optimizing the Performance of VRML Worlds", _Dr. Dobbs' Journal_, July 1996.
+
+[^86]: _Edge_, April 1994, p. 16-17.

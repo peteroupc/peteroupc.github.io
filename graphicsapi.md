@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a game screen of 640 &times; 480 or smaller, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
+Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a screen with no more pixels than a 640-&times;-480 screen, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
 
 <a id=Goal_An_Open_Source_Engine_or_API_for_Classic_Graphics></a>
 
@@ -28,7 +28,7 @@ The simplest way to proceed is to give the application a _frame buffer_, a block
 
 A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
-The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing. \(For such an API, antialiasing \[smoothing\] is optional, and it's enough for the API to draw to images stored in system memory, and not also drawing to video memory or directly to the screen.)
+The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.
 
 - Getting and setting pixel values of an image.
 - Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image.
@@ -50,6 +50,8 @@ A leaner API could provide for the following instead:
 - Optionally:
     - "Inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
     - Drawing simple outlines of elliptical arcs with a solid color, supporting only integer coordinates.[^3], [^7]
+
+For both APIs, antialiasing (smoothing) is optional, and it's enough for the APIs to draw to images stored in system memory, and not also to support drawing to video memory or directly to the screen.
 
 The following is not included in either API.
 
