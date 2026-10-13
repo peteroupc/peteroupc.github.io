@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Lean Programming Interfaces for Classic Graphics</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphicsapi.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="citation_title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.date" content="2026-10-10"><meta name="citation_date" content="2026/10/10"><meta name="citation_publication_date" content="2026/10/10"><meta name="citation_online_date" content="2026/10/10"><meta name="og:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.title" content="Lean Programming Interfaces for Classic Graphics"><meta name="twitter:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Lean Programming Interfaces for Classic Graphics</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphicsapi.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="citation_title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.date" content="2026-10-13"><meta name="citation_date" content="2026/10/13"><meta name="citation_publication_date" content="2026/10/13"><meta name="citation_online_date" content="2026/10/13"><meta name="og:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.title" content="Lean Programming Interfaces for Classic Graphics"><meta name="twitter:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-10-10.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-10-13.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -33,7 +33,7 @@
 <p>The simplest way to proceed is to give the application a <em>frame buffer</em>, a block of system memory consisting of a rectangular array of pixel samples.  The nature of each pixel sample depends on the game’s needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.<sup id="fnref:1:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <blockquote>
-  <p><strong>Note:</strong> Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels.</p>
+  <p><strong>Note:</strong> Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels, that is, no more pixels than a 640-×-480 screen.</p>
 </blockquote>
 
 <p>A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.</p>
@@ -221,46 +221,51 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
 <h2 id="further-reading">Further Reading</h2>
 
 <ul>
-  <li><em>Microsoft C/C++ Version 7.0 Run-Time Library Reference</em> (1991), section 2.6 (“Microsoft C runtime”).  Describes the graphics routines the named library supports.</li>
-  <li>The Windows graphics device interface (GDI):
-    <ul>
-      <li>The GDI supported in Windows 95, Windows 98, and Windows 3.x (the “16-bit GDI”), along with its limitations, is described in the following references:
-        <ul>
-          <li>“Microsoft Windows Software Development Kit: Programmer’s Reference” (for Windows 3.1).</li>
-          <li>Charles Petzold, <em>Programming Windows 3.1: The Microsoft Guide to Writing Applications for Windows 3.1</em>, Microsoft Press, 1992. ISBN 1-55615-395-3.</li>
-          <li><em>Microsoft Win32 Programmer’s Reference</em> (for Windows 95 and Windows 98).</li>
-          <li>“Microsoft Win32 API Overview”, Microsoft Developer Network, February 1994.</li>
-          <li>“INFO: Developing Win32-Based GDI Apps for Windows 95 and Windows NT or Windows2000”, Microsoft Knowledge Base article Q136989.</li>
-        </ul>
-      </li>
-      <li>The Windows NT GDI is described in the following references.  Its dashed-line feature did not materially change between the two references.
-        <ul>
-          <li>Chapter 3 of the <em>Graphics Driver Design Guide</em>, part of the Windows NT 4.0 Device Driver Kit.</li>
-          <li>The <a href="https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/"><strong>archived documentation for the XDDM</strong></a>, the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.</li>
-        </ul>
-      </li>
-      <li>Windows CE’s GDI.  Windows CE was an operating system for embedded and handheld computers.
-        <ul>
-          <li>Windows CE 2.0’s version of the GDI and its 2-D graphics features are described in Jon Christiansen, “Microsoft Windows CE Graphics Features” (undated, about 1997).</li>
-          <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29"><strong>Windows CE 5.0 documentation</strong></a> (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29"><strong>video driver recommendations</strong></a>, <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29"><strong>line drawing</strong></a>, and <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29"><strong>supported features</strong></a>.  (This information did not materially change in <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29"><strong>Windows Embedded CE 6.0</strong></a> [2010].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></li>
-          <li>In addition to the GDI, Windows CE 5.0 supports <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29"><strong>Direct3D Mobile</strong></a>, and Windows CE .NET 4.2 supports a version of <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29"><strong>Direct3D</strong></a>.  Both APIs approximate pre-2000 three-dimensional computer graphics.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Borland International, <em>Turbo C User’s Guide: Version 2.0</em>, 1988. Chapter 8 under “Programming in Graphics Mode” discusses the BGI graphics library.</li>
+  <li>Abrash, M., <a href="https://github.com/jagregory/abrash-black-book"><strong><em>Michael Abrash’s Graphics Programming Black Book: Special Edition</em></strong></a>, 1997.</li>
+  <li>Apple Computer Inc., <em>3D Graphics Programming With QuickDraw 3D 1.5.4</em>, 1997.</li>
   <li>Borland International, <em>Turbo C Reference Guide: Version 2.0</em>, 1988.</li>
+  <li>Borland International, <em>Turbo C User’s Guide: Version 2.0</em>, 1988. Chapter 8 under “Programming in Graphics Mode” discusses the BGI graphics library.</li>
+  <li>Bresenham, Jack E., “Algorithm for computer control of a digital plotter.” <em>IBM Systems Journal</em> 4.1 (1965): 25-30, <a href="https://doi.org/10.1147/sj.41.0025"><strong>https://doi.org/10.1147/sj.41.0025</strong></a> (simple outlines of line segments).</li>
+  <li>Bresenham J.E., “A linear algorithm for incremental digital display of circular arcs”, Commun. ACM 20, 2 (Feb. 1977), 100–106, <a href="https://doi.org/10.1145/359423.359432"><strong>https://doi.org/10.1145/359423.359432</strong></a> (simple outlines of circular arcs).</li>
+  <li>Intel &amp; Microsoft, <em>PC 99 System Design Guide</em>, Microsoft Press, 1998. ISBN 0-7356-0518-1.</li>
+  <li><em>Microsoft C/C++ Version 7.0 Run-Time Library Reference</em> (1991), section 2.6 (“Microsoft C runtime”).  Describes the graphics routines the named library supports.</li>
+  <li>Porter, T., and Duff, T. “Compositing Digital Images.” Computer Graphics 18(3), p 253 ff., 1984. <a href="https://doi.org/10.1145/800031.808606"><strong>https://doi.org/10.1145/800031.808606</strong></a></li>
+  <li>Ron Gery, “Primitive Cool”, Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).</li>
   <li>Ted Gruber Software, <em>Fastgraph User’s Guide</em>, April 1993.</li>
   <li>Ted Gruber Software, <em>Fastgraph Reference Manual</em>, April 1993.</li>
-  <li>Jack E. Bresenham, “Algorithm for computer control of a digital plotter.” <em>IBM Systems Journal</em> 4.1 (1965): 25-30, <a href="https://doi.org/10.1147/sj.41.0025"><strong>https://doi.org/10.1147/sj.41.0025</strong></a> (simple outlines of line segments).</li>
-  <li>Ron Gery, “Primitive Cool”, Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).</li>
-  <li>Jack E. Bresenham, “A linear algorithm for incremental digital display of circular arcs”, Commun. ACM 20, 2 (Feb. 1977), 100–106, <a href="https://doi.org/10.1145/359423.359432"><strong>https://doi.org/10.1145/359423.359432</strong></a> (simple outlines of circular arcs).</li>
-  <li>J. R. Van Aken, “An Efficient Ellipse-Drawing Algorithm,” in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, <a href="https://doi.org/10.1109/MCG.1984.275994"><strong>https://doi.org/10.1109/MCG.1984.275994</strong></a>.</li>
-  <li>Alois Zingl, “<a href="https://zingl.github.io/Bresenham.pdf"><strong>A Rasterizing Algorithm for Drawing Curves</strong></a>”, Technikum-Wien, 2016 (simple outlines of paths).</li>
-  <li>Porter, T., and Duff, T. “Compositing Digital Images.” Computer Graphics 18(3), p 253 ff., 1984. <a href="https://doi.org/10.1145/800031.808606"><strong>https://doi.org/10.1145/800031.808606</strong></a></li>
-  <li>Intel &amp; Microsoft, <em>PC 99 System Design Guide</em>, Microsoft Press, 1998. ISBN 0-7356-0518-1.</li>
+  <li>Van Aken, J.R., “An Efficient Ellipse-Drawing Algorithm,” in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, <a href="https://doi.org/10.1109/MCG.1984.275994"><strong>https://doi.org/10.1109/MCG.1984.275994</strong></a>.</li>
+  <li>Zingl, A., “<a href="https://zingl.github.io/Bresenham.pdf"><strong>A Rasterizing Algorithm for Drawing Curves</strong></a>”, Technikum-Wien, 2016 (simple outlines of paths).</li>
   <li>Woo, Mason, et al., <em>OpenGL Programming Guide: The Official Guide to Learning OpenGL, Version 1.1</em>, second edition, Addison Wesley Longman, 1997. ISBN 0-201-46138-2.</li>
-  <li>Apple Computer Inc., <em>3D Graphics Programming With QuickDraw 3D 1.5.4</em>, 1997.</li>
+</ul>
+
+<p><a id="Windows_GDI"></a></p>
+
+<h3 id="windows-gdi">Windows GDI</h3>
+
+<p>Information about the Windows graphics device interface (GDI) is scattered in many documents.</p>
+
+<ul>
+  <li>The GDI supported in Windows 95, Windows 98, and Windows 3.x (the “16-bit GDI”), along with its limitations, is described in the following references:
+    <ul>
+      <li>“Microsoft Windows Software Development Kit: Programmer’s Reference” (for Windows 3.1).</li>
+      <li>Charles Petzold, <em>Programming Windows 3.1: The Microsoft Guide to Writing Applications for Windows 3.1</em>, Microsoft Press, 1992. ISBN 1-55615-395-3.</li>
+      <li><em>Microsoft Win32 Programmer’s Reference</em> (for Windows 95 and Windows 98).</li>
+      <li>“Microsoft Win32 API Overview”, Microsoft Developer Network, February 1994.</li>
+      <li>“INFO: Developing Win32-Based GDI Apps for Windows 95 and Windows NT or Windows2000”, Microsoft Knowledge Base article Q136989.</li>
+    </ul>
+  </li>
+  <li>The Windows NT GDI is described in the following references.  Its dashed-line feature did not materially change between the two references.
+    <ul>
+      <li>Chapter 3 of the <em>Graphics Driver Design Guide</em>, part of the Windows NT 4.0 Device Driver Kit.</li>
+      <li>The <a href="https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/"><strong>archived documentation for the XDDM</strong></a>, the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.</li>
+    </ul>
+  </li>
+  <li>Windows CE’s GDI.<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">11</a></sup>  Windows CE was an operating system for embedded and handheld computers.
+    <ul>
+      <li>Jon Christiansen, “Microsoft Windows CE Graphics Features” (undated, about 1997), describes Windows CE 2.0’s version of the GDI and its 2-D graphics features.</li>
+      <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29"><strong>Windows CE 5.0 documentation</strong></a> (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29"><strong>video driver recommendations</strong></a>, <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29"><strong>line drawing</strong></a>, and <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29"><strong>supported features</strong></a>.  (This information did not materially change in <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29"><strong>Windows Embedded CE 6.0</strong></a> [2010].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">12</a></sup></li>
+    </ul>
+  </li>
 </ul>
 
 <p><a id="License"></a></p>
@@ -273,8 +278,6 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
 
 <h2 id="notes">Notes</h2>
 
-<p><br />2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment’s slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br />Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).</p>
-
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1">
@@ -284,7 +287,7 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
       <p>See, for example, “Optimizing OpenGL drivers for Quake3” by John Carmack, referenced in .plan, April 30, 1999. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>In this document, a <em>simple outline</em> of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br />A “thicker” than simple outline can be drawn by approximating the 2-D path with line segments, then:<br />1. Drawing filled circles around each segment’s endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or… <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:3:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:3:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
+      <p>In this document, a <em>simple outline</em> of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br />A “thicker” than simple outline can be drawn by approximating the 2-D path with line segments, then:<br />1. Drawing filled circles around each segment’s endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or… <br />2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment’s slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br />Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016). <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:3:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a> <a href="#fnref:3:2" class="reversefootnote" role="doc-backlink">&#8617;<sup>3</sup></a></p>
     </li>
     <li id="fn:4">
       <p>But the <em>Turbo C Reference Guide</em>, which describes a <code>floodfill</code> function, recommended an alternative to that function for compatibility reasons. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:4:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
@@ -293,7 +296,7 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
       <p>This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>A “monotone-vertical” polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of <em>Michael Abrash’s Graphics Programming Black Book Special Edition</em>, 1997. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A “monotone-vertical” polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Abrash (1997). <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
       <p>Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, “Microsoft Windows CE Graphics Features”, Bresenham (1975), Van Aken (1984). <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -306,6 +309,9 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
     </li>
     <li id="fn:10">
       <p>This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5’s Direct3D (Immediate Mode).  By contrast, the approach of <em>execute buffers</em>, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:12">
+      <p>In addition to the GDI, Windows CE 5.0 supports <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29"><strong>Direct3D Mobile</strong></a>, and Windows CE .NET 4.2 supports a version of <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29"><strong>Direct3D</strong></a>.  Both APIs approximate pre-2000 three-dimensional computer graphics. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:11">
       <p>Indeed, much “hardware acceleration” in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself. <a href="#fnref:11" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

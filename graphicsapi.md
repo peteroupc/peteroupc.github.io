@@ -24,7 +24,7 @@ The graphics engine is intended to run even on computers from around 2005 (and m
 
 The simplest way to proceed is to give the application a _frame buffer_, a block of system memory consisting of a rectangular array of pixel samples.  The nature of each pixel sample depends on the game's needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.[^1]
 
-> **Note:** Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels.
+> **Note:** Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels, that is, no more pixels than a 640-&times;-480 screen.
 
 A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
@@ -179,34 +179,40 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 
 ## Further Reading
 
-- _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6 ("Microsoft C runtime").  Describes the graphics routines the named library supports.
-- The Windows graphics device interface (GDI):
-    - The GDI supported in Windows 95, Windows 98, and Windows 3.x (the "16-bit GDI"), along with its limitations, is described in the following references:
-         - "Microsoft Windows Software Development Kit: Programmer's Reference" (for Windows 3.1).
-         - Charles Petzold, _Programming Windows 3.1: The Microsoft Guide to Writing Applications for Windows 3.1_, Microsoft Press, 1992. ISBN 1-55615-395-3.
-         - _Microsoft Win32 Programmer's Reference_ (for Windows 95 and Windows 98).
-         - "Microsoft Win32 API Overview", Microsoft Developer Network, February 1994.
-         - "INFO: Developing Win32-Based GDI Apps for Windows 95 and Windows NT or Windows2000", Microsoft Knowledge Base article Q136989.
-    - The Windows NT GDI is described in the following references.  Its dashed-line feature did not materially change between the two references.
-         - Chapter 3 of the _Graphics Driver Design Guide_, part of the Windows NT 4.0 Device Driver Kit.
-         - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
-    - Windows CE's GDI.  Windows CE was an operating system for embedded and handheld computers.
-        - Windows CE 2.0's version of the GDI and its 2-D graphics features are described in Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997).
-        - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^11]
-        - In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
-- Borland International, _Turbo C User's Guide: Version 2.0_, 1988. Chapter 8 under "Programming in Graphics Mode" discusses the BGI graphics library.
+- Abrash, M., [**_Michael Abrash's Graphics Programming Black Book: Special Edition_**](https://github.com/jagregory/abrash-black-book), 1997.
+- Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
 - Borland International, _Turbo C Reference Guide: Version 2.0_, 1988.
+- Borland International, _Turbo C User's Guide: Version 2.0_, 1988. Chapter 8 under "Programming in Graphics Mode" discusses the BGI graphics library.
+- Bresenham, Jack E., "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
+- Bresenham J.E., "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
+- Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
+- _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6 ("Microsoft C runtime").  Describes the graphics routines the named library supports.
+- Porter, T., and Duff, T. "Compositing Digital Images." Computer Graphics 18(3), p 253 ff., 1984. [**https://doi.org/10.1145/800031.808606**](https://doi.org/10.1145/800031.808606)
+- Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
 - Ted Gruber Software, _Fastgraph User's Guide_, April 1993.
 - Ted Gruber Software, _Fastgraph Reference Manual_, April 1993.
-- Jack E. Bresenham, "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
-- Ron Gery, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
-- Jack E. Bresenham, "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
-- J. R. Van Aken, "An Efficient Ellipse-Drawing Algorithm," in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, [**https://doi.org/10.1109/MCG.1984.275994**](https://doi.org/10.1109/MCG.1984.275994).
-- Alois Zingl, "[**A Rasterizing Algorithm for Drawing Curves**](https://zingl.github.io/Bresenham.pdf)", Technikum-Wien, 2016 (simple outlines of paths).
-- Porter, T., and Duff, T. "Compositing Digital Images." Computer Graphics 18(3), p 253 ff., 1984. [**https://doi.org/10.1145/800031.808606**](https://doi.org/10.1145/800031.808606)
-- Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
+- Van Aken, J.R., "An Efficient Ellipse-Drawing Algorithm," in IEEE Computer Graphics and Applications, vol. 4, no. 9, pp. 24-35, Sept. 1984, [**https://doi.org/10.1109/MCG.1984.275994**](https://doi.org/10.1109/MCG.1984.275994).
+- Zingl, A., "[**A Rasterizing Algorithm for Drawing Curves**](https://zingl.github.io/Bresenham.pdf)", Technikum-Wien, 2016 (simple outlines of paths).
 - Woo, Mason, et al., _OpenGL Programming Guide: The Official Guide to Learning OpenGL, Version 1.1_, second edition, Addison Wesley Longman, 1997. ISBN 0-201-46138-2.
-- Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
+
+<a id=Windows_GDI></a>
+
+### Windows GDI
+
+Information about the Windows graphics device interface (GDI) is scattered in many documents.
+
+- The GDI supported in Windows 95, Windows 98, and Windows 3.x (the "16-bit GDI"), along with its limitations, is described in the following references:
+     - "Microsoft Windows Software Development Kit: Programmer's Reference" (for Windows 3.1).
+     - Charles Petzold, _Programming Windows 3.1: The Microsoft Guide to Writing Applications for Windows 3.1_, Microsoft Press, 1992. ISBN 1-55615-395-3.
+     - _Microsoft Win32 Programmer's Reference_ (for Windows 95 and Windows 98).
+     - "Microsoft Win32 API Overview", Microsoft Developer Network, February 1994.
+     - "INFO: Developing Win32-Based GDI Apps for Windows 95 and Windows NT or Windows2000", Microsoft Knowledge Base article Q136989.
+- The Windows NT GDI is described in the following references.  Its dashed-line feature did not materially change between the two references.
+     - Chapter 3 of the _Graphics Driver Design Guide_, part of the Windows NT 4.0 Device Driver Kit.
+     - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
+- Windows CE's GDI.[^12]  Windows CE was an operating system for embedded and handheld computers.
+    - Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997), describes Windows CE 2.0's version of the GDI and its 2-D graphics features.
+    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^11]
 
 <a id=License></a>
 
@@ -222,14 +228,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^2]: See, for example, "Optimizing OpenGL drivers for Quake3" by John Carmack, referenced in .plan, April 30, 1999.
 
-[^3]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br>A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then:<br>1. Drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or...
-<br>2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment's slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br>Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
+[^3]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br>A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then:<br>1. Drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or... <br>2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment's slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br>Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
 
 [^4]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
 
 [^5]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
 
-[^6]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of _Michael Abrash's Graphics Programming Black Book Special Edition_, 1997.
+[^6]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Abrash (1997).
 
 [^7]: Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features", Bresenham (1975), Van Aken (1984).
 
@@ -240,3 +245,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^10]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
 
 [^11]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself.
+
+[^12]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
