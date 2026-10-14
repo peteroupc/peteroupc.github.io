@@ -314,7 +314,7 @@ This section has notes on this specification, such as how its requirements corre
 - An application may choose to support stencil buffers, bump mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.[^66]
 - This specification allows for:
     - Prerendered graphics, to simulate showing highly detailed imagery.  Examples of video games with prerendered graphics are _Space Quest V_ (1993), _Myst_ (1993), [_Star Wars: Rebel Assault_\]](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/) (1993), _Resident Evil_ (1996), the original _Final Fantasy VII_ on PlayStation (1997), and the arcade games _GP World_ (1984) and _Dragon's Lair_ (1983).
-    - Drawing a 3-D graphic as a [**_voxel mesh_**](https://blog.danielschroeder.me/blog/voxel-renderer-objects-and-animation) (formed from point samples in 3-D, rather than 2-D, called _voxels_)[^67], as long as the triangle limits are respected.
+    - Drawing a 3-D graphic as a _voxel model_ \(formed from point samples in 3-D, rather than 2-D, called _voxels_\)[^67], as long as the model is rendered in software.  But drawing voxel models as polygon meshes is subject to the limits on the number of primitives and vertices.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions.[^23]  Moreover, a rate of much more than 20,000 triangles per frame is poorly suited for rendering in software.
     - Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include:
@@ -435,7 +435,7 @@ The following are examples of the kind of statements desired:
 - Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
 - Apple Computer Inc., "[**Building a 3D application that calls RAVE**](https://developer.apple.com/library/archive/technotes/tn/tn1125.html)", Technical Note TN1125, May 4, 1998.
 - Anderson, G (ed.), _More Tricks of the Game Programming Gurus_, Sams, 1995. ISBN 0-672-30697-2.
-- CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, "Videotex/Teletext Presentation Level Protocol Syntax", also known as the North American Presentation Layer Protocol Syntax.
+- CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, "Videotex/Teletext Presentation Level Protocol Syntax", also known as the North American Presentation-Level-Protocol Syntax.
 - Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - International Telecommunication Union, _Conventional Television Systems_, ITU-R BT.470-6, 1998.
@@ -684,7 +684,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^66]: So is environment mapping, but this feature is simply the generating of texture coordinates in software for a suitably crafted texture image.  See Woo et al. (1997), chap. 9, section "Environment Mapping".
 
-[^67]: Examples include Amanatides and Woo (1987), chapter 16 of Lamothe (1995), chapter 7 of Anderson (1995), and the [**voxel space**](https://github.com/s-macke/VoxelSpace) algorithm for terrain rendering in U.S. Patent 6020893A, now expired, and used in _Comanche: Maximum Overkill_ (1992).
+[^67]: Examples include Amanatides and Woo (1987), chapter 16 of Lamothe (1995), chapter 7 of Anderson (1995), and the [**voxel space**](https://github.com/s-macke/VoxelSpace) algorithm for terrain rendering in U.S. Patent 6020893A, now expired, and used in _Comanche: Maximum Overkill_ (1992). Voxel models can also be found in certain games made with Ken Silverman's Build engine, such as _Blood_ (1997).
 
 [^68]: Fabien Sanglard, [**_Game Engine Black Book: Wolfenstein 3D_**](https://fabiensanglard.net/gebb/); Lampton, C., _Gardens of Imagination: Programming 3D Maze Games in C/C++_, Waite Group Press, 1994, ISBN  1-878739-59-X.
 
