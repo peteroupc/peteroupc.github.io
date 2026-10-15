@@ -63,11 +63,11 @@ The following is not included in either API.
 
 ### Text Rendering
 
-[**Text rendering**](https://behdad.org/text2024) is essentially the drawing of _glyphs_ of text.
+Text rendering is essentially the drawing of _glyphs_ of text.
 
 _Glyphs_ are graphics that represent elements of text (examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination). A _font_ is a collection of these glyphs along with rules for drawing and placing them. Glyphs are often but not always mapped one-to-one to letters or other writing symbols.
 
-Before 2000,[^8] there were three kinds of fonts for screen display:
+Before 2000, there were three kinds of fonts for screen display:
 
 - Raster fonts (the glyphs are images).
 - Vector fonts (the glyphs are made of line segments and/or curves; Hershey, Modern, and Script are examples)
@@ -75,9 +75,9 @@ Before 2000,[^8] there were three kinds of fonts for screen display:
 
 For example, Borland Graphics Interface supports raster and vector fonts (called "bit-mapped" and "stroked" fonts in _Turbo C User's Guide_, chapter 8), while Windows CE 2.0 supports raster and outline fonts (Christiansen).
 
-In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^9]
+In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^8]
 
-Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.  Moreover, the conversion of text to glyphs and the positioning of such glyphs is often nontrivial.  If text rendering is supported, glyph smoothing is optional.
+Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^9]  Moreover, the conversion of text to glyphs and the positioning of such glyphs is often nontrivial.  If text rendering is supported, glyph smoothing is optional.
 
 <a id=Possible_Additions></a>
 
@@ -124,7 +124,7 @@ The [**classic-graphics specification**](https://peteroupc.github.io/graphics.ht
 - Two-texture blending.
 - Edge antialiasing (smoothing).
 - MIP mapping.
-- Source and destination alpha blending.
+- Alpha compositing.
 
 These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The _PC 99 System Design Guide_ (1998) sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
 
@@ -239,9 +239,9 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^7]: Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features", Bresenham (1975), Van Aken (1984).
 
-[^8]: Later developments in text rendering saw:<br>(1) The addition of scalable colored graphics, especially _emoji_, to outline fonts.<br>(2) [**"Subpixel" antialiasing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998.)<br>Both features are outside the scope of this document.
+[^8]: Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough.
 
-[^9]: Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough.
+[^9]: A discussion of text rendering methods is beyond the scope of this document, but the following are pointers: [**State of text rendering**](https://behdad.org/text2024), [**Antialiasing (smoothing)**](https://mrandri19.github.io/2019/08/08/modern-text-rendering-linux-ep2.html), [**Hardware-accelerated text rendering**](https://alphapixeldev.com/sdf-vs-msdf-vs-slug-vs-rive-gpu-text-rendering/), [**The raster tragedy**](http://rastertragedy.com/).  Furthermore, the addition of scalable colored graphics, especially _emoji_, to outline fonts was developed after 2000, and [**"subpixel" smoothing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998, was not widely deployed before 2000.
 
 [^10]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
 

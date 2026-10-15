@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Lean Programming Interfaces for Classic Graphics</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphicsapi.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="citation_title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.date" content="2026-10-14"><meta name="citation_date" content="2026/10/14"><meta name="citation_publication_date" content="2026/10/14"><meta name="citation_online_date" content="2026/10/14"><meta name="og:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.title" content="Lean Programming Interfaces for Classic Graphics"><meta name="twitter:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Lean Programming Interfaces for Classic Graphics</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/graphicsapi.pdf"><meta name="citation_url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="citation_title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.date" content="2026-10-15"><meta name="citation_date" content="2026/10/15"><meta name="citation_publication_date" content="2026/10/15"><meta name="citation_online_date" content="2026/10/15"><meta name="og:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/graphicsapi.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.title" content="Lean Programming Interfaces for Classic Graphics"><meta name="twitter:title" content="Lean Programming Interfaces for Classic Graphics"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-10-14.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="lean-programming-interfaces-for-classic-graphics">Lean Programming Interfaces for Classic Graphics</h1><p>This version of the document is dated 2026-10-15.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -85,11 +85,11 @@
 
 <h3 id="text-rendering">Text Rendering</h3>
 
-<p><a href="https://behdad.org/text2024"><strong>Text rendering</strong></a> is essentially the drawing of <em>glyphs</em> of text.</p>
+<p>Text rendering is essentially the drawing of <em>glyphs</em> of text.</p>
 
 <p><em>Glyphs</em> are graphics that represent elements of text (examples are letters, digits, the <em>i</em>’s dot, and the <em>f-f-l</em> combination). A <em>font</em> is a collection of these glyphs along with rules for drawing and placing them. Glyphs are often but not always mapped one-to-one to letters or other writing symbols.</p>
 
-<p>Before 2000,<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> there were three kinds of fonts for screen display:</p>
+<p>Before 2000, there were three kinds of fonts for screen display:</p>
 
 <ul>
   <li>Raster fonts (the glyphs are images).</li>
@@ -99,9 +99,9 @@
 
 <p>For example, Borland Graphics Interface supports raster and vector fonts (called “bit-mapped” and “stroked” fonts in <em>Turbo C User’s Guide</em>, chapter 8), while Windows CE 2.0 supports raster and outline fonts (Christiansen).</p>
 
-<p>In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></p>
+<p>In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></p>
 
-<p>Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.  Moreover, the conversion of text to glyphs and the positioning of such glyphs is often nontrivial.  If text rendering is supported, glyph smoothing is optional.</p>
+<p>Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>  Moreover, the conversion of text to glyphs and the positioning of such glyphs is often nontrivial.  If text rendering is supported, glyph smoothing is optional.</p>
 
 <p><a id="Possible_Additions"></a></p>
 
@@ -155,7 +155,7 @@
   <li>Two-texture blending.</li>
   <li>Edge antialiasing (smoothing).</li>
   <li>MIP mapping.</li>
-  <li>Source and destination alpha blending.</li>
+  <li>Alpha compositing.</li>
 </ul>
 
 <p>These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The <em>PC 99 System Design Guide</em> (1998) sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.</p>
@@ -303,10 +303,10 @@ DrawTriangleStrip(State3D *state, float* vertices, uint32_t numvertices);
       <p>Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, “Microsoft Windows CE Graphics Features”, Bresenham (1975), Van Aken (1984). <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
-      <p>Later developments in text rendering saw:<br />(1) The addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts.<br />(2) <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“Subpixel” antialiasing</strong></a> of glyphs, such as the ClearType technology announced in November 1998.)<br />Both features are outside the scope of this document. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:9">
-      <p>Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A discussion of text rendering methods is beyond the scope of this document, but the following are pointers: <a href="https://behdad.org/text2024"><strong>State of text rendering</strong></a>, <a href="https://mrandri19.github.io/2019/08/08/modern-text-rendering-linux-ep2.html"><strong>Antialiasing (smoothing)</strong></a>, <a href="https://alphapixeldev.com/sdf-vs-msdf-vs-slug-vs-rive-gpu-text-rendering/"><strong>Hardware-accelerated text rendering</strong></a>, <a href="http://rastertragedy.com/"><strong>The raster tragedy</strong></a>.  Furthermore, the addition of scalable colored graphics, especially <em>emoji</em>, to outline fonts was developed after 2000, and <a href="http://rastertragedy.com/RTRCh2.htm#Sec2"><strong>“subpixel” smoothing</strong></a> of glyphs, such as the ClearType technology announced in November 1998, was not widely deployed before 2000. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:10">
       <p>This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5’s Direct3D (Immediate Mode).  By contrast, the approach of <em>execute buffers</em>, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

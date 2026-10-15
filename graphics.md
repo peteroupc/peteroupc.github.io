@@ -70,7 +70,7 @@ Limit 3-D graphics to the following:[^3]
     * Each primitive can be translucent.
 
 2. The maximum number of vertices that can be displayed at a time (or rendered per second) is 3 times the maximum number of primitives.
-    * A _vertex_ has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a  red&ndash;green&ndash;blue _vertex color_.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
+    * A _vertex_ has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a _vertex color_ of a format given later.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
 
 3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given earlier, or
@@ -313,7 +313,7 @@ This section has notes on this specification, such as how its requirements corre
 - The _PC 99 System Design Guide_ sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.[^65]  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.
 - An application may choose to support stencil buffers, bump mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.[^66]
 - This specification allows for:
-    - Prerendered graphics, to simulate showing highly detailed imagery.  Examples of video games with prerendered graphics are _Space Quest V_ (1993), _Myst_ (1993), [_Star Wars: Rebel Assault_\]](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/) (1993), _Resident Evil_ (1996), the original _Final Fantasy VII_ on PlayStation (1997), and the arcade games _GP World_ (1984) and _Dragon's Lair_ (1983).
+    - Prerendered graphics, to simulate showing highly detailed imagery.  Examples of video games with prerendered graphics are _Space Quest V_ (1993), _Myst_ (1993), [**_Star Wars: Rebel Assault_**](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/) (1993), _Resident Evil_ (1996), the original _Final Fantasy VII_ on PlayStation (1997), and the arcade games _GP World_ (1984) and _Dragon's Lair_ (1983).
     - Drawing a 3-D graphic as a _voxel model_ \(formed from point samples in 3-D, rather than 2-D, called _voxels_\)[^67], as long as the model is rendered in software.  But drawing voxel models as polygon meshes is subject to the limits on the number of primitives and vertices.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions.[^23]  Moreover, a rate of much more than 20,000 triangles per frame is poorly suited for rendering in software.
