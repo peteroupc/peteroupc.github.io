@@ -940,13 +940,13 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^59]: [**Köhler, P., "Estimating Remainder Functionals by the Moduli of Smoothness"**](https://scholar.google.com/scholar?q=Köhler,+P.,+Estimating+Remainder+Functions+by+the+Moduli+of+Smoothness), _Zeitschrift für Analysis und ihre Anwendungen_ 13(1), 1994.
 
-[^60]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain Journal of Mathematics, Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [**https://doi.org/10.1216/RMJ-1989-19-1-157**](https://doi.org/10.1216/RMJ-1989-19-1-157)
+[^60]: Heinz H. Gonska "Degree of approximation by lacunary interpolators: (0,…,R−2,R) interpolation", Rocky Mountain J. Math. 19(1), 157-172, (Winter 1989). [**https://doi.org/10.1216/RMJ-1989-19-1-157**](https://doi.org/10.1216/RMJ-1989-19-1-157)
 
 [^61]: Because of the assumptions on the operator $L$, $T$ will be a subspace of $S$; see chapter 2 of Cheney and Light (2009).
 
 [^62]: Powell, Michael James David. Approximation theory and methods. Cambridge University Press, 1981.
 
-[^63]: Cheney, W., Light, W., [**_A Course in Approximation Theory_**](https://bookstore.ams.org/gsm-101), American Mathematical Society, 2009.
+[^63]: Cheney, W., Light, W., [**_A Course in Approximation Theory_**](https://bookstore.ams.org/gsm-101), American Mathematical Society, 2009. ISBN 978-0-8218-4798-5.
 
 [^64]: De Boor, C. (1982). Topics in multivariate approximation theory. In: Turner, P.R. (eds) Topics in Numerical Analysis. Lecture Notes in Mathematics, vol 965. Springer, Berlin, Heidelberg. [**https://doi.org/10.1007/BFb0063200**](https://doi.org/10.1007/BFb0063200)
 

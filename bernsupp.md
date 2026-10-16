@@ -848,9 +848,7 @@ It is also true that $g_{2n}\cdot x$ and $g_n\cdot x$ satisfy the same property 
 
 #### A Conjecture on Polynomial Approximation
 
-The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
-
-**Conjecture.**
+The following statement suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.
 
 Let $r$ be a positive integer, and let $f(\lambda)$ be a function that&mdash;
 
@@ -860,34 +858,37 @@ Let $r$ be a positive integer, and let $f(\lambda)$ be a function that&mdash;
 
 Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), ..., W_{2^n}(\lambda),...$ be bounded functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).
 
-Suppose that there is $D>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
+Take the following statement:
 
-$$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
+>
+> Suppose that there is $D>0$ such that, for each integer $n\ge 1$ that's a power of 2&mdash;
+>
+> $$\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},$$
+>
+> whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
+>
+> Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
+>
+> Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality&mdash;
+>
+> $$W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^n W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
+>
+> $$\text{or }\sum_{i=0}^n \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},$$
+>
+> holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
+>
+> $C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambda$, or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
 
-whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.
-
-Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, ..., $2^i$, ..., defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that's a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$.
-
-Equivalently (see also Nacu and Peres 2005), there is $C_1>0$ such that the inequality&mdash;
-
-$$W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^n W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}$$
-
-$$\text{or }\sum_{i=0}^n \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},$$
-
-holds true for each integer $n\ge 1$ that's a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2\*_n_, _k_, _n_) random variable equals _i_.
-
-It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.
-
-$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambda$, or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.
+On October 14, 2026, a reader sent me a proof of a [**counterexample**](https://peteroupc.github.io/bernreq.html#A_Conjecture_on_Polynomial_Approximation) to that statement, and the proof suggests that the statement remains false even if the sequence $W_n$ is known to approach $f$ at a rate no faster than a constant times $1/n^s$, where $s$ is less than half of $r$.
 
 > **Notes:**
 >
-> 1. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
-> 2. This conjecture is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:
+> 1. By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the statement correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3\)[^1].
+> 2. The statement given is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:
 >
 >     - $W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or
 >     - $W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)[^1]. [^31]
-> 3. For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.
+> 3. For any $C_1$ that satisfies the statement, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.
 
 ----------
 

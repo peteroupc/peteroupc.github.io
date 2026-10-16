@@ -178,8 +178,7 @@ The following are optional features; the application decides:
 
 This specification for "classic graphics"[^18] in modern games largely reflects the visual limitations of&mdash;
 
-- consumer PCs (personal computers) released before 2000 (see example 1 later in this section),
-- home computers released before 1995,[^19]
+- consumer PCs (personal computers) and other home computers released before 2000 (see example 1 later in this section),[^19]
 - game consoles (handheld and for TVs) released before 2000,
 - arcade machines with similar performance to machines described earlier,[^20]
 - videotex protocols before 1995,[^21]
@@ -310,7 +309,7 @@ This section has notes on this specification, such as how its requirements corre
 
 #### 3-D graphics
 
-- The _PC 99 System Design Guide_ sections 14.27 to 14.34 gives guidelines on 3-D graphics support for PCs to be launched in 1999.[^65]  This challenge recommends the writing of game software with graphics performance as good as hardware meeting such guidelines, except for the screen resolution, frame rate, and double buffering requirements.
+- The _PC 2001 System Design Guide_, _PC 99 System Design Guide_, _PC 98 System Design Guide_, and _PC 97 Hardware Design Guide_ gave guidelines for PC 3-D graphics hardware.[^65]  Of these guides, the _PC 2001 System Design Guide_ reflected the "current state of the industry" in the matter of 3-D graphics hardware for PCs as of 2000.
 - An application may choose to support stencil buffers, bump mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.[^66]
 - This specification allows for:
     - Prerendered graphics, to simulate showing highly detailed imagery.  Examples of video games with prerendered graphics are _Space Quest V_ (1993), _Myst_ (1993), [**_Star Wars: Rebel Assault_**](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/) (1993), _Resident Evil_ (1996), the original _Final Fantasy VII_ on PlayStation (1997), and the arcade games _GP World_ (1984) and _Dragon's Lair_ (1983).
@@ -450,8 +449,8 @@ The following are examples of the kind of statements desired:
     - In _Dr. Dobbs' Journal_, Sep. 1995 ("Of Interest"), it was announced that the Multimedia PC Software Publishers Association released an MPC Level 3 specification.
     - Microsoft Corp., _Hardware Design Guide for Microsoft Windows 95_, Microsoft Press, 1995. ISBN 1-55615-642-1.
     - Microsoft Corp., _PC 97 Hardware Design Guide_, Microsoft Press, 1997. ISBN 1-57231-381-1.
-    - Intel & Microsoft, _PC 98 System Design Guide_, Microsoft Press, 1997. ISBN 1-57231-716-7.
     - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
+    - Intel & Microsoft, _PC 2001 System Design Guide_, 2000.
 - Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).
 - Rodent, H., "Animation in Win32", Microsoft Developer Network, Feb. 1, 1994.
 - Saettler, Matt, "Graphics Design and Optimization", Multimedia Technical Note (Microsoft), 1992.
@@ -588,7 +587,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^18]: Saettler (1992) contains a rich discussion of graphics used in computer games and other audiovisual computer applications up to 1992.  Not mentioned in that document are graphics resembling:<br> (1) Segmented liquid-crystal displays, of the kind found in Nintendo's Game & Watch and many Tiger Electronics handheld games.  These are simple to emulate, though: design a screen-size image that assigns each segment a unique color and, each frame, draw black where the segments that are "on" are, and draw white (or another background) elsewhere on the screen.<br>(2) Vacuum fluorescent displays, notable in user interfaces of some media player applications that resemble a "stereo rack system".
 
-[^19]: Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Sharp X68000, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System.
+[^19]: Home computers include IBM PC compatibles, PC-88 and PC-98 families, ZX-Spectrum, Atari ST family, MSX family, Commodore 64, Amiga family, Commodore PET and VIC-20, BBC Micro, Amstrad CPC, Acorn Archimedes, Tandy TRS-80, Sharp X68000, Apple II, and computers running MS-DOS, Windows (up to Windows 98), Macintosh operating system (Mac OS) up to 9.x, NeXTSTEP, OS/2, or X Window System.  This category includes computers described as "Consumer PCs", "Mobile PCs", and "Entertainment PCs" in the _PC 99 System Design Guide_, chapter 1.
 
 [^20]: The first arcade video game, _Computer Space_, launched in 1971.
 
@@ -680,7 +679,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^64]: Most of the VGA standard's display modes, including the 320 &times; 200 mode, ran at 70 hertz, but the 320 &times; 240 and 640 &times; 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second.
 
-[^65]: The _PC 98 System Design Guide_, chapter 14, items 24 to 30, have largely the same guidelines.  The _PC 97 Hardware Design Guide_, chapter 15, items 24-28 and 30-31, have weaker guidelines.
+[^65]: The _PC 99 System Design Guide_, sections 14.27 to 14.34, has largely the same guidelines as the _PC 98 System Design Guide_, chapter 14, items 24 to 30.  The _PC 97 Hardware Design Guide_, chapter 15, items 24-28 and 30-31, have weaker guidelines.  In the _PC 2001 System Design Guides_, the guidelines for 3-D hardware are in chapter 8, GRPH&ndash;0185 through GRPH&ndash;0189.
 
 [^66]: So is environment mapping, but this feature is simply the generating of texture coordinates in software for a suitably crafted texture image.  See Woo et al. (1997), chap. 9, section "Environment Mapping".
 

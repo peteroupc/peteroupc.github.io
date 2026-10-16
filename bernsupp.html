@@ -1,10 +1,10 @@
-<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-07-30"><meta name="citation_date" content="2026/07/30"><meta name="citation_publication_date" content="2026/07/30"><meta name="citation_online_date" content="2026/07/30"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html  xmlns:dc="http://purl.org/dc/terms/" xmlns:og="http://ogp.me/ns#" ><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.date" content="2026-10-16"><meta name="citation_date" content="2026/10/16"><meta name="citation_publication_date" content="2026/10/16"><meta name="citation_online_date" content="2026/10/16"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="dc.format" content="text/html"><meta name="dc.language" content="en"><meta name="title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="dc.creator" content="Peter Occil"/><meta name="author" content="Peter Occil"/><meta name="citation_author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-07-30.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="supplemental-notes-for-bernoulli-factory-algorithms">Supplemental Notes for Bernoulli Factory Algorithms</h1><p>This version of the document is dated 2026-10-16.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -1156,9 +1156,7 @@
 
 <h4 id="a-conjecture-on-polynomial-approximation">A Conjecture on Polynomial Approximation</h4>
 
-<p>The following conjecture suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
-
-<p><strong>Conjecture.</strong></p>
+<p>The following statement suggests there may be a way to easily adapt other approximating polynomials, besides the ordinary Bernstein polynomials, to the Bernoulli factory problem.</p>
 
 <p>Let $r$ be a positive integer, and let $f(\lambda)$ be a function that—</p>
 
@@ -1170,40 +1168,45 @@
 
 <p>Let $M$ be the maximum of the absolute value of $f$ and its derivatives up to the $r$-th derivative. Let $W_{2^0}(\lambda), W_{2^1}(\lambda), …, W_{2^n}(\lambda),…$ be bounded functions on the closed unit interval that converge uniformly to $f$ (that is, for every tolerance level, all $W_{2^i}$ after some value $i$ are within that tolerance level of $f$ at all points on the closed unit interval).</p>
 
-<p>Suppose that there is $D&gt;0$ such that, for each integer $n\ge 1$ that’s a power of 2—</p>
+<p>Take the following statement:</p>
+
+<blockquote>
+
+  <p>Suppose that there is $D&gt;0$ such that, for each integer $n\ge 1$ that’s a power of 2—</p>
 
 \[\text{abs}(f(\lambda)-B_n(W_n(\lambda))) \le DM/n^{r/2},\]
 
-<p>whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
+  <p>whenever $0\le \lambda\le 1$, where $B_n(W_n(\lambda))$ is the degree-$n$ Bernstein polynomial of $W_n(\lambda)$.</p>
 
-<p>Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, …, $2^i$, …, defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that’s a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it’s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</p>
+  <p>Then there is a number $C_0\ge D$ such that the polynomials $(g_n)$ in Bernstein form of degree 2, 4, 8, …, $2^i$, …, defined as $g_n=B_n(W_n(\lambda)) - C_0 M/n^{r/2}$, converge from below to $f$ with increasing $n$ and have the following property: For each $n$ that’s a power of two, $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it’s rewritten to a polynomial in Bernstein form of degree exactly $2n$.</p>
 
-<p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality—</p>
+  <p>Equivalently (see also Nacu and Peres 2005), there is $C_1&gt;0$ such that the inequality—</p>
 
 \[W_{2n}\left(\frac{k}{2n}\right) + \frac{C_1M}{n^{r/2}} - \sum_{i=0}^n W_n\left(\frac{i}{n}\right)\sigma_{n,k,i}\ge 0,\tag{PB}\]
 
 \[\text{or }\sum_{i=0}^n \left(W_{2n}\left(\frac{k}{2n}\right) - W_n\left(\frac{i}{n}\right)\right)\sigma_{n,k,i}\ge -\frac{C_1M}{n^{r/2}},\]
 
-<p>holds true for each integer $n\ge 1$ that’s a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
+  <p>holds true for each integer $n\ge 1$ that’s a power of 2 and whenever $0\le k\le 2n$.  Here, $\sigma_{n,k,i} = {n\choose i}{n\choose {k-i}}/{2n \choose k}$ is the probability that a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable equals <em>i</em>.</p>
 
-<p>It is further conjectured that the same value of $C_0$ (or $C_1$) suffices when $f$ has a Lipschitz-continuous $(r-1)$-th derivative and $M$ is the maximum of the absolute value of $f$ and the Lipschitz constants of $f$ and its derivatives up to the $(r-1)$-th derivative.</p>
+  <p>$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambda$, or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.</p>
+</blockquote>
 
-<p>$C_0$ or $C_1$ may depend on $r$ and the sequence $W_n$, but not on $f$, $\lambda$, or $n$. When $C_0$ or $C_1$ exists, find a good upper bound for it.</p>
+<p>On October 14, 2026, a reader sent me a proof of a <a href="https://peteroupc.github.io/bernreq.html#A_Conjecture_on_Polynomial_Approximation"><strong>counterexample</strong></a> to that statement, and the proof suggests that the statement remains false even if the sequence $W_n$ is known to approach $f$ at a rate no faster than a constant times $1/n^s$, where $s$ is less than half of $r$.</p>
 
 <blockquote>
   <p><strong>Notes:</strong></p>
 
   <ol>
-    <li>By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the conjecture correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)<sup id="fnref:1:20"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
+    <li>By Lemma 3, $B_n(W_n(f(\lambda)))$ would be close to $f(\lambda)$ by at most $C_0 M/n^{r/2}$.  Properties 2 and 3 in the statement correspond to (iii) and (iv) in Nacu and Peres (2005, Proposition 3)<sup id="fnref:1:20"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</li>
     <li>
-      <p>This conjecture is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:</p>
+      <p>The statement given is true in particular cases.  For example, it is true if $W_n$ converges uniformly to $f$ and, for each $n$ and whenever $\lambda=i/n$ where $0\le i\le n$:</p>
 
       <ul>
         <li>$W_n(\lambda)=c(n)$, where $c(n)$ is a number that depends only on $n$ (in that case, $C_0 = D$), or</li>
         <li>$W_n(\lambda)=f(\lambda)$ and $r$ is 1 or 2 (Nacu and Peres 2005)<sup id="fnref:1:21"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>. <sup id="fnref:31"><a href="#fn:31" class="footnote" rel="footnote" role="doc-noteref">31</a></sup></li>
       </ul>
     </li>
-    <li>For any $C_1$ that satisfies the conjecture, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.</li>
+    <li>For any $C_1$ that satisfies the statement, $C_0$ can be taken as $C_0=\max(D, C_1/(1-1/2^{r/2}))$.  See Theorem 1.</li>
   </ol>
 </blockquote>
 
