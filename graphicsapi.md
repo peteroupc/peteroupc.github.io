@@ -115,16 +115,17 @@ This section gives suggestions for a lean API supporting 3-D graphics. Any imple
 The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) allows the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_graphics):
 
 - Z buffering (depth buffering).
-- Bilinear filtering.
-- Flat shading and Gouraud shading.
-- Perspective correction.
+- Flat shading.
+- Gouraud shading.
 - Per-vertex specular highlighting.
 - Per-vertex depth-based fog.
-- 3-D line drawing.
-- Two-texture blending.
-- Edge antialiasing (smoothing).
-- MIP mapping.
+- 3-D line drawing (by approximating the line at integer coordinates).
 - Alpha compositing.
+- Two-texture blending.
+- MIP mapping of textures.
+- Bilinear filtering of textures.
+- Edge antialiasing (smoothing).
+- Perspective correction (outside the vertices)
 
 These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The _PC 99 System Design Guide_ (1998) sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
 
