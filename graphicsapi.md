@@ -14,7 +14,7 @@ It would be of interest to write a free and open-source graphics engine that imp
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
 - Borland Graphics Interface (BGI), a 2-D graphics API (for example, _Turbo C User's Guide_, chapter 8).
-- Certain game-oriented [**3-D graphics APIs**](https://leikareipa.github.io/blog/wrapping-old-graphics-apis/) from the 1990s, such as 3dfx's Glide, S3's S3d, ATI's CIF, and Matrox Simple Interface.
+- Certain game-oriented [**3-D graphics APIs**](https://leikareipa.github.io/blog/wrapping-old-graphics-apis/) from the 1990s, such as 3dfx's Glide, S3's S3d, ATI's 3D Rage Common Interface, and Matrox Simple Interface.
 
 The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable video games that run with acceptable performance on those computers.
 
