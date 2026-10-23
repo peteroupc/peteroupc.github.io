@@ -236,7 +236,7 @@ One of the following games can be considered an upper limit to what is considere
 
 ### Optional Limits
 
-A game may impose further constraints to [**this specification**](#The_Specification) (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://peteroupc.github.io/classic-wallpaper#Color_Palettes) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.
+A game may impose further constraints to [**this specification**](#The_Specification) (for example, to reduce the maximum number of 3-D triangles, to disallow 3-D graphics, to reduce the number of colors per tile allowed, or to [**reduce to a limited set the colors**](https://peteroupc.github.io/classic-wallpaper/palettes.html) ultimately displayed on screen).  I would be interested in knowing about these limitations that a new game that adopts this document decides to impose.
 
 Examples of optional constraints are the following:
 
