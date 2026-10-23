@@ -67,6 +67,7 @@ In the articles above, I put an emphasis on random variate generation that:
     - [**Tileable wallpapers with limited colors and resolution**](https://peteroupc.github.io/classic-wallpaper).
 * [**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html).
 * [**Traditional User-Interface Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/uielements.html)
+* [**Color Palettes for Classic-Style Graphics Projects**](https://peteroupc.github.io/classic-wallpaper/docs/palettes.html)
 * [**Converting Images to Vector Graphics**](https://peteroupc.github.io/classic-wallpaper/docs/pixeltovector.html)
 
 **Other Articles on Mathematics and Programming**
