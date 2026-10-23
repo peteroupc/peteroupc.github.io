@@ -17,22 +17,19 @@
 <p>Create a tileable desktop wallpaper graphic <sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> meeting the following requirements.</p>
 
 <ul>
-  <li>The graphic is one of the following:
-    <ul>
-      <li>It is an image (also known as a <em>raster image</em>, a rectangular array of pixels) with one of the color palettes and one of the pixel dimensions given later.</li>
-      <li>It is a vector graphic in the Scalable Vector Graphics (SVG) format made only of two-dimensional filled outlines with no stroke.  Excessive detail should be avoided.  Moreover:
-        <ul>
-          <li>Each outline is filled black and either opaque or translucent (semitransparent).  The vector graphic can then be scaled to any pixel dimension desired and turned into a grayscale (see later) image using known techniques (see <a href="https://heropatterns.com/"><strong><em>Hero Patterns</em></strong></a> for an example).  Or…</li>
-          <li>Each outline is opaque and filled with one of up to ten colors from a color palette given later.  See <a href="https://www.colourlovers.com/patterns"><strong><em>colourlovers.com</em></strong></a> for examples.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+  <li>The graphic is an image (also known as a <em>raster image</em>, a rectangular array of pixels) with one of the color palettes and one of the pixel dimensions given later.</li>
   <li>The graphic is preferably abstract, should not employ trademarks, and is suitable for all ages.</li>
   <li>The graphic does not contain text.  Graphics that contain depictions of people or human faces are not preferred.</li>
   <li>The graphic should be uncompressed or compressed without loss (so in PNG or BMP format, for example, rather than JPG format).</li>
   <li>The graphic is in the public domain or licensed under the <a href="https://unlicense.org/"><strong>Unlicense</strong></a> or, less preferably, another open-source license approved by the Open Source Initiative.</li>
   <li>The graphic was not produced by artificial-intelligence tools or with their help.</li>
+</ul>
+
+<p>Instead of being an image, the graphic is allowed to be a vector graphic with two-dimensional filled outlines with no stroke, where—</p>
+
+<ul>
+  <li>each outline is filled black and either opaque or translucent (semitransparent),<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> or</li>
+  <li>each outline is opaque and filled with one of up to ten colors from a color palette given later.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
 </ul>
 
 <p>Also welcome would be computer code (released to the public domain or licensed under the Unlicense) to generate tileable or seamless—</p>
@@ -66,27 +63,27 @@
     </ul>
   </li>
   <li>16-color VGA (Video Graphics Array) palette (light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128).</li>
-  <li>216-color “safety palette” (each color component is a multiple of 51). <sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
+  <li>216-color “safety palette” (each color component is a multiple of 51). <sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></li>
   <li>216-color “safety palette” plus VGA palette.</li>
   <li>A subset of a color palette given earlier, such as:
     <ul>
       <li>The following gray tones: black (0, 0, 0), gray (128, 128, 128), white (255, 255, 255). (Allows for hue shifting to, say, a black-to-red palette.)</li>
       <li>The VGA palette’s four gray tones: black, gray (128, 128, 128), light gray (192, 192, 192), white. (Allows for hue shifting to, say, a black-to-red palette.)</li>
       <li>An 8-color palette where each color component is 0 or 255 (a subset of the 16-color VGA palette).</li>
-      <li>The VGA palette without the color (192, 192, 192).<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
+      <li>The VGA palette without the color (192, 192, 192).<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></li>
     </ul>
   </li>
 </ul>
 
-<p>Any 16-color or 256-color repertoire that was used in a significant volume of application and video-game graphics before the year 2000 is also allowed.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></p>
+<p>Any 16-color or 256-color repertoire that was used in a significant volume of application and video-game graphics before the year 2000 is also allowed.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></p>
 
 <p>Additional color palettes allowed are as follows.</p>
 
 <ul>
   <li>The VGA palette plus the following four colors set by early versions of Windows: (192,220,192), (160,160,164), (255,251,240), (166,202,240).</li>
-  <li>The VGA palette plus each “half-and-half mixture” <sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> of any two colors in the palette, for a total of 98 unique colors (each color component is 0, 64, 128, or 192; or each color component is 0, 128, or 255; or each color component is 96 or 160; or each color component is 96 or 224).</li>
+  <li>The VGA palette plus each “half-and-half mixture” <sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> of any two colors in the palette, for a total of 98 unique colors (each color component is 0, 64, 128, or 192; or each color component is 0, 128, or 255; or each color component is 96 or 160; or each color component is 96 or 224).</li>
   <li>16-color <a href="https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/"><strong>canonical Color/Graphics Adapter (CGA) palette</strong></a> (each color component is 85 or 255; or each color component is 0 or 170, except (170, 85, 0) instead of (170, 170, 0)).</li>
-  <li>The canonical CGA palette plus each “half-and-half mixture” <sup id="fnref:5:1"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> of any two colors in the palette, for a total of 85 unique colors.</li>
+  <li>The canonical CGA palette plus each “half-and-half mixture” <sup id="fnref:5:1"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> of any two colors in the palette, for a total of 85 unique colors.</li>
   <li>One of the following “color-cube” palettes:
     <ul>
       <li>A 27-color palette where each color component is 0, 128, or 255.</li>
@@ -106,7 +103,7 @@
   <li>A 255-color palette in which each color component is a multiple of 3 and each color is as follows: All components are the same; or both the green and blue components are 0; or the red component is 255 and the green and blue components are the same.
     <ul>
       <li>Essentially, the palette is made of two color gradients: one going from black to white, and another going from black to “red” (255,0,0) to white.</li>
-      <li>This palette is proposed to allow for easy “recoloring” of an image based on a so-called <em>accent color</em>: the cases just given deal with a mixture of “black” and “white”; a mixture of “black” (0,0,0) and the accent color; and a mixture of “white” (255,255,255) and the accent color.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>  An example occurs with “red” and “blue” variants of a playing card back.  For examples, see the <code>recolor()</code> and <code>recolordither()</code> methods in <code>desktopwallpaper.py</code>.</li>
+      <li>This palette is proposed to allow for easy “recoloring” of an image based on a so-called <em>accent color</em>: the cases just given deal with a mixture of “black” and “white”; a mixture of “black” (0,0,0) and the accent color; and a mixture of “white” (255,255,255) and the accent color.<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  An example occurs with “red” and “blue” variants of a playing card back.  For examples, see the <code>recolor()</code> and <code>recolordither()</code> methods in <code>desktopwallpaper.py</code>.</li>
     </ul>
   </li>
   <li>A palette just described, except (129, 129, 129) is replaced with (128, 128, 128); (129, 0, 0), with (128, 0, 0); and (255, 129, 129), with (255, 128, 128).</li>
@@ -134,7 +131,7 @@
 
   <ol>
     <li>The <a href="https://github.com/peteroupc/classic-wallpaper/tree/main/palettes"><strong><em>palettes</em> directory</strong></a> of this repository hosts palette files for many of the color combinations described earlier.  The palette files are designed for use in software programs for drawing, especially those devoted to pixel art.</li>
-    <li>The palette can have one or more sequences of colors that smoothly range from one color to another, to aid in achieving gradient fills or other specialized shading techniques in a <em>ramp color model</em>.  For example, a palette can have ten colors (indexed from 0 through 9) that range from black to green, and ten additional colors (indexed from 10 through 19) that range from black to red.<sup id="fnref:6:1"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></li>
+    <li>The palette can have one or more sequences of colors that smoothly range from one color to another, to aid in achieving gradient fills or other specialized shading techniques in a <em>ramp color model</em>.  For example, a palette can have ten colors (indexed from 0 through 9) that range from black to green, and ten additional colors (indexed from 10 through 19) that range from black to red.<sup id="fnref:6:1"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></li>
   </ol>
 </blockquote>
 
@@ -179,7 +176,7 @@
       <td>peteroupc</td>
       <td>Black and white</td>
       <td>64 × 32</td>
-      <td>Unlicense <sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">7</a></sup></td>
+      <td>Unlicense <sup id="fnref:7"><a href="#fn:7" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></td>
     </tr>
     <tr>
       <td>dzigzagcyan.png</td>
@@ -207,7 +204,7 @@
       <td>peteroupc</td>
       <td>Black/gray/white</td>
       <td>32 × 32</td>
-      <td>Unlicense <sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></td>
+      <td>Unlicense <sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></td>
     </tr>
     <tr>
       <td>smallslant.png</td>
@@ -221,7 +218,7 @@
       <td>peteroupc</td>
       <td>VGA palette</td>
       <td>32 × 32</td>
-      <td>Unlicense <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></td>
+      <td>Unlicense <sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></td>
     </tr>
     <tr>
       <td>boxes.png</td>
@@ -298,10 +295,10 @@
 
     <ul>
       <li>A randomized tiling, or <em>stochastic tiling</em>, can be generated from this tile set by repeatedly selecting a grid position and choosing a random tile that can go in that position without introducing seams, until the whole grid is covered.</li>
-      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></li>
+      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">12</a></sup></li>
     </ul>
 
-    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">11</a></sup></p>
+    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:11"><a href="#fn:11" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></p>
   </li>
 </ol>
 
@@ -382,6 +379,12 @@ ifmt.writepng("/tmp/circlews.png", image2, width, height)
   <ol>
     <li id="fn:1">
       <p>Every tileable desktop wallpaper has a pattern that belongs in one of 17 <a href="https://en.wikipedia.org/wiki/Wallpaper_group"><strong><em>wallpaper groups</em></strong></a>.  The shape of the pattern is a rectangle in ten of them, a diamond with one corner pointing upward in two of them, and another parallelogram in the remaining five.  Many tileable wallpapers are <em>seamless</em>, but not all (consider a pattern of bricks or square floor tiles).<br />For the Macintosh operating system, System 7.5.x and Mac OS 7.6.x, 8.x, and 9.x supported <em>desktop patterns</em> of size up to 128 × 128 pixels, Mac OS 8.x and 9.x distinguished between desktop patterns and <em>desktop pictures</em> (of usually larger size and lying above the desktop pattern), and versions earlier than System 7.5 supported only 8-×-8-pixel desktop patterns.<br />In Windows version 3.1, Windows 95, and Windows 98, <em>desktop patterns</em> are of size 8x8 pixels and have only two colors (black and the desktop background color), and <em>desktop wallpaper</em> is of arbitrary size and lies above the desktop pattern. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:12">
+      <p>See <a href="https://heropatterns.com/"><strong><em>Hero Patterns</em></strong></a> for an example. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:13">
+      <p>See <a href="https://www.colourlovers.com/patterns"><strong><em>colourlovers.com</em></strong></a> for examples. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2">
       <p>The “safety palette”, also known as the “Web safe” colors, consists of 216 colors that are uniformly spaced in the red–green–blue color cube.  Robert Hess’s article “<a href="https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10)"><strong>The Safety Palette</strong></a>”, 1996, described the advantage that images that use only colors in this palette won’t dither when displayed by Web browsers on displays that can show up to 256 colors at once. (See also <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>Wikipedia</strong></a>. Dithering is the scattering of colors in a limited set to simulate colors outside that set.)  When the “safety palette” forms part of a 256-color repertoire, as it usually does, 40 slots are left that can be filled with additional colors, and as Hess mentions, graphics designers have no control over what these additional colors are. Usually these additional colors include the four Windows-specific colors plus the eight VGA palette colors not already in the “safety palette”.  For Java’s <code>BufferedImage.TYPE_BYTE_INDEXED</code>, these 40 colors are gray tones not already in the “safety palette”. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
