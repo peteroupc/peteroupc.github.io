@@ -64,21 +64,18 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 
 Limit 3-D graphics to the following:[^3]
 
-1. The maximum number of primitives that can be shown at a time is equal to screen width times screen height divided by 24.[^4]
+1. The number of _primitives_ that can be shown at a time ("per frame"\)[^4] is limited (see later in this specification). The number of _vertices_ that can be shown at a time is 3 times the maximum number of primitives.
     * A _primitive_ is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.
+    * A _vertex_ (plural: _vertices_) has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a _vertex color_ of a format given later.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
     * Each vertex of the primitive points to a vertex from the vertex list described later.
-    * Each primitive can be translucent.
 
-2. The maximum number of vertices that can be displayed at a time (or rendered per second) is 3 times the maximum number of primitives.
-    * A _vertex_ has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a _vertex color_ of a format given later.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
-
-3. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
-    * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given earlier, or
+2. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
+    * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given later in this specification, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 
-4. The width and height of each texture are each powers of 2.
-5. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-6. For 3-D graphics, any number of the following features are supported:[^6]
+3. The width and height of each texture are each powers of 2.
+4. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
+5. For 3-D graphics, any number of the following features are supported:[^6]
 
     - Z buffering (depth buffering).
     - Flat shading.
@@ -93,7 +90,7 @@ Limit 3-D graphics to the following:[^3]
     - Perspective correction (outside the vertices)[^8].
     - Alpha blending.[^9]
 
-7. Only the following color formats are supported for vertex colors:
+6. Only the following color formats are supported for vertex colors:
     * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
     * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent (semitransparent) pixels.
     * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
@@ -127,9 +124,9 @@ The following are decided by the application:
 1. The **"screen resolution"**: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (that is, no more pixels than a 640-&times;-480 screen, or a screen with 640 pixels horizontally and 480 vertically).[^14]
 2. If 3-D is supported:
 
-    1. The maximum number of primitives shown simultaneously ("per frame"\)[^4].  This number is no more than screen width times screen height divided by 24.
+    1. The maximum number of primitives shown simultaneously ("per frame"\)[^4].  This number is no more than screen width times screen height divided by 24. (Thus, the number of vertices per frame is no more than screen width times screen height divided by 8.)
     2. Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
-    3. Which 3-D features are supported, as given in point 6 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
+    3. Which 3-D features are supported, as given in point 5 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
     4. The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
     5. Whether translucent pixels, transparent pixels, or both are supported in vertices and textures.
 
@@ -185,6 +182,7 @@ The following are optional features; the application decides:
 >
 > 1. For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending) might not be typical.
 > 2. The use by the game of graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code is highly encouraged for this challenge.
+> 3. As given later in this document, a default screen resolution of 800 &times; 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But these limits (together with a target rate of 60 frames per second) can still serve as a "stress test" for any software renderer seeking to implement this specification.
 
 <a id=Classic_Graphics_in_Scope></a>
 
@@ -245,13 +243,14 @@ Examples of optional constraints are the following:
     - In the 8-bit-per-component color format, this palette's colors are: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128.
     - In the vertex color format, the closest colors to this palette are: 24/24/24; or each color component is 0 or 16; or each color component is 0 or 31.
 - The game displays no more than 256 colors at a time.[^26]
+- The game is limited to a fixed set of 236 colors plus black and white.
 - The game is limited to a fixed set of 256 colors, of which one is black and another is white.
 - Drawing graphics with translucency (semitransparency) is not supported.
 - All game files can be packaged in a ZIP file or Win32 program file that takes no more than&mdash;
     - 1,457,664 bytes (the capacity of a [**file-allocation-table (FAT) formatted high-density 3.5-inch floppy disk**](https://fitsonafloppy.com/)\),[^27] or
-    - 1,213,952 bytes (the capacity of a FAT formatted high-density 5.25-inch floppy disk), or
-    - 730,112 bytes (the capacity of a FAT formatted normal-density 3.5-inch floppy disk), or
-    - 362,496 bytes (the capacity of a FAT formatted double-density 5.25-inch floppy disk), or
+    - 1,213,952 bytes (the capacity of a FAT formatted high-density 5.25-inch floppy disk),[^27] or
+    - 730,112 bytes (the capacity of a FAT formatted normal-density 3.5-inch floppy disk),[^27] or
+    - 362,496 bytes (the capacity of a FAT formatted double-density 5.25-inch floppy disk),[^27] or
     - 65,536 bytes,[^28] or
     - 681 million bytes (slightly less than the maximum total size of files in a formatted CD-ROM).[^29]
 - The game uses no more than 16 million bytes of system memory at a time.
@@ -291,7 +290,7 @@ This section has notes on this specification, such as how its requirements corre
 
     This is not a complete list.  Some game consoles, such as the Nintendo 64, allowed games to alter the screen resolution during gameplay.  [**Arcade game graphics**](#Graphics_in_arcade_video_games) are described later.
 
-- As of early 1997, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^62]
+- As of November 1996, "[s]urveys indicate[d] that the great majority of [PC] users operate[d] in 640[ &times; ]480 resolution with 256 colors".[^62]
 
 - A game can support&mdash;
 
@@ -324,18 +323,18 @@ This section has notes on this specification, such as how its requirements corre
 #### 3-D graphics
 
 - The _PC 2001 System Design Guide_, _PC 99 System Design Guide_, _PC 98 System Design Guide_, and _PC 97 Hardware Design Guide_ gave guidelines for PC 3-D graphics hardware.[^67]  Of these guides, the _PC 2001 System Design Guide_ reflected the "current state of the industry" for such hardware as of 2000. (By contrast, neither the PC 95 Guide nor its supplement has requirements for 3-D hardware acceleration.)
-- An application may choose to support stencil buffers, bump mapping, and three- or four-texture blending, but these are borderline pre-2000 graphics capabilities.[^68]
 - This specification allows for:
     - Prerendered graphics, to simulate showing highly detailed imagery.  The following are examples:
         - _Space Quest V_ (1993).
         - _Myst_ (1993).
         - [**_Star Wars: Rebel Assault_**](https://www.retro-gamers.it/en/features/star-wars-rebel-assault-cd-rom-spectacle/) (1993).
-        - _Resident Evil_ for PlayStation (1996) employed prerendered backgrounds largely due to technical limitations[^69].
+        - _Resident Evil_ for PlayStation (1996) employed prerendered backgrounds largely due to technical limitations[^68].
         - The original _Final Fantasy VII_ on PlayStation (1997) features prerendered video backgrounds for some of its playable scenes.
         - The arcade games _GP World_ (1984) and _Dragon's Lair_ (1983) depict their action in the form of full-motion video.
         - _Doom_ (1993) and _Duke Nukem 3D_ (1996) have 2-D sprites based on real or digital 3-D models.
         - [**_Total Annihilation_**](https://mavorsrants.blogspot.com/2012/04/total-annihilation-graphics-engine.html) (1997) includes 3-D models, but renders them in advance and caches the resulting images to 2-D sprites.
-    - Drawing a 3-D graphic as a _voxel model_ \(formed from point samples in 3-D, rather than 2-D, called _voxels_\)[^70], as long as the model is rendered in software.  But drawing voxel models as polygon meshes is subject to the limits on the number of primitives and vertices.
+    - Drawing a 3-D graphic as a _voxel model_ \(formed from point samples in 3-D, rather than 2-D, called _voxels_\)[^69], as long as the model is rendered in software.  But drawing voxel models as polygon meshes is subject to the limits on the number of primitives and vertices.
+- Stencil buffers[^90], bump mapping, and three- or four-texture blending are considered borderline pre-2000 graphics capabilities.[^70]  Supporting these features is optional.
 - The following are not within the spirit of this challenge:
     - Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions.[^22]  Moreover, a rate of much more than 20,000 triangles per frame is poorly suited for rendering in software.
     - Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include:
@@ -697,23 +696,23 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^61]: Minimum resolution for "handheld PCs" (_Windows CE Programmer's Guide_, MSDN Library, June 1998).
 
-[^62]: S. Pruitt, "Frequently Asked Questions About HTML Coding for Internet Explorer 3.0", updated Jan. 30, 1997.
+[^62]: S. Pruitt, "Frequently Asked Questions About HTML Coding for Internet Explorer 3.0", version of Nov. 14, 1996.
 
 [^63]: Fabien Sanglard, [**_Game Engine Black Book: Doom_**](https://fabiensanglard.net/gebb/).
 
 [^64]: "NTSC" stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A. "PAL" stands for phase alternating line.   For information on NTSC- and PAL-compatible video, see _Conventional Television Systems_ (listed in the "Further Reading" section of this article).
 
-[^65]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, as acknowledged in the PC 95 Guide, chapter 3, and as recommended in "AVI Video Authoring Tips"; see "Further Reading" in this document).  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
+[^65]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, as recommended in "AVI Video Authoring Tips"; see also the PC 95 Guide, chapter 3; see "Further Reading" in this document).  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
 
 [^66]: Most of the VGA standard's display modes, including the 320 &times; 200 mode, ran at 70 hertz, but the 320 &times; 240 and 640 &times; 480 modes ran at 60 hertz instead.  However, even video games with VGA video tended not to target 70 frames per second.
 
 [^67]: The _PC 99 System Design Guide_, sections 14.27 to 14.34, has largely the same guidelines as the _PC 98 System Design Guide_, chapter 14, items 24 to 30.  The _PC 97 Hardware Design Guide_, chapter 15, items 24-28 and 30-31, have weaker guidelines.  In the _PC 2001 System Design Guides_, the guidelines for 3-D hardware are in chapter 8, GRPH&ndash;0185 through GRPH&ndash;0189.
 
-[^68]: So is environment mapping, but this feature is simply the generating of texture coordinates in software for a suitably crafted texture image.  See Woo et al. (1997), chap. 9, section "Environment Mapping".
+[^68]: Jonti Davies, "The Making of Resident Evil", in _Retro Gamer Collection_ volume 4 (2010).
 
-[^69]: Jonti Davies, "The Making of Resident Evil", in _Retro Gamer Collection_ volume 4 (2010).
+[^69]: Examples include Amanatides and Woo (1987), chapter 16 of Lamothe (1995), chapter 7 of Anderson (1995), and the [**voxel space**](https://github.com/s-macke/VoxelSpace) algorithm for terrain rendering in U.S. Patent 6020893A, now expired, and used in _Comanche: Maximum Overkill_ (1992). Voxel models can also be found in certain games made with Ken Silverman's Build engine, such as _Blood_ (1997).
 
-[^70]: Examples include Amanatides and Woo (1987), chapter 16 of Lamothe (1995), chapter 7 of Anderson (1995), and the [**voxel space**](https://github.com/s-macke/VoxelSpace) algorithm for terrain rendering in U.S. Patent 6020893A, now expired, and used in _Comanche: Maximum Overkill_ (1992). Voxel models can also be found in certain games made with Ken Silverman's Build engine, such as _Blood_ (1997).
+[^70]: So is environment mapping, but this feature is simply the generating of texture coordinates in software for a suitably crafted texture image.  See Woo et al. (1997), chap. 9, section "Environment Mapping".
 
 [^71]: Fabien Sanglard, [**_Game Engine Black Book: Wolfenstein 3D_**](https://fabiensanglard.net/gebb/); Lampton, C., _Gardens of Imagination: Programming 3D Maze Games in C/C++_, Waite Group Press, 1994, ISBN  1-878739-59-X.
 
@@ -752,3 +751,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^88]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^89]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^90]: John Carmack of _Quake_ fame was not aware of applications that used stencil buffers as of Sep 8, 1998 (.plan).
