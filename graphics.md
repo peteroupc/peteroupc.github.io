@@ -68,15 +68,12 @@ Limit 3-D graphics to the following:[^3]
     * A _primitive_ is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.
     * A _vertex_ (plural: _vertices_) has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a _vertex color_ of a format given later.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
     * Each vertex of the primitive points to a vertex from the vertex list described later.
-
 2. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given later in this specification, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
-
 3. The width and height of each texture are each powers of 2.
 4. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 5. For 3-D graphics, any number of the following features are supported:[^6]
-
     - Z buffering (depth buffering).
     - Flat shading.
     - Gouraud shading.
@@ -89,7 +86,6 @@ Limit 3-D graphics to the following:[^3]
     - Edge antialiasing (smoothing)[^7].
     - Perspective correction (outside the vertices)[^8].
     - Alpha blending.[^9]
-
 6. Only the following color formats are supported for vertex colors:
     * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
     * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent (semitransparent) pixels.
