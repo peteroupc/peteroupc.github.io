@@ -77,7 +77,7 @@ For example, Borland Graphics Interface supports raster and vector fonts (called
 
 In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^8]
 
-Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^9]  Moreover, the conversion of text to glyphs and the positioning of such glyphs is often nontrivial.  If text rendering is supported, glyph smoothing is optional.
+Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^9]  Moreover, the conversion of text to glyphs and the positioning of such glyphs are often nontrivial.  If text rendering is supported, glyph smoothing is optional.
 
 <a id=Possible_Additions></a>
 

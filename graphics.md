@@ -374,7 +374,7 @@ Outside the scope of this challenge are effects that&mdash;
 - [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display,[^77] or
 - simulate the interlaced video display of certain TV screens, especially NTSC- and PAL-compatible ones.
 
-This specification assumes those effects are not in place.  A game can have those effects if it wishes, but they should be in-game settings.
+This specification assumes those effects are not in place.  A game is allowed to have those effects, but applying them by default is not within the spirit of this specification.
 
 <a id=Sounds></a>
 
@@ -545,11 +545,15 @@ Develop a guide for creating 3-D models for use in modern video games that follo
 Write a free and open-source tutorial on game graphics programming using the pre-2000 graphic style emphasized in the [**specification**](https://peteroupc.github.io/graphics.html#Graphics_Challenge_for_Classic_Style_Games) given earlier, with the following features:
 
 1. The tutorial is book-length, printable, and programming-language neutral.
-2. The tutorial should cover all 2-D and 3-D concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and features for 3-D graphics. Coverage of graphics programming with a limited-color frame buffer (such as 16 colors or 256 colors) is recommended.
+2. The tutorial should cover all 2-D and 3-D concepts needed to exploit the specification fully, such as the concepts of tiles, sprites, 2-D layers, textures, 3-D triangles, and features for 3-D graphics.
 3. The tutorial explains math concepts to readers as necessary, without assuming prior knowledge of math higher than basic algebra.
 4. The tutorial should include checks for understanding, guided practice, and independent practice exercises.  The tutorial may also include review (retrieval practice) of past concepts.
 5. The tutorial does not require the use of hardware acceleration, OpenGL, or Direct3D in the practice exercises.  (See definition of "rendered in software" in the specification.)
-6. As a strong recommendation, the guided and independent practice can lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
+
+The following are recommended:
+
+- Graphics programming with a limited-color frame buffer (such as 16 colors or 256 colors) should be included.
+- The guided and independent practice should lead to readers writing a feature-rich software renderer that implements the pre-2000 graphics specification without third-party software libraries.
 
 Similar tutorials are [**_Computer Graphics from Scratch_**](https://gabrielgambetta.com/computer-graphics-from-scratch/) by Gabriel Gambetta and the [**tiny-renderer tutorial**](https://haqr.eu/tinyrenderer/) by Dmitry Sokolov, although they are not always geared toward the visuals in pre-2000 video games.  For example, Gambetta covers ray tracing (which is outside this specification's scope) but not sprites or other 2-D concepts.
 
