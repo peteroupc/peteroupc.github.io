@@ -39,6 +39,7 @@
           <li><a href="#Screen_image_effects_filters"><strong>Screen image effects (filters)</strong></a></li>
           <li><a href="#Sounds"><strong>Sounds</strong></a></li>
           <li><a href="#Memory"><strong>Memory</strong></a></li>
+          <li><a href="#Miscellaneous"><strong>Miscellaneous</strong></a></li>
         </ul>
       </li>
       <li><a href="#Seeking_Comments"><strong>Seeking Comments</strong></a></li>
@@ -100,7 +101,6 @@
     </ul>
   </li>
   <li>The width and height of each texture are each powers of 2.</li>
-  <li>Image files used by the game should not store “pre-pixelated” textures.  A “pre-pixelated” image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
   <li>For 3-D graphics, any number of the following features are supported:<sup id="fnref:6"><a href="#fn:6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>
     <ul>
       <li>Z buffering (depth buffering).</li>
@@ -152,7 +152,6 @@
       <li>The upper-left corner of a sprite can be placed anywhere relative to the game screen and even outside it.</li>
     </ol>
   </li>
-  <li>Image files used by the game should not store “pre-pixelated” sprites or tiles.</li>
   <li>The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.<sup id="fnref:12"><a href="#fn:12" class="footnote" rel="footnote" role="doc-noteref">12</a></sup> Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing them with translucency is also not supported.</li>
 </ol>
 
@@ -160,7 +159,7 @@
 
 <ul>
   <li><strong>Rendering in software:</strong> The game includes a mode in which the graphics are <em>rendered in software</em>.  This means that their rendering does not rely on a video card or graphics accelerator, whether directly or indirectly (such as through GDI, OpenGL, or Direct3D), with the sole exception of sending a finished game screen image to the player’s display (such as through GDI’s <code>StretchDIBits</code> or copying to video memory).  (Implementing a subset of <a href="https://registry.khronos.org/OpenGL/index_es.php"><strong>OpenGL ES</strong></a> 1.1 or <a href="https://registry.khronos.org/OpenGL/index_gl.php"><strong>OpenGL</strong></a> 1.1 in software without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).</li>
-  <li><strong>Music:</strong> Music is in the Standard MIDI File (SMF) format only. The General MIDI System level 1 should be followed for such files.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
+  <li><strong>Music:</strong> Music is in the Standard MIDI File (SMF) format only.<sup id="fnref:13"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
 </ul>
 
 <p>The following are decided by the application:</p>
@@ -171,7 +170,7 @@
     <p>If 3-D is supported:</p>
 
     <ol>
-      <li>The maximum number of primitives shown simultaneously (“per frame”)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.  This number is no more than screen width times screen height divided by 24. (Thus, the number of vertices per frame is no more than screen width times screen height divided by 8.)</li>
+      <li>The maximum number of primitives shown simultaneously (“per frame”)<sup id="fnref:4:1"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>.  This number is no more than screen width times screen height divided by 24. (Thus, the number of vertices per frame is no more than screen width times screen height divided by 8.  See examples later in this specification.)</li>
       <li>Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.</li>
       <li>Which 3-D features are supported, as given in point 5 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)</li>
       <li>The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.</li>
@@ -206,6 +205,23 @@
 <p> </p>
 
 <blockquote>
+
+  <p><strong>Notes:</strong></p>
+
+  <ol>
+    <li>
+      <p>The following are highly encouraged for this challenge:</p>
+
+      <ol>
+        <li>Image files used by the game should not store “pre-pixelated” textures, sprites, or tiles.  A “pre-pixelated” image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image’s rows and columns are repeated.</li>
+        <li>The game should use graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code.</li>
+        <li>The General MIDI System level 1 should be followed for the game’s music files.<sup id="fnref:13:1"><a href="#fn:13" class="footnote" rel="footnote" role="doc-noteref">13</a></sup></li>
+      </ol>
+    </li>
+    <li>For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending or alpha blending) might not be typical.</li>
+    <li>As given later in this document, a default screen resolution of 800 × 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But these limits (together with a target rate of 60 frames per second) can still serve as a “stress test” for any software renderer seeking to implement this specification.</li>
+  </ol>
+
   <p><strong>Examples:</strong></p>
 
   <ol>
@@ -309,14 +325,6 @@
     <li>
       <p>One way to implement the 2-D limits is: Screen resolution 640 × 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 × 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.</p>
     </li>
-  </ol>
-
-  <p><strong>Notes:</strong></p>
-
-  <ol>
-    <li>For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending) might not be typical.</li>
-    <li>The use by the game of graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code is highly encouraged for this challenge.</li>
-    <li>As given later in this document, a default screen resolution of 800 × 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But these limits (together with a target rate of 60 frames per second) can still serve as a “stress test” for any software renderer seeking to implement this specification.</li>
   </ol>
 </blockquote>
 
@@ -605,6 +613,14 @@
   </li>
 </ul>
 
+<p><a id="Miscellaneous"></a></p>
+
+<h4 id="miscellaneous">Miscellaneous</h4>
+
+<ul>
+  <li>Support for high-dynamic-range or wide-color-gamut content is beyond the scope of this challenge.</li>
+</ul>
+
 <p><a id="Seeking_Comments"></a></p>
 
 <h3 id="seeking-comments">Seeking Comments</h3>
@@ -858,7 +874,7 @@
       <p>This drawing can be done in many ways: for example, by designating pixels with a given label, say, 0, as transparent (in a process also known as <em>chroma keying</em>), or designating pixels that are the same as the upper-left pixel as transparent [Rodent 1994], or preparing a two-color mask identifying the pixels to be drawn [Gery 1992]. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:13">
-      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:13:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:14">
       <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels) (but even so this resolution was <a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742">“up from 640[ × ]360”</a>).<br /><br />In the Godot engine, the screen resolution corresponds to the “Viewport Width” (<code>window/size/viewport_width</code>) and “Viewport Height” (<code>window/size/viewport_height</code>) project settings, along with <code>window/stretch/mode=viewport</code> and <code>window/stretch/scale_mode=integer</code>.  For the Unity engine, there is advice from 2019 relating to the visual style in <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games"><strong>“8-bit”</strong></a> and <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games"><strong>“16-bit”</strong></a> game consoles.  In Unreal Engine, the screen resolution apparently corresponds to <code>ResolutionSizeX</code> and <code>ResolutionSizeY</code>.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

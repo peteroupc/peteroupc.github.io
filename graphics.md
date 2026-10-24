@@ -28,6 +28,7 @@ All may interest 1990s computer users.
         - [**Screen image effects (filters)**](#Screen_image_effects_filters)
         - [**Sounds**](#Sounds)
         - [**Memory**](#Memory)
+        - [**Miscellaneous**](#Miscellaneous)
     - [**Seeking Comments**](#Seeking_Comments)
     - [**Further Reading**](#Further_Reading)
 - [**Building a Public-Domain music synthesis library and instrument banks**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks)
@@ -72,8 +73,7 @@ Limit 3-D graphics to the following:[^3]
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given later in this specification, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 3. The width and height of each texture are each powers of 2.
-4. Image files used by the game should not store "pre-pixelated" textures.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
-5. For 3-D graphics, any number of the following features are supported:[^6]
+4. For 3-D graphics, any number of the following features are supported:[^6]
     - Z buffering (depth buffering).
     - Flat shading.
     - Gouraud shading.
@@ -86,7 +86,7 @@ Limit 3-D graphics to the following:[^3]
     - Edge antialiasing (smoothing)[^7].
     - Perspective correction (outside the vertices)[^8].
     - Alpha blending.[^9]
-6. Only the following color formats are supported for vertex colors:
+5. Only the following color formats are supported for vertex colors:
     * The red, green, and blue components occupy up to 5 bits each. No transparent or translucent pixels.
     * The red and blue components occupy 5 bits each and the green component occupies 6 bits. No transparent or translucent (semitransparent) pixels.
     * The red, green, and blue components occupy up to 5 bits each. A 1-bit alpha component marks transparent pixels.  No translucent pixels.
@@ -107,20 +107,19 @@ Limit 2-D graphics to the following\:[^10]
     1. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier.
     2. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
     3. The upper-left corner of a sprite can be placed anywhere relative to the game screen and even outside it.
-4. Image files used by the game should not store "pre-pixelated" sprites or tiles.
-5. The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.[^12] Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing them with translucency is also not supported.
+4. The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.[^12] Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing them with translucency is also not supported.
 
 Other requirements:
 
 - **Rendering in software:** The game includes a mode in which the graphics are _rendered in software_.  This means that their rendering does not rely on a video card or graphics accelerator, whether directly or indirectly (such as through GDI, OpenGL, or Direct3D), with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 in software without relying on a video card or graphics accelerator is allowed.)  The game can optionally support hardware acceleration of graphics as well (and can even use such acceleration by default when the game detects its availability).
-- **Music:** Music is in the Standard MIDI File (SMF) format only. The General MIDI System level 1 should be followed for such files.[^13]
+- **Music:** Music is in the Standard MIDI File (SMF) format only.[^13]
 
 The following are decided by the application:
 
 1. The **"screen resolution"**: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (that is, no more pixels than a 640-&times;-480 screen, or a screen with 640 pixels horizontally and 480 vertically).[^14]
 2. If 3-D is supported:
 
-    1. The maximum number of primitives shown simultaneously ("per frame"\)[^4].  This number is no more than screen width times screen height divided by 24. (Thus, the number of vertices per frame is no more than screen width times screen height divided by 8.)
+    1. The maximum number of primitives shown simultaneously ("per frame"\)[^4].  This number is no more than screen width times screen height divided by 24. (Thus, the number of vertices per frame is no more than screen width times screen height divided by 8.  See examples later in this specification.)
     2. Whether convex quadrilaterals (in addition to triangles and line segments) are 3-D primitives for purposes of the primitive limits.
     3. Which 3-D features are supported, as given in point 5 of the 3-D graphics section (for example, Gouraud shading, perspective correction, line drawing).  (This can also be expressed as a subset of OpenGL 1.1 or OpenGL ES 1.1 that the application implements.)
     4. The maximum width and height of a texture in pixels.  Each is no more than 256 and no more than the larger of the screen width and the screen height.
@@ -146,6 +145,18 @@ The following are optional features; the application decides:
 
 &nbsp;
 
+>
+> **Notes:**
+>
+> 1. The following are highly encouraged for this challenge:
+>
+>     1. Image files used by the game should not store "pre-pixelated" textures, sprites, or tiles.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
+>     2. The game should use graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code.
+>     3. The General MIDI System level 1 should be followed for the game's music files.[^13]
+>
+> 2. For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending or alpha blending) might not be typical.
+> 3. As given later in this document, a default screen resolution of 800 &times; 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But these limits (together with a target rate of 60 frames per second) can still serve as a "stress test" for any software renderer seeking to implement this specification.
+>
 > **Examples:**
 >
 > 1. The following limits apply for various game screen resolutions.  An application can decide on lower limits than the ones shown.
@@ -173,12 +184,6 @@ The following are optional features; the application decides:
 >     - No translucent or transparent pixels.
 >
 > 4. One way to implement the 2-D limits is: Screen resolution 640 &times; 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 &times; 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.
->
-> **Notes:**
->
-> 1. For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending) might not be typical.
-> 2. The use by the game of graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code is highly encouraged for this challenge.
-> 3. As given later in this document, a default screen resolution of 800 &times; 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But these limits (together with a target rate of 60 frames per second) can still serve as a "stress test" for any software renderer seeking to implement this specification.
 
 <a id=Classic_Graphics_in_Scope></a>
 
@@ -388,6 +393,12 @@ This specification assumes those effects are not in place.  A game can have thos
     - 1994: 4MB to 8 MB, with more expensive PCs having 16 MB.[^82]
     - 1997: 8MB to 32MB.[^83]
     - 1998: 32MB to 128MB.[^84]
+
+<a id=Miscellaneous></a>
+
+#### Miscellaneous
+
+- Support for high-dynamic-range or wide-color-gamut content is beyond the scope of this challenge.
 
 <a id=Seeking_Comments></a>
 
