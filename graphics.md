@@ -102,12 +102,12 @@ Limit 2-D graphics to the following\:[^10]
 2. Tiles. A _tile_ is a small rectangular array of pixels.
     1. Tiles share width in pixels, height in pixels, and number of bits per pixel.
     2. If tiles have fewer than 8 bits per pixel, each tile uses one of 16 color tables.  If tiles have 8 bits per pixel, they use the same 256-color table.
-    3. Each color in each color table used by tiles is of the vertex color format given earlier.
+    3. Each color in each color table used by tiles is of a vertex color format given earlier.
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
     1. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier.
     2. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
     3. The upper-left corner of a sprite can be placed anywhere relative to the game screen and even outside it.
-4. The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.[^12] Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing them with translucency is also not supported.
+4. The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.[^12] Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing sprites and tiles with translucency is also not supported.
 
 Other requirements:
 
@@ -129,7 +129,7 @@ The following are decided by the application:
 
     1. The number of 2-D layers (up to four).
     2. The number of bits per pixel that tiles have: 1, 2, 4, or 8.
-    3. The width and height of each tile, in pixels. The width must be 32 or less, and the height must be 32 or less.[^15]
+    3. The width and height of each tile, in pixels. The width is no more than 32, and the height is no more than 32.[^15]
     4. The maximum width and maximum height of a sprite in pixels. Each is no more than the following: Take the larger of the screen width and screen height, then divide by 4, then round up to the nearest power of 2.
     5. The maximum number of sprites displayed at a time on the game screen, no more than (screen width &times; screen height) / 256, rounded up.[^16]
     6. Whether sprites made of tiles, sprites made of pixels, or both are supported.
@@ -148,7 +148,7 @@ The following are optional features; the application decides:
 >
 > **Notes:**
 >
-> 1. The following are highly encouraged for this challenge:
+> 1. The following are recommended for this challenge:
 >
 >     1. Image files used by the game should not store "pre-pixelated" textures, sprites, or tiles.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 >     2. The game should use graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code.
@@ -374,7 +374,7 @@ Outside the scope of this challenge are effects that&mdash;
 - [**scale**](https://www.pcgamingwiki.com/wiki/Glossary:Scaling) the game screen to fit the height or width of the player's display,[^77] or
 - simulate the interlaced video display of certain TV screens, especially NTSC- and PAL-compatible ones.
 
-This specification assumes those effects are not in place.  A game is allowed to have those effects, but applying them by default is not within the spirit of this specification.
+This specification assumes those effects are not in place.  A game is allowed to have those effects, but applying them by default is not within the spirit of this specification (with the exception of magnifying the game screen image using point filtering).
 
 <a id=Sounds></a>
 
@@ -462,7 +462,7 @@ The following are examples of the kind of statements desired:
 - Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
 - Apple Computer Inc., "[**Building a 3D application that calls RAVE**](https://developer.apple.com/library/archive/technotes/tn/tn1125.html)", Technical Note TN1125, May 4, 1998.
 - Anderson, G (ed.), _More Tricks of the Game Programming Gurus_, Sams, 1995. ISBN 0-672-30697-2.
-- CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, "Videotex/Teletext Presentation Level Protocol Syntax", also known as the North American Presentation-Level-Protocol Syntax.
+- CSA T500-1983/ANSI X3.110-1983/FIPS PUB 121, "Videotex/Teletext Presentation Level Protocol Syntax", also known as the North American Presentation-Level-Protocol Syntax.  For an overview of this syntax, see the series of articles titled "NAPLPS: A New Standard for Text and Graphics" in _BYTE_, February 1983, March 1983, April 1983, and May 1983.
 - Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.
 - Houston, B., "Rendering Real-Time 3D Before GPUs", Jul. 17, 2026. [**https://ben3d.ca/blog/rendering-real-time-3d-before-gpus**](https://ben3d.ca/blog/rendering-real-time-3d-before-gpus)
 - International Telecommunication Union, _Conventional Television Systems_, ITU-R BT.470-6, 1998.
@@ -625,7 +625,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^20]: The first arcade video game, _Computer Space_, launched in 1971.
 
-[^21]: Videotex is a communication system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
+[^21]: Videotex is an information exchange system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
 [^22]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_,  _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)".
 
@@ -737,7 +737,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^76]: CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s.  This category includes effects that simulate the physical process of showing digital images on such displays, starting with the digital-to-analog conversion.
 
-[^77]: Effects to scale the game screen include so-called "pixel-art scaling algorithms" such as `HQX` and `2xSaI`, as well as bilinear or point filtering.<br>Effects to scale the game screen do not include the decoding of small videos to fit the _game screen_, as opposed to the player's display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen "on the fly", in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 &times; 200. (See, for instance, Nigel Thompson, "[**Stretching 256-Color Images Using Interpolation**](https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10))", Microsoft Developer Network, March 7, 1995.)
+[^77]: Effects to scale the game screen include so-called "pixel-art scaling algorithms" such as `HQX` and `2xSaI`, as well as bilinear, Lanczos, or point filtering.<br>Effects to scale the game screen do not include the decoding of small videos to fit the _game screen_, as opposed to the player's display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen "on the fly", in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 &times; 200. (See, for instance, Nigel Thompson, "[**Stretching 256-Color Images Using Interpolation**](https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10))", Microsoft Developer Network, March 7, 1995.)
 
 [^78]: Sound today is most commonly digitized by pulse-code modulation (PCM), and PCM-digitized sound is often stored in computer files ending in ".WAV".
 
