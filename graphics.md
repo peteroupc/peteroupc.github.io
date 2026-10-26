@@ -627,7 +627,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^21]: Videotex is an information exchange system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
-[^22]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_,  _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)".
+[^22]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_ (1997), _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)". (_Test Drive Le Mans_, likewise claimed to have a high polygon count, came out in 2000 and is thus outside this specification's scope.)
 
 [^23]: Versions 1.3 and later of OpenGL came after 2000.
 
@@ -735,7 +735,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^75]: _Edge_, April 1994, p. 16-17.
 
-[^76]: CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s.  This category includes effects that simulate the physical process of showing digital images on such displays, starting with the digital-to-analog conversion.
+[^76]: CRT displays, or cathode-ray-tube displays, were the typical kind of computer monitors and TVs in the 1980s and 1990s.  This category includes effects that simulate the physical process of showing digital images on such displays, starting with the digital-to-analog conversion, and it also includes effects that modify the game screen's colors to resemble those of a particular CRT display (for example, a black-and-white or desaturated TV screen).
 
 [^77]: Effects to scale the game screen include so-called "pixel-art scaling algorithms" such as `HQX` and `2xSaI`, as well as bilinear, Lanczos, or point filtering.<br>Effects to scale the game screen do not include the decoding of small videos to fit the _game screen_, as opposed to the player's display.  It was common for 1990s games to have videos smaller than the game screen and to scale those videos to fit the game screen "on the fly", in the process of displaying them.  For example, such a game could decode videos of size 160x100 to fit a game screen of 320 &times; 200. (See, for instance, Nigel Thompson, "[**Stretching 256-Color Images Using Interpolation**](https://learn.microsoft.com/en-us/previous-versions/ms969922(v=msdn.10))", Microsoft Developer Network, March 7, 1995.)
 
