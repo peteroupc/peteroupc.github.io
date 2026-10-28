@@ -43,7 +43,7 @@ A leaner API could provide for the following instead:
 
 - Getting and setting pixel values of an image.
 - Filling the following figures with a solid color.
-    - Rectangles whose edges have integer coordinates, and ellipses that are tightly contained in them.
+    - Rectangles whose edges have integer coordinates, and axis-aligned ellipses that are tightly contained in them.
     - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^6]
 - Drawing simple outlines of line segments with a solid color, supporting only integer coordinates.[^3]
 - Flood filling colored areas of an image.[^4]
