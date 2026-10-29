@@ -40,12 +40,12 @@
   <li>arrangements of symbols or small graphics or images with partial transparency,</li>
 </ul>
 
-<p>meeting the requirements given earlier.</p>
+<p>meeting the requirements given earlier. (In this sense, tileable or seamless <em>grayscale</em> images, as defined later, are quite versatile; see note 1 in “<a href="#Wallpaper_Generation_Notes"><strong>Wallpaper Generation Notes</strong></a>”.)</p>
 
 <p>In general, the following are not within the scope of this challenge.</p>
 
 <ul>
-  <li>Photographic images (see “Wallpaper Generation Notes”, later in this document).</li>
+  <li>Photographic images (see note 2 in “<a href="#Wallpaper_Generation_Notes"><strong>Wallpaper Generation Notes”</strong></a>”, later in this document).</li>
   <li>Graphics with a single solid color on all four sides; such graphics are trivially tileable.</li>
   <li>Graphics that can be tiled in one dimension only, such as those depicting horizontal or vertical borders with an “infinitely” extending background.</li>
 </ul>
@@ -187,9 +187,11 @@
 <h2 id="wallpaper-generation-notes">Wallpaper Generation Notes</h2>
 
 <ol>
-  <li>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred (that is, a version of the image where the colors are limited to gray tones, black, and white), since then the image could be color-shifted and then adapted to have the colors of any limited-color palette (as given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating <em>halftoning techniques</em>. Dithering scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.  For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.
+  <li>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred, since then the image could be color-shifted and then adapted to have the colors of any limited-color palette (as given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating <em>halftoning techniques</em>. For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.   Alternatively, the gray tones (as well as black and white) in the grayscale image could be mapped to colors in a <em>color gradient</em> (see the sample code given later), or the image could be dithered and then this mapping occurs.
     <ul>
-      <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting can be limited to the nongrayscale part.</li>
+      <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones, black, and white.</li>
+      <li><em>Dithering</em> scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.</li>
+      <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting or color mapping can be limited to the nongrayscale part.</li>
       <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”), it can be manually adapted instead.</li>
     </ul>
   </li>
@@ -253,11 +255,11 @@ image = dw.checkerboard(
   dw.blankimage(width,height,[random.randint(0, 255) for i in range(3)]),
   image,
   width, height)
-# Dither the image
-image2 = [x for x in image]  # copy image for dithering
-# Dither in VGA colors
+# Copy the image for dithering
+image2 = [x for x in image]
+# Dither the image in VGA colors
 dw.patternDither(image, width, height, dw.classiccolors())
-# Dither in "safety palette"
+# Dither the image in "safety palette"
 dw.websafeDither(image2, width, height)
 # Write dithered images
 ifmt.writepng("/tmp/circlec.png", image, width, height)
