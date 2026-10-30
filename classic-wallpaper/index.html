@@ -20,7 +20,7 @@
   <li>The graphic is an image (also known as a <em>raster image</em>, a rectangular array of pixels) with one of the color palettes given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>” and one of the pixel dimensions given later.</li>
   <li>The graphic is preferably abstract, should not employ trademarks, and is suitable for all ages.</li>
   <li>The graphic does not contain text.  Graphics that contain depictions of people or human faces are not preferred.</li>
-  <li>The graphic should be uncompressed or compressed without loss (so in PNG or BMP format, for example, rather than JPG format).</li>
+  <li>The graphic should be uncompressed or compressed without loss (so in PNG or BMP format, for example, rather than JPEG format).</li>
   <li>The graphic is in the public domain or licensed under the <a href="https://unlicense.org/"><strong>Unlicense</strong></a> or, less preferably, another open-source license approved by the Open Source Initiative.</li>
   <li>The graphic was not produced by artificial-intelligence tools or with their help.</li>
 </ul>
@@ -191,7 +191,7 @@
     <ul>
       <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones, black, and white.</li>
       <li><em>Dithering</em> scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.</li>
-      <li>A <em>color gradient</em> is a mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em>, where a gradient stop is a number together with the color it maps to; in this case, colors in between these gradient stops are found by linear interpolation.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way between “black” and “white”.</li>
+      <li>A <em>color gradient</em> is a mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em> (a gradient stop is a number together with the color it maps to), where colors in between these gradient stops are found by linear interpolation.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way from “black” to “white”.</li>
       <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting or color mapping can be limited to the nongrayscale part.</li>
       <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”), it can be manually adapted instead.</li>
     </ul>
@@ -216,10 +216,10 @@
 
     <ul>
       <li>A randomized tiling, or <em>stochastic tiling</em>, can be generated from this tile set by repeatedly selecting a grid position and choosing a random tile that can go in that position without introducing seams, until the whole grid is covered.</li>
-      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></li>
+      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></li>
     </ul>
 
-    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></p>
+    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></p>
   </li>
 </ol>
 
@@ -314,19 +314,19 @@ ifmt.writepng("/tmp/circlews.png", image2, width, height)
       <p>Can be generated from <code>truchet2color</code> using the following ImageMagick command: <code>magick truchet2color.png \( +clone \( +clone \) -append \( +clone \) +append -crop 50%x50%+1+1 \( -size 1x2 gradient:#FFFFFF-#808080 \) -clut \) -compose Multiply -composite truchet3color.png</code>.  Here, <code>#FFFFFF</code> and <code>#808080</code> indicate the two colors white and gray, respectively. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>The 16-color VGA (Video Graphics Array) palette has colors as follows: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128). <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The 16-color VGA (Video Graphics Array) palette has colors as follows: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128). <span style="background:rgb(0,0,0);border:1px black">   </span><span style="background:rgb(128,0,0);border:1px black">   </span><span style="background:rgb(0,128,0);border:1px black">   </span><span style="background:rgb(128,128,0);border:1px black">   </span><span style="background:rgb(0,0,128);border:1px black">   </span><span style="background:rgb(128,0,128);border:1px black">   </span><span style="background:rgb(0,128,128);border:1px black">   </span><span style="background:rgb(128,128,128);border:1px black">   </span><span style="background:rgb(192,192,192);border:1px black">   </span><span style="background:rgb(255,0,0);border:1px black">   </span><span style="background:rgb(0,255,0);border:1px black">   </span><span style="background:rgb(255,255,0);border:1px black">   </span><span style="background:rgb(0,0,255);border:1px black">   </span><span style="background:rgb(255,0,255);border:1px black">   </span><span style="background:rgb(0,255,255);border:1px black">   </span><span style="background:rgb(255,255,255);border:1px black">   </span>. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
       <p>Can be generated from <code>truchet3color</code> using the following <a href="https://imagemagick.org/"><strong>ImageMagick</strong></a> command: <code>magick truchet3color.png \( +clone -grayscale Rec709Luma \) \( -size 1x256 gradient:#000000-#ff5500 \) -delete 0 -clut  \( -size 1x1 xc:#000000 xc:#808080 xc:#FFFFFF xc:#C0C0C0 xc:#FF0000 xc:#800000 xc:#00FF00 xc:#008000 xc:#0000FF xc:#000080 xc:#FF00FF xc:#800080 xc:#00FFFF xc:#008080 xc:#FFFF00 xc:#808000 +append -write mpr:z +delete \) -dither FloydSteinberg -remap mpr:z truchetff5500vga.png</code>. This example, which employs a color shift and dither, demonstrates that derivative colored wallpapers with limited colored palettes can easily be generated from black/gray/white wallpapers using non-AI computer programs. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:10">
-      <p>Mathematically, a color gradient of this kind is a <em>piecewise linear function</em> from numbers to colors. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:8">
-      <p>This covers the special case of <em>Truchet tiles</em>, involving two versions of a graphic where each edge is symmetric and the second version is horizontally or vertically mirrored from the first. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Mathematically, a color gradient of this kind is a <em>piecewise linear function</em> from numbers to colors. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:9">
-      <p>For more on stochastic tiling using Wang tiles, see Cohen, M.F., Shade, J., et al., “Wang Tiles for Image and Texture Generation”, SIGGRAPH 2003.<br />Tiling techniques that also blend adjacent tiles to hide seams are too complex to describe here. For examples, see Efros and Freeman, “Image Quilting for Texture Synthesis and Transfer”, SIGGRAPH 2001; Deliot and Heitz, “Procedural Stochastic Textures by Tiling and Blending”, 2019. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>This covers the special case of <em>Truchet tiles</em>, involving two versions of a graphic where each edge is symmetric and the second version is horizontally or vertically mirrored from the first. <a href="#fnref:9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:10">
+      <p>For more on stochastic tiling using Wang tiles, see Cohen, M.F., Shade, J., et al., “Wang Tiles for Image and Texture Generation”, SIGGRAPH 2003.<br />Tiling techniques that also blend adjacent tiles to hide seams are too complex to describe here. For examples, see Efros and Freeman, “Image Quilting for Texture Synthesis and Transfer”, SIGGRAPH 2001; Deliot and Heitz, “Procedural Stochastic Textures by Tiling and Blending”, 2019. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
