@@ -191,15 +191,19 @@
     <ul>
       <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones, black, and white.</li>
       <li><em>Dithering</em> scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.</li>
+      <li>A <em>color gradient</em> is a mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em>, where a gradient stop is a number together with the color it maps to; in this case, colors in between these gradient stops are found by linear interpolation.<sup id="fnref:10"><a href="#fn:10" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way between “black” and “white”.</li>
       <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting or color mapping can be limited to the nongrayscale part.</li>
       <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”), it can be manually adapted instead.</li>
     </ul>
   </li>
   <li>
-    <p>Other tileable wallpapers employing more than 256 colors and otherwise satisfying the challenge’s requirements are acceptable, though not preferable.  If an image used as wallpaper has more than 256 colors and otherwise meets those requirements, it can be adapted to have the colors of a limited-color palette (see “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by dithering techniques, where the image can be converted to a grayscale image, color shifted, or both before adapting it this way.  And, if the image is not tileable, the <em>desktopwallpaper.py</em> has an <code>argyle</code> method that generates a tileable wallpaper image from two images of the same size, neither of which need be tileable.</p>
+    <p>Other tileable wallpapers employing more than 256 colors and otherwise satisfying the challenge’s requirements are acceptable, though not preferable.  If an image used as wallpaper has more than 256 colors and otherwise meets those requirements, it can be adapted to have the colors of a limited-color palette (see “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by dithering techniques, where the image can be converted to a grayscale image, color shifted, or both before adapting it this way.</p>
   </li>
   <li>
-    <p>An unusual form of wallpaper results from layering a tileable foreground over a nontileable (abstract) background, where the foreground has transparent pixels and wraps around the edges.  Examples of this technique are shown in the wallpaper files <code>RIBBONS.BMP</code> and <code>PARTY.BMP</code>, both of which were distributed with Windows 3.0 and the latter was inspired by the Memphis group style.</p>
+    <p>If an image is not tileable, but otherwise meets the challenge’s requirements, the Python script <em>desktopwallpaper.py</em> has an <code>argyle</code> method that generates a tileable wallpaper image from two images of the same size, neither of which need be tileable.</p>
+  </li>
+  <li>
+    <p>A striking form of wallpaper results from layering a tileable foreground over a nontileable (abstract) background, where the foreground has transparent pixels and wraps around the edges.  Examples of this technique are shown in the wallpaper files <code>RIBBONS.BMP</code> and <code>PARTY.BMP</code>, both of which were distributed with Windows 3.0 and the latter was inspired by the Memphis group style.</p>
   </li>
   <li>
     <p>One example of tileable noise can be generated using the “<a href="https://en.wikipedia.org/wiki/Diamond-square_algorithm"><strong>diamond-square algorithm</strong></a>”.</p>
@@ -212,10 +216,10 @@
 
     <ul>
       <li>A randomized tiling, or <em>stochastic tiling</em>, can be generated from this tile set by repeatedly selecting a grid position and choosing a random tile that can go in that position without introducing seams, until the whole grid is covered.</li>
-      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup></li>
+      <li>Another kind of stochastic tiling occurs with placing a randomly chosen version of a wallpaper graphic at each grid position, where each version has the same dimensions and the same edges as each other version but can otherwise vary.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></li>
     </ul>
 
-    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup></p>
+    <p>Both kinds of stochastic tiling can be combined.  <a href="https://web.archive.org/web/20160220062702/http://www.cr31.co.uk/stagecast/wang/2edge.html"><strong>See example</strong></a>.<sup id="fnref:9"><a href="#fn:9" class="footnote" rel="footnote" role="doc-noteref">10</a></sup></p>
   </li>
 </ol>
 
@@ -246,7 +250,7 @@ image = [
     _togray(contouring((p%width) * 2.0 / width - 1.0, (p//width) * 2.0 / height - 1.0, 2.5))
     for p in range(width*height)
 ]
-# Generate a random color gradient
+# Generate a random color gradient (that maps numbers from 0 through 255 to colors)
 colors = dw.randomColorization()
 # Create a colorized version of the image
 image = [cc for pix in [colors[x] for x in image] for cc in pix]
@@ -295,7 +299,7 @@ ifmt.writepng("/tmp/circlews.png", image2, width, height)
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1">
-      <p>Every tileable desktop wallpaper has a pattern that belongs in one of 17 <a href="https://en.wikipedia.org/wiki/Wallpaper_group"><strong><em>wallpaper groups</em></strong></a>.  The shape of the pattern is a rectangle in ten of them, a diamond with one corner pointing upward in two of them, and another parallelogram in the remaining five.  Many tileable wallpapers are <em>seamless</em>, but not all (consider a pattern of bricks or square floor tiles).<br />For the Macintosh operating system, System 7.5.x and Mac OS 7.6.x, 8.x, and 9.x supported <em>desktop patterns</em> of size up to 128 × 128 pixels, Mac OS 8.x and 9.x distinguished between desktop patterns and <em>desktop pictures</em> (of usually larger size and lying above the desktop pattern), and versions earlier than System 7.5 supported only 8-×-8-pixel desktop patterns.<br />In Windows version 3.1, Windows 95, and Windows 98, <em>desktop patterns</em> are of size 8x8 pixels and have only two colors (black and the desktop background color), and <em>desktop wallpaper</em> is of arbitrary size and lies above the desktop pattern. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Every tileable desktop wallpaper has a pattern that belongs in one of 17 <a href="https://en.wikipedia.org/wiki/Wallpaper_group"><strong><em>wallpaper groups</em></strong></a>.  The shape of the pattern is a rectangle in ten of them, a diamond with one corner pointing upward in two of them, and another parallelogram in the remaining five.  Many tileable wallpapers are <em>seamless</em>, but not all (consider a pattern of bricks or square floor tiles).<br />For the Macintosh operating system, System 7.5.x and Mac OS 7.6.x, 8.x, and 9.x supported <em>desktop patterns</em> of size up to 128 × 128 pixels, Mac OS 8.x and 9.x distinguished between desktop patterns and <em>desktop pictures</em> (of usually larger size and lying above the desktop pattern’s tiling), and versions earlier than System 7.5 supported only 8-×-8-pixel desktop patterns.<br />In Windows version 3.1, Windows 95, and Windows 98, <em>desktop patterns</em> are of size 8x8 pixels and have only two colors (black and the desktop background color), and <em>desktop wallpaper</em> is of arbitrary size and lies above the desktop pattern’s tiling. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2">
       <p>See <a href="https://heropatterns.com/"><strong><em>Hero Patterns</em></strong></a> for an example. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -314,6 +318,9 @@ ifmt.writepng("/tmp/circlews.png", image2, width, height)
     </li>
     <li id="fn:7">
       <p>Can be generated from <code>truchet3color</code> using the following <a href="https://imagemagick.org/"><strong>ImageMagick</strong></a> command: <code>magick truchet3color.png \( +clone -grayscale Rec709Luma \) \( -size 1x256 gradient:#000000-#ff5500 \) -delete 0 -clut  \( -size 1x1 xc:#000000 xc:#808080 xc:#FFFFFF xc:#C0C0C0 xc:#FF0000 xc:#800000 xc:#00FF00 xc:#008000 xc:#0000FF xc:#000080 xc:#FF00FF xc:#800080 xc:#00FFFF xc:#008080 xc:#FFFF00 xc:#808000 +append -write mpr:z +delete \) -dither FloydSteinberg -remap mpr:z truchetff5500vga.png</code>. This example, which employs a color shift and dither, demonstrates that derivative colored wallpapers with limited colored palettes can easily be generated from black/gray/white wallpapers using non-AI computer programs. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:10">
+      <p>Mathematically, a color gradient of this kind is a <em>piecewise linear function</em> from numbers to colors. <a href="#fnref:10" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:8">
       <p>This covers the special case of <em>Truchet tiles</em>, involving two versions of a graphic where each edge is symmetric and the second version is horizontally or vertically mirrored from the first. <a href="#fnref:8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
