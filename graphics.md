@@ -69,7 +69,7 @@ Limit 3-D graphics to the following:[^3]
     * A _primitive_ is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.
     * A _vertex_ (plural: _vertices_) has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a _vertex color_ of a format given later.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
     * Each vertex of the primitive points to a vertex from the vertex list described later.
-2. Each _texture_ (an image that is applied to the surface of 3-D objects)&mdash;
+2. Each _texture_ (a rectangular image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given later in this specification, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
 3. The width and height of each texture are each powers of 2.
@@ -104,7 +104,7 @@ Limit 2-D graphics to the following\:[^10]
     2. If tiles have fewer than 8 bits per pixel, each tile uses one of 16 color tables.  If tiles have 8 bits per pixel, they use the same 256-color table.
     3. Each color in each color table used by tiles is of a vertex color format given earlier.
 3. Sprites.  A _sprite_ is a rectangular array of either tiles or pixels.
-    1. Each sprite made of pixels (rather than tiles) has a pixel format allowed for _3-D textures_, given earlier.
+    1. Each sprite made of pixels (rather than tiles) has a pixel format allowed for textures, given earlier.
     2. Each sprite can be drawn above or below any of the 2-D or 3-D layers.
     3. The upper-left corner of a sprite can be placed anywhere relative to the game screen and even outside it.
 4. The drawing of sprites and tiles with transparency (that is, the drawing of some or all of their pixels) is supported.[^12] Sprites and tiles with translucent (semitransparent) pixels are not supported, and drawing sprites and tiles with translucency is also not supported.
@@ -155,7 +155,7 @@ The following are optional features; the application decides:
 >     3. The General MIDI System level 1 should be followed for the game's music files.[^13]
 >
 > 2. For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending or alpha blending) might not be typical.
-> 3. As given later in this document, a default screen resolution of 800 &times; 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But these limits (together with a target rate of 60 frames per second) can still serve as a "stress test" for any software renderer seeking to implement this specification.
+> 3. As given later in this document, a default screen resolution of 800 &times; 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But that resolution and limit (together with a target rate of 60 frames per second) can still serve as a "stress test" for any software renderer seeking to implement this specification.
 >
 > **Examples:**
 >
@@ -359,7 +359,7 @@ This section has notes on this specification, such as how its requirements corre
 - The visuals of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are _Asteroids_ (1979) and _Battlezone_ (1980).  In _Space Fury_ (1981) and _Star Wars_ (1983), these line segments were even multicolored.
 - Graphics made of tiles and sprites were popularized by the arcade game _Galaxian_ (1979).
 - Most arcade games before 1995 had a resolution from 46,080 pixels (192 &times; 240 or 240 &times; 192) through 98,304 pixels (256 &times; 384 or 384 &times; 256).  The following were exceptions:
-     - Certain two- or three-screen games by Taito (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
+     - Certain games by Taito that combine two or three video screens into one (for example, _Darius_ [1987] and _The Ninja Warriors_ [1987]).
      - The Midway MCR family of arcade machines (1980 to about 1986) had a screen resolution of 480 &times; 480, 512 &times; 448, or 512 &times; 480, but backgrounds were drawn at half the resolution of sprites.  Examples include _Tapper_ (1982) and _Wacko_ (1983).
 - If an arcade game employed 2-D visuals with tiles and sprites, each tile and sprite tended to use no more than 16 colors, and semitransparency was not used.
 - There have been so-called cinematic arcade video games, such as _Wild Gunman_ (1974), _Astron Belt_ (1982), and _Dragon's Lair_ (1983).
@@ -479,6 +479,7 @@ The following are examples of the kind of statements desired:
     - Microsoft Corp., _Hardware Design Guide for Microsoft Windows 95_, Microsoft Press, 1994. ISBN 1-55615-642-1.  This book is called the PC 95 Guide in this document.
     - Microsoft Corp., _Hardware Design Guide Supplement for Microsoft Windows 95_, 1996.
     - Microsoft Corp., _PC 97 Hardware Design Guide_, Microsoft Press, 1997. ISBN 1-57231-381-1.
+    - Intel & Microsoft, _PC 98 System Design Guide_, Microsoft Press, 1997. ISBN 1-57231-716-7.
     - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
     - Intel & Microsoft, _PC 2001 System Design Guide_, 2000.
 - Roca, Jordi, et al., "[**Workload Characterization of 3D Games**](https://ieeexplore.ieee.org/abstract/document/4086130)", _2006 IEEE International Symposium on Workload Characterization_. IEEE, 2006.  Study on measuring certain features of 3-D games that are of interest in this specification, including triangles per frame.  See the [**`attila-sim` repository**](https://github.com/attila-gpu/attila-sim).

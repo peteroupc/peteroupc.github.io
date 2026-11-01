@@ -52,7 +52,7 @@
 
 <p><a id="Pixel_Dimensions"></a></p>
 
-<h2 id="pixel-dimensions">Pixel Dimensions</h2>
+<h3 id="pixel-dimensions">Pixel Dimensions</h3>
 
 <p>The pixel dimensions allowed are as follows.</p>
 
@@ -191,7 +191,7 @@
     <ul>
       <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones, black, and white.</li>
       <li><em>Dithering</em> scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.</li>
-      <li>A <em>color gradient</em> is a mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em> (a gradient stop is a number together with the color it maps to), where colors in between these gradient stops are found by linear interpolation.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way from “black” to “white”.</li>
+      <li>A <em>color gradient</em> is a continuous or nearly continuous mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em> (a gradient stop is a number together with the color it maps to), where colors in between these gradient stops are found by <em>linear interpolation</em>: the colors between any two nearby stops go from one color to the other at an unchanging rate.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way from “black” to “white”.</li>
       <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting or color mapping can be limited to the nongrayscale part.</li>
       <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”), it can be manually adapted instead.</li>
     </ul>
