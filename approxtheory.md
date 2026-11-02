@@ -265,7 +265,7 @@ _Proof:_  Follows from the third bound for $L(R_k(f,\lambda))$ in Lemma 3 in the
 
 The following two lemmas are more general, but not as easy to use.
 
-**Lemma 4A** (special case of Theorem 3.4 in Gonska (1998/2023)[^32]). _Let $f(\lambda)$ be continuous on a union of nonempty compact intervals, and let $L$ be a positive linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
+**Lemma 4A** (special case of Theorem 3.4 in Gonska (1998/2023)[^32]). _Let $f(\lambda)$ be continuous on a union of a finite number of nonempty compact intervals, and let $L$ be a positive linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then:_
 
 $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max(\text{Max}(L(e_0)) ,L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)\\\\+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda))\\\\\le(\text{Max}(L(e_0)) +L(\text{abs}(e_1-\lambda))(\lambda))\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 
@@ -361,7 +361,7 @@ $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{C - c}{(k+1)!} \text{abs}(LA(e
 
 $$\text{abs}(L(f)(\lambda) - f(\lambda))\le \frac{2M}{(k+1)!} \text{abs}(LA(e_{k+1})(\lambda)).$$
 
-**Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^32]). _Let $f(\lambda)$ be continuous on a union of nonempty compact intervals, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
+**Lemma 9** (special case of Theorem 3.2 in Gonska (1998/2023)[^32]). _Let $f(\lambda)$ be continuous on a union of a finite number of nonempty compact intervals, and let $L$ be a bounded linear operator that maps continuous functions on $f$'s domain to bounded functions on that domain.  Let $h>0$ be a real number.  Then for each $\lambda$ in $f$'s domain:_
 
 $$\begin{multline}\text{abs}(L(f)(\lambda)-f(\lambda))\le\max((\Vert L\Vert_{op}+\alpha)/2, (\gamma(\beta(\lambda)-L(e_0)(\lambda))+\\\\\text{abs}(L(\text{abs}(e_1-\lambda))(\lambda)))/h)\\\\\cdot\tilde\omega_1(f,h)+\text{abs}(L(e_0)(\lambda)-1)\cdot\text{abs}(f(\lambda)),\end{multline}$$
 

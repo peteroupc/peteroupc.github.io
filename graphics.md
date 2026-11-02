@@ -642,7 +642,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^28]: Popular file size limit of so-called "64K intros".
 
-[^29]: A CD-ROM's format differs from the FAT file system.  In this case, the same guidelines as for FAT can be used, except: (1) There can be subdirectories, whose names follow the same rules as files. (2) There can be more than 110 files. (3) When calculating total file size, round the size of files up to the nearest multiple of 32,768 bytes, and treat subdirectory entries as having 32,768 bytes. (4) Subdirectories should not be nested more than seven levels deep.
+[^29]: A CD-ROM's format differs from the FAT file system.  In this case, the same guidelines as for FAT can be used, except: (1) There can be subdirectories, whose names follow the same rules as for files. (2) There can be more than 110 files. (3) When calculating total file size, round the size of files up to the nearest multiple of 32,768 bytes, and treat subdirectory entries as having 32,768 bytes. (4) Subdirectories should not be nested more than seven levels deep.
 
 [^30]: MS-DOS applications are normally limited to 640 kibibytes or less of _conventional memory_, along with whatever memory is carried by the video card.  (PCs running on the very early Intel 8086 and 8088 processors can map out no more than 640 kibibytes of system memory.) 262,144 bytes is the usual minimum of graphics memory for VGA video cards.
 
