@@ -14,7 +14,7 @@ It would be of interest to write a free and open-source graphics engine that imp
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
 - Borland Graphics Interface (BGI), a 2-D graphics API (for example, _Turbo C User's Guide_, chapter 8).
-- Certain game-oriented [**3-D graphics APIs**](https://leikareipa.github.io/blog/wrapping-old-graphics-apis/) from the 1990s, such as 3dfx's Glide, S3's S3d, ATI's 3D Rage Common Interface, and Matrox Simple Interface.
+- Certain game-oriented [**3-D graphics APIs**](https://leikareipa.github.io/blog/wrapping-old-graphics-apis/) from the 1990s, such as 3dfx's Glide, S3's S3d, VideoLogic's SGL, ATI's 3D Rage Common Interface, and Matrox Simple Interface.
 
 The graphics engine is intended to run even on computers from around 2005 (and maybe even on older computers), and with low resources, and so to enable video games that run with acceptable performance on those computers.
 
@@ -112,7 +112,7 @@ Unlike with today's programmable "shaders", classic 3-D video-game graphics supp
 
 This section gives suggestions for a lean API supporting 3-D graphics. Any implementation of it should render graphics in software[^1] and optionally with hardware acceleration.  As with 2-D, the 3-D API is allowed to support drawing to images stored in system memory without also supporting drawing to video memory or directly to the screen.
 
-The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) allows the following [**3-D graphics capabilities**](https://peteroupc.github.io/graphics.html#3_D_graphics):
+The [**classic-graphics specification**](https://peteroupc.github.io/graphics.html) allows the following [**3-D graphics features**](https://peteroupc.github.io/graphics.html#3_D_graphics):
 
 - Z buffering (depth buffering).
 - Flat shading.
@@ -129,7 +129,7 @@ The [**classic-graphics specification**](https://peteroupc.github.io/graphics.ht
 
 These features were more or less supported by 3-D graphics accelerators offered to consumers from 1995 to 1999, and by widely distributed 3-D game consoles throughout the 1990s.  The _PC 99 System Design Guide_ (1998) sections 14.27 to 14.34 (except for the screen resolution, frame rate, and double buffering requirements) are also in scope.
 
-Stencil buffers, bump mapping, and three- or four-texture blending are borderline capabilities.
+Stencil buffers, bump mapping, and three- or four-texture blending are borderline 3-D features.
 
 <a id=Suggested_C_Language_Functions></a>
 
@@ -185,8 +185,8 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 - Apple Computer Inc., _3D Graphics Programming With QuickDraw 3D 1.5.4_, 1997.
 - Borland International, _Turbo C Reference Guide: Version 2.0_, 1988.
 - Borland International, _Turbo C User's Guide: Version 2.0_, 1988. Chapter 8 under "Programming in Graphics Mode" discusses the BGI graphics library.
-- Bresenham, Jack E., "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
-- Bresenham J.E., "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
+- Bresenham, J.E., "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
+- Bresenham, J.E., "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
 - Gery, R, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
 - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
 - _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6 ("Microsoft C runtime").  Describes the graphics routines the named library supports.
