@@ -88,7 +88,7 @@ It is unclear whether to include any of the following in the lean 2-D graphics A
 1. 2-D affine transformations (which keep parallel lines parallel; examples are scalings, shears, and rotations).
 2. Translations, rotations and scalings, but no other 2-D affine transformations.
 3. Translations, rotations, scalings, and reflections, but no other 2-D affine transformations.
-4. So-called "[**raster operations**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBlt`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).
+4. So-called "[**raster operations**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBlt`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).[^13]
 5. [**Alpha compositing**](https://ciechanow.ski/alpha-compositing/) while drawing 2-D graphics.
 6. Drawing one image part over another (the "over" operation of Porter and Duff 1984), with optional translucency, but no other nontrivial alpha compositing.  The images may have translucent (semitransparent) or transparent pixels.
 7. Same as point 6, except the images can't have translucent pixels.
@@ -249,3 +249,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^11]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
 
 [^12]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself.
+
+[^13]: One of these raster operations, the bitwise "or", enables a [**rudimentary blending technique**](https://www.youtube.com/watch?v=GuFVKPT3ROY) involving two images whose pixels map to entries in a color palette: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise "or" of the foreground and background pixels is a pixel that maps to a "blend" of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.
