@@ -712,7 +712,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^63]: Fabien Sanglard, [**_Game Engine Black Book: Doom_**](https://fabiensanglard.net/gebb/).
 
-[^64]: "NTSC" stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A. "PAL" stands for phase alternating line.   For information on NTSC- and PAL-compatible video, see _Conventional Television Systems_ (listed in the "Further Reading" section of this article).
+[^64]: "NTSC" stands for the National Television Standards Committee of the Electronics Industries Association.  "NTSC" often refers to the video display protocol known as RS-1070A. "PAL" stands for phase alternation line or phase alternating line.   For information on NTSC- and PAL-compatible video, see _Conventional Television Systems_ (listed in the "Further Reading" section of this article).
 
 [^65]: Until the early 1990s, the number of color samples (pixels) an application can transfer per second was usually small, limiting the supported size and frame rate for arbitrary video content.  Indeed, for example, MPC Level 1 recommended that video cards be able to transfer up to 8-bit-per-sample graphics at a rate of 140,000 samples per second or faster given 40 percent of CPU bandwidth.  MPC Level 2 upped this recommendation to 1.2 million samples per second (sufficient for 320 &times; 240 video at 15 frames per second, as recommended in "AVI Video Authoring Tips"; see also the PC 95 Guide, chapter 3; see "Further Reading" in this document).  Both recommendations are far from the 6.144 million samples per second needed to display 640 &times; 480 video smoothly at 20 frames per second.
 
