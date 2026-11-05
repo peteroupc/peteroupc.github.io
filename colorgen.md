@@ -1184,7 +1184,7 @@ The same paper by Porter and Duff also mentioned a _plus operator_, which is a s
 
 ### Raster Operations
 
-_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  Unlike with most other color operations in this document, the input and output colors are nonnegative integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.
+_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  Unlike with most other color operations in this document, the input and output colors are nonnegative integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.  Raster operations were devised by Dan Ingalls and colleagues during the 1970s[^51]
 
 There are sixteen _binary raster operations_, each operation taking two bits (where each bit is either 0 or 1):
 
@@ -1235,10 +1235,14 @@ For example, code 28 is a ternary raster operation made up of binary raster oper
 
 Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.
 
-> **Note:** Raster operations also function, in principle, when the input and output color values are interpreted as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of colors; color value 1, the second; and so on), rather than as intensities (such as RGB colors).  But this is a more delicate case than the usual one, and functions best when&mdash;
+> **Note:** Raster operations also function, in principle, when the input and output color values are interpreted as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of colors; color value 1, the second; and so on), rather than as intensities (such as RGB colors).  But, in practice, a raster operation can be useful only in the indexed case, less useful in the indexed case, or equally useful in the indexed and nonindexed cases, depending on the purpose.  For example:
+>
+> 1. Transparency effects involving a combination of `in XOR out` and `in AND out` work equally well in the indexed and nonindexed cases.  Likewise, simple image copies (the `in` operation) function the same in both cases.
+> 2. When the `in XOR out` raster operation is meant to "invert" an image's colors, the indexed case functions best when&mdash;
 >
 > - the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and
 > - the colors in the second half of the palette would be the "inversions" of those in the first half, if the second half's colors were in reverse order (for example, the first color in the first half is "black" and the second half's last color is "white", the "inversion" of "black").
+> 3. In the indexed case, the `in OR out` operation (the bitwise "or") enables a [**rudimentary blending technique**](https://www.youtube.com/watch?v=GuFVKPT3ROY) between two images: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise "or" of the foreground and background pixels is a pixel that maps to a "blend" of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.
 
 <a id=Blend_Modes></a>
 
@@ -1932,6 +1936,8 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 [^49]: [**Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory"**](https://scholar.google.com/scholar?q=Walowit,+E.+Spectrophotometric+color+formulation+based+on+two-constant+Kubelka-Munk+theory.), Thesis, Rochester Institute of Technology, 1985.<br>The following reference may also be of interest: Furferi, R., Carfagni, R., "An As-Short-as-Possible Mathematical Assessment of Spectrophotometric Color Matching", _Journal of Applied Sciences_, 2010.
 
 [^50]: Mixbox appears to satisfy this, but the [**repository's source code**](https://github.com/scrtwpns/mixbox) is under a noncommercial license; whether the algorithm itself is so is uncertain.
+
+[^51]: Ingalls, D., "The Smalltalk-76 Programming System: Design and Implementation", Ph.D. thesis, University of Utah, 1978.
 
 <a id=License></a>
 
