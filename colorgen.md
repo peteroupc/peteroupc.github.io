@@ -105,8 +105,9 @@ This document presents an overview of many common color topics that are of gener
     - a list of colors (which can have duplicates), all of the same color space, or
     - the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
-- **Image.** Rectangular array of samples called _pixels_, where each pixel stores a color value or a reference to a color value.  Also known as a _raster image_.[^2] More generally, an image is as defined in [**"A Sprite Theory of Image Computing"**](https://alvyray.com/Memos/CG/Microsoft/5_sprite.pdf).
+- **Image.** Rectangular array of pixels.  Also known as a _raster image_.[^2] More generally, an image is as defined in [**"A Sprite Theory of Image Computing"**](https://alvyray.com/Memos/CG/Microsoft/5_sprite.pdf).
 - **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
+- **Pixel.** Point sample that stores a color value or a reference to a color value.  Pixels have no area, so [**they are not squares**](https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf), they don't have edges or centers, and so on.
 - **RGB.** Red-green-blue.
 
 <a id=Overview_of_Color_Vision></a>
@@ -1163,7 +1164,7 @@ There are several ways to find the contrast between two colors.
 
 ### Porter&ndash;Duff Formulas
 
-Porter and Duff (1984) define twelve formulas for combining ([**compositing**](https://ciechanow.ski/alpha-compositing/)) two RGBA colors[^32]. In the formulas below, it is assumed that the two colors and the output are in the 0-1 format and have been _premultiplied_ (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
+Porter and Duff (1984) define twelve formulas for combining ([**compositing**](https://ciechanow.ski/alpha-compositing/)) two RGBA colors[^32]. In the formulas below, it is assumed that the two colors and the operation's result are in the 0-1 format and have been _premultiplied_ (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
 
 - **Source Over**: `[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]`.
 - **Source In**: `[dst[3]*src[0], dst[3]*src[1], dst[3]*src[2], dst[3]*src[3]]`.
@@ -1184,27 +1185,27 @@ The same paper by Porter and Duff also mentioned a _plus operator_, which is a s
 
 ### Raster Operations
 
-_Raster operations_ define Boolean operations, or bit-by-bit combinations of an input or source color ("in") and an output or destination color ("out").  Unlike with most other color operations in this document, the input and output colors are nonnegative integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.  Raster operations were devised by Dan Ingalls and colleagues during the 1970s.[^33]
+_Raster operations_ define Boolean operations, or bit-by-bit combinations of a source or foreground color ("fore") and a destination or background color ("back").  Unlike with most other color operations in this document, the two colors are nonnegative integers, rather than made of components with fractional numbers from 0 through 1, and, if the colors are RGB colors, they can be linear or encoded.  Raster operations were devised by Dan Ingalls and colleagues during the 1970s.[^33]
 
 There are sixteen _binary raster operations_, each operation taking two bits (where each bit is either 0 or 1):
 
 | Code | Operation |
  -- | ---- |
 | 0 | 0 |
-| 1 | NOT (in OR out) |
-| 2 | out AND NOT in |
-| 3 | NOT in |
-| 4 | in AND NOT out |
-| 5 | NOT out |
-| 6 | in XOR out |
-| 7 | NOT (in AND out) |
-| 8 | in AND out |
-| 9 | NOT (in XOR out) |
-| 10 | out |
-| 11 | NOT (in AND NOT out) |
-| 12 | in |
-| 13 | NOT (out AND NOT in) |
-| 14 | in OR out |
+| 1 | NOT (fore OR back) |
+| 2 | back AND NOT fore |
+| 3 | NOT fore |
+| 4 | fore AND NOT back |
+| 5 | NOT back |
+| 6 | fore XOR back |
+| 7 | NOT (fore AND back) |
+| 8 | fore AND back |
+| 9 | NOT (fore XOR back) |
+| 10 | back |
+| 11 | NOT (fore AND NOT back) |
+| 12 | fore |
+| 13 | NOT (back AND NOT fore) |
+| 14 | fore OR back |
 | 15 | 1 |
 
 In the list of operations above:
@@ -1216,33 +1217,33 @@ In the list of operations above:
 
 The table below illustrates the result of some binary raster operations.
 
-| in  | out| 8: in AND out | 6: in XOR out | 3: NOT in |
+| fore  | back| 8: fore AND back | 6: fore XOR back | 3: NOT fore |
   --  | -- | ---- | ---- | ---- |
 |  0  | 0  |  0   |   0  |  1   |
 |  0  | 1  |  0   |   1  |  1   |
 |  1  | 0  |  0   |   1  |  0   |
 |  1  | 1  |  1   |   0  |  0   |
 
-The result of a binary raster operation `rop` (where `rop` is one of the codes given in the table of binary raster operations), given bits `in` and `out`, equals `(rop>>((in * 2) + out)) AND 1`, where `>>` is a right-shift bit operation that involves the left-hand side `L` and the right-hand side `R` and is equivalent to `floor(L / pow(2, R))`.
+The result of a binary raster operation `rop` (where `rop` is one of the codes given in the table of binary raster operations), given bits `fore` and `back`, equals `(rop>>((fore * 2) + back)) AND 1`, where `>>` is a right-shift bit operation that involves the left-hand side `L` and the right-hand side `R` and is equivalent to `floor(L / pow(2, R))`.
 
-There are also 256 _ternary raster operations_, involving bit-by-bit combinations of the input color ("in"), the output color ("out"), and a so-called _brush pattern_ color ("pat").  Each operation has a code equal to `codeH * 16 + codeL`, and the corresponding operation has the form&mdash;
+There are also 256 _ternary raster operations_, involving bit-by-bit combinations of the foreground color, the background color, and a so-called _brush pattern_ color ("pat").[^34]  Each operation has a code equal to `codeH * 16 + codeL`, and the corresponding operation has the form&mdash;
 
 - (_opH_ AND pat) XOR (_opL_ AND NOT pat),
 
-where _opH_ is the binary raster operation for the input and output colors with the code _codeH_, and _opL_, with the code _codeL_.  In other words, if the brush pattern bit is 1, use _opH_; if 0, use _opL_.
+where _opH_ is the binary raster operation for the foreground and background colors with the code _codeH_, and _opL_, with the code _codeL_.  In other words, if the brush pattern bit is 1, use _opH_; if 0, use _opL_.
 
-For example, code 28 is a ternary raster operation made up of binary raster operations _codeH_ = 1, _opH_ = NOT (in OR out), _codeL_ = 12, and _opL_ = in. (`1 * 16 + 12 = 28`.)  This ternary operation can be expressed as `((NOT (in OR out)) AND pat) XOR (in AND NOT pat)`; that is, if the brush pattern bit is 1, use `NOT (in OR out)`; if 0, use `in`.
+For example, code 28 is a ternary raster operation made up of binary raster operations _codeH_ = 1, _opH_ = NOT (fore OR back), _codeL_ = 12, and _opL_ = fore. (`1 * 16 + 12 = 28`.)  This ternary operation can be expressed as `((NOT (fore OR back)) AND pat) XOR (fore AND NOT pat)`; that is, if the brush pattern bit is 1, use `NOT (fore OR back)`; if 0, use `fore` (the foreground color).
 
 Binary and ternary raster operations are prevalent in bit block transfers, which copy or transfer parts of images onto other images.
 
-> **Note:** Raster operations also function, in principle, when the input and output color values are interpreted not as intensities (such as RGB colors), but as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of colors; color value 1, the second; and so on); call this the "indexed case".  But, in practice, a raster operation's usefulness depends on its purpose and on whether the indexed case is at hand.  For example:
+> **Note:** Raster operations also function, in principle, when the foreground and background color values are interpreted not as intensities (such as RGB colors), but as zero-based indices to a color palette (that is, color value 0 refers to the first entry in a palette of colors; color value 1, the second; and so on); call this the "indexed case".  But, in practice, a raster operation's usefulness depends on its purpose and on whether the indexed case is at hand.  For example:
 >
-> 1. Transparency effects involving a combination of `in XOR out` and `in AND out` work equally well in the indexed case and otherwise.[^52]  Likewise, simple image copies (the `in` operation) function the same in the indexed case and otherwise.
-> 2. When the `in XOR out` raster operation is meant to "invert" an image's colors, the indexed case functions best when&mdash;
+> 1. Transparency effects involving a combination of `fore XOR back` and `fore AND back` work equally well in the indexed case and otherwise.[^35]  Likewise, simple image copies (the `fore` operation) function the same in the indexed case and otherwise.
+> 2. When the `NOT fore` raster operation is meant to "invert" an image's colors, the indexed case functions best when—
 >
 > - the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and
 > - the colors in the second half of the palette would be the "inversions" of those in the first half, if the second half's colors were in reverse order (for example, the first color in the first half is "black" and the second half's last color is "white", the "inversion" of "black").
-> 3. In the indexed case, the `in OR out` operation (the bitwise "or") enables a [**rudimentary blending technique**](https://www.youtube.com/watch?v=GuFVKPT3ROY) between two images: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise "or" of the foreground and background pixels is a pixel that maps to a "blend" of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.
+> 3. In the indexed case, the `fore OR back` operation (the bitwise "or") enables a [**rudimentary blending technique**](https://www.youtube.com/watch?v=GuFVKPT3ROY) between two images: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise "or" of the foreground and background pixels is a pixel that maps to a "blend" of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.
 
 <a id=Blend_Modes></a>
 
@@ -1269,8 +1270,8 @@ A _color matrix_ is a 9-item (3 &times; 3) list for transforming a three-compone
 
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
-from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)"[^34].
-- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.[^34][^32]  This is an approximate hue rotation because the constant factors in the pseudocode are rounded off to a limited number of decimal places.
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)"[^36].
+- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.[^36][^32]  This is an approximate hue rotation because the constant factors in the pseudocode are rounded off to a limited number of decimal places.
 
 In the following pseudocode, `TransformColor` transforms an RGB color (`color`) with a color matrix (`matrix`).
 
@@ -1313,12 +1314,12 @@ The following approaches can generate a saturated or desaturated version of a co
 
 1. An RGB color&mdash;
     - is white, black, or a shade of gray (**_achromatic_**) if it has equal red, green, and blue components, and
-    - is in the "safety palette" if its red, green, and blue components are each a multiple of 0.2.[^35]
+    - is in the "safety palette" if its red, green, and blue components are each a multiple of 0.2.[^37]
 
     An [**_image color list_**](#Notation_and_Definitions) is achromatic if all its colors are achromatic.
 
 2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" areas of an image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether the pixel belongs in the "background" (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color the pixel is instead.
-3.  An application can **apply a function** to each component of an RGB or other multicomponent color, including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format[^36]), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
+3.  An application can **apply a function** to each component of an RGB or other multicomponent color, including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format[^38]), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
 4.  An application can **swap** the values of any two components of an RGB or other multicomponent color to form new colors.  The following example swaps the blue and red channels of an RGB color: `[color[2], color[1], color[0]]`.
 5. Pixel-level image processing techniques that process each pixel depending on the area surrounding that pixel or the image context are largely out of scope of this document.  These include neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation involving the area around each pixel (including some clustering and background removal algorithms).
 
@@ -1343,10 +1344,10 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
 
 > **Notes:**
 >
-> - For CIELAB or CIELUV, the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively[^37], is the Euclidean distance between two CIELAB or two CIELUV colors, respectively.
+> - For CIELAB or CIELUV, the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively[^39], is the Euclidean distance between two CIELAB or two CIELUV colors, respectively.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
-**Riemersma's method.** (Riemersma\)[^38] suggests an algorithm for color difference, to be applied to **encoded RGB colors**.
+**Riemersma's method.** (Riemersma\)[^40] suggests an algorithm for color difference, to be applied to **encoded RGB colors**.
 
 **CMC.** The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two [**CIELAB**](#CIELAB) colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(`LPARAM`:`CPARAM`) where&mdash;
 
@@ -1430,7 +1431,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
         return sqrt(fl*fl+fc*fc+fh*fh+r*fc*fh)
     END METHOD
 
-> **Note:** An improvement to CIEDE2000 (Huang et al. 2015\)[^39], recently recommended in CIE 230:2019 for small color differences, is not yet in common use.
+> **Note:** An improvement to CIEDE2000 (Huang et al. 2015\)[^41], recently recommended in CIE 230:2019 for small color differences, is not yet in common use.
 
 **Commercial factors.** A _commercial factor_ (`cf`) is an additional parameter to CMC and other color difference formulas.  The `COLORDIFF` result is divided by `cf` (which is usually 1) to get the final color difference.
 
@@ -1480,7 +1481,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 
 2. **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
-    - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the [**"safety palette"**](#Representing_RGB_Colors) [^35].
+    - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the [**"safety palette"**](#Representing_RGB_Colors) [^37].
     - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
     - For each color in the image color list, find its [**nearest color**](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
     - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.
@@ -1492,11 +1493,11 @@ There are several methods of finding the kind or kinds of colors that appear mos
 > 1. **Scale down**: For all these techniques, in the case of an image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 > 2. **Color reduction**: Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
->     - applying a _dithering_ technique (especially to reduce undesirable color "banding" in certain cases).[^40]
-> 3. **Unique colors**: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.[^41]
+>     - applying a _dithering_ technique (especially to reduce undesirable color "banding" in certain cases).[^42]
+> 3. **Unique colors**: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.[^43]
 > 4. **Disqualifying dominant colors**:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image's edges, can ignore certain kinds of colors (for example, gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the list of dominant colors.
 > 5. Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see `stackoverflow.com/questions/43111029`).
-> 6. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567).[^42] PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
+> 6. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567).[^44] PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
 <a id=Color_Maps></a>
 
@@ -1516,21 +1517,21 @@ The [**_ColorBrewer 2.0_**](http://colorbrewer2.org/) Web site's suggestions for
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [**recommends**](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[**Visually Distinct Colors**](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-> **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"[^43], "[**color blind friendly**](#Defective_and_Animal_Color_Vision)", or both suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+> **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"[^45], "[**color blind friendly**](#Defective_and_Animal_Color_Vision)", or both suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Color_Collections></a>
 
 ### Color Collections
 
-If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", "lemonchiffon", and "5RP 5/6"[^44].  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", "lemonchiffon", and "5RP 5/6"[^46].  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name can be done by&mdash;
-- retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table\)[^41], or
+- retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table\)[^43], or
 - finding the [**nearest color**](#Nearest_Colors) to that color among the named colors, and returning the name of the color found this way.
 
-Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lowercase form) in a hash table, or returning an error if no such color exists.[^41]
+Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lowercase form) in a hash table, or returning an error if no such color exists.[^43]
 
-If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_ (Venn et al.\)[^45].
+If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a _color dictionary_ (Venn et al.\)[^47].
 
 > **Notes:**
 >
@@ -1543,13 +1544,13 @@ If each name, number, or code in a color map is associated with one or several c
 
 Color maps can list colors used to identify different items. Because of this use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
 
-- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"[^46], the first nine of which
+- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"[^48], the first nine of which
   were intended for readers with normal and [**defective**](#Defective_and_Animal_Color_Vision) color vision, and
 - B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.
 
 In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly's list) should use other visual means in addition to color (or rather than color) to help users identify them, such as numbered labels, text labels, different shapes, different shading, different dash patterns, or a combination of these. (Note that under the [**Web Content Accessibility Guidelines 2.0**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/) level A, color may not be [**"the only visual means of conveying information"**](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
-In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest [**color difference**](#Color_Differences) [`COLORDIFF`] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be generated in advance or while the program runs, and such colors can be limited to those in a particular _color gamut_. Here, the color difference method should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize\)[^47].)
+In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest [**color difference**](#Color_Differences) [`COLORDIFF`] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be generated in advance or while the program runs, and such colors can be limited to those in a particular _color gamut_. Here, the color difference method should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize\)[^49].)
 
 <a id=Linear_Gradients></a>
 
@@ -1584,7 +1585,7 @@ The following pseudocode, `LinearGradientPoint`, gets the color at the specified
         return lastStop[1]
     end
 
-Linear gradients are often the basis for two-dimensional color gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point. (The name comes from U.S. patent 6879327B1, "Creating gradient fills", which expired in March 2022.)  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the specified 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to reduce banding include either dithering techniques[^40] or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
+Linear gradients are often the basis for two-dimensional color gradients such as radial gradients, or even gradients in higher dimensions.  They can generally be described in terms of a _contouring function_, which returns a point on a linear gradient given an N-dimensional point. (The name comes from U.S. patent 6879327B1, "Creating gradient fills", which expired in March 2022.)  For instance, a _radial gradient_ can be implemented by using the following contouring function: `sqrt(x*x+y*y)`, where `x` and `y` are the coordinates of an arbitrary point in 2-dimensional space.  The value of the radial gradient function can then be passed to `LinearGradientPoint` to generate the appropriate color at the specified 2-dimensional point.  Note, however, that generating multidimensional gradients can cause undesirable "banding" of colors (see the notes in [**"Dominant_Colors_of_an_Image"**](#Dominant_Colors_of_an_Image)).  Ways to reduce banding include either dithering techniques[^42] or adding/subtracting a small random offset ("noise") to the value of the contouring function for each 2-dimensional point.
 
 <a id=Pseudocode></a>
 
@@ -1700,7 +1701,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
         // color-matching function set and light source together,
         // so that `weight` can be precomputed if they will
         // not change.
-        // NOTE: If `weight` is 1/683, `cmfFunc` outputs XYZ
+        // NOTE: If `weight` is 1/683, `cmfFunc` returns XYZ
         // values, and `reflFunc` always returns 1, then SpectrumToTristim
         // will give out XYZ values where Y is a value in cd/m^2.
         xyz[0] = xyz[0] / weight
@@ -1735,7 +1736,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  As a blackbody's temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.
 
-The `Planckian` method shown next models the spectral power distribution (SPD) of a blackbody with the specified temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).[^48].  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
+The `Planckian` method shown next models the spectral power distribution (SPD) of a blackbody with the specified temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).[^50].  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
 
     METHOD Planckian(wl, temp)
         num = pow(wl, -5)
@@ -1773,9 +1774,9 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [**
 The mixture of two colorants can be complex, and there are several approaches to simulating this kind of color mixture.
 
 - As [**S. A. Burns indicates**](http://www.scottburns.us/subtractive-color-mixture/), two or more [**_reflectance curves_**](#Spectral_Color_Functions), each representing a **pigment or colorant**, can be mixed by calculating their _weighted geometric mean_, which
-  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.[^49]
+  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.[^51]
 - As [**B. MacEvoy indicates**](http://www.handprint.com/HP/WCL/color3.html#mixprofile), two or more spectral curves for **transmissive materials** can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.
-- An alternative method of color formulation, based on the **Kubelka&ndash;Munk theory**, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985[^50].  ISO 18314-2 is also a relevant document.
+- An alternative method of color formulation, based on the **Kubelka&ndash;Munk theory**, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985[^52].  ISO 18314-2 is also a relevant document.
 
 For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where&mdash;
 
@@ -1825,7 +1826,7 @@ The following topics may be added in the future based on reader interest:
 Descriptions on the following methods would greatly enhance this document, as long as the methods are not covered by any active patents or pending patent applications and can be implemented by public-domain source code (usable for any purpose):
 
 - A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card or white balance card.
-- A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the input colors would appear on paper.[^51]
+- A method to convert two RGB colors into an RGB color that closely matches how the mixture of two pigments of the colors to be converted would appear on paper.[^53]
 - A method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations.
 
 <a id=Notes></a>
@@ -1892,7 +1893,7 @@ Descriptions on the following methods would greatly enhance this document, as lo
 
 [^28]: J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/), Aug. 24, 2009.
 
-[^29]: `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
+[^29]: `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the return value of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [**in another page**](https://peteroupc.github.io/html3dutil/MathUtil.html#MathUtil.vec3lerp).
 
 [^30]: P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)".
@@ -1903,43 +1904,45 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 [^33]: Ingalls, D., "The Smalltalk-76 Programming System: Design and Implementation", Ph.D. thesis, University of Utah, 1978.
 
-[^34]: P. Haeberli, [**"Matrix Operations for Image Processing"**](https://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.
+[^34]: See, for example, the Microsoft Win32 documentation on raster operations: [**https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes) .
 
-[^35]: The "safety palette", also known as the "Web safe" colors, consists of 216 colors that are uniformly spaced in the red&ndash;green&ndash;blue color cube.  Robert Hess's article "[**The Safety Palette**](https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10))", 1996, described the advantage that images that use only colors in this palette won't dither when displayed by Web browsers on displays that can show up to 256 colors at once. (See also [**Wikipedia**](http://en.wikipedia.org/wiki/Web_colors). Dithering is the scattering of colors in a limited set to simulate colors outside that set.)<br>A color palette containing the safety palette's 216 colors appears to date at least as early as 1990: it was used in the 32-Bit QuickDraw graphics subsystem, at least version 1.2 for Macintosh system software version 6.0.5 (Apple Technical Note QD01, "32-Bit QuickDraw: Version 1.2 Features", Apr. 1, 1990), and possibly also version 1.0 from May 1989.  Moreover, a picture of this 256-color palette appears in Apple's _Macintosh Human Interface Guidelines_ (1992, p. 240).  Finally, Microsoft's _Multimedia Development Kit: Programmer's Workbook_, chapter 8, mentioned the safety palette's Macintosh origin.
+[^35]: See, for example, Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.
 
-[^36]: This is often called the "CMY" ("cyan&ndash;magenta&ndash;yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
+[^36]: P. Haeberli, [**"Matrix Operations for Image Processing"**](https://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.
 
-[^37]: The "E" here stands for the German word _Empfindung_.
+[^37]: The "safety palette", also known as the "Web safe" colors, consists of 216 colors that are uniformly spaced in the red&ndash;green&ndash;blue color cube.  Robert Hess's article "[**The Safety Palette**](https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10))", 1996, described the advantage that images that use only colors in this palette won't dither when displayed by Web browsers on displays that can show up to 256 colors at once. (See also [**Wikipedia**](http://en.wikipedia.org/wiki/Web_colors). Dithering is the scattering of colors in a limited set to simulate colors outside that set.)<br>A color palette containing the safety palette's 216 colors appears to date at least as early as 1990: it was used in the 32-Bit QuickDraw graphics subsystem, at least version 1.2 for Macintosh system software version 6.0.5 (Apple Technical Note QD01, "32-Bit QuickDraw: Version 1.2 Features", Apr. 1, 1990), and possibly also version 1.0 from May 1989.  Moreover, a picture of this 256-color palette appears in Apple's _Macintosh Human Interface Guidelines_ (1992, p. 240).  Finally, Microsoft's _Multimedia Development Kit: Programmer's Workbook_, chapter 8, mentioned the safety palette's Macintosh origin.
 
-[^38]: T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), section "A low-cost approximation".
+[^38]: This is often called the "CMY" ("cyan&ndash;magenta&ndash;yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
-[^39]: [**Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas."**](https://scholar.google.com/scholar?q=Huang,+M.,+Cui,+G.,+et+al.+2015.+Power+functions+improving+the+performance+of+color-difference+formulas) Optical Society of America, 23(1), 597&ndash;610.
+[^39]: The "E" here stands for the German word _Empfindung_.
 
-[^40]: _Dithering_ is the scattering of colors in a limited set to simulate colors outside that set. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as well as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
+[^40]: T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), section "A low-cost approximation".
 
-[^41]: This document does not cover how to implement hash tables.
+[^41]: [**Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas."**](https://scholar.google.com/scholar?q=Huang,+M.,+Cui,+G.,+et+al.+2015.+Power+functions+improving+the+performance+of+color-difference+formulas) Optical Society of America, 23(1), 597&ndash;610.
 
-[^42]: An example of scene-referred image data is a raw image from a digital camera after applying an input device transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.
+[^42]: _Dithering_ is the scattering of colors in a limited set to simulate colors outside that set. Detailing the various dithering techniques is outside the scope of this article, but see the [**Wikipedia article on dithering**](https://en.wikipedia.org/wiki/Dither) as well as [**Joel Yliluoma's algorithm and his review of other dithering algorithms**](https://bisqwit.iki.fi/story/howto/dither/jy/). Another way to implement dithering is mentioned in C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.
 
-[^43]: In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a specified or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").
+[^43]: This document does not cover how to implement hash tables.
 
-[^44]: Many color collections are represented by printed or dyed color swatches, are found in printed fan decks, or both.  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.
+[^44]: An example of scene-referred image data is a raw image from a digital camera after applying an input device transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.
 
-[^45]: Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".
+[^45]: In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a specified or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").
 
-[^46]: An approximation of the colors, in order, to encoded sRGB in [**HTML color format**](#HTML_Format_and_Other_Text_Formats), is as follows: "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.
+[^46]: Many color collections are represented by printed or dyed color swatches, are found in printed fan decks, or both.  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.
 
-[^47]: Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".
+[^47]: Venn, A., et al. "Das Farbw&ouml;rterbuch / The Colour Dictionary".
 
-[^48]: See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".
+[^48]: An approximation of the colors, in order, to encoded sRGB in [**HTML color format**](#HTML_Format_and_Other_Text_Formats), is as follows: "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.
 
-[^49]: As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [for example, the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
+[^49]: Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".
 
-[^50]: [**Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory"**](https://scholar.google.com/scholar?q=Walowit,+E.+Spectrophotometric+color+formulation+based+on+two-constant+Kubelka-Munk+theory.), Thesis, Rochester Institute of Technology, 1985.<br>The following reference may also be of interest: Furferi, R., Carfagni, R., "An As-Short-as-Possible Mathematical Assessment of Spectrophotometric Color Matching", _Journal of Applied Sciences_, 2010.
+[^50]: See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".
 
-[^51]: Mixbox appears to satisfy this, but the [**repository's source code**](https://github.com/scrtwpns/mixbox) is under a noncommercial license; whether the algorithm itself is so is uncertain.
+[^51]: As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [for example, the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
-[^52]: See, for example, Gery, R., "Bitmaps with Transparency", Microsoft Developer Network, Jun. 1, 1992.
+[^52]: [**Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory"**](https://scholar.google.com/scholar?q=Walowit,+E.+Spectrophotometric+color+formulation+based+on+two-constant+Kubelka-Munk+theory.), Thesis, Rochester Institute of Technology, 1985.<br>The following reference may also be of interest: Furferi, R., Carfagni, R., "An As-Short-as-Possible Mathematical Assessment of Spectrophotometric Color Matching", _Journal of Applied Sciences_, 2010.
+
+[^53]: Mixbox appears to satisfy this, but the [**repository's source code**](https://github.com/scrtwpns/mixbox) is under a noncommercial license; whether the algorithm itself is so is uncertain.
 
 <a id=License></a>
 

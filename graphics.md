@@ -65,10 +65,10 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 
 Limit 3-D graphics to the following:[^3]
 
-1. The number of _primitives_ that can be shown at a time ("per frame"\)[^4] is limited (see later in this specification). The number of _vertices_ that can be shown at a time is 3 times the maximum number of primitives.
+1. The number of _primitives_ that can be shown at a time ("per frame"\)[^4] is limited (see later in this specification). The number of _vertices_ that can be shown at a time is 3 times the maximum number of primitives. In this specification:
     * A _primitive_ is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.
     * A _vertex_ (plural: _vertices_) has at least these properties: a three-dimensional position (x-, y-, and z-coordinates) and a _vertex color_ of a format given later.  A vertex may also have one or more pairs of _texture coordinates_ (u- and v-coordinates) depending on whether the vertex belongs to a texture-mapped or texture-blended primitive.[^5]
-    * Each vertex of the primitive points to a vertex from the vertex list described later.
+    * Each vertex of a primitive points to a vertex from the vertex list described later.
 2. Each _texture_ (a rectangular image that is applied to the surface of 3-D objects)&mdash;
     * is in a 16-bit-per-pixel format, where each pixel has a vertex color format given later in this specification, or
     * is in a 1-, 2-, 4-, or 8-bit-per-pixel format and has a table of colors with that color format.
@@ -616,7 +616,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^15]: The suggested width and height for tiles is 8 pixels by 8 pixels.
 
-[^16]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer (see the "Architecture of Consoles" series by Rodrigo Copetti).<br>Game consoles employing tile-based visuals tended to limit not only the number of sprites per frame, but also the number of sprites per row of pixels, but a per-row limit is not adopted here.  As for the per-frame limit, the Famicom/Nintendo Entertainment System (1983), SEGA Master System/SEGA Mark III (1985), and PC Engine/TurboGrafx 16 (1987) had a limit of 64 sprites; the Game Boy (1989), 40; the SEGA Mega Drive/Genesis (1988), 80; the Super Famicom/Super Nintendo Entertainment System (1990), 128; and the relatively expensive Neo Geo (1990), 381.  Again, see the "Architecture of Consoles" series by Rodrigo Copetti.
+[^16]: Tile- and sprite-based graphics were in place largely because they saved memory.  Indeed, this system, present in the Nintendo DS and many earlier game consoles, was abandoned in the Nintendo 3DS in favor of a frame buffer (see the "Architecture of Consoles" series by Rodrigo Copetti).<br>Game consoles employing tile-based visuals tended to limit not only the number of sprites per frame, but also the number of sprites per row of the screen image, but a per-row limit is not adopted here.  As for the per-frame limit, the Famicom/Nintendo Entertainment System (1983), SEGA Master System/SEGA Mark III (1985), and PC Engine/TurboGrafx 16 (1987) had a limit of 64 sprites; the Game Boy (1989), 40; the SEGA Mega Drive/Genesis (1988), 80; the Super Famicom/Super Nintendo Entertainment System (1990), 128; and the relatively expensive Neo Geo (1990), 381.  Again, see the "Architecture of Consoles" series by Rodrigo Copetti.
 
 [^17]: SEGA arcade machines from the 1980s could scale (stretch or shrink) sprites horizontally and vertically in hardware (for example, _Turbo_ \[1981\], _Hang-On_ \[1985\], _Out Run_ \[1986\]). In the Super Famicom/Super Nintendo Entertainment System (1990), sprites could not be scaled, but they could be flipped.
 
@@ -628,7 +628,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^21]: Videotex is an information exchange system involving video screens.  Some videotex protocols supported exchanging images and line drawings in addition to text, and it's these that are of particular interest.  See the videotex references in "Further Reading". However, distribution of video games over videotex seems to be rare; an early example is _Dire Straits_ (1982).
 
-[^22]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_ (1997), _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)". (_Test Drive Le Mans_, likewise claimed to have a high polygon count, came out in 2000 and is thus outside this specification's scope.)
+[^22]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_ (1997), _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ (1999) and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)". (_Test Drive Le Mans_, likewise claimed to have a high polygon count, came out in 2000 and is thus outside this specification's scope.)
 
 [^23]: Versions 1.3 and later of OpenGL came after 2000.
 

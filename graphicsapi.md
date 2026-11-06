@@ -22,7 +22,7 @@ The graphics engine is intended to run even on computers from around 2005 (and m
 
 ## 2-D Graphics
 
-The simplest way to proceed is to give the application a _frame buffer_, a block of system memory consisting of a rectangular array of pixel samples.  The nature of each pixel sample depends on the game's needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.[^1]
+The simplest way to proceed is to give the application a _frame buffer_, a block of system memory consisting of a rectangular array of pixels (color samples).  The nature of each pixel depends on the game's needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.[^1]
 
 > **Note:** Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels, that is, no more pixels than a 640-&times;-480 screen.
 
@@ -63,7 +63,7 @@ The following is not included in either API.
 
 ### Text Rendering
 
-Text rendering is essentially the drawing of _glyphs_ of text.
+Text rendering is essentially the drawing of glyphs of text.
 
 _Glyphs_ are graphics that represent elements of text (examples are letters, digits, the _i_'s dot, and the _f-f-l_ combination). A _font_ is a collection of these glyphs along with rules for drawing and placing them. Glyphs are often but not always mapped one-to-one to letters or other writing symbols.
 
@@ -88,7 +88,7 @@ It is unclear whether to include any of the following in the lean 2-D graphics A
 1. 2-D affine transformations (which keep parallel lines parallel; examples are scalings, shears, and rotations).
 2. Translations, rotations and scalings, but no other 2-D affine transformations.
 3. Translations, rotations, scalings, and reflections, but no other 2-D affine transformations.
-4. [**_Raster operations_**](https://learn.microsoft.com/en-us/windows/win32/gdi/raster-operation-codes)" (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBlt`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).[^10]
+4. _Raster operations_ (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBlt`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).  For more on raster operations, see the [**section on them in "Color Topics for Programmers"**](https://peteroupc.github.io/colorgen.html#Raster_Operations)".
 5. [**Alpha compositing**](https://ciechanow.ski/alpha-compositing/) while drawing 2-D graphics.
 6. Drawing one image part over another (the "over" operation of Porter and Duff 1984), with optional translucency, but no other nontrivial alpha compositing.  The images may have translucent (semitransparent) or transparent pixels.
 7. Same as point 6, except the images can't have translucent pixels.
@@ -138,7 +138,7 @@ Stencil buffers, bump mapping, and three- or four-texture blending are borderlin
     DrawTrianglesOneTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture);
 
-Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^11]
+Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^10]
 
 > **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a screen resolution of 640 &times; 480.
 
@@ -212,9 +212,9 @@ Information about the Windows graphics device interface (GDI) is scattered in ma
 - The Windows NT GDI is described in the following references.  Its dashed-line feature did not materially change between the two references.
      - Chapter 3 of the _Graphics Driver Design Guide_, part of the Windows NT 4.0 Device Driver Kit.
      - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
-- Windows CE's GDI.[^12]  Windows CE was an operating system for embedded and handheld computers.
+- Windows CE's GDI.[^11]  Windows CE was an operating system for embedded and handheld computers.
     - Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997), describes Windows CE 2.0's version of the GDI and its 2-D graphics features.
-    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^13]
+    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^12]
 
 <a id=License></a>
 
@@ -244,10 +244,8 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^9]: A discussion of text rendering methods is beyond the scope of this document, but the following are pointers: [**State of text rendering**](https://behdad.org/text2024), [**Antialiasing (smoothing)**](https://mrandri19.github.io/2019/08/08/modern-text-rendering-linux-ep2.html), [**Hardware-accelerated text rendering**](https://alphapixeldev.com/sdf-vs-msdf-vs-slug-vs-rive-gpu-text-rendering/), [**The raster tragedy**](http://rastertragedy.com/).  Furthermore, the addition of scalable colored graphics, especially _emoji_, to outline fonts was developed after 2000, and [**"subpixel" smoothing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998, was not widely deployed before 2000.
 
-[^10]: One of these raster operations, the bitwise "or", enables a [**rudimentary blending technique**](https://www.youtube.com/watch?v=GuFVKPT3ROY) involving two images whose pixels map to entries in a color palette: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise "or" of the foreground and background pixels is a pixel that maps to a "blend" of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.
+[^10]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
 
-[^11]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
+[^11]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
 
-[^12]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
-
-[^13]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself.
+[^12]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself.
