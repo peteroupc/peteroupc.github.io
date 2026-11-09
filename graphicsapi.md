@@ -187,7 +187,7 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 - Borland International, _Turbo C User's Guide: Version 2.0_, 1988. Chapter 8 under "Programming in Graphics Mode" discusses the BGI graphics library.
 - Bresenham, J.E., "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
 - Bresenham, J.E., "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
-- Bresenham, J.E., "Ambiguities in Incremental Line Rastering", in IEEE Computer Graphics and Applications, vol. 7, no. 5, pp. 31-43, May 1987. [https://doi.org/10.1109/MCG.1987.276986](https://doi.org/10.1109/MCG.1987.276986)
+- Bresenham, J.E., "Ambiguities in Incremental Line Rastering", in IEEE Computer Graphics and Applications, vol. 7, no. 5, pp. 31-43, May 1987. [**https://doi.org/10.1109/MCG.1987.276986**](https://doi.org/10.1109/MCG.1987.276986)
 - Gery, R, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
 - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
 - _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6 ("Microsoft C runtime").  Describes the graphics routines the named library supports.
