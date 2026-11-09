@@ -2,10 +2,10 @@
 <meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf">
 <meta name="citation_url" content="https://peteroupc.github.io/colorgen.html">
 <meta name="citation_title" content="Color Topics for Programmers">
-<meta name="dc.date" content="2026-11-06">
-<meta name="citation_date" content="2026/11/06">
-<meta name="citation_publication_date" content="2026/11/06">
-<meta name="citation_online_date" content="2026/11/06">
+<meta name="dc.date" content="2026-11-09">
+<meta name="citation_date" content="2026/11/09">
+<meta name="citation_publication_date" content="2026/11/09">
+<meta name="citation_online_date" content="2026/11/09">
 <meta property="og:title" content="Color Topics for Programmers">
 <meta property="og:description" content="Color Topics for Programmers">
 <meta name="description" content="Color Topics for Programmers">
@@ -30,7 +30,7 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-11-06.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="color-topics-for-programmers">Color Topics for Programmers</h1><p>This version of the document is dated 2026-11-09.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -1539,14 +1539,16 @@ END METHOD
 
   <ol>
     <li>Transparency effects involving a combination of <code>fore XOR back</code> and <code>fore AND back</code> work equally well in the indexed case and otherwise.<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup>  Likewise, simple image copies (the <code>fore</code> operation) function the same in the indexed case and otherwise.</li>
-    <li>When the <code>NOT fore</code> raster operation is meant to “invert” an image’s colors, the indexed case functions best when—</li>
-  </ol>
+    <li>
+      <p>When the <code>NOT fore</code> raster operation is meant to “invert” an image’s colors, the indexed case functions best when—</p>
 
-  <ul>
-    <li>the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and</li>
-    <li>the colors in the second half of the palette would be the “inversions” of those in the first half, if the second half’s colors were in reverse order (for example, the first color in the first half is “black” and the second half’s last color is “white”, the “inversion” of “black”).
-3. In the indexed case, the <code>fore OR back</code> operation (the bitwise “or”) enables a <a href="https://www.youtube.com/watch?v=GuFVKPT3ROY"><strong>rudimentary blending technique</strong></a> between two images: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise “or” of the foreground and background pixels is a pixel that maps to a “blend” of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.</li>
-  </ul>
+      <ul>
+        <li>the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and</li>
+        <li>the colors in the second half of the palette would be the “inversions” of those in the first half, if the second half’s colors were in reverse order (for example, the first color in the first half is “black” and the second half’s last color is “white”, the “inversion” of “black”).</li>
+      </ul>
+    </li>
+    <li>In the indexed case, the <code>fore OR back</code> operation (the bitwise “or”) enables a <a href="https://www.youtube.com/watch?v=GuFVKPT3ROY"><strong>rudimentary blending technique</strong></a> between two images: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise “or” of the foreground and background pixels is a pixel that maps to a “blend” of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.</li>
+  </ol>
 </blockquote>
 
 <p><a id="Blend_Modes"></a></p>

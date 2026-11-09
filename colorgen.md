@@ -1241,8 +1241,9 @@ Binary and ternary raster operations are prevalent in bit block transfers, which
 > 1. Transparency effects involving a combination of `fore XOR back` and `fore AND back` work equally well in the indexed case and otherwise.[^35]  Likewise, simple image copies (the `fore` operation) function the same in the indexed case and otherwise.
 > 2. When the `NOT fore` raster operation is meant to "invert" an image's colors, the indexed case functions best when—
 >
-> - the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and
-> - the colors in the second half of the palette would be the "inversions" of those in the first half, if the second half's colors were in reverse order (for example, the first color in the first half is "black" and the second half's last color is "white", the "inversion" of "black").
+>     - the number of colors in the color palette is a power of two (for example, 2, 8, 16, 256), and
+>     - the colors in the second half of the palette would be the "inversions" of those in the first half, if the second half's colors were in reverse order (for example, the first color in the first half is "black" and the second half's last color is "white", the "inversion" of "black").
+>
 > 3. In the indexed case, the `fore OR back` operation (the bitwise "or") enables a [**rudimentary blending technique**](https://www.youtube.com/watch?v=GuFVKPT3ROY) between two images: one (the foreground) sets only the upper bits of each pixel; the other (the background) sets only the lower bits.  The bitwise "or" of the foreground and background pixels is a pixel that maps to a "blend" of the original pixels; where a foreground pixel is 0, the unblended background pixel is the result.
 
 <a id=Blend_Modes></a>

@@ -31,10 +31,10 @@ A tile- and sprite-based API suggested by the classic-graphics specification is 
 The following is a sketch of what could be included in a lean API for copying and stretching 2-D images as well as for geometric drawing.
 
 - Getting and setting pixel values of an image.
-- Filling with a solid color a rectangular area (whose edges have integer coordinates) of an image.
+- Filling with a single color a rectangular area (whose edges have integer coordinates) of an image.
 - Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image, with optional nearest-neighbor scaling.  The copying can optionally support transparency, in the sense that transparent pixels or pixels of a certain color are excluded.
-- Filling 2-D paths with a solid color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
-- Drawing simple outlines of 2-D paths with a solid color.[^3]
+- Filling 2-D paths with a single color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
+- Drawing simple outlines of 2-D paths with a single color.[^3]
 - Flood filling colored areas of an image.[^4]
 - Optionally, "inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
 - Optionally, fading an image to or from black.[^5]
@@ -42,14 +42,14 @@ The following is a sketch of what could be included in a lean API for copying an
 A leaner API could provide for the following instead:
 
 - Getting and setting pixel values of an image.
-- Filling the following figures with a solid color.
+- Filling the following figures with a single color.
     - Rectangles whose edges have integer coordinates, and axis-aligned ellipses that are tightly contained in them.
     - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^6]
-- Drawing simple outlines of line segments with a solid color, supporting only integer coordinates.[^3]
+- Drawing simple outlines of line segments with a single color, supporting only integer coordinates.[^3]
 - Flood filling colored areas of an image.[^4]
 - Optionally:
     - "Inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
-    - Drawing simple outlines of elliptical arcs with a solid color, supporting only integer coordinates.[^3], [^7]
+    - Drawing simple outlines of elliptical arcs with a single color, supporting only integer coordinates.[^3], [^7]
     - Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image, with no scaling or transparency supported.
 
 For both APIs, antialiasing (smoothing) is optional, and it's enough for the APIs to draw to images stored in system memory, and not also to support drawing to video memory or directly to the screen.
@@ -96,7 +96,7 @@ It is unclear whether to include any of the following in the lean 2-D graphics A
 9. Filling rectangular areas with a repeating image pattern without transparent or translucent pixels.
 10. Filling rectangular areas with a repeating image pattern.  The image may have transparent pixels.
 11. Filling arbitrary 2-D paths with a repeating image pattern.  The image may have transparent pixels.
-12. Drawing a solid color over an image, with optional translucency, but no other nontrivial alpha compositing. This implements "fading in" and "fading out".
+12. Drawing a single color over an image, with optional translucency, but no other nontrivial alpha compositing. This implements "fading in" and "fading out".
 
 > **Notes:**
 >
@@ -187,6 +187,7 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 - Borland International, _Turbo C User's Guide: Version 2.0_, 1988. Chapter 8 under "Programming in Graphics Mode" discusses the BGI graphics library.
 - Bresenham, J.E., "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
 - Bresenham, J.E., "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
+- Bresenham, J.E., "Ambiguities in Incremental Line Rastering", in IEEE Computer Graphics and Applications, vol. 7, no. 5, pp. 31-43, May 1987. [https://doi.org/10.1109/MCG.1987.276986](https://doi.org/10.1109/MCG.1987.276986)
 - Gery, R, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
 - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
 - _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6 ("Microsoft C runtime").  Describes the graphics routines the named library supports.
@@ -214,7 +215,7 @@ Information about the Windows graphics device interface (GDI) is scattered in ma
      - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
 - Windows CE's GDI.[^11]  Windows CE was an operating system for embedded and handheld computers.
     - Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997), describes Windows CE 2.0's version of the GDI and its 2-D graphics features.
-    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially solid color fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^12]
+    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially single-color rectangular fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^12]
 
 <a id=License></a>
 

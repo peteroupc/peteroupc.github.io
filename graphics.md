@@ -469,7 +469,7 @@ The following are examples of the kind of statements desired:
 - International Telecommunication Union, _International Interworking for Videotex Services_, ITU-T T.101, 1988.
 - Lamothe, A., et al., _Tricks of the Game Programming Gurus_, Sams, 1994. ISBN 0-672-30846-0.
 - Lamothe, A., _Black Art of 3D Game Programming_, Waite Group Press, 1995. ISBN 1-57169-004-2.
-- Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification. ISBN 0-672-31835-0.
+- Lamothe, A., _Tricks of the 3D Game Programming Gurus: Advanced 3D Graphics and Rasterization_, Sams, 2003. ISBN 0-672-31835-0. Published after 1999, but most of the 3-D capabilities discussed there are within the spirit of this specification.
 - Lamothe, A., _Tricks of the Windows Game Programming Gurus_, Sams, 1999. ISBN 0-672-31361-8.
 - J. McCornack et al., _Tricks of the Mac Game Programming Gurus_, Hayden Books, 1995. ISBN 1-56830-183-9.
 - Microsoft Corp., "AVI Video Authoring Tips & Compression Options Dialog Box", Microsoft Knowledge Base article Q139826, 1995.
