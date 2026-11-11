@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Notes on developing an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a screen with no more pixels than a 640-&times;-480 screen, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
+**Abstract:** In this page are notes on defining an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a screen with no more pixels than a 640-&times;-480 screen, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
 
 <a id=Goal_An_Open_Source_Engine_or_API_for_Classic_Graphics></a>
 
