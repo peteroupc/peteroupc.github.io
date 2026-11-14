@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** In this page are notes on defining an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a screen with no more pixels than a 640-&times;-480 screen, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
+**Abstract:** In this page are notes on defining an application programming interface (API) for classic graphics with as few entry points as possible.  As given in my [**specification for such graphics**](https://peteroupc.github.io/graphics.html#The_Specification), _classic graphics_ generally means 2-D or 3-D graphics achieved by video games before the year 2000 and the rise of programmable "shaders". In general, pre-2000 graphics involve a screen with no more pixels than a 640-&times;-480 screen, up to 12,800 3-D polygons at a time (fewer if the game screen is smaller), and tile- or sprite-based 2-D graphics.
 
 <a id=Goal_An_Open_Source_Engine_or_API_for_Classic_Graphics></a>
 
@@ -11,7 +11,7 @@
 It would be of interest to write a free and open-source graphics engine that implements [**the classic-graphics specification**](https://peteroupc.github.io/graphics.html#The_Specification) and renders graphics in software (with a minimum of source code and dependencies),[^1] or to establish a lean API for that specification.  The following are examples:
 
 - _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 programming interface for a game's graphics rendering[^2].
-- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a minimal version of the Python language runtime and nonreliance on hardware acceleration would be worthwhile.
+- The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
 - Borland Graphics Interface (BGI), a 2-D graphics API (for example, _Turbo C User's Guide_, chapter 8).
 - Certain game-oriented [**3-D graphics APIs**](https://leikareipa.github.io/blog/wrapping-old-graphics-apis/) from the 1990s, such as 3dfx's Glide, S3's S3d, VideoLogic's SGL, ATI's 3D Rage Common Interface, and Matrox Simple Interface.
@@ -22,9 +22,9 @@ The graphics engine is intended to run even on computers from around 2005 (and m
 
 ## 2-D Graphics
 
-The simplest way to proceed is to give the application a _frame buffer_, a block of system memory consisting of a rectangular array of pixels (color samples).  The nature of each pixel depends on the game's needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.[^1]
+The simplest 2-D graphics API is to give the application a _frame buffer_, a block of system memory consisting of a rectangular array of pixels (color samples).  The nature of each pixel depends on the game's needs; for example, it may be an 8-bit index to a color palette, or a 16-bit color value.  In this case, the application must render graphics in software.[^1]
 
-> **Note:** Under the classic-graphics specification, the frame buffer has no more than 307,200 pixels, that is, no more pixels than a 640-&times;-480 screen.
+> **Note:** Under the [**classic-graphics specification**](https://peteroupc.github.io/graphics.html#The_Specification), the frame buffer has no more than 307,200 pixels, that is, no more pixels than a 640-&times;-480 screen.
 
 A tile- and sprite-based API suggested by the classic-graphics specification is yet to be determined.
 
@@ -32,7 +32,9 @@ The following is a sketch of what could be included in a lean API for copying an
 
 - Getting and setting pixel values of an image.
 - Filling with a single color a rectangular area (whose edges have integer coordinates) of an image.
-- Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image, with optional nearest-neighbor scaling.  The copying can optionally support transparency, in the sense that transparent pixels or pixels of a certain color are excluded.
+- Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image.  This copying can optionally support:
+    - Stretching or shrinking with point filtering (also called point sampling or nearest-neighbor filtering).
+    - Transparency, in the sense that transparent pixels or pixels of a certain color are left out.
 - Filling 2-D paths with a single color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
 - Drawing simple outlines of 2-D paths with a single color.[^3]
 - Flood filling colored areas of an image.[^4]
@@ -50,7 +52,7 @@ A leaner API could provide for the following instead:
 - Optionally:
     - "Inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
     - Drawing simple outlines of elliptical arcs with a single color, supporting only integer coordinates.[^3], [^7]
-    - Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image, with no scaling or transparency supported.
+    - Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image, with no stretching, shrinking, or transparency supported.
 
 For both APIs, antialiasing (smoothing) is optional, and it's enough for the APIs to draw to images stored in system memory, and not also to support drawing to video memory or directly to the screen.
 
@@ -85,9 +87,9 @@ Text rendering need not be supported by either API mentioned previously, since t
 
 It is unclear whether to include any of the following in the lean 2-D graphics API; this will depend on how heavily pre-2000 or pre-1995 video games (spanning PCs, home computers, game consoles, and arcade machines) made use of them.
 
-1. 2-D affine transformations (which keep parallel lines parallel; examples are scalings, shears, and rotations).
-2. Translations, rotations and scalings, but no other 2-D affine transformations.
-3. Translations, rotations, scalings, and reflections, but no other 2-D affine transformations.
+1. 2-D affine transformations (which keep parallel lines parallel; examples are scaling \[stretching and shrinking\], shear, and rotations).
+2. Translations, rotations and scaling, but no other 2-D affine transformations.
+3. Translations, rotations, scaling, and reflections, but no other 2-D affine transformations.
 4. _Raster operations_ (bit-by-bit operations between two images), such as those found in the Windows API (for example, `BitBlt`) and in the "Microsoft C runtime" (for example, `_putimage`, `_setwritemode`).  For more on raster operations, see the [**section on them in "Color Topics for Programmers"**](https://peteroupc.github.io/colorgen.html#Raster_Operations)".
 5. [**Alpha compositing**](https://ciechanow.ski/alpha-compositing/) while drawing 2-D graphics.
 6. Drawing one image part over another (the "over" operation of Porter and Duff 1984), with optional translucency, but no other nontrivial alpha compositing.  The images may have translucent (semitransparent) or transparent pixels.
@@ -249,4 +251,4 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^11]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
 
-[^12]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle onto a frame buffer, or to copy a rectangular area of memory, or to fill it with a 2-byte color value, rather than do those operations itself.
+[^12]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle, copy an image, or fill a rectangle with color, rather than do those operations itself.  This offloading served two purposes:<br>(1) To free the CPU to perform other tasks (as in copying an image from system memory to a video card).<br>(2) To reduce the amount of data sent between the CPU and the video card (as in colored rectangular fills, line or circle drawing, copying one area of video memory onto another, or coloring the "black" parts of an image onto another image).<br>In case 2, this is notably because, in 1990s PCs, the communication between the CPU and the video card (known as a _bus_) was often slow (for example, about 8 million bytes per second for the Industry Standard Architecture bus).

@@ -139,7 +139,7 @@ The following are optional features; the application decides:
 1. Whether the application supports game screen resolutions with more pixels than a 640-&times;-480 screen, in addition to the primary resolution.
 2. Whether hardware acceleration is supported in addition to rendering in software.
 3. Whether tiles can be flipped horizontally and/or vertically.
-4. Whether sprites can undergo a 2-D affine transformation (such as a rotation, enlargement, or shrinking).
+4. Whether sprites can undergo a 2-D affine transformation (such as a rotation, enlargement, shrinking, or shearing).
 5. Whether sprites can be flipped horizontally and/or vertically (even if affine transformation of sprites isn't supported in general).[^17]
 6. Whether at least one of the 2-D layers can undergo a 2-D affine transformation.
 
