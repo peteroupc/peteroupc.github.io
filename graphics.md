@@ -17,6 +17,7 @@ All may interest 1990s computer users.
 
 - [**Contents**](#Contents)
 - [**Graphics Challenge for Classic-Style Games**](#Graphics_Challenge_for_Classic_Style_Games)
+    - [**Summary**](#Summary)
     - [**The Specification**](#The_Specification)
     - [**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)
     - [**Optional Limits**](#Optional_Limits)
@@ -48,16 +49,35 @@ All may interest 1990s computer users.
 
 An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.
 
-In this document, _classic graphics_ or _pre-2000 graphics_ generally means two- or three-dimensional graphics achieved by video games up to some year earlier than 2000, before the advent of programmable "shaders".  For details, see "[**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)", later. (To summarize: In general, a game screen of 640 &times; 480 or smaller, up to 12,800 3-D polygons at a time, and tile- or sprite-based 2-D visuals are involved.)
+In this document, _classic graphics_ or _pre-2000 graphics_ generally means two- or three-dimensional graphics achieved by video games up to some year earlier than 2000, before the advent of programmable "shaders".  For details, see "[**Classic Graphics in Scope**](#Classic_Graphics_in_Scope)", later.
 
 This challenge is intended to encourage the making of&mdash;
 
 -  modern video games that simulate pre-2000 graphics and run with very low resource requirements (say, 64 million bytes of memory or less) and even on very low-end computers (say, those that date from 2010 or earlier or support Windows 7, Windows XP, or even older), and
 -  graphics engines and editors (especially free and open-source ones) devoted to pre-2000 visuals and meant for developing such modern video games.[^1]
 
-Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality pre-2000 graphics using only software &mdash; without relying on specialized video cards &mdash; at 640 &times; 480 pixels or smaller, screen resolutions typically targeted by video games in the 1990s and earlier.[^2]
+Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality pre-2000 graphics using only software &mdash; without relying on specialized video cards &mdash; at 640 &times; 480 pixels or smaller.[^2]
 
 The challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further [**constraints to graphics computation**](#Optional_Limits) (such as memory, resource, color, resolution, or triangle limits) are highly encouraged. It is also encouraged to establish a lean programming interface for this specification; for details, see "[**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html)".
+
+<a id=Summary></a>
+
+### Summary
+
+- Screen has no more pixels than a 640-by-480 screen.
+- Up to 12,800 triangles per frame (fewer if the game screen is smaller).
+- Textures and vertex colors up to 16 bits per pixel.
+- Up to 256-by-256 textures if screen width or height is 256 or greater.
+- Any number of these 3-D features: Z buffering, flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, 3-D line drawing, two-texture blending, MIP mapping, bilinear filtering, edge smoothing, perspective correction, alpha blending.
+- Up to four 2-D layers, or up to three of them and one 3-D layer.
+- 2-D tiles and sprites.
+- Tiles have the same width, height, and bits per pixel, up to 16 bits per pixel.
+- Sprites have up to 16 bits per pixel.
+- Up to 1200 sprites (fewer if the game screen is smaller).
+- Up to 256-by-256 sprites (limit can be smaller if game screen is smaller).
+- Transparency in layers, tiles, and sprites is allowed, but semitransparency is not.
+- Must support software rendering.
+- Music is in standard MIDI files only.
 
 <a id=The_Specification></a>
 
@@ -348,7 +368,7 @@ This section has notes on this specification, such as how its requirements corre
 - It wasn't until 1995 that 3-D video cards became widely available for consumer PCs.[^73] In 3-D video games for PCs "[i]n 1995/1996, it was not uncommon to have 30-50% of the game screen filled with polygons without textures" (according to an [**article**](https://retro.swarm.cz/s3-virge-325-vx-dx-gx-gx2-series-of-early-3d-accelerators-deep-dive/) that compared _Havoc_ [1995] with _Mortal Kombat 4_ [1997]).
 - This specification is not centered on video games that offer "3-D vision" (see note under "Frame rate"), given how rare they were before 2000.
 - The following suggests alternative primitive drawing rates an application can use.
-    - Nadeau (1996)[^74], mentions: "[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh".  Assuming the Pentium processor's speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.
+    - Nadeau (1996)[^74] mentions: "[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh".  Assuming the Pentium processor's speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.
     - The first version of the Renderware library (1994) was claimed to draw about 40,000 polygons per second at resolution 400 &times; 400 on a 50-megahertz processor.[^75]  Assuming an average of 60 frames per second, the target rate would be about 13.33 polygons per megahertz per frame, or 666 polygons per frame.
 <a id=Graphics_in_video_arcade_games></a>
 
@@ -610,7 +630,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^12]: This drawing can be done in many ways: for example, by designating pixels with a given label, say, 0, as transparent (in a process also known as _chroma keying_), or designating pixels that are the same as the upper-left pixel as transparent \[Rodent 1994\], or preparing a two-color mask identifying the pixels to be drawn \[Gery 1992\].
 
-[^13]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "Building a Public-Domain music synthesis library and instrument banks"), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br>Standard MIDI files organize MIDI commands into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
+[^13]: Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section "[**Building a Public-Domain music synthesis library and instrument banks**](#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks)"), using either frequency-modulation (FM) or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it's possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br>Standard MIDI files organize MIDI commands into up to 16 _channels_, each occupied by at most one "instrument" at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, "DOCERR: MarkMIDI Utility Not Provided in Win32 SDK", 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance.
 
 [^14]: If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 &times; 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game _Return of the Obra Dinn_ employs a two-color 800 &times; 450 display (378,000 total pixels) (but even so this resolution was ["up from 640[ &times; ]360"](https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742)).<br><br>In the Godot engine, the screen resolution corresponds to the "Viewport Width" (`window/size/viewport_width`) and "Viewport Height" (`window/size/viewport_height`) project settings, along with `window/stretch/mode=viewport` and `window/stretch/scale_mode=integer`.  For the Unity engine, there is advice from 2019 relating to the visual style in [**"8-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games) and [**"16-bit"**](https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games) game consoles.  In Unreal Engine, the screen resolution apparently corresponds to `ResolutionSizeX` and `ResolutionSizeY`.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification.
 
@@ -630,7 +650,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^22]: The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: _The Lost World: Jurassic Park_ (1997), _Emergency Call Ambulance_, and _L.A. Machine Guns_ for SEGA Model 3, and _Soul Calibur_ (1999) and _Dead or Alive 2_ for Dreamcast.  See "[**Seeking Comments**](#Seeking_Comments)". (_Test Drive Le Mans_, likewise claimed to have a high polygon count, came out in 2000 and is thus outside this specification's scope.)
 
-[^23]: Versions 1.3 and later of OpenGL came after 2000.
+[^23]: Versions 1.2 and 1.2.1 of OpenGL came out in March 1998 and April 1999, respectively.  Versions 1.3 and later of OpenGL came after 2000.
 
 [^24]: OpenGL ES Shading Language and OpenGL ES 2.0, which came out in May 2009 and November 2010, respectively, enabled programmable "shaders", which are beyond this specification's scope.
 

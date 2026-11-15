@@ -103,7 +103,7 @@ This document presents an overview of many common color topics that are of gener
 - **D65/2 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **Image color list.** Means either&mdash;
     - a list of colors (which can have duplicates), all of the same color space, or
-    - the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital video, or a digital document.
+    - the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital movie, or a digital document.
 - **ISO.** International Organization for Standardization.
 - **Image.** Rectangular array of pixels.  Also known as a _raster image_.[^2] More generally, an image is as defined in [**"A Sprite Theory of Image Computing"**](https://alvyray.com/Memos/CG/Microsoft/5_sprite.pdf).
 - **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
@@ -162,7 +162,7 @@ A color can be specified in one of two ways:
     - [**HSV**](#HSV), [**HSL**](#HSL), and [**HWB**](#HWB) color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.
     - [**XYZ**](#CIE_XYZ), [**CIELAB**](#CIELAB), and [**CIELUV**](#CIELUV) color spaces are based on human color perception.
     - [**CMYK**](#CMYK_and_Other_Ink_Mixture_Color_Models) color spaces are especially used to describe proportions of four specific kinds of ink.
-    - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) is especially used in video encoding.
+    - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) is especially used in digital movie encoding.
 * **As a _spectral curve_**, which gives the behavior of light across the electromagnetic spectrum (see "[**Spectral Color Functions**](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
 
 <a id=RGB_Color_Model></a>
@@ -561,7 +561,7 @@ The conversions given below are independent of RGB color space, but should be do
 
 ### Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and Other Video Color Formats
 
-An RGB color can be transformed to a specialized form to improve image and video encoding.
+An RGB color can be transformed to a specialized form to improve encoding of images and digital movies.
 
 [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a family of color formats designed for this purpose. A Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> color consists of three components in the following order:
 
@@ -635,7 +635,7 @@ The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB 
 
 > **Notes:**
 >
-> 1. This document does not seek to survey the various ways in which the point samples in images and videos are represented as Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, for example, by Y&prime;, luma) than chromatic sensitivity (for example, C<sub>_B_</sub>, C<sub>_R_</sub>).
+> 1. This document does not seek to survey the various ways in which the point samples in images and digital movies are represented as Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated, for example, by Y&prime;, luma) than chromatic sensitivity (for example, C<sub>_B_</sub>, C<sub>_R_</sub>).
 > 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4 and detailed in a [**Dolby white paper**](https://www.dolby.com/us/en/technologies/dolby-vision/ICtCp-white-paper.pdf).
 
 <a id=Other_Color_Models></a>
@@ -726,7 +726,7 @@ Both methods are approximate conversions because the factors in the pseudocode a
 
 #### Encoding XYZ Through RGB
 
-The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.
+The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or digital movies.
 
 1. An XYZ-to-linear-RGB transform.  This is usually a [**matrix**](#Conversion_Matrices_Between_XYZ_and_RGB) generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white points, but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above\)[^19].
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.

@@ -173,6 +173,8 @@ Specifically:
 | Uniform numbers in the interval \[0, 1\), where numbers in \[0, 0.5\) and those in \[0.5, 1\) are known to occur with equal probability (for example, Java's `Math.random()`). | 0 if the source gives out a number less than 0.5, or 1 otherwise. | 2. |
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
+      // NOTE: See also the footnote in this document
+      // that discusses _Accelerated C++_.
       if maxInclusive <= MODULUS - 1:
         // NOTE: If the programming language implements
         // division with two integers by discarding the result's
@@ -1147,7 +1149,7 @@ The _Poisson distribution_ uses a parameter `mean` (also known as &lambda;). &la
 
 In this document, `Poisson(mean)` is a Poisson-distributed number if `mean` is greater than 0, or 0 if `mean` is 0.
 
-The method `PoissonInt` generates a Poisson random variate with mean `mx`/`my`, with the `Poisson1` method using an algorithm by Duchon and Duvignau (2016\)[^55],
+The method `PoissonInt` generates a Poisson random variate with mean `mx`/`my`, with the `Poisson1` method using an algorithm by Duchon and Duvignau (2016\)[^55]; see also Duvignau (2015)[^116]
 
 ```
 METHOD Poisson1()
@@ -2111,7 +2113,7 @@ The following are some additional articles I have written on the topic of random
 
 [^1]: Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949)", arXiv:1704.07949v3 [stat.CO], 2018.
 
-[^2]: For an exercise solved by part of the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
+[^2]: For an exercise solved by part of the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, Addison-Wesley, 2000 (ISBN 0-201-70353-X); see also a blog post by Johnny Chan**](https://web.archive.org/web/20150529174416/http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 
 [^3]: An example of such a source is a Gaussian noise generator.  This kind of source is often called an _entropy source_.
 
@@ -2340,6 +2342,8 @@ The following are some additional articles I have written on the topic of random
 [^114]: In the privacy context, see, for example, Awan, J. and Rao, V., 2022. "[**Privacy-Aware Rejection Sampling**](https://arxiv.org/abs/2108.00965)", arXiv:2108.00965.
 
 [^115]: For example, see [**Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers"**](https://scholar.google.com/scholar?q=Balcer,+V.,+Vadhan,+S.,+Differential+Privacy+on+Finite+Computers), Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).
+
+[^116]: Duvignau, R., "Maintenance et simulation de graphes aléatoires dynamiques", Doctoral dissertation, Université de Bordeaux, 2015. [**https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc**](https://doi.org/10.70675/a3eacbb7zb986z4051z9022z444d8bfe03bc).
 
 <a id=Appendix></a>
 

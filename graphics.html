@@ -2,10 +2,10 @@
 <meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf">
 <meta name="citation_url" content="https://peteroupc.github.io/graphics.html">
 <meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications">
-<meta name="dc.date" content="2026-11-11">
-<meta name="citation_date" content="2026/11/11">
-<meta name="citation_publication_date" content="2026/11/11">
-<meta name="citation_online_date" content="2026/11/11">
+<meta name="dc.date" content="2026-11-15">
+<meta name="citation_date" content="2026/11/15">
+<meta name="citation_publication_date" content="2026/11/15">
+<meta name="citation_online_date" content="2026/11/15">
 <meta property="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications">
 <meta property="og:description" content="Graphics and Music Challenges for Classic-Style Computer Applications">
 <meta name="description" content="Graphics and Music Challenges for Classic-Style Computer Applications">
@@ -37,7 +37,7 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-11-11.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-11-15.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -60,6 +60,7 @@
   <li><a href="#Contents"><strong>Contents</strong></a></li>
   <li><a href="#Graphics_Challenge_for_Classic_Style_Games"><strong>Graphics Challenge for Classic-Style Games</strong></a>
     <ul>
+      <li><a href="#Summary"><strong>Summary</strong></a></li>
       <li><a href="#The_Specification"><strong>The Specification</strong></a></li>
       <li><a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a></li>
       <li><a href="#Optional_Limits"><strong>Optional Limits</strong></a></li>
@@ -100,7 +101,7 @@
 
 <p>An interesting challenge for game developers, relating to designing games with classic graphics that run on an exceptional variety of modern and recent computers.</p>
 
-<p>In this document, <em>classic graphics</em> or <em>pre-2000 graphics</em> generally means two- or three-dimensional graphics achieved by video games up to some year earlier than 2000, before the advent of programmable “shaders”.  For details, see “<a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a>”, later. (To summarize: In general, a game screen of 640 × 480 or smaller, up to 12,800 3-D polygons at a time, and tile- or sprite-based 2-D visuals are involved.)</p>
+<p>In this document, <em>classic graphics</em> or <em>pre-2000 graphics</em> generally means two- or three-dimensional graphics achieved by video games up to some year earlier than 2000, before the advent of programmable “shaders”.  For details, see “<a href="#Classic_Graphics_in_Scope"><strong>Classic Graphics in Scope</strong></a>”, later.</p>
 
 <p>This challenge is intended to encourage the making of—</p>
 
@@ -109,9 +110,30 @@
   <li>graphics engines and editors (especially free and open-source ones) devoted to pre-2000 visuals and meant for developing such modern video games.<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></li>
 </ul>
 
-<p>Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality pre-2000 graphics using only software — without relying on specialized video cards — at 640 × 480 pixels or smaller, screen resolutions typically targeted by video games in the 1990s and earlier.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
+<p>Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality pre-2000 graphics using only software — without relying on specialized video cards — at 640 × 480 pixels or smaller.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
 <p>The challenge sets an <em>upper bound</em> on the kind of computer graphics that are of interest.  Further <a href="#Optional_Limits"><strong>constraints to graphics computation</strong></a> (such as memory, resource, color, resolution, or triangle limits) are highly encouraged. It is also encouraged to establish a lean programming interface for this specification; for details, see “<a href="https://peteroupc.github.io/graphicsapi.html"><strong>Lean Programming Interfaces for Classic Graphics</strong></a>”.</p>
+
+<p><a id="Summary"></a></p>
+
+<h3 id="summary">Summary</h3>
+
+<ul>
+  <li>Screen has no more pixels than a 640-by-480 screen.</li>
+  <li>Up to 12,800 triangles per frame (fewer if the game screen is smaller).</li>
+  <li>Textures and vertex colors up to 16 bits per pixel.</li>
+  <li>Up to 256-by-256 textures if screen width or height is 256 or greater.</li>
+  <li>Any number of these 3-D features: Z buffering, flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, 3-D line drawing, two-texture blending, MIP mapping, bilinear filtering, edge smoothing, perspective correction, alpha blending.</li>
+  <li>Up to four 2-D layers, or up to three of them and one 3-D layer.</li>
+  <li>2-D tiles and sprites.</li>
+  <li>Tiles have the same width, height, and bits per pixel, up to 16 bits per pixel.</li>
+  <li>Sprites have up to 16 bits per pixel.</li>
+  <li>Up to 1200 sprites (fewer if the game screen is smaller).</li>
+  <li>Up to 256-by-256 sprites (limit can be smaller if game screen is smaller).</li>
+  <li>Transparency in layers, tiles, and sprites is allowed, but semitransparency is not.</li>
+  <li>Must support software rendering.</li>
+  <li>Music is in standard MIDI files only.</li>
+</ul>
 
 <p><a id="The_Specification"></a></p>
 
@@ -583,7 +605,7 @@
   <li>This specification is not centered on video games that offer “3-D vision” (see note under “Frame rate”), given how rare they were before 2000.</li>
   <li>The following suggests alternative primitive drawing rates an application can use.
     <ul>
-      <li>Nadeau (1996)<sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">74</a></sup>, mentions: “[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh”.  Assuming the Pentium processor’s speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.</li>
+      <li>Nadeau (1996)<sup id="fnref:74"><a href="#fn:74" class="footnote" rel="footnote" role="doc-noteref">74</a></sup> mentions: “[A] typical software implementation of the graphics pipeline for a Pentium PC can draw about 90,000 triangles per second. At a 60-Hz video refresh rate, the software can draw about 1500 triangles per refresh”.  Assuming the Pentium processor’s speed is 100 megahertz this suggests a target rate of 15 triangles per megahertz per frame.  For example, if the target processor speed is 250 megahertz or faster, the target rate is 3750 triangles per frame.</li>
       <li>The first version of the Renderware library (1994) was claimed to draw about 40,000 polygons per second at resolution 400 × 400 on a 50-megahertz processor.<sup id="fnref:75"><a href="#fn:75" class="footnote" rel="footnote" role="doc-noteref">75</a></sup>  Assuming an average of 60 frames per second, the target rate would be about 13.33 polygons per megahertz per frame, or 666 polygons per frame.
 <a id="Graphics_in_video_arcade_games"></a></li>
     </ul>
@@ -914,7 +936,7 @@
       <p>This drawing can be done in many ways: for example, by designating pixels with a given label, say, 0, as transparent (in a process also known as <em>chroma keying</em>), or designating pixels that are the same as the upper-left pixel as transparent [Rodent 1994], or preparing a two-color mask identifying the pixels to be drawn [Gery 1992]. <a href="#fnref:12" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:13">
-      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “Building a Public-Domain music synthesis library and instrument banks”), using either FM or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:13:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+      <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “<a href="#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks"><strong>Building a Public-Domain music synthesis library and instrument banks</strong></a>”), using either frequency-modulation (FM) or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:13:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:14">
       <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels) (but even so this resolution was <a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742">“up from 640[ × ]360”</a>).<br /><br />In the Godot engine, the screen resolution corresponds to the “Viewport Width” (<code>window/size/viewport_width</code>) and “Viewport Height” (<code>window/size/viewport_height</code>) project settings, along with <code>window/stretch/mode=viewport</code> and <code>window/stretch/scale_mode=integer</code>.  For the Unity engine, there is advice from 2019 relating to the visual style in <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games"><strong>“8-bit”</strong></a> and <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games"><strong>“16-bit”</strong></a> game consoles.  In Unreal Engine, the screen resolution apparently corresponds to <code>ResolutionSizeX</code> and <code>ResolutionSizeY</code>.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -944,7 +966,7 @@
       <p>The following video games before 2000 are suspected, but not yet confirmed, to show more than 20,000 triangles per frame, a performance level beyond the spirit of this challenge: <em>The Lost World: Jurassic Park</em> (1997), <em>Emergency Call Ambulance</em>, and <em>L.A. Machine Guns</em> for SEGA Model 3, and <em>Soul Calibur</em> (1999) and <em>Dead or Alive 2</em> for Dreamcast.  See “<a href="#Seeking_Comments"><strong>Seeking Comments</strong></a>”. (<em>Test Drive Le Mans</em>, likewise claimed to have a high polygon count, came out in 2000 and is thus outside this specification’s scope.) <a href="#fnref:22" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:22:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:23">
-      <p>Versions 1.3 and later of OpenGL came after 2000. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Versions 1.2 and 1.2.1 of OpenGL came out in March 1998 and April 1999, respectively.  Versions 1.3 and later of OpenGL came after 2000. <a href="#fnref:23" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:24">
       <p>OpenGL ES Shading Language and OpenGL ES 2.0, which came out in May 2009 and November 2010, respectively, enabled programmable “shaders”, which are beyond this specification’s scope. <a href="#fnref:24" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
