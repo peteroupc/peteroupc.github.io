@@ -56,7 +56,7 @@ This challenge is intended to encourage the making of&mdash;
 -  modern video games that simulate pre-2000 graphics and run with very low resource requirements (say, 64 million bytes of memory or less) and even on very low-end computers (say, those that date from 2010 or earlier or support Windows 7, Windows XP, or even older), and
 -  graphics engines and editors (especially free and open-source ones) devoted to pre-2000 visuals and meant for developing such modern video games.[^1]
 
-Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can draw even high-quality pre-2000 graphics using only software &mdash; without relying on specialized video cards &mdash; at 640 &times; 480 pixels or smaller.[^2]
+Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can render even high-detail graphics meeting this challenge in software, without specialized video cards.[^2]
 
 The challenge sets an _upper bound_ on the kind of computer graphics that are of interest.  Further [**constraints to graphics computation**](#Optional_Limits) (such as memory, resource, color, resolution, or triangle limits) are highly encouraged. It is also encouraged to establish a lean programming interface for this specification; for details, see "[**Lean Programming Interfaces for Classic Graphics**](https://peteroupc.github.io/graphicsapi.html)".
 
@@ -65,13 +65,13 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 ### Summary
 
 - Screen has no more pixels than a 640-by-480 screen.
-- Up to 12,800 triangles per frame (fewer if the game screen is smaller).
+- Up to 12,800 triangles "per frame" (fewer if the game screen is smaller).
 - Textures and vertex colors up to 16 bits per pixel.
 - Up to 256-by-256 textures if screen width or height is 256 or greater.
 - Any number of these 3-D features: Z buffering, flat shading, Gouraud shading, per-vertex specular highlighting, per-vertex depth-based fog, 3-D line drawing, two-texture blending, MIP mapping, bilinear filtering, edge smoothing, perspective correction, alpha blending.
 - Up to four 2-D layers, or up to three of them and one 3-D layer.
 - 2-D tiles and sprites.
-- Tiles have the same width, height, and bits per pixel, up to 16 bits per pixel.
+- Tiles have the same width, height, and bits per pixel, up to 8 bits per pixel.
 - Sprites have up to 16 bits per pixel.
 - Up to 1200 sprites (fewer if the game screen is smaller).
 - Up to 256-by-256 sprites (limit can be smaller if game screen is smaller).
@@ -83,7 +83,7 @@ The challenge sets an _upper bound_ on the kind of computer graphics that are of
 
 ### The Specification
 
-Limit 3-D graphics to the following:[^3]
+Limit 3-D graphics to the following\:[^3]
 
 1. The number of _primitives_ that can be shown at a time ("per frame"\)[^4] is limited (see later in this specification). The number of _vertices_ that can be shown at a time is 3 times the maximum number of primitives. In this specification:
     * A _primitive_ is a triangle or a line segment.  Alternatively, a primitive is a triangle, a line segment, or a convex quadrilateral.
@@ -172,7 +172,7 @@ The following are optional features; the application decides:
 >
 >     1. Image files used by the game should not store "pre-pixelated" textures, sprites, or tiles.  A "pre-pixelated" image results when an image is enlarged in advance with point filtering (also called point sampling or nearest-neighbor filtering), with the result that some or all of the resulting image's rows and columns are repeated.
 >     2. The game should use graphics and sound routines that implement the specification in software, are portable to diverse platforms, and have a minimum of code.
->     3. The General MIDI System level 1 should be followed for the game's music files.[^13]
+>     3. The General MIDI System level 1 should be followed for the game's music files.[^91]
 >
 > 2. For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending or alpha blending) might not be typical.
 > 3. As given later in this document, a default screen resolution of 800 &times; 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But that resolution and limit (together with a target rate of 60 frames per second) can still serve as a "stress test" for any software renderer seeking to implement this specification.
@@ -670,7 +670,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^32]: The use of 64-bit floating-point numbers (IEEE 754 binary64, or the commonly implemented meaning of the C language's `double` type) is perhaps unusual in graphics programming before 2000.
 
-[^33]: This is the performance level targeted for the "[**CyberVGA**](https://expfunction.itch.io/cybervga)" engine by Burak Yazar.
+[^33]: This is the performance level targeted for the MS-DOS version of the "[**CyberVGA**](https://expfunction.itch.io/cybervga)" engine by Burak Yazar.
 
 [^34]: Moreover, PC games before 2000 that required screen resolutions larger than 640 &times; 480 are rare, and according to PCGamingWiki they include the following games (most of which are 2-D): _Timon & Pumbaa's Jungle Games_ (1995); _Tequila & Boom Boom_ (1995); _Romance of the Three Kingdoms IV: Wall of Fire_ (1995/1996);  _Links LS: 1998 Edition_ (1997); _Emergency: Fighters for Life_ (1998); _Championship Manager: Season 99/00_ (1999); _Heroes of Might and Magic III_ (1999); _Alien Nations_ (1999); _Pizza Syndicate_/_Fast Food Tycoon_ (1999); _Age of Empires II: The Age of Kings_ (1999).
 
@@ -785,3 +785,5 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 [^89]: Antochi, Iosif, et al., "GraalBench: a 3D graphics benchmark suite for mobile phones", _ACM SIGPLAN Notices_ 39(7), 2004.
 
 [^90]: The "Game-Ready 3D Models" guide was designed for high-system-resource games from 2024 or so, but appears to have been generated by artificial-intelligence tools, which are not allowed for this project.
+
+[^91]: The General MIDI System level 1 (also adopted by MPC Level 1) defines, among other things, a standardized assignment of musical instruments and percussive (drum) noises.
