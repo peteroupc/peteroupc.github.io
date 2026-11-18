@@ -32,6 +32,8 @@
   <li>each outline is opaque and filled with one of up to ten colors from a color palette given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”.<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
 </ul>
 
+<p>The vector graphic is rectangular in the sense that its transparent and nontransparent areas together form an unrotated rectangle, but the graphic’s outlines need not be rectangular.</p>
+
 <p>Also welcome would be computer code (released to the public domain or licensed under the Unlicense) to generate tileable—</p>
 
 <ul>
@@ -187,9 +189,10 @@
 <h2 id="wallpaper-generation-notes">Wallpaper Generation Notes</h2>
 
 <ol>
-  <li>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred, since then the image could be color-shifted and then adapted to have the colors of any limited-color palette (as given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating <em>halftoning techniques</em>. For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.   Alternatively, the gray tones (as well as black and white) in the grayscale image could be mapped to colors in a <em>color gradient</em> (see the sample code given later), or the image could be dithered and then this mapping occurs.
+  <li>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred, since then the image could be color-shifted and then adapted to have the colors of any limited-color palette (as given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating <em>halftoning techniques</em>. For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.   Alternatively, the gray tones in the grayscale image could be mapped to colors in a <em>color gradient</em> (see the sample code given later), or the image could be dithered and then this mapping occurs.
     <ul>
-      <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones, black, and white.</li>
+      <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones.</li>
+      <li>A <em>gray tone</em> is black, white, or a mixture of black and white.</li>
       <li><em>Dithering</em> scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.</li>
       <li>A <em>color gradient</em> is a continuous or nearly continuous mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em> (a gradient stop is a number together with the color it maps to), where colors in between these gradient stops are found by <em>linear interpolation</em>: the colors between any two nearby stops go from one color to the other at an unchanging rate.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way from “black” to “white”.</li>
       <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting or color mapping can be limited to the nongrayscale part.</li>
