@@ -10,7 +10,7 @@
 
 It would be of interest to write a free and open-source graphics engine that implements [**the classic-graphics specification**](https://peteroupc.github.io/graphics.html#The_Specification) and renders graphics in software (with a minimum of source code and dependencies),[^1] or to establish a lean API for that specification.  The following are examples:
 
-- _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 programming interface for a game's graphics rendering[^2].
+- _Quake_ (1996), _Quake II_ (1997), and _Quake III Arena_ (1999) popularized the practice of using only a subset of the OpenGL 1.1 programming interface for a game's graphics rendering (see, for example, the Carmack document mentioned later).
 - The [**API reference**](https://github.com/kitao/pyxel?tab=readme-ov-file#api-reference) for the two-dimensional (2-D) game engine _Pyxel_.  But, in addition to the efforts there, a nonreliance on hardware acceleration would be worthwhile.
 - The [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic) is an approximation of pre-2000 3-D graphics.
 - Borland Graphics Interface (BGI), a 2-D graphics API (for example, _Turbo C User's Guide_, chapter 8).
@@ -36,22 +36,22 @@ The following is a sketch of what could be included in a lean API for copying an
     - Stretching or shrinking with point filtering (also called point sampling or nearest-neighbor filtering).
     - Transparency, in the sense that transparent pixels or pixels of a certain color are left out.
 - Filling 2-D paths with a single color, with even/odd or nonzero winding order. 2-D paths are sequences of path segments (line segments, quadratic Bézier curves, cubic Bézier curves, and elliptical arcs).
-- Drawing simple outlines of 2-D paths with a single color.[^3]
-- Flood filling colored areas of an image.[^4]
+- Drawing simple outlines of 2-D paths with a single color.[^2]
+- Flood filling colored areas of an image.[^3]
 - Optionally, "inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
-- Optionally, fading an image to or from black.[^5]
+- Optionally, fading an image to or from black.[^4]
 
 A leaner API could provide for the following instead:
 
 - Getting and setting pixel values of an image.
 - Filling the following figures with a single color.
     - Rectangles whose edges have integer coordinates, and axis-aligned ellipses that are tightly contained in them.
-    - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^6]
-- Drawing simple outlines of line segments with a single color, supporting only integer coordinates.[^3]
-- Flood filling colored areas of an image.[^4]
+    - Polygons with integer coordinates and even/odd or nonzero winding order.  The API can choose to support arbitrary polygons, convex polygons only, or monotone-vertical polygons only.[^5]
+- Drawing simple outlines of line segments with a single color, supporting only integer coordinates.[^2]
+- Flood filling colored areas of an image.[^3]
 - Optionally:
     - "Inverting" the colors or color indices of an image within a rectangular area (whose edges have integer coordinates).
-    - Drawing simple outlines of elliptical arcs with a single color, supporting only integer coordinates.[^3], [^7]
+    - Drawing simple outlines of elliptical arcs with a single color, supporting only integer coordinates.[^2], [^6]
     - Copying a rectangular area (whose edges have integer coordinates) of an image onto the same or another image, with no stretching, shrinking, or transparency supported.
 
 For both APIs, antialiasing (smoothing) is optional, and it's enough for the APIs to draw to images stored in system memory, and not also to support drawing to video memory or directly to the screen.
@@ -77,9 +77,9 @@ Before 2000, there were three kinds of fonts for screen display:
 
 For example, Borland Graphics Interface supports raster and vector fonts (called "bit-mapped" and "stroked" fonts in _Turbo C User's Guide_, chapter 8), while Windows CE 2.0 supports raster and outline fonts (Christiansen).
 
-In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^8]
+In most cases in the 1990s and earlier, glyphs were drawn unsmoothed and in a single color.[^7]
 
-Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^9]  Moreover, the conversion of text to glyphs and the positioning of such glyphs are often nontrivial.  If text rendering is supported, glyph smoothing is optional.
+Text rendering need not be supported by either API mentioned previously, since the needs of applications in supporting writing systems and languages vary, as do approaches to rendering text.[^8]  Moreover, the conversion of text to glyphs and the positioning of such glyphs are often nontrivial.  If text rendering is supported, glyph smoothing is optional.
 
 <a id=Possible_Additions></a>
 
@@ -140,7 +140,7 @@ Stencil buffers, bump mapping, and three- or four-texture blending are borderlin
     DrawTrianglesOneTex(State3D *state, float* vertices, uint32_t numvertices,
        uint32_t * indices, uint32_t numindices, Texture *texture);
 
-Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^10]
+Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^9]
 
 > **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a screen resolution of 640 &times; 480.
 
@@ -190,6 +190,7 @@ This is far from a complete list of useful 3-D drawing functions; there may be o
 - Bresenham, J.E., "Algorithm for computer control of a digital plotter." _IBM Systems Journal_ 4.1 (1965): 25-30, [**https://doi.org/10.1147/sj.41.0025**](https://doi.org/10.1147/sj.41.0025) (simple outlines of line segments).
 - Bresenham, J.E., "A linear algorithm for incremental digital display of circular arcs", Commun. ACM 20, 2 (Feb. 1977), 100–106, [**https://doi.org/10.1145/359423.359432**](https://doi.org/10.1145/359423.359432) (simple outlines of circular arcs).
 - Bresenham, J.E., "Ambiguities in Incremental Line Rastering", in IEEE Computer Graphics and Applications, vol. 7, no. 5, pp. 31-43, May 1987. [**https://doi.org/10.1109/MCG.1987.276986**](https://doi.org/10.1109/MCG.1987.276986)
+- Carmack, John, "Optimizing OpenGL drivers for Quake3", a document referenced in .plan, April 30, 1999.
 - Gery, R, "Primitive Cool", Microsoft Developer Network, Mar. 17, 1992 (discusses how Windows 3.1 implements some graphical operations).
 - Intel & Microsoft, _PC 99 System Design Guide_, Microsoft Press, 1998. ISBN 0-7356-0518-1.
 - _Microsoft C/C++ Version 7.0 Run-Time Library Reference_ (1991), section 2.6 ("Microsoft C runtime").  Describes the graphics routines the named library supports.
@@ -215,9 +216,9 @@ Information about the Windows graphics device interface (GDI) is scattered in ma
 - The Windows NT GDI is described in the following references.  Its dashed-line feature did not materially change between the two references.
      - Chapter 3 of the _Graphics Driver Design Guide_, part of the Windows NT 4.0 Device Driver Kit.
      - The [**archived documentation for the XDDM**](https://learn.microsoft.com/en-us/previous-versions/windows/drivers/display/), the driver model supported in Windows 2000, Windows XP, Windows Vista, and Windows 7.
-- Windows CE's GDI.[^11]  Windows CE was an operating system for embedded and handheld computers.
+- Windows CE's GDI.[^10]  Windows CE was an operating system for embedded and handheld computers.
     - Jon Christiansen, "Microsoft Windows CE Graphics Features" (undated, about 1997), describes Windows CE 2.0's version of the GDI and its 2-D graphics features.
-    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially single-color rectangular fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^12]
+    - [**Windows CE 5.0 documentation**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms905330%28v=msdn.10%29) (2006) has useful information on 2-D graphics operations for embedded and handheld computers, especially the pages on [**video driver recommendations**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa447503%28v=msdn.10%29), [**line drawing**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892485%28v=msdn.10%29), and [**supported features**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452651%28v=msdn.10%29).  (This information did not materially change in [**Windows Embedded CE 6.0**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ee504812%28v=winembedded.60%29) \[2010\].)  Notably, relatively few 2-D graphics operations (especially single-color rectangular fills, image area copying, and simple outlines of line segments) were worth accelerating in hardware; more complicated ones could be done in software or broken into simpler ones.[^11]
 
 <a id=License></a>
 
@@ -231,24 +232,22 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 [^1]: In this document, "rendering in software" means that the rendering of graphics does not rely on a video card or graphics accelerator, whether directly or indirectly (such as through GDI, OpenGL, or Direct3D), with the sole exception of sending a finished game screen image to the player's display (such as through GDI’s `StretchDIBits` or copying to video memory).  (Implementing a subset of [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or [**OpenGL**](https://registry.khronos.org/OpenGL/index_gl.php) 1.1 in software without relying on a video card or graphics accelerator is allowed.)
 
-[^2]: See, for example, "Optimizing OpenGL drivers for Quake3" by John Carmack, referenced in .plan, April 30, 1999.
+[^2]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br>A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then:<br>1. Drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or... <br>2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment's slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br>Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
 
-[^3]: In this document, a _simple outline_ of a 2-D path (including a line segment, curve, or arc) is drawn by approximating the path with a sequence of points at integer coordinates and coloring the pixels at those points.  (For example, if the path is a line segment whose endpoints have integer coordinates, an algorithm by Bresenham [1965] draws a simple outline of it.)<br>A "thicker" than simple outline can be drawn by approximating the 2-D path with line segments, then:<br>1. Drawing filled circles around each segment's endpoints, then drawing filled rectangles that follow the path of each line segment, as in the 16-bit GDI (see Gery 1992).  Or... <br>2. For each segment, drawing multiple simple outlines of that segment, shifted horizontally or vertically depending on the segment's slope, as in OpenGL 1.1 (see Woo et al. 1997, chapter 2).<br>Thus, a lean graphics API need not support nonsimple outlines of paths.  See also Bresenham (1965, 1977), Van Aken (1984), Zingl (2016).
+[^3]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
 
-[^4]: But the _Turbo C Reference Guide_, which describes a `floodfill` function, recommended an alternative to that function for compatibility reasons.
+[^4]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
 
-[^5]: This is not required for games that display no more than 256 colors at a time, since the game is assumed to have a game screen image with a color table, so that the fade effect can be implemented by altering the color table.
+[^5]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Abrash (1997).
 
-[^6]: A "monotone-vertical" polygon is one that changes direction along the y-axis exactly twice, whether or not the polygon is self-intersecting. Every convex polygon is monotone-vertical.  See chapter 41 of Abrash (1997).
+[^6]: Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features", Bresenham (1975), Van Aken (1984).
 
-[^7]: Elliptical arcs were not available in Windows CE version 2.0 and earlier, unlike Windows 95, Windows NT, and Windows 3.x.  See Jon Christiansen, "Microsoft Windows CE Graphics Features", Bresenham (1975), Van Aken (1984).
+[^7]: Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough.
 
-[^8]: Windows 98 supported a systemwide setting to smooth the glyphs of outline fonts when the text size and bits per screen pixel are high enough.
+[^8]: A discussion of text rendering methods is beyond the scope of this document, but the following are pointers: [**State of text rendering**](https://behdad.org/text2024), [**Antialiasing (smoothing)**](https://mrandri19.github.io/2019/08/08/modern-text-rendering-linux-ep2.html), [**Hardware-accelerated text rendering**](https://alphapixeldev.com/sdf-vs-msdf-vs-slug-vs-rive-gpu-text-rendering/), [**The raster tragedy**](http://rastertragedy.com/).  Furthermore, the addition of scalable colored graphics, especially _emoji_, to outline fonts was developed after 2000, and [**"subpixel" smoothing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998, was not widely deployed before 2000.
 
-[^9]: A discussion of text rendering methods is beyond the scope of this document, but the following are pointers: [**State of text rendering**](https://behdad.org/text2024), [**Antialiasing (smoothing)**](https://mrandri19.github.io/2019/08/08/modern-text-rendering-linux-ep2.html), [**Hardware-accelerated text rendering**](https://alphapixeldev.com/sdf-vs-msdf-vs-slug-vs-rive-gpu-text-rendering/), [**The raster tragedy**](http://rastertragedy.com/).  Furthermore, the addition of scalable colored graphics, especially _emoji_, to outline fonts was developed after 2000, and [**"subpixel" smoothing**](http://rastertragedy.com/RTRCh2.htm#Sec2) of glyphs, such as the ClearType technology announced in November 1998, was not widely deployed before 2000.
+[^9]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
 
-[^10]: This function and others in this section were inspired by APIs for drawing a block of 3-D primitives, such as the API introduced in DirectX 5's Direct3D (Immediate Mode).  By contrast, the approach of _execute buffers_, found in DirectX versions 2 and 3, is not adopted in this section since many game developers reportedly found it hard to use.  Likewise, Direct3D Retained Mode, a high-level API built on top of Direct3D Immediate Mode, was very rarely used in practice.
+[^10]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
 
-[^11]: In addition to the GDI, Windows CE 5.0 supports [**Direct3D Mobile**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29), and Windows CE .NET 4.2 supports a version of [**Direct3D**](https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms892057%28v=msdn.10%29).  Both APIs approximate pre-2000 three-dimensional computer graphics.
-
-[^12]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle, copy an image, or fill a rectangle with color, rather than do those operations itself.  This offloading served two purposes:<br>(1) To free the CPU to perform other tasks (as in copying an image from system memory to a video card).<br>(2) To reduce the amount of data sent between the CPU and the video card (as in colored rectangular fills, line or circle drawing, copying one area of video memory onto another, or coloring the "black" parts of an image onto another image).<br>In case 2, this is notably because, in 1990s PCs, the communication between the CPU and the video card (known as a _bus_) was often slow (for example, about 8 million bytes per second for the Industry Standard Architecture bus).
+[^11]: Indeed, much "hardware acceleration" in graphics is simply the offloading of memory reads and writes to other processors.  For example, a CPU can tell another processor to draw a line or circle, copy an image, or fill a rectangle with color, rather than do those operations itself.  This offloading served two purposes:<br>(1) To free the CPU to perform other tasks (as in copying an image from system memory to a video card).<br>(2) To reduce the amount of data sent between the CPU and the video card (as in colored rectangular fills, line or circle drawing, copying one area of video memory onto another, or coloring the "black" parts of an image onto another image).<br>In case 2, this is notably because, in 1990s PCs, the communication between the CPU and the video card (known as a _bus_) was often slow (for example, about 8 million bytes per second for the Industry Standard Architecture bus).
