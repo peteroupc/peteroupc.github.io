@@ -105,7 +105,7 @@ This document presents an overview of many common color topics that are of gener
     - a list of colors (which can have duplicates), all of the same color space, or
     - the colors (which can have duplicates) used in a two-, three-, or more-dimensional image or geometric model, a digital movie, or a digital document.
 - **ISO.** International Organization for Standardization.
-- **Image.** Rectangular array of pixels.  Also known as a _raster image_.[^2] More generally, an image is as defined in [**"A Sprite Theory of Image Computing"**](https://alvyray.com/Memos/CG/Microsoft/5_sprite.pdf).
+- **Image.** Rectangular array of pixels.  Also known as a _raster image_.[^2] More generally, an image is as defined in [**"A Sprite Theory of Image Computing"**](https://alvyray.com/Memos/CG/Microsoft/5_sprite.pdf) by Alvy Ray Smith.
 - **Light source.** Means a [**_primary light source_**](https://cie.co.at/eilvterm/17-27-002) or an [**_illuminant_**](https://cie.co.at/eilvterm/17-23-018), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **Pixel.** Point sample that stores a color value or a reference to a color value.  Pixels have no area, so [**they are not squares**](https://alvyray.com/Memos/CG/Microsoft/6_pixel.pdf), they don't have edges or centers, and so on.
 - **RGB.** Red-green-blue.

@@ -2,10 +2,10 @@
 <meta name="citation_pdf_url" content="https://peteroupc.github.io/graphics.pdf">
 <meta name="citation_url" content="https://peteroupc.github.io/graphics.html">
 <meta name="citation_title" content="Graphics and Music Challenges for Classic-Style Computer Applications">
-<meta name="dc.date" content="2026-11-17">
-<meta name="citation_date" content="2026/11/17">
-<meta name="citation_publication_date" content="2026/11/17">
-<meta name="citation_online_date" content="2026/11/17">
+<meta name="dc.date" content="2026-11-21">
+<meta name="citation_date" content="2026/11/21">
+<meta name="citation_publication_date" content="2026/11/21">
+<meta name="citation_online_date" content="2026/11/21">
 <meta property="og:title" content="Graphics and Music Challenges for Classic-Style Computer Applications">
 <meta property="og:description" content="Graphics and Music Challenges for Classic-Style Computer Applications">
 <meta name="description" content="Graphics and Music Challenges for Classic-Style Computer Applications">
@@ -37,7 +37,7 @@
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-11-17.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
+<h1 id="graphics-and-music-challenges-for-classic-style-computer-applications">Graphics and Music Challenges for Classic-Style Computer Applications</h1><p>This version of the document is dated 2026-11-21.  <a href='https://github.com/peteroupc/peteroupc.github.io/issues'>Post an issue or comment on this document</a>.</p>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -112,14 +112,14 @@
 
 <p>Most desktop and laptop computers from 2010 on, and most smartphones from 2016 on, can render even high-detail graphics meeting this challenge in software, without specialized video cards.<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
-<p>The challenge sets an <em>upper bound</em> on the kind of computer graphics that are of interest.  Further <a href="#Optional_Limits"><strong>constraints to graphics computation</strong></a> (such as memory, resource, color, resolution, or triangle limits) are highly encouraged. It is also encouraged to establish a lean programming interface for this specification; for details, see “<a href="https://peteroupc.github.io/graphicsapi.html"><strong>Lean Programming Interfaces for Classic Graphics</strong></a>”.</p>
+<p>The challenge sets an <em>upper bound</em> on the kind of computer graphics that are of interest.  Further <a href="#Optional_Limits"><strong>constraints to graphics computation</strong></a> (such as memory, resource, color, game screen width and height, or triangle limits) are highly encouraged. It is also encouraged to establish a lean programming interface for this specification; for details, see “<a href="https://peteroupc.github.io/graphicsapi.html"><strong>Lean Programming Interfaces for Classic Graphics</strong></a>”.</p>
 
 <p><a id="Summary"></a></p>
 
 <h3 id="summary">Summary</h3>
 
 <ul>
-  <li>Screen has no more pixels than a 640-by-480 screen.</li>
+  <li>Game screen has no more pixels than a 640-by-480 screen.</li>
   <li>Up to 12,800 triangles “per frame” (fewer if the game screen is smaller).</li>
   <li>Textures and vertex colors up to 16 bits per pixel.</li>
   <li>Up to 256-by-256 textures if screen width or height is 256 or greater.</li>
@@ -220,7 +220,7 @@
 <p>The following are decided by the application:</p>
 
 <ol>
-  <li>The <strong>“screen resolution”</strong>: the width and height of the game screen image in pixels. The game screen image has no more than 307,200 total pixels (that is, no more pixels than a 640-×-480 screen, or a screen with 640 pixels horizontally and 480 vertically).<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
+  <li>The width and height of the game screen image in pixels. (This corresponds to what in other contexts is called a “screen resolution”.) The game screen image has no more than 307,200 total pixels (that is, no more pixels than a 640-×-480 screen, or a screen with 640 pixels horizontally and 480 vertically).<sup id="fnref:14"><a href="#fn:14" class="footnote" rel="footnote" role="doc-noteref">14</a></sup></li>
   <li>
     <p>If 3-D is supported:</p>
 
@@ -249,7 +249,7 @@
 <p>The following are optional features; the application decides:</p>
 
 <ol>
-  <li>Whether the application supports game screen resolutions with more pixels than a 640-×-480 screen, in addition to the primary resolution.</li>
+  <li>Whether the application supports game screens with more pixels than a 640-×-480 screen, in addition to the primary width and height of the game screen.</li>
   <li>Whether hardware acceleration is supported in addition to rendering in software.</li>
   <li>Whether tiles can be flipped horizontally and/or vertically.</li>
   <li>Whether sprites can undergo a 2-D affine transformation (such as a rotation, enlargement, shrinking, or shearing).</li>
@@ -274,19 +274,19 @@
       </ol>
     </li>
     <li>For years earlier than 1999, some of the 3-D features mentioned in the specification (such as texture blending or alpha blending) might not be typical.</li>
-    <li>As given later in this document, a default screen resolution of 800 × 600 and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But that resolution and limit (together with a target rate of 60 frames per second) can still serve as a “stress test” for any software renderer seeking to implement this specification.</li>
+    <li>As given later in this document, a default width and height of 800 × 600 for the game screen and a limit of, say, 60,000 primitives per frame would be beyond the spirit of this specification.  But that width, height, and limit (together with a target rate of 60 frames per second) can still serve as a “stress test” for any software renderer seeking to implement this specification.</li>
   </ol>
 
   <p><strong>Examples:</strong></p>
 
   <ol>
     <li>
-      <p>The following limits apply for various game screen resolutions.  An application can decide on lower limits than the ones shown.</p>
+      <p>The following limits apply for various widths and heights of the game screen.  An application can decide on lower limits than the ones shown.</p>
 
       <table>
         <thead>
           <tr>
-            <th>Resolution</th>
+            <th>Width and height</th>
             <th>Max. primitives per frame</th>
             <th>Max. vertices per frame</th>
             <th>Max. texture size</th>
@@ -363,13 +363,13 @@
       </table>
     </li>
     <li>
-      <p>For the screen resolution 640 × 480 and a frame rate of 60 frames per second, the maximum number of primitives per second is 768,000 (= 60 × (640 × 480) / 24); for 320 × 240, it is 192,000.</p>
+      <p>For a 640-×-480 game screen and a frame rate of 60 frames per second, the maximum number of primitives per second is 768,000 (= 60 × (640 × 480) / 24); for 320 × 240, it is 192,000.</p>
     </li>
     <li>
       <p>The following is one way to implement the 3-D portion of this specification:</p>
 
       <ul>
-        <li>Game screen resolution: 512 × 384.</li>
+        <li>Game screen: 512 × 384.</li>
         <li>Primitives per frame: up to 5000.  Primitives are triangles and line segments, not quadrilaterals.</li>
         <li>Maximum texture size: 128 × 128.</li>
         <li>Implements a subset of OpenGL ES 1.1, rendered in software.</li>
@@ -378,7 +378,7 @@
       </ul>
     </li>
     <li>
-      <p>One way to implement the 2-D limits is: Screen resolution 640 × 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 × 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.</p>
+      <p>One way to implement the 2-D limits is: Game screen is 640 × 480; four 2-D layers; tiles have 4 bits per pixel; tiles are 16 × 16 pixels; maximum sprite size 64x64 pixels; up to 192 sprites at a time; sprites are made of pixels.</p>
     </li>
   </ol>
 </blockquote>
@@ -390,11 +390,11 @@
 <p>This specification for “classic graphics”<sup id="fnref:19"><a href="#fn:19" class="footnote" rel="footnote" role="doc-noteref">19</a></sup> in modern games largely reflects the visual limitations of—</p>
 
 <ul>
-  <li>consumer PCs (personal computers) and other home computers released before 2000 (see example 1 later in this section),<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup></li>
-  <li>game consoles (handheld and for TVs) released before 2000,</li>
-  <li>arcade machines with similar performance to machines described earlier,<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup></li>
-  <li>videotex protocols before 1995,<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
-  <li>personal digital assistants, palmtop PCs, graphical calculators, learning toys with an electronic display, and mobile phones with similar performance to consumer PCs from before 2000 (see example 2 later in this section), and</li>
+  <li>consumer PCs (personal computers) and other home computers released before 2000 (see example 1 later in this section);<sup id="fnref:20"><a href="#fn:20" class="footnote" rel="footnote" role="doc-noteref">20</a></sup></li>
+  <li>game consoles (handheld and for TVs) released before 2000;</li>
+  <li>arcade machines with similar performance to machines described earlier;<sup id="fnref:21"><a href="#fn:21" class="footnote" rel="footnote" role="doc-noteref">21</a></sup></li>
+  <li>videotex protocols before 1995;<sup id="fnref:22"><a href="#fn:22" class="footnote" rel="footnote" role="doc-noteref">22</a></sup></li>
+  <li>personal digital assistants, palmtop PCs, graphical calculators, learning toys with an electronic display, and mobile phones with similar performance to consumer PCs from before 2000 (see example 2 later in this section); and</li>
   <li>the Game Boy Advance and Nintendo DS, both of which were released after 2000 but have relatively meager graphical ability.</li>
 </ul>
 
@@ -429,7 +429,7 @@
         <li>The <a href="https://dench.flatlib.jp/app/chiraks_em"><strong>Sharp MI-Zaurus</strong></a> (2000).</li>
         <li>Symbian OS.</li>
         <li>Mobile phones, palmtop PCs, and personal digital assistants running Windows CE 5.0 or earlier, including when the graphics are drawn using <a href="https://learn.microsoft.com/en-us/previous-versions/windows/embedded/aa452478%28v=msdn.10%29"><strong>Direct3D Mobile</strong></a>.</li>
-        <li>Mobile phones, when the graphics are drawn using:
+        <li>Mobile phones and personal digital assistants, when the graphics are drawn using:
           <ul>
             <li>Java Micro Edition, its Mobile Information Device Profile (MIDP, <a href="https://jcp.org/en/jsr/detail?id=37"><strong>Java specification request 37</strong></a> and <a href="https://jcp.org/en/jsr/detail?id=118"><strong>JSR 118</strong></a>), or extensions (especially <a href="https://jcp.org/en/jsr/detail?id=184"><strong>JSR 184, Mobile 3D Graphics API</strong></a>).  Or…</li>
             <li><a href="https://registry.khronos.org/OpenGL/index_es.php"><strong>OpenGL ES</strong></a> 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).</li>
@@ -504,7 +504,7 @@
 
 <ul>
   <li>
-    <p>Screen resolutions with more pixels than a 640-×-480 screen (such as 800 × 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the <em>PC 98 System Design Guide</em> (1997), aimed for the 800 × 600 resolution or higher for 3-D graphics.  Indeed, for the most part, major game consoles and arcade machines in the 1990s and earlier supported resolutions with no more pixels than a 640-×-480 screen.<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup></p>
+    <p>Game screen images with more pixels than a 640-×-480 screen (such as 800 × 600) are not within the spirit of this challenge, even though more demanding games in the late 1990s, as well as the <em>PC 98 System Design Guide</em> (1997), aimed for the 800 × 600 screen resolution or higher for 3-D graphics.  Indeed, for the most part, major game consoles and arcade machines in the 1990s and earlier supported screen resolutions with no more pixels than a 640-×-480 screen.<sup id="fnref:35"><a href="#fn:35" class="footnote" rel="footnote" role="doc-noteref">35</a></sup></p>
   </li>
   <li>
     <p>Screen resolutions that have been used in classic games include:<sup id="fnref:36"><a href="#fn:36" class="footnote" rel="footnote" role="doc-noteref">36</a></sup></p>
@@ -536,17 +536,17 @@
     <p>or both features, without changing the size of the game’s image.  For example, the original <em>Doom</em> (1993) supported several sizes of this kind (on PC, they were 96 × 48, 128 × 64, 160 × 80, and so on up to 288 × 144, as well as 320 × 168 and 320 × 200) and optional pixel-column doubling.<sup id="fnref:64"><a href="#fn:64" class="footnote" rel="footnote" role="doc-noteref">64</a></sup></p>
   </li>
   <li>
-    <p>Games within the scope of this challenge are meant to be run in a desktop window if the player’s display is 800 × 600 pixels or larger.  The same is true if the game’s resolution is 620 × 420 or smaller and the player’s display is 640 × 480.  The game may also support full-screen display.</p>
+    <p>Games within the scope of this challenge are meant to be run in a desktop window if the player’s display is 800 × 600 pixels or larger.  The same is true if the game screen image’s width is 620 or less, its height is 420 or less, and the player’s display has a screen resolution of 640 × 480.  The game may also support full-screen display.</p>
   </li>
   <li>
-    <p>For games that simulate the resolution of video game consoles supporting NTSC- or PAL-compatible TV screens,<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup> a vertical resolution of—</p>
+    <p>Among video game consoles supporting NTSC- or PAL-compatible TV screens,<sup id="fnref:65"><a href="#fn:65" class="footnote" rel="footnote" role="doc-noteref">65</a></sup> a vertical resolution of—</p>
 
     <ul>
       <li>240 or 288 rows of video (respectively) in <em>progressive scan</em> at nearly 60 frames or 50 frames per second, or</li>
       <li>480 or 576 rows of <em>interlaced video</em> (in two passes, each pass drawing every other row) at nearly 30 frames or 25 frames per second,</li>
     </ul>
 
-    <p>is common.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlacing or progressive scan.  In the case of some NTSC-compatible TVs, though, the upper and lower portions of the image are hidden by the bezel, so that, in effect, only 224 rows in progressive scan or 448 rows of interlaced video may be visible (see Rodrigo Copetti’s “Architecture of Consoles” series).</p>
+    <p>is commonly offered.  (By contrast, the horizontal resolution could vary in such cases.) Such TV screens draw 240 or 288 visible rows from top to bottom, whether in interlacing or progressive scan.  In the case of some NTSC-compatible TVs, though, the upper and lower portions of the image are hidden by the bezel, so that, in effect, only 224 rows in progressive scan or 448 rows of interlaced video may be visible (see Rodrigo Copetti’s “Architecture of Consoles” series).</p>
   </li>
 </ul>
 
@@ -588,7 +588,7 @@
   <li>Stencil buffers<sup id="fnref:71"><a href="#fn:71" class="footnote" rel="footnote" role="doc-noteref">71</a></sup>, bump mapping, and three- or four-texture blending are considered borderline pre-2000 graphics capabilities.<sup id="fnref:72"><a href="#fn:72" class="footnote" rel="footnote" role="doc-noteref">72</a></sup>  Supporting these features is optional.</li>
   <li>The following are not within the spirit of this challenge:
     <ul>
-      <li>Displaying more than 20,000 triangles at a time (per frame), even for higher screen resolutions.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions.<sup id="fnref:23:1"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  Moreover, a rate of much more than 20,000 triangles per frame is poorly suited for rendering in software.</li>
+      <li>Displaying more than 20,000 triangles at a time (per frame), even for game screen images larger than 640 × 480.  Most 3-D video games before 2000 displayed well fewer than that, but there may be exceptions.<sup id="fnref:23:1"><a href="#fn:23" class="footnote" rel="footnote" role="doc-noteref">23</a></sup>  Moreover, a rate of much more than 20,000 triangles per frame is poorly suited for rendering in software.</li>
       <li>
         <p>Phong shading (per-pixel specular highlighting), ray tracing, and path tracing, which were too slow for real-time use in the 20th century.  Exceptions include:</p>
 
@@ -619,7 +619,7 @@
   <li>The practice of drawing graphics on a mostly black screen continued up to the early 1980s, but this time they were colored by the game itself rather than by an overlay.</li>
   <li>The visuals of some arcade games from 1979 to the early 1980s were made of white line segments.  Notable examples are <em>Asteroids</em> (1979) and <em>Battlezone</em> (1980).  In <em>Space Fury</em> (1981) and <em>Star Wars</em> (1983), these line segments were even multicolored.</li>
   <li>Graphics made of tiles and sprites were popularized by the arcade game <em>Galaxian</em> (1979).</li>
-  <li>Most arcade games before 1995 had a resolution from 46,080 pixels (192 × 240 or 240 × 192) through 98,304 pixels (256 × 384 or 384 × 256).  The following were exceptions:
+  <li>Most arcade games before 1995 had a screen resolution amounting to 46,080 pixels (192 × 240 or 240 × 192) through 98,304 pixels (256 × 384 or 384 × 256).  The following were exceptions:
     <ul>
       <li>Certain games by Taito that combine two or three video screens into one (for example, <em>Darius</em> [1987] and <em>The Ninja Warriors</em> [1987]).</li>
       <li>The Midway MCR family of arcade machines (1980 to about 1986) had a screen resolution of 480 × 480, 512 × 448, or 512 × 480, but backgrounds were drawn at half the resolution of sprites.  Examples include <em>Tapper</em> (1982) and <em>Wacko</em> (1983).</li>
@@ -658,7 +658,7 @@
 <h4 id="memory">Memory</h4>
 
 <ul>
-  <li>This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the screen width times screen height divided by 24, which is slightly less than 13.2 million bytes for 640 × 480 resolution. (A kibibyte is 1024 bytes.) Imposing a limit on graphical memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.<sup id="fnref:81"><a href="#fn:81" class="footnote" rel="footnote" role="doc-noteref">81</a></sup></li>
+  <li>This specification does not impose a limit on graphical memory use (akin to the video memory, or VRAM, of a video card).  Such a limit is optional.  One suggested example, given in kibibytes, is the game screen image’s width divided by its height divided by 24, which is slightly less than 13.2 million bytes for 640-×-480. (A kibibyte is 1024 bytes.) Imposing a limit on graphical memory use does not limit the size or number of textures, 3-D models, images, or other resource files a game can have.<sup id="fnref:81"><a href="#fn:81" class="footnote" rel="footnote" role="doc-noteref">81</a></sup></li>
   <li>According to “<a href="https://www.dosdays.co.uk/topics/typical_pc_per_year.php"><strong>Typical PCs Each Year</strong></a>”, the following ranges of system memory were typical for PCs sold in the specified years:<sup id="fnref:82"><a href="#fn:82" class="footnote" rel="footnote" role="doc-noteref">82</a></sup>
     <ul>
       <li>1994: 4MB to 8 MB, with more expensive PCs having 16 MB.<sup id="fnref:83"><a href="#fn:83" class="footnote" rel="footnote" role="doc-noteref">83</a></sup></li>
@@ -822,7 +822,7 @@
 
 <h3 id="classic-desktop-wallpaper">Classic desktop wallpaper</h3>
 
-<p>See the “<a href="https://peteroupc.github.io/classic-wallpaper"><strong>peteroupc/classic-wallpaper</strong></a>” repository for a challenge on creating tileable desktop wallpapers with a limited selection of colors and limited dimensions in pixels — such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to have a high-definition resolution (1920 × 1080 or larger).</p>
+<p>See the “<a href="https://peteroupc.github.io/classic-wallpaper"><strong>peteroupc/classic-wallpaper</strong></a>” repository for a challenge on creating tileable desktop wallpapers with a limited selection of colors and limited dimensions in pixels — such wallpapers are getting ever harder to find because desktop backgrounds today tend to cover the full computer screen, to employ thousands of colors, and to be designed for high-definition displays (for example, 1920 × 1080 or larger).</p>
 
 <p><a id="Button_and_border_styles_for_classic_interfaces"></a></p>
 
@@ -939,7 +939,7 @@
       <p>Standard MIDI files should be played back using a cross-platform open-source software synthesizer (see section “<a href="#Building_a_Public_Domain_music_synthesis_library_and_instrument_banks"><strong>Building a Public-Domain music synthesis library and instrument banks</strong></a>”), using either frequency-modulation (FM) or wave-table synthesis; most modern PCs no longer come with hardware synthesizers.  I note that it’s possible to write an FM software synthesizer supporting every MIDI instrument in less than a million bytes of code.<br />Standard MIDI files organize MIDI commands into up to 16 <em>channels</em>, each occupied by at most one “instrument” at a time.  Under MPC Level 1, the first ten channels were intended for high-end synthesizers (where the tenth is percussion); the thirteenth through sixteenth, for low-end ones (sixteenth is percussion), and the nonpercussion channels were arranged in decreasing order of importance.  This convention was abandoned with the rise in support for the General MIDI System level 1 (see Microsoft Knowledge Base article Q141087, “DOCERR: MarkMIDI Utility Not Provided in Win32 SDK”, 1995): now all 16 channels are supported (with only the tenth for percussion) and need not be arranged by importance. <a href="#fnref:13" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:14">
-      <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels) (but even so this resolution was <a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742">“up from 640[ × ]360”</a>).<br /><br />In the Godot engine, the screen resolution corresponds to the “Viewport Width” (<code>window/size/viewport_width</code>) and “Viewport Height” (<code>window/size/viewport_height</code>) project settings, along with <code>window/stretch/mode=viewport</code> and <code>window/stretch/scale_mode=integer</code>.  For the Unity engine, there is advice from 2019 relating to the visual style in <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games"><strong>“8-bit”</strong></a> and <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games"><strong>“16-bit”</strong></a> game consoles.  In Unreal Engine, the screen resolution apparently corresponds to <code>ResolutionSizeX</code> and <code>ResolutionSizeY</code>.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>If the game screen image uses two colors only (such as black and white), the game could choose to allow it to have up to 800,000 total pixels.  For example, a 1024 × 768 display has 786,432 total pixels.  However, two-color graphical display modes larger than 307,200 total pixels are probably rare among consumers.  The modern game <em>Return of the Obra Dinn</em> employs a two-color 800 × 450 display (378,000 total pixels) (but even so this display width and height were <a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742">“up from 640[ × ]360”</a>).<br /><br />In the Godot engine, the game screen image’s width and height correspond to the “Viewport Width” (<code>window/size/viewport_width</code>) and “Viewport Height” (<code>window/size/viewport_height</code>) project settings, along with <code>window/stretch/mode=viewport</code> and <code>window/stretch/scale_mode=integer</code>.  For the Unity engine, there is advice from 2019 relating to the visual style in <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-8-bits-games"><strong>“8-bit”</strong></a> and <a href="https://blog.unity.com/technology/2d-pixel-perfect-how-to-set-up-your-unity-project-for-retro-16-bit-games"><strong>“16-bit”</strong></a> game consoles.  In Unreal Engine, the game screen image’s width and height apparently correspond to <code>ResolutionSizeX</code> and <code>ResolutionSizeY</code>.  But a lighter-weight graphics engine than Unity, Unreal, or even Godot would better suit the spirit of this specification. <a href="#fnref:14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:15">
       <p>The suggested width and height for tiles is 8 pixels by 8 pixels. <a href="#fnref:15" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
@@ -1005,7 +1005,7 @@
       <p>Moreover, PC games before 2000 that required screen resolutions larger than 640 × 480 are rare, and according to PCGamingWiki they include the following games (most of which are 2-D): <em>Timon &amp; Pumbaa’s Jungle Games</em> (1995); <em>Tequila &amp; Boom Boom</em> (1995); <em>Romance of the Three Kingdoms IV: Wall of Fire</em> (1995/1996);  <em>Links LS: 1998 Edition</em> (1997); <em>Emergency: Fighters for Life</em> (1998); <em>Championship Manager: Season 99/00</em> (1999); <em>Heroes of Might and Magic III</em> (1999); <em>Alien Nations</em> (1999); <em>Pizza Syndicate</em>/<em>Fast Food Tycoon</em> (1999); <em>Age of Empires II: The Age of Kings</em> (1999). <a href="#fnref:35" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:36">
-      <p>In addition to the resolutions shown here, there are modern games that employ low resolutions with the same 16:9 aspect ratio as high-definition displays.  These include 640 × 360 (<em>Blasphemous</em> [2019]); 400 × 225 (<em>Unsighted</em>); 480 × 270 (<em>Enter the Gungeon</em>); 320 × 180 (<em>Celeste</em>).<br />Information about game consoles’ screen resolution can be found in Rodrigo Copetti’s “Architecture of Consoles” series. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>In addition to the screen resolutions shown here, there are modern games that employ low screen image sizes with the same 16:9 aspect ratio as high-definition displays.  These include 640 × 360 (<em>Blasphemous</em> [2019]); 400 × 225 (<em>Unsighted</em>); 480 × 270 (<em>Enter the Gungeon</em>); 320 × 180 (<em>Celeste</em>).<br />Information about game consoles’ screen resolution can be found in Rodrigo Copetti’s “Architecture of Consoles” series. <a href="#fnref:36" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:37">
       <p>VGA mode 12h (16 colors); VGA mode 11h (2 colors). <a href="#fnref:37" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:37:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
