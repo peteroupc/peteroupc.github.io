@@ -142,7 +142,7 @@ Stencil buffers, bump mapping, and three- or four-texture blending are borderlin
 
 Draws a sequence of triangles.  The `vertices` array is a rectangular array of numbers organized into "vertex blocks". The number of `float`s pointed to must equal the number of `float`s per vertex block times `numvertices`. The number of indices (`numindices`) must be a multiple of 3. `float` is a number in IEEE 754 binary32 format.[^9]
 
-> **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a screen resolution of 640 &times; 480.
+> **Note:** As given in the classic graphics specification, the number of vertices per frame should be no more than 38,400 for a game screen of 640 columns and 480 rows of pixels.
 
 There are several possibilities for "vertex blocks":
 

@@ -462,6 +462,8 @@ There may be other useful schemes for polynomials not mentioned in this document
 
 [^55]: Rababah, Abedallah. "Transformation of Chebyshev–Bernstein polynomial basis." Computational Methods in Applied Mathematics 3.4 (2003): 608-622.  [**https://doi.org/10.2478/cmam-2003-0038**](https://doi.org/10.2478/cmam-2003-0038)
 
+[^56]: Jaddoa, A., Abdulsattar, H., & Jassim, N. (2026). Improving approximation via linear combinations of Bernstein operators. J. Numer. Anal. Approx. Theory, 55(1), 88-107. [https://doi.org/10.33993/jnaat551-1718](https://doi.org/10.33993/jnaat551-1718)
+
 <a id=Appendix></a>
 
 ## Appendix
@@ -518,7 +520,14 @@ _Proof:_ The assumptions on $f$ imply that $B_n(f)\le 2 f$ (Li 2000)[^42], showi
 
 _Proof_: Let $E(\lambda, n) = \frac{L \lambda(1-\lambda)}{2n}$. Lorentz (1963)[^13] showed that with this Lipschitz derivative assumption on $f$, $B_n$ differs from $f(\lambda)$ by no more than $E(\lambda, n)$ for every $n\ge 1$ and wherever $0\lt\lambda\lt 1$.  As is well known, $B_n(0)=f(0)$ and $B_n(1)=f(1)$.  By inspection, $E(\lambda, n)$ is biggest when $n=1$ and decreases as $n$ increases. Assuming the worst case that $B_n(\lambda) = f(\lambda) + E(\lambda, m)$, it follows that $W_{n,2}=2 f(\lambda) - B_n(\lambda)\ge 2 f(\lambda) - f(\lambda) - E(\lambda, m) = f(\lambda) - E(\lambda, m)\ge 0$ whenever $f(\lambda)\ge E(\lambda, m)$.  Because $E(\lambda, k+1)\le E(\lambda,k)$ for every $k\ge 1$, the preceding sentence holds true for every $n\ge m$. &#x25a1;
 
-**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$, where $\Lambda_3$ is the maximum of that third derivative's Lipschitz constant or greater.
+In the following propositions:
+
+- $f^{(r)}$ means the $r$-th derivative of the function $f$.
+- $M_r = \max(\text{abs}(f^{(r)}))$ means a value equal to or greater than the maximum of the absolute value of $f^{(r)}$.
+- $H_r$ means a value equal to or greater than the Hölder constant of $f^{(r)}$.
+- $\Lambda_r$ means a value equal to or greater than the Lipschitz constant of $f^{(r)}$.
+
+**Proposition B10**: Let $f(\lambda)$ have a Lipschitz-continuous third derivative on the closed unit interval.  For each $n\gt 4$ that is divisible by 4, let $L_{3,n/4}(f) = (1/3)\cdot B_{n/4}(f) - 2\cdot B_{n/2}(f) + (8/3)\cdot B_{n}(f)$.  Then $L_{3,n/4}(f)$ is within $\frac{\Lambda_3}{8 n^2}$ of $f$.
 
 _Proof_: This proof is inspired by the proof technique in Tachev (2022)[^8].
 
@@ -540,7 +549,9 @@ $$P(f)(x) = \alpha_0 B_{n(0)}(f)(x) + \alpha_1 B_{n(1)}(f)(x) + ... + \alpha_k B
 
 (where $\alpha_i$ are real numbers and $n(i)\ge 2$ is an integer), as long as $P$ preserves all polynomials of degree $r$ or less and $f$ has a Lipschitz-continuous $r$-th derivative. An example is the polynomials $T_q^{(0)}$ described in Costabile et al. (1996)[^37], citing Stoer and Bulirsch (1970)[^45].
 
-The following error bounds, which make use of Corollary 1 in the article "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)" as well as the proof technique in Proposition B10, can be shown.  In the following table, $\Lambda_r$ is the maximum of $f$'s $r$-th derivative's Lipschitz constant or greater, and each result applies only to values of $n$ where all the numbers in the third column are integers greater than 1.
+In the following table, all the bounds except the last one make use of Corollary 1 in the article "[**Notes on Approximation Theory**](https://peteroupc.github.io/approxtheory.html)" as well as the proof technique in Proposition B10 and can be shown.  The last bound comes from Jaddoa et al. (2026, Remark 12)[^56].
+
+Each result in the table applies only to values of $n$ where all the numbers in the third column are integers greater than 1.
 
 | Property of $f$ on the closed unit interval | $\alpha_0$, $\alpha_1$, ... | $n(0)$, $n(1)$, ... | Upper bound of error |
   --- | -- | -- | ----- |
@@ -551,18 +562,13 @@ The following error bounds, which make use of Corollary 1 in the article "[**Not
 | Has a Lipschitz-continuous third derivative. | $\frac{1}{2}$, $-4$, $\frac{9}{2}$ | $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_3\frac{25}{128 n^{2}}$ = $\Lambda_3 0.1953125/n^{2}$  |
 | Has a Lipschitz-continuous fourth derivative. | $- \frac{1}{6}$, $4$, $- \frac{27}{2}$, $\frac{32}{3}$ | $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_4\frac{8 \sqrt{5} + 18 \sqrt{15} + 27 \sqrt{10}}{640 n^{5 / 2}}$ &lt; $\Lambda_4\frac{0.2703}{n^{2.5}}$ |
 | Has a Lipschitz-continuous fifth derivative. | $\frac{1}{24}$, $- \frac{8}{3}$, $\frac{81}{4}$, $- \frac{128}{3}$, $\frac{625}{24}$ | $\frac{n}{5}$, $\frac{n}{4}$, $\frac{n}{3}$, $\frac{n}{2}$, $n$ | $\Lambda_5\frac{545}{1536 n^{3}}$ &lt; $\Lambda_5\frac{0.3549}{n^{3}}$ |
+| Has a continuous fourth derivative. | $-1$, $2$ | $\frac{n}{2}$, $n$ | $\frac{1}{(n/2)^2}(M_3 \sqrt{3}/216 + M_4 3/256)$ |
 
 The _Lorentz operator_ of order 2 is denoted as $Q_{n,2}(f)=B_n(f)(x)-\frac{x(1-x)}{2n} B_n(f^{(2)})(x)$ (Holtz et al. 2011\)[^10], (Lorentz 1963)[^12].  This operator is a polynomial in Bernstein form of degree $n+2$.
 
 **Corollary B10B:** Let $f(\lambda)$ have a continuous second derivative on the closed unit interval.  Then $B_n(f)$ is within $\frac{M_2}{8n}$ of $f$, where $M_2$ is the maximum of that second derivative's absolute value or greater.
 
 _Proof_: Follows from Lorentz (1963)[^13] and the well-known fact that $M_2$ is an upper bound of $f$'s first derivative's (minimal) Lipschitz constant. &#x25a1;
-
-In the following propositions:
-
-- $f^{(r)}$ means the $r$-th derivative of the function $f$.
-- $M_r = \max(\text{abs}(f^{(r)}))$ means a value equal to or greater than the maximum of the absolute value of $f^{(r)}$.
-- $H_r$ means a value equal to or greater than the Hölder constant of $f^{(r)}$.
 
 **Proposition B10C:** Let $f(\lambda)$ have a Hölder-continuous second derivative on the closed unit interval, with Hölder exponent $\alpha$ ($0\lt\alpha\le 1$).  Let $U_{n,2}(f)=B_n(2f-B_n(f))$ be $f$'s iterated Boolean sum of order 2 of Bernstein polynomials.  Then if $n\ge 3$ is an integer, the error in approximating $f$ with $U_{n,2}(f)$ is as follows:
 
