@@ -25,14 +25,17 @@
   <li>The graphic was not produced by artificial-intelligence tools or with their help.</li>
 </ul>
 
-<p>Instead of being an image, the graphic is allowed to be a vector graphic with two-dimensional filled outlines with no stroke, where—</p>
+<p>Instead of being an image, the graphic is allowed to be a vector graphic where—</p>
 
 <ul>
-  <li>each outline is filled black and either opaque or translucent (semitransparent),<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> or</li>
-  <li>each outline is opaque and filled with one of up to ten colors from a color palette given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”.<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
+  <li>the graphic is bounded by an unrotated rectangle, and</li>
+  <li>the graphic is of two-dimensional filled outlines with no stroke, where—
+    <ul>
+      <li>each outline is filled black and either opaque or translucent (semitransparent),<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> or</li>
+      <li>each outline is opaque and filled with one of up to ten colors from a color palette given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”.<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></li>
+    </ul>
+  </li>
 </ul>
-
-<p>The vector graphic is rectangular in the sense that its transparent and nontransparent areas together form an unrotated rectangle, but the graphic’s outlines need not be rectangular.</p>
 
 <p>Also welcome would be computer code (released to the public domain or licensed under the Unlicense) to generate tileable—</p>
 
@@ -317,7 +320,7 @@ ifmt.writepng("/tmp/circlews.png", image2, width, height)
       <p>Can be generated from <code>truchet2color</code> using the following ImageMagick command: <code>magick truchet2color.png \( +clone \( +clone \) -append \( +clone \) +append -crop 50%x50%+1+1 \( -size 1x2 gradient:#FFFFFF-#808080 \) -clut \) -compose Multiply -composite truchet3color.png</code>.  Here, <code>#FFFFFF</code> and <code>#808080</code> indicate the two colors white and gray, respectively. <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>The 16-color VGA (Video Graphics Array) palette has colors as follows: light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128). <span style="background:rgb(0,0,0);border:1px black">   </span><span style="background:rgb(128,0,0);border:1px black">   </span><span style="background:rgb(0,128,0);border:1px black">   </span><span style="background:rgb(128,128,0);border:1px black">   </span><span style="background:rgb(0,0,128);border:1px black">   </span><span style="background:rgb(128,0,128);border:1px black">   </span><span style="background:rgb(0,128,128);border:1px black">   </span><span style="background:rgb(128,128,128);border:1px black">   </span><span style="background:rgb(192,192,192);border:1px black">   </span><span style="background:rgb(255,0,0);border:1px black">   </span><span style="background:rgb(0,255,0);border:1px black">   </span><span style="background:rgb(255,255,0);border:1px black">   </span><span style="background:rgb(0,0,255);border:1px black">   </span><span style="background:rgb(255,0,255);border:1px black">   </span><span style="background:rgb(0,255,255);border:1px black">   </span><span style="background:rgb(255,255,255);border:1px black">   </span>. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>The 16-color VGA (Video Graphics Array) palette has colors as follows (each color is given as a  red–green–blue color with each component ranging from 0 through 255): light gray, that is, (192, 192, 192); or each color component is 0 or 255; or each color component is 0 or 128). <span style="background:rgb(0,0,0);border:1px black">   </span><span style="background:rgb(128,0,0);border:1px black">   </span><span style="background:rgb(0,128,0);border:1px black">   </span><span style="background:rgb(128,128,0);border:1px black">   </span><span style="background:rgb(0,0,128);border:1px black">   </span><span style="background:rgb(128,0,128);border:1px black">   </span><span style="background:rgb(0,128,128);border:1px black">   </span><span style="background:rgb(128,128,128);border:1px black">   </span><span style="background:rgb(192,192,192);border:1px black">   </span><span style="background:rgb(255,0,0);border:1px black">   </span><span style="background:rgb(0,255,0);border:1px black">   </span><span style="background:rgb(255,255,0);border:1px black">   </span><span style="background:rgb(0,0,255);border:1px black">   </span><span style="background:rgb(255,0,255);border:1px black">   </span><span style="background:rgb(0,255,255);border:1px black">   </span><span style="background:rgb(255,255,255);border:1px black">   </span>. <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:7">
       <p>Can be generated from <code>truchet3color</code> using the following <a href="https://imagemagick.org/"><strong>ImageMagick</strong></a> command: <code>magick truchet3color.png \( +clone -grayscale Rec709Luma \) \( -size 1x256 gradient:#000000-#ff5500 \) -delete 0 -clut  \( -size 1x1 xc:#000000 xc:#808080 xc:#FFFFFF xc:#C0C0C0 xc:#FF0000 xc:#800000 xc:#00FF00 xc:#008000 xc:#0000FF xc:#000080 xc:#FF00FF xc:#800080 xc:#00FFFF xc:#008080 xc:#FFFF00 xc:#808000 +append -write mpr:z +delete \) -dither FloydSteinberg -remap mpr:z truchetff5500vga.png</code>. This example, which employs a color shift and dither, demonstrates that derivative colored wallpapers with limited colored palettes can easily be generated from black/gray/white wallpapers using non-AI computer programs. <a href="#fnref:7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

@@ -1506,7 +1506,10 @@ There are several methods of finding the kind or kinds of colors that appear mos
 
 A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, [**_linear RGB_ colors**](#RGB_Color_Spaces) should be used rather than encoded RGB colors.
 
-> **Example:** A color map consisting of the encoded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]` is a progression from "black" to "white" going through shades of gray.
+> **Examples:**
+>
+> 1. A color map consisting of the encoded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]` is a progression from "black" to "white" going through shades of gray.
+> 2. For other examples of color palettes, see "[**Color Palettes for Classic-Style Graphics Projects**](https://peteroupc.github.io/palettes.html)".
 
 <a id=Kinds_of_Color_Maps></a>
 
