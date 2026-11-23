@@ -578,7 +578,7 @@ where:
 - $X_k$ is a hypergeometric($2n$, $k$, $n$) random variable.  This is the number of "good" balls out of $k$ balls taken uniformly at random, all at once, from a bag containing $2n$ balls, $n$ of which are "good".
 - $\sigma_{n,k,i}$ equals ${n\choose i}{n\choose {k-i}}/{2n \choose k}$ and is the probability that $X_k$ equals $i$.
 
-$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^74].  That paper, among others (for example, Micchelli 1973[^75]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for all values of $n$.)
+$L_n$ and $W_n$ are generally nonpositive operators.  As an example, take $W_n=2f-B_n(f)$.  Then $B_n(W_n(f))$ is a linear operator that is the iterated Boolean sum of degree-$n$ Bernstein polynomials, with one iteration; see Güntürk and Li (2021a, Theorem 5)[^74].  That paper, among others (for example, Micchelli 1973[^75]), showed that this operator approaches $f$ at the rate $O(1/n^{3/2})$ if $f$ has a continuous third derivative. ("$O(1/n^{3/2})$" means the error is no greater than a constant times $1/n^{3/2}$ for large-enough values of $n$.)
 
 With this choice of $W_n$, $L_n$ becomes:
 
@@ -783,7 +783,7 @@ where $C$ and $D$ are unspecified constants with no upper bounds given.  Or:
 
 $$\text{abs}(f(\lambda) - L(\lambda)) = O(1/n^{1/2}),$$
 
-where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$. (For example, compare Sevy 1991[^17] with Gonska and Zhou 1994[^89]; Holtz et al. 2011[^83]; Kopotun 1996[^90]; Kopotun et al. 2011((1.1), (1.3))[^91]).
+where $O(1/n^{1/2})$ is a function whose absolute value is no more than an unspecified constant times $1/n^{1/2}$ for large-enough values of $n$. (For example, compare Sevy 1991[^17] with Gonska and Zhou 1994[^89]; Holtz et al. 2011[^83]; Kopotun 1996[^90]; Kopotun et al. 2011((1.1), (1.3))[^91]).
 
 It was a goal of this article to catalog general-purpose error bounds without such hidden constants.
 

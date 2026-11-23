@@ -37,18 +37,19 @@ read the file fuzzer.xml. It has the following XML format:</p>
   <li>outputPath - Path of the directory to store the generated file.</li>
   <li>validFilesPath - Path of the directory containing files in a particular file
 format. The fuzzer will randomly manipulate these files to generate its
-test data.</li>
+test data.  Default is ‘<em>.</em>’.</li>
   <li>startBytes - A hexadecimal string specifying the bytes to write at the
 beginning of some of the generated files. Such files will contain random
 data following the header.</li>
-  <li>fileExtension - File extension of the generated files.</li>
+  <li>fileExtension - File extension of the generated files, without the beginning
+period character.  Example: ‘dat’, not ‘.dat’.  Default is ‘dat’.</li>
   <li>fuzzOffset - Byte offset of the point where the fuzzer will modify the
-bytes of the files located in <em>validFilesPath</em>.</li>
-  <li>frequencyMean - Mean of the frequency of changes, in bytes.</li>
-  <li>frequencyStdDev - Standard deviation of the frequency of changes, in bytes.</li>
+bytes of the files located in <em>validFilesPath</em>.  Default is 0.</li>
+  <li>frequencyMean - Mean of the frequency of changes, in bytes.  Default is 32.</li>
+  <li>frequencyStdDev - Standard deviation of the frequency of changes, in bytes.  Default is 16.</li>
   <li>iterations - Number of files to generate. Each file will be named XXXXX.YYY
-where XXXXX is a sequence of five or more digits and YYY is the file
-extension given in <em>fileExtension</em>.</li>
+where XXXXX is a sequence of five or more digits and YYY is the
+value given in <em>fileExtension</em>.  Default is 1000.</li>
 </ul>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

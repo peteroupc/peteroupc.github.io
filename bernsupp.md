@@ -351,8 +351,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial of degree _n_ with Bernstein coefficients in the closed unit interval (Goyal and Sigman 2012\)[^7]. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010\)[^13]. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005\)[^1].<br/>Whenever _f_ admits a fast simulation (Mendo 2019\)[^14].  |
 | Number of flips required, raised to power of _r_, is bounded by a finite number on average and has a tail that drops off uniformly over _f_'s domain.  | Only if _f_ has continuous _r_-th derivative (Nacu and Peres 2005\)[^1]. |
-| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note later) (Holtz et al. 2011, Theorem 13\)[^15]. |
-| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for noninteger _&alpha;_ &gt; 0 and every _&lambda;_, and for large enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011, Theorem 8\)[^15]. Assumes _f_ is bounded away from 0 and 1. |
+| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_, and for large-enough _n_. (The greater _r_ is, the faster the simulation.) | Only if _f_ has an _r_-th derivative that is continuous and in the Zygmund class (see note later) (Holtz et al. 2011, Theorem 13\)[^15]. |
+| Requires more than _n_ flips with at most a probability proportional to _&Delta;_(_n_, _&alpha;_, _&lambda;_), for noninteger _&alpha;_ &gt; 0 and every _&lambda;_, and for large-enough _n_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has an _r_-th derivative that is Hölder continuous with Hölder exponent (_&alpha;_ &minus; _r_) or greater, where _r_ = floor(_&alpha;_) (Holtz et al. 2011, Theorem 8\)[^15]. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially or faster as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010\)[^13]. | If and only if _f_ is analytic at every point in its domain (see note later) (Nacu and Peres 2005\)[^1].   |
 | Average number of flips greater than or equal to (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019\)[^14]. |
 
@@ -657,7 +657,7 @@ The proof follows from Theorem 3 of Lubinsky and Ziegler (1990)[^27] and the pro
 | 11 | 2098/3 < 699.334 |
 | 12 | 48272/33 < 1462.788 |
 
-It seems that this offshoot approaches $c\cdot 2^n$ as $n$ increases, where $c$ is a number that approaches about 0.353.  Stated differently, the offshoot seems to grow like $O(2^n)$, at an exponential rate in the degree of the polynomial.
+It seems that this offshoot approaches $c\cdot 2^n$ as $n$ increases, where $c$ is a number that approaches about 0.353.  Moreover, the rate of growth is exponential in the degree of the polynomial.
 
 <a id=Proofs_for_Polynomial_Building_Schemes></a>
 
