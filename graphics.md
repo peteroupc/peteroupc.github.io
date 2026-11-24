@@ -245,6 +245,9 @@ NVIDIA GeForce 256 (late 1999) is out of scope.  Some arcade machines, such as S
 >        - [**OpenGL ES**](https://registry.khronos.org/OpenGL/index_es.php) 1.1 or 1.0 specification (either the Common profile or the Common-Lite profile with fixed-point but not floating-point arithmetic).
 >
 >    If there is interest, this exception could expand to the years 2007 and 2008 and thus include certain video games for the original iPhone from 2007.[^25]
+>
+> **Note:** Screen savers (computer programs that show a moving picture when the computer remains idle for a time) can be treated as video games for purposes of this challenge.  Indeed, screen savers have many of the same graphical abilities as video games; it's just that most screen savers end when a key is pressed or the mouse is moved.
+>
 
 One of the following games can be considered an upper limit to what is considered "classic graphics" in this specification.
 
@@ -436,7 +439,7 @@ This includes statements like the following, with references or measurements:
 - "Game X shows no more than [16 or 256] simultaneous colors".
 - "Game X uses Y bytes of memory while running on Windows 98".[^88]
 - "Game X shows up to Y sprites at a time [at screen resolution Z]" (for 2-D games such as those built using the tool Director, then by Macromedia).
-- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics) (for example, 2-D rotations of sprites; filling ellipses with a solid color; flood filling; antialiasing of lines and shapes; translucent alpha blending; translucent sprites).
+- The 2-D game X, from year Y, supports a [**given 2-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#2_D_Graphics) (for example, 2-D rotations of sprites; filling ellipses with a single color; flood filling; antialiasing of lines and shapes; translucent alpha blending; translucent sprites).
 - The 3-D game X, from year Y, supports a [**given 3-D graphics capability**](https://peteroupc.github.io/graphicsapi.html#3_D_Graphics) (for example, Gouraud shading; bump mapping; edge antialiasing; alpha blending; texture mapping of most polygons in a scene; or MIP mapping).
 
 (Those statements will also help me define constraints for video games up to an earlier year than 1999.)
