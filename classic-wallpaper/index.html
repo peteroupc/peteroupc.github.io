@@ -192,21 +192,31 @@
 <h2 id="wallpaper-generation-notes">Wallpaper Generation Notes</h2>
 
 <ol>
-  <li>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred, since then the image could be color-shifted and then adapted to have the colors of any limited-color palette (as given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating <em>halftoning techniques</em>. For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.   Alternatively, the gray tones in the grayscale image could be mapped to colors in a <em>color gradient</em> (see the sample code given later), or the image could be dithered and then this mapping occurs.
+  <li>
+    <p>Suppose an image used as wallpaper has only colors of the same hue and “saturation”.  Then a <em>grayscale</em> version of the image is preferred, since then many color customizations are possible.  For example:</p>
+
+    <ul>
+      <li>If a grayscale image has two, three, or four gray tones, those gray tones can be mapped to other colors (for example, by the user, at random, or by a certain principle, such as mapping light or dark gray tones to light or dark colors respectively).</li>
+      <li>A grayscale image’s gray tones can be mapped to colors in a <em>color gradient</em> (see the sample code given later) and then the image is adapted to have the colors of any limited-color palette (as given in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by known <a href="https://bisqwit.iki.fi/story/howto/dither/jy/"><strong>dithering techniques</strong></a> or print-simulating halftoning techniques. For an example, see the <code>patternDither</code> method in <em>desktopwallpaper.py</em>.</li>
+      <li>A grayscale image’s gray tones can be mapped to colors in a <em>color gradient</em> with no further dithering, or the image could be dithered to a small number of gray tones (say, four or sixteen) and then this mapping occurs.</li>
+      <li>If only part of an image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color  mapping can be limited to the nongrayscale part.  An example occurs with “red” and “blue” variants of a playing card back.  For examples, see the <code>recolor()</code> and <code>recolordither()</code> methods in the Python script <a href="https://github.com/peteroupc/classic-wallpaper/blob/main/desktopwallpaper.py"><strong><code>desktopwallpaper.py</code></strong></a>.</li>
+      <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”), it can be manually adapted instead.</li>
+    </ul>
+
+    <p>As used on this page:</p>
+
     <ul>
       <li>A <em>grayscale</em> image is an image where the colors are limited to gray tones.</li>
       <li>A <em>gray tone</em> is black, white, or a mixture of black and white.</li>
       <li><em>Dithering</em> scatters an image’s pixels in a limited-color palette to simulate colors outside that palette.</li>
-      <li>A <em>color gradient</em> is a continuous or nearly continuous mapping from numbers to colors.  A color gradient can be defined, among other ways, as a list of <em>gradient stops</em> (a gradient stop is a number together with the color it maps to), where colors in between these gradient stops are found by <em>linear interpolation</em>: the colors between any two nearby stops go from one color to the other at an unchanging rate.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way from “black” to “white”.</li>
-      <li>If only part of the image has only colors of the same hue and “saturation”, and the rest is grayscale, then the color shifting or color mapping can be limited to the nongrayscale part.</li>
-      <li>If an image looks unsatisfactory after being automatically adapted to a particular color palette (such as one mentioned in “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”), it can be manually adapted instead.</li>
+      <li>A <em>color gradient</em> is a continuous or nearly continuous mapping from numbers to colors.  A color gradient can be  defined, among other ways, as a list of <em>gradient stops</em> (a gradient stop is a number together with the color it maps to), where colors in between these gradient stops are found by <em>linear interpolation</em>: the colors between any two nearby stops go from one color to the other at an unchanging rate.<sup id="fnref:8"><a href="#fn:8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup>  As an example, suppose a color gradient of this kind has the gradient stops (0, “black”) and (1, “white”).  Then the in-between color at 0.3 is the gray tone that is 30% of the way from “black” to “white”.</li>
     </ul>
   </li>
   <li>
     <p>Other tileable wallpapers employing more than 256 colors and otherwise satisfying the challenge’s requirements are acceptable, though not preferable.  If an image used as wallpaper has more than 256 colors and otherwise meets those requirements, it can be adapted to have the colors of a limited-color palette (see “<a href="https://peteroupc.github.io/classic-wallpaper/docs/palettes.html"><strong>Color Palettes for Classic-Style Graphics Projects</strong></a>”) by dithering techniques, where the image can be converted to a grayscale image, color shifted, or both before adapting it this way.</p>
   </li>
   <li>
-    <p>If an image is not tileable, but otherwise meets the challenge’s requirements, the Python script <em>desktopwallpaper.py</em> has an <code>argyle</code> method that generates a tileable wallpaper image from two images of the same size, neither of which need be tileable.</p>
+    <p>If an image is not tileable, but otherwise meets the challenge’s requirements, the Python script <a href="https://github.com/peteroupc/classic-wallpaper/blob/main/desktopwallpaper.py"><strong><code>desktopwallpaper.py</code></strong></a> has an <code>argyle()</code> method that generates a tileable wallpaper image from two images of the same size, neither of which need be tileable.</p>
   </li>
   <li>
     <p>A striking form of wallpaper results from layering a tileable foreground over a nontileable (abstract) background, where the foreground has transparent pixels and wraps around the edges.  Examples of this technique are shown in the wallpaper files <code>RIBBONS.BMP</code> and <code>PARTY.BMP</code>, both of which were distributed with Windows 3.0 and the latter was inspired by the Memphis group style.</p>
